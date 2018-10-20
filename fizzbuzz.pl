@@ -32,6 +32,48 @@ EOI
 my $dsl = <<'EODSL';
 :default ::= action => ::first
 lexeme default = latm => 1
+
+top ::= leader hoon trailer
+leader ::= ws_elements
+trailer ::= ws_elements
+ws_elements ::= ws_element*
+ws_element ::= ACE
+ws_element ::= gap
+ws_element ::= COMMENT
+
+hoon ::= tall_bartis
+hoon ::= tall_tislus
+hoon ::= slash_2cell
+
+tall_bartis ::= BARTIS gap model gap value
+value ::= noun # probably should not be hoon
+model ::= noun # probably should not be hoon
+noun ::= hoon
+noun ::= NAME
+
+tall_tislus ::= TISLUS gap hoon gap hoon
+
+gap ::= ACE ACE optAces
+gap ::= optAces NL optAces
+gap ::= optAces COMMENT comments optAces
+optAces ::=
+optAces ::= aces
+aces ::= ACE*
+comments ::= COMMENT*
+
+ACE ~ ' '
+COMMENT ~ '::' nonNLs nl
+NL ~ nl
+nl ~ '\n'
+nonNLs ~ nonNL*
+nonNL ~ [^\n]
+NAME ~ [\w]+
+
+BARTIS ~ '|='
+TISLUS ~ '=+'
+
+slash_2cell ::= NAME '/' NAME
+
 EODSL
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
