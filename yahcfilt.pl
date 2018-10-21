@@ -7,9 +7,7 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 3;
-
-use Marpa::R2 4.000;
+# use Test::More tests => 3;
 
 require "./yahc.pm";
 

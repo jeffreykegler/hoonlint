@@ -5,29 +5,12 @@ use strict;
 use warnings;
 
 use Data::Dumper;
+use Marpa::R2 4.000;
+
+package MarpaX::YAHC;
+
 use English qw( -no_match_vars );
 
-use Test::More tests => 3;
-
-use Marpa::R2 2.090;
-
-my $fizzbuzz = <<'EOI';
-|=  end/atom
-=+  count=1
-|-
-^-  (list tape)
-?:  =(end count)
-   ~
-:-
-  ?:  =(0 (mod count 15))
-    "FizzBuzz"
-  ?:  =(0 (mod count 5))
-    "Fizz"
-  ?:  =(0 (mod count 3))
-    "Buzz"
-  (scow %ud count)
-$(count (add 1 count))
-EOI
 
 my $dsl = <<'EODSL';
 :default ::= action => [name,start,length,values]
@@ -181,36 +164,23 @@ EODSL
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
-TEST: {
-    my $input = \$fizzbuzz;
-    my $recce = Marpa::R2::Scanless::R->new( { grammar => $grammar,
-       trace_lexers => 1,
-       trace_terminals => 1,
-    } );
-    my $valueRef;
-    my $eval_ok = eval { $valueRef = doit( $recce, $input ); 1; };
-    if ( !$eval_ok ) {
-        Test::More::fail('Example 3 failed');
-        Test::More::diag($EVAL_ERROR);
-        last TEST;
-    }
-    # my $result = [ grep {defined} split q{ }, ${$input} ];
-    local $Data::Dumper::Deepcopy    = 1;
-    local $Data::Dumper::Terse    = 1;
+sub parse {
+    my ( $input ) = @_;
+    my $recce = Marpa::R2::Scanless::R->new(
+        {
+            grammar         => $grammar,
+            trace_lexers    => 1,
+            trace_terminals => 1,
+        }
+    );
 
-    say Data::Dumper::Dumper($valueRef);
-    # Test::More::is_deeply( $result, $valueRef, 'Example 3' );
-} ## end TEST:
-
-sub doit {
-    my ( $recce, $input ) = @_;
     my $input_length = ${$input};
     my $length_read  = $recce->read($input);
     if ( $length_read != length $input_length ) {
         die "read() ended prematurely\n",
-            "  input length = $input_length\n",
-            "  length read = $length_read\n",
-            "  the cause may be an unexpected event";
+          "  input length = $input_length\n",
+          "  length read = $length_read\n",
+          "  the cause may be an unexpected event";
     } ## end if ( $length_read != length $input_length )
     if ( $recce->ambiguity_metric() > 1 ) {
 
@@ -218,10 +188,10 @@ sub doit {
         my $asf = Marpa::R2::ASF->new( { slr => $recce } );
         say STDERR 'No ASF' if not defined $asf;
         my $ambiguities = Marpa::R2::Internal::ASF::ambiguities($asf);
-        my @ambiguities = grep {defined} @{$ambiguities}[ 0 .. 1 ];
+        my @ambiguities = grep { defined } @{$ambiguities}[ 0 .. 1 ];
         die
-            "Parse of BNF/Scanless source is ambiguous\n",
-            Marpa::R2::Internal::ASF::ambiguities_show( $asf, \@ambiguities );
+          "Parse of BNF/Scanless source is ambiguous\n",
+          Marpa::R2::Internal::ASF::ambiguities_show( $asf, \@ambiguities );
     } ## end if ( $recce->ambiguity_metric() > 1 )
 
     my $valueRef = $recce->value();
@@ -230,4 +200,6 @@ sub doit {
     }
 
     return $valueRef;
-} ## end sub doit
+}
+
+1;
