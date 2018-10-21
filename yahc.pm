@@ -169,8 +169,8 @@ sub parse {
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar         => $grammar,
-            trace_lexers    => 1,
-            trace_terminals => 1,
+            # trace_lexers    => 1,
+            # trace_terminals => 1,
         }
     );
 

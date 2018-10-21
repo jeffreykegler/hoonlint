@@ -11,25 +11,12 @@ use English qw( -no_match_vars );
 
 require "./yahc.pm";
 
-my $fizzbuzz = <<'EOI';
-|=  end/atom
-=+  count=1
-|-
-^-  (list tape)
-?:  =(end count)
-   ~
-:-
-  ?:  =(0 (mod count 15))
-    "FizzBuzz"
-  ?:  =(0 (mod count 5))
-    "Fizz"
-  ?:  =(0 (mod count 3))
-    "Buzz"
-  (scow %ud count)
-$(count (add 1 count))
-EOI
+my $hoonSource = do {
+  local $RS = undef;
+  <>;
+};
 
-my $astRef = MarpaX::YAHC::parse(\$fizzbuzz);
+my $astRef = MarpaX::YAHC::parse(\$hoonSource);
 
 die "Parse failed" if not $astRef;
 
