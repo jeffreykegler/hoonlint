@@ -13,10 +13,12 @@ use English qw( -no_match_vars );
 
 
 my $dsl = <<'EODSL';
-:default ::= action => [name,start,length,values]
+# start and length will be needed for production
+# :default ::= action => [name,start,length,values]
+:default ::= action => [name,values]
 lexeme default = latm => 1
 
-top ::= leader hoon trailer
+top ::= (leader) hoon (trailer)
 leader ::= ws_elements
 trailer ::= ws_elements
 ws_elements ::= ws_element*
@@ -35,7 +37,7 @@ hoon ::= tall_kethep
 hoon ::= irr_kettis
 hoon ::= tall_tislus
 hoon ::= tall_wutcol
-hoon ::= slash_2cell
+hoon ::= irr_centis_slash
 hoon ::= noun
 
 noun ::= NAME
@@ -45,35 +47,35 @@ noun ::= TERM
 noun ::= NIL
 toga ::= NAME # TODO: is this right?
 
-tall_barhep ::= BARHEP gap hoon
+tall_barhep ::= (BARHEP) (gap) hoon
 
-tall_bartis ::= BARTIS gap hoon gap hoon
+tall_bartis ::= (BARTIS) (gap) hoon (gap) hoon
 
-tall_cenhep ::= CENHEP gap hoon gap hoon
+tall_cenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
 # It's hard to find an exact description of this
 # in the docs, but the various arities seem to
 # all be irregular variations of censig.
-irr_censig ::= '(' hoonAceSeq ')'
+irr_censig ::= ('(') hoonAceSeq (')')
 hoonAceSeq ::= hoon+ separator=>ACE proper=>1
 
 # Apparently a form of centis with the special
 # limb $ for the recursion point
-irr_centis ::= '$(' hoonAceSeq ')'
+irr_centis ::= ('$(') hoonAceSeq (')')
 
-tall_colhep ::= COLHEP gap hoon gap hoon
+tall_colhep ::= (COLHEP gap) hoon (gap) hoon
 
-irr_dottis ::= '=(' hoon ACE hoon ')'
+irr_dottis ::= ('=(') hoon (ACE) hoon (')')
 
-tall_kethep ::= KETHEP gap hoon gap hoon
+tall_kethep ::= (KETHEP gap) hoon (gap) hoon
 
-irr_kettis ::= toga '=' hoon
+irr_kettis ::= toga ('=') hoon
 
-tall_tislus ::= TISLUS gap hoon gap hoon
+tall_tislus ::= (TISLUS gap) hoon (gap) hoon
 
-tall_wutcol ::= WUTCOL gap hoon gap hoon gap hoon
+tall_wutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 
-slash_2cell ::= NAME '/' NAME
+irr_centis_slash ::= NAME ('/') NAME
 
 gap ::= ACE ACE optAces
 gap ::= optAces NL optAces
