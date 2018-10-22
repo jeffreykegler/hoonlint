@@ -190,6 +190,68 @@ TERM ~ '%' name
 
 EODSL
 
+# ace and gap are not really char names,
+# and are omitted
+my %glyphs = (
+    gal => '<',
+    pal => '(',
+    bar => '|',
+    par => ')',
+    bas => '\\',
+    gar => '>',
+    sel => '\xb5', # '['
+    buc => '$',
+    hax => '#',
+    sem => ';',
+    cab => '_',
+    hep => '-',
+    ser => ']',
+    cen => '%',
+    kel => '{',
+    sig => '~',
+    col => ':',
+    ker => '}',
+    soq => '\'',
+    com => ',',
+    ket => '^',
+    tar => '*',
+    doq => '"',
+    lus => '+',
+    tec => '`',
+    dot => '.',
+    pam => '&',
+    tis => '=',
+    fas => '/',
+    pat => '@',
+    wut => '?',
+    zap => '!',
+);
+
+# takes LC alphanumeric rune name and samples
+# for N-fixed rune and returns the Marpa rules
+# for the tall and the 2 regular flat forms.
+sub doFixedRune {
+    my ($runeName, @samples) = @_;
+    my @result = ('# ' . uc $runeName);
+    my $glyphname1 = substr($runeName, 1, 3);
+    my $glyphname2 = substr($runeName, 4, 3);
+    my $glyph1 = $glyphs{$glyphname1};
+    my $glyph2 = $glyphs{$glyphname2};
+    my $lexeme = uc $runeName;
+    # BARHEP ~ [|] [-]
+    push @result, $lexeme . q{ ~ ['} . $glyph1 . q{] [} . $glyph2 . q{';};
+    # tallHoon ::= (BARHEP) (gap) hoon (gap) hoon
+    push @result, 'tallHoon ::= (' . $lexeme . ')' . (join ' (gap) ', '', @samples);
+    my @flatSamples = map { s/^hoon$/flatHoon/ } @samples;
+    # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
+    push @result, 'flatHoon ::= ([' . $glyph1 . '] [' . $glyph2 . '])' . (join ' (ACE) ', '', @flatSamples);
+    my $regularName = join '', ':',
+      substr($glyphname1, 1, 1), substr($glyphname1, 3, 1),
+      substr($glyphname2, 1, 1), substr($glyphname2, 3, 1);
+    # flatHoon ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
+    push @result, q{flatHoon ::= ([:] '} . $regularName . q{'} . (join ' (ACE) ', '', @flatSamples);
+}
+
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
 sub parse {
