@@ -18,19 +18,19 @@ my $dsl = <<'EODSL';
 :default ::= action => [name,values]
 lexeme default = latm => 1
 
-# TODO: Is a Hoon file always just one hoon?
-top ::= (leader) hoon (trailer)
+# LATER: This is a simplication, which does not
+# catch all the subtleties of "ford" files
+top ::= (leader) hoon hoons (trailer)
 
-# TODO: Can <leader> legally contain anything but comments?
 leader ::= wsElements
 
-# TODO: Can <trailer> legally contain anything but comments?
 trailer ::= wsElements
 wsElements ::= wsElement*
 wsElement ::= ACE
 wsElement ::= gap
 wsElement ::= COMMENT
 
+hoons ::= hoon*
 hoon ::= tallHoon
 hoon ::= flatHoon
 
@@ -94,13 +94,13 @@ tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 # Perhaps should be called irrBuctisSlash?
 irrCentisSlash ::= NAME ('/') NAME
 
-# TODO: For now blank lines are banned
+# LATER: For now blank lines are banned
 gap ::= ACE ACE aces
 gap ::= aces NL aces
 gap ::= aces COMMENT comments aces
 aces ::= ACE*
 
-# TODO: For now blank lines are banned
+# LATER: For now blank lines are banned
 comments ::= COMMENT*
 
 backslash ~ [\0x5c] # 0x5c is backslash
