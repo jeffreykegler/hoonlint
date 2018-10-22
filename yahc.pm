@@ -26,19 +26,23 @@ ws_element ::= ACE
 ws_element ::= gap
 ws_element ::= COMMENT
 
-hoon ::= tall_barhep
-hoon ::= tall_bartis
-hoon ::= tall_cenhep
-hoon ::= irr_censig
-hoon ::= irr_centis
-hoon ::= tall_colhep
-hoon ::= irr_dottis
-hoon ::= tall_kethep
-hoon ::= irr_kettis
-hoon ::= tall_tislus
-hoon ::= tall_wutcol
-hoon ::= irr_centis_slash
 hoon ::= noun
+hoon ::= tall_hoon
+hoon ::= flat_hoon
+
+tall_hoon ::= tall_barhep
+tall_hoon ::= tall_bartis
+tall_hoon ::= tall_cenhep
+tall_hoon ::= tall_colhep
+tall_hoon ::= tall_kethep
+tall_hoon ::= tall_tislus
+tall_hoon ::= tall_wutcol
+
+flat_hoon ::= irr_censig
+flat_hoon ::= irr_centis
+flat_hoon ::= irr_dottis
+flat_hoon ::= irr_kettis
+flat_hoon ::= irr_centis_slash
 
 noun ::= NAME
 noun ::= NUMBER

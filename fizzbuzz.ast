@@ -3,250 +3,347 @@
     [
       'hoon',
       [
-        'tall_bartis',
+        'tall_hoon',
         [
-          'hoon',
+          'tall_bartis',
           [
-            'irr_centis_slash',
-            'end',
-            'atom'
-          ]
-        ],
-        [
-          'hoon',
-          [
-            'tall_tislus',
+            'hoon',
             [
-              'hoon',
+              'flat_hoon',
               [
-                'irr_kettis',
+                'irr_centis_slash',
+                'end',
+                'atom'
+              ]
+            ]
+          ],
+          [
+            'hoon',
+            [
+              'tall_hoon',
+              [
+                'tall_tislus',
                 [
-                  'toga',
-                  'count'
+                  'hoon',
+                  [
+                    'flat_hoon',
+                    [
+                      'irr_kettis',
+                      [
+                        'toga',
+                        'count'
+                      ],
+                      [
+                        'hoon',
+                        [
+                          'noun',
+                          '1'
+                        ]
+                      ]
+                    ]
+                  ]
                 ],
                 [
                   'hoon',
                   [
-                    'noun',
-                    '1'
-                  ]
-                ]
-              ]
-            ],
-            [
-              'hoon',
-              [
-                'tall_barhep',
-                [
-                  'hoon',
-                  [
-                    'tall_kethep',
+                    'tall_hoon',
                     [
-                      'hoon',
+                      'tall_barhep',
                       [
-                        'irr_censig',
+                        'hoon',
                         [
-                          'hoonAceSeq',
+                          'tall_hoon',
                           [
-                            'hoon',
-                            [
-                              'noun',
-                              'list'
-                            ]
-                          ],
-                          [
-                            'hoon',
-                            [
-                              'noun',
-                              'tape'
-                            ]
-                          ]
-                        ]
-                      ]
-                    ],
-                    [
-                      'hoon',
-                      [
-                        'tall_wutcol',
-                        [
-                          'hoon',
-                          [
-                            'irr_dottis',
+                            'tall_kethep',
                             [
                               'hoon',
                               [
-                                'noun',
-                                'end'
-                              ]
-                            ],
-                            [
-                              'hoon',
-                              [
-                                'noun',
-                                'count'
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          'hoon',
-                          [
-                            'noun',
-                            '~'
-                          ]
-                        ],
-                        [
-                          'hoon',
-                          [
-                            'tall_colhep',
-                            [
-                              'hoon',
-                              [
-                                'tall_wutcol',
+                                'flat_hoon',
                                 [
-                                  'hoon',
+                                  'irr_censig',
                                   [
-                                    'irr_dottis',
+                                    'hoonAceSeq',
                                     [
                                       'hoon',
                                       [
                                         'noun',
-                                        '0'
+                                        'list'
                                       ]
                                     ],
                                     [
                                       'hoon',
                                       [
-                                        'irr_censig',
-                                        [
-                                          'hoonAceSeq',
-                                          [
-                                            'hoon',
-                                            [
-                                              'noun',
-                                              'mod'
-                                            ]
-                                          ],
-                                          [
-                                            'hoon',
-                                            [
-                                              'noun',
-                                              'count'
-                                            ]
-                                          ],
-                                          [
-                                            'hoon',
-                                            [
-                                              'noun',
-                                              '15'
-                                            ]
-                                          ]
-                                        ]
+                                        'noun',
+                                        'tape'
                                       ]
                                     ]
                                   ]
-                                ],
+                                ]
+                              ]
+                            ],
+                            [
+                              'hoon',
+                              [
+                                'tall_hoon',
                                 [
-                                  'hoon',
+                                  'tall_wutcol',
                                   [
-                                    'noun',
-                                    '"FizzBuzz"'
-                                  ]
-                                ],
-                                [
-                                  'hoon',
-                                  [
-                                    'tall_wutcol',
+                                    'hoon',
                                     [
-                                      'hoon',
+                                      'flat_hoon',
                                       [
                                         'irr_dottis',
                                         [
                                           'hoon',
                                           [
                                             'noun',
-                                            '0'
+                                            'end'
                                           ]
                                         ],
                                         [
                                           'hoon',
                                           [
-                                            'irr_censig',
-                                            [
-                                              'hoonAceSeq',
-                                              [
-                                                'hoon',
-                                                [
-                                                  'noun',
-                                                  'mod'
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
-                                                [
-                                                  'noun',
-                                                  'count'
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
-                                                [
-                                                  'noun',
-                                                  '5'
-                                                ]
-                                              ]
-                                            ]
+                                            'noun',
+                                            'count'
                                           ]
                                         ]
                                       ]
-                                    ],
+                                    ]
+                                  ],
+                                  [
+                                    'hoon',
                                     [
-                                      'hoon',
-                                      [
-                                        'noun',
-                                        '"Fizz"'
-                                      ]
-                                    ],
+                                      'noun',
+                                      '~'
+                                    ]
+                                  ],
+                                  [
+                                    'hoon',
                                     [
-                                      'hoon',
+                                      'tall_hoon',
                                       [
-                                        'tall_wutcol',
+                                        'tall_colhep',
                                         [
                                           'hoon',
                                           [
-                                            'irr_dottis',
+                                            'tall_hoon',
                                             [
-                                              'hoon',
+                                              'tall_wutcol',
                                               [
-                                                'noun',
-                                                '0'
-                                              ]
-                                            ],
-                                            [
-                                              'hoon',
-                                              [
-                                                'irr_censig',
+                                                'hoon',
                                                 [
-                                                  'hoonAceSeq',
+                                                  'flat_hoon',
                                                   [
-                                                    'hoon',
+                                                    'irr_dottis',
                                                     [
-                                                      'noun',
-                                                      'mod'
+                                                      'hoon',
+                                                      [
+                                                        'noun',
+                                                        '0'
+                                                      ]
+                                                    ],
+                                                    [
+                                                      'hoon',
+                                                      [
+                                                        'flat_hoon',
+                                                        [
+                                                          'irr_censig',
+                                                          [
+                                                            'hoonAceSeq',
+                                                            [
+                                                              'hoon',
+                                                              [
+                                                                'noun',
+                                                                'mod'
+                                                              ]
+                                                            ],
+                                                            [
+                                                              'hoon',
+                                                              [
+                                                                'noun',
+                                                                'count'
+                                                              ]
+                                                            ],
+                                                            [
+                                                              'hoon',
+                                                              [
+                                                                'noun',
+                                                                '15'
+                                                              ]
+                                                            ]
+                                                          ]
+                                                        ]
+                                                      ]
                                                     ]
-                                                  ],
+                                                  ]
+                                                ]
+                                              ],
+                                              [
+                                                'hoon',
+                                                [
+                                                  'noun',
+                                                  '"FizzBuzz"'
+                                                ]
+                                              ],
+                                              [
+                                                'hoon',
+                                                [
+                                                  'tall_hoon',
                                                   [
-                                                    'hoon',
+                                                    'tall_wutcol',
                                                     [
-                                                      'noun',
-                                                      'count'
-                                                    ]
-                                                  ],
-                                                  [
-                                                    'hoon',
+                                                      'hoon',
+                                                      [
+                                                        'flat_hoon',
+                                                        [
+                                                          'irr_dottis',
+                                                          [
+                                                            'hoon',
+                                                            [
+                                                              'noun',
+                                                              '0'
+                                                            ]
+                                                          ],
+                                                          [
+                                                            'hoon',
+                                                            [
+                                                              'flat_hoon',
+                                                              [
+                                                                'irr_censig',
+                                                                [
+                                                                  'hoonAceSeq',
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      'mod'
+                                                                    ]
+                                                                  ],
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      'count'
+                                                                    ]
+                                                                  ],
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      '5'
+                                                                    ]
+                                                                  ]
+                                                                ]
+                                                              ]
+                                                            ]
+                                                          ]
+                                                        ]
+                                                      ]
+                                                    ],
                                                     [
-                                                      'noun',
-                                                      '3'
+                                                      'hoon',
+                                                      [
+                                                        'noun',
+                                                        '"Fizz"'
+                                                      ]
+                                                    ],
+                                                    [
+                                                      'hoon',
+                                                      [
+                                                        'tall_hoon',
+                                                        [
+                                                          'tall_wutcol',
+                                                          [
+                                                            'hoon',
+                                                            [
+                                                              'flat_hoon',
+                                                              [
+                                                                'irr_dottis',
+                                                                [
+                                                                  'hoon',
+                                                                  [
+                                                                    'noun',
+                                                                    '0'
+                                                                  ]
+                                                                ],
+                                                                [
+                                                                  'hoon',
+                                                                  [
+                                                                    'flat_hoon',
+                                                                    [
+                                                                      'irr_censig',
+                                                                      [
+                                                                        'hoonAceSeq',
+                                                                        [
+                                                                          'hoon',
+                                                                          [
+                                                                            'noun',
+                                                                            'mod'
+                                                                          ]
+                                                                        ],
+                                                                        [
+                                                                          'hoon',
+                                                                          [
+                                                                            'noun',
+                                                                            'count'
+                                                                          ]
+                                                                        ],
+                                                                        [
+                                                                          'hoon',
+                                                                          [
+                                                                            'noun',
+                                                                            '3'
+                                                                          ]
+                                                                        ]
+                                                                      ]
+                                                                    ]
+                                                                  ]
+                                                                ]
+                                                              ]
+                                                            ]
+                                                          ],
+                                                          [
+                                                            'hoon',
+                                                            [
+                                                              'noun',
+                                                              '"Buzz"'
+                                                            ]
+                                                          ],
+                                                          [
+                                                            'hoon',
+                                                            [
+                                                              'flat_hoon',
+                                                              [
+                                                                'irr_censig',
+                                                                [
+                                                                  'hoonAceSeq',
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      'scow'
+                                                                    ]
+                                                                  ],
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      '%ud'
+                                                                    ]
+                                                                  ],
+                                                                  [
+                                                                    'hoon',
+                                                                    [
+                                                                      'noun',
+                                                                      'count'
+                                                                    ]
+                                                                  ]
+                                                                ]
+                                                              ]
+                                                            ]
+                                                          ]
+                                                        ]
+                                                      ]
                                                     ]
                                                   ]
                                                 ]
@@ -257,84 +354,53 @@
                                         [
                                           'hoon',
                                           [
-                                            'noun',
-                                            '"Buzz"'
-                                          ]
-                                        ],
-                                        [
-                                          'hoon',
-                                          [
-                                            'irr_censig',
+                                            'flat_hoon',
                                             [
-                                              'hoonAceSeq',
+                                              'irr_centis',
                                               [
-                                                'hoon',
+                                                'hoonAceSeq',
                                                 [
-                                                  'noun',
-                                                  'scow'
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
+                                                  'hoon',
+                                                  [
+                                                    'noun',
+                                                    'count'
+                                                  ]
+                                                ],
                                                 [
-                                                  'noun',
-                                                  '%ud'
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
-                                                [
-                                                  'noun',
-                                                  'count'
+                                                  'hoon',
+                                                  [
+                                                    'flat_hoon',
+                                                    [
+                                                      'irr_censig',
+                                                      [
+                                                        'hoonAceSeq',
+                                                        [
+                                                          'hoon',
+                                                          [
+                                                            'noun',
+                                                            'add'
+                                                          ]
+                                                        ],
+                                                        [
+                                                          'hoon',
+                                                          [
+                                                            'noun',
+                                                            '1'
+                                                          ]
+                                                        ],
+                                                        [
+                                                          'hoon',
+                                                          [
+                                                            'noun',
+                                                            'count'
+                                                          ]
+                                                        ]
+                                                      ]
+                                                    ]
+                                                  ]
                                                 ]
                                               ]
                                             ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ],
-                            [
-                              'hoon',
-                              [
-                                'irr_centis',
-                                [
-                                  'hoonAceSeq',
-                                  [
-                                    'hoon',
-                                    [
-                                      'noun',
-                                      'count'
-                                    ]
-                                  ],
-                                  [
-                                    'hoon',
-                                    [
-                                      'irr_censig',
-                                      [
-                                        'hoonAceSeq',
-                                        [
-                                          'hoon',
-                                          [
-                                            'noun',
-                                            'add'
-                                          ]
-                                        ],
-                                        [
-                                          'hoon',
-                                          [
-                                            'noun',
-                                            '1'
-                                          ]
-                                        ],
-                                        [
-                                          'hoon',
-                                          [
-                                            'noun',
-                                            'count'
                                           ]
                                         ]
                                       ]
