@@ -60,8 +60,6 @@ noun ::= NIL
 toga ::= NAME
 toga ::= '[' togaElement togaElements ']'
 togaElements ::= togaElement* separator=>ACE proper=>1
-# TODO: This allows infinite nesting of <toga>'s.  Is that right?
-# TODO: Should it be <togaElement> ::= <NAME> instead?
 togaElement ::= toga
 togaElement ::= NIL
 
@@ -96,10 +94,13 @@ tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 # Perhaps should be called irrBuctisSlash?
 irrCentisSlash ::= NAME ('/') NAME
 
+# TODO: For now blank lines are banned
 gap ::= ACE ACE aces
 gap ::= aces NL aces
 gap ::= aces COMMENT comments aces
 aces ::= ACE*
+
+# TODO: For now blank lines are banned
 comments ::= COMMENT*
 
 backslash ~ [\0x5c] # 0x5c is backslash
