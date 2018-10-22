@@ -44,7 +44,7 @@ tallHoon ::= tallTislus
 tallHoon ::= tallWutcol
 
 # flatHoons ::= flatHoon*
-flatHoon ::= irrCensig
+flatHoon ::= irrCenhep
 flatHoon ::= irrCentis
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
@@ -73,10 +73,9 @@ tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
 tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
-# It's hard to find an exact description of this
-# in the docs, but the various arities seem to
-# all be irregular variations of censig.
-irrCensig ::= ('(') hoonAceSeq (')')
+# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
+# and cenhep in https://urbit.org/docs/hoon/irregular/
+irrCenhep ::= ('(') hoonAceSeq (')')
 hoonAceSeq ::= flatHoon+ separator=>ACE proper=>1
 
 # A function call with '$' for the empty string
