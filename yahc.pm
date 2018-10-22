@@ -20,7 +20,7 @@ lexeme default = latm => 1
 
 # LATER: This is a simplication, which does not
 # catch all the subtleties of "ford" files
-top ::= (leader) hoon hoons (trailer)
+top ::= (leader) hoon (trailer)
 
 leader ::= wsElements
 
@@ -30,7 +30,7 @@ wsElement ::= ACE
 wsElement ::= gap
 wsElement ::= COMMENT
 
-hoons ::= hoon*
+# hoons ::= hoon*
 hoon ::= tallHoon
 hoon ::= flatHoon
 
