@@ -1,40 +1,40 @@
 \[
     'top',
     [
-      'hoon',
+      'hoonSeq',
       [
-        'tallHoon',
+        'hoon',
         [
-          'tallBartis',
+          'tallHoon',
           [
-            'hoon',
+            'tallBartis',
             [
-              'flatHoon',
+              'hoon',
               [
-                'irrCentisSlash',
-                'end',
-                'atom'
-              ]
-            ]
-          ],
-          [
-            'hoon',
-            [
-              'tallHoon',
-              [
-                'tallTislus',
+                'flatHoon',
                 [
-                  'hoon',
+                  'irrCentisSlash',
+                  'end',
+                  'atom'
+                ]
+              ]
+            ],
+            [
+              'hoon',
+              [
+                'tallHoon',
+                [
+                  'tallTislus',
                   [
-                    'flatHoon',
+                    'hoon',
                     [
-                      'irrKettis',
+                      'flatHoon',
                       [
-                        'toga',
-                        'count'
-                      ],
-                      [
-                        'hoon',
+                        'irrKettis',
+                        [
+                          'toga',
+                          'count'
+                        ],
                         [
                           'flatHoon',
                           [
@@ -44,70 +44,64 @@
                         ]
                       ]
                     ]
-                  ]
-                ],
-                [
-                  'hoon',
+                  ],
                   [
-                    'tallHoon',
+                    'hoon',
                     [
-                      'tallBarhep',
+                      'tallHoon',
                       [
-                        'hoon',
+                        'tallBarhep',
                         [
-                          'tallHoon',
+                          'hoon',
                           [
-                            'tallKethep',
+                            'tallHoon',
                             [
-                              'hoon',
+                              'tallKethep',
                               [
-                                'flatHoon',
+                                'hoon',
                                 [
-                                  'irrCenhep',
+                                  'flatHoon',
                                   [
-                                    'hoonAceSeq',
+                                    'irrCenhep',
                                     [
-                                      'flatHoon',
+                                      'flatHoonSeq',
                                       [
-                                        'noun',
-                                        'list'
-                                      ]
-                                    ],
-                                    [
-                                      'flatHoon',
+                                        'flatHoon',
+                                        [
+                                          'noun',
+                                          'list'
+                                        ]
+                                      ],
                                       [
-                                        'noun',
-                                        'tape'
+                                        'flatHoon',
+                                        [
+                                          'noun',
+                                          'tape'
+                                        ]
                                       ]
                                     ]
                                   ]
                                 ]
-                              ]
-                            ],
-                            [
-                              'hoon',
+                              ],
                               [
-                                'tallHoon',
+                                'hoon',
                                 [
-                                  'tallWutcol',
+                                  'tallHoon',
                                   [
-                                    'hoon',
+                                    'tallWutcol',
                                     [
-                                      'flatHoon',
+                                      'hoon',
                                       [
-                                        'irrDottis',
+                                        'flatHoon',
                                         [
-                                          'hoon',
+                                          'irrDottis',
                                           [
                                             'flatHoon',
                                             [
                                               'noun',
                                               'end'
                                             ]
-                                          ]
-                                        ],
-                                        [
-                                          'hoon',
+                                          ],
                                           [
                                             'flatHoon',
                                             [
@@ -117,54 +111,48 @@
                                           ]
                                         ]
                                       ]
-                                    ]
-                                  ],
-                                  [
-                                    'hoon',
+                                    ],
                                     [
-                                      'flatHoon',
+                                      'hoon',
                                       [
-                                        'noun',
-                                        '~'
-                                      ]
-                                    ]
-                                  ],
-                                  [
-                                    'hoon',
-                                    [
-                                      'tallHoon',
-                                      [
-                                        'tallColhep',
+                                        'flatHoon',
                                         [
-                                          'hoon',
+                                          'noun',
+                                          '~'
+                                        ]
+                                      ]
+                                    ],
+                                    [
+                                      'hoon',
+                                      [
+                                        'tallHoon',
+                                        [
+                                          'tallColhep',
                                           [
-                                            'tallHoon',
+                                            'hoon',
                                             [
-                                              'tallWutcol',
+                                              'tallHoon',
                                               [
-                                                'hoon',
+                                                'tallWutcol',
                                                 [
-                                                  'flatHoon',
+                                                  'hoon',
                                                   [
-                                                    'irrDottis',
+                                                    'flatHoon',
                                                     [
-                                                      'hoon',
+                                                      'irrDottis',
                                                       [
                                                         'flatHoon',
                                                         [
                                                           'noun',
                                                           '0'
                                                         ]
-                                                      ]
-                                                    ],
-                                                    [
-                                                      'hoon',
+                                                      ],
                                                       [
                                                         'flatHoon',
                                                         [
                                                           'irrCenhep',
                                                           [
-                                                            'hoonAceSeq',
+                                                            'flatHoonSeq',
                                                             [
                                                               'flatHoon',
                                                               [
@@ -191,48 +179,42 @@
                                                       ]
                                                     ]
                                                   ]
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
+                                                ],
                                                 [
-                                                  'flatHoon',
+                                                  'hoon',
                                                   [
-                                                    'noun',
-                                                    '"FizzBuzz"'
-                                                  ]
-                                                ]
-                                              ],
-                                              [
-                                                'hoon',
-                                                [
-                                                  'tallHoon',
-                                                  [
-                                                    'tallWutcol',
+                                                    'flatHoon',
                                                     [
-                                                      'hoon',
+                                                      'noun',
+                                                      '"FizzBuzz"'
+                                                    ]
+                                                  ]
+                                                ],
+                                                [
+                                                  'hoon',
+                                                  [
+                                                    'tallHoon',
+                                                    [
+                                                      'tallWutcol',
                                                       [
-                                                        'flatHoon',
+                                                        'hoon',
                                                         [
-                                                          'irrDottis',
+                                                          'flatHoon',
                                                           [
-                                                            'hoon',
+                                                            'irrDottis',
                                                             [
                                                               'flatHoon',
                                                               [
                                                                 'noun',
                                                                 '0'
                                                               ]
-                                                            ]
-                                                          ],
-                                                          [
-                                                            'hoon',
+                                                            ],
                                                             [
                                                               'flatHoon',
                                                               [
                                                                 'irrCenhep',
                                                                 [
-                                                                  'hoonAceSeq',
+                                                                  'flatHoonSeq',
                                                                   [
                                                                     'flatHoon',
                                                                     [
@@ -259,48 +241,42 @@
                                                             ]
                                                           ]
                                                         ]
-                                                      ]
-                                                    ],
-                                                    [
-                                                      'hoon',
+                                                      ],
                                                       [
-                                                        'flatHoon',
+                                                        'hoon',
                                                         [
-                                                          'noun',
-                                                          '"Fizz"'
-                                                        ]
-                                                      ]
-                                                    ],
-                                                    [
-                                                      'hoon',
-                                                      [
-                                                        'tallHoon',
-                                                        [
-                                                          'tallWutcol',
+                                                          'flatHoon',
                                                           [
-                                                            'hoon',
+                                                            'noun',
+                                                            '"Fizz"'
+                                                          ]
+                                                        ]
+                                                      ],
+                                                      [
+                                                        'hoon',
+                                                        [
+                                                          'tallHoon',
+                                                          [
+                                                            'tallWutcol',
                                                             [
-                                                              'flatHoon',
+                                                              'hoon',
                                                               [
-                                                                'irrDottis',
+                                                                'flatHoon',
                                                                 [
-                                                                  'hoon',
+                                                                  'irrDottis',
                                                                   [
                                                                     'flatHoon',
                                                                     [
                                                                       'noun',
                                                                       '0'
                                                                     ]
-                                                                  ]
-                                                                ],
-                                                                [
-                                                                  'hoon',
+                                                                  ],
                                                                   [
                                                                     'flatHoon',
                                                                     [
                                                                       'irrCenhep',
                                                                       [
-                                                                        'hoonAceSeq',
+                                                                        'flatHoonSeq',
                                                                         [
                                                                           'flatHoon',
                                                                           [
@@ -327,45 +303,45 @@
                                                                   ]
                                                                 ]
                                                               ]
-                                                            ]
-                                                          ],
-                                                          [
-                                                            'hoon',
+                                                            ],
                                                             [
-                                                              'flatHoon',
+                                                              'hoon',
                                                               [
-                                                                'noun',
-                                                                '"Buzz"'
-                                                              ]
-                                                            ]
-                                                          ],
-                                                          [
-                                                            'hoon',
-                                                            [
-                                                              'flatHoon',
-                                                              [
-                                                                'irrCenhep',
+                                                                'flatHoon',
                                                                 [
-                                                                  'hoonAceSeq',
+                                                                  'noun',
+                                                                  '"Buzz"'
+                                                                ]
+                                                              ]
+                                                            ],
+                                                            [
+                                                              'hoon',
+                                                              [
+                                                                'flatHoon',
+                                                                [
+                                                                  'irrCenhep',
                                                                   [
-                                                                    'flatHoon',
+                                                                    'flatHoonSeq',
                                                                     [
-                                                                      'noun',
-                                                                      'scow'
-                                                                    ]
-                                                                  ],
-                                                                  [
-                                                                    'flatHoon',
+                                                                      'flatHoon',
+                                                                      [
+                                                                        'noun',
+                                                                        'scow'
+                                                                      ]
+                                                                    ],
                                                                     [
-                                                                      'noun',
-                                                                      '%ud'
-                                                                    ]
-                                                                  ],
-                                                                  [
-                                                                    'flatHoon',
+                                                                      'flatHoon',
+                                                                      [
+                                                                        'noun',
+                                                                        '%ud'
+                                                                      ]
+                                                                    ],
                                                                     [
-                                                                      'noun',
-                                                                      'count'
+                                                                      'flatHoon',
+                                                                      [
+                                                                        'noun',
+                                                                        'count'
+                                                                      ]
                                                                     ]
                                                                   ]
                                                                 ]
@@ -379,49 +355,49 @@
                                                 ]
                                               ]
                                             ]
-                                          ]
-                                        ],
-                                        [
-                                          'hoon',
+                                          ],
                                           [
-                                            'flatHoon',
+                                            'hoon',
                                             [
-                                              'irrCentis',
-                                              '$',
+                                              'flatHoon',
                                               [
-                                                'hoonAceSeq',
+                                                'irrCentis',
+                                                '$',
                                                 [
-                                                  'flatHoon',
+                                                  'flatHoonSeq',
                                                   [
-                                                    'noun',
-                                                    'count'
-                                                  ]
-                                                ],
-                                                [
-                                                  'flatHoon',
-                                                  [
-                                                    'irrCenhep',
+                                                    'flatHoon',
                                                     [
-                                                      'hoonAceSeq',
+                                                      'noun',
+                                                      'count'
+                                                    ]
+                                                  ],
+                                                  [
+                                                    'flatHoon',
+                                                    [
+                                                      'irrCenhep',
                                                       [
-                                                        'flatHoon',
+                                                        'flatHoonSeq',
                                                         [
-                                                          'noun',
-                                                          'add'
-                                                        ]
-                                                      ],
-                                                      [
-                                                        'flatHoon',
+                                                          'flatHoon',
+                                                          [
+                                                            'noun',
+                                                            'add'
+                                                          ]
+                                                        ],
                                                         [
-                                                          'noun',
-                                                          '1'
-                                                        ]
-                                                      ],
-                                                      [
-                                                        'flatHoon',
+                                                          'flatHoon',
+                                                          [
+                                                            'noun',
+                                                            '1'
+                                                          ]
+                                                        ],
                                                         [
-                                                          'noun',
-                                                          'count'
+                                                          'flatHoon',
+                                                          [
+                                                            'noun',
+                                                            'count'
+                                                          ]
                                                         ]
                                                       ]
                                                     ]

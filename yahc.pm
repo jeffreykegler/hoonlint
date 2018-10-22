@@ -20,7 +20,7 @@ lexeme default = latm => 1
 
 # LATER: This is a simplication, which does not
 # catch all the subtleties of "ford" files
-top ::= (leader) hoon (trailer)
+top ::= (leader) hoonSeq (trailer)
 
 leader ::= wsElements
 
@@ -30,7 +30,7 @@ wsElement ::= ACE
 wsElement ::= gap
 wsElement ::= COMMENT
 
-# hoons ::= hoon*
+hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= tallHoon
 hoon ::= flatHoon
 
@@ -58,8 +58,8 @@ noun ::= TERM
 noun ::= NIL
 
 toga ::= NAME
-toga ::= '[' togaElement togaElements ']'
-togaElements ::= togaElement* separator=>ACE proper=>1
+toga ::= '[' togaSeq ']'
+togaSeq ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
@@ -73,19 +73,19 @@ tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
-irrCenhep ::= ('(') hoonAceSeq (')')
-hoonAceSeq ::= flatHoon+ separator=>ACE proper=>1
+irrCenhep ::= ('(') flatHoonSeq (')')
+flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
 # A function call with '$' for the empty string
-irrCentis ::= NAME ('(') hoonAceSeq (')')
+irrCentis ::= NAME ('(') flatHoonSeq (')')
 
 tallColhep ::= (COLHEP gap) hoon (gap) hoon
 
-irrDottis ::= ('=(') hoon (ACE) hoon (')')
+irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
 tallKethep ::= (KETHEP gap) hoon (gap) hoon
 
-irrKettis ::= toga ('=') hoon
+irrKettis ::= toga ('=') flatHoon
 
 tallTislus ::= (TISLUS gap) hoon (gap) hoon
 
@@ -95,10 +95,11 @@ tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 irrCentisSlash ::= NAME ('/') NAME
 
 # LATER: For now blank lines are banned
-gap ::= ACE ACE aces
-gap ::= aces NL aces
-gap ::= aces COMMENT comments aces
-aces ::= ACE*
+gap ::= ACE aces
+gap ::= optAces NL optAces
+gap ::= optAces COMMENT comments optAces
+optAces ::= ACE*
+aces ::= ACE+
 
 # LATER: For now blank lines are banned
 comments ::= COMMENT*
