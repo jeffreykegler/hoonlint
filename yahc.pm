@@ -49,6 +49,8 @@ toga ::= NAME # TODO: is this right?
 
 tall_barhep ::= (BARHEP) (gap) hoon
 
+# TODO: should this be (BARTIS) (gap) type (gap) hoon
+# and what is <type>?
 tall_bartis ::= (BARTIS) (gap) hoon (gap) hoon
 
 tall_cenhep ::= (CENHEP) (gap) hoon (gap) hoon
@@ -74,13 +76,12 @@ tall_tislus ::= (TISLUS gap) hoon (gap) hoon
 
 tall_wutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 
+# Perhaps should be called irr_buctis_slash?
 irr_centis_slash ::= NAME ('/') NAME
 
-gap ::= ACE ACE optAces
-gap ::= optAces NL optAces
-gap ::= optAces COMMENT comments optAces
-optAces ::=
-optAces ::= aces
+gap ::= ACE ACE aces
+gap ::= aces NL aces
+gap ::= aces COMMENT comments aces
 aces ::= ACE*
 comments ::= COMMENT*
 
@@ -92,11 +93,13 @@ NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
 nonNL ~ [^\n]
-NAME ~ nameFirstChar nameLaterChars
+NAME ~ name
+name ~ nameFirstChar nameLaterChars
+name ~ '$'
 
-nameFirstChar ~ [_a-zA-Z]
+nameFirstChar ~ [a-z]
 nameLaterChars ~ nameLaterChar*
-nameLaterChar ~ [\w]
+nameLaterChar ~ [a-z0-9-]
 
 NIL ~ '~'
 
@@ -157,9 +160,7 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
 # From syntax.vim, probably need correction
-TERM ~ '%' termChar termChars
-termChars ~ termChar*
-termChar ~ [-\w]
+TERM ~ '%' name
 
 EODSL
 
