@@ -18,8 +18,13 @@ my $dsl = <<'EODSL';
 :default ::= action => [name,values]
 lexeme default = latm => 1
 
+# TODO: Is a Hoon file always just one hoon?
 top ::= (leader) hoon (trailer)
+
+# TODO: Can <leader> legally contain anything but comments?
 leader ::= ws_elements
+
+# TODO: Can <trailer> legally contain anything but comments?
 trailer ::= ws_elements
 ws_elements ::= ws_element*
 ws_element ::= ACE
@@ -30,6 +35,7 @@ hoon ::= noun
 hoon ::= tall_hoon
 hoon ::= flat_hoon
 
+# tall_hoons ::= tall_hoon*
 tall_hoon ::= tall_barhep
 tall_hoon ::= tall_bartis
 tall_hoon ::= tall_cenhep
@@ -38,6 +44,7 @@ tall_hoon ::= tall_kethep
 tall_hoon ::= tall_tislus
 tall_hoon ::= tall_wutcol
 
+# flat_hoons ::= flat_hoon*
 flat_hoon ::= irr_censig
 flat_hoon ::= irr_centis
 flat_hoon ::= irr_dottis
@@ -66,7 +73,7 @@ irr_censig ::= ('(') hoonAceSeq (')')
 hoonAceSeq ::= hoon+ separator=>ACE proper=>1
 
 # A function call with '$' for the empty string
-irr_centis ::= ('$(') hoonAceSeq (')')
+irr_centis ::= NAME ('(') hoonAceSeq (')')
 
 tall_colhep ::= (COLHEP gap) hoon (gap) hoon
 

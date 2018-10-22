@@ -357,6 +357,7 @@
                                             'flat_hoon',
                                             [
                                               'irr_centis',
+                                              '$',
                                               [
                                                 'hoonAceSeq',
                                                 [
