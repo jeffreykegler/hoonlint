@@ -22,34 +22,34 @@ lexeme default = latm => 1
 top ::= (leader) hoon (trailer)
 
 # TODO: Can <leader> legally contain anything but comments?
-leader ::= ws_elements
+leader ::= wsElements
 
 # TODO: Can <trailer> legally contain anything but comments?
-trailer ::= ws_elements
-ws_elements ::= ws_element*
-ws_element ::= ACE
-ws_element ::= gap
-ws_element ::= COMMENT
+trailer ::= wsElements
+wsElements ::= wsElement*
+wsElement ::= ACE
+wsElement ::= gap
+wsElement ::= COMMENT
 
-hoon ::= noun
-hoon ::= tall_hoon
-hoon ::= flat_hoon
+hoon ::= tallHoon
+hoon ::= flatHoon
 
-# tall_hoons ::= tall_hoon*
-tall_hoon ::= tall_barhep
-tall_hoon ::= tall_bartis
-tall_hoon ::= tall_cenhep
-tall_hoon ::= tall_colhep
-tall_hoon ::= tall_kethep
-tall_hoon ::= tall_tislus
-tall_hoon ::= tall_wutcol
+# tallHoons ::= tallHoon*
+tallHoon ::= tallBarhep
+tallHoon ::= tallBartis
+tallHoon ::= tallCenhep
+tallHoon ::= tallColhep
+tallHoon ::= tallKethep
+tallHoon ::= tallTislus
+tallHoon ::= tallWutcol
 
-# flat_hoons ::= flat_hoon*
-flat_hoon ::= irr_censig
-flat_hoon ::= irr_centis
-flat_hoon ::= irr_dottis
-flat_hoon ::= irr_kettis
-flat_hoon ::= irr_centis_slash
+# flatHoons ::= flatHoon*
+flatHoon ::= irrCensig
+flatHoon ::= irrCentis
+flatHoon ::= irrDottis
+flatHoon ::= irrKettis
+flatHoon ::= irrCentisSlash
+flatHoon ::= noun
 
 noun ::= NAME
 noun ::= NUMBER
@@ -58,44 +58,44 @@ noun ::= TERM
 noun ::= NIL
 
 toga ::= NAME
-toga ::= '[' toga_element toga_elements ']'
-toga_elements ::= toga_element* separator=>ACE proper=>1
+toga ::= '[' togaElement togaElements ']'
+togaElements ::= togaElement* separator=>ACE proper=>1
 # TODO: This allows infinite nesting of <toga>'s.  Is that right?
-# TODO: Should it be <toga_element> ::= <NAME> instead?
-toga_element ::= toga
-toga_element ::= NIL
+# TODO: Should it be <togaElement> ::= <NAME> instead?
+togaElement ::= toga
+togaElement ::= NIL
 
-tall_barhep ::= (BARHEP) (gap) hoon
+tallBarhep ::= (BARHEP) (gap) hoon
 
 # TODO: should this be (BARTIS) (gap) type (gap) hoon
 # and what is <type>?
-tall_bartis ::= (BARTIS) (gap) hoon (gap) hoon
+tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
-tall_cenhep ::= (CENHEP) (gap) hoon (gap) hoon
+tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
 # It's hard to find an exact description of this
 # in the docs, but the various arities seem to
 # all be irregular variations of censig.
-irr_censig ::= ('(') hoonAceSeq (')')
-hoonAceSeq ::= hoon+ separator=>ACE proper=>1
+irrCensig ::= ('(') hoonAceSeq (')')
+hoonAceSeq ::= flatHoon+ separator=>ACE proper=>1
 
 # A function call with '$' for the empty string
-irr_centis ::= NAME ('(') hoonAceSeq (')')
+irrCentis ::= NAME ('(') hoonAceSeq (')')
 
-tall_colhep ::= (COLHEP gap) hoon (gap) hoon
+tallColhep ::= (COLHEP gap) hoon (gap) hoon
 
-irr_dottis ::= ('=(') hoon (ACE) hoon (')')
+irrDottis ::= ('=(') hoon (ACE) hoon (')')
 
-tall_kethep ::= (KETHEP gap) hoon (gap) hoon
+tallKethep ::= (KETHEP gap) hoon (gap) hoon
 
-irr_kettis ::= toga ('=') hoon
+irrKettis ::= toga ('=') hoon
 
-tall_tislus ::= (TISLUS gap) hoon (gap) hoon
+tallTislus ::= (TISLUS gap) hoon (gap) hoon
 
-tall_wutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
+tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 
-# Perhaps should be called irr_buctis_slash?
-irr_centis_slash ::= NAME ('/') NAME
+# Perhaps should be called irrBuctisSlash?
+irrCentisSlash ::= NAME ('/') NAME
 
 gap ::= ACE ACE aces
 gap ::= aces NL aces
