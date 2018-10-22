@@ -56,7 +56,14 @@ noun ::= NUMBER
 noun ::= STRING
 noun ::= TERM
 noun ::= NIL
-toga ::= NAME # TODO: is this right?
+
+toga ::= NAME
+toga ::= '[' toga_element toga_elements ']'
+toga_elements ::= toga_element* separator=>ACE proper=>1
+# TODO: This allows infinite nesting of <toga>'s.  Is that right?
+# TODO: Should it be <toga_element> ::= <NAME> instead?
+toga_element ::= toga
+toga_element ::= NIL
 
 tall_barhep ::= (BARHEP) (gap) hoon
 
