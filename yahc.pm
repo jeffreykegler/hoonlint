@@ -233,24 +233,27 @@ my %glyphs = (
 sub doFixedRune {
     my ($runeName, @samples) = @_;
     my @result = ('# ' . uc $runeName);
-    my $glyphname1 = substr($runeName, 1, 3);
-    my $glyphname2 = substr($runeName, 4, 3);
-    my $glyph1 = $glyphs{$glyphname1};
+    my $glyphname1 = substr($runeName, 0, 3);
+    my $glyphname2 = substr($runeName, 3, 3);
+    my $glyph1 = $glyphs{$glyphname1} or die "no glyph for $glyphname1";
     my $glyph2 = $glyphs{$glyphname2};
     my $lexeme = uc $runeName;
     # BARHEP ~ [|] [-]
-    push @result, $lexeme . q{ ~ ['} . $glyph1 . q{] [} . $glyph2 . q{';};
+    push @result, $lexeme . q{ ~ ['} . $glyph1 . q{'] ['} . $glyph2 . q{']};
     # tallHoon ::= (BARHEP) (gap) hoon (gap) hoon
     push @result, 'tallHoon ::= (' . $lexeme . ')' . (join ' (gap) ', '', @samples);
-    my @flatSamples = map { s/^hoon$/flatHoon/ } @samples;
+    my @flatSamples = map { s/^hoon$/flatHoon/; $_; } @samples;
     # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
-    push @result, 'flatHoon ::= ([' . $glyph1 . '] [' . $glyph2 . '])' . (join ' (ACE) ', '', @flatSamples);
+    push @result, 'flatHoon ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
     my $regularName = join '', ':',
-      substr($glyphname1, 1, 1), substr($glyphname1, 3, 1),
-      substr($glyphname2, 1, 1), substr($glyphname2, 3, 1);
+      substr($glyphname1, 0, 1), substr($glyphname1, 2, 1),
+      substr($glyphname2, 0, 1), substr($glyphname2, 2, 1);
     # flatHoon ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
-    push @result, q{flatHoon ::= ([:] '} . $regularName . q{'} . (join ' (ACE) ', '', @flatSamples);
+    push @result, q{flatHoon ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    return join "\n", @result, '';
 }
+
+# say STDERR doFixedRune('colhep', 'hoon', 'hoon');
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
