@@ -164,14 +164,20 @@ binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
 # syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
 # syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
 # syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
+
+# LATER: @v and @w format
 # syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
 # syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
 
+# TODO: Add \xx hex escapes, and more backslash escapes
+# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
 STRING ~ ["] doubleStringElements ["]
 doubleStringElements ~ doubleStringElement*
 # 0x5C is backslash
 # From syntax.vim, might need correction
 doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
+
+# TODO Single string element -- they also allow escapes
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
