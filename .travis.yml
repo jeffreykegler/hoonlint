@@ -16,8 +16,6 @@ before_install:
 install:
   # for debugging, output available perls
   - perlbrew list
-  # install dependencies without testing, for speed
-  - (cd cpan/ && cpanm --installdeps --quiet --notest .)
 
 sudo: false  # faster builds using containers
 
