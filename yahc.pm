@@ -59,8 +59,7 @@ tall_cenhep ::= (CENHEP) (gap) hoon (gap) hoon
 irr_censig ::= ('(') hoonAceSeq (')')
 hoonAceSeq ::= hoon+ separator=>ACE proper=>1
 
-# Apparently a form of centis with the special
-# limb $ for the recursion point
+# A function call with '$' for the empty string
 irr_centis ::= ('$(') hoonAceSeq (')')
 
 tall_colhep ::= (COLHEP gap) hoon (gap) hoon
