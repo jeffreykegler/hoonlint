@@ -22,13 +22,12 @@ lexeme default = latm => 1
 # catch all the subtleties of "ford" files
 top ::= (leader) hoonSeq (trailer)
 
-leader ::= wsElements
+leader ::= optWsElements
 
-trailer ::= wsElements
-wsElements ::= wsElement*
+trailer ::= optWsElements
+optWsElements ::= wsElement*
 wsElement ::= ACE
 wsElement ::= gap
-wsElement ::= COMMENT
 
 hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= tallHoon
