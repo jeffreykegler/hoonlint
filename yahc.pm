@@ -65,8 +65,8 @@ togaElement ::= NIL
 
 tallBarhep ::= (BARHEP) (gap) hoon
 
-# TODO: should this be (BARTIS) (gap) type (gap) hoon
-# and what is <type>?
+# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# where <type> is buc??? runes and irregular forms thereof
 tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
 tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
