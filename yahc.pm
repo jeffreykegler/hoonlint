@@ -94,15 +94,17 @@ tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 # Perhaps should be called irrBuctisSlash?
 irrCentisSlash ::= NAME ('/') NAME
 
-# LATER: For now blank lines are banned
-gap ::= ACE aces
-gap ::= optAces NL optAces
-gap ::= optAces COMMENT comments optAces
+gap ::= ACE aces # a "flat" gap
+gap ::= tallGapPrefix optGapLines optAces
+# The prefix must contain an <NL> to ensure that this *is* a tall gap
+tallGapPrefix ::= optAces NL
+tallGapPrefix ::= optAces COMMENT
+optGapLines ::= gapLine*
+gapLine ::= optAces COMMENT
+gapLine ::= optAces NL
+
 optAces ::= ACE*
 aces ::= ACE+
-
-# LATER: For now blank lines are banned
-comments ::= COMMENT*
 
 backslash ~ [\0x5c] # 0x5c is backslash
 
