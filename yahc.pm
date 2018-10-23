@@ -34,9 +34,9 @@ hoon ::= tallHoon
 hoon ::= flatHoon
 
 # tallHoons ::= tallHoon*
-tallHoon ::= tallBarhep
+# tallHoon ::= tallBarhep
 tallHoon ::= tallBartis
-tallHoon ::= tallCenhep
+# tallHoon ::= tallCenhep
 tallHoon ::= tallColhep
 tallHoon ::= tallKethep
 tallHoon ::= tallTislus
@@ -62,13 +62,13 @@ togaSeq ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
-tallBarhep ::= (BARHEP) (gap) hoon
+# tallBarhep ::= (BARHEP) (gap) hoon
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # where <type> is buc??? runes and irregular forms thereof
 tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
-tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
+# tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
@@ -123,9 +123,9 @@ nameLaterChar ~ [a-z0-9-]
 
 NIL ~ '~'
 
-BARHEP ~ '|-'
+# BARHEP ~ '|-'
 BARTIS ~ '|='
-CENHEP ~ '%-'
+# CENHEP ~ '%-'
 COLHEP ~ ':-'
 KETHEP ~ '^-'
 TISLUS ~ '=+'
@@ -238,10 +238,14 @@ sub doFixedRune {
     my $glyph1 = $glyphs{$glyphname1} or die "no glyph for $glyphname1";
     my $glyph2 = $glyphs{$glyphname2};
     my $lexeme = uc $runeName;
+    my $tallLHS = 'tall' . ucfirst $runeName;
+    my $flatLHS = 'flat' . ucfirst $runeName;
     # BARHEP ~ [|] [-]
-    push @result, $lexeme . q{ ~ ['} . $glyph1 . q{'] ['} . $glyph2 . q{']};
-    # tallHoon ::= (BARHEP) (gap) hoon (gap) hoon
-    push @result, 'tallHoon ::= (' . $lexeme . ')' . (join ' (gap) ', '', @samples);
+    push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
+    # tallHoon ::= tallBarhep
+    push @result, 'tallHoon ::= ' . $tallLHS;
+    # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
+    push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
     my @flatSamples = map { s/^hoon$/flatHoon/; $_; } @samples;
     # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
     push @result, 'flatHoon ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
@@ -271,7 +275,7 @@ cenhep hoon hoon
 # bardot hoon
 # bartar model hoon
 # barsig model hoon
-# barhep hoon
+barhep hoon
 # wutgal hoon hoon
 # wutgar hoon hoon
 # wutpat wing hoon hoon
@@ -323,8 +327,8 @@ cenhep hoon hoon
 EOS
 
 $fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
-# say STDERR $fixedDesc;
 $dsl .= join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
+# say STDERR $dsl;
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
