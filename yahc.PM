@@ -93,7 +93,7 @@ hoon ::= flatHoon
 # tallHoon ::= tallBartis
 # tallHoon ::= tallCenhep
 # tallHoon ::= tallColhep
-tallHoon ::= tallKethep
+# tallHoon ::= tallKethep
 tallHoon ::= tallTislus
 tallHoon ::= tallWutcol
 
@@ -137,7 +137,7 @@ irrCentis ::= NAME ('(') flatHoonSeq (')')
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
-tallKethep ::= (KETHEP gap) hoon (gap) hoon
+# tallKethep ::= (KETHEP gap) hoon (gap) hoon
 
 irrKettis ::= toga ('=') flatHoon
 
@@ -182,7 +182,7 @@ NIL ~ '~'
 # BARTIS ~ '|='
 # CENHEP ~ '%-'
 # COLHEP ~ ':-'
-KETHEP ~ '^-'
+# KETHEP ~ '^-'
 TISLUS ~ '=+'
 WUTCOL ~ '?:'
 
@@ -270,7 +270,7 @@ my %glyphs = (
     ker => '}',
     soq => '\'',
     com => ',',
-    ket => '^',
+    ket => '\\^',
     tar => '*',
     doq => '"',
     lus => '+',
@@ -366,7 +366,7 @@ barhep hoon
 # ketwut hoon
 # ketsig hoon
 # ketbar hoon
-# kethep model value
+kethep hoon hoon
 # collus hoon hoon hoon
 # colcab hoon hoon
 # colket hoon hoon hoon hoon

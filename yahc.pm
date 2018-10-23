@@ -82,7 +82,7 @@ hoon ::= flatHoon
 # tallHoon ::= tallBartis
 # tallHoon ::= tallCenhep
 # tallHoon ::= tallColhep
-tallHoon ::= tallKethep
+# tallHoon ::= tallKethep
 tallHoon ::= tallTislus
 tallHoon ::= tallWutcol
 
@@ -126,7 +126,7 @@ irrCentis ::= NAME ('(') flatHoonSeq (')')
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
-tallKethep ::= (KETHEP gap) hoon (gap) hoon
+# tallKethep ::= (KETHEP gap) hoon (gap) hoon
 
 irrKettis ::= toga ('=') flatHoon
 
@@ -171,7 +171,7 @@ NIL ~ '~'
 # BARTIS ~ '|='
 # CENHEP ~ '%-'
 # COLHEP ~ ':-'
-KETHEP ~ '^-'
+# KETHEP ~ '^-'
 TISLUS ~ '=+'
 WUTCOL ~ '?:'
 
@@ -255,6 +255,14 @@ flatHoon ::= flatBarhep
 tallBarhep ::= (BARHEP gap)hoon
 flatBarhep ::= (BARHEP) [(] flatHoon [)]
 flatBarhep ::= (':brhp') [(] flatHoon [)]
+
+# KETHEP
+KETHEP ~ [\^] [-]
+tallHoon ::= tallKethep
+flatHoon ::= flatKethep
+tallKethep ::= (KETHEP gap)hoon (gap) hoon
+flatKethep ::= (KETHEP) [(] flatHoon (ACE) flatHoon [)]
+flatKethep ::= (':kthp') [(] flatHoon (ACE) flatHoon [)]
 
 # COLHEP
 COLHEP ~ [:] [-]
