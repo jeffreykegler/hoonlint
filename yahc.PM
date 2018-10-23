@@ -1,6 +1,12 @@
 use 5.010;
 use strict;
 use warnings;
+use English qw( -no_match_vars );
+
+my $dsl1 = <<'END_OF_DSL_PIECE_1';
+use 5.010;
+use strict;
+use warnings;
 
 use Data::Dumper;
 use Marpa::R2 4.000;
@@ -229,17 +235,150 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # From syntax.vim, probably need correction
 TERM ~ '%' name
 
-# CENHEP
-CENHEP ~ [%] [-]
-tallHoon ::= tallCenhep
-tallCenhep ::= (CENHEP gap)hoon (gap) hoon
-flatHoon ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
-flatHoon ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
+END_OF_DSL_PIECE_1
 
-# BARHEP
-BARHEP ~ [|] [-]
-tallHoon ::= tallBarhep
-tallBarhep ::= (BARHEP gap)hoon
-flatHoon ::= (BARHEP) [(] flatHoon [)]
-flatHoon ::= (':brhp') [(] flatHoon [)]
+# Here is meta-programming to write piece 2
+
+# ace and gap are not really char names,
+# and are omitted
+my %glyphs = (
+    gal => '<',
+    pal => '(',
+    bar => '|',
+    par => ')',
+    bas => '\\',
+    gar => '>',
+    sel => '\xb5', # '['
+    buc => '$',
+    hax => '#',
+    sem => ';',
+    cab => '_',
+    hep => '-',
+    ser => ']',
+    cen => '%',
+    kel => '{',
+    sig => '~',
+    col => ':',
+    ker => '}',
+    soq => '\'',
+    com => ',',
+    ket => '^',
+    tar => '*',
+    doq => '"',
+    lus => '+',
+    tec => '`',
+    dot => '.',
+    pam => '&',
+    tis => '=',
+    fas => '/',
+    pat => '@',
+    wut => '?',
+    zap => '!',
+);
+
+# takes LC alphanumeric rune name and samples
+# for N-fixed rune and returns the Marpa rules
+# for the tall and the 2 regular flat forms.
+sub doFixedRune {
+    my ($runeName, @samples) = @_;
+    my @result = ('# ' . uc $runeName);
+    my $glyphname1 = substr($runeName, 0, 3);
+    my $glyphname2 = substr($runeName, 3, 3);
+    my $glyph1 = $glyphs{$glyphname1} or die "no glyph for $glyphname1";
+    my $glyph2 = $glyphs{$glyphname2};
+    my $lexeme = uc $runeName;
+    my $tallLHS = 'tall' . ucfirst $runeName;
+    my $flatLHS = 'flat' . ucfirst $runeName;
+    # BARHEP ~ [|] [-]
+    push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
+    # tallHoon ::= tallBarhep
+    push @result, 'tallHoon ::= ' . $tallLHS;
+    # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
+    push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
+    my @flatSamples = map { s/^hoon$/flatHoon/; $_; } @samples;
+    # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
+    push @result, 'flatHoon ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    my $regularName = join '', ':',
+      substr($glyphname1, 0, 1), substr($glyphname1, 2, 1),
+      substr($glyphname2, 0, 1), substr($glyphname2, 2, 1);
+    # flatHoon ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
+    push @result, q{flatHoon ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    return join "\n", @result, '';
+}
+
+my $fixedDesc = <<'EOS';
+# cenlus hoon hoon hoon
+# cendot hoon hoon
+# cenket hoon hoon hoon hoon
+# censig wing hoon hoon
+cenhep hoon hoon
+# bucpat model model
+# buctis @tas model
+# buccab hoon
+# bucket model model
+# buchep model model
+# semsem model value
+# barcol hoon hoon
+# bartis model hoon
+# barwut hoon
+# bardot hoon
+# bartar model hoon
+# barsig model hoon
+barhep hoon
+# wutgal hoon hoon
+# wutgar hoon hoon
+# wutpat wing hoon hoon
+# wutcol hoon hoon hoon
+# wuttis model wing
+# wutdot hoon hoon hoon
+# wutket wing hoon hoon
+# wutzap hoon
+# wutsig wing hoon hoon
+# siggal hoon hoon
+# siglus hoon
+# siggar hoon hoon
+# sigbuc term hoon
+# sigwut hoon hoon hoon
+# sigfas term hoon
+# sigzap hoon hoon
+# sigcen term wing hoon hoon
+# sigbar hoon hoon
+# sigpam hoon hoon
+# ketlus hoon hoon
+# kettis toga hoon
+# ketwut hoon
+# ketsig hoon
+# ketbar hoon
+# kethep model value
+# collus hoon hoon hoon
+# colcab hoon hoon
+# colket hoon hoon hoon hoon
+# colhep hoon hoon
+# dotlus atom
+# dottis hoon hoon
+# dotwut hoon
+# dottar hoon hoon
+# tissem taco hoon hoon
+# tisgal hoon hoon
+# tislus hoon hoon
+# tisgar hoon hoon
+# tiswut wing hoon hoon hoon
+# tisdot wing hoon hoon
+# tistar term hoon hoon
+# tisfas taco hoon hoon
+# tisket taco wing hoon hoon
+# tisbar hoon hoon
+# tishep hoon hoon
+# tiscom hoon hoon
+# zapgar hoon
+# zaptis hoon
+# zapwut atom hoon
+EOS
+
+$fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
+my $dsl2 = join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
+
+# Print the two pieces
+say join '', $dsl1, $dsl2;
+
 
