@@ -93,9 +93,10 @@ hoon ::= flatHoon
 # flatHoons ::= flatHoon*
 flatHoon ::= irrCenhep
 flatHoon ::= irrCentis
+flatHoon ::= irrCentisSlash
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
-flatHoon ::= irrCentisSlash
+flatHoon ::= irrTisgal
 flatHoon ::= atom
 
 atom ::= NAME
@@ -103,6 +104,7 @@ atom ::= NUMBER
 atom ::= STRING
 atom ::= TERM
 atom ::= NIL
+atom ::= AURA
 
 toga ::= NAME
 toga ::= '[' togaSeq ']'
@@ -123,6 +125,8 @@ irrCentisSlash ::= NAME ('/') NAME
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
 irrKettis ::= toga ('=') flatHoon
+
+irrTisgal ::= flatHoon (':') flatHoon
 
 gap ::= ACE aces # a "flat" gap
 gap ::= tallGapPrefix optGapLines optAces
@@ -208,8 +212,15 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
-# From syntax.vim, probably need correction
-TERM ~ '%' name
+TERM ~ '%' firstTermChar
+TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
+firstTermChar ~ [a-z]
+optMedialTermChars ~ medialTermChar*
+medialTermChar ~ [a-z0-9-]
+lastTermChar ~ [a-z0-9]
+
+AURA ~ '@'
+AURA ~ '@' name
 
 END_OF_DSL_MAIN
 
@@ -337,7 +348,9 @@ semsem hoon hoon
 
 sigbar hoon hoon
 # sigbuc term hoon
+
 # sigcen term wing hoon hoon
+
 # sigfas term hoon
 siggal hoon hoon
 siggar hoon hoon
@@ -348,28 +361,45 @@ sigzap hoon hoon
 
 tisbar hoon hoon
 tiscom hoon hoon
+
 # tisdot wing hoon hoon
+tisdot hoon hoon hoon
+
 tishep hoon hoon
+
 # tisfas taco hoon hoon
+tisfas hoon hoon hoon
+
 tisgal hoon hoon
 tisgar hoon hoon
+
 # tisket taco wing hoon hoon
+tisket hoon hoon hoon hoon
+
 tislus hoon hoon
+
 # tissem taco hoon hoon
+tissem hoon hoon hoon
+
 # tistar term hoon hoon
+
 # tiswut wing hoon hoon hoon
+tiswut hoon hoon hoon hoon
 
 wutcol hoon hoon hoon
 wutdot hoon hoon hoon
 wutgal hoon hoon
 wutgar hoon hoon
 wutzap hoon
+
 # wutket wing hoon hoon
+wutket hoon hoon hoon
 
 # wutpat wing hoon hoon
 wutpat hoon hoon hoon
 
 # wutsig wing hoon hoon
+wutsig hoon hoon hoon
 
 # wuttis hoon wing
 wuttis hoon hoon
