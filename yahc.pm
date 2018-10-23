@@ -253,7 +253,78 @@ sub doFixedRune {
     return join "\n", @result, '';
 }
 
-# say STDERR doFixedRune('colhep', 'hoon', 'hoon');
+my $fixedDesc = <<'EOS';
+# cenlus hoon hoon hoon
+# cendot hoon hoon
+# cenket hoon hoon hoon hoon
+# censig wing hoon hoon
+cenhep hoon hoon
+# bucpat model model
+# buctis @tas model
+# buccab hoon
+# bucket model model
+# buchep model model
+# semsem model value
+# barcol hoon hoon
+# bartis model hoon
+# barwut hoon
+# bardot hoon
+# bartar model hoon
+# barsig model hoon
+# barhep hoon
+# wutgal hoon hoon
+# wutgar hoon hoon
+# wutpat wing hoon hoon
+# wutcol hoon hoon hoon
+# wuttis model wing
+# wutdot hoon hoon hoon
+# wutket wing hoon hoon
+# wutzap hoon
+# wutsig wing hoon hoon
+# siggal hoon hoon
+# siglus hoon
+# siggar hoon hoon
+# sigbuc term hoon
+# sigwut hoon hoon hoon
+# sigfas term hoon
+# sigzap hoon hoon
+# sigcen term wing hoon hoon
+# sigbar hoon hoon
+# sigpam hoon hoon
+# ketlus hoon hoon
+# kettis toga hoon
+# ketwut hoon
+# ketsig hoon
+# ketbar hoon
+# kethep model value
+# collus hoon hoon hoon
+# colcab hoon hoon
+# colket hoon hoon hoon hoon
+# colhep hoon hoon
+# dotlus atom
+# dottis hoon hoon
+# dotwut hoon
+# dottar hoon hoon
+# tissem taco hoon hoon
+# tisgal hoon hoon
+# tislus hoon hoon
+# tisgar hoon hoon
+# tiswut wing hoon hoon hoon
+# tisdot wing hoon hoon
+# tistar term hoon hoon
+# tisfas taco hoon hoon
+# tisket taco wing hoon hoon
+# tisbar hoon hoon
+# tishep hoon hoon
+# tiscom hoon hoon
+# zapgar hoon
+# zaptis hoon
+# zapwut atom hoon
+EOS
+
+$fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
+# say STDERR $fixedDesc;
+$dsl .= join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
