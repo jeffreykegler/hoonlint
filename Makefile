@@ -6,7 +6,7 @@ all: test
 
 test: test_suite undoc_tests
 
-test_suite: fizzbuzz sieve_b
+test_suite: fizzbuzz sieve_b sieve_k
 
 yahc.pm: yahc.PM
 	perl -I. yahc.PM > yahc.pm
@@ -20,14 +20,14 @@ sieve_b: yahc.pm sieve_b.hoon
 	diff sieve_b.ast.try sieve_b.ast || echo 'sieve_b example !FAILED!'
 
 sieve_k: yahc.pm sieve_k.hoon
-	perl -I. yahcfilt.pl <sieve_k.hoon
-	# perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast.try 2>&1
-	# diff sieve_k.ast.try sieve_k.ast || echo 'sieve_k example !FAILED!'
+	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast.try 2>&1
+	diff sieve_k.ast.try sieve_k.ast || echo 'sieve_k example !FAILED!'
 
 undoc_tests:
 
 ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
 	perl -I. yahcfilt.pl <sieve_b.hoon >sieve_b.ast
+	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast
 
 dev: sieve_k
