@@ -276,7 +276,7 @@ sub doFixedRune {
     state $flatEquiv = {
         hoon => 'flatHoon',
     };
-    my @flatSamples = map { $flatEquiv->{$_}; } @samples;
+    my @flatSamples = map { $flatEquiv->{$_} // $_; } @samples;
     # flatBarhep ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
     push @result, $flatLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
     my $regularName = join '', ':',
@@ -318,15 +318,15 @@ bartar hoon hoon
 bartis hoon hoon
 barwut hoon
 
-# colcab hoon hoon
+colcab hoon hoon
 colhep hoon hoon
-# collus hoon hoon hoon
-# colket hoon hoon hoon hoon
+collus hoon hoon hoon
+colket hoon hoon hoon hoon
 
-# dotlus atom
-# dottar hoon hoon
-# dottis hoon hoon
-# dotwut hoon
+dotlus atom
+dottar hoon hoon
+dottis hoon hoon
+dotwut hoon
 
 # ketbar hoon
 kethep hoon hoon

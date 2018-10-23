@@ -336,6 +336,14 @@ tallBarwut ::= (BARWUT gap)hoon
 flatBarwut ::= (BARWUT) [(] flatHoon [)]
 flatBarwut ::= (':brwt') [(] flatHoon [)]
 
+# COLCAB
+COLCAB ~ [:] [_]
+tallHoon ::= tallColcab
+flatHoon ::= flatColcab
+tallColcab ::= (COLCAB gap)hoon (gap) hoon
+flatColcab ::= (COLCAB) [(] flatHoon (ACE) flatHoon [)]
+flatColcab ::= (':clcb') [(] flatHoon (ACE) flatHoon [)]
+
 # COLHEP
 COLHEP ~ [:] [-]
 tallHoon ::= tallColhep
@@ -343,6 +351,54 @@ flatHoon ::= flatColhep
 tallColhep ::= (COLHEP gap)hoon (gap) hoon
 flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
 flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
+
+# COLLUS
+COLLUS ~ [:] [+]
+tallHoon ::= tallCollus
+flatHoon ::= flatCollus
+tallCollus ::= (COLLUS gap)hoon (gap) hoon (gap) hoon
+flatCollus ::= (COLLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatCollus ::= (':clls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# COLKET
+COLKET ~ [:] [\^]
+tallHoon ::= tallColket
+flatHoon ::= flatColket
+tallColket ::= (COLKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
+flatColket ::= (COLKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatColket ::= (':clkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# DOTLUS
+DOTLUS ~ [.] [+]
+tallHoon ::= tallDotlus
+flatHoon ::= flatDotlus
+tallDotlus ::= (DOTLUS gap)atom
+flatDotlus ::= (DOTLUS) [(] atom [)]
+flatDotlus ::= (':dtls') [(] atom [)]
+
+# DOTTAR
+DOTTAR ~ [.] [*]
+tallHoon ::= tallDottar
+flatHoon ::= flatDottar
+tallDottar ::= (DOTTAR gap)hoon (gap) hoon
+flatDottar ::= (DOTTAR) [(] flatHoon (ACE) flatHoon [)]
+flatDottar ::= (':dttr') [(] flatHoon (ACE) flatHoon [)]
+
+# DOTTIS
+DOTTIS ~ [.] [=]
+tallHoon ::= tallDottis
+flatHoon ::= flatDottis
+tallDottis ::= (DOTTIS gap)hoon (gap) hoon
+flatDottis ::= (DOTTIS) [(] flatHoon (ACE) flatHoon [)]
+flatDottis ::= (':dtts') [(] flatHoon (ACE) flatHoon [)]
+
+# DOTWUT
+DOTWUT ~ [.] [?]
+tallHoon ::= tallDotwut
+flatHoon ::= flatDotwut
+tallDotwut ::= (DOTWUT gap)hoon
+flatDotwut ::= (DOTWUT) [(] flatHoon [)]
+flatDotwut ::= (':dtwt') [(] flatHoon [)]
 
 # KETHEP
 KETHEP ~ [\^] [-]
