@@ -288,6 +288,38 @@ tallBarcol ::= (BARCOL gap)hoon (gap) hoon
 flatBarcol ::= (BARCOL) [(] flatHoon (ACE) flatHoon [)]
 flatBarcol ::= (':brcl') [(] flatHoon (ACE) flatHoon [)]
 
+# BARDOT
+BARDOT ~ [|] [.]
+tallHoon ::= tallBardot
+flatHoon ::= flatBardot
+tallBardot ::= (BARDOT gap)hoon
+flatBardot ::= (BARDOT) [(] flatHoon [)]
+flatBardot ::= (':brdt') [(] flatHoon [)]
+
+# BARHEP
+BARHEP ~ [|] [-]
+tallHoon ::= tallBarhep
+flatHoon ::= flatBarhep
+tallBarhep ::= (BARHEP gap)hoon
+flatBarhep ::= (BARHEP) [(] flatHoon [)]
+flatBarhep ::= (':brhp') [(] flatHoon [)]
+
+# BARSIG
+BARSIG ~ [|] [~]
+tallHoon ::= tallBarsig
+flatHoon ::= flatBarsig
+tallBarsig ::= (BARSIG gap)hoon (gap) hoon
+flatBarsig ::= (BARSIG) [(] flatHoon (ACE) flatHoon [)]
+flatBarsig ::= (':brsg') [(] flatHoon (ACE) flatHoon [)]
+
+# BARTAR
+BARTAR ~ [|] [*]
+tallHoon ::= tallBartar
+flatHoon ::= flatBartar
+tallBartar ::= (BARTAR gap)hoon (gap) hoon
+flatBartar ::= (BARTAR) [(] flatHoon (ACE) flatHoon [)]
+flatBartar ::= (':brtr') [(] flatHoon (ACE) flatHoon [)]
+
 # BARTIS
 BARTIS ~ [|] [=]
 tallHoon ::= tallBartis
@@ -304,37 +336,13 @@ tallBarwut ::= (BARWUT gap)hoon
 flatBarwut ::= (BARWUT) [(] flatHoon [)]
 flatBarwut ::= (':brwt') [(] flatHoon [)]
 
-# BARDOT
-BARDOT ~ [|] [.]
-tallHoon ::= tallBardot
-flatHoon ::= flatBardot
-tallBardot ::= (BARDOT gap)hoon
-flatBardot ::= (BARDOT) [(] flatHoon [)]
-flatBardot ::= (':brdt') [(] flatHoon [)]
-
-# BARTAR
-BARTAR ~ [|] [*]
-tallHoon ::= tallBartar
-flatHoon ::= flatBartar
-tallBartar ::= (BARTAR gap)hoon (gap) hoon
-flatBartar ::= (BARTAR) [(] flatHoon (ACE) flatHoon [)]
-flatBartar ::= (':brtr') [(] flatHoon (ACE) flatHoon [)]
-
-# BARSIG
-BARSIG ~ [|] [~]
-tallHoon ::= tallBarsig
-flatHoon ::= flatBarsig
-tallBarsig ::= (BARSIG gap)hoon (gap) hoon
-flatBarsig ::= (BARSIG) [(] flatHoon (ACE) flatHoon [)]
-flatBarsig ::= (':brsg') [(] flatHoon (ACE) flatHoon [)]
-
-# BARHEP
-BARHEP ~ [|] [-]
-tallHoon ::= tallBarhep
-flatHoon ::= flatBarhep
-tallBarhep ::= (BARHEP gap)hoon
-flatBarhep ::= (BARHEP) [(] flatHoon [)]
-flatBarhep ::= (':brhp') [(] flatHoon [)]
+# WUTCOL
+WUTCOL ~ [?] [:]
+tallHoon ::= tallWutcol
+flatHoon ::= flatWutcol
+tallWutcol ::= (WUTCOL gap)hoon (gap) hoon (gap) hoon
+flatWutcol ::= (WUTCOL) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatWutcol ::= (':wtcl') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTGAL
 WUTGAL ~ [?] [<]
@@ -359,14 +367,6 @@ flatHoon ::= flatWutpat
 tallWutpat ::= (WUTPAT gap)hoon (gap) hoon (gap) hoon
 flatWutpat ::= (WUTPAT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatWutpat ::= (':wtpt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-
-# WUTCOL
-WUTCOL ~ [?] [:]
-tallHoon ::= tallWutcol
-flatHoon ::= flatWutcol
-tallWutcol ::= (WUTCOL gap)hoon (gap) hoon (gap) hoon
-flatWutcol ::= (WUTCOL) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutcol ::= (':wtcl') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTTIS
 WUTTIS ~ [?] [=]

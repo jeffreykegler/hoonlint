@@ -311,64 +311,69 @@ barcol hoon hoon
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # where <type> is buc??? runes and irregular forms thereof
-bartis hoon hoon
-
-barwut hoon
 bardot hoon
-bartar hoon hoon
-barsig hoon hoon
 barhep hoon
+barsig hoon hoon
+bartar hoon hoon
+bartis hoon hoon
+barwut hoon
+
+wutcol hoon hoon hoon
+# wutdot hoon hoon hoon
 wutgal hoon hoon
 wutgar hoon hoon
+# wutzap hoon
+# wutket wing hoon hoon
 
 # wutpat wing hoon hoon
 wutpat hoon hoon hoon
 
-wutcol hoon hoon hoon
+# wutsig wing hoon hoon
 
 # wuttis hoon wing
 wuttis hoon hoon
 
-# wutdot hoon hoon hoon
-# wutket wing hoon hoon
-# wutzap hoon
-# wutsig wing hoon hoon
-# siggal hoon hoon
-# siglus hoon
-# siggar hoon hoon
-# sigbuc term hoon
-# sigwut hoon hoon hoon
-# sigfas term hoon
-# sigzap hoon hoon
-# sigcen term wing hoon hoon
 # sigbar hoon hoon
+# sigbuc term hoon
+# sigcen term wing hoon hoon
+# sigfas term hoon
+# siggal hoon hoon
+# siggar hoon hoon
+# siglus hoon
 # sigpam hoon hoon
-# ketlus hoon hoon
-# kettis toga hoon
-# ketwut hoon
-# ketsig hoon
+# sigwut hoon hoon hoon
+# sigzap hoon hoon
+
 # ketbar hoon
 kethep hoon hoon
-# collus hoon hoon hoon
+# ketlus hoon hoon
+# ketsig hoon
+# kettis toga hoon
+# ketwut hoon
+
 # colcab hoon hoon
-# colket hoon hoon hoon hoon
 colhep hoon hoon
+# collus hoon hoon hoon
+# colket hoon hoon hoon hoon
+
 # dotlus atom
+# dottar hoon hoon
 # dottis hoon hoon
 # dotwut hoon
-# dottar hoon hoon
-# tissem taco hoon hoon
-# tisgal hoon hoon
-tislus hoon hoon
-# tisgar hoon hoon
-# tiswut wing hoon hoon hoon
-# tisdot wing hoon hoon
-# tistar term hoon hoon
-# tisfas taco hoon hoon
-# tisket taco wing hoon hoon
+
 # tisbar hoon hoon
-# tishep hoon hoon
 # tiscom hoon hoon
+# tisdot wing hoon hoon
+# tishep hoon hoon
+# tisfas taco hoon hoon
+# tisgal hoon hoon
+# tisgar hoon hoon
+# tisket taco wing hoon hoon
+tislus hoon hoon
+# tissem taco hoon hoon
+# tistar term hoon hoon
+# tiswut wing hoon hoon hoon
+
 # zapgar hoon
 # zaptis hoon
 # zapwut atom hoon
