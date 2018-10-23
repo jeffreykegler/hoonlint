@@ -448,6 +448,102 @@ tallSemsem ::= (SEMSEM gap)hoon (gap) hoon
 flatSemsem ::= (SEMSEM) [(] flatHoon (ACE) flatHoon [)]
 flatSemsem ::= (':smsm') [(] flatHoon (ACE) flatHoon [)]
 
+# SIGBAR
+SIGBAR ~ [~] [|]
+tallHoon ::= tallSigbar
+flatHoon ::= flatSigbar
+tallSigbar ::= (SIGBAR gap)hoon (gap) hoon
+flatSigbar ::= (SIGBAR) [(] flatHoon (ACE) flatHoon [)]
+flatSigbar ::= (':sgbr') [(] flatHoon (ACE) flatHoon [)]
+
+# SIGGAL
+SIGGAL ~ [~] [<]
+tallHoon ::= tallSiggal
+flatHoon ::= flatSiggal
+tallSiggal ::= (SIGGAL gap)hoon (gap) hoon
+flatSiggal ::= (SIGGAL) [(] flatHoon (ACE) flatHoon [)]
+flatSiggal ::= (':sggl') [(] flatHoon (ACE) flatHoon [)]
+
+# SIGGAR
+SIGGAR ~ [~] [>]
+tallHoon ::= tallSiggar
+flatHoon ::= flatSiggar
+tallSiggar ::= (SIGGAR gap)hoon (gap) hoon
+flatSiggar ::= (SIGGAR) [(] flatHoon (ACE) flatHoon [)]
+flatSiggar ::= (':sggr') [(] flatHoon (ACE) flatHoon [)]
+
+# SIGLUS
+SIGLUS ~ [~] [+]
+tallHoon ::= tallSiglus
+flatHoon ::= flatSiglus
+tallSiglus ::= (SIGLUS gap)hoon
+flatSiglus ::= (SIGLUS) [(] flatHoon [)]
+flatSiglus ::= (':sgls') [(] flatHoon [)]
+
+# SIGPAM
+SIGPAM ~ [~] [&]
+tallHoon ::= tallSigpam
+flatHoon ::= flatSigpam
+tallSigpam ::= (SIGPAM gap)hoon (gap) hoon
+flatSigpam ::= (SIGPAM) [(] flatHoon (ACE) flatHoon [)]
+flatSigpam ::= (':sgpm') [(] flatHoon (ACE) flatHoon [)]
+
+# SIGWUT
+SIGWUT ~ [~] [?]
+tallHoon ::= tallSigwut
+flatHoon ::= flatSigwut
+tallSigwut ::= (SIGWUT gap)hoon (gap) hoon (gap) hoon
+flatSigwut ::= (SIGWUT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatSigwut ::= (':sgwt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# SIGZAP
+SIGZAP ~ [~] [!]
+tallHoon ::= tallSigzap
+flatHoon ::= flatSigzap
+tallSigzap ::= (SIGZAP gap)hoon (gap) hoon
+flatSigzap ::= (SIGZAP) [(] flatHoon (ACE) flatHoon [)]
+flatSigzap ::= (':sgzp') [(] flatHoon (ACE) flatHoon [)]
+
+# TISBAR
+TISBAR ~ [=] [|]
+tallHoon ::= tallTisbar
+flatHoon ::= flatTisbar
+tallTisbar ::= (TISBAR gap)hoon (gap) hoon
+flatTisbar ::= (TISBAR) [(] flatHoon (ACE) flatHoon [)]
+flatTisbar ::= (':tsbr') [(] flatHoon (ACE) flatHoon [)]
+
+# TISCOM
+TISCOM ~ [=] [,]
+tallHoon ::= tallTiscom
+flatHoon ::= flatTiscom
+tallTiscom ::= (TISCOM gap)hoon (gap) hoon
+flatTiscom ::= (TISCOM) [(] flatHoon (ACE) flatHoon [)]
+flatTiscom ::= (':tscm') [(] flatHoon (ACE) flatHoon [)]
+
+# TISHEP
+TISHEP ~ [=] [-]
+tallHoon ::= tallTishep
+flatHoon ::= flatTishep
+tallTishep ::= (TISHEP gap)hoon (gap) hoon
+flatTishep ::= (TISHEP) [(] flatHoon (ACE) flatHoon [)]
+flatTishep ::= (':tshp') [(] flatHoon (ACE) flatHoon [)]
+
+# TISGAL
+TISGAL ~ [=] [<]
+tallHoon ::= tallTisgal
+flatHoon ::= flatTisgal
+tallTisgal ::= (TISGAL gap)hoon (gap) hoon
+flatTisgal ::= (TISGAL) [(] flatHoon (ACE) flatHoon [)]
+flatTisgal ::= (':tsgl') [(] flatHoon (ACE) flatHoon [)]
+
+# TISGAR
+TISGAR ~ [=] [>]
+tallHoon ::= tallTisgar
+flatHoon ::= flatTisgar
+tallTisgar ::= (TISGAR gap)hoon (gap) hoon
+flatTisgar ::= (TISGAR) [(] flatHoon (ACE) flatHoon [)]
+flatTisgar ::= (':tsgr') [(] flatHoon (ACE) flatHoon [)]
+
 # TISLUS
 TISLUS ~ [=] [+]
 tallHoon ::= tallTislus
@@ -463,6 +559,14 @@ flatHoon ::= flatWutcol
 tallWutcol ::= (WUTCOL gap)hoon (gap) hoon (gap) hoon
 flatWutcol ::= (WUTCOL) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatWutcol ::= (':wtcl') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# WUTDOT
+WUTDOT ~ [?] [.]
+tallHoon ::= tallWutdot
+flatHoon ::= flatWutdot
+tallWutdot ::= (WUTDOT gap)hoon (gap) hoon (gap) hoon
+flatWutdot ::= (WUTDOT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatWutdot ::= (':wtdt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTGAL
 WUTGAL ~ [?] [<]
@@ -480,6 +584,14 @@ tallWutgar ::= (WUTGAR gap)hoon (gap) hoon
 flatWutgar ::= (WUTGAR) [(] flatHoon (ACE) flatHoon [)]
 flatWutgar ::= (':wtgr') [(] flatHoon (ACE) flatHoon [)]
 
+# WUTZAP
+WUTZAP ~ [?] [!]
+tallHoon ::= tallWutzap
+flatHoon ::= flatWutzap
+tallWutzap ::= (WUTZAP gap)hoon
+flatWutzap ::= (WUTZAP) [(] flatHoon [)]
+flatWutzap ::= (':wtzp') [(] flatHoon [)]
+
 # WUTPAT
 WUTPAT ~ [?] [@]
 tallHoon ::= tallWutpat
@@ -495,4 +607,28 @@ flatHoon ::= flatWuttis
 tallWuttis ::= (WUTTIS gap)hoon (gap) hoon
 flatWuttis ::= (WUTTIS) [(] flatHoon (ACE) flatHoon [)]
 flatWuttis ::= (':wtts') [(] flatHoon (ACE) flatHoon [)]
+
+# ZAPGAR
+ZAPGAR ~ [!] [>]
+tallHoon ::= tallZapgar
+flatHoon ::= flatZapgar
+tallZapgar ::= (ZAPGAR gap)hoon
+flatZapgar ::= (ZAPGAR) [(] flatHoon [)]
+flatZapgar ::= (':zpgr') [(] flatHoon [)]
+
+# ZAPTIS
+ZAPTIS ~ [!] [=]
+tallHoon ::= tallZaptis
+flatHoon ::= flatZaptis
+tallZaptis ::= (ZAPTIS gap)hoon
+flatZaptis ::= (ZAPTIS) [(] flatHoon [)]
+flatZaptis ::= (':zpts') [(] flatHoon [)]
+
+# ZAPWUT
+ZAPWUT ~ [!] [?]
+tallHoon ::= tallZapwut
+flatHoon ::= flatZapwut
+tallZapwut ::= (ZAPWUT gap)atom (gap) hoon
+flatZapwut ::= (ZAPWUT) [(] atom (ACE) flatHoon [)]
+flatZapwut ::= (':zpwt') [(] atom (ACE) flatHoon [)]
 

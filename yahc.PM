@@ -335,24 +335,24 @@ ketwut hoon
 #semsem hoon value
 semsem hoon hoon
 
-# sigbar hoon hoon
+sigbar hoon hoon
 # sigbuc term hoon
 # sigcen term wing hoon hoon
 # sigfas term hoon
-# siggal hoon hoon
-# siggar hoon hoon
-# siglus hoon
-# sigpam hoon hoon
-# sigwut hoon hoon hoon
-# sigzap hoon hoon
+siggal hoon hoon
+siggar hoon hoon
+siglus hoon
+sigpam hoon hoon
+sigwut hoon hoon hoon
+sigzap hoon hoon
 
-# tisbar hoon hoon
-# tiscom hoon hoon
+tisbar hoon hoon
+tiscom hoon hoon
 # tisdot wing hoon hoon
-# tishep hoon hoon
+tishep hoon hoon
 # tisfas taco hoon hoon
-# tisgal hoon hoon
-# tisgar hoon hoon
+tisgal hoon hoon
+tisgar hoon hoon
 # tisket taco wing hoon hoon
 tislus hoon hoon
 # tissem taco hoon hoon
@@ -360,10 +360,10 @@ tislus hoon hoon
 # tiswut wing hoon hoon hoon
 
 wutcol hoon hoon hoon
-# wutdot hoon hoon hoon
+wutdot hoon hoon hoon
 wutgal hoon hoon
 wutgar hoon hoon
-# wutzap hoon
+wutzap hoon
 # wutket wing hoon hoon
 
 # wutpat wing hoon hoon
@@ -374,9 +374,9 @@ wutpat hoon hoon hoon
 # wuttis hoon wing
 wuttis hoon hoon
 
-# zapgar hoon
-# zaptis hoon
-# zapwut atom hoon
+zapgar hoon
+zaptis hoon
+zapwut atom hoon
 EOS
 
 # === DSL Piece: Automatically generated Marpa rules ===
