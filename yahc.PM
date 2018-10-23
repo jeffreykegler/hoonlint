@@ -288,33 +288,47 @@ sub doFixedRune {
 }
 
 my $fixedDesc = <<'EOS';
-# cenlus hoon hoon hoon
-# cendot hoon hoon
-# cenket hoon hoon hoon hoon
+cenlus hoon hoon hoon
+cendot hoon hoon
+cenket hoon hoon hoon hoon
+
 # censig wing hoon hoon
+censig hoon hoon hoon
+
 cenhep hoon hoon
-# bucpat model model
+bucpat hoon hoon
+
 # buctis @tas model
-# buccab hoon
-# bucket model model
-# buchep model model
-# semsem model value
-# barcol hoon hoon
+
+buccab hoon
+bucket hoon hoon
+buchep hoon hoon
+
+#semsem hoon value
+semsem hoon hoon
+
+barcol hoon hoon
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # where <type> is buc??? runes and irregular forms thereof
 bartis hoon hoon
 
-# barwut hoon
-# bardot hoon
-# bartar model hoon
-# barsig model hoon
+barwut hoon
+bardot hoon
+bartar hoon hoon
+barsig hoon hoon
 barhep hoon
-# wutgal hoon hoon
-# wutgar hoon hoon
+wutgal hoon hoon
+wutgar hoon hoon
+
 # wutpat wing hoon hoon
+wutpat hoon hoon hoon
+
 wutcol hoon hoon hoon
-# wuttis model wing
+
+# wuttis hoon wing
+wuttis hoon hoon
+
 # wutdot hoon hoon hoon
 # wutket wing hoon hoon
 # wutzap hoon
