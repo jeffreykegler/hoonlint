@@ -303,7 +303,10 @@ sub doFixedRune {
     push @result, 'tallHoon ::= ' . $tallLHS;
     # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
     push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
-    my @flatSamples = map { s/^hoon$/flatHoon/; $_; } @samples;
+    state $flatEquiv = {
+        hoon => 'flatHoon',
+    };
+    my @flatSamples = map { $flatEquiv->{$_}; } @samples;
     # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
     push @result, 'flatHoon ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
     my $regularName = join '', ':',
