@@ -272,14 +272,6 @@ tallBuchep ::= (BUCHEP gap)hoon (gap) hoon
 flatBuchep ::= (BUCHEP) [(] flatHoon (ACE) flatHoon [)]
 flatBuchep ::= (':bchp') [(] flatHoon (ACE) flatHoon [)]
 
-# SEMSEM
-SEMSEM ~ [;] [;]
-tallHoon ::= tallSemsem
-flatHoon ::= flatSemsem
-tallSemsem ::= (SEMSEM gap)hoon (gap) hoon
-flatSemsem ::= (SEMSEM) [(] flatHoon (ACE) flatHoon [)]
-flatSemsem ::= (':smsm') [(] flatHoon (ACE) flatHoon [)]
-
 # BARCOL
 BARCOL ~ [|] [:]
 tallHoon ::= tallBarcol
@@ -400,6 +392,14 @@ tallDotwut ::= (DOTWUT gap)hoon
 flatDotwut ::= (DOTWUT) [(] flatHoon [)]
 flatDotwut ::= (':dtwt') [(] flatHoon [)]
 
+# KETBAR
+KETBAR ~ [\^] [|]
+tallHoon ::= tallKetbar
+flatHoon ::= flatKetbar
+tallKetbar ::= (KETBAR gap)hoon
+flatKetbar ::= (KETBAR) [(] flatHoon [)]
+flatKetbar ::= (':ktbr') [(] flatHoon [)]
+
 # KETHEP
 KETHEP ~ [\^] [-]
 tallHoon ::= tallKethep
@@ -407,6 +407,46 @@ flatHoon ::= flatKethep
 tallKethep ::= (KETHEP gap)hoon (gap) hoon
 flatKethep ::= (KETHEP) [(] flatHoon (ACE) flatHoon [)]
 flatKethep ::= (':kthp') [(] flatHoon (ACE) flatHoon [)]
+
+# KETLUS
+KETLUS ~ [\^] [+]
+tallHoon ::= tallKetlus
+flatHoon ::= flatKetlus
+tallKetlus ::= (KETLUS gap)hoon (gap) hoon
+flatKetlus ::= (KETLUS) [(] flatHoon (ACE) flatHoon [)]
+flatKetlus ::= (':ktls') [(] flatHoon (ACE) flatHoon [)]
+
+# KETSIG
+KETSIG ~ [\^] [~]
+tallHoon ::= tallKetsig
+flatHoon ::= flatKetsig
+tallKetsig ::= (KETSIG gap)hoon
+flatKetsig ::= (KETSIG) [(] flatHoon [)]
+flatKetsig ::= (':ktsg') [(] flatHoon [)]
+
+# KETTIS
+KETTIS ~ [\^] [=]
+tallHoon ::= tallKettis
+flatHoon ::= flatKettis
+tallKettis ::= (KETTIS gap)toga (gap) hoon
+flatKettis ::= (KETTIS) [(] toga (ACE) flatHoon [)]
+flatKettis ::= (':ktts') [(] toga (ACE) flatHoon [)]
+
+# KETWUT
+KETWUT ~ [\^] [?]
+tallHoon ::= tallKetwut
+flatHoon ::= flatKetwut
+tallKetwut ::= (KETWUT gap)hoon
+flatKetwut ::= (KETWUT) [(] flatHoon [)]
+flatKetwut ::= (':ktwt') [(] flatHoon [)]
+
+# SEMSEM
+SEMSEM ~ [;] [;]
+tallHoon ::= tallSemsem
+flatHoon ::= flatSemsem
+tallSemsem ::= (SEMSEM gap)hoon (gap) hoon
+flatSemsem ::= (SEMSEM) [(] flatHoon (ACE) flatHoon [)]
+flatSemsem ::= (':smsm') [(] flatHoon (ACE) flatHoon [)]
 
 # TISLUS
 TISLUS ~ [=] [+]

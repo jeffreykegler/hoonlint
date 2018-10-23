@@ -304,9 +304,6 @@ buccab hoon
 bucket hoon hoon
 buchep hoon hoon
 
-#semsem hoon value
-semsem hoon hoon
-
 barcol hoon hoon
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
@@ -328,12 +325,15 @@ dottar hoon hoon
 dottis hoon hoon
 dotwut hoon
 
-# ketbar hoon
+ketbar hoon
 kethep hoon hoon
-# ketlus hoon hoon
-# ketsig hoon
-# kettis toga hoon
-# ketwut hoon
+ketlus hoon hoon
+ketsig hoon
+kettis toga hoon
+ketwut hoon
+
+#semsem hoon value
+semsem hoon hoon
 
 # sigbar hoon hoon
 # sigbuc term hoon
