@@ -235,14 +235,16 @@ TERM ~ '%' name
 # CENHEP
 CENHEP ~ [%] [-]
 tallHoon ::= tallCenhep
+flatHoon ::= flatCenhep
 tallCenhep ::= (CENHEP gap)hoon (gap) hoon
-flatHoon ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
-flatHoon ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
+flatCenhep ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
+flatCenhep ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
 
 # BARHEP
 BARHEP ~ [|] [-]
 tallHoon ::= tallBarhep
+flatHoon ::= flatBarhep
 tallBarhep ::= (BARHEP gap)hoon
-flatHoon ::= (BARHEP) [(] flatHoon [)]
-flatHoon ::= (':brhp') [(] flatHoon [)]
+flatBarhep ::= (BARHEP) [(] flatHoon [)]
+flatBarhep ::= (':brhp') [(] flatHoon [)]
 

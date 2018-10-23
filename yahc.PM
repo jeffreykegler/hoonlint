@@ -301,19 +301,21 @@ sub doFixedRune {
     push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
     # tallHoon ::= tallBarhep
     push @result, 'tallHoon ::= ' . $tallLHS;
+    # flatHoon ::= flatBarhep
+    push @result, 'flatHoon ::= ' . $flatLHS;
     # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
     push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
     state $flatEquiv = {
         hoon => 'flatHoon',
     };
     my @flatSamples = map { $flatEquiv->{$_}; } @samples;
-    # flatHoon ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
-    push @result, 'flatHoon ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    # flatBarhep ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
+    push @result, $flatLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
     my $regularName = join '', ':',
       substr($glyphname1, 0, 1), substr($glyphname1, 2, 1),
       substr($glyphname2, 0, 1), substr($glyphname2, 2, 1);
-    # flatHoon ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
-    push @result, q{flatHoon ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    # flatBarhep ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
+    push @result, $flatLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
     return join "\n", @result, '';
 }
 
