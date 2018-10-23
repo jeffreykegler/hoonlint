@@ -16,3 +16,6 @@ fizzbuzz: yahc.pm fizzbuzz.hoon
 	diff fizzbuzz.ast.try fizzbuzz.ast || echo 'fizzbuzz example !FAILED!'
 
 undoc_tests:
+
+ast_reset: yahc.pm
+	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast

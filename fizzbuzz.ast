@@ -38,7 +38,7 @@
                         [
                           'flatHoon',
                           [
-                            'noun',
+                            'atom',
                             '1'
                           ]
                         ]
@@ -68,14 +68,14 @@
                                       [
                                         'flatHoon',
                                         [
-                                          'noun',
+                                          'atom',
                                           'list'
                                         ]
                                       ],
                                       [
                                         'flatHoon',
                                         [
-                                          'noun',
+                                          'atom',
                                           'tape'
                                         ]
                                       ]
@@ -98,14 +98,14 @@
                                           [
                                             'flatHoon',
                                             [
-                                              'noun',
+                                              'atom',
                                               'end'
                                             ]
                                           ],
                                           [
                                             'flatHoon',
                                             [
-                                              'noun',
+                                              'atom',
                                               'count'
                                             ]
                                           ]
@@ -117,7 +117,7 @@
                                       [
                                         'flatHoon',
                                         [
-                                          'noun',
+                                          'atom',
                                           '~'
                                         ]
                                       ]
@@ -143,7 +143,7 @@
                                                       [
                                                         'flatHoon',
                                                         [
-                                                          'noun',
+                                                          'atom',
                                                           '0'
                                                         ]
                                                       ],
@@ -156,21 +156,21 @@
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'noun',
+                                                                'atom',
                                                                 'mod'
                                                               ]
                                                             ],
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'noun',
+                                                                'atom',
                                                                 'count'
                                                               ]
                                                             ],
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'noun',
+                                                                'atom',
                                                                 '15'
                                                               ]
                                                             ]
@@ -185,7 +185,7 @@
                                                   [
                                                     'flatHoon',
                                                     [
-                                                      'noun',
+                                                      'atom',
                                                       '"FizzBuzz"'
                                                     ]
                                                   ]
@@ -205,7 +205,7 @@
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'noun',
+                                                                'atom',
                                                                 '0'
                                                               ]
                                                             ],
@@ -218,21 +218,21 @@
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'noun',
+                                                                      'atom',
                                                                       'mod'
                                                                     ]
                                                                   ],
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'noun',
+                                                                      'atom',
                                                                       'count'
                                                                     ]
                                                                   ],
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'noun',
+                                                                      'atom',
                                                                       '5'
                                                                     ]
                                                                   ]
@@ -247,7 +247,7 @@
                                                         [
                                                           'flatHoon',
                                                           [
-                                                            'noun',
+                                                            'atom',
                                                             '"Fizz"'
                                                           ]
                                                         ]
@@ -267,7 +267,7 @@
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'noun',
+                                                                      'atom',
                                                                       '0'
                                                                     ]
                                                                   ],
@@ -280,21 +280,21 @@
                                                                         [
                                                                           'flatHoon',
                                                                           [
-                                                                            'noun',
+                                                                            'atom',
                                                                             'mod'
                                                                           ]
                                                                         ],
                                                                         [
                                                                           'flatHoon',
                                                                           [
-                                                                            'noun',
+                                                                            'atom',
                                                                             'count'
                                                                           ]
                                                                         ],
                                                                         [
                                                                           'flatHoon',
                                                                           [
-                                                                            'noun',
+                                                                            'atom',
                                                                             '3'
                                                                           ]
                                                                         ]
@@ -309,7 +309,7 @@
                                                               [
                                                                 'flatHoon',
                                                                 [
-                                                                  'noun',
+                                                                  'atom',
                                                                   '"Buzz"'
                                                                 ]
                                                               ]
@@ -325,21 +325,21 @@
                                                                     [
                                                                       'flatHoon',
                                                                       [
-                                                                        'noun',
+                                                                        'atom',
                                                                         'scow'
                                                                       ]
                                                                     ],
                                                                     [
                                                                       'flatHoon',
                                                                       [
-                                                                        'noun',
+                                                                        'atom',
                                                                         '%ud'
                                                                       ]
                                                                     ],
                                                                     [
                                                                       'flatHoon',
                                                                       [
-                                                                        'noun',
+                                                                        'atom',
                                                                         'count'
                                                                       ]
                                                                     ]
@@ -368,7 +368,7 @@
                                                   [
                                                     'flatHoon',
                                                     [
-                                                      'noun',
+                                                      'atom',
                                                       'count'
                                                     ]
                                                   ],
@@ -381,21 +381,21 @@
                                                         [
                                                           'flatHoon',
                                                           [
-                                                            'noun',
+                                                            'atom',
                                                             'add'
                                                           ]
                                                         ],
                                                         [
                                                           'flatHoon',
                                                           [
-                                                            'noun',
+                                                            'atom',
                                                             '1'
                                                           ]
                                                         ],
                                                         [
                                                           'flatHoon',
                                                           [
-                                                            'noun',
+                                                            'atom',
                                                             'count'
                                                           ]
                                                         ]
