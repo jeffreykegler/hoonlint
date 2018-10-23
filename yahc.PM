@@ -93,8 +93,11 @@ hoon ::= flatHoon
 # flatHoons ::= flatHoon*
 flatHoon ::= irrBarcen
 flatHoon ::= irrCenhep
+flatHoon ::= irrCensig
 flatHoon ::= irrCentis
 flatHoon ::= irrCentisSlash
+flatHoon ::= irrDotdot
+flatHoon ::= irrDotlus
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
 flatHoon ::= irrTisgal
@@ -115,20 +118,40 @@ togaElement ::= NIL
 
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
-irrBarcen ::= ('|%' gap) optArmSeq (gap '--')
-# TODO: Zero or more?  One or more?
+hoonJogging ::= hoonJogs
+hoonJogs ::= hoonJog+ separator=>gap proper=>1
+hoonJog ::= hoon (gap) hoon
+flatHoonJogging ::= flatHoonJogs
+flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
+flatHoonJog ::= flatHoon (ACE) flatHoon
+flatHoonJoggingSeparator ::= ',' ACE
+
 optArmSeq ::= arm* separator=>gap proper=>1
 arm ::= ('++' gap) NAME (gap) hoon
+
+# TODO: Zero or more?  One or more?
+irrBarcen ::= ('|%' gap) optArmSeq (gap '--')
+
+tallHoon ::= tallCentis
+CENTIS ~ [%] [=]
+tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap) '=='
 
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 irrCenhep ::= ('(') flatHoonSeq (')')
 
-irrCentis ::= NAME ('(') flatHoonSeq (')')
+irrCensig ::= ('~(') flatHoonSeq (')')
+
+irrCentis ::= NAME ('(') flatHoonJogging (')')
 
 irrCentisSlash ::= NAME ('/') NAME
 
+# TODO: Is this really an atom?
+irrDotdot ::= ('..') NAME
+
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
+
+irrDotlus ::= ('+(') flatHoon (')')
 
 irrKettis ::= toga ('=') flatHoon
 
