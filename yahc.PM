@@ -212,6 +212,7 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
+# TODO: Is this right?
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
 firstTermChar ~ [a-z]
@@ -347,11 +348,12 @@ ketwut hoon
 semsem hoon hoon
 
 sigbar hoon hoon
-# sigbuc term hoon
+sigbuc TERM hoon
 
 # sigcen term wing hoon hoon
+sigcen TERM hoon hoon hoon
 
-# sigfas term hoon
+sigfas TERM hoon
 siggal hoon hoon
 siggar hoon hoon
 siglus hoon
@@ -382,6 +384,7 @@ tislus hoon hoon
 tissem hoon hoon hoon
 
 # tistar term hoon hoon
+tistar TERM hoon hoon
 
 # tiswut wing hoon hoon hoon
 tiswut hoon hoon hoon hoon

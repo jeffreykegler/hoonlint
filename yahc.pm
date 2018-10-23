@@ -201,6 +201,7 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
+# TODO: Is this right?
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
 firstTermChar ~ [a-z]
@@ -467,6 +468,30 @@ tallSigbar ::= (SIGBAR gap)hoon (gap) hoon
 flatSigbar ::= (SIGBAR) [(] flatHoon (ACE) flatHoon [)]
 flatSigbar ::= (':sgbr') [(] flatHoon (ACE) flatHoon [)]
 
+# SIGBUC
+SIGBUC ~ [~] [$]
+tallHoon ::= tallSigbuc
+flatHoon ::= flatSigbuc
+tallSigbuc ::= (SIGBUC gap)TERM (gap) hoon
+flatSigbuc ::= (SIGBUC) [(] TERM (ACE) flatHoon [)]
+flatSigbuc ::= (':sgbc') [(] TERM (ACE) flatHoon [)]
+
+# SIGCEN
+SIGCEN ~ [~] [%]
+tallHoon ::= tallSigcen
+flatHoon ::= flatSigcen
+tallSigcen ::= (SIGCEN gap)TERM (gap) hoon (gap) hoon (gap) hoon
+flatSigcen ::= (SIGCEN) [(] TERM (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatSigcen ::= (':sgcn') [(] TERM (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# SIGFAS
+SIGFAS ~ [~] [/]
+tallHoon ::= tallSigfas
+flatHoon ::= flatSigfas
+tallSigfas ::= (SIGFAS gap)TERM (gap) hoon
+flatSigfas ::= (SIGFAS) [(] TERM (ACE) flatHoon [)]
+flatSigfas ::= (':sgfs') [(] TERM (ACE) flatHoon [)]
+
 # SIGGAL
 SIGGAL ~ [~] [<]
 tallHoon ::= tallSiggal
@@ -594,6 +619,14 @@ flatHoon ::= flatTissem
 tallTissem ::= (TISSEM gap)hoon (gap) hoon (gap) hoon
 flatTissem ::= (TISSEM) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatTissem ::= (':tssm') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# TISTAR
+TISTAR ~ [=] [*]
+tallHoon ::= tallTistar
+flatHoon ::= flatTistar
+tallTistar ::= (TISTAR gap)TERM (gap) hoon (gap) hoon
+flatTistar ::= (TISTAR) [(] TERM (ACE) flatHoon (ACE) flatHoon [)]
+flatTistar ::= (':tstr') [(] TERM (ACE) flatHoon (ACE) flatHoon [)]
 
 # TISWUT
 TISWUT ~ [=] [?]
