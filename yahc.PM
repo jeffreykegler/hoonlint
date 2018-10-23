@@ -94,8 +94,8 @@ hoon ::= flatHoon
 # tallHoon ::= tallCenhep
 # tallHoon ::= tallColhep
 # tallHoon ::= tallKethep
-tallHoon ::= tallTislus
-tallHoon ::= tallWutcol
+# tallHoon ::= tallTislus
+# tallHoon ::= tallWutcol
 
 # flatHoons ::= flatHoon*
 flatHoon ::= irrCenhep
@@ -141,9 +141,9 @@ irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
 irrKettis ::= toga ('=') flatHoon
 
-tallTislus ::= (TISLUS gap) hoon (gap) hoon
+# tallTislus ::= (TISLUS gap) hoon (gap) hoon
 
-tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
+# tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 
 # Perhaps should be called irrBuctisSlash?
 irrCentisSlash ::= NAME ('/') NAME
@@ -183,8 +183,8 @@ NIL ~ '~'
 # CENHEP ~ '%-'
 # COLHEP ~ ':-'
 # KETHEP ~ '^-'
-TISLUS ~ '=+'
-WUTCOL ~ '?:'
+# TISLUS ~ '=+'
+# WUTCOL ~ '?:'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
@@ -345,7 +345,7 @@ barhep hoon
 # wutgal hoon hoon
 # wutgar hoon hoon
 # wutpat wing hoon hoon
-# wutcol hoon hoon hoon
+wutcol hoon hoon hoon
 # wuttis model wing
 # wutdot hoon hoon hoon
 # wutket wing hoon hoon
@@ -377,7 +377,7 @@ colhep hoon hoon
 # dottar hoon hoon
 # tissem taco hoon hoon
 # tisgal hoon hoon
-# tislus hoon hoon
+tislus hoon hoon
 # tisgar hoon hoon
 # tiswut wing hoon hoon hoon
 # tisdot wing hoon hoon

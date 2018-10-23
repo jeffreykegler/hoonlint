@@ -83,8 +83,8 @@ hoon ::= flatHoon
 # tallHoon ::= tallCenhep
 # tallHoon ::= tallColhep
 # tallHoon ::= tallKethep
-tallHoon ::= tallTislus
-tallHoon ::= tallWutcol
+# tallHoon ::= tallTislus
+# tallHoon ::= tallWutcol
 
 # flatHoons ::= flatHoon*
 flatHoon ::= irrCenhep
@@ -130,9 +130,9 @@ irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
 irrKettis ::= toga ('=') flatHoon
 
-tallTislus ::= (TISLUS gap) hoon (gap) hoon
+# tallTislus ::= (TISLUS gap) hoon (gap) hoon
 
-tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
+# tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
 
 # Perhaps should be called irrBuctisSlash?
 irrCentisSlash ::= NAME ('/') NAME
@@ -172,8 +172,8 @@ NIL ~ '~'
 # CENHEP ~ '%-'
 # COLHEP ~ ':-'
 # KETHEP ~ '^-'
-TISLUS ~ '=+'
-WUTCOL ~ '?:'
+# TISLUS ~ '=+'
+# WUTCOL ~ '?:'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
@@ -256,6 +256,14 @@ tallBarhep ::= (BARHEP gap)hoon
 flatBarhep ::= (BARHEP) [(] flatHoon [)]
 flatBarhep ::= (':brhp') [(] flatHoon [)]
 
+# WUTCOL
+WUTCOL ~ [?] [:]
+tallHoon ::= tallWutcol
+flatHoon ::= flatWutcol
+tallWutcol ::= (WUTCOL gap)hoon (gap) hoon (gap) hoon
+flatWutcol ::= (WUTCOL) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatWutcol ::= (':wtcl') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
 # KETHEP
 KETHEP ~ [\^] [-]
 tallHoon ::= tallKethep
@@ -271,4 +279,12 @@ flatHoon ::= flatColhep
 tallColhep ::= (COLHEP gap)hoon (gap) hoon
 flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
 flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
+
+# TISLUS
+TISLUS ~ [=] [+]
+tallHoon ::= tallTislus
+flatHoon ::= flatTislus
+tallTislus ::= (TISLUS gap)hoon (gap) hoon
+flatTislus ::= (TISLUS) [(] flatHoon (ACE) flatHoon [)]
+flatTislus ::= (':tsls') [(] flatHoon (ACE) flatHoon [)]
 
