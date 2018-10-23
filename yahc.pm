@@ -78,13 +78,6 @@ hoon ::= tallHoon
 hoon ::= flatHoon
 
 # tallHoons ::= tallHoon*
-# tallHoon ::= tallBarhep
-# tallHoon ::= tallBartis
-# tallHoon ::= tallCenhep
-# tallHoon ::= tallColhep
-# tallHoon ::= tallKethep
-# tallHoon ::= tallTislus
-# tallHoon ::= tallWutcol
 
 # flatHoons ::= flatHoon*
 flatHoon ::= irrCenhep
@@ -106,36 +99,19 @@ togaSeq ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
-# tallBarhep ::= (BARHEP) (gap) hoon
-
-# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# where <type> is buc??? runes and irregular forms thereof
-# tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
-
-# tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
+flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 irrCenhep ::= ('(') flatHoonSeq (')')
-flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
-# A function call with '$' for the empty string
 irrCentis ::= NAME ('(') flatHoonSeq (')')
 
-# tallColhep ::= (COLHEP gap) hoon (gap) hoon
+irrCentisSlash ::= NAME ('/') NAME
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
-# tallKethep ::= (KETHEP gap) hoon (gap) hoon
-
 irrKettis ::= toga ('=') flatHoon
-
-# tallTislus ::= (TISLUS gap) hoon (gap) hoon
-
-# tallWutcol ::= (WUTCOL gap) hoon (gap) hoon (gap) hoon
-
-# Perhaps should be called irrBuctisSlash?
-irrCentisSlash ::= NAME ('/') NAME
 
 gap ::= ACE aces # a "flat" gap
 gap ::= tallGapPrefix optGapLines optAces
@@ -166,14 +142,6 @@ nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
 
 NIL ~ '~'
-
-# BARHEP ~ '|-'
-# BARTIS ~ '|='
-# CENHEP ~ '%-'
-# COLHEP ~ ':-'
-# KETHEP ~ '^-'
-# TISLUS ~ '=+'
-# WUTCOL ~ '?:'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
