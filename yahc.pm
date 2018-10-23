@@ -336,6 +336,30 @@ tallBarwut ::= (BARWUT gap)hoon
 flatBarwut ::= (BARWUT) [(] flatHoon [)]
 flatBarwut ::= (':brwt') [(] flatHoon [)]
 
+# COLHEP
+COLHEP ~ [:] [-]
+tallHoon ::= tallColhep
+flatHoon ::= flatColhep
+tallColhep ::= (COLHEP gap)hoon (gap) hoon
+flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
+flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
+
+# KETHEP
+KETHEP ~ [\^] [-]
+tallHoon ::= tallKethep
+flatHoon ::= flatKethep
+tallKethep ::= (KETHEP gap)hoon (gap) hoon
+flatKethep ::= (KETHEP) [(] flatHoon (ACE) flatHoon [)]
+flatKethep ::= (':kthp') [(] flatHoon (ACE) flatHoon [)]
+
+# TISLUS
+TISLUS ~ [=] [+]
+tallHoon ::= tallTislus
+flatHoon ::= flatTislus
+tallTislus ::= (TISLUS gap)hoon (gap) hoon
+flatTislus ::= (TISLUS) [(] flatHoon (ACE) flatHoon [)]
+flatTislus ::= (':tsls') [(] flatHoon (ACE) flatHoon [)]
+
 # WUTCOL
 WUTCOL ~ [?] [:]
 tallHoon ::= tallWutcol
@@ -375,28 +399,4 @@ flatHoon ::= flatWuttis
 tallWuttis ::= (WUTTIS gap)hoon (gap) hoon
 flatWuttis ::= (WUTTIS) [(] flatHoon (ACE) flatHoon [)]
 flatWuttis ::= (':wtts') [(] flatHoon (ACE) flatHoon [)]
-
-# KETHEP
-KETHEP ~ [\^] [-]
-tallHoon ::= tallKethep
-flatHoon ::= flatKethep
-tallKethep ::= (KETHEP gap)hoon (gap) hoon
-flatKethep ::= (KETHEP) [(] flatHoon (ACE) flatHoon [)]
-flatKethep ::= (':kthp') [(] flatHoon (ACE) flatHoon [)]
-
-# COLHEP
-COLHEP ~ [:] [-]
-tallHoon ::= tallColhep
-flatHoon ::= flatColhep
-tallColhep ::= (COLHEP gap)hoon (gap) hoon
-flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
-flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
-
-# TISLUS
-TISLUS ~ [=] [+]
-tallHoon ::= tallTislus
-flatHoon ::= flatTislus
-tallTislus ::= (TISLUS gap)hoon (gap) hoon
-flatTislus ::= (TISLUS) [(] flatHoon (ACE) flatHoon [)]
-flatTislus ::= (':tsls') [(] flatHoon (ACE) flatHoon [)]
 
