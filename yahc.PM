@@ -11,7 +11,7 @@ my $dsl_warning = <<END_OF_WARNING;
 END_OF_WARNING
 
 # === DSL Piece: the main body ===
-my $dsl_main = <<'END_OF_DSL_PIECE_1';
+my $dsl_main = <<'END_OF_DSL_MAIN';
 use 5.010;
 use strict;
 use warnings;
@@ -103,13 +103,13 @@ flatHoon ::= irrCentis
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
 flatHoon ::= irrCentisSlash
-flatHoon ::= noun
+flatHoon ::= atom
 
-noun ::= NAME
-noun ::= NUMBER
-noun ::= STRING
-noun ::= TERM
-noun ::= NIL
+atom ::= NAME
+atom ::= NUMBER
+atom ::= STRING
+atom ::= TERM
+atom ::= NIL
 
 toga ::= NAME
 toga ::= '[' togaSeq ']'
@@ -243,7 +243,7 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # From syntax.vim, probably need correction
 TERM ~ '%' name
 
-END_OF_DSL_PIECE_1
+END_OF_DSL_MAIN
 
 # Here is meta-programming to write piece 2
 

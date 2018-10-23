@@ -92,13 +92,13 @@ flatHoon ::= irrCentis
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
 flatHoon ::= irrCentisSlash
-flatHoon ::= noun
+flatHoon ::= atom
 
-noun ::= NAME
-noun ::= NUMBER
-noun ::= STRING
-noun ::= TERM
-noun ::= NIL
+atom ::= NAME
+atom ::= NUMBER
+atom ::= STRING
+atom ::= TERM
+atom ::= NIL
 
 toga ::= NAME
 toga ::= '[' togaSeq ']'
