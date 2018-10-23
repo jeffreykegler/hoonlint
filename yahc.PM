@@ -331,6 +331,17 @@ sub doFixedRune {
     return join "\n", @result, '';
 }
 
+# This is the descripton of the fixed length runes
+# (1-fixed, 2-fixed, 3-fixed and 4-fixed) for auto-generation
+# of Marpa rules for the various regular formats, both
+# tall and flat.
+#
+# The format is
+#
+#   rune type1 type2 ...
+#
+# Hash comments are allowed.  Blank lines are ignored.
+#
 my $fixedDesc = <<'EOS';
 cenlus hoon hoon hoon
 cendot hoon hoon
