@@ -80,6 +80,7 @@ hoon ::= flatHoon
 # tallHoons ::= tallHoon*
 
 # flatHoons ::= flatHoon*
+flatHoon ::= irrBarcen
 flatHoon ::= irrCenhep
 flatHoon ::= irrCentis
 flatHoon ::= irrCentisSlash
@@ -102,6 +103,11 @@ togaElement ::= toga
 togaElement ::= NIL
 
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
+
+irrBarcen ::= ('|%' gap) optArmSeq (gap '--')
+# TODO: Zero or more?  One or more?
+optArmSeq ::= arm* separator=>gap proper=>1
+arm ::= ('++' gap) NAME (gap) hoon
 
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
