@@ -79,9 +79,9 @@ hoon ::= flatHoon
 
 # tallHoons ::= tallHoon*
 # tallHoon ::= tallBarhep
-tallHoon ::= tallBartis
+# tallHoon ::= tallBartis
 # tallHoon ::= tallCenhep
-tallHoon ::= tallColhep
+# tallHoon ::= tallColhep
 tallHoon ::= tallKethep
 tallHoon ::= tallTislus
 tallHoon ::= tallWutcol
@@ -110,7 +110,7 @@ togaElement ::= NIL
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # where <type> is buc??? runes and irregular forms thereof
-tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
+# tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
 # tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
@@ -122,7 +122,7 @@ flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 # A function call with '$' for the empty string
 irrCentis ::= NAME ('(') flatHoonSeq (')')
 
-tallColhep ::= (COLHEP gap) hoon (gap) hoon
+# tallColhep ::= (COLHEP gap) hoon (gap) hoon
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
@@ -168,9 +168,9 @@ nameLaterChar ~ [a-z0-9-]
 NIL ~ '~'
 
 # BARHEP ~ '|-'
-BARTIS ~ '|='
+# BARTIS ~ '|='
 # CENHEP ~ '%-'
-COLHEP ~ ':-'
+# COLHEP ~ ':-'
 KETHEP ~ '^-'
 TISLUS ~ '=+'
 WUTCOL ~ '?:'
@@ -240,6 +240,14 @@ tallCenhep ::= (CENHEP gap)hoon (gap) hoon
 flatCenhep ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
 flatCenhep ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
 
+# BARTIS
+BARTIS ~ [|] [=]
+tallHoon ::= tallBartis
+flatHoon ::= flatBartis
+tallBartis ::= (BARTIS gap)hoon (gap) hoon
+flatBartis ::= (BARTIS) [(] flatHoon (ACE) flatHoon [)]
+flatBartis ::= (':brts') [(] flatHoon (ACE) flatHoon [)]
+
 # BARHEP
 BARHEP ~ [|] [-]
 tallHoon ::= tallBarhep
@@ -247,4 +255,12 @@ flatHoon ::= flatBarhep
 tallBarhep ::= (BARHEP gap)hoon
 flatBarhep ::= (BARHEP) [(] flatHoon [)]
 flatBarhep ::= (':brhp') [(] flatHoon [)]
+
+# COLHEP
+COLHEP ~ [:] [-]
+tallHoon ::= tallColhep
+flatHoon ::= flatColhep
+tallColhep ::= (COLHEP gap)hoon (gap) hoon
+flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
+flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
 

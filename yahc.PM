@@ -90,9 +90,9 @@ hoon ::= flatHoon
 
 # tallHoons ::= tallHoon*
 # tallHoon ::= tallBarhep
-tallHoon ::= tallBartis
+# tallHoon ::= tallBartis
 # tallHoon ::= tallCenhep
-tallHoon ::= tallColhep
+# tallHoon ::= tallColhep
 tallHoon ::= tallKethep
 tallHoon ::= tallTislus
 tallHoon ::= tallWutcol
@@ -121,7 +121,7 @@ togaElement ::= NIL
 
 # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # where <type> is buc??? runes and irregular forms thereof
-tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
+# tallBartis ::= (BARTIS) (gap) hoon (gap) hoon
 
 # tallCenhep ::= (CENHEP) (gap) hoon (gap) hoon
 
@@ -133,7 +133,7 @@ flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 # A function call with '$' for the empty string
 irrCentis ::= NAME ('(') flatHoonSeq (')')
 
-tallColhep ::= (COLHEP gap) hoon (gap) hoon
+# tallColhep ::= (COLHEP gap) hoon (gap) hoon
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
@@ -179,9 +179,9 @@ nameLaterChar ~ [a-z0-9-]
 NIL ~ '~'
 
 # BARHEP ~ '|-'
-BARTIS ~ '|='
+# BARTIS ~ '|='
 # CENHEP ~ '%-'
-COLHEP ~ ':-'
+# COLHEP ~ ':-'
 KETHEP ~ '^-'
 TISLUS ~ '=+'
 WUTCOL ~ '?:'
@@ -332,7 +332,11 @@ cenhep hoon hoon
 # buchep model model
 # semsem model value
 # barcol hoon hoon
-# bartis model hoon
+
+# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# where <type> is buc??? runes and irregular forms thereof
+bartis hoon hoon
+
 # barwut hoon
 # bardot hoon
 # bartar model hoon
@@ -366,7 +370,7 @@ barhep hoon
 # collus hoon hoon hoon
 # colcab hoon hoon
 # colket hoon hoon hoon hoon
-# colhep hoon hoon
+colhep hoon hoon
 # dotlus atom
 # dottis hoon hoon
 # dotwut hoon
