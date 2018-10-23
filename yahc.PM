@@ -386,7 +386,17 @@ EOS
 # === DSL Piece: Automatically generated Marpa rules ===
 
 $fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
-my $dsl_auto_rules = join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
+my @dsl_auto_rules = ();
+DESC: for my $desc (split "\n", $fixedDesc) {
+    chomp $desc; # remove newline
+    $desc =~ s/^\s+//; # eliminate leading spaces
+    $desc =~ s/\s+$//; # eliminate trailing spaces
+    $desc =~ s/\s*[#].*//; # eliminate comments
+    next DESC if length $desc <= 0; # ignore empty line
+    my ($rune, @samples) = split /\s+/, $desc;
+    push @dsl_auto_rules, doFixedRune( $rune, @samples );
+}
+my $dsl_auto_rules = join "\n", @dsl_auto_rules;
 
 # Print the two pieces
 say join '', $dsl_warning, $dsl_main, $dsl_auto_rules;
