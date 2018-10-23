@@ -3,7 +3,15 @@ use strict;
 use warnings;
 use English qw( -no_match_vars );
 
-my $dsl1 = <<'END_OF_DSL_PIECE_1';
+# === DSL Piece: "Do not edit" warning ===
+my $dsl_warning = <<END_OF_WARNING;
+# !!! DO NOT EDIT !!!
+# This code automatically written by $PROGRAM_NAME
+
+END_OF_WARNING
+
+# === DSL Piece: the main body ===
+my $dsl_main = <<'END_OF_DSL_PIECE_1';
 use 5.010;
 use strict;
 use warnings;
@@ -375,10 +383,12 @@ barhep hoon
 # zapwut atom hoon
 EOS
 
+# === DSL Piece: Automatically generated Marpa rules ===
+
 $fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
-my $dsl2 = join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
+my $dsl_auto_rules = join "\n", map { doFixedRune( @{[split]} ); } map { s/^\s*//; $_; } grep { not /^$/; } split "\n", $fixedDesc;
 
 # Print the two pieces
-say join '', $dsl1, $dsl2;
+say join '', $dsl_warning, $dsl_main, $dsl_auto_rules;
 
 

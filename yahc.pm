@@ -1,3 +1,6 @@
+# !!! DO NOT EDIT !!!
+# This code automatically written by yahc.PM
+
 use 5.010;
 use strict;
 use warnings;
