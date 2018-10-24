@@ -365,10 +365,7 @@ my $fixedDesc = <<'EOS';
 cenlus hoon hoon hoon
 cendot hoon hoon
 cenket hoon hoon hoon hoon
-
-# censig wing hoon hoon
 censig wing hoon hoon
-
 cenhep hoon hoon
 bucpat hoon hoon
 
@@ -411,10 +408,7 @@ semsem hoon hoon
 
 sigbar hoon hoon
 sigbuc TERM hoon
-
-# sigcen term wing hoon hoon
-sigcen TERM hoon hoon hoon
-
+sigcen TERM wing hoon hoon
 sigfas TERM hoon
 siggal hoon hoon
 siggar hoon hoon
@@ -425,10 +419,7 @@ sigzap hoon hoon
 
 tisbar hoon hoon
 tiscom hoon hoon
-
-# tisdot wing hoon hoon
-tisdot hoon hoon hoon
-
+tisdot wing hoon hoon
 tishep hoon hoon
 
 # tisfas taco hoon hoon
@@ -436,38 +427,24 @@ tisfas hoon hoon hoon
 
 tisgal hoon hoon
 tisgar hoon hoon
-
-# tisket taco wing hoon hoon
-tisket hoon hoon hoon hoon
-
+tisket hoon wing hoon hoon
 tislus hoon hoon
 
 # tissem taco hoon hoon
 tissem hoon hoon hoon
 
-# tistar term hoon hoon
 tistar TERM hoon hoon
-
-# tiswut wing hoon hoon hoon
-tiswut hoon hoon hoon hoon
+tiswut wing hoon hoon hoon
 
 wutcol hoon hoon hoon
 wutdot hoon hoon hoon
 wutgal hoon hoon
 wutgar hoon hoon
 wutzap hoon
-
-# wutket wing hoon hoon
-wutket hoon hoon hoon
-
-# wutpat wing hoon hoon
-wutpat hoon hoon hoon
-
-# wutsig wing hoon hoon
-wutsig hoon hoon hoon
-
-# wuttis hoon wing
-wuttis hoon hoon
+wutket wing hoon hoon
+wutpat wing hoon hoon
+wutsig wing hoon hoon
+wuttis hoon wing
 
 zapgar hoon
 zaptis hoon

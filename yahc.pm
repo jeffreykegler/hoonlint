@@ -531,9 +531,9 @@ flatSigbuc ::= (':sgbc') [(] TERM (ACE) flatHoon [)]
 SIGCEN ~ [~] [%]
 tallHoon ::= tallSigcen
 flatHoon ::= flatSigcen
-tallSigcen ::= (SIGCEN gap)TERM (gap) hoon (gap) hoon (gap) hoon
-flatSigcen ::= (SIGCEN) [(] TERM (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatSigcen ::= (':sgcn') [(] TERM (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallSigcen ::= (SIGCEN gap)TERM (gap) wing (gap) hoon (gap) hoon
+flatSigcen ::= (SIGCEN) [(] TERM (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+flatSigcen ::= (':sgcn') [(] TERM (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # SIGFAS
 SIGFAS ~ [~] [/]
@@ -611,9 +611,9 @@ flatTiscom ::= (':tscm') [(] flatHoon (ACE) flatHoon [)]
 TISDOT ~ [=] [.]
 tallHoon ::= tallTisdot
 flatHoon ::= flatTisdot
-tallTisdot ::= (TISDOT gap)hoon (gap) hoon (gap) hoon
-flatTisdot ::= (TISDOT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTisdot ::= (':tsdt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallTisdot ::= (TISDOT gap)wing (gap) hoon (gap) hoon
+flatTisdot ::= (TISDOT) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatTisdot ::= (':tsdt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # TISHEP
 TISHEP ~ [=] [-]
@@ -651,9 +651,9 @@ flatTisgar ::= (':tsgr') [(] flatHoon (ACE) flatHoon [)]
 TISKET ~ [=] [\^]
 tallHoon ::= tallTisket
 flatHoon ::= flatTisket
-tallTisket ::= (TISKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
-flatTisket ::= (TISKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTisket ::= (':tskt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallTisket ::= (TISKET gap)hoon (gap) wing (gap) hoon (gap) hoon
+flatTisket ::= (TISKET) [(] flatHoon (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+flatTisket ::= (':tskt') [(] flatHoon (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # TISLUS
 TISLUS ~ [=] [+]
@@ -683,9 +683,9 @@ flatTistar ::= (':tstr') [(] TERM (ACE) flatHoon (ACE) flatHoon [)]
 TISWUT ~ [=] [?]
 tallHoon ::= tallTiswut
 flatHoon ::= flatTiswut
-tallTiswut ::= (TISWUT gap)hoon (gap) hoon (gap) hoon (gap) hoon
-flatTiswut ::= (TISWUT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTiswut ::= (':tswt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallTiswut ::= (TISWUT gap)wing (gap) hoon (gap) hoon (gap) hoon
+flatTiswut ::= (TISWUT) [(] wing (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatTiswut ::= (':tswt') [(] wing (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTCOL
 WUTCOL ~ [?] [:]
@@ -731,33 +731,33 @@ flatWutzap ::= (':wtzp') [(] flatHoon [)]
 WUTKET ~ [?] [\^]
 tallHoon ::= tallWutket
 flatHoon ::= flatWutket
-tallWutket ::= (WUTKET gap)hoon (gap) hoon (gap) hoon
-flatWutket ::= (WUTKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutket ::= (':wtkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallWutket ::= (WUTKET gap)wing (gap) hoon (gap) hoon
+flatWutket ::= (WUTKET) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatWutket ::= (':wtkt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTPAT
 WUTPAT ~ [?] [@]
 tallHoon ::= tallWutpat
 flatHoon ::= flatWutpat
-tallWutpat ::= (WUTPAT gap)hoon (gap) hoon (gap) hoon
-flatWutpat ::= (WUTPAT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutpat ::= (':wtpt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallWutpat ::= (WUTPAT gap)wing (gap) hoon (gap) hoon
+flatWutpat ::= (WUTPAT) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatWutpat ::= (':wtpt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTSIG
 WUTSIG ~ [?] [~]
 tallHoon ::= tallWutsig
 flatHoon ::= flatWutsig
-tallWutsig ::= (WUTSIG gap)hoon (gap) hoon (gap) hoon
-flatWutsig ::= (WUTSIG) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutsig ::= (':wtsg') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallWutsig ::= (WUTSIG gap)wing (gap) hoon (gap) hoon
+flatWutsig ::= (WUTSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatWutsig ::= (':wtsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # WUTTIS
 WUTTIS ~ [?] [=]
 tallHoon ::= tallWuttis
 flatHoon ::= flatWuttis
-tallWuttis ::= (WUTTIS gap)hoon (gap) hoon
-flatWuttis ::= (WUTTIS) [(] flatHoon (ACE) flatHoon [)]
-flatWuttis ::= (':wtts') [(] flatHoon (ACE) flatHoon [)]
+tallWuttis ::= (WUTTIS gap)hoon (gap) wing
+flatWuttis ::= (WUTTIS) [(] flatHoon (ACE) wing [)]
+flatWuttis ::= (':wtts') [(] flatHoon (ACE) wing [)]
 
 # ZAPGAR
 ZAPGAR ~ [!] [>]
