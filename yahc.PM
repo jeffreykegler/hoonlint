@@ -98,7 +98,7 @@ flatHoon ::= irrBarcen
 flatHoon ::= irrCenhep
 flatHoon ::= irrCensig
 flatHoon ::= irrCentis
-flatHoon ::= irrCentisSlash
+flatHoon ::= irrBuctisSlash
 flatHoon ::= irrDotlus
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
@@ -169,7 +169,7 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
-irrCentisSlash ::= NAME ('/') NAME
+irrBuctisSlash ::= NAME ('/') hoon
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
@@ -370,22 +370,20 @@ cenket hoon hoon hoon hoon
 censig wing hoon hoon
 cenhep hoon hoon
 bucpat hoon hoon
-
-# buctis @tas model
-
+buctis TERM hoon
 buccab hoon
 bucket hoon hoon
 buchep hoon hoon
-
 barcol hoon hoon
-
-# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# where <type> is buc??? runes and irregular forms thereof
 bardot hoon
 barhep hoon
 barsig hoon hoon
 bartar hoon hoon
+
+# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# where <type> is buc??? runes and irregular forms thereof
 bartis hoon hoon
+
 barwut hoon
 
 colcab hoon hoon

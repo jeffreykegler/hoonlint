@@ -13,9 +13,24 @@
               [
                 'flatHoon',
                 [
-                  'irrCentisSlash',
+                  'irrBuctisSlash',
                   'end',
-                  'atom'
+                  [
+                    'hoon',
+                    [
+                      'flatHoon',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'atom'
+                        ]
+                      ]
+                    ]
+                  ]
                 ]
               ]
             ],

@@ -87,7 +87,7 @@ flatHoon ::= irrBarcen
 flatHoon ::= irrCenhep
 flatHoon ::= irrCensig
 flatHoon ::= irrCentis
-flatHoon ::= irrCentisSlash
+flatHoon ::= irrBuctisSlash
 flatHoon ::= irrDotlus
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
@@ -158,7 +158,7 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
-irrCentisSlash ::= NAME ('/') NAME
+irrBuctisSlash ::= NAME ('/') hoon
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
@@ -312,6 +312,14 @@ flatHoon ::= flatBucpat
 tallBucpat ::= (BUCPAT gap)hoon (gap) hoon
 flatBucpat ::= (BUCPAT) [(] flatHoon (ACE) flatHoon [)]
 flatBucpat ::= (':bcpt') [(] flatHoon (ACE) flatHoon [)]
+
+# BUCTIS
+BUCTIS ~ [$] [=]
+tallHoon ::= tallBuctis
+flatHoon ::= flatBuctis
+tallBuctis ::= (BUCTIS gap)TERM (gap) hoon
+flatBuctis ::= (BUCTIS) [(] TERM (ACE) flatHoon [)]
+flatBuctis ::= (':bcts') [(] TERM (ACE) flatHoon [)]
 
 # BUCCAB
 BUCCAB ~ [$] [_]
