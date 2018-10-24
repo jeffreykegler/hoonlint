@@ -68,15 +68,27 @@
                                       [
                                         'flatHoon',
                                         [
-                                          'atom',
-                                          'list'
+                                          'wing',
+                                          [
+                                            'limb',
+                                            [
+                                              'optKets'
+                                            ],
+                                            'list'
+                                          ]
                                         ]
                                       ],
                                       [
                                         'flatHoon',
                                         [
-                                          'atom',
-                                          'tape'
+                                          'wing',
+                                          [
+                                            'limb',
+                                            [
+                                              'optKets'
+                                            ],
+                                            'tape'
+                                          ]
                                         ]
                                       ]
                                     ]
@@ -98,15 +110,27 @@
                                           [
                                             'flatHoon',
                                             [
-                                              'atom',
-                                              'end'
+                                              'wing',
+                                              [
+                                                'limb',
+                                                [
+                                                  'optKets'
+                                                ],
+                                                'end'
+                                              ]
                                             ]
                                           ],
                                           [
                                             'flatHoon',
                                             [
-                                              'atom',
-                                              'count'
+                                              'wing',
+                                              [
+                                                'limb',
+                                                [
+                                                  'optKets'
+                                                ],
+                                                'count'
+                                              ]
                                             ]
                                           ]
                                         ]
@@ -156,15 +180,27 @@
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'atom',
-                                                                'mod'
+                                                                'wing',
+                                                                [
+                                                                  'limb',
+                                                                  [
+                                                                    'optKets'
+                                                                  ],
+                                                                  'mod'
+                                                                ]
                                                               ]
                                                             ],
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'atom',
-                                                                'count'
+                                                                'wing',
+                                                                [
+                                                                  'limb',
+                                                                  [
+                                                                    'optKets'
+                                                                  ],
+                                                                  'count'
+                                                                ]
                                                               ]
                                                             ],
                                                             [
@@ -218,15 +254,27 @@
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'atom',
-                                                                      'mod'
+                                                                      'wing',
+                                                                      [
+                                                                        'limb',
+                                                                        [
+                                                                          'optKets'
+                                                                        ],
+                                                                        'mod'
+                                                                      ]
                                                                     ]
                                                                   ],
                                                                   [
                                                                     'flatHoon',
                                                                     [
-                                                                      'atom',
-                                                                      'count'
+                                                                      'wing',
+                                                                      [
+                                                                        'limb',
+                                                                        [
+                                                                          'optKets'
+                                                                        ],
+                                                                        'count'
+                                                                      ]
                                                                     ]
                                                                   ],
                                                                   [
@@ -280,15 +328,27 @@
                                                                         [
                                                                           'flatHoon',
                                                                           [
-                                                                            'atom',
-                                                                            'mod'
+                                                                            'wing',
+                                                                            [
+                                                                              'limb',
+                                                                              [
+                                                                                'optKets'
+                                                                              ],
+                                                                              'mod'
+                                                                            ]
                                                                           ]
                                                                         ],
                                                                         [
                                                                           'flatHoon',
                                                                           [
-                                                                            'atom',
-                                                                            'count'
+                                                                            'wing',
+                                                                            [
+                                                                              'limb',
+                                                                              [
+                                                                                'optKets'
+                                                                              ],
+                                                                              'count'
+                                                                            ]
                                                                           ]
                                                                         ],
                                                                         [
@@ -325,8 +385,14 @@
                                                                     [
                                                                       'flatHoon',
                                                                       [
-                                                                        'atom',
-                                                                        'scow'
+                                                                        'wing',
+                                                                        [
+                                                                          'limb',
+                                                                          [
+                                                                            'optKets'
+                                                                          ],
+                                                                          'scow'
+                                                                        ]
                                                                       ]
                                                                     ],
                                                                     [
@@ -339,8 +405,14 @@
                                                                     [
                                                                       'flatHoon',
                                                                       [
-                                                                        'atom',
-                                                                        'count'
+                                                                        'wing',
+                                                                        [
+                                                                          'limb',
+                                                                          [
+                                                                            'optKets'
+                                                                          ],
+                                                                          'count'
+                                                                        ]
                                                                       ]
                                                                     ]
                                                                   ]
@@ -372,8 +444,14 @@
                                                       [
                                                         'flatHoon',
                                                         [
-                                                          'atom',
-                                                          'count'
+                                                          'wing',
+                                                          [
+                                                            'limb',
+                                                            [
+                                                              'optKets'
+                                                            ],
+                                                            'count'
+                                                          ]
                                                         ]
                                                       ],
                                                       [
@@ -385,8 +463,14 @@
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'atom',
-                                                                'add'
+                                                                'wing',
+                                                                [
+                                                                  'limb',
+                                                                  [
+                                                                    'optKets'
+                                                                  ],
+                                                                  'add'
+                                                                ]
                                                               ]
                                                             ],
                                                             [
@@ -399,8 +483,14 @@
                                                             [
                                                               'flatHoon',
                                                               [
-                                                                'atom',
-                                                                'count'
+                                                                'wing',
+                                                                [
+                                                                  'limb',
+                                                                  [
+                                                                    'optKets'
+                                                                  ],
+                                                                  'count'
+                                                                ]
                                                               ]
                                                             ]
                                                           ]

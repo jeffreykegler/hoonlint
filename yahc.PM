@@ -99,7 +99,6 @@ flatHoon ::= irrCenhep
 flatHoon ::= irrCensig
 flatHoon ::= irrCentis
 flatHoon ::= irrCentisSlash
-flatHoon ::= irrDotdot
 flatHoon ::= irrDotlus
 flatHoon ::= irrDottis
 flatHoon ::= irrKettis
@@ -107,8 +106,6 @@ flatHoon ::= irrTisgal
 flatHoon ::= atom
 flatHoon ::= wing
 
-# TODO: Is a name a simple case of a wing?
-atom ::= NAME
 atom ::= NUMBER
 atom ::= STRING
 atom ::= TERM
@@ -122,10 +119,8 @@ togaElement ::= toga
 togaElement ::= NIL
 
 wing ::= limb+ separator=>[.] proper=>1
-# TODO: Is a name a simple case of a wing?
-# If we make this limb ::= optKets , the a NAME is a trivial case of a wing
-limb ::= kets NAME
-kets ::= KET+
+limb ::= optKets NAME
+optKets ::= KET*
 limb ::= lark
 lark ::= '.'
 lark ::= [+&|] NUMBER
@@ -175,9 +170,6 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
 irrCentisSlash ::= NAME ('/') NAME
-
-# TODO: Is this really an atom?
-irrDotdot ::= ('..') NAME
 
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
