@@ -91,9 +91,9 @@ hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= tallHoon
 hoon ::= flatHoon
 
-# tallHoons ::= tallHoon*
+# tallHoons ::= tallHoon+
 
-# flatHoons ::= flatHoon*
+# flatHoons ::= flatHoon+
 flatHoon ::= irrBarcen
 flatHoon ::= irrCenhep
 flatHoon ::= irrCensig
@@ -150,8 +150,17 @@ flatHoonJoggingSeparator ::= ',' ACE
 optArmSeq ::= arm* separator=>gap proper=>1
 arm ::= ('++' gap) NAME (gap) hoon
 
-# TODO: Zero or more?  One or more?
 irrBarcen ::= ('|%' gap) optArmSeq (gap '--')
+
+BUCCOL ~ [$] [:]
+tallHoon ::= tallBuccol
+tallBuccol ::= (BUCCOL gap) hoonSeq (gap '==')
+flatHoon ::= flatBuccol
+flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
+flatBuccol ::= (':bccl(') flatHoonSeq (')')
+flatBuccol ::= ('{') flatHoonSeq ('}')
+flatBuccol ::= ('[') flatHoonSeq (']')
+flatBuccol ::= (',[') flatHoonSeq (']')
 
 tallHoon ::= tallCentis
 CENTIS ~ [%] [=]
@@ -272,7 +281,8 @@ medialTermChar ~ [a-z0-9-]
 lastTermChar ~ [a-z0-9]
 
 AURA ~ '@'
-AURA ~ '@' name
+AURA ~ '@' optAlphas
+optAlphas ~ [a-zA-Z]*
 
 END_OF_DSL_MAIN
 
