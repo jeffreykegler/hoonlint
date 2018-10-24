@@ -30,4 +30,5 @@ ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <sieve_b.hoon >sieve_b.ast
 	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast
 
-dev: sieve_k
+dev:
+	perl -I. yahcfilt.pl <toe.hoon

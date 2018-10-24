@@ -105,7 +105,9 @@ flatHoon ::= irrDottis
 flatHoon ::= irrKettis
 flatHoon ::= irrTisgal
 flatHoon ::= atom
+flatHoon ::= wing
 
+# TODO: Is a name a simple case of a wing?
 atom ::= NAME
 atom ::= NUMBER
 atom ::= STRING
@@ -118,6 +120,22 @@ toga ::= '[' togaSeq ']'
 togaSeq ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
+
+wing ::= limb+ separator=>[.] proper=>1
+# TODO: Is a name a simple case of a wing?
+# If we make this limb ::= optKets , the a NAME is a trivial case of a wing
+limb ::= kets NAME
+kets ::= KET+
+limb ::= lark
+lark ::= '.'
+lark ::= [+&|] NUMBER
+lark ::= carCdr
+lark ::= carCdrPairs
+lark ::= carCdrPairs carCdr
+carCdrPairs ::= carCdrPair+
+# The [-+] and [<>] syntax alternates for readability
+carCdrPair ::= [-+][<>]
+carCdr ::= [-+]
 
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
@@ -189,6 +207,7 @@ nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
 
 NIL ~ '~'
+KET ~ '^'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
@@ -348,7 +367,7 @@ cendot hoon hoon
 cenket hoon hoon hoon hoon
 
 # censig wing hoon hoon
-censig hoon hoon hoon
+censig wing hoon hoon
 
 cenhep hoon hoon
 bucpat hoon hoon

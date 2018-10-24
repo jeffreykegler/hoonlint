@@ -94,7 +94,9 @@ flatHoon ::= irrDottis
 flatHoon ::= irrKettis
 flatHoon ::= irrTisgal
 flatHoon ::= atom
+flatHoon ::= wing
 
+# TODO: Is a name a simple case of a wing?
 atom ::= NAME
 atom ::= NUMBER
 atom ::= STRING
@@ -107,6 +109,22 @@ toga ::= '[' togaSeq ']'
 togaSeq ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
+
+wing ::= limb+ separator=>[.] proper=>1
+# TODO: Is a name a simple case of a wing?
+# If we make this limb ::= optKets , the a NAME is a trivial case of a wing
+limb ::= kets NAME
+kets ::= KET+
+limb ::= lark
+lark ::= '.'
+lark ::= [+&|] NUMBER
+lark ::= carCdr
+lark ::= carCdrPairs
+lark ::= carCdrPairs carCdr
+carCdrPairs ::= carCdrPair+
+# The [-+] and [<>] syntax alternates for readability
+carCdrPair ::= [-+][<>]
+carCdr ::= [-+]
 
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
@@ -178,6 +196,7 @@ nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
 
 NIL ~ '~'
+KET ~ '^'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
@@ -272,9 +291,9 @@ flatCenket ::= (':cnkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHo
 CENSIG ~ [%] [~]
 tallHoon ::= tallCensig
 flatHoon ::= flatCensig
-tallCensig ::= (CENSIG gap)hoon (gap) hoon (gap) hoon
-flatCensig ::= (CENSIG) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCensig ::= (':cnsg') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+tallCensig ::= (CENSIG gap)wing (gap) hoon (gap) hoon
+flatCensig ::= (CENSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatCensig ::= (':cnsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # CENHEP
 CENHEP ~ [%] [-]
