@@ -168,6 +168,7 @@ hoon ::= flatHoon
 
 # flatHoons ::= flatHoon+
 flatHoon ::= atom
+flatHoon ::= type
 flatHoon ::= wing
 
 atom ::= NUMBER
@@ -175,6 +176,13 @@ atom ::= STRING
 atom ::= TERM
 atom ::= NIL
 atom ::= AURA
+
+type ::= '*' # cell
+type ::= '^' # cell
+type ::= '?' # loobean
+# TODO: commented out because these create ambiguities
+# type ::= '~' # null
+# type ::= '@' # cell
 
 toga ::= NAME
 toga ::= '[' togaSeq ']'
@@ -206,11 +214,12 @@ flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
 flatHoonJog ::= flatHoon (ACE) flatHoon
 flatHoonJoggingSeparator ::= ',' ACE
 
-optArmSeq ::= arm* separator=>gap proper=>1
-arm ::= ('++' gap) NAME (gap) hoon
+optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
+namedHoon ::= ('++' gap) NAME (gap) hoon
 
-flatHoon ::= irrBarcen
-irrBarcen ::= ('|%' gap) optArmSeq (gap '--')
+BARCEN ~ [|] [%]
+tallHoon ::= tallBarcen
+tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
 
 BUCCOL ~ [$] [:]
 tallHoon ::= tallBuccol
@@ -224,6 +233,23 @@ flatBuccol ::= (',[') flatHoonSeq (']')
 
 flatHoon  ::= irrBuccab
 irrBuccab ::= ('_') flatHoon
+
+BUCCEN ~ [$] [%]
+tallHoon ::= tallBuccen
+flatHoon ::= flatBuccen
+tallBuccen ::= (BUCCEN gap) buccenPairSeq (gap '==')
+flatBuccen ::= (BUCCEN '(') flatHoonSeq (')')
+flatBuccen ::= (':bccl(') flatHoonSeq (')')
+buccenPairSeq ::= buccenPair+ separator=>gap proper=>1
+buccenPair ::= flatHoon
+buccenPair ::= oldBuccenPair
+oldBuccenPair ::= ('{') oldBuccenElement (ACE) oldBuccenElement ('}')
+oldBuccenPair ::= ('{') oldBuccenElement (ACE) oldBuccenElement ('}')
+oldBuccenElement ::= oldBuccenSymbol
+oldBuccenElement ::= oldBuccenNil
+oldBuccenElement ::= flatHoon
+oldBuccenSymbol ::= ('$') NAME
+oldBuccenNil ::= ('$~')
 
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon

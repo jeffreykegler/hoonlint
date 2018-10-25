@@ -125,11 +125,11 @@
               ]
             ],
             [
-              'irrBarcen',
+              'tallBarcen',
               [
-                'optArmSeq',
+                'optNamedHoonSeq',
                 [
-                  'arm',
+                  'namedHoon',
                   'abet',
                   [
                     'irrCenhep',
@@ -189,7 +189,7 @@
                   ]
                 ],
                 [
-                  'arm',
+                  'namedHoon',
                   'main',
                   [
                     'tallTisfas',
@@ -383,7 +383,7 @@
                   ]
                 ],
                 [
-                  'arm',
+                  'namedHoon',
                   'reap',
                   [
                     'tallBartis',
