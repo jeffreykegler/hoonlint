@@ -321,6 +321,10 @@ wsChar ~ [ \n]
 NUMBER ~ decimalNumber
 NUMBER ~ hexNumber
 NUMBER ~ binaryNumber
+NUMBER ~ vNumber
+NUMBER ~ wNumber
+
+# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
 decimalNumber ~ decimalPrefix decimalGroups
 decimalPrefix ~ decimalDigit
 decimalPrefix ~ decimalDigit decimalDigit
@@ -329,6 +333,7 @@ decimalDigit ~ [0-9]
 decimalGroups ~ decimalGroup*
 decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
 
+# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
 hexNumber ~ '0x' hexPrefix hexGroups
 hexPrefix ~ hexDigit
 hexPrefix ~ hexDigit hexDigit
@@ -338,6 +343,7 @@ hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
+# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
 binaryNumber ~ '0b' binaryPrefix binaryGroups
 binaryPrefix ~ binaryDigit
 binaryPrefix ~ binaryDigit binaryDigit
@@ -347,13 +353,27 @@ binaryDigit ~ [01]
 binaryGroups ~ binaryGroup*
 binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
 
-# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
-# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
-# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
-
-# LATER: @v and @w format
 # syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
+vNumber ~ '0v' vNumPrefix vNumGroups
+vNumPrefix ~ vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+vNumDigit ~ [0-9a-v]
+vNumGroups ~ vNumGroup*
+vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+
 # syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
+wNumber ~ '0w' wNumPrefix wNumGroups
+wNumPrefix ~ wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
+wNumDigit ~ [-~0-9a-zA-Z]
+wNumGroups ~ wNumGroup*
+wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
 
 # TODO: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
