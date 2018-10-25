@@ -166,7 +166,7 @@ atom ::= TERM
 atom ::= NIL
 atom ::= AURA
 
-type ::= '*' # cell
+type ::= '*' # noun
 type ::= '^' # cell
 type ::= '?' # loobean
 # TODO: commented out because these create ambiguities
@@ -272,6 +272,10 @@ irrKettis ::= toga ('=') flatHoon
 
 flatHoon ::= irrTisgal
 irrTisgal ::= flatHoon (':') flatHoon
+
+tallHoon ::= tallWuthep
+WUTHEP ~ [?] [-]
+tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
 gap ::= ACE aces # a "flat" gap
 gap ::= tallGapPrefix optGapLines optAces
