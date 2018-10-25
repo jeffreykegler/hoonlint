@@ -217,6 +217,10 @@ flatHoonJoggingSeparator ::= ',' ACE
 optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
 namedHoon ::= ('++' gap) NAME (gap) hoon
 
+BARCAB ~ [|] [_]
+tallHoon ::= tallBarcab
+tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
+
 BARCEN ~ [|] [%]
 tallHoon ::= tallBarcen
 tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
@@ -265,7 +269,7 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 flatHoon ::= irrCentis
 tallHoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap) '=='
+tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
 flatHoon ::= irrDottis
