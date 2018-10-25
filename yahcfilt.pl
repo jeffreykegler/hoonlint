@@ -17,11 +17,11 @@ my $hoonSource = do {
 };
 
 my $astRef = MarpaX::YAHC::parse(\$hoonSource);
-
 die "Parse failed" if not $astRef;
+my $pruned = MarpaX::YAHC::prune($astRef);
 
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
-say Data::Dumper::Dumper($astRef);
+say Data::Dumper::Dumper($pruned);
 

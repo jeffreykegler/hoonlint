@@ -54,6 +54,79 @@ sub parse {
     return $valueRef;
 }
 
+# Takes one argument and returns a ref to an array of acceptable
+# nodes.  The array may be empty.  All scalars are acceptable
+# leaf nodes.  Acceptable interior nodes have length at least 1
+# and contain a Haskell Standard symbol name, followed by zero or
+# more acceptable nodes.
+sub prune {
+    my ($v) = @_;
+
+    state $deleteIfEmpty = {
+    };
+
+    state $nonSemantic = {
+        flatHoon        => 1,
+        flatHoonJogging => 1,
+        flatHoonJogs    => 1,
+        flatHoonSeq     => 1,
+        hoon            => 1,
+        hoonJog     => 1,
+        hoonJogging => 1,
+        hoonJogs    => 1,
+        hoonSeq         => 1,
+        tallHoon        => 1,
+    };
+
+    return [] if not defined $v;
+    my $reftype = ref $v;
+    return [$v] if not $reftype; # An acceptable leaf node
+    return prune($$v) if $reftype eq 'REF';
+    divergence("Tree node has reftype $reftype") if $reftype ne 'ARRAY';
+    my @source = grep { defined } @{$v};
+    my $element_count = scalar @source;
+    return [] if $element_count <= 0; # must have at least one element
+    my $name = shift @source;
+    my $nameReftype = ref $name;
+    # divergence("Tree node name has reftype $nameReftype") if $nameReftype;
+    if ($nameReftype) {
+      my @result = ();
+      ELEMENT:for my $element ($name, @source) {
+	if (ref $element eq 'ARRAY') {
+	  push @result, grep { defined }
+		  map { @{$_}; }
+		  map { prune($_); }
+		  @{$element}
+		;
+	  next ELEMENT;
+	}
+	push @result, $_;
+      }
+      return [@result];
+    }
+    if (defined $deleteIfEmpty->{$name} and $element_count == 1) {
+      return [];
+    }
+    if (defined $nonSemantic->{$name}) {
+      # Not an acceptable branch node, but (hopefully)
+      # its children are acceptable
+      return [ grep { defined }
+	      map { @{$_}; }
+	      map { prune($_); }
+	      @source
+	    ];
+    }
+
+    # An acceptable branch node
+    my @result = ($name);
+    push @result, grep { defined }
+	    map { @{$_}; }
+	    map { prune($_); }
+	    @source;
+    return [\@result];
+}
+
+1;
 1;
 
 __DATA__
