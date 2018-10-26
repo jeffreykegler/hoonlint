@@ -284,6 +284,13 @@ flatHoon ::= flatWutbar
 flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
 flatWutbar ::= (':wtbr(') flatHoonSeq (')')
 
+WUTPAM ~ [?] [&]
+tallHoon ::= tallWutpam
+tallWutpam ::= (WUTPAM gap) hoonSeq (gap '==')
+flatHoon ::= flatWutpam
+flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
+flatWutpam ::= (':wtbr(') flatHoonSeq (')')
+
 tallHoon ::= tallWuthep
 WUTHEP ~ [?] [-]
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
