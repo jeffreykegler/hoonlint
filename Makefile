@@ -1,12 +1,13 @@
 
 
-.PHONY: all test test_suite undoc_tests
+.PHONY: all test test_suite undoc_tests \
+  fizzbuzz sieve_b sieve_k toe
 
 all: test
 
 test: test_suite undoc_tests
 
-test_suite: fizzbuzz sieve_b sieve_k
+test_suite: fizzbuzz sieve_b sieve_k toe
 
 yahc.pm: yahc.PM
 	perl -I. yahc.PM > yahc.pm
@@ -23,12 +24,18 @@ sieve_k: yahc.pm sieve_k.hoon
 	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast.try 2>&1
 	diff sieve_k.ast.try sieve_k.ast || echo 'sieve_k example !FAILED!'
 
+toe: yahc.pm toe.hoon
+	perl -I. yahcfilt.pl <toe.hoon >toe.ast.try 2>&1
+	diff toe.ast.try toe.ast || echo 'toe example !FAILED!'
+
 undoc_tests:
 
 ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
 	perl -I. yahcfilt.pl <sieve_b.hoon >sieve_b.ast
 	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast
+	perl -I. yahcfilt.pl <toe.hoon >toe.ast
 
 dev:
-	perl -I. yahcfilt.pl <toe.hoon
+	echo empty dev target
+	# perl -I. yahcfilt.pl <toe.hoon
