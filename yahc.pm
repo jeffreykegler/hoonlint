@@ -127,7 +127,6 @@ sub prune {
 }
 
 1;
-1;
 
 __DATA__
 # start and length will be needed for production
@@ -165,6 +164,12 @@ atom ::= STRING
 atom ::= term
 atom ::= NIL
 atom ::= AURA
+atom ::= loobean
+
+loobean ::= '%.y'
+loobean ::= '%.n'
+loobean ::= '&'
+loobean ::= '|'
 
 term ::= TERM
 term ::= dollarTerm
@@ -271,6 +276,13 @@ irrKettis ::= toga ('=') flatHoon
 
 flatHoon ::= irrTisgal
 irrTisgal ::= flatHoon (':') flatHoon
+
+WUTBAR ~ [?] [|]
+tallHoon ::= tallWutbar
+tallWutbar ::= (WUTBAR gap) hoonSeq (gap '==')
+flatHoon ::= flatWutbar
+flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
+flatWutbar ::= (':wtbr(') flatHoonSeq (')')
 
 tallHoon ::= tallWuthep
 WUTHEP ~ [?] [-]
