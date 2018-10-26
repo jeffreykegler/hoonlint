@@ -191,7 +191,7 @@ dollarNil ::= ('$~')
 type ::= '*' # noun
 type ::= '^' # cell
 type ::= '?' # loobean
-# TODO: commented out because these create ambiguities
+# LATER: commented out because these create ambiguities
 # type ::= '~' # null
 # type ::= '@' # cell
 
@@ -402,7 +402,7 @@ wNumDigit ~ [-~0-9a-zA-Z]
 wNumGroups ~ wNumGroup*
 wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
 
-# TODO: Add \xx hex escapes, and more backslash escapes
+# LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
 STRING ~ ["] doubleStringElements ["]
 doubleStringElements ~ doubleStringElement*
@@ -410,13 +410,12 @@ doubleStringElements ~ doubleStringElement*
 # From syntax.vim, might need correction
 doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 
-# TODO Single string element -- they also allow escapes
+# LATER Single string element -- they also allow escapes
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
-# TODO: Is this right?
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
 firstTermChar ~ [a-z]
