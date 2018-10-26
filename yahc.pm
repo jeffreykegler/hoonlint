@@ -229,20 +229,20 @@ irrBuccab ::= ('_') flatHoon
 
 BUCCEN ~ [$] [%]
 tallHoon ::= tallBuccen
-flatHoon ::= flatBuccen
-tallBuccen ::= (BUCCEN gap) buccenPairSeq (gap '==')
-flatBuccen ::= (BUCCEN '(') flatHoonSeq (')')
-flatBuccen ::= (':bccl(') flatHoonSeq (')')
-buccenPairSeq ::= buccenPair+ separator=>gap proper=>1
-buccenPair ::= flatHoon
-buccenPair ::= oldBuccenPair
-oldBuccenPair ::= ('{') oldBuccenElement (ACE) oldBuccenElement ('}')
-oldBuccenPair ::= ('{') oldBuccenElement (ACE) oldBuccenElement ('}')
-oldBuccenElement ::= oldBuccenSymbol
-oldBuccenElement ::= oldBuccenNil
-oldBuccenElement ::= flatHoon
-oldBuccenSymbol ::= ('$') NAME
-oldBuccenNil ::= ('$~')
+tallBuccen ::= (BUCCEN gap) battery (gap '==')
+
+battery ::= batteryPair+ separator=>gap proper=>1
+batteryPair ::= ('[' ACE) TERM (ACE) foot (']')
+batteryPair ::= curlyBatteryPair
+curlyBatteryPair ::= ('{') curlyBatteryTerm (ACE) foot ('}')
+curlyBatteryPair ::= ('{') batteryTerm (ACE) foot ('}')
+batteryTerm ::= TERM
+batteryTerm ::= curlyBatteryTerm
+foot ::= flatHoon
+foot ::= curlyBatteryTerm
+curlyBatteryTerm ::= ('$') NAME
+curlyBatteryTerm ::= curlyBatteryNil
+curlyBatteryNil ::= ('$~')
 
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
