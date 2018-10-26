@@ -162,9 +162,15 @@ flatHoon ::= wing
 
 atom ::= NUMBER
 atom ::= STRING
-atom ::= TERM
+atom ::= term
 atom ::= NIL
 atom ::= AURA
+
+term ::= TERM
+term ::= dollarTerm
+dollarTerm ::= ('$') NAME
+dollarTerm ::= dollarNil
+dollarNil ::= ('$~')
 
 type ::= '*' # noun
 type ::= '^' # cell
@@ -232,16 +238,10 @@ tallHoon ::= tallBuccen
 tallBuccen ::= (BUCCEN gap) battery (gap '==')
 
 battery ::= batteryPair+ separator=>gap proper=>1
-batteryPair ::= ('[' ACE) TERM (ACE) foot (']')
-batteryPair ::= curlyBatteryPair
-curlyBatteryPair ::= ('{') batteryTerm (ACE) foot ('}')
-batteryTerm ::= TERM
-batteryTerm ::= curlyBatteryTerm
+batteryPair ::= ('[' ACE) term (ACE) foot (']')
+batteryPair ::= curlyPair
+curlyPair ::= ('{') term (ACE) foot ('}')
 foot ::= flatHoon
-foot ::= curlyBatteryTerm
-curlyBatteryTerm ::= ('$') NAME
-curlyBatteryTerm ::= curlyBatteryNil
-curlyBatteryNil ::= ('$~')
 
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
@@ -445,9 +445,9 @@ flatBucpat ::= (':bcpt') [(] flatHoon (ACE) flatHoon [)]
 BUCTIS ~ [$] [=]
 tallHoon ::= tallBuctis
 flatHoon ::= flatBuctis
-tallBuctis ::= (BUCTIS gap)TERM (gap) hoon
-flatBuctis ::= (BUCTIS) [(] TERM (ACE) flatHoon [)]
-flatBuctis ::= (':bcts') [(] TERM (ACE) flatHoon [)]
+tallBuctis ::= (BUCTIS gap)term (gap) hoon
+flatBuctis ::= (BUCTIS) [(] term (ACE) flatHoon [)]
+flatBuctis ::= (':bcts') [(] term (ACE) flatHoon [)]
 
 # BUCCAB
 BUCCAB ~ [$] [_]
@@ -661,25 +661,25 @@ flatSigbar ::= (':sgbr') [(] flatHoon (ACE) flatHoon [)]
 SIGBUC ~ [~] [$]
 tallHoon ::= tallSigbuc
 flatHoon ::= flatSigbuc
-tallSigbuc ::= (SIGBUC gap)TERM (gap) hoon
-flatSigbuc ::= (SIGBUC) [(] TERM (ACE) flatHoon [)]
-flatSigbuc ::= (':sgbc') [(] TERM (ACE) flatHoon [)]
+tallSigbuc ::= (SIGBUC gap)term (gap) hoon
+flatSigbuc ::= (SIGBUC) [(] term (ACE) flatHoon [)]
+flatSigbuc ::= (':sgbc') [(] term (ACE) flatHoon [)]
 
 # SIGCEN
 SIGCEN ~ [~] [%]
 tallHoon ::= tallSigcen
 flatHoon ::= flatSigcen
-tallSigcen ::= (SIGCEN gap)TERM (gap) wing (gap) hoon (gap) hoon
-flatSigcen ::= (SIGCEN) [(] TERM (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
-flatSigcen ::= (':sgcn') [(] TERM (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+tallSigcen ::= (SIGCEN gap)term (gap) wing (gap) hoon (gap) hoon
+flatSigcen ::= (SIGCEN) [(] term (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+flatSigcen ::= (':sgcn') [(] term (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
 
 # SIGFAS
 SIGFAS ~ [~] [/]
 tallHoon ::= tallSigfas
 flatHoon ::= flatSigfas
-tallSigfas ::= (SIGFAS gap)TERM (gap) hoon
-flatSigfas ::= (SIGFAS) [(] TERM (ACE) flatHoon [)]
-flatSigfas ::= (':sgfs') [(] TERM (ACE) flatHoon [)]
+tallSigfas ::= (SIGFAS gap)term (gap) hoon
+flatSigfas ::= (SIGFAS) [(] term (ACE) flatHoon [)]
+flatSigfas ::= (':sgfs') [(] term (ACE) flatHoon [)]
 
 # SIGGAL
 SIGGAL ~ [~] [<]
@@ -813,9 +813,9 @@ flatTissem ::= (':tssm') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 TISTAR ~ [=] [*]
 tallHoon ::= tallTistar
 flatHoon ::= flatTistar
-tallTistar ::= (TISTAR gap)TERM (gap) hoon (gap) hoon
-flatTistar ::= (TISTAR) [(] TERM (ACE) flatHoon (ACE) flatHoon [)]
-flatTistar ::= (':tstr') [(] TERM (ACE) flatHoon (ACE) flatHoon [)]
+tallTistar ::= (TISTAR gap)term (gap) hoon (gap) hoon
+flatTistar ::= (TISTAR) [(] term (ACE) flatHoon (ACE) flatHoon [)]
+flatTistar ::= (':tstr') [(] term (ACE) flatHoon (ACE) flatHoon [)]
 
 # TISWUT
 TISWUT ~ [=] [?]

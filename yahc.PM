@@ -173,9 +173,15 @@ flatHoon ::= wing
 
 atom ::= NUMBER
 atom ::= STRING
-atom ::= TERM
+atom ::= term
 atom ::= NIL
 atom ::= AURA
+
+term ::= TERM
+term ::= dollarTerm
+dollarTerm ::= ('$') NAME
+dollarTerm ::= dollarNil
+dollarNil ::= ('$~')
 
 type ::= '*' # noun
 type ::= '^' # cell
@@ -243,16 +249,10 @@ tallHoon ::= tallBuccen
 tallBuccen ::= (BUCCEN gap) battery (gap '==')
 
 battery ::= batteryPair+ separator=>gap proper=>1
-batteryPair ::= ('[' ACE) TERM (ACE) foot (']')
-batteryPair ::= curlyBatteryPair
-curlyBatteryPair ::= ('{') batteryTerm (ACE) foot ('}')
-batteryTerm ::= TERM
-batteryTerm ::= curlyBatteryTerm
+batteryPair ::= ('[' ACE) term (ACE) foot (']')
+batteryPair ::= curlyPair
+curlyPair ::= ('{') term (ACE) foot ('}')
 foot ::= flatHoon
-foot ::= curlyBatteryTerm
-curlyBatteryTerm ::= ('$') NAME
-curlyBatteryTerm ::= curlyBatteryNil
-curlyBatteryNil ::= ('$~')
 
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
@@ -498,7 +498,7 @@ cenket hoon hoon hoon hoon
 censig wing hoon hoon
 cenhep hoon hoon
 bucpat hoon hoon
-buctis TERM hoon
+buctis term hoon
 buccab hoon
 bucket hoon hoon
 buchep hoon hoon
@@ -535,9 +535,9 @@ ketwut hoon
 semsem hoon hoon
 
 sigbar hoon hoon
-sigbuc TERM hoon
-sigcen TERM wing hoon hoon
-sigfas TERM hoon
+sigbuc term hoon
+sigcen term wing hoon hoon
+sigfas term hoon
 siggal hoon hoon
 siggar hoon hoon
 siglus hoon
@@ -561,7 +561,7 @@ tislus hoon hoon
 # tissem taco hoon hoon
 tissem hoon hoon hoon
 
-tistar TERM hoon hoon
+tistar term hoon hoon
 tiswut wing hoon hoon hoon
 
 wutcol hoon hoon hoon
