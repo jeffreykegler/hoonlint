@@ -234,7 +234,6 @@ tallBuccen ::= (BUCCEN gap) battery (gap '==')
 battery ::= batteryPair+ separator=>gap proper=>1
 batteryPair ::= ('[' ACE) TERM (ACE) foot (']')
 batteryPair ::= curlyBatteryPair
-curlyBatteryPair ::= ('{') curlyBatteryTerm (ACE) foot ('}')
 curlyBatteryPair ::= ('{') batteryTerm (ACE) foot ('}')
 batteryTerm ::= TERM
 batteryTerm ::= curlyBatteryTerm
