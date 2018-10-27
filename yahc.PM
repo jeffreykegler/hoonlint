@@ -238,6 +238,23 @@ flatHoonJoggingSeparator ::= ',' ACE
 optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
 namedHoon ::= ('++' gap) NAME (gap) hoon
 
+# FIXED: bucpat hoon hoon
+# FIXED: buctis term hoon
+# FIXED: buccab hoon
+# FIXED: bucket hoon hoon
+# FIXED: buchep hoon hoon
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
+
+# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# # where <type> is buc??? runes and irregular forms thereof
+# FIXED: bartis hoon hoon
+
+# FIXED: barwut hoon
+
 BARCAB ~ [|] [_]
 tallHoon ::= tallBarcab
 tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
@@ -272,13 +289,24 @@ foot ::= flatHoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
 
+# FIXED: cendot hoon hoon
+# FIXED: cenhep hoon hoon
 flatHoon ::= irrCenhep
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 irrCenhep ::= ('(') flatHoonSeq (')')
 
+# FIXED: cenket hoon hoon hoon hoon
+# FIXED: cenlus hoon hoon hoon
+
+# FIXED: censig wing hoon hoon
 flatHoon ::= irrCensig
 irrCensig ::= ('~(') flatHoonSeq (')')
+
+# FIXED: colcab hoon hoon
+# FIXED: colhep hoon hoon
+# FIXED: collus hoon hoon hoon
+# FIXED: colket hoon hoon hoon hoon
 
 flatHoon ::= irrCentis
 tallHoon ::= tallCentis
@@ -286,11 +314,16 @@ CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
+# FIXED: dottis hoon hoon
 flatHoon ::= irrDottis
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
+# FIXED: dotlus atom
 flatHoon ::= irrDotlus
 irrDotlus ::= ('+(') flatHoon (')')
+
+# FIXED: dottar hoon hoon
+# FIXED: dotwut hoon
 
 flatHoon ::= irrKettis
 irrKettis ::= toga ('=') flatHoon
@@ -437,35 +470,6 @@ AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
 
-# FIXED: cenlus hoon hoon hoon
-# FIXED: cendot hoon hoon
-# FIXED: cenket hoon hoon hoon hoon
-# FIXED: censig wing hoon hoon
-# FIXED: cenhep hoon hoon
-# FIXED: bucpat hoon hoon
-# FIXED: buctis term hoon
-# FIXED: buccab hoon
-# FIXED: bucket hoon hoon
-# FIXED: buchep hoon hoon
-# FIXED: barcol hoon hoon
-# FIXED: bardot hoon
-# FIXED: barhep hoon
-# FIXED: barsig hoon hoon
-# FIXED: bartar hoon hoon
-
-# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# # where <type> is buc??? runes and irregular forms thereof
-# FIXED: bartis hoon hoon
-
-# FIXED: barwut hoon
-# FIXED: colcab hoon hoon
-# FIXED: colhep hoon hoon
-# FIXED: collus hoon hoon hoon
-# FIXED: colket hoon hoon hoon hoon
-# FIXED: dotlus atom
-# FIXED: dottar hoon hoon
-# FIXED: dottis hoon hoon
-# FIXED: dotwut hoon
 # FIXED: ketbar hoon
 # FIXED: kethep hoon hoon
 # FIXED: ketlus hoon hoon

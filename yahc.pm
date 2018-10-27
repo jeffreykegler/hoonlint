@@ -217,6 +217,23 @@ flatHoonJoggingSeparator ::= ',' ACE
 optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
 namedHoon ::= ('++' gap) NAME (gap) hoon
 
+# FIXED: bucpat hoon hoon
+# FIXED: buctis term hoon
+# FIXED: buccab hoon
+# FIXED: bucket hoon hoon
+# FIXED: buchep hoon hoon
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
+
+# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# # where <type> is buc??? runes and irregular forms thereof
+# FIXED: bartis hoon hoon
+
+# FIXED: barwut hoon
+
 BARCAB ~ [|] [_]
 tallHoon ::= tallBarcab
 tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
@@ -251,13 +268,24 @@ foot ::= flatHoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
 
+# FIXED: cendot hoon hoon
+# FIXED: cenhep hoon hoon
 flatHoon ::= irrCenhep
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 irrCenhep ::= ('(') flatHoonSeq (')')
 
+# FIXED: cenket hoon hoon hoon hoon
+# FIXED: cenlus hoon hoon hoon
+
+# FIXED: censig wing hoon hoon
 flatHoon ::= irrCensig
 irrCensig ::= ('~(') flatHoonSeq (')')
+
+# FIXED: colcab hoon hoon
+# FIXED: colhep hoon hoon
+# FIXED: collus hoon hoon hoon
+# FIXED: colket hoon hoon hoon hoon
 
 flatHoon ::= irrCentis
 tallHoon ::= tallCentis
@@ -265,11 +293,16 @@ CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
+# FIXED: dottis hoon hoon
 flatHoon ::= irrDottis
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
+# FIXED: dotlus atom
 flatHoon ::= irrDotlus
 irrDotlus ::= ('+(') flatHoon (')')
+
+# FIXED: dottar hoon hoon
+# FIXED: dotwut hoon
 
 flatHoon ::= irrKettis
 irrKettis ::= toga ('=') flatHoon
@@ -416,35 +449,6 @@ AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
 
-# FIXED: cenlus hoon hoon hoon
-# FIXED: cendot hoon hoon
-# FIXED: cenket hoon hoon hoon hoon
-# FIXED: censig wing hoon hoon
-# FIXED: cenhep hoon hoon
-# FIXED: bucpat hoon hoon
-# FIXED: buctis term hoon
-# FIXED: buccab hoon
-# FIXED: bucket hoon hoon
-# FIXED: buchep hoon hoon
-# FIXED: barcol hoon hoon
-# FIXED: bardot hoon
-# FIXED: barhep hoon
-# FIXED: barsig hoon hoon
-# FIXED: bartar hoon hoon
-
-# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# # where <type> is buc??? runes and irregular forms thereof
-# FIXED: bartis hoon hoon
-
-# FIXED: barwut hoon
-# FIXED: colcab hoon hoon
-# FIXED: colhep hoon hoon
-# FIXED: collus hoon hoon hoon
-# FIXED: colket hoon hoon hoon hoon
-# FIXED: dotlus atom
-# FIXED: dottar hoon hoon
-# FIXED: dottis hoon hoon
-# FIXED: dotwut hoon
 # FIXED: ketbar hoon
 # FIXED: kethep hoon hoon
 # FIXED: ketlus hoon hoon
@@ -498,46 +502,6 @@ optAlphas ~ [a-zA-Z]*
 # FIXED: zapgar hoon
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
-
-# CENLUS hoon hoon hoon
-CENLUS ~ [%] [+]
-tallHoon ::= tallCenlus
-flatHoon ::= flatCenlus
-tallCenlus ::= (CENLUS gap)hoon (gap) hoon (gap) hoon
-flatCenlus ::= (CENLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCenlus ::= (':cnls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-
-# CENDOT hoon hoon
-CENDOT ~ [%] [.]
-tallHoon ::= tallCendot
-flatHoon ::= flatCendot
-tallCendot ::= (CENDOT gap)hoon (gap) hoon
-flatCendot ::= (CENDOT) [(] flatHoon (ACE) flatHoon [)]
-flatCendot ::= (':cndt') [(] flatHoon (ACE) flatHoon [)]
-
-# CENKET hoon hoon hoon hoon
-CENKET ~ [%] [\^]
-tallHoon ::= tallCenket
-flatHoon ::= flatCenket
-tallCenket ::= (CENKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
-flatCenket ::= (CENKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCenket ::= (':cnkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-
-# CENSIG wing hoon hoon
-CENSIG ~ [%] [~]
-tallHoon ::= tallCensig
-flatHoon ::= flatCensig
-tallCensig ::= (CENSIG gap)wing (gap) hoon (gap) hoon
-flatCensig ::= (CENSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatCensig ::= (':cnsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-
-# CENHEP hoon hoon
-CENHEP ~ [%] [-]
-tallHoon ::= tallCenhep
-flatHoon ::= flatCenhep
-tallCenhep ::= (CENHEP gap)hoon (gap) hoon
-flatCenhep ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
-flatCenhep ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
 
 # BUCPAT hoon hoon
 BUCPAT ~ [$] [@]
@@ -635,6 +599,46 @@ tallBarwut ::= (BARWUT gap)hoon
 flatBarwut ::= (BARWUT) [(] flatHoon [)]
 flatBarwut ::= (':brwt') [(] flatHoon [)]
 
+# CENDOT hoon hoon
+CENDOT ~ [%] [.]
+tallHoon ::= tallCendot
+flatHoon ::= flatCendot
+tallCendot ::= (CENDOT gap)hoon (gap) hoon
+flatCendot ::= (CENDOT) [(] flatHoon (ACE) flatHoon [)]
+flatCendot ::= (':cndt') [(] flatHoon (ACE) flatHoon [)]
+
+# CENHEP hoon hoon
+CENHEP ~ [%] [-]
+tallHoon ::= tallCenhep
+flatHoon ::= flatCenhep
+tallCenhep ::= (CENHEP gap)hoon (gap) hoon
+flatCenhep ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
+flatCenhep ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
+
+# CENKET hoon hoon hoon hoon
+CENKET ~ [%] [\^]
+tallHoon ::= tallCenket
+flatHoon ::= flatCenket
+tallCenket ::= (CENKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
+flatCenket ::= (CENKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatCenket ::= (':cnkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# CENLUS hoon hoon hoon
+CENLUS ~ [%] [+]
+tallHoon ::= tallCenlus
+flatHoon ::= flatCenlus
+tallCenlus ::= (CENLUS gap)hoon (gap) hoon (gap) hoon
+flatCenlus ::= (CENLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+flatCenlus ::= (':cnls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# CENSIG wing hoon hoon
+CENSIG ~ [%] [~]
+tallHoon ::= tallCensig
+flatHoon ::= flatCensig
+tallCensig ::= (CENSIG gap)wing (gap) hoon (gap) hoon
+flatCensig ::= (CENSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+flatCensig ::= (':cnsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+
 # COLCAB hoon hoon
 COLCAB ~ [:] [_]
 tallHoon ::= tallColcab
@@ -667,6 +671,14 @@ tallColket ::= (COLKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
 flatColket ::= (COLKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatColket ::= (':clkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
+# DOTTIS hoon hoon
+DOTTIS ~ [.] [=]
+tallHoon ::= tallDottis
+flatHoon ::= flatDottis
+tallDottis ::= (DOTTIS gap)hoon (gap) hoon
+flatDottis ::= (DOTTIS) [(] flatHoon (ACE) flatHoon [)]
+flatDottis ::= (':dtts') [(] flatHoon (ACE) flatHoon [)]
+
 # DOTLUS atom
 DOTLUS ~ [.] [+]
 tallHoon ::= tallDotlus
@@ -682,14 +694,6 @@ flatHoon ::= flatDottar
 tallDottar ::= (DOTTAR gap)hoon (gap) hoon
 flatDottar ::= (DOTTAR) [(] flatHoon (ACE) flatHoon [)]
 flatDottar ::= (':dttr') [(] flatHoon (ACE) flatHoon [)]
-
-# DOTTIS hoon hoon
-DOTTIS ~ [.] [=]
-tallHoon ::= tallDottis
-flatHoon ::= flatDottis
-tallDottis ::= (DOTTIS gap)hoon (gap) hoon
-flatDottis ::= (DOTTIS) [(] flatHoon (ACE) flatHoon [)]
-flatDottis ::= (':dtts') [(] flatHoon (ACE) flatHoon [)]
 
 # DOTWUT hoon
 DOTWUT ~ [.] [?]
