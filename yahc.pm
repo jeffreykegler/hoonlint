@@ -180,7 +180,7 @@ dollarNil ::= ('$~')
 type ::= '*' # noun
 type ::= '^' # cell
 type ::= '?' # loobean
-# TODO: commented out because these create ambiguities
+# LATER: commented out because these create ambiguities
 # type ::= '~' # null
 # type ::= '@' # cell
 
@@ -391,7 +391,7 @@ wNumDigit ~ [-~0-9a-zA-Z]
 wNumGroups ~ wNumGroup*
 wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
 
-# TODO: Add \xx hex escapes, and more backslash escapes
+# LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
 STRING ~ ["] doubleStringElements ["]
 doubleStringElements ~ doubleStringElement*
@@ -399,13 +399,12 @@ doubleStringElements ~ doubleStringElement*
 # From syntax.vim, might need correction
 doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 
-# TODO Single string element -- they also allow escapes
+# LATER Single string element -- they also allow escapes
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
-# TODO: Is this right?
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
 firstTermChar ~ [a-z]
@@ -416,6 +415,92 @@ lastTermChar ~ [a-z0-9]
 AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
+
+# FIXED: cenlus hoon hoon hoon
+# FIXED: cendot hoon hoon
+# FIXED: cenket hoon hoon hoon hoon
+# FIXED: censig wing hoon hoon
+# FIXED: cenhep hoon hoon
+# FIXED: bucpat hoon hoon
+# FIXED: buctis term hoon
+# FIXED: buccab hoon
+# FIXED: bucket hoon hoon
+# FIXED: buchep hoon hoon
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
+# FIXED: 
+# FIXED: # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# FIXED: # where <type> is buc??? runes and irregular forms thereof
+# FIXED: bartis hoon hoon
+# FIXED: 
+# FIXED: barwut hoon
+# FIXED: 
+# FIXED: colcab hoon hoon
+# FIXED: colhep hoon hoon
+# FIXED: collus hoon hoon hoon
+# FIXED: colket hoon hoon hoon hoon
+# FIXED: 
+# FIXED: dotlus atom
+# FIXED: dottar hoon hoon
+# FIXED: dottis hoon hoon
+# FIXED: dotwut hoon
+# FIXED: 
+# FIXED: ketbar hoon
+# FIXED: kethep hoon hoon
+# FIXED: ketlus hoon hoon
+# FIXED: ketsig hoon
+# FIXED: kettis toga hoon
+# FIXED: ketwut hoon
+# FIXED: 
+# FIXED: #semsem hoon value
+# FIXED: semsem hoon hoon
+# FIXED: 
+# FIXED: sigbar hoon hoon
+# FIXED: sigbuc term hoon
+# FIXED: sigcen term wing hoon hoon
+# FIXED: sigfas term hoon
+# FIXED: siggal hoon hoon
+# FIXED: siggar hoon hoon
+# FIXED: siglus hoon
+# FIXED: sigpam hoon hoon
+# FIXED: sigwut hoon hoon hoon
+# FIXED: sigzap hoon hoon
+# FIXED: 
+# FIXED: tisbar hoon hoon
+# FIXED: tiscom hoon hoon
+# FIXED: tisdot wing hoon hoon
+# FIXED: tishep hoon hoon
+# FIXED: 
+# FIXED: # tisfas taco hoon hoon
+# FIXED: tisfas hoon hoon hoon
+# FIXED: 
+# FIXED: tisgal hoon hoon
+# FIXED: tisgar hoon hoon
+# FIXED: tisket hoon wing hoon hoon
+# FIXED: tislus hoon hoon
+# FIXED: 
+# FIXED: # tissem taco hoon hoon
+# FIXED: tissem hoon hoon hoon
+# FIXED: 
+# FIXED: tistar term hoon hoon
+# FIXED: tiswut wing hoon hoon hoon
+# FIXED: 
+# FIXED: wutcol hoon hoon hoon
+# FIXED: wutdot hoon hoon hoon
+# FIXED: wutgal hoon hoon
+# FIXED: wutgar hoon hoon
+# FIXED: wutzap hoon
+# FIXED: wutket wing hoon hoon
+# FIXED: wutpat wing hoon hoon
+# FIXED: wutsig wing hoon hoon
+# FIXED: wuttis hoon wing
+# FIXED: 
+# FIXED: zapgar hoon
+# FIXED: zaptis hoon
+# FIXED: zapwut atom hoon
 
 # CENLUS
 CENLUS ~ [%] [+]

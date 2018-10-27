@@ -427,6 +427,92 @@ AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
 
+# FIXED: cenlus hoon hoon hoon
+# FIXED: cendot hoon hoon
+# FIXED: cenket hoon hoon hoon hoon
+# FIXED: censig wing hoon hoon
+# FIXED: cenhep hoon hoon
+# FIXED: bucpat hoon hoon
+# FIXED: buctis term hoon
+# FIXED: buccab hoon
+# FIXED: bucket hoon hoon
+# FIXED: buchep hoon hoon
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
+# FIXED: 
+# FIXED: # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# FIXED: # where <type> is buc??? runes and irregular forms thereof
+# FIXED: bartis hoon hoon
+# FIXED: 
+# FIXED: barwut hoon
+# FIXED: 
+# FIXED: colcab hoon hoon
+# FIXED: colhep hoon hoon
+# FIXED: collus hoon hoon hoon
+# FIXED: colket hoon hoon hoon hoon
+# FIXED: 
+# FIXED: dotlus atom
+# FIXED: dottar hoon hoon
+# FIXED: dottis hoon hoon
+# FIXED: dotwut hoon
+# FIXED: 
+# FIXED: ketbar hoon
+# FIXED: kethep hoon hoon
+# FIXED: ketlus hoon hoon
+# FIXED: ketsig hoon
+# FIXED: kettis toga hoon
+# FIXED: ketwut hoon
+# FIXED: 
+# FIXED: #semsem hoon value
+# FIXED: semsem hoon hoon
+# FIXED: 
+# FIXED: sigbar hoon hoon
+# FIXED: sigbuc term hoon
+# FIXED: sigcen term wing hoon hoon
+# FIXED: sigfas term hoon
+# FIXED: siggal hoon hoon
+# FIXED: siggar hoon hoon
+# FIXED: siglus hoon
+# FIXED: sigpam hoon hoon
+# FIXED: sigwut hoon hoon hoon
+# FIXED: sigzap hoon hoon
+# FIXED: 
+# FIXED: tisbar hoon hoon
+# FIXED: tiscom hoon hoon
+# FIXED: tisdot wing hoon hoon
+# FIXED: tishep hoon hoon
+# FIXED: 
+# FIXED: # tisfas taco hoon hoon
+# FIXED: tisfas hoon hoon hoon
+# FIXED: 
+# FIXED: tisgal hoon hoon
+# FIXED: tisgar hoon hoon
+# FIXED: tisket hoon wing hoon hoon
+# FIXED: tislus hoon hoon
+# FIXED: 
+# FIXED: # tissem taco hoon hoon
+# FIXED: tissem hoon hoon hoon
+# FIXED: 
+# FIXED: tistar term hoon hoon
+# FIXED: tiswut wing hoon hoon hoon
+# FIXED: 
+# FIXED: wutcol hoon hoon hoon
+# FIXED: wutdot hoon hoon hoon
+# FIXED: wutgal hoon hoon
+# FIXED: wutgar hoon hoon
+# FIXED: wutzap hoon
+# FIXED: wutket wing hoon hoon
+# FIXED: wutpat wing hoon hoon
+# FIXED: wutsig wing hoon hoon
+# FIXED: wuttis hoon wing
+# FIXED: 
+# FIXED: zapgar hoon
+# FIXED: zaptis hoon
+# FIXED: zapwut atom hoon
+
 END_OF_DSL_MAIN
 
 # Here is meta-programming to write piece 2
@@ -606,8 +692,9 @@ EOS
 
 $fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
 my @dsl_auto_rules = ();
-DESC: for my $desc (split "\n", $fixedDesc) {
+DESC: for my $desc (split "\n", $dsl_main) {
     chomp $desc; # remove newline
+    next DESC if not $desc =~ s/^[#] FIXED: //;
     $desc =~ s/^\s+//; # eliminate leading spaces
     $desc =~ s/\s+$//; # eliminate trailing spaces
     $desc =~ s/\s*[#].*//; # eliminate comments
