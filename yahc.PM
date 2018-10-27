@@ -357,12 +357,6 @@ batteryElement ::= ('++' gap) NAME (gap) hoon
 
 # === CELLS BY RUNE ==
 
-# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# # where <type> is buc??? runes and irregular forms thereof
-# FIXED: bartis hoon hoon
-
-# FIXED: barwut hoon
-
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
 tallBarcab ::= (BARCAB gap) hoon (gap) battery (gap '--')
@@ -374,8 +368,19 @@ tallBarcen ::= (BARCEN gap) battery (gap '--')
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
 # FIXED: barhep hoon
+
+BARKET ~ [|] '^'
+hoon ::= tallBarket
+tallBarket ::= (BARKET gap) hoon (gap) battery (gap '--')
+
 # FIXED: barsig hoon hoon
 # FIXED: bartar hoon hoon
+
+# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# # where <type> is buc??? runes and irregular forms thereof
+# FIXED: bartis hoon hoon
+
+# FIXED: barwut hoon
 
 # FIXED: buccab hoon
 flatHoon  ::= irrBuccab
