@@ -108,9 +108,9 @@
           [
             'tallBarcen',
             [
-              'optNamedHoonSeq',
+              'battery',
               [
-                'namedHoon',
+                'batteryElement',
                 'abet',
                 [
                   'irrCenhep',
@@ -173,7 +173,7 @@
                 ]
               ],
               [
-                'namedHoon',
+                'batteryElement',
                 'main',
                 [
                   'tallTislus',
@@ -363,7 +363,7 @@
                 ]
               ],
               [
-                'namedHoon',
+                'batteryElement',
                 'reap',
                 [
                   'tallBartis',

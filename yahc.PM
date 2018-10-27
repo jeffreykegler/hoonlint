@@ -352,8 +352,8 @@ flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
 flatHoonJog ::= flatHoon (ACE) flatHoon
 flatHoonJoggingSeparator ::= ',' ACE
 
-optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
-namedHoon ::= ('++' gap) NAME (gap) hoon
+battery ::= batteryElement* separator=>gap proper=>1
+batteryElement ::= ('++' gap) NAME (gap) hoon
 
 # === CELLS BY RUNE ==
 
@@ -365,11 +365,11 @@ namedHoon ::= ('++' gap) NAME (gap) hoon
 
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
-tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
+tallBarcab ::= (BARCAB gap) hoon (gap) battery (gap '--')
 
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
-tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
+tallBarcen ::= (BARCEN gap) battery (gap '--')
 
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
@@ -380,7 +380,6 @@ tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
 # FIXED: buccab hoon
 flatHoon  ::= irrBuccab
 irrBuccab ::= ('_') flatHoon
-
 
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol

@@ -311,9 +311,9 @@
       [
         'tallBarcen',
         [
-          'optNamedHoonSeq',
+          'battery',
           [
-            'namedHoon',
+            'batteryElement',
             'side',
             [
               'atom',
@@ -321,7 +321,7 @@
             ]
           ],
           [
-            'namedHoon',
+            'batteryElement',
             'spot',
             [
               'flatBuccol',
@@ -344,7 +344,7 @@
             ]
           ],
           [
-            'namedHoon',
+            'batteryElement',
             'fact',
             [
               'tallBuccen',
@@ -412,7 +412,7 @@
             ]
           ],
           [
-            'namedHoon',
+            'batteryElement',
             'move',
             [
               'tallBuccen',
@@ -510,7 +510,7 @@
             ]
           ],
           [
-            'namedHoon',
+            'batteryElement',
             'game',
             [
               'tallBuccol',
@@ -557,9 +557,9 @@
       [
         'tallBarcen',
         [
-          'optNamedHoonSeq',
+          'battery',
           [
-            'namedHoon',
+            'batteryElement',
             'bo',
             [
               'tallBarcab',
@@ -578,9 +578,9 @@
                 ]
               ],
               [
-                'optNamedHoonSeq',
+                'battery',
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'bit',
                   [
                     'flatBartis',
@@ -648,7 +648,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'off',
                   [
                     'flatBartis',
@@ -735,7 +735,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'get',
                   [
                     'flatBartis',
@@ -794,7 +794,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'set',
                   [
                     'flatBartis',
@@ -876,7 +876,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'win',
                   [
                     'tallCenlus',
@@ -976,7 +976,7 @@
             ]
           ],
           [
-            'namedHoon',
+            'batteryElement',
             'go',
             [
               'tallBarcab',
@@ -995,9 +995,9 @@
                 ]
               ],
               [
-                'optNamedHoonSeq',
+                'battery',
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'do',
                   [
                     'tallBartis',
@@ -1264,7 +1264,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'nu',
                   [
                     'flatKetlus',
@@ -1301,7 +1301,7 @@
                   ]
                 ],
                 [
-                  'namedHoon',
+                  'batteryElement',
                   'on',
                   [
                     'tallBarcab',
@@ -1320,9 +1320,9 @@
                       ]
                     ],
                     [
-                      'optNamedHoonSeq',
+                      'battery',
                       [
-                        'namedHoon',
+                        'batteryElement',
                         'is',
                         [
                           'tallWutbar',
@@ -1435,7 +1435,7 @@
                         ]
                       ],
                       [
-                        'namedHoon',
+                        'batteryElement',
                         'mo',
                         [
                           'tallKethep',
