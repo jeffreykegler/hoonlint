@@ -155,6 +155,7 @@ __DATA__
 :default ::= action => [name,values]
 lexeme default = latm => 1
 
+:start ::= top
 # LATER: This is a simplication, which does not
 # catch all the subtleties of "ford" files
 top ::= (leader) hoonSeq (trailer)
@@ -297,7 +298,34 @@ wNumDigit ~ [-~0-9a-zA-Z]
 wNumGroups ~ wNumGroup*
 wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
 
+# === ATOMS: ROCK
+
+AURA ~ '@'
+AURA ~ '@' optAlphas
+optAlphas ~ [a-zA-Z]*
+
+TERM ~ '%' firstTermChar
+TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
+firstTermChar ~ [a-z]
+optMedialTermChars ~ medialTermChar*
+medialTermChar ~ [a-z0-9-]
+lastTermChar ~ [a-z0-9]
+
 # === STRINGS ==
+
+# LATER: Add \xx hex escapes, and more backslash escapes
+# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
+STRING ~ ["] doubleStringElements ["]
+doubleStringElements ~ doubleStringElement*
+# 0x5C is backslash
+# From syntax.vim, might need correction
+doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
+
+# LATER Single string element -- they also allow escapes
+
+# syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
+# syn region      hoonBlock         start=+'''+ end=+'''+
+# syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
 # === HOONS ==
 
@@ -459,31 +487,6 @@ KET ~ '^'
 
 wsChars ~ wsChar*
 wsChar ~ [ \n]
-
-# LATER: Add \xx hex escapes, and more backslash escapes
-# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
-STRING ~ ["] doubleStringElements ["]
-doubleStringElements ~ doubleStringElement*
-# 0x5C is backslash
-# From syntax.vim, might need correction
-doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
-
-# LATER Single string element -- they also allow escapes
-
-# syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
-# syn region      hoonBlock         start=+'''+ end=+'''+
-# syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
-
-TERM ~ '%' firstTermChar
-TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
-firstTermChar ~ [a-z]
-optMedialTermChars ~ medialTermChar*
-medialTermChar ~ [a-z0-9-]
-lastTermChar ~ [a-z0-9]
-
-AURA ~ '@'
-AURA ~ '@' optAlphas
-optAlphas ~ [a-zA-Z]*
 
 # #semsem hoon value
 # FIXED: semsem hoon hoon
