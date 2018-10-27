@@ -357,12 +357,6 @@ namedHoon ::= ('++' gap) NAME (gap) hoon
 
 # === CELLS BY RUNE ==
 
-# FIXED: barcol hoon hoon
-# FIXED: bardot hoon
-# FIXED: barhep hoon
-# FIXED: barsig hoon hoon
-# FIXED: bartar hoon hoon
-
 # # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
@@ -376,6 +370,12 @@ tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
 tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
+
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
 
 # FIXED: buccab hoon
 flatHoon  ::= irrBuccab

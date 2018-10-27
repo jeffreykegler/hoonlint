@@ -336,12 +336,6 @@ namedHoon ::= ('++' gap) NAME (gap) hoon
 
 # === CELLS BY RUNE ==
 
-# FIXED: barcol hoon hoon
-# FIXED: bardot hoon
-# FIXED: barhep hoon
-# FIXED: barsig hoon hoon
-# FIXED: bartar hoon hoon
-
 # # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
 # # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
@@ -355,6 +349,12 @@ tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
 tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
+
+# FIXED: barcol hoon hoon
+# FIXED: bardot hoon
+# FIXED: barhep hoon
+# FIXED: barsig hoon hoon
+# FIXED: bartar hoon hoon
 
 # FIXED: buccab hoon
 flatHoon  ::= irrBuccab
@@ -520,6 +520,22 @@ nameFirstChar ~ [a-z]
 nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
 
+# BARTIS hoon hoon
+BARTIS ~ [|] [=]
+hoon ::= tallBartis
+flatHoon ::= flatBartis
+tallBartis ::= (BARTIS gap)hoon (gap) hoon
+flatBartis ::= (BARTIS) [(] flatHoon (ACE) flatHoon [)]
+flatBartis ::= (':brts') [(] flatHoon (ACE) flatHoon [)]
+
+# BARWUT hoon
+BARWUT ~ [|] [?]
+hoon ::= tallBarwut
+flatHoon ::= flatBarwut
+tallBarwut ::= (BARWUT gap)hoon
+flatBarwut ::= (BARWUT) [(] flatHoon [)]
+flatBarwut ::= (':brwt') [(] flatHoon [)]
+
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
 hoon ::= tallBarcol
@@ -559,22 +575,6 @@ flatHoon ::= flatBartar
 tallBartar ::= (BARTAR gap)hoon (gap) hoon
 flatBartar ::= (BARTAR) [(] flatHoon (ACE) flatHoon [)]
 flatBartar ::= (':brtr') [(] flatHoon (ACE) flatHoon [)]
-
-# BARTIS hoon hoon
-BARTIS ~ [|] [=]
-hoon ::= tallBartis
-flatHoon ::= flatBartis
-tallBartis ::= (BARTIS gap)hoon (gap) hoon
-flatBartis ::= (BARTIS) [(] flatHoon (ACE) flatHoon [)]
-flatBartis ::= (':brts') [(] flatHoon (ACE) flatHoon [)]
-
-# BARWUT hoon
-BARWUT ~ [|] [?]
-hoon ::= tallBarwut
-flatHoon ::= flatBarwut
-tallBarwut ::= (BARWUT gap)hoon
-flatBarwut ::= (BARWUT) [(] flatHoon [)]
-flatBarwut ::= (':brwt') [(] flatHoon [)]
 
 # BUCCAB hoon
 BUCCAB ~ [$] [_]
