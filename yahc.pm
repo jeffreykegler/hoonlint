@@ -141,55 +141,40 @@ lexeme default = latm => 1
 hoonFile ::= (leader) hoonSeq (trailer)
 
 trailer ::= optWs
+leader  ::= optWs
+
+# === CHARACTER SET ===
+
+backslash ~ [\0x5c] # 0x5c is backslash
+KET ~ '^'
+
+# === WHITESPACE ===
+
 optWs ::=
 optWs ::= ACE
 optWs ::= gap
 
-leader ::= optWsElements
-optWsElements ::= wsElement*
-wsElement ::= ACE
-wsElement ::= gap
+gap ::= ACE aces # a "flat" gap
+gap ::= tallGapPrefix optGapLines optAces
+# The prefix must contain an <NL> to ensure that this *is* a tall gap
+tallGapPrefix ::= optAces NL
+tallGapPrefix ::= optAces COMMENT
+optGapLines ::= gapLine*
+gapLine ::= optAces COMMENT
+gapLine ::= optAces NL
 
-hoonSeq ::= hoon+ separator=>gap proper=>1
-hoon ::= flatHoon
+optAces ::= ACE*
+aces ::= ACE+
 
-# flatHoons ::= flatHoon+
-flatHoon ::= atom
-flatHoon ::= type
-flatHoon ::= wing
+ACE ~ ' '
+COMMENT ~ '::' nonNLs nl
+NL ~ nl
+nl ~ [\n]
+nonNLs ~ nonNL*
+nonNL ~ [^\n]
 
-toga ::= NAME
-toga ::= '[' togaSeq ']'
-togaSeq ::= togaElement+ separator=>ACE proper=>1
-togaElement ::= toga
-togaElement ::= NIL
-
-wing ::= limb+ separator=>[.] proper=>1
-limb ::= optKets NAME
-optKets ::= KET*
-limb ::= lark
-lark ::= '.'
-lark ::= [+&|] NUMBER
-lark ::= carCdr
-lark ::= carCdrPairs
-lark ::= carCdrPairs carCdr
-carCdrPairs ::= carCdrPair+
-# The [-+] and [<>] syntax alternates for readability
-carCdrPair ::= [-+][<>]
-carCdr ::= [-+]
-
-flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
-
-hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>gap proper=>1
-hoonJog ::= hoon (gap) hoon
-flatHoonJogging ::= flatHoonJogs
-flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
-flatHoonJog ::= flatHoon (ACE) flatHoon
-flatHoonJoggingSeparator ::= ',' ACE
-
-optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
-namedHoon ::= ('++' gap) NAME (gap) hoon
+wsChars ~ wsChar*
+wsChar ~ [ \n]
 
 # === ATOMS ==
 
@@ -199,6 +184,8 @@ atom ::= term
 atom ::= NIL
 atom ::= AURA
 atom ::= loobean
+
+NIL ~ '~'
 
 loobean ::= '%.y'
 loobean ::= '%.n'
@@ -304,7 +291,50 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
 
-# === HOONS ==
+# === CELLS BY TYPE ==
+
+hoonSeq ::= hoon+ separator=>gap proper=>1
+hoon ::= flatHoon
+
+# flatHoons ::= flatHoon+
+flatHoon ::= atom
+flatHoon ::= type
+flatHoon ::= wing
+
+toga ::= NAME
+toga ::= '[' togaSeq ']'
+togaSeq ::= togaElement+ separator=>ACE proper=>1
+togaElement ::= toga
+togaElement ::= NIL
+
+wing ::= limb+ separator=>[.] proper=>1
+limb ::= optKets NAME
+optKets ::= KET*
+limb ::= lark
+lark ::= '.'
+lark ::= [+&|] NUMBER
+lark ::= carCdr
+lark ::= carCdrPairs
+lark ::= carCdrPairs carCdr
+carCdrPairs ::= carCdrPair+
+# The [-+] and [<>] syntax alternates for readability
+carCdrPair ::= [-+][<>]
+carCdr ::= [-+]
+
+flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
+
+hoonJogging ::= hoonJogs
+hoonJogs ::= hoonJog+ separator=>gap proper=>1
+hoonJog ::= hoon (gap) hoon
+flatHoonJogging ::= flatHoonJogs
+flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
+flatHoonJog ::= flatHoon (ACE) flatHoon
+flatHoonJoggingSeparator ::= ',' ACE
+
+optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
+namedHoon ::= ('++' gap) NAME (gap) hoon
+
+# === CELLS BY RUNE ==
 
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
@@ -482,26 +512,6 @@ tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
 
-gap ::= ACE aces # a "flat" gap
-gap ::= tallGapPrefix optGapLines optAces
-# The prefix must contain an <NL> to ensure that this *is* a tall gap
-tallGapPrefix ::= optAces NL
-tallGapPrefix ::= optAces COMMENT
-optGapLines ::= gapLine*
-gapLine ::= optAces COMMENT
-gapLine ::= optAces NL
-
-optAces ::= ACE*
-aces ::= ACE+
-
-backslash ~ [\0x5c] # 0x5c is backslash
-
-ACE ~ ' '
-COMMENT ~ '::' nonNLs nl
-NL ~ nl
-nl ~ [\n]
-nonNLs ~ nonNL*
-nonNL ~ [^\n]
 NAME ~ name
 name ~ nameFirstChar nameLaterChars
 name ~ '$'
@@ -509,12 +519,6 @@ name ~ '$'
 nameFirstChar ~ [a-z]
 nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
-
-NIL ~ '~'
-KET ~ '^'
-
-wsChars ~ wsChar*
-wsChar ~ [ \n]
 
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
