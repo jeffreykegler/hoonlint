@@ -1,41 +1,64 @@
 [
   [
-    'top',
+    'tallBartis',
     [
-      'tallBartis',
+      'irrBuctisSlash',
+      'end',
       [
-        'irrBuctisSlash',
-        'end',
+        'wing',
         [
-          'wing',
+          'limb',
           [
-            'limb',
-            [
-              'optKets'
-            ],
-            'atom'
-          ]
+            'optKets'
+          ],
+          'atom'
+        ]
+      ]
+    ],
+    [
+      'tallTislus',
+      [
+        'irrKettis',
+        [
+          'toga',
+          'count'
+        ],
+        [
+          'atom',
+          '1'
         ]
       ],
       [
-        'tallTislus',
+        'tallBarhep',
         [
-          'irrKettis',
+          'tallKethep',
           [
-            'toga',
-            'count'
+            'irrCenhep',
+            [
+              'wing',
+              [
+                'limb',
+                [
+                  'optKets'
+                ],
+                'list'
+              ]
+            ],
+            [
+              'wing',
+              [
+                'limb',
+                [
+                  'optKets'
+                ],
+                'tape'
+              ]
+            ]
           ],
           [
-            'atom',
-            '1'
-          ]
-        ],
-        [
-          'tallBarhep',
-          [
-            'tallKethep',
+            'tallWutcol',
             [
-              'irrCenhep',
+              'irrDottis',
               [
                 'wing',
                 [
@@ -43,7 +66,7 @@
                   [
                     'optKets'
                   ],
-                  'list'
+                  'end'
                 ]
               ],
               [
@@ -53,41 +76,56 @@
                   [
                     'optKets'
                   ],
-                  'tape'
+                  'count'
                 ]
               ]
             ],
             [
-              'tallWutcol',
+              'atom',
+              '~'
+            ],
+            [
+              'tallColhep',
               [
-                'irrDottis',
+                'tallWutcol',
                 [
-                  'wing',
+                  'irrDottis',
                   [
-                    'limb',
+                    'atom',
+                    '0'
+                  ],
+                  [
+                    'irrCenhep',
                     [
-                      'optKets'
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'mod'
+                      ]
                     ],
-                    'end'
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'count'
+                      ]
+                    ],
+                    [
+                      'atom',
+                      '15'
+                    ]
                   ]
                 ],
                 [
-                  'wing',
-                  [
-                    'limb',
-                    [
-                      'optKets'
-                    ],
-                    'count'
-                  ]
-                ]
-              ],
-              [
-                'atom',
-                '~'
-              ],
-              [
-                'tallColhep',
+                  'atom',
+                  '"FizzBuzz"'
+                ],
                 [
                   'tallWutcol',
                   [
@@ -120,13 +158,13 @@
                       ],
                       [
                         'atom',
-                        '15'
+                        '5'
                       ]
                     ]
                   ],
                   [
                     'atom',
-                    '"FizzBuzz"'
+                    '"Fizz"'
                   ],
                   [
                     'tallWutcol',
@@ -160,101 +198,13 @@
                         ],
                         [
                           'atom',
-                          '5'
+                          '3'
                         ]
                       ]
                     ],
                     [
                       'atom',
-                      '"Fizz"'
-                    ],
-                    [
-                      'tallWutcol',
-                      [
-                        'irrDottis',
-                        [
-                          'atom',
-                          '0'
-                        ],
-                        [
-                          'irrCenhep',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'mod'
-                            ]
-                          ],
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'count'
-                            ]
-                          ],
-                          [
-                            'atom',
-                            '3'
-                          ]
-                        ]
-                      ],
-                      [
-                        'atom',
-                        '"Buzz"'
-                      ],
-                      [
-                        'irrCenhep',
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'scow'
-                          ]
-                        ],
-                        [
-                          'atom',
-                          [
-                            'term',
-                            '%ud'
-                          ]
-                        ],
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'count'
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ],
-                [
-                  'irrCentis',
-                  '$',
-                  [
-                    'flatHoonJog',
-                    [
-                      'wing',
-                      [
-                        'limb',
-                        [
-                          'optKets'
-                        ],
-                        'count'
-                      ]
+                      '"Buzz"'
                     ],
                     [
                       'irrCenhep',
@@ -265,12 +215,15 @@
                           [
                             'optKets'
                           ],
-                          'add'
+                          'scow'
                         ]
                       ],
                       [
                         'atom',
-                        '1'
+                        [
+                          'term',
+                          '%ud'
+                        ]
                       ],
                       [
                         'wing',
@@ -281,6 +234,50 @@
                           ],
                           'count'
                         ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                'irrCentis',
+                '$',
+                [
+                  'flatHoonJog',
+                  [
+                    'wing',
+                    [
+                      'limb',
+                      [
+                        'optKets'
+                      ],
+                      'count'
+                    ]
+                  ],
+                  [
+                    'irrCenhep',
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'add'
+                      ]
+                    ],
+                    [
+                      'atom',
+                      '1'
+                    ],
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'count'
                       ]
                     ]
                   ]

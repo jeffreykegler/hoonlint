@@ -1,82 +1,123 @@
 [
   [
-    'top',
+    'tallTisgal',
     [
-      'tallTisgal',
+      'tallBartis',
       [
-        'tallBartis',
+        'irrBuctisSlash',
+        'feed',
+        [
+          'irrCenhep',
+          [
+            'wing',
+            [
+              'limb',
+              [
+                'optKets'
+              ],
+              'list'
+            ]
+          ],
+          [
+            'wing',
+            [
+              'limb',
+              [
+                'optKets'
+              ],
+              'move'
+            ]
+          ]
+        ]
+      ],
+      [
+        'tallTisbar',
         [
           'irrBuctisSlash',
-          'feed',
+          'game',
           [
-            'irrCenhep',
+            'wing',
             [
-              'wing',
+              'limb',
               [
-                'limb',
-                [
-                  'optKets'
-                ],
-                'list'
-              ]
-            ],
-            [
-              'wing',
-              [
-                'limb',
-                [
-                  'optKets'
-                ],
-                'move'
-              ]
+                'optKets'
+              ],
+              'game'
             ]
           ]
         ],
         [
-          'tallTisbar',
+          'tallBarhep',
           [
-            'irrBuctisSlash',
-            'game',
+            'tallKethep',
             [
-              'wing',
+              'irrCenhep',
               [
-                'limb',
+                'wing',
                 [
-                  'optKets'
-                ],
-                'game'
-              ]
-            ]
-          ],
-          [
-            'tallBarhep',
-            [
-              'tallKethep',
-              [
-                'irrCenhep',
-                [
-                  'wing',
+                  'limb',
                   [
-                    'limb',
-                    [
-                      'optKets'
-                    ],
-                    'list'
-                  ]
-                ],
-                [
-                  'wing',
-                  [
-                    'limb',
-                    [
-                      'optKets'
-                    ],
-                    'fact'
-                  ]
+                    'optKets'
+                  ],
+                  'list'
                 ]
               ],
               [
-                'tallWutsig',
+                'wing',
+                [
+                  'limb',
+                  [
+                    'optKets'
+                  ],
+                  'fact'
+                ]
+              ]
+            ],
+            [
+              'tallWutsig',
+              [
+                'wing',
+                [
+                  'limb',
+                  [
+                    'optKets'
+                  ],
+                  'feed'
+                ]
+              ],
+              [
+                'atom',
+                '~'
+              ],
+              [
+                'tallTisket',
+                [
+                  'irrBuctisSlash',
+                  'this',
+                  [
+                    'irrCenhep',
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'unit'
+                      ]
+                    ],
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'fact'
+                      ]
+                    ]
+                  ]
+                ],
                 [
                   'wing',
                   [
@@ -84,18 +125,67 @@
                     [
                       'optKets'
                     ],
-                    'feed'
+                    'game'
                   ]
                 ],
                 [
-                  'atom',
-                  '~'
+                  'irrCenhep',
+                  [
+                    'irrCensig',
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'do'
+                      ]
+                    ],
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'go'
+                      ]
+                    ],
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'game'
+                      ]
+                    ]
+                  ],
+                  [
+                    'wing',
+                    [
+                      'limb',
+                      [
+                        'optKets'
+                      ],
+                      'i'
+                    ],
+                    [
+                      'limb',
+                      [
+                        'optKets'
+                      ],
+                      'feed'
+                    ]
+                  ]
                 ],
                 [
-                  'tallTisket',
+                  'tallTisfas',
                   [
                     'irrBuctisSlash',
-                    'this',
+                    'rest',
                     [
                       'irrCenhep',
                       [
@@ -105,7 +195,7 @@
                           [
                             'optKets'
                           ],
-                          'unit'
+                          'list'
                         ]
                       ],
                       [
@@ -121,48 +211,50 @@
                     ]
                   ],
                   [
-                    'wing',
+                    'irrCentis',
+                    '$',
                     [
-                      'limb',
+                      'flatHoonJog',
                       [
-                        'optKets'
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'feed'
+                        ]
                       ],
-                      'game'
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          't'
+                        ],
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'feed'
+                        ]
+                      ]
                     ]
                   ],
                   [
-                    'irrCenhep',
+                    'flatWutsig',
+                    '(',
                     [
-                      'irrCensig',
+                      'wing',
                       [
-                        'wing',
+                        'limb',
                         [
-                          'limb',
-                          [
-                            'optKets'
-                          ],
-                          'do'
-                        ]
-                      ],
-                      [
-                        'wing',
-                        [
-                          'limb',
-                          [
-                            'optKets'
-                          ],
-                          'go'
-                        ]
-                      ],
-                      [
-                        'wing',
-                        [
-                          'limb',
-                          [
-                            'optKets'
-                          ],
-                          'game'
-                        ]
+                          'optKets'
+                        ],
+                        'this'
                       ]
                     ],
                     [
@@ -172,85 +264,20 @@
                         [
                           'optKets'
                         ],
-                        'i'
-                      ],
-                      [
-                        'limb',
-                        [
-                          'optKets'
-                        ],
-                        'feed'
-                      ]
-                    ]
-                  ],
-                  [
-                    'tallTisfas',
-                    [
-                      'irrBuctisSlash',
-                      'rest',
-                      [
-                        'irrCenhep',
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'list'
-                          ]
-                        ],
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'fact'
-                          ]
-                        ]
+                        'rest'
                       ]
                     ],
                     [
-                      'irrCentis',
-                      '$',
-                      [
-                        'flatHoonJog',
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'feed'
-                          ]
-                        ],
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            't'
-                          ],
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'feed'
-                          ]
-                        ]
-                      ]
-                    ],
-                    [
-                      'flatWutsig',
-                      '(',
+                      'flatBuccol',
                       [
                         'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'u'
+                        ],
                         [
                           'limb',
                           [
@@ -268,39 +295,258 @@
                           ],
                           'rest'
                         ]
-                      ],
+                      ]
+                    ],
+                    ')'
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      'tallTisgar',
+      [
+        'tallBarcen',
+        [
+          'optNamedHoonSeq',
+          [
+            'namedHoon',
+            'side',
+            [
+              'atom',
+              '@'
+            ]
+          ],
+          [
+            'namedHoon',
+            'spot',
+            [
+              'flatBuccol',
+              [
+                'irrBuctisSlash',
+                'x',
+                [
+                  'atom',
+                  '@'
+                ]
+              ],
+              [
+                'irrBuctisSlash',
+                'y',
+                [
+                  'atom',
+                  '@'
+                ]
+              ]
+            ]
+          ],
+          [
+            'namedHoon',
+            'fact',
+            [
+              'tallBuccen',
+              [
+                'battery',
+                [
+                  'batteryPair',
+                  [
+                    'curlyPair',
+                    [
+                      'term',
                       [
-                        'flatBuccol',
+                        'dollarTerm',
+                        'tie'
+                      ]
+                    ],
+                    [
+                      'foot',
+                      [
+                        'atom',
                         [
-                          'wing',
+                          'term',
                           [
-                            'limb',
+                            'dollarTerm',
                             [
-                              'optKets'
-                            ],
-                            'u'
-                          ],
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'this'
-                          ]
-                        ],
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'rest'
+                              'dollarNil'
+                            ]
                           ]
                         ]
-                      ],
-                      ')'
+                      ]
                     ]
+                  ]
+                ],
+                [
+                  'batteryPair',
+                  [
+                    'curlyPair',
+                    [
+                      'term',
+                      [
+                        'dollarTerm',
+                        'win'
+                      ]
+                    ],
+                    [
+                      'foot',
+                      [
+                        'irrBuctisSlash',
+                        'p',
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'cord'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            'namedHoon',
+            'move',
+            [
+              'tallBuccen',
+              [
+                'battery',
+                [
+                  'batteryPair',
+                  [
+                    'curlyPair',
+                    [
+                      'term',
+                      [
+                        'dollarTerm',
+                        'x'
+                      ]
+                    ],
+                    [
+                      'foot',
+                      [
+                        'irrBuctisSlash',
+                        'p',
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'spot'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'batteryPair',
+                  [
+                    'curlyPair',
+                    [
+                      'term',
+                      [
+                        'dollarTerm',
+                        'o'
+                      ]
+                    ],
+                    [
+                      'foot',
+                      [
+                        'irrBuctisSlash',
+                        'p',
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'spot'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'batteryPair',
+                  [
+                    'curlyPair',
+                    [
+                      'term',
+                      [
+                        'dollarTerm',
+                        'z'
+                      ]
+                    ],
+                    [
+                      'foot',
+                      [
+                        'atom',
+                        [
+                          'term',
+                          [
+                            'dollarTerm',
+                            [
+                              'dollarNil'
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            'namedHoon',
+            'game',
+            [
+              'tallBuccol',
+              [
+                'irrBuctisSlash',
+                'w',
+                [
+                  'type',
+                  '?'
+                ]
+              ],
+              [
+                'irrBuctisSlash',
+                'a',
+                [
+                  'wing',
+                  [
+                    'limb',
+                    [
+                      'optKets'
+                    ],
+                    'side'
+                  ]
+                ]
+              ],
+              [
+                'irrBuctisSlash',
+                'z',
+                [
+                  'wing',
+                  [
+                    'limb',
+                    [
+                      'optKets'
+                    ],
+                    'side'
                   ]
                 ]
               ]
@@ -309,355 +555,52 @@
         ]
       ],
       [
-        'tallTisgar',
+        'tallBarcen',
         [
-          'tallBarcen',
+          'optNamedHoonSeq',
           [
-            'optNamedHoonSeq',
+            'namedHoon',
+            'bo',
             [
-              'namedHoon',
-              'side',
+              'tallBarcab',
               [
-                'atom',
-                '@'
-              ]
-            ],
-            [
-              'namedHoon',
-              'spot',
-              [
-                'flatBuccol',
+                'irrBuctisSlash',
+                'half',
                 [
-                  'irrBuctisSlash',
-                  'x',
+                  'wing',
                   [
-                    'atom',
-                    '@'
-                  ]
-                ],
-                [
-                  'irrBuctisSlash',
-                  'y',
-                  [
-                    'atom',
-                    '@'
+                    'limb',
+                    [
+                      'optKets'
+                    ],
+                    'side'
                   ]
                 ]
-              ]
-            ],
-            [
-              'namedHoon',
-              'fact',
+              ],
               [
-                'tallBuccen',
+                'optNamedHoonSeq',
                 [
-                  'battery',
+                  'namedHoon',
+                  'bit',
                   [
-                    'batteryPair',
+                    'flatBartis',
+                    '(',
                     [
-                      'curlyPair',
+                      'irrBuctisSlash',
+                      'a',
                       [
-                        'term',
-                        [
-                          'dollarTerm',
-                          'tie'
-                        ]
-                      ],
-                      [
-                        'foot',
-                        [
-                          'atom',
-                          [
-                            'term',
-                            [
-                              'dollarTerm',
-                              [
-                                'dollarNil'
-                              ]
-                            ]
-                          ]
-                        ]
+                        'atom',
+                        '@'
                       ]
-                    ]
-                  ],
-                  [
-                    'batteryPair',
+                    ],
                     [
-                      'curlyPair',
+                      'irrDottis',
                       [
-                        'term',
-                        [
-                          'dollarTerm',
-                          'win'
-                        ]
+                        'atom',
+                        '1'
                       ],
                       [
-                        'foot',
-                        [
-                          'irrBuctisSlash',
-                          'p',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'cord'
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ],
-            [
-              'namedHoon',
-              'move',
-              [
-                'tallBuccen',
-                [
-                  'battery',
-                  [
-                    'batteryPair',
-                    [
-                      'curlyPair',
-                      [
-                        'term',
-                        [
-                          'dollarTerm',
-                          'x'
-                        ]
-                      ],
-                      [
-                        'foot',
-                        [
-                          'irrBuctisSlash',
-                          'p',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'spot'
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryPair',
-                    [
-                      'curlyPair',
-                      [
-                        'term',
-                        [
-                          'dollarTerm',
-                          'o'
-                        ]
-                      ],
-                      [
-                        'foot',
-                        [
-                          'irrBuctisSlash',
-                          'p',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'spot'
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryPair',
-                    [
-                      'curlyPair',
-                      [
-                        'term',
-                        [
-                          'dollarTerm',
-                          'z'
-                        ]
-                      ],
-                      [
-                        'foot',
-                        [
-                          'atom',
-                          [
-                            'term',
-                            [
-                              'dollarTerm',
-                              [
-                                'dollarNil'
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ],
-            [
-              'namedHoon',
-              'game',
-              [
-                'tallBuccol',
-                [
-                  'irrBuctisSlash',
-                  'w',
-                  [
-                    'type',
-                    '?'
-                  ]
-                ],
-                [
-                  'irrBuctisSlash',
-                  'a',
-                  [
-                    'wing',
-                    [
-                      'limb',
-                      [
-                        'optKets'
-                      ],
-                      'side'
-                    ]
-                  ]
-                ],
-                [
-                  'irrBuctisSlash',
-                  'z',
-                  [
-                    'wing',
-                    [
-                      'limb',
-                      [
-                        'optKets'
-                      ],
-                      'side'
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        [
-          'tallBarcen',
-          [
-            'optNamedHoonSeq',
-            [
-              'namedHoon',
-              'bo',
-              [
-                'tallBarcab',
-                [
-                  'irrBuctisSlash',
-                  'half',
-                  [
-                    'wing',
-                    [
-                      'limb',
-                      [
-                        'optKets'
-                      ],
-                      'side'
-                    ]
-                  ]
-                ],
-                [
-                  'optNamedHoonSeq',
-                  [
-                    'namedHoon',
-                    'bit',
-                    [
-                      'flatBartis',
-                      '(',
-                      [
-                        'irrBuctisSlash',
-                        'a',
-                        [
-                          'atom',
-                          '@'
-                        ]
-                      ],
-                      [
-                        'irrDottis',
-                        [
-                          'atom',
-                          '1'
-                        ],
-                        [
-                          'irrCenhep',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'cut'
-                            ]
-                          ],
-                          [
-                            'atom',
-                            '0'
-                          ],
-                          [
-                            'flatBuccol',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'a'
-                              ]
-                            ],
-                            [
-                              'atom',
-                              '1'
-                            ]
-                          ],
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'half'
-                            ]
-                          ]
-                        ]
-                      ],
-                      ')'
-                    ]
-                  ],
-                  [
-                    'namedHoon',
-                    'off',
-                    [
-                      'flatBartis',
-                      '(',
-                      [
-                        'irrBuctisSlash',
-                        'a',
+                        'irrCenhep',
                         [
                           'wing',
                           [
@@ -665,8 +608,92 @@
                             [
                               'optKets'
                             ],
-                            'spot'
+                            'cut'
                           ]
+                        ],
+                        [
+                          'atom',
+                          '0'
+                        ],
+                        [
+                          'flatBuccol',
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'a'
+                            ]
+                          ],
+                          [
+                            'atom',
+                            '1'
+                          ]
+                        ],
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'half'
+                          ]
+                        ]
+                      ]
+                    ],
+                    ')'
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'off',
+                  [
+                    'flatBartis',
+                    '(',
+                    [
+                      'irrBuctisSlash',
+                      'a',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'spot'
+                        ]
+                      ]
+                    ],
+                    [
+                      'irrCenhep',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'add'
+                        ]
+                      ],
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'x'
+                        ],
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'a'
                         ]
                       ],
                       [
@@ -678,8 +705,12 @@
                             [
                               'optKets'
                             ],
-                            'add'
+                            'mul'
                           ]
+                        ],
+                        [
+                          'atom',
+                          '3'
                         ],
                         [
                           'wing',
@@ -688,7 +719,7 @@
                             [
                               'optKets'
                             ],
-                            'x'
+                            'y'
                           ],
                           [
                             'limb',
@@ -697,63 +728,42 @@
                             ],
                             'a'
                           ]
-                        ],
-                        [
-                          'irrCenhep',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'mul'
-                            ]
-                          ],
-                          [
-                            'atom',
-                            '3'
-                          ],
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'y'
-                            ],
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'a'
-                            ]
-                          ]
                         ]
-                      ],
-                      ')'
-                    ]
-                  ],
+                      ]
+                    ],
+                    ')'
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'get',
                   [
-                    'namedHoon',
-                    'get',
+                    'flatBartis',
+                    '(',
                     [
-                      'flatBartis',
-                      '(',
+                      'irrBuctisSlash',
+                      'a',
                       [
-                        'irrBuctisSlash',
-                        'a',
+                        'wing',
                         [
-                          'wing',
+                          'limb',
                           [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'spot'
-                          ]
+                            'optKets'
+                          ],
+                          'spot'
+                        ]
+                      ]
+                    ],
+                    [
+                      'irrCenhep',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'bit'
                         ]
                       ],
                       [
@@ -765,7 +775,76 @@
                             [
                               'optKets'
                             ],
-                            'bit'
+                            'off'
+                          ]
+                        ],
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'a'
+                          ]
+                        ]
+                      ]
+                    ],
+                    ')'
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'set',
+                  [
+                    'flatBartis',
+                    '(',
+                    [
+                      'irrBuctisSlash',
+                      'a',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'spot'
+                        ]
+                      ]
+                    ],
+                    [
+                      'irrCenhep',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'con'
+                        ]
+                      ],
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'half'
+                        ]
+                      ],
+                      [
+                        'irrCenhep',
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'bex'
                           ]
                         ],
                         [
@@ -791,13 +870,47 @@
                             ]
                           ]
                         ]
-                      ],
-                      ')'
-                    ]
-                  ],
+                      ]
+                    ],
+                    ')'
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'win',
                   [
-                    'namedHoon',
-                    'set',
+                    'tallCenlus',
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'lien'
+                      ]
+                    ],
+                    [
+                      'irrCenhep',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'rip'
+                        ]
+                      ],
+                      [
+                        'atom',
+                        '4'
+                      ],
+                      [
+                        'atom',
+                        '0wl04h0.4A0Aw.4A00s.0e070'
+                      ]
+                    ],
                     [
                       'flatBartis',
                       '(',
@@ -805,18 +918,12 @@
                         'irrBuctisSlash',
                         'a',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'spot'
-                          ]
+                          'atom',
+                          '@'
                         ]
                       ],
                       [
-                        'irrCenhep',
+                        'irrDottis',
                         [
                           'wing',
                           [
@@ -824,17 +931,7 @@
                             [
                               'optKets'
                             ],
-                            'con'
-                          ]
-                        ],
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'half'
+                            'a'
                           ]
                         ],
                         [
@@ -846,86 +943,9 @@
                               [
                                 'optKets'
                               ],
-                              'bex'
+                              'dis'
                             ]
                           ],
-                          [
-                            'irrCenhep',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'off'
-                              ]
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'a'
-                              ]
-                            ]
-                          ]
-                        ]
-                      ],
-                      ')'
-                    ]
-                  ],
-                  [
-                    'namedHoon',
-                    'win',
-                    [
-                      'tallCenlus',
-                      [
-                        'wing',
-                        [
-                          'limb',
-                          [
-                            'optKets'
-                          ],
-                          'lien'
-                        ]
-                      ],
-                      [
-                        'irrCenhep',
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'rip'
-                          ]
-                        ],
-                        [
-                          'atom',
-                          '4'
-                        ],
-                        [
-                          'atom',
-                          '0wl04h0.4A0Aw.4A00s.0e070'
-                        ]
-                      ],
-                      [
-                        'flatBartis',
-                        '(',
-                        [
-                          'irrBuctisSlash',
-                          'a',
-                          [
-                            'atom',
-                            '@'
-                          ]
-                        ],
-                        [
-                          'irrDottis',
                           [
                             'wing',
                             [
@@ -937,340 +957,53 @@
                             ]
                           ],
                           [
-                            'irrCenhep',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'dis'
-                              ]
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'a'
-                              ]
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'half'
-                              ]
-                            ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ],
-            [
-              'namedHoon',
-              'go',
-              [
-                'tallBarcab',
-                [
-                  'irrBuctisSlash',
-                  'game',
-                  [
-                    'wing',
-                    [
-                      'limb',
-                      [
-                        'optKets'
-                      ],
-                      'game'
-                    ]
-                  ]
-                ],
-                [
-                  'optNamedHoonSeq',
-                  [
-                    'namedHoon',
-                    'do',
-                    [
-                      'tallBartis',
-                      [
-                        'irrBuctisSlash',
-                        'act',
-                        [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'optKets'
-                            ],
-                            'move'
-                          ]
-                        ]
-                      ],
-                      [
-                        'tallKethep',
-                        [
-                          'flatBuccol',
-                          [
-                            'irrCenhep',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'unit'
-                              ]
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'fact'
-                              ]
-                            ]
-                          ],
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets',
-                                '^'
-                              ],
-                              'game'
-                            ]
-                          ]
-                        ],
-                        [
-                          'tallWuthep',
-                          '?-',
-                          [
                             'wing',
                             [
                               'limb',
                               [
                                 'optKets'
                               ],
-                              'act'
-                            ]
-                          ],
-                          [
-                            'flatBuccol',
-                            [
-                              'atom',
-                              [
-                                'term',
-                                [
-                                  'dollarTerm',
-                                  'x'
-                                ]
-                              ]
-                            ],
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ],
-                          [
-                            'flatWutgar',
-                            '(',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'w'
-                              ],
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'game'
-                              ]
-                            ],
-                            [
-                              'irrCensig',
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'mo'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'on'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'p'
-                                ],
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'act'
-                                ]
-                              ]
-                            ],
-                            ')'
-                          ],
-                          [
-                            'flatBuccol',
-                            [
-                              'atom',
-                              [
-                                'term',
-                                [
-                                  'dollarTerm',
-                                  'o'
-                                ]
-                              ]
-                            ],
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ],
-                          [
-                            'flatWutgal',
-                            '(',
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'w'
-                              ],
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'game'
-                              ]
-                            ],
-                            [
-                              'irrCensig',
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'mo'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'on'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'p'
-                                ],
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'act'
-                                ]
-                              ]
-                            ],
-                            ')'
-                          ],
-                          [
-                            'flatBuccol',
-                            [
-                              'atom',
-                              [
-                                'term',
-                                [
-                                  'dollarTerm',
-                                  'z'
-                                ]
-                              ]
-                            ],
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ],
-                          [
-                            'flatBuccol',
-                            [
-                              'atom',
-                              '~'
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'nu'
-                              ]
+                              'half'
                             ]
                           ]
                         ]
-                      ]
+                      ],
+                      ')'
                     ]
-                  ],
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            'namedHoon',
+            'go',
+            [
+              'tallBarcab',
+              [
+                'irrBuctisSlash',
+                'game',
+                [
+                  'wing',
                   [
-                    'namedHoon',
-                    'nu',
+                    'limb',
                     [
-                      'flatKetlus',
-                      '(',
+                      'optKets'
+                    ],
+                    'game'
+                  ]
+                ]
+              ],
+              [
+                'optNamedHoonSeq',
+                [
+                  'namedHoon',
+                  'do',
+                  [
+                    'tallBartis',
+                    [
+                      'irrBuctisSlash',
+                      'act',
                       [
                         'wing',
                         [
@@ -1278,38 +1011,52 @@
                           [
                             'optKets'
                           ],
-                          'game'
+                          'move'
                         ]
-                      ],
+                      ]
+                    ],
+                    [
+                      'tallKethep',
                       [
                         'flatBuccol',
                         [
-                          'atom',
+                          'irrCenhep',
                           [
-                            'loobean',
-                            '&'
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'unit'
+                            ]
+                          ],
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'fact'
+                            ]
                           ]
                         ],
                         [
-                          'atom',
-                          '0'
-                        ],
-                        [
-                          'atom',
-                          '0'
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets',
+                              '^'
+                            ],
+                            'game'
+                          ]
                         ]
                       ],
-                      ')'
-                    ]
-                  ],
-                  [
-                    'namedHoon',
-                    'on',
-                    [
-                      'tallBarcab',
                       [
-                        'irrBuctisSlash',
-                        'here',
+                        'tallWuthep',
+                        '?-',
                         [
                           'wing',
                           [
@@ -1317,153 +1064,280 @@
                             [
                               'optKets'
                             ],
-                            'spot'
-                          ]
-                        ]
-                      ],
-                      [
-                        'optNamedHoonSeq',
-                        [
-                          'namedHoon',
-                          'is',
-                          [
-                            'tallWutbar',
-                            [
-                              'irrCenhep',
-                              [
-                                'irrCensig',
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'get'
-                                  ]
-                                ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'bo'
-                                  ]
-                                ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'a'
-                                  ],
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'game'
-                                  ]
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'here'
-                                ]
-                              ]
-                            ],
-                            [
-                              'irrCenhep',
-                              [
-                                'irrCensig',
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'get'
-                                  ]
-                                ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'bo'
-                                  ]
-                                ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'z'
-                                  ],
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'game'
-                                  ]
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'here'
-                                ]
-                              ]
-                            ]
+                            'act'
                           ]
                         ],
                         [
-                          'namedHoon',
-                          'mo',
+                          'flatBuccol',
                           [
-                            'tallKethep',
+                            'atom',
                             [
-                              'flatBuccol',
+                              'term',
                               [
-                                'irrCenhep',
+                                'dollarTerm',
+                                'x'
+                              ]
+                            ]
+                          ],
+                          [
+                            'type',
+                            '*'
+                          ]
+                        ],
+                        [
+                          'flatWutgar',
+                          '(',
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'w'
+                            ],
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'game'
+                            ]
+                          ],
+                          [
+                            'irrCensig',
+                            [
+                              'wing',
+                              [
+                                'limb',
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'unit'
-                                  ]
+                                  'optKets'
                                 ],
+                                'mo'
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
                                 [
-                                  'wing',
+                                  'optKets'
+                                ],
+                                'on'
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'p'
+                              ],
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'act'
+                              ]
+                            ]
+                          ],
+                          ')'
+                        ],
+                        [
+                          'flatBuccol',
+                          [
+                            'atom',
+                            [
+                              'term',
+                              [
+                                'dollarTerm',
+                                'o'
+                              ]
+                            ]
+                          ],
+                          [
+                            'type',
+                            '*'
+                          ]
+                        ],
+                        [
+                          'flatWutgal',
+                          '(',
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'w'
+                            ],
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'game'
+                            ]
+                          ],
+                          [
+                            'irrCensig',
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'mo'
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'on'
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'p'
+                              ],
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'act'
+                              ]
+                            ]
+                          ],
+                          ')'
+                        ],
+                        [
+                          'flatBuccol',
+                          [
+                            'atom',
+                            [
+                              'term',
+                              [
+                                'dollarTerm',
+                                'z'
+                              ]
+                            ]
+                          ],
+                          [
+                            'type',
+                            '*'
+                          ]
+                        ],
+                        [
+                          'flatBuccol',
+                          [
+                            'atom',
+                            '~'
+                          ],
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'nu'
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'nu',
+                  [
+                    'flatKetlus',
+                    '(',
+                    [
+                      'wing',
+                      [
+                        'limb',
+                        [
+                          'optKets'
+                        ],
+                        'game'
+                      ]
+                    ],
+                    [
+                      'flatBuccol',
+                      [
+                        'atom',
+                        [
+                          'loobean',
+                          '&'
+                        ]
+                      ],
+                      [
+                        'atom',
+                        '0'
+                      ],
+                      [
+                        'atom',
+                        '0'
+                      ]
+                    ],
+                    ')'
+                  ]
+                ],
+                [
+                  'namedHoon',
+                  'on',
+                  [
+                    'tallBarcab',
+                    [
+                      'irrBuctisSlash',
+                      'here',
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'spot'
+                        ]
+                      ]
+                    ],
+                    [
+                      'optNamedHoonSeq',
+                      [
+                        'namedHoon',
+                        'is',
+                        [
+                          'tallWutbar',
+                          [
+                            'irrCenhep',
+                            [
+                              'irrCensig',
+                              [
+                                'wing',
+                                [
+                                  'limb',
                                   [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'fact'
-                                  ]
+                                    'optKets'
+                                  ],
+                                  'get'
                                 ]
                               ],
                               [
@@ -1471,15 +1345,44 @@
                                 [
                                   'limb',
                                   [
-                                    'optKets',
-                                    '^'
+                                    'optKets'
+                                  ],
+                                  'bo'
+                                ]
+                              ],
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'a'
+                                ],
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
                                   ],
                                   'game'
                                 ]
                               ]
                             ],
                             [
-                              'tallWutgal',
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'here'
+                              ]
+                            ]
+                          ],
+                          [
+                            'irrCenhep',
+                            [
+                              'irrCensig',
                               [
                                 'wing',
                                 [
@@ -1487,14 +1390,124 @@
                                   [
                                     'optKets'
                                   ],
-                                  'is'
+                                  'get'
                                 ]
                               ],
                               [
-                                'tallTisfas',
+                                'wing',
                                 [
-                                  'irrBuctisSlash',
-                                  'next',
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'bo'
+                                ]
+                              ],
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'z'
+                                ],
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'game'
+                                ]
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'here'
+                              ]
+                            ]
+                          ]
+                        ]
+                      ],
+                      [
+                        'namedHoon',
+                        'mo',
+                        [
+                          'tallKethep',
+                          [
+                            'flatBuccol',
+                            [
+                              'irrCenhep',
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'unit'
+                                ]
+                              ],
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'fact'
+                                ]
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets',
+                                  '^'
+                                ],
+                                'game'
+                              ]
+                            ]
+                          ],
+                          [
+                            'tallWutgal',
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'is'
+                              ]
+                            ],
+                            [
+                              'tallTisfas',
+                              [
+                                'irrBuctisSlash',
+                                'next',
+                                [
+                                  'wing',
+                                  [
+                                    'limb',
+                                    [
+                                      'optKets'
+                                    ],
+                                    'side'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'irrCenhep',
+                                [
+                                  'irrCensig',
                                   [
                                     'wing',
                                     [
@@ -1502,50 +1515,7 @@
                                       [
                                         'optKets'
                                       ],
-                                      'side'
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  'irrCenhep',
-                                  [
-                                    'irrCensig',
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'set'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'bo'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'a'
-                                      ],
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'game'
-                                      ]
+                                      'set'
                                     ]
                                   ],
                                   [
@@ -1555,108 +1525,75 @@
                                       [
                                         'optKets'
                                       ],
-                                      'here'
+                                      'bo'
+                                    ]
+                                  ],
+                                  [
+                                    'wing',
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'a'
+                                    ],
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'game'
                                     ]
                                   ]
                                 ],
                                 [
-                                  'tallWutcol',
+                                  'wing',
                                   [
-                                    'irrCensig',
+                                    'limb',
                                     [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'win'
-                                      ]
+                                      'optKets'
                                     ],
+                                    'here'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'tallWutcol',
+                                [
+                                  'irrCensig',
+                                  [
+                                    'wing',
                                     [
-                                      'wing',
+                                      'limb',
                                       [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'bo'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'next'
-                                      ]
+                                        'optKets'
+                                      ],
+                                      'win'
                                     ]
                                   ],
                                   [
-                                    'flatBuccol',
+                                    'wing',
                                     [
-                                      'flatBuccol',
+                                      'limb',
                                       [
-                                        'atom',
-                                        '~'
+                                        'optKets'
                                       ],
-                                      [
-                                        'atom',
-                                        [
-                                          'term',
-                                          '%win'
-                                        ]
-                                      ],
-                                      [
-                                        'flatWutcol',
-                                        '(',
-                                        [
-                                          'wing',
-                                          [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'w'
-                                          ],
-                                          [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'game'
-                                          ]
-                                        ],
-                                        [
-                                          'atom',
-                                          [
-                                            'term',
-                                            '%x'
-                                          ]
-                                        ],
-                                        [
-                                          'atom',
-                                          [
-                                            'term',
-                                            '%o'
-                                          ]
-                                        ],
-                                        ')'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'nu'
-                                      ]
+                                      'bo'
                                     ]
                                   ],
+                                  [
+                                    'wing',
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'next'
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'flatBuccol',
                                   [
                                     'flatBuccol',
                                     [
@@ -1664,95 +1601,155 @@
                                       '~'
                                     ],
                                     [
-                                      'irrCentis',
-                                      'game',
+                                      'atom',
                                       [
-                                        'flatHoonJog',
+                                        'term',
+                                        '%win'
+                                      ]
+                                    ],
+                                    [
+                                      'flatWutcol',
+                                      '(',
+                                      [
+                                        'wing',
                                         [
-                                          'wing',
+                                          'limb',
                                           [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'w'
-                                          ]
+                                            'optKets'
+                                          ],
+                                          'w'
                                         ],
                                         [
-                                          'flatWutzap',
+                                          'limb',
                                           [
-                                            'irrWutzap',
+                                            'optKets'
+                                          ],
+                                          'game'
+                                        ]
+                                      ],
+                                      [
+                                        'atom',
+                                        [
+                                          'term',
+                                          '%x'
+                                        ]
+                                      ],
+                                      [
+                                        'atom',
+                                        [
+                                          'term',
+                                          '%o'
+                                        ]
+                                      ],
+                                      ')'
+                                    ]
+                                  ],
+                                  [
+                                    'wing',
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'nu'
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'flatBuccol',
+                                  [
+                                    'atom',
+                                    '~'
+                                  ],
+                                  [
+                                    'irrCentis',
+                                    'game',
+                                    [
+                                      'flatHoonJog',
+                                      [
+                                        'wing',
+                                        [
+                                          'limb',
+                                          [
+                                            'optKets'
+                                          ],
+                                          'w'
+                                        ]
+                                      ],
+                                      [
+                                        'flatWutzap',
+                                        [
+                                          'irrWutzap',
+                                          [
+                                            'wing',
                                             [
-                                              'wing',
+                                              'limb',
                                               [
-                                                'limb',
-                                                [
-                                                  'optKets'
-                                                ],
-                                                'w'
+                                                'optKets'
                                               ],
+                                              'w'
+                                            ],
+                                            [
+                                              'limb',
                                               [
-                                                'limb',
-                                                [
-                                                  'optKets'
-                                                ],
-                                                'game'
-                                              ]
+                                                'optKets'
+                                              ],
+                                              'game'
                                             ]
                                           ]
                                         ]
-                                      ],
+                                      ]
+                                    ],
+                                    [
+                                      'flatHoonJog',
                                       [
-                                        'flatHoonJog',
+                                        'wing',
                                         [
-                                          'wing',
+                                          'limb',
                                           [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'a'
-                                          ]
-                                        ],
-                                        [
-                                          'wing',
-                                          [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'z'
+                                            'optKets'
                                           ],
-                                          [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'game'
-                                          ]
+                                          'a'
                                         ]
                                       ],
                                       [
-                                        'flatHoonJog',
+                                        'wing',
                                         [
-                                          'wing',
+                                          'limb',
                                           [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'z'
-                                          ]
+                                            'optKets'
+                                          ],
+                                          'z'
                                         ],
                                         [
-                                          'wing',
+                                          'limb',
                                           [
-                                            'limb',
-                                            [
-                                              'optKets'
-                                            ],
-                                            'next'
-                                          ]
+                                            'optKets'
+                                          ],
+                                          'game'
+                                        ]
+                                      ]
+                                    ],
+                                    [
+                                      'flatHoonJog',
+                                      [
+                                        'wing',
+                                        [
+                                          'limb',
+                                          [
+                                            'optKets'
+                                          ],
+                                          'z'
+                                        ]
+                                      ],
+                                      [
+                                        'wing',
+                                        [
+                                          'limb',
+                                          [
+                                            'optKets'
+                                          ],
+                                          'next'
                                         ]
                                       ]
                                     ]

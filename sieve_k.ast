@@ -1,13 +1,30 @@
 [
   [
-    'top',
+    'tallBartis',
     [
-      'tallBartis',
+      'irrKettis',
       [
-        'irrKettis',
+        'toga',
+        'top'
+      ],
+      [
+        'atom',
+        '@'
+      ]
+    ],
+    [
+      'tallKethep',
+      [
+        'irrCenhep',
         [
-          'toga',
-          'top'
+          'wing',
+          [
+            'limb',
+            [
+              'optKets'
+            ],
+            'list'
+          ]
         ],
         [
           'atom',
@@ -15,31 +32,24 @@
         ]
       ],
       [
-        'tallKethep',
+        'tallTislus',
         [
-          'irrCenhep',
+          'irrKettis',
           [
-            'wing',
-            [
-              'limb',
-              [
-                'optKets'
-              ],
-              'list'
-            ]
+            'toga',
+            'fed'
           ],
           [
-            'atom',
-            '@'
-          ]
-        ],
-        [
-          'tallTislus',
-          [
-            'irrKettis',
+            'irrCenhep',
             [
-              'toga',
-              'fed'
+              'wing',
+              [
+                'limb',
+                [
+                  'optKets'
+                ],
+                'sy'
+              ]
             ],
             [
               'irrCenhep',
@@ -50,94 +60,211 @@
                   [
                     'optKets'
                   ],
-                  'sy'
+                  'gulf'
                 ]
               ],
               [
-                'irrCenhep',
+                'atom',
+                '2'
+              ],
+              [
+                'wing',
                 [
-                  'wing',
+                  'limb',
                   [
-                    'limb',
-                    [
-                      'optKets'
-                    ],
-                    'gulf'
-                  ]
-                ],
-                [
-                  'atom',
-                  '2'
-                ],
-                [
-                  'wing',
-                  [
-                    'limb',
-                    [
-                      'optKets'
-                    ],
-                    'top'
-                  ]
+                    'optKets'
+                  ],
+                  'top'
                 ]
+              ]
+            ]
+          ]
+        ],
+        [
+          'tallTisgal',
+          [
+            'irrTisgal',
+            [
+              'wing',
+              [
+                'limb',
+                [
+                  'optKets'
+                ],
+                'abet'
+              ]
+            ],
+            [
+              'wing',
+              [
+                'limb',
+                [
+                  'optKets'
+                ],
+                'main'
               ]
             ]
           ],
           [
-            'tallTisgal',
+            'tallBarcen',
             [
-              'irrTisgal',
+              'optNamedHoonSeq',
               [
-                'wing',
+                'namedHoon',
+                'abet',
                 [
-                  'limb',
+                  'irrCenhep',
                   [
-                    'optKets'
+                    'wing',
+                    [
+                      'limb',
+                      [
+                        'optKets'
+                      ],
+                      'sort'
+                    ]
                   ],
-                  'abet'
-                ]
-              ],
-              [
-                'wing',
-                [
-                  'limb',
-                  [
-                    'optKets'
-                  ],
-                  'main'
-                ]
-              ]
-            ],
-            [
-              'tallBarcen',
-              [
-                'optNamedHoonSeq',
-                [
-                  'namedHoon',
-                  'abet',
                   [
                     'irrCenhep',
                     [
-                      'wing',
+                      'irrCensig',
                       [
-                        'limb',
+                        'wing',
                         [
-                          'optKets'
-                        ],
-                        'sort'
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'tap'
+                        ]
+                      ],
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'in'
+                        ]
+                      ],
+                      [
+                        'wing',
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'fed'
+                        ]
                       ]
+                    ]
+                  ],
+                  [
+                    'wing',
+                    [
+                      'limb',
+                      [
+                        'optKets'
+                      ],
+                      'lth'
+                    ]
+                  ]
+                ]
+              ],
+              [
+                'namedHoon',
+                'main',
+                [
+                  'tallTislus',
+                  [
+                    'irrKettis',
+                    [
+                      'toga',
+                      'fac'
                     ],
                     [
-                      'irrCenhep',
+                      'atom',
+                      '2'
+                    ]
+                  ],
+                  [
+                    'tallBarhep',
+                    [
+                      'tallKetlus',
                       [
-                        'irrCensig',
+                        'wing',
                         [
-                          'wing',
+                          'limb',
                           [
-                            'limb',
+                            'lark',
+                            '.'
+                          ]
+                        ],
+                        [
+                          'limb',
+                          [
+                            'optKets'
+                          ],
+                          'main'
+                        ]
+                      ],
+                      [
+                        'tallWutcol',
+                        [
+                          'irrCenhep',
+                          [
+                            'wing',
                             [
-                              'optKets'
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'gth'
+                            ]
+                          ],
+                          [
+                            'irrCenhep',
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'mul'
+                              ]
                             ],
-                            'tap'
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'fac'
+                              ]
+                            ],
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'fac'
+                              ]
+                            ]
+                          ],
+                          [
+                            'wing',
+                            [
+                              'limb',
+                              [
+                                'optKets'
+                              ],
+                              'top'
+                            ]
                           ]
                         ],
                         [
@@ -145,49 +272,146 @@
                           [
                             'limb',
                             [
-                              'optKets'
-                            ],
-                            'in'
-                          ]
-                        ],
-                        [
-                          'wing',
+                              'lark',
+                              '.'
+                            ]
+                          ],
                           [
                             'limb',
                             [
                               'optKets'
                             ],
-                            'fed'
+                            'main'
+                          ]
+                        ],
+                        [
+                          'irrCentis',
+                          '$',
+                          [
+                            'flatHoonJog',
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'fac'
+                              ]
+                            ],
+                            [
+                              'irrDotlus',
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'fac'
+                                ]
+                              ]
+                            ]
+                          ],
+                          [
+                            'flatHoonJog',
+                            [
+                              'wing',
+                              [
+                                'limb',
+                                [
+                                  'lark',
+                                  '.'
+                                ]
+                              ],
+                              [
+                                'limb',
+                                [
+                                  'optKets'
+                                ],
+                                'main'
+                              ]
+                            ],
+                            [
+                              'irrCenhep',
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'reap'
+                                ]
+                              ],
+                              [
+                                'wing',
+                                [
+                                  'limb',
+                                  [
+                                    'optKets'
+                                  ],
+                                  'fac'
+                                ]
+                              ]
+                            ]
                           ]
                         ]
                       ]
-                    ],
-                    [
-                      'wing',
-                      [
-                        'limb',
-                        [
-                          'optKets'
-                        ],
-                        'lth'
-                      ]
                     ]
                   ]
-                ],
+                ]
+              ],
+              [
+                'namedHoon',
+                'reap',
                 [
-                  'namedHoon',
-                  'main',
+                  'tallBartis',
+                  [
+                    'irrKettis',
+                    [
+                      'toga',
+                      'fac'
+                    ],
+                    [
+                      'atom',
+                      '@'
+                    ]
+                  ],
                   [
                     'tallTislus',
                     [
                       'irrKettis',
                       [
                         'toga',
-                        'fac'
+                        'cot'
                       ],
                       [
-                        'atom',
-                        '2'
+                        'irrCenhep',
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'mul'
+                          ]
+                        ],
+                        [
+                          'atom',
+                          '2'
+                        ],
+                        [
+                          'wing',
+                          [
+                            'limb',
+                            [
+                              'optKets'
+                            ],
+                            'fac'
+                          ]
+                        ]
                       ]
                     ],
                     [
@@ -208,7 +432,7 @@
                             [
                               'optKets'
                             ],
-                            'main'
+                            'reap'
                           ]
                         ],
                         [
@@ -226,36 +450,13 @@
                               ]
                             ],
                             [
-                              'irrCenhep',
+                              'wing',
                               [
-                                'wing',
+                                'limb',
                                 [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'mul'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'fac'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'fac'
-                                ]
+                                  'optKets'
+                                ],
+                                'cot'
                               ]
                             ],
                             [
@@ -283,7 +484,7 @@
                               [
                                 'optKets'
                               ],
-                              'main'
+                              'reap'
                             ]
                           ],
                           [
@@ -298,11 +499,31 @@
                                   [
                                     'optKets'
                                   ],
-                                  'fac'
+                                  'cot'
                                 ]
                               ],
                               [
-                                'irrDotlus',
+                                'irrCenhep',
+                                [
+                                  'wing',
+                                  [
+                                    'limb',
+                                    [
+                                      'optKets'
+                                    ],
+                                    'add'
+                                  ]
+                                ],
+                                [
+                                  'wing',
+                                  [
+                                    'limb',
+                                    [
+                                      'optKets'
+                                    ],
+                                    'cot'
+                                  ]
+                                ],
                                 [
                                   'wing',
                                   [
@@ -322,178 +543,46 @@
                                 [
                                   'limb',
                                   [
-                                    'lark',
-                                    '.'
-                                  ]
-                                ],
-                                [
-                                  'limb',
-                                  [
                                     'optKets'
                                   ],
-                                  'main'
+                                  'fed'
                                 ]
                               ],
                               [
                                 'irrCenhep',
                                 [
-                                  'wing',
+                                  'irrCensig',
                                   [
-                                    'limb',
+                                    'wing',
                                     [
-                                      'optKets'
-                                    ],
-                                    'reap'
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'del'
+                                    ]
+                                  ],
+                                  [
+                                    'wing',
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'in'
+                                    ]
+                                  ],
+                                  [
+                                    'wing',
+                                    [
+                                      'limb',
+                                      [
+                                        'optKets'
+                                      ],
+                                      'fed'
+                                    ]
                                   ]
                                 ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'fac'
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ],
-                [
-                  'namedHoon',
-                  'reap',
-                  [
-                    'tallBartis',
-                    [
-                      'irrKettis',
-                      [
-                        'toga',
-                        'fac'
-                      ],
-                      [
-                        'atom',
-                        '@'
-                      ]
-                    ],
-                    [
-                      'tallTislus',
-                      [
-                        'irrKettis',
-                        [
-                          'toga',
-                          'cot'
-                        ],
-                        [
-                          'irrCenhep',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'mul'
-                            ]
-                          ],
-                          [
-                            'atom',
-                            '2'
-                          ],
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'fac'
-                            ]
-                          ]
-                        ]
-                      ],
-                      [
-                        'tallBarhep',
-                        [
-                          'tallKetlus',
-                          [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'lark',
-                                '.'
-                              ]
-                            ],
-                            [
-                              'limb',
-                              [
-                                'optKets'
-                              ],
-                              'reap'
-                            ]
-                          ],
-                          [
-                            'tallWutcol',
-                            [
-                              'irrCenhep',
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'gth'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'cot'
-                                ]
-                              ],
-                              [
-                                'wing',
-                                [
-                                  'limb',
-                                  [
-                                    'optKets'
-                                  ],
-                                  'top'
-                                ]
-                              ]
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'lark',
-                                  '.'
-                                ]
-                              ],
-                              [
-                                'limb',
-                                [
-                                  'optKets'
-                                ],
-                                'reap'
-                              ]
-                            ],
-                            [
-                              'irrCentis',
-                              '$',
-                              [
-                                'flatHoonJog',
                                 [
                                   'wing',
                                   [
@@ -502,98 +591,6 @@
                                       'optKets'
                                     ],
                                     'cot'
-                                  ]
-                                ],
-                                [
-                                  'irrCenhep',
-                                  [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      [
-                                        'optKets'
-                                      ],
-                                      'add'
-                                    ]
-                                  ],
-                                  [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      [
-                                        'optKets'
-                                      ],
-                                      'cot'
-                                    ]
-                                  ],
-                                  [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      [
-                                        'optKets'
-                                      ],
-                                      'fac'
-                                    ]
-                                  ]
-                                ]
-                              ],
-                              [
-                                'flatHoonJog',
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    [
-                                      'optKets'
-                                    ],
-                                    'fed'
-                                  ]
-                                ],
-                                [
-                                  'irrCenhep',
-                                  [
-                                    'irrCensig',
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'del'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'in'
-                                      ]
-                                    ],
-                                    [
-                                      'wing',
-                                      [
-                                        'limb',
-                                        [
-                                          'optKets'
-                                        ],
-                                        'fed'
-                                      ]
-                                    ]
-                                  ],
-                                  [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      [
-                                        'optKets'
-                                      ],
-                                      'cot'
-                                    ]
                                   ]
                                 ]
                               ]

@@ -92,6 +92,7 @@ sub prune {
         flatHoonJogs    => 1,
         flatHoonSeq     => 1,
         hoon            => 1,
+	hoonFile => 1,
         hoonJog     => 1,
         hoonJogging => 1,
         hoonJogs    => 1,
@@ -155,10 +156,11 @@ __DATA__
 :default ::= action => [name,values]
 lexeme default = latm => 1
 
-:start ::= top
+# === HOON FILE ===
+:start ::= hoonFile
 # LATER: This is a simplication, which does not
 # catch all the subtleties of "ford" files
-top ::= (leader) hoonSeq (trailer)
+hoonFile ::= (leader) hoonSeq (trailer)
 
 trailer ::= optWs
 optWs ::=
