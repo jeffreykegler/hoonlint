@@ -97,7 +97,6 @@ sub prune {
         hoonJogging => 1,
         hoonJogs    => 1,
         hoonSeq         => 1,
-        tallHoon        => 1,
     };
 
     return [] if not defined $v;
@@ -173,10 +172,7 @@ wsElement ::= ACE
 wsElement ::= gap
 
 hoonSeq ::= hoon+ separator=>gap proper=>1
-hoon ::= tallHoon
 hoon ::= flatHoon
-
-# tallHoons ::= tallHoon+
 
 # flatHoons ::= flatHoon+
 flatHoon ::= atom
@@ -344,11 +340,11 @@ doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # FIXED: barwut hoon
 
 BARCAB ~ [|] [_]
-tallHoon ::= tallBarcab
+hoon ::= tallBarcab
 tallBarcab ::= (BARCAB gap) hoon (gap) optNamedHoonSeq (gap '--')
 
 BARCEN ~ [|] [%]
-tallHoon ::= tallBarcen
+hoon ::= tallBarcen
 tallBarcen ::= (BARCEN gap) optNamedHoonSeq (gap '--')
 
 # FIXED: buccab hoon
@@ -357,7 +353,7 @@ irrBuccab ::= ('_') flatHoon
 
 
 BUCCOL ~ [$] [:]
-tallHoon ::= tallBuccol
+hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL gap) hoonSeq (gap '==')
 flatHoon ::= flatBuccol
 flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
@@ -367,7 +363,7 @@ flatBuccol ::= ('[') flatHoonSeq (']')
 flatBuccol ::= (',[') flatHoonSeq (']')
 
 BUCCEN ~ [$] [%]
-tallHoon ::= tallBuccen
+hoon ::= tallBuccen
 tallBuccen ::= (BUCCEN gap) battery (gap '==')
 
 battery ::= batteryPair+ separator=>gap proper=>1
@@ -405,7 +401,7 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 # FIXED: colket hoon hoon hoon hoon
 
 flatHoon ::= irrCentis
-tallHoon ::= tallCentis
+hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
@@ -470,7 +466,7 @@ irrTisgal ::= flatHoon (':') flatHoon
 # FIXED: tiswut wing hoon hoon hoon
 
 WUTBAR ~ [?] [|]
-tallHoon ::= tallWutbar
+hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR gap) hoonSeq (gap '==')
 flatHoon ::= flatWutbar
 flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
@@ -485,7 +481,7 @@ flatWutbar ::= ('|(') flatHoonSeq (')')
 # FIXED: wutket wing hoon hoon
 
 WUTPAM ~ [?] [&]
-tallHoon ::= tallWutpam
+hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM gap) hoonSeq (gap '==')
 flatHoon ::= flatWutpam
 flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
@@ -499,7 +495,7 @@ flatWutpam ::= ('&(') flatHoonSeq (')')
 flatWutzap ::= irrWutzap
 irrWutzap ::= ('!') flatHoon
 
-tallHoon ::= tallWuthep
+hoon ::= tallWuthep
 WUTHEP ~ [?] [-]
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
@@ -597,8 +593,8 @@ sub doFixedRune {
     my $flatLHS = 'flat' . ucfirst $runeName;
     # BARHEP ~ [|] [-]
     push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
-    # tallHoon ::= tallBarhep
-    push @result, 'tallHoon ::= ' . $tallLHS;
+    # hoon ::= tallBarhep
+    push @result, 'hoon ::= ' . $tallLHS;
     # flatHoon ::= flatBarhep
     push @result, 'flatHoon ::= ' . $flatLHS;
     # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
