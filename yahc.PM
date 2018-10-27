@@ -197,60 +197,47 @@ nonNL ~ [^\n]
 wsChars ~ wsChar*
 wsChar ~ [ \n]
 
-# === ATOMS ==
+# === ATOMS: SAND ===
 
 atom ::= NUMBER
-atom ::= STRING
-atom ::= term
-atom ::= NIL
-atom ::= AURA
 atom ::= loobean
 
-NIL ~ '~'
+# @c    UTF-32                   ~-foobar
+# @da   128-bit absolute date    ~2016.4.23..20.09.26..f27b..dead..beef..babe
+#                                ~2016.4.23
+# @dr   128-bit relative date    ~s17          (17 seconds)
+#                                ~m20          (20 minutes)
+#                                ~d42          (42 days)
 
+# @f    loobean                  &             (0, yes)
+#                                |             (1, no)
 loobean ::= '%.y'
 loobean ::= '%.n'
 loobean ::= '&'
 loobean ::= '|'
 
-term ::= TERM
-term ::= dollarTerm
-dollarTerm ::= ('$') NAME
-dollarTerm ::= dollarNil
-dollarNil ::= ('$~')
+# @p                             ~zod          (0)
+# @rd   64-bit IEEE float        .~3.14        (pi)
+#                                .~-3.14       (negative pi)
+# @rs   32-bit IEEE float        .3.14         (pi)
+#                                .-3.14        (negative pi)
+# @rq   128-bit IEEE float       .~~~3.14      (pi)
+# @rh   16-bit IEEE float        .~~3.14       (pi)
+# @sb   signed binary            --0b10        (2)
+#                                -0b101        (-5)
+# @sd   signed decimal           --2           (2)
+#                                -5            (-5)
+# @sv   signed base32            --0v68        (200)
+#                                -0vfk         (-500)
+# @sw   signed base64            --0w38        (200)
+#                                -0w7Q         (500)
+# @sx   signed hexadecimal       --0x2         (2)
+#                                -0x5          -5
+# @t    UTF-8 text (cord)        'foobar'
+# @ta   ASCII text (knot)        ~.foobar
 
-type ::= '*' # noun
-type ::= '^' # cell
-type ::= '?' # loobean
-# LATER: commented out because these create ambiguities
-# type ::= '~' # null
-# type ::= '@' # cell
-
-NUMBER ~ decimalNumber
-NUMBER ~ hexNumber
+# @ub   unsigned binary          0b10          (2)
 NUMBER ~ binaryNumber
-NUMBER ~ vNumber
-NUMBER ~ wNumber
-
-# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
-decimalNumber ~ decimalPrefix decimalGroups
-decimalPrefix ~ decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit decimalDigit
-decimalDigit ~ [0-9]
-decimalGroups ~ decimalGroup*
-decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
-
-# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
-hexNumber ~ '0x' hexPrefix hexGroups
-hexPrefix ~ hexDigit
-hexPrefix ~ hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
-hexDigit ~ [0-9a-fA-F]
-hexGroups ~ hexGroup*
-hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
-
 # syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
 binaryNumber ~ '0b' binaryPrefix binaryGroups
 binaryPrefix ~ binaryDigit
@@ -261,6 +248,21 @@ binaryDigit ~ [01]
 binaryGroups ~ binaryGroup*
 binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
 
+# @uc   bitcoin address          0c1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+# @ud   unsigned decimal         42            (42)
+#                                1.420         (1420)
+NUMBER ~ decimalNumber
+# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
+decimalNumber ~ decimalPrefix decimalGroups
+decimalPrefix ~ decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit decimalDigit
+decimalDigit ~ [0-9]
+decimalGroups ~ decimalGroup*
+decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
+
+# @uv   unsigned base32          0v3ic5h.6urr6 
+NUMBER ~ vNumber
 # syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
 vNumber ~ '0v' vNumPrefix vNumGroups
 vNumPrefix ~ vNumDigit
@@ -272,6 +274,8 @@ vNumDigit ~ [0-9a-v]
 vNumGroups ~ vNumGroup*
 vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
 
+# @uw   unsigned base64          0wsC5.yrSZC
+NUMBER ~ wNumber
 # syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
 wNumber ~ '0w' wNumPrefix wNumGroups
 wNumPrefix ~ wNumDigit
@@ -283,11 +287,45 @@ wNumDigit ~ [-~0-9a-zA-Z]
 wNumGroups ~ wNumGroup*
 wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
 
+# @ux   unsigned hexadecimal     0xcafe.babe
+NUMBER ~ hexNumber
+# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
+hexNumber ~ '0x' hexPrefix hexGroups
+hexPrefix ~ hexDigit
+hexPrefix ~ hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
+hexDigit ~ [0-9a-fA-F]
+hexGroups ~ hexGroup*
+hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
+
+# TODO: Are these %sand atoms?
+
+atom ::= NIL
+NIL ~ '~'
+
+atom ::= type
+type ::= '*' # noun
+type ::= '^' # cell
+type ::= '?' # loobean
+# LATER: commented out because these create ambiguities
+# type ::= '~' # null
+# type ::= '@' # cell
+
 # === ATOMS: ROCK
+
+atom ::= AURA
+atom ::= term
 
 AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
+
+term ::= TERM
+term ::= dollarTerm
+dollarTerm ::= ('$') NAME
+dollarTerm ::= dollarNil
+dollarNil ::= ('$~')
 
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
@@ -297,6 +335,8 @@ medialTermChar ~ [a-z0-9-]
 lastTermChar ~ [a-z0-9]
 
 # === STRINGS ==
+
+atom ::= STRING
 
 # LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
@@ -319,7 +359,6 @@ hoon ::= flatHoon
 
 # flatHoons ::= flatHoon+
 flatHoon ::= atom
-flatHoon ::= type
 flatHoon ::= wing
 
 toga ::= NAME
