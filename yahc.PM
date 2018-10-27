@@ -180,31 +180,6 @@ flatHoon ::= atom
 flatHoon ::= type
 flatHoon ::= wing
 
-atom ::= NUMBER
-atom ::= STRING
-atom ::= term
-atom ::= NIL
-atom ::= AURA
-atom ::= loobean
-
-loobean ::= '%.y'
-loobean ::= '%.n'
-loobean ::= '&'
-loobean ::= '|'
-
-term ::= TERM
-term ::= dollarTerm
-dollarTerm ::= ('$') NAME
-dollarTerm ::= dollarNil
-dollarNil ::= ('$~')
-
-type ::= '*' # noun
-type ::= '^' # cell
-type ::= '?' # loobean
-# LATER: commented out because these create ambiguities
-# type ::= '~' # null
-# type ::= '@' # cell
-
 toga ::= NAME
 toga ::= '[' togaSeq ']'
 togaSeq ::= togaElement+ separator=>ACE proper=>1
@@ -237,6 +212,94 @@ flatHoonJoggingSeparator ::= ',' ACE
 
 optNamedHoonSeq ::= namedHoon* separator=>gap proper=>1
 namedHoon ::= ('++' gap) NAME (gap) hoon
+
+# === ATOMS ==
+
+atom ::= NUMBER
+atom ::= STRING
+atom ::= term
+atom ::= NIL
+atom ::= AURA
+atom ::= loobean
+
+loobean ::= '%.y'
+loobean ::= '%.n'
+loobean ::= '&'
+loobean ::= '|'
+
+term ::= TERM
+term ::= dollarTerm
+dollarTerm ::= ('$') NAME
+dollarTerm ::= dollarNil
+dollarNil ::= ('$~')
+
+type ::= '*' # noun
+type ::= '^' # cell
+type ::= '?' # loobean
+# LATER: commented out because these create ambiguities
+# type ::= '~' # null
+# type ::= '@' # cell
+
+NUMBER ~ decimalNumber
+NUMBER ~ hexNumber
+NUMBER ~ binaryNumber
+NUMBER ~ vNumber
+NUMBER ~ wNumber
+
+# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
+decimalNumber ~ decimalPrefix decimalGroups
+decimalPrefix ~ decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit decimalDigit
+decimalDigit ~ [0-9]
+decimalGroups ~ decimalGroup*
+decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
+
+# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
+hexNumber ~ '0x' hexPrefix hexGroups
+hexPrefix ~ hexDigit
+hexPrefix ~ hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
+hexDigit ~ [0-9a-fA-F]
+hexGroups ~ hexGroup*
+hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
+
+# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
+binaryNumber ~ '0b' binaryPrefix binaryGroups
+binaryPrefix ~ binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit binaryDigit binaryDigit
+binaryDigit ~ [01]
+binaryGroups ~ binaryGroup*
+binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
+
+# syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
+vNumber ~ '0v' vNumPrefix vNumGroups
+vNumPrefix ~ vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+vNumDigit ~ [0-9a-v]
+vNumGroups ~ vNumGroup*
+vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+
+# syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
+wNumber ~ '0w' wNumPrefix wNumGroups
+wNumPrefix ~ wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
+wNumDigit ~ [-~0-9a-zA-Z]
+wNumGroups ~ wNumGroup*
+wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
+
+# === STRINGS ==
+
+# === HOONS ==
 
 # FIXED: bucpat hoon hoon
 # FIXED: buctis term hoon
@@ -325,8 +388,17 @@ irrDotlus ::= ('+(') flatHoon (')')
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
 
+
+# FIXED: ketbar hoon
+# FIXED: kethep hoon hoon
+# FIXED: ketlus hoon hoon
+# FIXED: ketsig hoon
+
+# FIXED: kettis toga hoon
 flatHoon ::= irrKettis
 irrKettis ::= toga ('=') flatHoon
+
+# FIXED: ketwut hoon
 
 flatHoon ::= irrTisgal
 irrTisgal ::= flatHoon (':') flatHoon
@@ -388,63 +460,6 @@ KET ~ '^'
 wsChars ~ wsChar*
 wsChar ~ [ \n]
 
-NUMBER ~ decimalNumber
-NUMBER ~ hexNumber
-NUMBER ~ binaryNumber
-NUMBER ~ vNumber
-NUMBER ~ wNumber
-
-# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
-decimalNumber ~ decimalPrefix decimalGroups
-decimalPrefix ~ decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit decimalDigit
-decimalDigit ~ [0-9]
-decimalGroups ~ decimalGroup*
-decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
-
-# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
-hexNumber ~ '0x' hexPrefix hexGroups
-hexPrefix ~ hexDigit
-hexPrefix ~ hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
-hexDigit ~ [0-9a-fA-F]
-hexGroups ~ hexGroup*
-hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
-
-# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
-binaryNumber ~ '0b' binaryPrefix binaryGroups
-binaryPrefix ~ binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit binaryDigit binaryDigit
-binaryDigit ~ [01]
-binaryGroups ~ binaryGroup*
-binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
-
-# syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
-vNumber ~ '0v' vNumPrefix vNumGroups
-vNumPrefix ~ vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
-vNumDigit ~ [0-9a-v]
-vNumGroups ~ vNumGroup*
-vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
-
-# syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
-wNumber ~ '0w' wNumPrefix wNumGroups
-wNumPrefix ~ wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
-wNumDigit ~ [-~0-9a-zA-Z]
-wNumGroups ~ wNumGroup*
-wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
-
 # LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
 STRING ~ ["] doubleStringElements ["]
@@ -469,13 +484,6 @@ lastTermChar ~ [a-z0-9]
 AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
-
-# FIXED: ketbar hoon
-# FIXED: kethep hoon hoon
-# FIXED: ketlus hoon hoon
-# FIXED: ketsig hoon
-# FIXED: kettis toga hoon
-# FIXED: ketwut hoon
 
 # #semsem hoon value
 # FIXED: semsem hoon hoon
