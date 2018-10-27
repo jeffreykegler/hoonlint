@@ -349,9 +349,9 @@
             [
               'tallBuccen',
               [
-                'battery',
+                'buccenBody',
                 [
-                  'batteryPair',
+                  'buccenPair',
                   [
                     'curlyPair',
                     [
@@ -379,7 +379,7 @@
                   ]
                 ],
                 [
-                  'batteryPair',
+                  'buccenPair',
                   [
                     'curlyPair',
                     [
@@ -417,9 +417,9 @@
             [
               'tallBuccen',
               [
-                'battery',
+                'buccenBody',
                 [
-                  'batteryPair',
+                  'buccenPair',
                   [
                     'curlyPair',
                     [
@@ -449,7 +449,7 @@
                   ]
                 ],
                 [
-                  'batteryPair',
+                  'buccenPair',
                   [
                     'curlyPair',
                     [
@@ -479,7 +479,7 @@
                   ]
                 ],
                 [
-                  'batteryPair',
+                  'buccenPair',
                   [
                     'curlyPair',
                     [

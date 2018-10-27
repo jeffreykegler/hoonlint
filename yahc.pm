@@ -371,13 +371,14 @@ flatBuccol ::= ('{') flatHoonSeq ('}')
 flatBuccol ::= ('[') flatHoonSeq (']')
 flatBuccol ::= (',[') flatHoonSeq (']')
 
+# BUCCEN is "2-running"
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN gap) battery (gap '==')
+tallBuccen ::= (BUCCEN gap) buccenBody (gap '==')
 
-battery ::= batteryPair+ separator=>gap proper=>1
-batteryPair ::= ('[' ACE) term (ACE) foot (']')
-batteryPair ::= curlyPair
+buccenBody ::= buccenPair+ separator=>gap proper=>1
+buccenPair ::= ('[' ACE) term (ACE) foot (']')
+buccenPair ::= curlyPair
 curlyPair ::= ('{') term (ACE) foot ('}')
 foot ::= flatHoon
 
