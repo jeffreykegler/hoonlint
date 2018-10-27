@@ -10,7 +10,7 @@ test: test_suite undoc_tests
 test_suite: fizzbuzz sieve_b sieve_k toe
 
 yahc.pm: yahc.PM
-	perl -I. yahc.PM > yahc.pm
+	perl yahc.PM > yahc.pm
 
 fizzbuzz: yahc.pm fizzbuzz.hoon
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast.try 2>&1

@@ -11,6 +11,16 @@ my $dsl_warning = <<END_OF_WARNING;
 END_OF_WARNING
 
 # === DSL Piece: the main body ===
+
+# The "FIXED:" comments lines are descriptons of the fixed length runes
+# (1-fixed, 2-fixed, 3-fixed and 4-fixed) for auto-generation
+# of Marpa rules for the various regular formats, both
+# tall and flat.
+#
+# The format is
+#
+#   rune type1 type2 ...
+
 my $dsl_main = <<'END_OF_DSL_MAIN';
 use 5.010;
 use strict;
@@ -442,33 +452,30 @@ optAlphas ~ [a-zA-Z]*
 # FIXED: barhep hoon
 # FIXED: barsig hoon hoon
 # FIXED: bartar hoon hoon
-# FIXED: 
-# FIXED: # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# FIXED: # where <type> is buc??? runes and irregular forms thereof
+
+# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
-# FIXED: 
+
 # FIXED: barwut hoon
-# FIXED: 
 # FIXED: colcab hoon hoon
 # FIXED: colhep hoon hoon
 # FIXED: collus hoon hoon hoon
 # FIXED: colket hoon hoon hoon hoon
-# FIXED: 
 # FIXED: dotlus atom
 # FIXED: dottar hoon hoon
 # FIXED: dottis hoon hoon
 # FIXED: dotwut hoon
-# FIXED: 
 # FIXED: ketbar hoon
 # FIXED: kethep hoon hoon
 # FIXED: ketlus hoon hoon
 # FIXED: ketsig hoon
 # FIXED: kettis toga hoon
 # FIXED: ketwut hoon
-# FIXED: 
-# FIXED: #semsem hoon value
+
+# #semsem hoon value
 # FIXED: semsem hoon hoon
-# FIXED: 
+#
 # FIXED: sigbar hoon hoon
 # FIXED: sigbuc term hoon
 # FIXED: sigcen term wing hoon hoon
@@ -479,26 +486,26 @@ optAlphas ~ [a-zA-Z]*
 # FIXED: sigpam hoon hoon
 # FIXED: sigwut hoon hoon hoon
 # FIXED: sigzap hoon hoon
-# FIXED: 
+#
 # FIXED: tisbar hoon hoon
 # FIXED: tiscom hoon hoon
 # FIXED: tisdot wing hoon hoon
 # FIXED: tishep hoon hoon
-# FIXED: 
-# FIXED: # tisfas taco hoon hoon
+
+# tisfas taco hoon hoon
 # FIXED: tisfas hoon hoon hoon
-# FIXED: 
+
 # FIXED: tisgal hoon hoon
 # FIXED: tisgar hoon hoon
 # FIXED: tisket hoon wing hoon hoon
 # FIXED: tislus hoon hoon
-# FIXED: 
-# FIXED: # tissem taco hoon hoon
+
+# tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
-# FIXED: 
+
 # FIXED: tistar term hoon hoon
 # FIXED: tiswut wing hoon hoon hoon
-# FIXED: 
+
 # FIXED: wutcol hoon hoon hoon
 # FIXED: wutdot hoon hoon hoon
 # FIXED: wutgal hoon hoon
@@ -508,7 +515,7 @@ optAlphas ~ [a-zA-Z]*
 # FIXED: wutpat wing hoon hoon
 # FIXED: wutsig wing hoon hoon
 # FIXED: wuttis hoon wing
-# FIXED: 
+
 # FIXED: zapgar hoon
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
@@ -559,7 +566,7 @@ my %glyphs = (
 # for the tall and the 2 regular flat forms.
 sub doFixedRune {
     my ($runeName, @samples) = @_;
-    my @result = ('# ' . uc $runeName);
+    my @result = (join ' ', '#', (uc $runeName), @samples);
     my $glyphname1 = substr($runeName, 0, 3);
     my $glyphname2 = substr($runeName, 3, 3);
     my $glyph1 = $glyphs{$glyphname1} or die "no glyph for $glyphname1";
@@ -589,117 +596,17 @@ sub doFixedRune {
     return join "\n", @result, '';
 }
 
-# This is the descripton of the fixed length runes
-# (1-fixed, 2-fixed, 3-fixed and 4-fixed) for auto-generation
-# of Marpa rules for the various regular formats, both
-# tall and flat.
-#
-# The format is
-#
-#   rune type1 type2 ...
-#
-# Hash comments are allowed.  Blank lines are ignored.
-#
-my $fixedDesc = <<'EOS';
-cenlus hoon hoon hoon
-cendot hoon hoon
-cenket hoon hoon hoon hoon
-censig wing hoon hoon
-cenhep hoon hoon
-bucpat hoon hoon
-buctis term hoon
-buccab hoon
-bucket hoon hoon
-buchep hoon hoon
-barcol hoon hoon
-bardot hoon
-barhep hoon
-barsig hoon hoon
-bartar hoon hoon
-
-# LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
-# where <type> is buc??? runes and irregular forms thereof
-bartis hoon hoon
-
-barwut hoon
-
-colcab hoon hoon
-colhep hoon hoon
-collus hoon hoon hoon
-colket hoon hoon hoon hoon
-
-dotlus atom
-dottar hoon hoon
-dottis hoon hoon
-dotwut hoon
-
-ketbar hoon
-kethep hoon hoon
-ketlus hoon hoon
-ketsig hoon
-kettis toga hoon
-ketwut hoon
-
-#semsem hoon value
-semsem hoon hoon
-
-sigbar hoon hoon
-sigbuc term hoon
-sigcen term wing hoon hoon
-sigfas term hoon
-siggal hoon hoon
-siggar hoon hoon
-siglus hoon
-sigpam hoon hoon
-sigwut hoon hoon hoon
-sigzap hoon hoon
-
-tisbar hoon hoon
-tiscom hoon hoon
-tisdot wing hoon hoon
-tishep hoon hoon
-
-# tisfas taco hoon hoon
-tisfas hoon hoon hoon
-
-tisgal hoon hoon
-tisgar hoon hoon
-tisket hoon wing hoon hoon
-tislus hoon hoon
-
-# tissem taco hoon hoon
-tissem hoon hoon hoon
-
-tistar term hoon hoon
-tiswut wing hoon hoon hoon
-
-wutcol hoon hoon hoon
-wutdot hoon hoon hoon
-wutgal hoon hoon
-wutgar hoon hoon
-wutzap hoon
-wutket wing hoon hoon
-wutpat wing hoon hoon
-wutsig wing hoon hoon
-wuttis hoon wing
-
-zapgar hoon
-zaptis hoon
-zapwut atom hoon
-EOS
-
 # === DSL Piece: Automatically generated Marpa rules ===
 
-$fixedDesc =~ s/\s* [#] [^\n]* $//xmsg;
 my @dsl_auto_rules = ();
 DESC: for my $desc (split "\n", $dsl_main) {
+    my $originalDesc = $desc;
     chomp $desc; # remove newline
     next DESC if not $desc =~ s/^[#] FIXED: //;
     $desc =~ s/^\s+//; # eliminate leading spaces
     $desc =~ s/\s+$//; # eliminate trailing spaces
-    $desc =~ s/\s*[#].*//; # eliminate comments
-    next DESC if length $desc <= 0; # ignore empty line
     my ($rune, @samples) = split /\s+/, $desc;
+    die $originalDesc if not $rune;
     push @dsl_auto_rules, doFixedRune( $rune, @samples );
 }
 my $dsl_auto_rules = join "\n", @dsl_auto_rules;
