@@ -474,6 +474,14 @@ irrDotlus ::= ('+(') flatHoon (')')
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
 
+# FAS group are (usually?) ford runes:
+
+FASTIS ~ [\/] [=]
+hoon ::= tallFastis
+tallFastis ::= (FASTIS gap) NAME (gap) hoon 
+flatHoon ::= flatFastis
+flatFastis ::= (FASTIS) NAME '=' hoon
+
 # FIXED: ketbar hoon
 # FIXED: kethep hoon hoon
 # FIXED: ketlus hoon hoon

@@ -495,6 +495,14 @@ irrDotlus ::= ('+(') flatHoon (')')
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
 
+# FAS group are (usually?) ford runes:
+
+FASTIS ~ [\/] [=]
+hoon ::= tallFastis
+tallFastis ::= (FASTIS gap) NAME (gap) hoon 
+flatHoon ::= flatFastis
+flatFastis ::= (FASTIS) NAME '=' hoon
+
 # FIXED: ketbar hoon
 # FIXED: kethep hoon hoon
 # FIXED: ketlus hoon hoon
@@ -596,36 +604,36 @@ END_OF_DSL_MAIN
 # ace and gap are not really char names,
 # and are omitted
 my %glyphs = (
-    gal => '<',
-    pal => '(',
     bar => '|',
-    par => ')',
     bas => '\\',
-    gar => '>',
-    sel => '\xb5', # '['
     buc => '$',
-    hax => '#',
-    sem => ';',
     cab => '_',
-    hep => '-',
-    ser => ']',
     cen => '%',
-    kel => '{',
-    sig => '~',
     col => ':',
-    ker => '}',
-    soq => '\'',
     com => ',',
-    ket => '\\^',
-    tar => '*',
     doq => '"',
-    lus => '+',
-    tec => '`',
     dot => '.',
-    pam => '&',
-    tis => '=',
     fas => '/',
+    gal => '<',
+    gar => '>',
+    hax => '#',
+    hep => '-',
+    kel => '{',
+    ker => '}',
+    ket => '\\^',
+    lus => '+',
+    pal => '(',
+    pam => '&',
+    par => ')',
     pat => '@',
+    sel => '\xb5', # '['
+    sem => ';',
+    ser => ']',
+    sig => '~',
+    soq => '\'',
+    tar => '*',
+    tec => '`',
+    tis => '=',
     wut => '?',
     zap => '!',
 );
