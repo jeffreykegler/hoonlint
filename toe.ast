@@ -515,14 +515,13 @@
             [
               'tallBuccol',
               [
-                'irrBuctisSlash',
-                'w',
+                'wing',
                 [
-                  'atom',
+                  'limb',
                   [
-                    'type',
-                    '?'
-                  ]
+                    'optKets'
+                  ],
+                  'w'
                 ]
               ],
               [
