@@ -189,6 +189,8 @@ aces ::= ACE+
 
 ACE ~ ' '
 COMMENT ~ '::' nonNLs nl
+# TODO: Is this OK?
+COMMENT ~ '/?' nonNLs nl
 NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
@@ -480,6 +482,8 @@ CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
+# FIXED: dotket hoon hoon
+
 # FIXED: dottis hoon hoon
 flatHoon ::= irrDottis
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
@@ -660,6 +664,16 @@ sub doFixedRune {
     push @result, $flatLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
     return join "\n", @result, '';
 }
+
+# Undocumented runes
+
+# !:  ::  turn on debugging printfs
+# !.  ::  turn off debugging printfs
+# !;  ::  using the "type of type", emit the type for an expression
+# !,  ::  emit AST of expression
+# $*  ::  bunt (irregular form is *)
+# ^.  ::  use gate to transform type
+# ^&  ::  zinc (covariant) -- see the docs on advanced types
 
 # === DSL Piece: Automatically generated Marpa rules ===
 

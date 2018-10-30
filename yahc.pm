@@ -168,6 +168,8 @@ aces ::= ACE+
 
 ACE ~ ' '
 COMMENT ~ '::' nonNLs nl
+# TODO: Is this OK?
+COMMENT ~ '/?' nonNLs nl
 NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
@@ -459,6 +461,8 @@ CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
+# FIXED: dotket hoon hoon
+
 # FIXED: dottis hoon hoon
 flatHoon ::= irrDottis
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
@@ -731,6 +735,14 @@ flatHoon ::= flatColket
 tallColket ::= (COLKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
 flatColket ::= (COLKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatColket ::= (':clkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# DOTKET hoon hoon
+DOTKET ~ [.] [\^]
+hoon ::= tallDotket
+flatHoon ::= flatDotket
+tallDotket ::= (DOTKET gap)hoon (gap) hoon
+flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoon [)]
+flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoon [)]
 
 # DOTTIS hoon hoon
 DOTTIS ~ [.] [=]
