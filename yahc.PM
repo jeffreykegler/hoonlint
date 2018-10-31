@@ -550,6 +550,7 @@ irrKettis ::= toga ('=') flatHoon
 # #semsem hoon value
 # FIXED: semsem hoon hoon
 
+# FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
 # FIXED: sigzap hoon hoon
 

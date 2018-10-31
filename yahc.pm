@@ -529,6 +529,7 @@ irrKettis ::= toga ('=') flatHoon
 # #semsem hoon value
 # FIXED: semsem hoon hoon
 
+# FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
 # FIXED: sigzap hoon hoon
 
@@ -963,6 +964,14 @@ flatHoon ::= flatSemsem
 tallSemsem ::= (SEMSEM gap)hoon (gap) hoon
 flatSemsem ::= (SEMSEM) [(] flatHoon (ACE) flatHoon [)]
 flatSemsem ::= (':smsm') [(] flatHoon (ACE) flatHoon [)]
+
+# SIGCAB hoon hoon
+SIGCAB ~ [~] [_]
+hoon ::= tallSigcab
+flatHoon ::= flatSigcab
+tallSigcab ::= (SIGCAB gap)hoon (gap) hoon
+flatSigcab ::= (SIGCAB) [(] flatHoon (ACE) flatHoon [)]
+flatSigcab ::= (':sgcb') [(] flatHoon (ACE) flatHoon [)]
 
 # SIGWUT hoon hoon hoon
 SIGWUT ~ [~] [?]
