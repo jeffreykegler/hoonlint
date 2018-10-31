@@ -406,6 +406,7 @@ tallBarket ::= (BARKET gap) hoon (gap) battery (gap '--')
 flatHoon  ::= irrBuccab
 irrBuccab ::= ('_') flatHoon
 
+# Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL gap) hoonSeq (gap '==')
@@ -434,6 +435,14 @@ foot ::= flatHoon
 # FIXED: buctis term hoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
+
+BUCWUT ~ [$] [?]
+hoon ::= tallBucwut
+tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
+flatHoon ::= flatBucwut
+flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
+flatBucwut ::= (':bcwt(') flatHoonSeq (')')
+flatBucwut ::= ('?(') flatHoonSeq (')')
 
 # FIXED: cendot hoon hoon
 
@@ -567,6 +576,11 @@ tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 # FIXED: zapgar hoon
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
+
+# zapzap (= crash) is nullary
+ZAPZAP ~ [!] [!]
+hoon ::= tallZapzap
+tallZapzap ::= ZAPZAP
 
 NAME ~ name
 name ~ nameFirstChar nameLaterChars
