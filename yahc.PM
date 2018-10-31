@@ -166,6 +166,7 @@ leader  ::= optWs
 
 # === CHARACTER SET ===
 
+# BACKSLASH ~ backslash
 backslash ~ [\0x5c] # 0x5c is backslash
 KET ~ '^'
 
@@ -189,8 +190,12 @@ aces ::= ACE+
 
 ACE ~ ' '
 COMMENT ~ '::' nonNLs nl
-# TODO: Is this OK?
+
+# TODO: Is this treatment of these fas runes OK?
 COMMENT ~ '/?' nonNLs nl
+COMMENT ~ '/+' nonNLs nl
+COMMENT ~ '/-' nonNLs nl
+
 NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
@@ -457,6 +462,10 @@ foot ::= flatHoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
 
+# TODO: what is ace-separated slash -- another form of buctis?
+# Or something else?
+# irrBuctisSlash ::= NAME (ACE '/' ACE) hoon
+
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
@@ -464,6 +473,9 @@ flatHoon ::= flatBucwut
 flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
 flatBucwut ::= (':bcwt(') flatHoonSeq (')')
 flatBucwut ::= ('?(') flatHoonSeq (')')
+
+# TODO: From clay file system?
+# FIXED: cenbar hoon hoon
 
 # FIXED: cendot hoon hoon
 
@@ -475,6 +487,9 @@ irrCenhep ::= ('(') flatHoonSeq (')')
 
 # FIXED: cenket hoon hoon hoon hoon
 # FIXED: cenlus hoon hoon hoon
+
+# TODO: From clay file system?
+# FIXED: cenpam hoon
 
 # FIXED: censig wing hoon hoon
 flatHoon ::= irrCensig
@@ -594,9 +609,24 @@ hoon ::= tallWuthep
 WUTHEP ~ [?] [-]
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
+# Undocumented runes
+# !:  ::  turn on debugging printfs
+ZAPCOL ~ [!] [:]
+hoon ::= tallZapcol
+tallZapcol ::= ZAPCOL
+
+# Undocumented runes
+# !.  ::  turn off debugging printfs
+ZAPDOT ~ [!] [.]
+hoon ::= tallZapdot
+tallZapdot ::= ZAPDOT
+
 # FIXED: zapgar hoon
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
+
+# !;  ::  using the "type of type", emit the type for an expression
+# !,  ::  emit AST of expression
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
@@ -688,11 +718,6 @@ sub doFixedRune {
 }
 
 # Undocumented runes
-
-# !:  ::  turn on debugging printfs
-# !.  ::  turn off debugging printfs
-# !;  ::  using the "type of type", emit the type for an expression
-# !,  ::  emit AST of expression
 # $*  ::  bunt (irregular form is *)
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types

@@ -145,6 +145,7 @@ leader  ::= optWs
 
 # === CHARACTER SET ===
 
+# BACKSLASH ~ backslash
 backslash ~ [\0x5c] # 0x5c is backslash
 KET ~ '^'
 
@@ -168,8 +169,12 @@ aces ::= ACE+
 
 ACE ~ ' '
 COMMENT ~ '::' nonNLs nl
-# TODO: Is this OK?
+
+# TODO: Is this treatment of these fas runes OK?
 COMMENT ~ '/?' nonNLs nl
+COMMENT ~ '/+' nonNLs nl
+COMMENT ~ '/-' nonNLs nl
+
 NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
@@ -436,6 +441,10 @@ foot ::= flatHoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
 
+# TODO: what is ace-separated slash -- another form of buctis?
+# Or something else?
+# irrBuctisSlash ::= NAME (ACE '/' ACE) hoon
+
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
@@ -443,6 +452,9 @@ flatHoon ::= flatBucwut
 flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
 flatBucwut ::= (':bcwt(') flatHoonSeq (')')
 flatBucwut ::= ('?(') flatHoonSeq (')')
+
+# TODO: From clay file system?
+# FIXED: cenbar hoon hoon
 
 # FIXED: cendot hoon hoon
 
@@ -454,6 +466,9 @@ irrCenhep ::= ('(') flatHoonSeq (')')
 
 # FIXED: cenket hoon hoon hoon hoon
 # FIXED: cenlus hoon hoon hoon
+
+# TODO: From clay file system?
+# FIXED: cenpam hoon
 
 # FIXED: censig wing hoon hoon
 flatHoon ::= irrCensig
@@ -573,9 +588,24 @@ hoon ::= tallWuthep
 WUTHEP ~ [?] [-]
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
+# Undocumented runes
+# !:  ::  turn on debugging printfs
+ZAPCOL ~ [!] [:]
+hoon ::= tallZapcol
+tallZapcol ::= ZAPCOL
+
+# Undocumented runes
+# !.  ::  turn off debugging printfs
+ZAPDOT ~ [!] [.]
+hoon ::= tallZapdot
+tallZapdot ::= ZAPDOT
+
 # FIXED: zapgar hoon
 # FIXED: zaptis hoon
 # FIXED: zapwut atom hoon
+
+# !;  ::  using the "type of type", emit the type for an expression
+# !,  ::  emit AST of expression
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
@@ -686,6 +716,14 @@ tallBuctis ::= (BUCTIS gap)term (gap) hoon
 flatBuctis ::= (BUCTIS) [(] term (ACE) flatHoon [)]
 flatBuctis ::= (':bcts') [(] term (ACE) flatHoon [)]
 
+# CENBAR hoon hoon
+CENBAR ~ [%] [|]
+hoon ::= tallCenbar
+flatHoon ::= flatCenbar
+tallCenbar ::= (CENBAR gap)hoon (gap) hoon
+flatCenbar ::= (CENBAR) [(] flatHoon (ACE) flatHoon [)]
+flatCenbar ::= (':cnbr') [(] flatHoon (ACE) flatHoon [)]
+
 # CENDOT hoon hoon
 CENDOT ~ [%] [.]
 hoon ::= tallCendot
@@ -717,6 +755,14 @@ flatHoon ::= flatCenlus
 tallCenlus ::= (CENLUS gap)hoon (gap) hoon (gap) hoon
 flatCenlus ::= (CENLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatCenlus ::= (':cnls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+
+# CENPAM hoon
+CENPAM ~ [%] [&]
+hoon ::= tallCenpam
+flatHoon ::= flatCenpam
+tallCenpam ::= (CENPAM gap)hoon
+flatCenpam ::= (CENPAM) [(] flatHoon [)]
+flatCenpam ::= (':cnpm') [(] flatHoon [)]
 
 # CENSIG wing hoon hoon
 CENSIG ~ [%] [~]
