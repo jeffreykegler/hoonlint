@@ -353,7 +353,13 @@ doubleStringElements ~ doubleStringElement*
 # From syntax.vim, might need correction
 doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 
-# LATER Single string element -- they also allow escapes
+# LATER Single string element also allow escapes
+# LATER: Add \xx hex escapes, and more backslash escapes
+STRING ~ ['] singleStringElements [']
+singleStringElements ~ singleStringElement*
+# 0x5C is backslash
+# From syntax.vim, might need correction
+singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
@@ -495,16 +501,35 @@ irrCenhep ::= ('(') flatHoonSeq (')')
 flatHoon ::= irrCensig
 irrCensig ::= ('~(') flatHoonSeq (')')
 
-# FIXED: colcab hoon hoon
-# FIXED: colhep hoon hoon
-# FIXED: collus hoon hoon hoon
-# FIXED: colket hoon hoon hoon hoon
-
 flatHoon ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
+
+# FIXED: colcab hoon hoon
+# FIXED: colhep hoon hoon
+# FIXED: collus hoon hoon hoon
+# FIXED: colket hoon hoon hoon hoon
+
+# Running syntax
+COLSIG ~ [:] [~]
+hoon ::= tallColsig
+tallColsig ::= (COLSIG gap) hoonSeq (gap '==')
+flatHoon ::= flatColsig
+flatHoon ::= flatColsig2
+flatColsig ::= (COLSIG '(') flatHoonSeq (')')
+flatColsig ::= (':clsg(') flatHoonSeq (')')
+flatColsig ::= ('~[') flatHoonSeq (']')
+flatColsig2 ::= ('[') flatHoonSeq (']~')
+
+# Running syntax
+COLTAR ~ [:] [*]
+hoon ::= tallColtar
+tallColtar ::= (COLTAR gap) hoonSeq (gap '==')
+flatHoon ::= flatColtar
+flatColtar ::= (COLTAR '(') flatHoonSeq (')')
+flatColtar ::= (':cltr(') flatHoonSeq (')')
 
 # FIXED: dotket hoon hoon
 
@@ -521,6 +546,8 @@ irrDotlus ::= ('+(') flatHoon (')')
 
 # FAS group are (usually?) ford runes:
 
+# FIXED: fassem hoon hoon
+
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
 tallFastis ::= (FASTIS gap) NAME (gap) hoon 
@@ -528,7 +555,11 @@ flatHoon ::= flatFastis
 flatFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketbar hoon
+
 # FIXED: kethep hoon hoon
+flatHoon ::= irrKethep
+irrKethep ::= ('`') hoon ('`') hoon
+
 # FIXED: ketlus hoon hoon
 # FIXED: ketsig hoon
 
