@@ -201,6 +201,8 @@ loobean ::= '%.y'
 loobean ::= '%.n'
 loobean ::= '&'
 loobean ::= '|'
+loobean ::= '%&'
+loobean ::= '%|'
 
 # @p                             ~zod          (0)
 # @rd   64-bit IEEE float        .~3.14        (pi)
@@ -460,9 +462,6 @@ flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
 flatBucwut ::= (':bcwt(') flatHoonSeq (')')
 flatBucwut ::= ('?(') flatHoonSeq (')')
 
-# TODO: From clay file system?
-# FIXED: cenbar hoon hoon
-
 # FIXED: cendot hoon hoon
 
 # FIXED: cenhep hoon hoon
@@ -473,9 +472,6 @@ irrCenhep ::= ('(') flatHoonSeq (')')
 
 # FIXED: cenket hoon hoon hoon hoon
 # FIXED: cenlus hoon hoon hoon
-
-# TODO: From clay file system?
-# FIXED: cenpam hoon
 
 # FIXED: censig wing hoon hoon
 flatHoon ::= irrCensig
@@ -499,10 +495,12 @@ tallColsig ::= (COLSIG gap) hoonSeq (gap '==')
 flatHoon ::= flatColsig
 flatHoon ::= flatColsig2
 flatHoon ::= flatColsig3
+flatHoon ::= flatColsig4
 flatColsig ::= (COLSIG '(') flatHoonSeq (')')
 flatColsig ::= (':clsg(') flatHoonSeq (')')
 flatColsig2 ::= ('~[') flatHoonSeq (']')
 flatColsig3 ::= ('[') flatHoonSeq (']~')
+flatColsig4 ::= ('`') flatHoon
 
 # Running syntax
 COLTAR ~ [:] [*]
@@ -750,14 +748,6 @@ tallBuctis ::= (BUCTIS gap)term (gap) hoon
 flatBuctis ::= (BUCTIS) [(] term (ACE) flatHoon [)]
 flatBuctis ::= (':bcts') [(] term (ACE) flatHoon [)]
 
-# CENBAR hoon hoon
-CENBAR ~ [%] [|]
-hoon ::= tallCenbar
-flatHoon ::= flatCenbar
-tallCenbar ::= (CENBAR gap)hoon (gap) hoon
-flatCenbar ::= (CENBAR) [(] flatHoon (ACE) flatHoon [)]
-flatCenbar ::= (':cnbr') [(] flatHoon (ACE) flatHoon [)]
-
 # CENDOT hoon hoon
 CENDOT ~ [%] [.]
 hoon ::= tallCendot
@@ -789,14 +779,6 @@ flatHoon ::= flatCenlus
 tallCenlus ::= (CENLUS gap)hoon (gap) hoon (gap) hoon
 flatCenlus ::= (CENLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatCenlus ::= (':cnls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-
-# CENPAM hoon
-CENPAM ~ [%] [&]
-hoon ::= tallCenpam
-flatHoon ::= flatCenpam
-tallCenpam ::= (CENPAM gap)hoon
-flatCenpam ::= (CENPAM) [(] flatHoon [)]
-flatCenpam ::= (':cnpm') [(] flatHoon [)]
 
 # CENSIG wing hoon hoon
 CENSIG ~ [%] [~]
