@@ -268,7 +268,7 @@ decimalDigit ~ [0-9]
 decimalGroups ~ decimalGroup*
 decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
 
-# @uv   unsigned base32          0v3ic5h.6urr6 
+# @uv   unsigned base32          0v3ic5h.6urr6
 NUMBER ~ vNumber
 # syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
 vNumber ~ '0v' vNumPrefix vNumGroups
@@ -467,6 +467,7 @@ foot ::= flatHoon
 # FIXED: buctis term hoon
 flatHoon ::= irrBuctisSlash
 irrBuctisSlash ::= NAME ('/') hoon
+irrBuctisSlash ::= NAME ('+') hoon
 
 # TODO: what is ace-separated slash -- another form of buctis?
 # Or something else?
@@ -518,10 +519,11 @@ hoon ::= tallColsig
 tallColsig ::= (COLSIG gap) hoonSeq (gap '==')
 flatHoon ::= flatColsig
 flatHoon ::= flatColsig2
+flatHoon ::= flatColsig3
 flatColsig ::= (COLSIG '(') flatHoonSeq (')')
 flatColsig ::= (':clsg(') flatHoonSeq (')')
-flatColsig ::= ('~[') flatHoonSeq (']')
-flatColsig2 ::= ('[') flatHoonSeq (']~')
+flatColsig2 ::= ('~[') flatHoonSeq (']')
+flatColsig3 ::= ('[') flatHoonSeq (']~')
 
 # Running syntax
 COLTAR ~ [:] [*]
@@ -550,7 +552,7 @@ irrDotlus ::= ('+(') flatHoon (')')
 
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
-tallFastis ::= (FASTIS gap) NAME (gap) hoon 
+tallFastis ::= (FASTIS gap) NAME (gap) hoon
 flatHoon ::= flatFastis
 flatFastis ::= (FASTIS) NAME '=' hoon
 
@@ -637,8 +639,8 @@ flatWutpam ::= ('&(') flatHoonSeq (')')
 flatWutzap ::= irrWutzap
 irrWutzap ::= ('!') flatHoon
 
-hoon ::= tallWuthep
 WUTHEP ~ [?] [-]
+hoon ::= tallWuthep
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
 # Undocumented runes
