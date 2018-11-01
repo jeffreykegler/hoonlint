@@ -4,7 +4,7 @@
     [
       'tallBartis',
       [
-        'irrBuctisSlash',
+        'irrColhepSlash',
         'feed',
         [
           'irrCenhep',
@@ -33,7 +33,7 @@
       [
         'tallTisbar',
         [
-          'irrBuctisSlash',
+          'irrColhepSlash',
           'game',
           [
             'wing',
@@ -92,7 +92,7 @@
               [
                 'tallTisket',
                 [
-                  'irrBuctisSlash',
+                  'irrColhepSlash',
                   'this',
                   [
                     'irrCenhep',
@@ -184,7 +184,7 @@
                 [
                   'tallTisfas',
                   [
-                    'irrBuctisSlash',
+                    'irrColhepSlash',
                     'rest',
                     [
                       'irrCenhep',
@@ -326,7 +326,7 @@
             [
               'flatBuccol',
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'x',
                 [
                   'atom',
@@ -334,7 +334,7 @@
                 ]
               ],
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'y',
                 [
                   'atom',
@@ -392,7 +392,7 @@
                     [
                       'foot',
                       [
-                        'irrBuctisSlash',
+                        'irrColhepSlash',
                         'p',
                         [
                           'wing',
@@ -432,7 +432,7 @@
                     [
                       'foot',
                       [
-                        'irrBuctisSlash',
+                        'irrColhepSlash',
                         'p',
                         [
                           'wing',
@@ -462,7 +462,7 @@
                     [
                       'foot',
                       [
-                        'irrBuctisSlash',
+                        'irrColhepSlash',
                         'p',
                         [
                           'wing',
@@ -525,7 +525,7 @@
                 ]
               ],
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'a',
                 [
                   'wing',
@@ -539,7 +539,7 @@
                 ]
               ],
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'z',
                 [
                   'wing',
@@ -566,7 +566,7 @@
             [
               'tallBarcab',
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'half',
                 [
                   'wing',
@@ -588,7 +588,7 @@
                     'flatBartis',
                     '(',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'a',
                       [
                         'atom',
@@ -656,7 +656,7 @@
                     'flatBartis',
                     '(',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'a',
                       [
                         'wing',
@@ -743,7 +743,7 @@
                     'flatBartis',
                     '(',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'a',
                       [
                         'wing',
@@ -802,7 +802,7 @@
                     'flatBartis',
                     '(',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'a',
                       [
                         'wing',
@@ -917,7 +917,7 @@
                       'flatBartis',
                       '(',
                       [
-                        'irrBuctisSlash',
+                        'irrColhepSlash',
                         'a',
                         [
                           'atom',
@@ -983,7 +983,7 @@
             [
               'tallBarcab',
               [
-                'irrBuctisSlash',
+                'irrColhepSlash',
                 'game',
                 [
                   'wing',
@@ -1004,7 +1004,7 @@
                   [
                     'tallBartis',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'act',
                       [
                         'wing',
@@ -1317,7 +1317,7 @@
                   [
                     'tallBarcab',
                     [
-                      'irrBuctisSlash',
+                      'irrColhepSlash',
                       'here',
                       [
                         'wing',
@@ -1502,7 +1502,7 @@
                             [
                               'tallTisfas',
                               [
-                                'irrBuctisSlash',
+                                'irrColhepSlash',
                                 'next',
                                 [
                                   'wing',

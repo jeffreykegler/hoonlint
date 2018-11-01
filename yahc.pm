@@ -446,9 +446,6 @@ foot ::= flatHoon
 # FIXED: bucpat hoon hoon
 
 # FIXED: buctis term hoon
-flatHoon ::= irrBuctisSlash
-irrBuctisSlash ::= NAME ('/') hoon
-irrBuctisSlash ::= NAME ('+') hoon
 
 # TODO: what is ace-separated slash -- another form of buctis?
 # Or something else?
@@ -484,7 +481,12 @@ tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
 irrCentis ::= NAME ('(') flatHoonJogging (')')
 
 # FIXED: colcab hoon hoon
+
 # FIXED: colhep hoon hoon
+flatHoon ::= irrColhepSlash
+irrColhepSlash ::= NAME ('/') hoon
+irrColhepSlash ::= NAME ('+') hoon
+
 # FIXED: collus hoon hoon hoon
 # FIXED: colket hoon hoon hoon hoon
 

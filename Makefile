@@ -38,4 +38,4 @@ ast_reset: yahc.pm
 
 dev:
 	echo empty dev target
-	# perl -I. yahcfilt.pl <toe.hoon
+	perl -I. recognize.t
