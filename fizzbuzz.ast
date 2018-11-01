@@ -124,7 +124,13 @@
                 ],
                 [
                   'atom',
-                  '"FizzBuzz"'
+                  [
+                    'doubleString',
+                    [
+                      'doubleStringElement',
+                      'FizzBuzz'
+                    ]
+                  ]
                 ],
                 [
                   'tallWutcol',
@@ -164,7 +170,13 @@
                   ],
                   [
                     'atom',
-                    '"Fizz"'
+                    [
+                      'doubleString',
+                      [
+                        'doubleStringElement',
+                        'Fizz'
+                      ]
+                    ]
                   ],
                   [
                     'tallWutcol',
@@ -204,7 +216,13 @@
                     ],
                     [
                       'atom',
-                      '"Buzz"'
+                      [
+                        'doubleString',
+                        [
+                          'doubleStringElement',
+                          'Buzz'
+                        ]
+                      ]
                     ],
                     [
                       'irrCenhep',

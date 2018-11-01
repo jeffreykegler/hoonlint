@@ -66,6 +66,7 @@ sub prune {
     };
 
     state $nonSemantic = {
+	doubleStringElements => 1,
         flatHoon        => 1,
         flatHoonJogging => 1,
         flatHoonJogs    => 1,
@@ -324,19 +325,24 @@ lastTermChar ~ [a-z0-9]
 
 # === STRINGS ==
 
-atom ::= STRING
+atom ::= doubleString
+atom ::= SINGLESTRING
 
 # LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
-STRING ~ ["] doubleStringElements ["]
-doubleStringElements ~ doubleStringElement*
+doubleString ::= (["]) doubleStringElements (["])
+doubleStringElements ::= doubleStringElement*
+doubleStringElement ::= stringInterpolation
+doubleStringElement ::= DOUBLESTRINGCHARS
+DOUBLESTRINGCHARS ~ doubleStringChar+
 # 0x5C is backslash
 # From syntax.vim, might need correction
-doubleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
+doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
+stringInterpolation ::= '{' flatHoon '}'
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
-STRING ~ ['] singleStringElements [']
+SINGLESTRING ~ ['] singleStringElements [']
 singleStringElements ~ singleStringElement*
 # 0x5C is backslash
 # From syntax.vim, might need correction
@@ -345,6 +351,18 @@ singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
 # syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
+
+# === PATHS ==
+
+atom ::= path
+path ::= [/] optPathSeq
+optPathSeq ::= pathElement* separator=>[/]
+pathElement ::= PATHSTRING
+PATHSTRING ~ pathStringElements
+pathStringElements ~ pathStringElement
+# Do path strings allow escapes?
+pathStringElement ~ [^/]
+pathElement ::= '(' flatHoon ')'
 
 # === CELLS BY TYPE ==
 
