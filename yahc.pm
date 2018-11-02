@@ -536,7 +536,13 @@ flatHoon ::= flatColtar
 flatColtar ::= (COLTAR '(') flatHoonSeq (')')
 flatColtar ::= (':cltr(') flatHoonSeq (')')
 
-# FIXED: dotket hoon hoon
+# DOTKET hoon hoon
+DOTKET ~ [.] [\^]
+hoon ::= tallDotket
+flatHoon ::= flatDotket
+tallDotket ::= (DOTKET gap)hoon (gap) hoonSeq
+flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoonSeq [)]
+flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoonSeq [)]
 
 # FIXED: dottis hoon hoon
 flatHoon ::= irrDottis
@@ -853,14 +859,6 @@ flatHoon ::= flatColket
 tallColket ::= (COLKET gap)hoon (gap) hoon (gap) hoon (gap) hoon
 flatColket ::= (COLKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatColket ::= (':clkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-
-# DOTKET hoon hoon
-DOTKET ~ [.] [\^]
-hoon ::= tallDotket
-flatHoon ::= flatDotket
-tallDotket ::= (DOTKET gap)hoon (gap) hoon
-flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoon [)]
-flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoon [)]
 
 # DOTTIS hoon hoon
 DOTTIS ~ [.] [=]
