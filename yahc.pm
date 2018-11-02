@@ -463,6 +463,12 @@ foot ::= flatHoon
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
 
+# Undocumented runes
+# $*  ::  bunt (irregular form is *)
+# FIXED: buctar hoon
+flatHoon ::= irrBuctar
+irrBuctar ::= '*' hoon
+
 # FIXED: buctis term hoon
 
 # TODO: what is ace-separated slash -- another form of buctis?
@@ -759,6 +765,14 @@ flatHoon ::= flatBucpat
 tallBucpat ::= (BUCPAT gap)hoon (gap) hoon
 flatBucpat ::= (BUCPAT) [(] flatHoon (ACE) flatHoon [)]
 flatBucpat ::= (':bcpt') [(] flatHoon (ACE) flatHoon [)]
+
+# BUCTAR hoon
+BUCTAR ~ [$] [*]
+hoon ::= tallBuctar
+flatHoon ::= flatBuctar
+tallBuctar ::= (BUCTAR gap)hoon
+flatBuctar ::= (BUCTAR) [(] flatHoon [)]
+flatBuctar ::= (':bctr') [(] flatHoon [)]
 
 # BUCTIS term hoon
 BUCTIS ~ [$] [=]

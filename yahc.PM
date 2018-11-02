@@ -484,6 +484,12 @@ foot ::= flatHoon
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
 
+# Undocumented runes
+# $*  ::  bunt (irregular form is *)
+# FIXED: buctar hoon
+flatHoon ::= irrBuctar
+irrBuctar ::= '*' hoon
+
 # FIXED: buctis term hoon
 
 # TODO: what is ace-separated slash -- another form of buctis?
@@ -769,8 +775,6 @@ sub doFixedRune {
     return join "\n", @result, '';
 }
 
-# Undocumented runes
-# $*  ::  bunt (irregular form is *)
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
 
