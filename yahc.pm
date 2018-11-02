@@ -592,6 +592,14 @@ irrKettis ::= toga ('=') flatHoon
 # #semsem hoon value
 # FIXED: semsem hoon hoon
 
+# 1-fixed, then running syntax
+SEMSIG ~ [;] [~]
+hoon ::= tallSemsig
+tallSemsig ::= (SEMSIG gap) hoon (gap) hoonSeq (gap '==')
+flatHoon ::= flatSemsig
+flatSemsig ::= (SEMSIG '(') hoon (ACE) flatHoonSeq (')')
+flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
+
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
 # FIXED: sigzap hoon hoon
