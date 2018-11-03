@@ -377,10 +377,10 @@ pathElement ::= PATHSTRING
 # pathHoon is hoon that is legal as part of a path
 pathElement ::= pathHoon
 
-PATHSTRING ~ pathStringElements
-pathStringElements ~ pathStringElement
+PATHSTRING ~ pathStringChars
+pathStringChars ~ pathStringChar+
 # Do path strings allow escapes?
-pathStringElement ~ [^/]
+pathStringChar ~ [a-zA-Z-]
 
 # === CELLS BY TYPE ==
 
@@ -404,14 +404,12 @@ hoonPrimary ::= pathHoon
 hoonPrimary ::= atom
 hoonPrimary ::= wing
 
-pathHoon ::= togaSeq
 toga ::= NAME
 toga ::= togaSeq
 togaSeq ::= ('[') togaElements (']')
-togaElements ::= flatHoon+ separator=>ACE proper=>1
-# TODO: 
-# togaElement ::= toga
-# togaElement ::= NIL
+togaElements ::= togaElement+ separator=>ACE proper=>1
+togaElement ::= toga
+togaElement ::= NIL
 
 wing ::= limb+ separator=>[.] proper=>1
 limb ::= optKets NAME
@@ -718,6 +716,17 @@ pathHoon ::= circumParen3
 circumParen1 ::= ('(') flatHoon (')')
 circumParen2 ::= ('(') flatHoon (ACE) flatHoon (')')
 circumParen3 ::= ('(') flatHoon (ACE) flatHoon (ACE) flatHoonSeq (')')
+
+pathHoon ::= circumSelser1
+pathHoon ::= circumSelser2
+pathHoon ::= circumSelser3
+pathHoon ::= circumSelser4
+pathHoon ::= circumSelser5
+circumSelser1 ::= ('[') flatHoon (']')
+circumSelser2 ::= ('[') flatHoon (ACE) flatHoon (']')
+circumSelser3 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (']')
+circumSelser4 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (']')
+circumSelser5 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoonSeq (']')
 
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
