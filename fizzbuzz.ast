@@ -2,7 +2,7 @@
   [
     'tallBartis',
     [
-      'irrColhepSlash',
+      'infixSlash',
       'end',
       [
         'wing',
@@ -18,7 +18,7 @@
     [
       'tallTislus',
       [
-        'irrKettis',
+        'infixEqual',
         [
           'toga',
           'count'

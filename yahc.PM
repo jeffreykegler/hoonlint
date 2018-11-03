@@ -93,10 +93,12 @@ sub prune {
         flatHoonJogs    => 1,
         flatHoonSeq     => 1,
         hoon            => 1,
+	hoonExpression => 1,
 	hoonFile => 1,
         hoonJog     => 1,
         hoonJogging => 1,
         hoonJogs    => 1,
+	hoonPrimary => 1,
         hoonSeq         => 1,
 	pathHoon => 1,
     };
@@ -404,12 +406,21 @@ pathStringElement ~ [^/]
 
 hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= flatHoon
+flatHoon ::= hoonExpression
+hoonExpression ::= infixColon
+hoonExpression ::= infixSlash
+hoonExpression ::= infixPlus
+hoonExpression ::= infixEqual
+hoonExpression ::= hoonPrimary
+infixColon ::= hoonPrimary (':') flatHoon
+infixEqual ::= toga ('=') hoonExpression
+infixPlus ::=  NAME ('+') hoonExpression
+infixSlash ::= NAME ('/') hoonExpression
 
-flatHoon ::= pathHoon
+hoonPrimary ::= pathHoon
 
-# flatHoons ::= flatHoon+
-flatHoon ::= atom
-flatHoon ::= wing
+hoonPrimary ::= atom
+hoonPrimary ::= wing
 
 toga ::= NAME
 toga ::= '[' togaSeq ']'
@@ -479,7 +490,7 @@ irrBuccab ::= ('_') flatHoon
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL gap) hoonSeq (gap '==')
-flatHoon ::= flatBuccol
+hoonPrimary ::= flatBuccol
 flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
 flatBuccol ::= (':bccl(') flatHoonSeq (')')
 flatBuccol ::= ('{') flatHoonSeq ('}')
@@ -505,14 +516,14 @@ foot ::= flatHoon
 # $*  ::  bunt (irregular form is *)
 # FIXED: buctar hoon
 flatHoon ::= irrBuctar
-irrBuctar ::= '*' hoon
+irrBuctar ::= '*' flatHoon
 
 # FIXED: buctis term hoon
 
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
-flatHoon ::= flatBucwut
+hoonPrimary ::= flatBucwut
 flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
 flatBucwut ::= (':bcwt(') flatHoonSeq (')')
 flatBucwut ::= ('?(') flatHoonSeq (')')
@@ -525,10 +536,10 @@ flatBucwut ::= ('?(') flatHoonSeq (')')
 # FIXED: cenlus hoon hoon hoon
 
 # FIXED: censig wing hoon hoon
-flatHoon ::= irrCensig
+hoonPrimary ::= irrCensig
 irrCensig ::= ('~(') flatHoonSeq (')')
 
-flatHoon ::= irrCentis
+hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
@@ -537,9 +548,6 @@ irrCentis ::= NAME ('(') flatHoonJogging (')')
 # FIXED: colcab hoon hoon
 
 # FIXED: colhep hoon hoon
-flatHoon ::= irrColhepSlash
-irrColhepSlash ::= NAME ('/') hoon
-irrColhepSlash ::= NAME ('+') hoon
 
 # FIXED: collus hoon hoon hoon
 # FIXED: colket hoon hoon hoon hoon
@@ -548,10 +556,10 @@ irrColhepSlash ::= NAME ('+') hoon
 COLSIG ~ [:] [~]
 hoon ::= tallColsig
 tallColsig ::= (COLSIG gap) hoonSeq (gap '==')
-flatHoon ::= flatColsig
-flatHoon ::= flatColsig2
-flatHoon ::= flatColsig3
-flatHoon ::= flatColsig4
+hoonPrimary ::= flatColsig
+hoonPrimary ::= flatColsig2
+hoonPrimary ::= flatColsig3
+hoonPrimary ::= flatColsig4
 flatColsig ::= (COLSIG '(') flatHoonSeq (')')
 flatColsig ::= (':clsg(') flatHoonSeq (')')
 flatColsig2 ::= ('~[') flatHoonSeq (']')
@@ -562,24 +570,24 @@ flatColsig4 ::= ('`') flatHoon
 COLTAR ~ [:] [*]
 hoon ::= tallColtar
 tallColtar ::= (COLTAR gap) hoonSeq (gap '==')
-flatHoon ::= flatColtar
+hoonPrimary ::= flatColtar
 flatColtar ::= (COLTAR '(') flatHoonSeq (')')
 flatColtar ::= (':cltr(') flatHoonSeq (')')
 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
-flatHoon ::= flatDotket
+hoonPrimary ::= flatDotket
 tallDotket ::= (DOTKET gap)hoon (gap) hoonSeq
 flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoonSeq [)]
 flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoonSeq [)]
 
 # FIXED: dottis hoon hoon
-flatHoon ::= irrDottis
+hoonPrimary ::= irrDottis
 irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
 
 # FIXED: dotlus atom
-flatHoon ::= irrDotlus
+hoonPrimary ::= irrDotlus
 irrDotlus ::= ('+(') flatHoon (')')
 
 # FIXED: dottar hoon hoon
@@ -592,21 +600,19 @@ irrDotlus ::= ('+(') flatHoon (')')
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
 tallFastis ::= (FASTIS gap) NAME (gap) hoon
-flatHoon ::= flatFastis
+hoonPrimary ::= flatFastis
 flatFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketbar hoon
 
 # FIXED: kethep hoon hoon
-flatHoon ::= irrKethep
+hoonPrimary ::= irrKethep
 irrKethep ::= ('`') hoon ('`') hoon
 
 # FIXED: ketlus hoon hoon
 # FIXED: ketsig hoon
 
 # FIXED: kettis toga hoon
-flatHoon ::= irrKettis
-irrKettis ::= toga ('=') flatHoon
 
 # FIXED: ketwut hoon
 
@@ -626,7 +632,7 @@ irrKettis ::= toga ('=') flatHoon
 SEMSIG ~ [;] [~]
 hoon ::= tallSemsig
 tallSemsig ::= (SEMSIG gap) hoon (gap) hoonSeq (gap '==')
-flatHoon ::= flatSemsig
+hoonPrimary ::= flatSemsig
 flatSemsig ::= (SEMSIG '(') hoon (ACE) flatHoonSeq (')')
 flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 
@@ -643,8 +649,6 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 # FIXED: tisfas hoon hoon hoon
 
 # FIXED: tisgal hoon hoon
-flatHoon ::= irrTisgal
-irrTisgal ::= flatHoon (':') flatHoon
 
 # FIXED: tisgar hoon hoon
 # FIXED: tisket hoon wing hoon hoon
@@ -659,7 +663,7 @@ irrTisgal ::= flatHoon (':') flatHoon
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR gap) hoonSeq (gap '==')
-flatHoon ::= flatWutbar
+hoonPrimary ::= flatWutbar
 flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
 flatWutbar ::= (':wtbr(') flatHoonSeq (')')
 flatWutbar ::= ('|(') flatHoonSeq (')')
@@ -674,7 +678,7 @@ flatWutbar ::= ('|(') flatHoonSeq (')')
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM gap) hoonSeq (gap '==')
-flatHoon ::= flatWutpam
+hoonPrimary ::= flatWutpam
 flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
 flatWutpam ::= (':wtpm(') flatHoonSeq (')')
 flatWutpam ::= ('&(') flatHoonSeq (')')
@@ -789,8 +793,8 @@ sub doFixedRune {
     push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
     # hoon ::= tallBarhep
     push @result, 'hoon ::= ' . $tallLHS;
-    # flatHoon ::= flatBarhep
-    push @result, 'flatHoon ::= ' . $flatLHS;
+    # hoonPrimary ::= flatBarhep
+    push @result, 'hoonPrimary ::= ' . $flatLHS;
     # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
     push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
     state $flatEquiv = {

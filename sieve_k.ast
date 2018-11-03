@@ -2,7 +2,7 @@
   [
     'tallBartis',
     [
-      'irrKettis',
+      'infixEqual',
       [
         'toga',
         'top'
@@ -34,7 +34,7 @@
       [
         'tallTislus',
         [
-          'irrKettis',
+          'infixEqual',
           [
             'toga',
             'fed'
@@ -83,7 +83,7 @@
         [
           'tallTisgal',
           [
-            'irrTisgal',
+            'infixColon',
             [
               'wing',
               [
@@ -178,7 +178,7 @@
                 [
                   'tallTislus',
                   [
-                    'irrKettis',
+                    'infixEqual',
                     [
                       'toga',
                       'fac'
@@ -368,7 +368,7 @@
                 [
                   'tallBartis',
                   [
-                    'irrKettis',
+                    'infixEqual',
                     [
                       'toga',
                       'fac'
@@ -381,7 +381,7 @@
                   [
                     'tallTislus',
                     [
-                      'irrKettis',
+                      'infixEqual',
                       [
                         'toga',
                         'cot'

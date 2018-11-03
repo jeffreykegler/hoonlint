@@ -2,7 +2,7 @@
   [
     'tallBartis',
     [
-      'irrKettis',
+      'infixEqual',
       [
         'toga',
         'thru'
@@ -34,7 +34,7 @@
       [
         'tallTisfas',
         [
-          'irrKettis',
+          'infixEqual',
           [
             'toga',
             'field'
@@ -100,7 +100,7 @@
         [
           'tallTisgal',
           [
-            'irrTisgal',
+            'infixColon',
             [
               'wing',
               [
@@ -192,7 +192,7 @@
                 [
                   'tallTisfas',
                   [
-                    'irrKettis',
+                    'infixEqual',
                     [
                       'toga',
                       'factor'
@@ -386,7 +386,7 @@
                 [
                   'tallBartis',
                   [
-                    'irrKettis',
+                    'infixEqual',
                     [
                       'toga',
                       'factor'
@@ -399,7 +399,7 @@
                   [
                     'tallTisfas',
                     [
-                      'irrKettis',
+                      'infixEqual',
                       [
                         'toga',
                         'count'
