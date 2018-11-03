@@ -1,13 +1,14 @@
 
 
 .PHONY: all test test_suite undoc_tests \
-  fizzbuzz sieve_b sieve_k toe
+  fizzbuzz sieve_b sieve_k toe \
+  recognize
 
 all: test
 
 test: test_suite undoc_tests
 
-test_suite: fizzbuzz sieve_b sieve_k toe
+test_suite: fizzbuzz sieve_b sieve_k toe recognize
 
 yahc.pm: yahc.PM
 	perl yahc.PM > yahc.pm
@@ -28,6 +29,9 @@ toe: yahc.pm toe.hoon
 	perl -I. yahcfilt.pl <toe.hoon >toe.ast.try 2>&1
 	diff toe.ast.try toe.ast || echo 'toe example !FAILED!'
 
+recognize:
+	prove -I. --verbose recognize.t
+
 undoc_tests:
 
 ast_reset: yahc.pm
@@ -38,4 +42,3 @@ ast_reset: yahc.pm
 
 dev:
 	echo empty dev target
-	perl -I. recognize.t

@@ -8,114 +8,114 @@ use autodie;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 3;
+use Test::More tests => 103;
 
 require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
-6 hoons/arvo/gen/pipe/cancel.hoon
-6 hoons/arvo/gen/pipe/connect.hoon
-6 hoons/arvo/gen/pipe/list.hoon
-7 hoons/arvo/gen/hood/hi.hoon
-7 hoons/arvo/gen/hood/rm.hoon
-7 hoons/arvo/gen/hood/schedule.hoon
-8 hoons/arvo/gen/bug.hoon
-10 hoons/arvo/gen/hood/private.hoon
-10 hoons/arvo/gen/hood/public.hoon
-11 hoons/arvo/gen/hood/syncs.hoon
-11 hoons/arvo/gen/hood/tlon/add-fora.hoon
-11 hoons/arvo/gen/hood/tlon/add-stream.hoon
-12 hoons/arvo/gen/hello.hoon
-12 hoons/arvo/gen/hood/ping.hoon
-12 hoons/arvo/gen/hood/tlon/init-stream.hoon
-12 hoons/arvo/gen/serving.hoon
-13 hoons/arvo/gen/curl/url.hoon
-13 hoons/arvo/gen/hall/load.hoon
-13 hoons/arvo/gen/hall/load-legacy.hoon
-13 hoons/arvo/gen/hall/log.hoon
-13 hoons/arvo/gen/hall/save.hoon
-13 hoons/arvo/gen/hall/unlog.hoon
-13 hoons/arvo/gen/hood/ask.hoon
-13 hoons/arvo/gen/hood/deset.hoon
-13 hoons/arvo/gen/hood/mass.hoon
-13 hoons/arvo/gen/hood/nuke.hoon
-13 hoons/arvo/gen/hood/obey.hoon
-13 hoons/arvo/gen/hood/overload.hoon
-13 hoons/arvo/gen/hood/rc.hoon
-13 hoons/arvo/gen/hood/reboot.hoon
-13 hoons/arvo/gen/hood/reset.hoon
-13 hoons/arvo/gen/hood/rf.hoon
-13 hoons/arvo/gen/hood/wipe-ford.hoon
-13 hoons/arvo/gen/womb/balance.hoon
-13 hoons/arvo/gen/womb/shop.hoon
-13 hoons/arvo/gen/womb/stats.hoon
-14 hoons/arvo/gen/curl.hoon
-14 hoons/arvo/gen/hood/autoload.hoon
-14 hoons/arvo/gen/hood/breload.hoon
-14 hoons/arvo/gen/hood/cancel.hoon
-14 hoons/arvo/gen/hood/claim.hoon
-14 hoons/arvo/gen/hood/label.hoon
-14 hoons/arvo/gen/hood/manage.hoon
-14 hoons/arvo/gen/hood/manage-old-key.hoon
-14 hoons/arvo/gen/hood/rekey.hoon
-14 hoons/arvo/gen/hood/release.hoon
-14 hoons/arvo/gen/hood/reload-desk.hoon
-14 hoons/arvo/gen/hood/reload.hoon
-14 hoons/arvo/gen/hood/replay-womb-log.hoon
-14 hoons/arvo/gen/hood/sync.hoon
-14 hoons/arvo/gen/hood/track.hoon
-14 hoons/arvo/gen/hood/unmount.hoon
-14 hoons/arvo/gen/hood/unsync.hoon
-14 hoons/arvo/gen/ls.hoon
-14 hoons/arvo/gen/twit/as.hoon
-15 hoons/arvo/gen/ask/admins.hoon
-15 hoons/arvo/gen/code.hoon
-15 hoons/arvo/gen/gmail/send.hoon
-15 hoons/arvo/gen/hood/commit.hoon
-15 hoons/arvo/gen/hood/reinvite.hoon
-15 hoons/arvo/gen/hood/release-ships.hoon
-15 hoons/arvo/gen/hood/report.hoon
-15 hoons/arvo/gen/womb/balances.hoon
-16 hoons/arvo/gen/hood/exit.hoon
-16 hoons/arvo/gen/hood/link.hoon
-16 hoons/arvo/gen/hood/unlink.hoon
-16 hoons/arvo/gen/hood/verb.hoon
-16 hoons/arvo/gen/static/build.hoon
-16 hoons/arvo/gen/ticket.hoon
-17 hoons/arvo/gen/curl-hiss.hoon
-17 hoons/arvo/gen/hood/cp.hoon
-17 hoons/arvo/gen/hood/mount.hoon
-17 hoons/arvo/gen/hood/save.hoon
-17 hoons/arvo/gen/hood/start.hoon
-17 hoons/arvo/gen/hood/transfer.hoon
-18 hoons/arvo/gen/hood/bonus.hoon
-19 hoons/arvo/gen/gmail/list.hoon
-19 hoons/arvo/gen/hood/mv.hoon
-20 hoons/arvo/gen/hood/load.hoon
-20 hoons/arvo/gen/hood/serve.hoon
-20 hoons/arvo/gen/twit/feed.hoon
-22 hoons/arvo/gen/tree.hoon
-25 hoons/arvo/gen/moon.hoon
-27 hoons/arvo/gen/pope.hoon
-33 hoons/arvo/gen/cat.hoon
-33 hoons/arvo/gen/hood/init-oauth2/google.hoon
-34 hoons/arvo/gen/hood/init-auth-basic.hoon
-36 hoons/arvo/gen/hood/init-oauth1.hoon
-36 hoons/arvo/gen/hood/init-oauth2.hoon
-42 hoons/arvo/gen/ivory.hoon
-47 hoons/arvo/gen/hood/merge.hoon
-53 hoons/arvo/gen/hood/invite.hoon
-58 hoons/arvo/gen/hood/begin.hoon
-64 hoons/arvo/gen/help.hoon
-76 hoons/arvo/gen/solid.hoon
-80 hoons/arvo/gen/test.hoon
-131 hoons/arvo/gen/glass.hoon
-180 hoons/arvo/gen/deco.hoon
-285 hoons/arvo/gen/capitalize.hoon
-294 hoons/arvo/gen/brass.hoon
-324 hoons/arvo/gen/metal.hoon
-366 hoons/arvo/gen/musk.hoon
-458 hoons/arvo/gen/al.hoon
+ok 6 hoons/arvo/gen/pipe/cancel.hoon
+ok 6 hoons/arvo/gen/pipe/connect.hoon
+ok 6 hoons/arvo/gen/pipe/list.hoon
+ok 7 hoons/arvo/gen/hood/hi.hoon
+ok 7 hoons/arvo/gen/hood/rm.hoon
+ok 7 hoons/arvo/gen/hood/schedule.hoon
+ok 8 hoons/arvo/gen/bug.hoon
+ok 10 hoons/arvo/gen/hood/private.hoon
+ok 10 hoons/arvo/gen/hood/public.hoon
+ok 11 hoons/arvo/gen/hood/syncs.hoon
+ok 11 hoons/arvo/gen/hood/tlon/add-fora.hoon
+ok 11 hoons/arvo/gen/hood/tlon/add-stream.hoon
+ok 12 hoons/arvo/gen/hello.hoon
+ok 12 hoons/arvo/gen/hood/ping.hoon
+ok 12 hoons/arvo/gen/hood/tlon/init-stream.hoon
+ok 12 hoons/arvo/gen/serving.hoon
+ok 13 hoons/arvo/gen/curl/url.hoon
+ok 13 hoons/arvo/gen/hall/load.hoon
+ok 13 hoons/arvo/gen/hall/load-legacy.hoon
+ok 13 hoons/arvo/gen/hall/log.hoon
+ok 13 hoons/arvo/gen/hall/save.hoon
+ok 13 hoons/arvo/gen/hall/unlog.hoon
+todo 13 hoons/arvo/gen/hood/ask.hoon
+ok 13 hoons/arvo/gen/hood/deset.hoon
+ok 13 hoons/arvo/gen/hood/mass.hoon
+ok 13 hoons/arvo/gen/hood/nuke.hoon
+ok 13 hoons/arvo/gen/hood/obey.hoon
+ok 13 hoons/arvo/gen/hood/overload.hoon
+ok 13 hoons/arvo/gen/hood/rc.hoon
+ok 13 hoons/arvo/gen/hood/reboot.hoon
+ok 13 hoons/arvo/gen/hood/reset.hoon
+ok 13 hoons/arvo/gen/hood/rf.hoon
+ok 13 hoons/arvo/gen/hood/wipe-ford.hoon
+ok 13 hoons/arvo/gen/womb/balance.hoon
+ok 13 hoons/arvo/gen/womb/shop.hoon
+ok 13 hoons/arvo/gen/womb/stats.hoon
+ok 14 hoons/arvo/gen/curl.hoon
+ok 14 hoons/arvo/gen/hood/autoload.hoon
+ok 14 hoons/arvo/gen/hood/breload.hoon
+ok 14 hoons/arvo/gen/hood/cancel.hoon
+ok 14 hoons/arvo/gen/hood/claim.hoon
+ok 14 hoons/arvo/gen/hood/label.hoon
+ok 14 hoons/arvo/gen/hood/manage.hoon
+ok 14 hoons/arvo/gen/hood/manage-old-key.hoon
+ok 14 hoons/arvo/gen/hood/rekey.hoon
+ok 14 hoons/arvo/gen/hood/release.hoon
+ok 14 hoons/arvo/gen/hood/reload-desk.hoon
+ok 14 hoons/arvo/gen/hood/reload.hoon
+ok 14 hoons/arvo/gen/hood/replay-womb-log.hoon
+ok 14 hoons/arvo/gen/hood/sync.hoon
+ok 14 hoons/arvo/gen/hood/track.hoon
+ok 14 hoons/arvo/gen/hood/unmount.hoon
+ok 14 hoons/arvo/gen/hood/unsync.hoon
+todo 14 hoons/arvo/gen/ls.hoon
+ok 14 hoons/arvo/gen/twit/as.hoon
+ok 15 hoons/arvo/gen/ask/admins.hoon
+ok 15 hoons/arvo/gen/code.hoon
+todo 15 hoons/arvo/gen/gmail/send.hoon
+ok 15 hoons/arvo/gen/hood/commit.hoon
+todo 15 hoons/arvo/gen/hood/reinvite.hoon
+ok 15 hoons/arvo/gen/hood/release-ships.hoon
+ok 15 hoons/arvo/gen/hood/report.hoon
+todo 15 hoons/arvo/gen/womb/balances.hoon
+ok 16 hoons/arvo/gen/hood/exit.hoon
+ok 16 hoons/arvo/gen/hood/link.hoon
+ok 16 hoons/arvo/gen/hood/unlink.hoon
+ok 16 hoons/arvo/gen/hood/verb.hoon
+ok 16 hoons/arvo/gen/static/build.hoon
+todo 16 hoons/arvo/gen/ticket.hoon
+ok 17 hoons/arvo/gen/curl-hiss.hoon
+todo 17 hoons/arvo/gen/hood/cp.hoon
+ok 17 hoons/arvo/gen/hood/mount.hoon
+todo 17 hoons/arvo/gen/hood/save.hoon
+ok 17 hoons/arvo/gen/hood/start.hoon
+ok 17 hoons/arvo/gen/hood/transfer.hoon
+ok 18 hoons/arvo/gen/hood/bonus.hoon
+ok 19 hoons/arvo/gen/gmail/list.hoon
+todo 19 hoons/arvo/gen/hood/mv.hoon
+todo 20 hoons/arvo/gen/hood/load.hoon
+ok 20 hoons/arvo/gen/hood/serve.hoon
+todo 20 hoons/arvo/gen/twit/feed.hoon
+todo 22 hoons/arvo/gen/tree.hoon
+todo 25 hoons/arvo/gen/moon.hoon
+ok 27 hoons/arvo/gen/pope.hoon
+todo 33 hoons/arvo/gen/cat.hoon
+ok 33 hoons/arvo/gen/hood/init-oauth2/google.hoon
+todo 34 hoons/arvo/gen/hood/init-auth-basic.hoon
+todo 36 hoons/arvo/gen/hood/init-oauth1.hoon
+todo 36 hoons/arvo/gen/hood/init-oauth2.hoon
+ok 42 hoons/arvo/gen/ivory.hoon
+todo 47 hoons/arvo/gen/hood/merge.hoon
+todo 53 hoons/arvo/gen/hood/invite.hoon
+todo 58 hoons/arvo/gen/hood/begin.hoon
+todo 64 hoons/arvo/gen/help.hoon
+todo 76 hoons/arvo/gen/solid.hoon
+todo 80 hoons/arvo/gen/test.hoon
+todo 131 hoons/arvo/gen/glass.hoon
+todo 180 hoons/arvo/gen/deco.hoon
+todo 285 hoons/arvo/gen/capitalize.hoon
+todo 294 hoons/arvo/gen/brass.hoon
+todo 324 hoons/arvo/gen/metal.hoon
+todo 366 hoons/arvo/gen/musk.hoon
+todo 458 hoons/arvo/gen/al.hoon
 END_OF_LIST
 
 $fileList =~ s/\s*[#].*$//xmsg; # Eliminate comments
@@ -123,24 +123,49 @@ $fileList =~ s/^\s*//xmsg; # Eliminate leading space
 $fileList =~ s/\s*$//xmsg; # Eliminate trailing space
 # Size is for developer convenience -- not used in
 # the code
-$fileList =~ s/^[0-9]*\s*//xmsg; # Eliminate leading size
 
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
 my $errorCount = 0;
 my @files = split "\n", $fileList;
-FILE: for my $fileName (@files) {
-    chomp $fileName;
-    next FILE unless length $fileName;
-    open my $fh, '<', $fileName;
-    my $hoonSource = do { local $RS = undef; <$fh>; };
+
+sub doTest {
+   my ($testName, $hoonSource) = @_;
     my $ok = eval { MarpaX::YAHC::parse( \$hoonSource ); 1; };
-    say "=== $fileName ===";
-    next FILE if $ok;
+    if ($ok) {
+        Test::More::pass($testName);
+	return;
+    }
+    Test::More::fail($testName);
     $errorCount++;
     my $evalErr = $EVAL_ERROR;
-    say $evalErr;
+    Test::More::diag($evalErr);
+    return;
 }
-my $fileCount = scalar @files;
-say "$errorCount failed parses in $fileCount files";
+
+FILE: for my $fileData (@files) {
+    chomp $fileData;
+    next FILE unless length $fileData;
+    my ($testStatus, undef, $fileName) = split /\s+/, $fileData;
+    open my $fh, '<', $fileName;
+    my $testName = $fileName;
+    $testName =~ s/^hoons\///;
+    $testName = "Test of " . $testName;
+    my $hoonSource = do { local $RS = undef; <$fh>; };
+    if ($testStatus eq 'ok') {
+      doTest($testName, $hoonSource);
+      next FILE;
+    }
+    if ($testStatus eq 'todo') {
+       TODO: {
+           local $TODO = 'NYI';
+	   doTest($testName, $hoonSource);
+       }
+      next FILE;
+    }
+    die("Bad test status: $testStatus\n")
+}
+
+# my $fileCount = scalar @files;
+# say "$errorCount failed parses in $fileCount files";
