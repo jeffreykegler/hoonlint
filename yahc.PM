@@ -749,6 +749,12 @@ circumSelser3 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (']')
 circumSelser4 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (']')
 circumSelser5 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoonSeq (']')
 
+pathHoon ::= circumGalgar
+circumGalgar ::= ('<') flatHoon ('>')
+
+pathHoon ::= circumGargal
+circumGargal ::= ('>') flatHoon ('<')
+
 END_OF_DSL_MAIN
 
 # Here is meta-programming to write piece 2

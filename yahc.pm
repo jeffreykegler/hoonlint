@@ -728,6 +728,12 @@ circumSelser3 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (']')
 circumSelser4 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (']')
 circumSelser5 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoonSeq (']')
 
+pathHoon ::= circumGalgar
+circumGalgar ::= ('<') flatHoon ('>')
+
+pathHoon ::= circumGargal
+circumGargal ::= ('>') flatHoon ('<')
+
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
 hoon ::= tallBarcol
