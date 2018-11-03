@@ -208,6 +208,10 @@ loobean ::= '&'
 loobean ::= '|'
 loobean ::= '%&'
 loobean ::= '%|'
+# TODO: Same as %& and %| except "%leaf" instead of "%rock".
+# What does that imply for semantics?
+loobean ::= '$&'
+loobean ::= '$|'
 
 # @p                             ~zod          (0)
 # @rd   64-bit IEEE float        .~3.14        (pi)
@@ -373,6 +377,7 @@ atom ::= path
 path ::= [/] optPathSeq
 optPathSeq ::= pathElement* separator=>[/]
 pathElement ::= PATHSTRING
+pathElement ::= SINGLESTRING
 
 # pathHoon is hoon that is legal as part of a path
 pathElement ::= pathHoon
@@ -494,11 +499,14 @@ foot ::= flatHoon
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
 
+# FIXED: buctar hoon
+
 # Undocumented runes
 # $*  ::  bunt (irregular form is *)
-# FIXED: buctar hoon
-flatHoon ::= irrBuctar
+hoonPrimary ::= irrBuctar
 irrBuctar ::= '*' flatHoon
+
+# TODO: Should all unary expression be <hoonPrimary>?
 
 # FIXED: buctis term hoon
 
@@ -676,6 +684,10 @@ WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
 tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
 
+WUTLUS ~ [?] [+]
+hoon ::= tallWutlus
+tallWutlus ::= WUTLUS (gap) wing (gap) hoon (gap) hoonJogging (gap '==')
+
 # Undocumented runes
 # !:  ::  turn on debugging printfs
 ZAPCOL ~ [!] [:]
@@ -697,8 +709,7 @@ tallZapdot ::= ZAPDOT
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
-hoon ::= tallZapzap
-tallZapzap ::= ZAPZAP
+flatHoon ::= ZAPZAP
 
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
