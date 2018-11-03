@@ -98,6 +98,7 @@ sub prune {
         hoonJogging => 1,
         hoonJogs    => 1,
         hoonSeq         => 1,
+	pathHoon => 1,
     };
 
     return [] if not defined $v;
@@ -337,12 +338,23 @@ dollarTerm ::= ('$') NAME
 dollarTerm ::= dollarNil
 dollarNil ::= ('$~')
 
+TERM ~ '%$' # [%rock p=%tas q=0]
 TERM ~ '%' firstTermChar
 TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
 firstTermChar ~ [a-z]
 optMedialTermChars ~ medialTermChar*
 medialTermChar ~ [a-z0-9-]
 lastTermChar ~ [a-z0-9]
+
+# === NAMES ==
+
+NAME ~ name
+name ~ nameFirstChar nameLaterChars
+name ~ '$'
+
+nameFirstChar ~ [a-z]
+nameLaterChars ~ nameLaterChar*
+nameLaterChar ~ [a-z0-9-]
 
 # === STRINGS ==
 
@@ -378,17 +390,18 @@ singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 atom ::= path
 path ::= [/] optPathSeq
 optPathSeq ::= pathElement* separator=>[/]
-pathElement ::= PATHSTRING
+pathElement ::= PATHSTRING | pathHoon
 PATHSTRING ~ pathStringElements
 pathStringElements ~ pathStringElement
 # Do path strings allow escapes?
 pathStringElement ~ [^/]
-pathElement ::= '(' flatHoon ')'
 
 # === CELLS BY TYPE ==
 
 hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= flatHoon
+
+flatHoon ::= pathHoon
 
 # flatHoons ::= flatHoon+
 flatHoon ::= atom
@@ -492,10 +505,6 @@ irrBuctar ::= '*' hoon
 
 # FIXED: buctis term hoon
 
-# TODO: what is ace-separated slash -- another form of buctis?
-# Or something else?
-# irrBuctisSlash ::= NAME (ACE '/' ACE) hoon
-
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
@@ -507,10 +516,6 @@ flatBucwut ::= ('?(') flatHoonSeq (')')
 # FIXED: cendot hoon hoon
 
 # FIXED: cenhep hoon hoon
-flatHoon ::= irrCenhep
-# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
-# and cenhep in https://urbit.org/docs/hoon/irregular/
-irrCenhep ::= ('(') flatHoonSeq (')')
 
 # FIXED: cenket hoon hoon hoon hoon
 # FIXED: cenlus hoon hoon hoon
@@ -705,13 +710,22 @@ ZAPZAP ~ [!] [!]
 hoon ::= tallZapzap
 tallZapzap ::= ZAPZAP
 
-NAME ~ name
-name ~ nameFirstChar nameLaterChars
-name ~ '$'
+# ^.  ::  use gate to transform type
+# ^&  ::  zinc (covariant) -- see the docs on advanced types
 
-nameFirstChar ~ [a-z]
-nameLaterChars ~ nameLaterChar*
-nameLaterChar ~ [a-z0-9-]
+# === IRREGULAR FORMS ===
+
+# TODO TO JK: Census circum irregular forms for those which should be broken out by
+# n-ary, for n==1, n==2, n>=3.
+
+# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
+# and cenhep in https://urbit.org/docs/hoon/irregular/
+pathHoon ::= circumParen1
+pathHoon ::= circumParen2
+pathHoon ::= circumParen3
+circumParen1 ::= ('(') flatHoon (')')
+circumParen2 ::= ('(') flatHoon (ACE) flatHoon (')')
+circumParen3 ::= ('(') flatHoon (ACE) flatHoon (ACE) flatHoonSeq (')')
 
 END_OF_DSL_MAIN
 
@@ -788,9 +802,6 @@ sub doFixedRune {
     push @result, $flatLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
     return join "\n", @result, '';
 }
-
-# ^.  ::  use gate to transform type
-# ^&  ::  zinc (covariant) -- see the docs on advanced types
 
 # === DSL Piece: Automatically generated Marpa rules ===
 
