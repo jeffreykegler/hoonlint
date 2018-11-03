@@ -101,6 +101,7 @@ sub prune {
 	hoonPrimary => 1,
         hoonSeq         => 1,
 	pathHoon => 1,
+	togaElements => 1
     };
 
     return [] if not defined $v;
@@ -408,11 +409,13 @@ hoonSeq ::= hoon+ separator=>gap proper=>1
 hoon ::= flatHoon
 flatHoon ::= hoonExpression
 hoonExpression ::= infixColon
-hoonExpression ::= infixSlash
-hoonExpression ::= infixPlus
+hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
+hoonExpression ::= infixPlus
+hoonExpression ::= infixSlash
 hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') flatHoon
+infixKet ::= hoonPrimary ('^') flatHoon
 infixEqual ::= toga ('=') hoonExpression
 infixPlus ::=  NAME ('+') hoonExpression
 infixSlash ::= NAME ('/') hoonExpression
@@ -422,11 +425,14 @@ hoonPrimary ::= pathHoon
 hoonPrimary ::= atom
 hoonPrimary ::= wing
 
+pathHoon ::= togaSeq
 toga ::= NAME
-toga ::= '[' togaSeq ']'
-togaSeq ::= togaElement+ separator=>ACE proper=>1
-togaElement ::= toga
-togaElement ::= NIL
+toga ::= togaSeq
+togaSeq ::= ('[') togaElements (']')
+togaElements ::= flatHoon+ separator=>ACE proper=>1
+# TODO: 
+# togaElement ::= toga
+# togaElement ::= NIL
 
 wing ::= limb+ separator=>[.] proper=>1
 limb ::= optKets NAME
@@ -494,7 +500,6 @@ hoonPrimary ::= flatBuccol
 flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
 flatBuccol ::= (':bccl(') flatHoonSeq (')')
 flatBuccol ::= ('{') flatHoonSeq ('}')
-flatBuccol ::= ('[') flatHoonSeq (']')
 flatBuccol ::= (',[') flatHoonSeq (']')
 
 # BUCCEN is "2-running"
