@@ -390,7 +390,11 @@ singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 atom ::= path
 path ::= [/] optPathSeq
 optPathSeq ::= pathElement* separator=>[/]
-pathElement ::= PATHSTRING | pathHoon
+pathElement ::= PATHSTRING
+
+# pathHoon is hoon that is legal as part of a path
+pathElement ::= pathHoon
+
 PATHSTRING ~ pathStringElements
 pathStringElements ~ pathStringElement
 # Do path strings allow escapes?
