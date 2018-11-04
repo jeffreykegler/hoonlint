@@ -492,8 +492,6 @@ tallBarket ::= (BARKET gap) hoon (gap) battery (gap '--')
 # FIXED: barwut hoon
 
 # FIXED: buccab hoon
-flatHoon  ::= irrBuccab
-irrBuccab ::= ('_') flatHoon
 
 # Running syntax
 BUCCOL ~ [$] [:]
@@ -698,7 +696,7 @@ flatWutpam ::= ('&(') flatHoonSeq (')')
 # FIXED: wutsig wing hoon hoon
 # FIXED: wuttis hoon wing
 
-flatWutzap ::= irrWutzap
+hoonPrimary ::= irrWutzap
 irrWutzap ::= ('!') flatHoon
 
 WUTHEP ~ [?] [-]
@@ -735,7 +733,12 @@ flatHoon ::= ZAPZAP
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
 
-# === IRREGULAR FORMS ===
+# === IRREGULAR FORMS: PREFIX ===
+
+pathHoon ::= prefixCab
+prefixCab ::= ('_') flatHoon
+
+# === IRREGULAR FORMS: CIRCUMFIX ===
 
 # TODO TO JK: Census circum irregular forms for those which should be broken out by
 # n-ary, for n==1, n==2, n>=3.

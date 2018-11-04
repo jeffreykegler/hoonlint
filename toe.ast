@@ -1688,25 +1688,22 @@
                                         ]
                                       ],
                                       [
-                                        'flatWutzap',
+                                        'irrWutzap',
                                         [
-                                          'irrWutzap',
+                                          'wing',
                                           [
-                                            'wing',
+                                            'limb',
                                             [
-                                              'limb',
-                                              [
-                                                'optKets'
-                                              ],
-                                              'w'
+                                              'optKets'
                                             ],
+                                            'w'
+                                          ],
+                                          [
+                                            'limb',
                                             [
-                                              'limb',
-                                              [
-                                                'optKets'
-                                              ],
-                                              'game'
-                                            ]
+                                              'optKets'
+                                            ],
+                                            'game'
                                           ]
                                         ]
                                       ]

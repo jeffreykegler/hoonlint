@@ -30,7 +30,7 @@ toe: yahc.pm toe.hoon
 	diff toe.ast.try toe.ast || echo 'toe example !FAILED!'
 
 recognize:
-	prove -I. --verbose recognize.t
+	prove -I. --verbose recognize.t > recognize.try
 
 undoc_tests:
 
