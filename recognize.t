@@ -94,7 +94,7 @@ ok 19 hoons/arvo/gen/hood/mv.hoon
 ok 20 hoons/arvo/gen/hood/load.hoon
 ok 20 hoons/arvo/gen/hood/serve.hoon
 ok 20 hoons/arvo/gen/twit/feed.hoon
-todo 22 hoons/arvo/gen/tree.hoon
+ok 22 hoons/arvo/gen/tree.hoon
 ok 25 hoons/arvo/gen/moon.hoon
 ok 27 hoons/arvo/gen/pope.hoon
 ok 33 hoons/arvo/gen/cat.hoon
@@ -106,7 +106,7 @@ ok 42 hoons/arvo/gen/ivory.hoon
 todo 47 hoons/arvo/gen/hood/merge.hoon
 todo 53 hoons/arvo/gen/hood/invite.hoon
 ok 58 hoons/arvo/gen/hood/begin.hoon
-todo 64 hoons/arvo/gen/help.hoon
+ok 64 hoons/arvo/gen/help.hoon
 todo 76 hoons/arvo/gen/solid.hoon
 todo 80 hoons/arvo/gen/test.hoon
 todo 131 hoons/arvo/gen/glass.hoon

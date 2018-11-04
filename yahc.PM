@@ -438,8 +438,9 @@ togaElement ::= toga
 togaElement ::= NIL
 
 wing ::= limb+ separator=>[.] proper=>1
-limb ::= optKets NAME
-optKets ::= KET*
+limb ::= NAME
+limb ::= kets hoonPrimary
+kets ::= KET+
 limb ::= lark
 lark ::= '.'
 lark ::= [+&|] NUMBER

@@ -8,9 +8,6 @@
         'wing',
         [
           'limb',
-          [
-            'optKets'
-          ],
           'atom'
         ]
       ]
@@ -38,9 +35,6 @@
               'wing',
               [
                 'limb',
-                [
-                  'optKets'
-                ],
                 'list'
               ]
             ],
@@ -48,9 +42,6 @@
               'wing',
               [
                 'limb',
-                [
-                  'optKets'
-                ],
                 'tape'
               ]
             ]
@@ -63,9 +54,6 @@
                 'wing',
                 [
                   'limb',
-                  [
-                    'optKets'
-                  ],
                   'end'
                 ]
               ],
@@ -73,9 +61,6 @@
                 'wing',
                 [
                   'limb',
-                  [
-                    'optKets'
-                  ],
                   'count'
                 ]
               ]
@@ -100,9 +85,6 @@
                       'wing',
                       [
                         'limb',
-                        [
-                          'optKets'
-                        ],
                         'mod'
                       ]
                     ],
@@ -110,9 +92,6 @@
                       'wing',
                       [
                         'limb',
-                        [
-                          'optKets'
-                        ],
                         'count'
                       ]
                     ],
@@ -146,9 +125,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'mod'
                         ]
                       ],
@@ -156,9 +132,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'count'
                         ]
                       ],
@@ -192,9 +165,6 @@
                           'wing',
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'mod'
                           ]
                         ],
@@ -202,9 +172,6 @@
                           'wing',
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'count'
                           ]
                         ],
@@ -230,9 +197,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'scow'
                         ]
                       ],
@@ -247,9 +211,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'count'
                         ]
                       ]
@@ -266,9 +227,6 @@
                     'wing',
                     [
                       'limb',
-                      [
-                        'optKets'
-                      ],
                       'count'
                     ]
                   ],
@@ -278,9 +236,6 @@
                       'wing',
                       [
                         'limb',
-                        [
-                          'optKets'
-                        ],
                         'add'
                       ]
                     ],
@@ -292,9 +247,6 @@
                       'wing',
                       [
                         'limb',
-                        [
-                          'optKets'
-                        ],
                         'count'
                       ]
                     ]

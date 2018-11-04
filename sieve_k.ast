@@ -20,9 +20,6 @@
           'wing',
           [
             'limb',
-            [
-              'optKets'
-            ],
             'list'
           ]
         ],
@@ -45,9 +42,6 @@
               'wing',
               [
                 'limb',
-                [
-                  'optKets'
-                ],
                 'sy'
               ]
             ],
@@ -57,9 +51,6 @@
                 'wing',
                 [
                   'limb',
-                  [
-                    'optKets'
-                  ],
                   'gulf'
                 ]
               ],
@@ -71,9 +62,6 @@
                 'wing',
                 [
                   'limb',
-                  [
-                    'optKets'
-                  ],
                   'top'
                 ]
               ]
@@ -88,9 +76,6 @@
               'wing',
               [
                 'limb',
-                [
-                  'optKets'
-                ],
                 'abet'
               ]
             ],
@@ -98,9 +83,6 @@
               'wing',
               [
                 'limb',
-                [
-                  'optKets'
-                ],
                 'main'
               ]
             ]
@@ -118,9 +100,6 @@
                     'wing',
                     [
                       'limb',
-                      [
-                        'optKets'
-                      ],
                       'sort'
                     ]
                   ],
@@ -132,9 +111,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'tap'
                         ]
                       ],
@@ -142,9 +118,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'in'
                         ]
                       ],
@@ -152,9 +125,6 @@
                         'wing',
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'fed'
                         ]
                       ]
@@ -164,9 +134,6 @@
                     'wing',
                     [
                       'limb',
-                      [
-                        'optKets'
-                      ],
                       'lth'
                     ]
                   ]
@@ -203,9 +170,6 @@
                         ],
                         [
                           'limb',
-                          [
-                            'optKets'
-                          ],
                           'main'
                         ]
                       ],
@@ -217,9 +181,6 @@
                             'wing',
                             [
                               'limb',
-                              [
-                                'optKets'
-                              ],
                               'gth'
                             ]
                           ],
@@ -229,9 +190,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'mul'
                               ]
                             ],
@@ -239,9 +197,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'fac'
                               ]
                             ],
@@ -249,9 +204,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'fac'
                               ]
                             ]
@@ -260,9 +212,6 @@
                             'wing',
                             [
                               'limb',
-                              [
-                                'optKets'
-                              ],
                               'top'
                             ]
                           ]
@@ -278,9 +227,6 @@
                           ],
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'main'
                           ]
                         ],
@@ -293,9 +239,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'fac'
                               ]
                             ],
@@ -305,9 +248,6 @@
                                 'wing',
                                 [
                                   'limb',
-                                  [
-                                    'optKets'
-                                  ],
                                   'fac'
                                 ]
                               ]
@@ -326,9 +266,6 @@
                               ],
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'main'
                               ]
                             ],
@@ -338,9 +275,6 @@
                                 'wing',
                                 [
                                   'limb',
-                                  [
-                                    'optKets'
-                                  ],
                                   'reap'
                                 ]
                               ],
@@ -348,9 +282,6 @@
                                 'wing',
                                 [
                                   'limb',
-                                  [
-                                    'optKets'
-                                  ],
                                   'fac'
                                 ]
                               ]
@@ -392,9 +323,6 @@
                           'wing',
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'mul'
                           ]
                         ],
@@ -406,9 +334,6 @@
                           'wing',
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'fac'
                           ]
                         ]
@@ -429,9 +354,6 @@
                           ],
                           [
                             'limb',
-                            [
-                              'optKets'
-                            ],
                             'reap'
                           ]
                         ],
@@ -443,9 +365,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'gth'
                               ]
                             ],
@@ -453,9 +372,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'cot'
                               ]
                             ],
@@ -463,9 +379,6 @@
                               'wing',
                               [
                                 'limb',
-                                [
-                                  'optKets'
-                                ],
                                 'top'
                               ]
                             ]
@@ -481,9 +394,6 @@
                             ],
                             [
                               'limb',
-                              [
-                                'optKets'
-                              ],
                               'reap'
                             ]
                           ],
@@ -496,9 +406,6 @@
                                 'wing',
                                 [
                                   'limb',
-                                  [
-                                    'optKets'
-                                  ],
                                   'cot'
                                 ]
                               ],
@@ -508,9 +415,6 @@
                                   'wing',
                                   [
                                     'limb',
-                                    [
-                                      'optKets'
-                                    ],
                                     'add'
                                   ]
                                 ],
@@ -518,9 +422,6 @@
                                   'wing',
                                   [
                                     'limb',
-                                    [
-                                      'optKets'
-                                    ],
                                     'cot'
                                   ]
                                 ],
@@ -528,9 +429,6 @@
                                   'wing',
                                   [
                                     'limb',
-                                    [
-                                      'optKets'
-                                    ],
                                     'fac'
                                   ]
                                 ]
@@ -542,9 +440,6 @@
                                 'wing',
                                 [
                                   'limb',
-                                  [
-                                    'optKets'
-                                  ],
                                   'fed'
                                 ]
                               ],
@@ -556,9 +451,6 @@
                                     'wing',
                                     [
                                       'limb',
-                                      [
-                                        'optKets'
-                                      ],
                                       'del'
                                     ]
                                   ],
@@ -566,9 +458,6 @@
                                     'wing',
                                     [
                                       'limb',
-                                      [
-                                        'optKets'
-                                      ],
                                       'in'
                                     ]
                                   ],
@@ -576,9 +465,6 @@
                                     'wing',
                                     [
                                       'limb',
-                                      [
-                                        'optKets'
-                                      ],
                                       'fed'
                                     ]
                                   ]
@@ -587,9 +473,6 @@
                                   'wing',
                                   [
                                     'limb',
-                                    [
-                                      'optKets'
-                                    ],
                                     'cot'
                                   ]
                                 ]
