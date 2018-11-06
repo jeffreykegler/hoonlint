@@ -66,7 +66,7 @@ ok 14 hoons/arvo/gen/hood/sync.hoon
 ok 14 hoons/arvo/gen/hood/track.hoon
 ok 14 hoons/arvo/gen/hood/unmount.hoon
 ok 14 hoons/arvo/gen/hood/unsync.hoon
-todo 14 hoons/arvo/gen/ls.hoon
+ok 14 hoons/arvo/gen/ls.hoon
 ok 14 hoons/arvo/gen/twit/as.hoon
 ok 15 hoons/arvo/gen/ask/admins.hoon
 ok 15 hoons/arvo/gen/code.hoon

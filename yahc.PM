@@ -334,6 +334,9 @@ type ::= '?' # loobean
 
 atom ::= AURA
 atom ::= term
+atom ::= currentDirectory
+
+currentDirectory ::= '%'
 
 AURA ~ '@'
 AURA ~ '@' optAlphas
