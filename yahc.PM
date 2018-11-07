@@ -735,7 +735,7 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 # tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
 
-# FIXED: tistar term hoon hoon
+# FIXED: tistar SYM4K hoon hoon
 # FIXED: tiswut wing hoon hoon hoon
 
 WUTBAR ~ [?] [|]

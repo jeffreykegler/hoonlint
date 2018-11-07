@@ -714,7 +714,7 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 # tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
 
-# FIXED: tistar term hoon hoon
+# FIXED: tistar SYM4K hoon hoon
 # FIXED: tiswut wing hoon hoon hoon
 
 WUTBAR ~ [?] [|]
@@ -1257,13 +1257,13 @@ tallTissem ::= (TISSEM GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
 flatTissem ::= (TISSEM) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 flatTissem ::= (':tssm') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
 
-# TISTAR term hoon hoon
+# TISTAR SYM4K hoon hoon
 TISTAR ~ [=] [*]
 hoon ::= tallTistar
 hoonPrimary ::= flatTistar
-tallTistar ::= (TISTAR GAP4K)term (GAP4K) hoon (GAP4K) hoon
-flatTistar ::= (TISTAR) [(] term (ACE) flatHoon (ACE) flatHoon [)]
-flatTistar ::= (':tstr') [(] term (ACE) flatHoon (ACE) flatHoon [)]
+tallTistar ::= (TISTAR GAP4K)SYM4K (GAP4K) hoon (GAP4K) hoon
+flatTistar ::= (TISTAR) [(] SYM4K (ACE) flatHoon (ACE) flatHoon [)]
+flatTistar ::= (':tstr') [(] SYM4K (ACE) flatHoon (ACE) flatHoon [)]
 
 # TISWUT wing hoon hoon hoon
 TISWUT ~ [=] [?]
