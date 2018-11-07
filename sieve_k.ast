@@ -17,11 +17,8 @@
       [
         'circumParen2',
         [
-          'wing',
-          [
-            'limb',
-            'list'
-          ]
+          'limb',
+          'list'
         ],
         [
           'atom',
@@ -39,31 +36,22 @@
           [
             'circumParen2',
             [
-              'wing',
-              [
-                'limb',
-                'sy'
-              ]
+              'limb',
+              'sy'
             ],
             [
               'circumParen3',
               [
-                'wing',
-                [
-                  'limb',
-                  'gulf'
-                ]
+                'limb',
+                'gulf'
               ],
               [
                 'atom',
                 '2'
               ],
               [
-                'wing',
-                [
-                  'limb',
-                  'top'
-                ]
+                'limb',
+                'top'
               ]
             ]
           ]
@@ -73,18 +61,12 @@
           [
             'infixColon',
             [
-              'wing',
-              [
-                'limb',
-                'abet'
-              ]
+              'limb',
+              'abet'
             ],
             [
-              'wing',
-              [
-                'limb',
-                'main'
-              ]
+              'limb',
+              'main'
             ]
           ],
           [
@@ -97,45 +79,30 @@
                 [
                   'circumParen3',
                   [
-                    'wing',
-                    [
-                      'limb',
-                      'sort'
-                    ]
+                    'limb',
+                    'sort'
                   ],
                   [
                     'circumParen1',
                     [
                       'irrCensig',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'tap'
-                        ]
+                        'limb',
+                        'tap'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'in'
-                        ]
+                        'limb',
+                        'in'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'fed'
-                        ]
+                        'limb',
+                        'fed'
                       ]
                     ]
                   ],
                   [
-                    'wing',
-                    [
-                      'limb',
-                      'lth'
-                    ]
+                    'limb',
+                    'lth'
                   ]
                 ]
               ],
@@ -160,75 +127,48 @@
                     [
                       'tallKetlus',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          [
-                            'lark',
-                            '.'
-                          ]
-                        ],
-                        [
-                          'limb',
-                          'main'
-                        ]
+                        'limb',
+                        '.'
+                      ],
+                      [
+                        'limb',
+                        'main'
                       ],
                       [
                         'tallWutcol',
                         [
                           'circumParen3',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'gth'
-                            ]
+                            'limb',
+                            'gth'
                           ],
                           [
                             'circumParen3',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'mul'
-                              ]
+                              'limb',
+                              'mul'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'limb',
+                              'fac'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'limb',
+                              'fac'
                             ]
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'top'
-                            ]
+                            'limb',
+                            'top'
                           ]
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'lark',
-                              '.'
-                            ]
-                          ],
-                          [
-                            'limb',
-                            'main'
-                          ]
+                          'limb',
+                          '.'
+                        ],
+                        [
+                          'limb',
+                          'main'
                         ],
                         [
                           'irrCentis',
@@ -236,54 +176,36 @@
                           [
                             'flatHoonJog',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'limb',
+                              'fac'
                             ],
                             [
                               'irrDotlus',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'fac'
-                                ]
+                                'limb',
+                                'fac'
                               ]
                             ]
                           ],
                           [
                             'flatHoonJog',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                [
-                                  'lark',
-                                  '.'
-                                ]
-                              ],
-                              [
-                                'limb',
-                                'main'
-                              ]
+                              'limb',
+                              '.'
+                            ],
+                            [
+                              'limb',
+                              'main'
                             ],
                             [
                               'circumParen2',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'reap'
-                                ]
+                                'limb',
+                                'reap'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'fac'
-                                ]
+                                'limb',
+                                'fac'
                               ]
                             ]
                           ]
@@ -320,22 +242,16 @@
                       [
                         'circumParen3',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'mul'
-                          ]
+                          'limb',
+                          'mul'
                         ],
                         [
                           'atom',
                           '2'
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'fac'
-                          ]
+                          'limb',
+                          'fac'
                         ]
                       ]
                     ],
@@ -344,58 +260,37 @@
                       [
                         'tallKetlus',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            [
-                              'lark',
-                              '.'
-                            ]
-                          ],
-                          [
-                            'limb',
-                            'reap'
-                          ]
+                          'limb',
+                          '.'
+                        ],
+                        [
+                          'limb',
+                          'reap'
                         ],
                         [
                           'tallWutcol',
                           [
                             'circumParen3',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'gth'
-                              ]
+                              'limb',
+                              'gth'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'cot'
-                              ]
+                              'limb',
+                              'cot'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'top'
-                              ]
+                              'limb',
+                              'top'
                             ]
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              [
-                                'lark',
-                                '.'
-                              ]
-                            ],
-                            [
-                              'limb',
-                              'reap'
-                            ]
+                            'limb',
+                            '.'
+                          ],
+                          [
+                            'limb',
+                            'reap'
                           ],
                           [
                             'irrCentis',
@@ -403,78 +298,51 @@
                             [
                               'flatHoonJog',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'cot'
-                                ]
+                                'limb',
+                                'cot'
                               ],
                               [
                                 'circumParen3',
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'add'
-                                  ]
+                                  'limb',
+                                  'add'
                                 ],
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'cot'
-                                  ]
+                                  'limb',
+                                  'cot'
                                 ],
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'fac'
-                                  ]
+                                  'limb',
+                                  'fac'
                                 ]
                               ]
                             ],
                             [
                               'flatHoonJog',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'fed'
-                                ]
+                                'limb',
+                                'fed'
                               ],
                               [
                                 'circumParen2',
                                 [
                                   'irrCensig',
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'del'
-                                    ]
+                                    'limb',
+                                    'del'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'in'
-                                    ]
+                                    'limb',
+                                    'in'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'fed'
-                                    ]
+                                    'limb',
+                                    'fed'
                                   ]
                                 ],
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'cot'
-                                  ]
+                                  'limb',
+                                  'cot'
                                 ]
                               ]
                             ]

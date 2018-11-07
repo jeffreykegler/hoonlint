@@ -63,6 +63,7 @@ sub prune {
     my ($v) = @_;
 
     state $deleteIfEmpty = {
+        optKets => 1,
     };
 
     state $nonSemantic = {
@@ -80,7 +81,8 @@ sub prune {
 	hoonPrimary => 1,
         hoonSeq         => 1,
 	pathHoon => 1,
-	togaElements => 1
+	togaElements => 1,
+	wing => 1,
     };
 
     return [] if not defined $v;
@@ -139,6 +141,40 @@ __DATA__
 :default ::= action => [name,values]
 lexeme default = latm => 1
 
+# === CHARACTER SET ===
+
+# BACKSLASH ~ backslash
+backslash ~ [\0x5c] # 0x5c is backslash
+# HEP ~ hep4h
+hep4h ~ '-'
+KET ~ ket4h
+ket4h ~ '^'
+
+# === Hoon library: 4j ===
+
+DIM4J ~ dim4j # a natural number
+dim4j ~ '0'
+dim4j ~ [1-9] dim4jRest
+dim4jRest ~ [0-9]
+
+# === Hoon library: 4k ===
+
+SYM4K ~ low4k sym4kRest
+low4k ~ [a-z]
+nud4k ~ [0-9]
+sym4kRest ~ # empty
+sym4kRest ~ sym4kRestChars
+sym4kRestChars ~ sym4kRestChar+
+sym4kRestChar ~ low4k | nud4k | hep4h
+
+VEN4K ~ ven4k
+ven4k ~ carCdr
+ven4k ~ carCdrPairs
+ven4k ~ carCdrPairs carCdr
+carCdrPairs ~ carCdrPair+
+carCdrPair ~ [-+][<>]
+carCdr ~ [-+]
+
 # === HOON FILE ===
 :start ::= hoonFile
 # LATER: This is a simplication, which does not
@@ -147,12 +183,6 @@ hoonFile ::= (leader) hoonSeq (trailer)
 
 trailer ::= optWs
 leader  ::= optWs
-
-# === CHARACTER SET ===
-
-# BACKSLASH ~ backslash
-backslash ~ [\0x5c] # 0x5c is backslash
-KET ~ '^'
 
 # === WHITESPACE ===
 
@@ -419,20 +449,15 @@ togaElements ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
+# parsed by the rope arm in hoon.hoon
 wing ::= limb+ separator=>[.] proper=>1
-limb ::= NAME
-limb ::= kets hoonPrimary
-kets ::= KET+
-limb ::= lark
-lark ::= '.'
-lark ::= [+&|] NUMBER
-lark ::= carCdr
-lark ::= carCdrPairs
-lark ::= carCdrPairs carCdr
-carCdrPairs ::= carCdrPair+
-# The [-+] and [<>] syntax alternates for readability
-carCdrPair ::= [-+][<>]
-carCdr ::= [-+]
+limb ::= ','
+limb ::= optKets '$'
+limb ::= optKets SYM4K
+optKets ::= KET*
+limb ::= [+&|] DIM4J
+limb ::= VEN4K
+limb ::= '.'
 
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 

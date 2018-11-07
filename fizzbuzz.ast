@@ -5,11 +5,8 @@
       'infixSlash',
       'end',
       [
-        'wing',
-        [
-          'limb',
-          'atom'
-        ]
+        'limb',
+        'atom'
       ]
     ],
     [
@@ -32,18 +29,12 @@
           [
             'circumParen2',
             [
-              'wing',
-              [
-                'limb',
-                'list'
-              ]
+              'limb',
+              'list'
             ],
             [
-              'wing',
-              [
-                'limb',
-                'tape'
-              ]
+              'limb',
+              'tape'
             ]
           ],
           [
@@ -51,18 +42,12 @@
             [
               'irrDottis',
               [
-                'wing',
-                [
-                  'limb',
-                  'end'
-                ]
+                'limb',
+                'end'
               ],
               [
-                'wing',
-                [
-                  'limb',
-                  'count'
-                ]
+                'limb',
+                'count'
               ]
             ],
             [
@@ -82,18 +67,12 @@
                   [
                     'circumParen3',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'mod'
-                      ]
+                      'limb',
+                      'mod'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'count'
-                      ]
+                      'limb',
+                      'count'
                     ],
                     [
                       'atom',
@@ -122,18 +101,12 @@
                     [
                       'circumParen3',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'mod'
-                        ]
+                        'limb',
+                        'mod'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'count'
-                        ]
+                        'limb',
+                        'count'
                       ],
                       [
                         'atom',
@@ -162,18 +135,12 @@
                       [
                         'circumParen3',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'mod'
-                          ]
+                          'limb',
+                          'mod'
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'count'
-                          ]
+                          'limb',
+                          'count'
                         ],
                         [
                           'atom',
@@ -194,11 +161,8 @@
                     [
                       'circumParen3',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'scow'
-                        ]
+                        'limb',
+                        'scow'
                       ],
                       [
                         'atom',
@@ -208,11 +172,8 @@
                         ]
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'count'
-                        ]
+                        'limb',
+                        'count'
                       ]
                     ]
                   ]
@@ -224,31 +185,22 @@
                 [
                   'flatHoonJog',
                   [
-                    'wing',
-                    [
-                      'limb',
-                      'count'
-                    ]
+                    'limb',
+                    'count'
                   ],
                   [
                     'circumParen3',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'add'
-                      ]
+                      'limb',
+                      'add'
                     ],
                     [
                       'atom',
                       '1'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'count'
-                      ]
+                      'limb',
+                      'count'
                     ]
                   ]
                 ]

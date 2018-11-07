@@ -9,18 +9,12 @@
         [
           'circumParen2',
           [
-            'wing',
-            [
-              'limb',
-              'list'
-            ]
+            'limb',
+            'list'
           ],
           [
-            'wing',
-            [
-              'limb',
-              'move'
-            ]
+            'limb',
+            'move'
           ]
         ]
       ],
@@ -30,11 +24,8 @@
           'infixSlash',
           'game',
           [
-            'wing',
-            [
-              'limb',
-              'game'
-            ]
+            'limb',
+            'game'
           ]
         ],
         [
@@ -44,28 +35,19 @@
             [
               'circumParen2',
               [
-                'wing',
-                [
-                  'limb',
-                  'list'
-                ]
+                'limb',
+                'list'
               ],
               [
-                'wing',
-                [
-                  'limb',
-                  'fact'
-                ]
+                'limb',
+                'fact'
               ]
             ],
             [
               'tallWutsig',
               [
-                'wing',
-                [
-                  'limb',
-                  'feed'
-                ]
+                'limb',
+                'feed'
               ],
               [
                 'atom',
@@ -79,64 +61,43 @@
                   [
                     'circumParen2',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'unit'
-                      ]
+                      'limb',
+                      'unit'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'fact'
-                      ]
+                      'limb',
+                      'fact'
                     ]
                   ]
                 ],
                 [
-                  'wing',
-                  [
-                    'limb',
-                    'game'
-                  ]
+                  'limb',
+                  'game'
                 ],
                 [
                   'circumParen2',
                   [
                     'irrCensig',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'do'
-                      ]
+                      'limb',
+                      'do'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'go'
-                      ]
+                      'limb',
+                      'go'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'game'
-                      ]
+                      'limb',
+                      'game'
                     ]
                   ],
                   [
-                    'wing',
-                    [
-                      'limb',
-                      'i'
-                    ],
-                    [
-                      'limb',
-                      'feed'
-                    ]
+                    'limb',
+                    'i'
+                  ],
+                  [
+                    'limb',
+                    'feed'
                   ]
                 ],
                 [
@@ -147,18 +108,12 @@
                     [
                       'circumParen2',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'list'
-                        ]
+                        'limb',
+                        'list'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'fact'
-                        ]
+                        'limb',
+                        'fact'
                       ]
                     ]
                   ],
@@ -168,22 +123,16 @@
                     [
                       'flatHoonJog',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'feed'
-                        ]
+                        'limb',
+                        'feed'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          't'
-                        ],
-                        [
-                          'limb',
-                          'feed'
-                        ]
+                        'limb',
+                        't'
+                      ],
+                      [
+                        'limb',
+                        'feed'
                       ]
                     ]
                   ],
@@ -191,38 +140,26 @@
                     'flatWutsig',
                     '(',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'this'
-                      ]
+                      'limb',
+                      'this'
                     ],
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'rest'
-                      ]
+                      'limb',
+                      'rest'
                     ],
                     [
                       'circumSelser2',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'u'
-                        ],
-                        [
-                          'limb',
-                          'this'
-                        ]
+                        'limb',
+                        'u'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'rest'
-                        ]
+                        'limb',
+                        'this'
+                      ],
+                      [
+                        'limb',
+                        'rest'
                       ]
                     ],
                     ')'
@@ -323,11 +260,8 @@
                         'infixSlash',
                         'p',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'cord'
-                          ]
+                          'limb',
+                          'cord'
                         ]
                       ]
                     ]
@@ -360,11 +294,8 @@
                         'infixSlash',
                         'p',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'spot'
-                          ]
+                          'limb',
+                          'spot'
                         ]
                       ]
                     ]
@@ -387,11 +318,8 @@
                         'infixSlash',
                         'p',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'spot'
-                          ]
+                          'limb',
+                          'spot'
                         ]
                       ]
                     ]
@@ -434,32 +362,23 @@
             [
               'tallBuccol',
               [
-                'wing',
-                [
-                  'limb',
-                  'w'
-                ]
+                'limb',
+                'w'
               ],
               [
                 'infixSlash',
                 'a',
                 [
-                  'wing',
-                  [
-                    'limb',
-                    'side'
-                  ]
+                  'limb',
+                  'side'
                 ]
               ],
               [
                 'infixSlash',
                 'z',
                 [
-                  'wing',
-                  [
-                    'limb',
-                    'side'
-                  ]
+                  'limb',
+                  'side'
                 ]
               ]
             ]
@@ -479,11 +398,8 @@
                 'infixSlash',
                 'half',
                 [
-                  'wing',
-                  [
-                    'limb',
-                    'side'
-                  ]
+                  'limb',
+                  'side'
                 ]
               ],
               [
@@ -511,11 +427,8 @@
                       [
                         'circumParen3',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'cut'
-                          ]
+                          'limb',
+                          'cut'
                         ],
                         [
                           'atom',
@@ -524,11 +437,8 @@
                         [
                           'circumSelser2',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'a'
-                            ]
+                            'limb',
+                            'a'
                           ],
                           [
                             'atom',
@@ -536,11 +446,8 @@
                           ]
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'half'
-                          ]
+                          'limb',
+                          'half'
                         ]
                       ]
                     ],
@@ -557,56 +464,41 @@
                       'infixSlash',
                       'a',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'spot'
-                        ]
+                        'limb',
+                        'spot'
                       ]
                     ],
                     [
                       'circumParen3',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'add'
-                        ]
+                        'limb',
+                        'add'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'x'
-                        ],
-                        [
-                          'limb',
-                          'a'
-                        ]
+                        'limb',
+                        'x'
+                      ],
+                      [
+                        'limb',
+                        'a'
                       ],
                       [
                         'circumParen3',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'mul'
-                          ]
+                          'limb',
+                          'mul'
                         ],
                         [
                           'atom',
                           '3'
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'y'
-                          ],
-                          [
-                            'limb',
-                            'a'
-                          ]
+                          'limb',
+                          'y'
+                        ],
+                        [
+                          'limb',
+                          'a'
                         ]
                       ]
                     ],
@@ -623,37 +515,25 @@
                       'infixSlash',
                       'a',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'spot'
-                        ]
+                        'limb',
+                        'spot'
                       ]
                     ],
                     [
                       'circumParen2',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'bit'
-                        ]
+                        'limb',
+                        'bit'
                       ],
                       [
                         'circumParen2',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'off'
-                          ]
+                          'limb',
+                          'off'
                         ],
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'a'
-                          ]
+                          'limb',
+                          'a'
                         ]
                       ]
                     ],
@@ -670,53 +550,35 @@
                       'infixSlash',
                       'a',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'spot'
-                        ]
+                        'limb',
+                        'spot'
                       ]
                     ],
                     [
                       'circumParen3',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'con'
-                        ]
+                        'limb',
+                        'con'
                       ],
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'half'
-                        ]
+                        'limb',
+                        'half'
                       ],
                       [
                         'circumParen2',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'bex'
-                          ]
+                          'limb',
+                          'bex'
                         ],
                         [
                           'circumParen2',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'off'
-                            ]
+                            'limb',
+                            'off'
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'a'
-                            ]
+                            'limb',
+                            'a'
                           ]
                         ]
                       ]
@@ -730,20 +592,14 @@
                   [
                     'tallCenlus',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'lien'
-                      ]
+                      'limb',
+                      'lien'
                     ],
                     [
                       'circumParen3',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'rip'
-                        ]
+                        'limb',
+                        'rip'
                       ],
                       [
                         'atom',
@@ -768,34 +624,22 @@
                       [
                         'irrDottis',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'a'
-                          ]
+                          'limb',
+                          'a'
                         ],
                         [
                           'circumParen3',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'dis'
-                            ]
+                            'limb',
+                            'dis'
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'a'
-                            ]
+                            'limb',
+                            'a'
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'half'
-                            ]
+                            'limb',
+                            'half'
                           ]
                         ]
                       ],
@@ -815,11 +659,8 @@
                 'infixSlash',
                 'game',
                 [
-                  'wing',
-                  [
-                    'limb',
-                    'game'
-                  ]
+                  'limb',
+                  'game'
                 ]
               ],
               [
@@ -833,11 +674,8 @@
                       'infixSlash',
                       'act',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'move'
-                        ]
+                        'limb',
+                        'move'
                       ]
                     ],
                     [
@@ -847,47 +685,29 @@
                         [
                           'circumParen2',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'unit'
-                            ]
+                            'limb',
+                            'unit'
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'fact'
-                            ]
+                            'limb',
+                            'fact'
                           ]
                         ],
                         [
-                          'wing',
+                          'limb',
                           [
-                            'limb',
-                            [
-                              'kets',
-                              '^'
-                            ],
-                            [
-                              'wing',
-                              [
-                                'limb',
-                                'game'
-                              ]
-                            ]
-                          ]
+                            'optKets',
+                            '^'
+                          ],
+                          'game'
                         ]
                       ],
                       [
                         'tallWuthep',
                         '?-',
                         [
-                          'wing',
-                          [
-                            'limb',
-                            'act'
-                          ]
+                          'limb',
+                          'act'
                         ],
                         [
                           'flatBuccol',
@@ -913,42 +733,30 @@
                           'flatWutgar',
                           '(',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'w'
-                            ],
-                            [
-                              'limb',
-                              'game'
-                            ]
+                            'limb',
+                            'w'
+                          ],
+                          [
+                            'limb',
+                            'game'
                           ],
                           [
                             'irrCensig',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'mo'
-                              ]
+                              'limb',
+                              'mo'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'on'
-                              ]
+                              'limb',
+                              'on'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'p'
-                              ],
-                              [
-                                'limb',
-                                'act'
-                              ]
+                              'limb',
+                              'p'
+                            ],
+                            [
+                              'limb',
+                              'act'
                             ]
                           ],
                           ')'
@@ -977,42 +785,30 @@
                           'flatWutgal',
                           '(',
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'w'
-                            ],
-                            [
-                              'limb',
-                              'game'
-                            ]
+                            'limb',
+                            'w'
+                          ],
+                          [
+                            'limb',
+                            'game'
                           ],
                           [
                             'irrCensig',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'mo'
-                              ]
+                              'limb',
+                              'mo'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'on'
-                              ]
+                              'limb',
+                              'on'
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'p'
-                              ],
-                              [
-                                'limb',
-                                'act'
-                              ]
+                              'limb',
+                              'p'
+                            ],
+                            [
+                              'limb',
+                              'act'
                             ]
                           ],
                           ')'
@@ -1044,11 +840,8 @@
                             '~'
                           ],
                           [
-                            'wing',
-                            [
-                              'limb',
-                              'nu'
-                            ]
+                            'limb',
+                            'nu'
                           ]
                         ]
                       ]
@@ -1062,11 +855,8 @@
                     'flatKetlus',
                     '(',
                     [
-                      'wing',
-                      [
-                        'limb',
-                        'game'
-                      ]
+                      'limb',
+                      'game'
                     ],
                     [
                       'circumSelser3',
@@ -1098,11 +888,8 @@
                       'infixSlash',
                       'here',
                       [
-                        'wing',
-                        [
-                          'limb',
-                          'spot'
-                        ]
+                        'limb',
+                        'spot'
                       ]
                     ],
                     [
@@ -1117,37 +904,25 @@
                             [
                               'irrCensig',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'get'
-                                ]
+                                'limb',
+                                'get'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'bo'
-                                ]
+                                'limb',
+                                'bo'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'a'
-                                ],
-                                [
-                                  'limb',
-                                  'game'
-                                ]
+                                'limb',
+                                'a'
+                              ],
+                              [
+                                'limb',
+                                'game'
                               ]
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'here'
-                              ]
+                              'limb',
+                              'here'
                             ]
                           ],
                           [
@@ -1155,37 +930,25 @@
                             [
                               'irrCensig',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'get'
-                                ]
+                                'limb',
+                                'get'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'bo'
-                                ]
+                                'limb',
+                                'bo'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'z'
-                                ],
-                                [
-                                  'limb',
-                                  'game'
-                                ]
+                                'limb',
+                                'z'
+                              ],
+                              [
+                                'limb',
+                                'game'
                               ]
                             ],
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'here'
-                              ]
+                              'limb',
+                              'here'
                             ]
                           ]
                         ]
@@ -1200,46 +963,28 @@
                             [
                               'circumParen2',
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'unit'
-                                ]
+                                'limb',
+                                'unit'
                               ],
                               [
-                                'wing',
-                                [
-                                  'limb',
-                                  'fact'
-                                ]
+                                'limb',
+                                'fact'
                               ]
                             ],
                             [
-                              'wing',
+                              'limb',
                               [
-                                'limb',
-                                [
-                                  'kets',
-                                  '^'
-                                ],
-                                [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'game'
-                                  ]
-                                ]
-                              ]
+                                'optKets',
+                                '^'
+                              ],
+                              'game'
                             ]
                           ],
                           [
                             'tallWutgal',
                             [
-                              'wing',
-                              [
-                                'limb',
-                                'is'
-                              ]
+                              'limb',
+                              'is'
                             ],
                             [
                               'tallTisfas',
@@ -1247,11 +992,8 @@
                                 'infixSlash',
                                 'next',
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'side'
-                                  ]
+                                  'limb',
+                                  'side'
                                 ]
                               ],
                               [
@@ -1259,37 +1001,25 @@
                                 [
                                   'irrCensig',
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'set'
-                                    ]
+                                    'limb',
+                                    'set'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'bo'
-                                    ]
+                                    'limb',
+                                    'bo'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'a'
-                                    ],
-                                    [
-                                      'limb',
-                                      'game'
-                                    ]
+                                    'limb',
+                                    'a'
+                                  ],
+                                  [
+                                    'limb',
+                                    'game'
                                   ]
                                 ],
                                 [
-                                  'wing',
-                                  [
-                                    'limb',
-                                    'here'
-                                  ]
+                                  'limb',
+                                  'here'
                                 ]
                               ],
                               [
@@ -1297,25 +1027,16 @@
                                 [
                                   'irrCensig',
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'win'
-                                    ]
+                                    'limb',
+                                    'win'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'bo'
-                                    ]
+                                    'limb',
+                                    'bo'
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'next'
-                                    ]
+                                    'limb',
+                                    'next'
                                   ]
                                 ],
                                 [
@@ -1337,15 +1058,12 @@
                                       'flatWutcol',
                                       '(',
                                       [
-                                        'wing',
-                                        [
-                                          'limb',
-                                          'w'
-                                        ],
-                                        [
-                                          'limb',
-                                          'game'
-                                        ]
+                                        'limb',
+                                        'w'
+                                      ],
+                                      [
+                                        'limb',
+                                        'game'
                                       ],
                                       [
                                         'atom',
@@ -1365,11 +1083,8 @@
                                     ]
                                   ],
                                   [
-                                    'wing',
-                                    [
-                                      'limb',
-                                      'nu'
-                                    ]
+                                    'limb',
+                                    'nu'
                                   ]
                                 ],
                                 [
@@ -1384,41 +1099,14 @@
                                     [
                                       'flatHoonJog',
                                       [
-                                        'wing',
-                                        [
-                                          'limb',
-                                          'w'
-                                        ]
+                                        'limb',
+                                        'w'
                                       ],
                                       [
                                         'irrWutzap',
                                         [
-                                          'wing',
-                                          [
-                                            'limb',
-                                            'w'
-                                          ],
-                                          [
-                                            'limb',
-                                            'game'
-                                          ]
-                                        ]
-                                      ]
-                                    ],
-                                    [
-                                      'flatHoonJog',
-                                      [
-                                        'wing',
-                                        [
                                           'limb',
-                                          'a'
-                                        ]
-                                      ],
-                                      [
-                                        'wing',
-                                        [
-                                          'limb',
-                                          'z'
+                                          'w'
                                         ],
                                         [
                                           'limb',
@@ -1429,18 +1117,27 @@
                                     [
                                       'flatHoonJog',
                                       [
-                                        'wing',
-                                        [
-                                          'limb',
-                                          'z'
-                                        ]
+                                        'limb',
+                                        'a'
                                       ],
                                       [
-                                        'wing',
-                                        [
-                                          'limb',
-                                          'next'
-                                        ]
+                                        'limb',
+                                        'z'
+                                      ],
+                                      [
+                                        'limb',
+                                        'game'
+                                      ]
+                                    ],
+                                    [
+                                      'flatHoonJog',
+                                      [
+                                        'limb',
+                                        'z'
+                                      ],
+                                      [
+                                        'limb',
+                                        'next'
                                       ]
                                     ]
                                   ]
