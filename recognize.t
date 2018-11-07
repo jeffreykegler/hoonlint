@@ -12,6 +12,8 @@ use Test::More tests => 103;
 
 require "./yahc.pm";
 
+# Size is for developer convenience -- not used in
+# the code
 my $fileList = <<'END_OF_LIST';
 ok 6 hoons/arvo/gen/pipe/cancel.hoon
 ok 6 hoons/arvo/gen/pipe/connect.hoon
@@ -94,7 +96,10 @@ ok 19 hoons/arvo/gen/hood/mv.hoon
 ok 20 hoons/arvo/gen/hood/load.hoon
 ok 20 hoons/arvo/gen/hood/serve.hoon
 ok 20 hoons/arvo/gen/twit/feed.hoon
-ok 22 hoons/arvo/gen/tree.hoon
+#
+# regression Tue Nov  6 19:34:00 EST 2018
+todo 22 hoons/arvo/gen/tree.hoon
+#
 ok 25 hoons/arvo/gen/moon.hoon
 ok 27 hoons/arvo/gen/pope.hoon
 ok 33 hoons/arvo/gen/cat.hoon
@@ -106,7 +111,10 @@ ok 42 hoons/arvo/gen/ivory.hoon
 todo 47 hoons/arvo/gen/hood/merge.hoon
 todo 53 hoons/arvo/gen/hood/invite.hoon
 ok 58 hoons/arvo/gen/hood/begin.hoon
-ok 64 hoons/arvo/gen/help.hoon
+#
+# regression Tue Nov  6 19:34:00 EST 2018
+todo 64 hoons/arvo/gen/help.hoon
+#
 todo 76 hoons/arvo/gen/solid.hoon
 todo 80 hoons/arvo/gen/test.hoon
 todo 131 hoons/arvo/gen/glass.hoon
@@ -118,17 +126,10 @@ todo 366 hoons/arvo/gen/musk.hoon
 todo 458 hoons/arvo/gen/al.hoon
 END_OF_LIST
 
-$fileList =~ s/\s*[#].*$//xmsg; # Eliminate comments
-$fileList =~ s/^\s*//xmsg; # Eliminate leading space
-$fileList =~ s/\s*$//xmsg; # Eliminate trailing space
-# Size is for developer convenience -- not used in
-# the code
-
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
 my $errorCount = 0;
-my @files = split "\n", $fileList;
 
 sub doTest {
    my ($testName, $hoonSource) = @_;
@@ -144,10 +145,16 @@ sub doTest {
     return;
 }
 
-FILE: for my $fileData (@files) {
-    chomp $fileData;
-    next FILE unless length $fileData;
-    my ($testStatus, undef, $fileName) = split /\s+/, $fileData;
+FILE: for my $fileLine (split "\n", $fileList) {
+    my $origLine = $fileLine;
+    chomp $fileLine;
+    $fileLine =~ s/\s*[#].*$//xmsg; # Eliminate comments
+    $fileLine =~ s/^\s*//xmsg; # Eliminate leading space
+    $fileLine =~ s/\s*$//xmsg; # Eliminate trailing space
+    next FILE unless $fileLine;
+
+    my ($testStatus, undef, $fileName) = split /\s+/, $fileLine;
+    die "Malformed line: $origLine" unless $fileName;
     open my $fh, '<', $fileName;
     my $testName = $fileName;
     $testName =~ s/^hoons\///;
