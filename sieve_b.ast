@@ -184,7 +184,10 @@
                         ],
                         [
                           'irrCentis',
-                          '$',
+                          [
+                            'limb',
+                            '$'
+                          ],
                           [
                             'flatHoonJog',
                             [

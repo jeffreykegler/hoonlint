@@ -119,7 +119,10 @@
                   ],
                   [
                     'irrCentis',
-                    '$',
+                    [
+                      'limb',
+                      '$'
+                    ],
                     [
                       'flatHoonJog',
                       [
@@ -1095,7 +1098,10 @@
                                   ],
                                   [
                                     'irrCentis',
-                                    'game',
+                                    [
+                                      'limb',
+                                      'game'
+                                    ],
                                     [
                                       'flatHoonJog',
                                       [

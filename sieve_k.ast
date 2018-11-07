@@ -172,7 +172,10 @@
                         ],
                         [
                           'irrCentis',
-                          '$',
+                          [
+                            'limb',
+                            '$'
+                          ],
                           [
                             'flatHoonJog',
                             [
@@ -294,7 +297,10 @@
                           ],
                           [
                             'irrCentis',
-                            '$',
+                            [
+                              'limb',
+                              '$'
+                            ],
                             [
                               'flatHoonJog',
                               [

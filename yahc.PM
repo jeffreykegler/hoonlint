@@ -580,8 +580,8 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (gap) hoon (gap) hoonJogging (gap '==')
-irrCentis ::= NAME ('(') flatHoonJogging (')')
+tallCentis ::= CENTIS (gap) wing (gap) hoonJogging (gap '==')
+irrCentis ::= wing ('(') flatHoonJogging (')')
 
 # FIXED: colcab hoon hoon
 
