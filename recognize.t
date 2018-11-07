@@ -71,7 +71,7 @@ ok 14 hoons/arvo/gen/ls.hoon
 ok 14 hoons/arvo/gen/twit/as.hoon
 ok 15 hoons/arvo/gen/ask/admins.hoon
 ok 15 hoons/arvo/gen/code.hoon
-todo 15 hoons/arvo/gen/gmail/send.hoon
+ok 15 hoons/arvo/gen/gmail/send.hoon
 ok 15 hoons/arvo/gen/hood/commit.hoon
 ok 15 hoons/arvo/gen/hood/reinvite.hoon
 ok 15 hoons/arvo/gen/hood/release-ships.hoon

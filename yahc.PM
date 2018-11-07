@@ -164,12 +164,26 @@ lexeme default = latm => 1
 
 # === CHARACTER SET ===
 
+# Unicorn is a non-existence character used for various
+# tricks: error rules, TODO rules, inaccessbile symbols,
+# etc.
+UNICORN ~ unicorn
+unicorn ~ [^\d\D]
+
+# === Hoon library: 4h ===
+
 # BACKSLASH ~ backslash
+bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
+
+fas4h ~ [/]
+
 # HEP ~ hep4h
 hep4h ~ '-'
 KET ~ ket4h
 ket4h ~ '^'
+
+soq4h ~ [']
 
 # === Hoon library: 4j ===
 
@@ -179,6 +193,9 @@ dim4j ~ [1-9] dim4jRest
 dim4jRest ~ [0-9]
 
 # === Hoon library: 4k ===
+
+gay4k ~ # empty
+gay4k ~ gap4k
 
 SYM4K ~ low4k sym4kRest
 low4k ~ [a-z]
@@ -196,6 +213,24 @@ carCdrPairs ~ carCdrPair+
 carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
+qit4k ::= <UNESCAPED CORD CHARS>
+qit4k ::= <ESCAPED CORD CHAR>
+<UNESCAPED CORD CHARS> ~ unescapedCordChar+
+
+# All the printable (non-control) characters except
+# bas and soq
+unescapedCordChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
+<ESCAPED CORD CHAR> ~ bas4h bas4h | bas4h soq4h | bas4h mes4k
+
+dit4k ~ [0-9]
+
+hit4k ~ dit4k
+hit4k ~ [a-f][A-F]
+
+mes4k ~ hit4k hit4k
+
+gon4k ~ bas4h gay4k fas4h
+
 # === HOON FILE ===
 :start ::= hoonFile
 # LATER: This is a simplication, which does not
@@ -209,29 +244,32 @@ leader  ::= optWs
 
 optWs ::=
 optWs ::= ACE
-optWs ::= gap
+optWs ::= GAP4K
 
-gap ::= ACE aces # a "flat" gap
-gap ::= tallGapPrefix optGapLines optAces
+GAP4K ~ gap4k
+
+gap4k ~ ace aces # a "flat" gap
+gap4k ~ tallGapPrefix optGapLines optAces
 # The prefix must contain an <NL> to ensure that this *is* a tall gap
-tallGapPrefix ::= optAces NL
-tallGapPrefix ::= optAces COMMENT
-optGapLines ::= gapLine*
-gapLine ::= optAces COMMENT
-gapLine ::= optAces NL
+tallGapPrefix ~ optAces nl
+tallGapPrefix ~ optAces comment
+optGapLines ~ gapLine*
+gapLine ~ optAces comment
+gapLine ~ optAces nl
 
-optAces ::= ACE*
-aces ::= ACE+
+optAces ~ ace*
+aces ~ ace+
 
-ACE ~ ' '
-COMMENT ~ '::' nonNLs nl
+ACE ~ ace
+ace ~ ' '
+comment ~ '::' nonNLs nl
 
 # TODO: Is this treatment of these fas runes OK?
-COMMENT ~ '/?' nonNLs nl
-COMMENT ~ '/+' nonNLs nl
-COMMENT ~ '/-' nonNLs nl
+comment ~ '/?' nonNLs nl
+comment ~ '/+' nonNLs nl
+comment ~ '/-' nonNLs nl
 
-NL ~ nl
+# NL ~ nl
 nl ~ [\n]
 nonNLs ~ nonNL*
 nonNL ~ [^\n]
@@ -415,11 +453,13 @@ stringInterpolation ::= '{' flatHoon '}'
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
-SINGLESTRING ~ ['] singleStringElements [']
-singleStringElements ~ singleStringElement*
-# hex 5C is backslash
-# From syntax.vim, might need correction
-singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
+SINGLESTRING ::= ([']) <single soq cord> (['])
+<single soq cord> ::= qit4k* separator=>gon4k proper=>1
+
+# TODO: hoon.hoon and Library syntaxes differ!
+atom ::= <TODO triple soq quote>
+<TODO triple soq quote> ::= SOZ4K UNICORN
+<SOZ4K> ~ soq4h soq4h soq4h # soz(4k) only in hoon.hoon
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
@@ -443,7 +483,7 @@ pathStringChar ~ [a-zA-Z-]
 
 # === CELLS BY TYPE ==
 
-hoonSeq ::= hoon+ separator=>gap proper=>1
+hoonSeq ::= hoon+ separator=>GAP4K proper=>1
 hoon ::= flatHoon
 flatHoon ::= hoonExpression
 hoonExpression ::= infixColon
@@ -483,25 +523,25 @@ limb ::= '.'
 flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
 
 hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>gap proper=>1
-hoonJog ::= hoon (gap) hoon
+hoonJogs ::= hoonJog+ separator=>GAP4K proper=>1
+hoonJog ::= hoon (GAP4K) hoon
 flatHoonJogging ::= flatHoonJogs
 flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
 flatHoonJog ::= flatHoon (ACE) flatHoon
 flatHoonJoggingSeparator ::= ',' ACE
 
-battery ::= batteryElement* separator=>gap proper=>1
-batteryElement ::= ('++' gap) NAME (gap) hoon
+battery ::= batteryElement* separator=>GAP4K proper=>1
+batteryElement ::= ('++' GAP4K) NAME (GAP4K) hoon
 
 # === CELLS BY RUNE ==
 
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
-tallBarcab ::= (BARCAB gap) hoon (gap) battery (gap '--')
+tallBarcab ::= (BARCAB GAP4K) hoon (GAP4K) battery (GAP4K '--')
 
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
-tallBarcen ::= (BARCEN gap) battery (gap '--')
+tallBarcen ::= (BARCEN GAP4K) battery (GAP4K '--')
 
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
@@ -509,12 +549,12 @@ tallBarcen ::= (BARCEN gap) battery (gap '--')
 
 BARKET ~ [|] '^'
 hoon ::= tallBarket
-tallBarket ::= (BARKET gap) hoon (gap) battery (gap '--')
+tallBarket ::= (BARKET GAP4K) hoon (GAP4K) battery (GAP4K '--')
 
 # FIXED: barsig hoon hoon
 # FIXED: bartar hoon hoon
 
-# # LATER: Should eventually be (BARTIS) (gap) type (gap) hoon
+# # LATER: Should eventually be (BARTIS) (GAP4K) type (GAP4K) hoon
 # # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
 
@@ -525,7 +565,7 @@ tallBarket ::= (BARKET gap) hoon (gap) battery (gap '--')
 # Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
-tallBuccol ::= (BUCCOL gap) hoonSeq (gap '==')
+tallBuccol ::= (BUCCOL GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatBuccol
 flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
 flatBuccol ::= (':bccl(') flatHoonSeq (')')
@@ -535,9 +575,9 @@ flatBuccol ::= (',[') flatHoonSeq (']')
 # BUCCEN is "2-running"
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN gap) buccenBody (gap '==')
+tallBuccen ::= (BUCCEN GAP4K) buccenBody (GAP4K '==')
 
-buccenBody ::= buccenPair+ separator=>gap proper=>1
+buccenBody ::= buccenPair+ separator=>GAP4K proper=>1
 buccenPair ::= ('[' ACE) term (ACE) foot (']')
 buccenPair ::= curlyPair
 curlyPair ::= ('{') term (ACE) foot ('}')
@@ -560,7 +600,7 @@ irrBuctar ::= '*' flatHoon
 
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
-tallBucwut ::= (BUCWUT gap) hoonSeq (gap '==')
+tallBucwut ::= (BUCWUT GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatBucwut
 flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
 flatBucwut ::= (':bcwt(') flatHoonSeq (')')
@@ -580,7 +620,7 @@ irrCensig ::= ('~(') flatHoonSeq (')')
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (gap) wing (gap) hoonJogging (gap '==')
+tallCentis ::= CENTIS (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
 irrCentis ::= wing ('(') flatHoonJogging (')')
 
 # FIXED: colcab hoon hoon
@@ -593,7 +633,7 @@ irrCentis ::= wing ('(') flatHoonJogging (')')
 # Running syntax
 COLSIG ~ [:] [~]
 hoon ::= tallColsig
-tallColsig ::= (COLSIG gap) hoonSeq (gap '==')
+tallColsig ::= (COLSIG GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatColsig
 hoonPrimary ::= flatColsig2
 hoonPrimary ::= flatColsig3
@@ -607,7 +647,7 @@ flatColsig4 ::= ('`') flatHoon
 # Running syntax
 COLTAR ~ [:] [*]
 hoon ::= tallColtar
-tallColtar ::= (COLTAR gap) hoonSeq (gap '==')
+tallColtar ::= (COLTAR GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatColtar
 flatColtar ::= (COLTAR '(') flatHoonSeq (')')
 flatColtar ::= (':cltr(') flatHoonSeq (')')
@@ -616,7 +656,7 @@ flatColtar ::= (':cltr(') flatHoonSeq (')')
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
 hoonPrimary ::= flatDotket
-tallDotket ::= (DOTKET gap)hoon (gap) hoonSeq
+tallDotket ::= (DOTKET GAP4K)hoon (GAP4K) hoonSeq
 flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoonSeq [)]
 flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoonSeq [)]
 
@@ -637,7 +677,7 @@ irrDotlus ::= ('+(') flatHoon (')')
 
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
-tallFastis ::= (FASTIS gap) NAME (gap) hoon
+tallFastis ::= (FASTIS GAP4K) NAME (GAP4K) hoon
 hoonPrimary ::= flatFastis
 flatFastis ::= (FASTIS) NAME '=' hoon
 
@@ -669,7 +709,7 @@ irrKethep ::= ('`') hoon ('`') hoon
 # 1-fixed, then running syntax
 SEMSIG ~ [;] [~]
 hoon ::= tallSemsig
-tallSemsig ::= (SEMSIG gap) hoon (gap) hoonSeq (gap '==')
+tallSemsig ::= (SEMSIG GAP4K) hoon (GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatSemsig
 flatSemsig ::= (SEMSIG '(') hoon (ACE) flatHoonSeq (')')
 flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
@@ -700,7 +740,7 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
-tallWutbar ::= (WUTBAR gap) hoonSeq (gap '==')
+tallWutbar ::= (WUTBAR GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatWutbar
 flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
 flatWutbar ::= (':wtbr(') flatHoonSeq (')')
@@ -715,7 +755,7 @@ flatWutbar ::= ('|(') flatHoonSeq (')')
 
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM gap) hoonSeq (gap '==')
+tallWutpam ::= (WUTPAM GAP4K) hoonSeq (GAP4K '==')
 hoonPrimary ::= flatWutpam
 flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
 flatWutpam ::= (':wtpm(') flatHoonSeq (')')
@@ -730,11 +770,11 @@ irrWutzap ::= ('!') flatHoon
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (gap) wing (gap) hoonJogging (gap '==')
+tallWuthep ::= WUTHEP (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
 
 WUTLUS ~ [?] [+]
 hoon ::= tallWutlus
-tallWutlus ::= WUTLUS (gap) wing (gap) hoon (gap) hoonJogging (gap '==')
+tallWutlus ::= WUTLUS (GAP4K) wing (GAP4K) hoon (GAP4K) hoonJogging (GAP4K '==')
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
@@ -858,8 +898,8 @@ sub doFixedRune {
     push @result, 'hoon ::= ' . $tallLHS;
     # hoonPrimary ::= flatBarhep
     push @result, 'hoonPrimary ::= ' . $flatLHS;
-    # tallBarhep ::= (BARHEP gap) hoon (gap) hoon
-    push @result, $tallLHS . ' ::= (' . $lexeme . ' gap)' . (join ' (gap) ', @samples);
+    # tallBarhep ::= (BARHEP GAP4K) hoon (GAP4K) hoon
+    push @result, $tallLHS . ' ::= (' . $lexeme . ' GAP4K)' . (join ' (GAP4K) ', @samples);
     state $flatEquiv = {
         hoon => 'flatHoon',
     };
