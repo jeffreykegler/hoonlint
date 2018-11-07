@@ -144,7 +144,7 @@ lexeme default = latm => 1
 # === CHARACTER SET ===
 
 # BACKSLASH ~ backslash
-backslash ~ [\0x5c] # 0x5c is backslash
+backslash ~ [\x5c] # hex 5c is backslash
 # HEP ~ hep4h
 hep4h ~ '-'
 KET ~ ket4h
@@ -387,7 +387,7 @@ doubleStringElements ::= doubleStringElement*
 doubleStringElement ::= stringInterpolation
 doubleStringElement ::= DOUBLESTRINGCHARS
 DOUBLESTRINGCHARS ~ doubleStringChar+
-# 0x5C is backslash
+# hex 5C is backslash
 # From syntax.vim, might need correction
 doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
 stringInterpolation ::= '{' flatHoon '}'
@@ -396,7 +396,7 @@ stringInterpolation ::= '{' flatHoon '}'
 # LATER: Add \xx hex escapes, and more backslash escapes
 SINGLESTRING ~ ['] singleStringElements [']
 singleStringElements ~ singleStringElement*
-# 0x5C is backslash
+# hex 5C is backslash
 # From syntax.vim, might need correction
 singleStringElement ~ [^"\x5c] | backslash ["] | backslash backslash
 

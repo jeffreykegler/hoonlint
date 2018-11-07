@@ -36,7 +36,7 @@ ok 13 hoons/arvo/gen/hall/load-legacy.hoon
 ok 13 hoons/arvo/gen/hall/log.hoon
 ok 13 hoons/arvo/gen/hall/save.hoon
 ok 13 hoons/arvo/gen/hall/unlog.hoon
-todo 13 hoons/arvo/gen/hood/ask.hoon
+ok 13 hoons/arvo/gen/hood/ask.hoon
 ok 13 hoons/arvo/gen/hood/deset.hoon
 ok 13 hoons/arvo/gen/hood/mass.hoon
 ok 13 hoons/arvo/gen/hood/nuke.hoon
