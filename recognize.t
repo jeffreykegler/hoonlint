@@ -105,7 +105,7 @@ ok 36 hoons/arvo/gen/hood/init-oauth1.hoon
 ok 36 hoons/arvo/gen/hood/init-oauth2.hoon
 ok 42 hoons/arvo/gen/ivory.hoon
 ok 47 hoons/arvo/gen/hood/merge.hoon
-todo 53 hoons/arvo/gen/hood/invite.hoon
+ok 53 hoons/arvo/gen/hood/invite.hoon
 ok 58 hoons/arvo/gen/hood/begin.hoon
 ok 64 hoons/arvo/gen/help.hoon
 todo 76 hoons/arvo/gen/solid.hoon

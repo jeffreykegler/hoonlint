@@ -67,24 +67,28 @@ sub prune {
     };
 
     state $nonSemantic = {
-	doubleStringElements => 1,
-        wideHoon        => 1,
-        wideHoonJogging => 1,
-        wideHoonJogs    => 1,
-        wideHoonJog     => 1,
-        wideHoonSeq     => 1,
-        hoon            => 1,
-	hoonExpression => 1,
-	hoonFile => 1,
-        hoonJog     => 1,
-        hoonJogging => 1,
-        hoonJogs    => 1,
-        hoonJog     => 1,
-	hoonPrimary => 1,
-        hoonSeq         => 1,
-	pathHoon => 1,
-	togaElements => 1,
-	wing => 1,
+        doubleStringElements => 1,
+        wideHoon             => 1,
+        wideHoonJogging      => 1,
+        wideHoonJogs         => 1,
+        wideHoonJog          => 1,
+        wideHoonSeq          => 1,
+        wideMold          => 1,
+        wideMoldSeq          => 1,
+        hoon                 => 1,
+        hoonExpression       => 1,
+        hoonFile             => 1,
+        hoonJog              => 1,
+        hoonJogging          => 1,
+        hoonJogs             => 1,
+        hoonJog              => 1,
+        hoonPrimary          => 1,
+        hoonSeq              => 1,
+        mold                 => 1,
+        moldSeq              => 1,
+        pathHoon             => 1,
+        togaElements         => 1,
+        wing                 => 1,
     };
 
     return [] if not defined $v;
@@ -326,8 +330,18 @@ wideMold ::= moldKet
 moldKet ~ '^'
 
 # <moldInfixCol> can start with either KET (^) or lowercase char
+# This is scab(5d)
 wideMold ::= moldInfixCol
 moldInfixCol ::= wing+ separator=>[:] proper=>1
+
+wideMold ::= moldPrefixTis
+moldPrefixTis ::= ('=') wideMold (')')
+
+wideMold ::= moldInfixTis
+moldInfixTis ::= SYM4K ('=') wideMold
+
+wideMold ::= moldInfixFas
+moldInfixFas ::= SYM4K ('/') wideMold
 
 # TODO: Finish Implementing scad(5d)
 
