@@ -364,7 +364,7 @@ moldInfixTis ::= SYM4K ('=') wideMold
 wideMold ::= moldInfixFas
 moldInfixFas ::= SYM4K ('/') wideMold
 
-# TODO: Finish Implementing scad(5d)
+# TODO: Add molds from norm
 
 # === HOON FILE ===
 :start ::= hoonFile
@@ -372,28 +372,34 @@ moldInfixFas ::= SYM4K ('/') wideMold
 # catch all the subtleties of "ford" files
 hoonFile ::= (leader) hoonSeq (trailer)
 
-trailer ::= optWs
-leader  ::= optWs
+trailer ::= WS
+trailer ::= 
+leader  ::= WS
+leader  ::=
 
 # === WHITESPACE ===
 
-optWs ::=
-optWs ::= ACE
-optWs ::= GAP
+WS ~ whitespace
+whitespace ~ ace
+whitespace ~ gap4k
+optHorizontalWhitespace ~ horizontalWhitespaceElement*
+horizontalWhitespaceElements ~ horizontalWhitespaceElement+
+horizontalWhitespaceElement ~ ace
+horizontalWhitespaceElement ~ '+=' # documentation decoration
+horizontalWhitespaceElement ~ horizontalGapElement # documentation decoration
+horizontalGapElement ~ '+=' # documentation decoration
 
 GAP ~ gap4k
 
-gap4k ~ ace aces # a "wide" gap
-gap4k ~ tallGapPrefix optGapLines optAces
+gap4k ~ ace horizontalWhitespaceElements # a "wide" gap
+gap4k ~ horizontalGapElement optHorizontalWhitespace # a "wide" gap
+gap4k ~ tallGapPrefix optGapLines optHorizontalWhitespace
 # The prefix must contain an <NL> to ensure that this *is* a tall gap
-tallGapPrefix ~ optAces nl
-tallGapPrefix ~ optAces comment
+tallGapPrefix ~ optHorizontalWhitespace nl
+tallGapPrefix ~ optHorizontalWhitespace comment
 optGapLines ~ gapLine*
-gapLine ~ optAces comment
-gapLine ~ optAces nl
-
-optAces ~ ace*
-aces ~ ace+
+gapLine ~ optHorizontalWhitespace comment
+gapLine ~ optHorizontalWhitespace nl
 
 ACE ~ ace
 ace ~ ' '
@@ -403,6 +409,11 @@ comment ~ '::' nonNLs nl
 comment ~ '/?' nonNLs nl
 comment ~ '/+' nonNLs nl
 comment ~ '/-' nonNLs nl
+
+# Documentation decorations treated as comments
+comment ~ ':>' nonNLs nl
+comment ~ ':<' nonNLs nl
+comment ~ '+|' nonNLs nl
 
 # NL ~ nl
 nl ~ [\n]
