@@ -75,181 +75,56 @@
               'battery',
               [
                 'batteryElement',
-                'abet',
                 [
-                  'circumParen3',
+                  'hoonBatteryElement',
+                  'abet',
                   [
-                    'limb',
-                    'sort'
-                  ],
-                  [
-                    'circumParen1',
+                    'circumParen3',
                     [
-                      'irrCensig',
-                      [
-                        'limb',
-                        'tap'
-                      ],
-                      [
-                        'limb',
-                        'in'
-                      ],
-                      [
-                        'limb',
-                        'fed'
-                      ]
-                    ]
-                  ],
-                  [
-                    'limb',
-                    'lth'
-                  ]
-                ]
-              ],
-              [
-                'batteryElement',
-                'main',
-                [
-                  'tallTislus',
-                  [
-                    'infixEqual',
-                    [
-                      'toga',
-                      'fac'
+                      'limb',
+                      'sort'
                     ],
                     [
-                      'atom',
-                      '2'
-                    ]
-                  ],
-                  [
-                    'tallBarhep',
-                    [
-                      'tallKetlus',
+                      'circumParen1',
                       [
-                        'limb',
-                        '.'
-                      ],
-                      [
-                        'limb',
-                        'main'
-                      ],
-                      [
-                        'tallWutcol',
+                        'irrCensig',
                         [
-                          'circumParen3',
-                          [
-                            'limb',
-                            'gth'
-                          ],
-                          [
-                            'circumParen3',
-                            [
-                              'limb',
-                              'mul'
-                            ],
-                            [
-                              'limb',
-                              'fac'
-                            ],
-                            [
-                              'limb',
-                              'fac'
-                            ]
-                          ],
-                          [
-                            'limb',
-                            'top'
-                          ]
+                          'limb',
+                          'tap'
                         ],
                         [
                           'limb',
-                          '.'
+                          'in'
                         ],
                         [
                           'limb',
-                          'main'
-                        ],
-                        [
-                          'irrCentis',
-                          [
-                            'limb',
-                            '$'
-                          ],
-                          [
-                            'limb',
-                            'fac'
-                          ],
-                          [
-                            'irrDotlus',
-                            [
-                              'limb',
-                              'fac'
-                            ]
-                          ],
-                          [
-                            'limb',
-                            '.'
-                          ],
-                          [
-                            'limb',
-                            'main'
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'limb',
-                              'reap'
-                            ],
-                            [
-                              'limb',
-                              'fac'
-                            ]
-                          ]
+                          'fed'
                         ]
                       ]
+                    ],
+                    [
+                      'limb',
+                      'lth'
                     ]
                   ]
                 ]
               ],
               [
                 'batteryElement',
-                'reap',
                 [
-                  'tallBartis',
-                  [
-                    'infixEqual',
-                    [
-                      'toga',
-                      'fac'
-                    ],
-                    [
-                      'atom',
-                      '@'
-                    ]
-                  ],
+                  'hoonBatteryElement',
+                  'main',
                   [
                     'tallTislus',
                     [
                       'infixEqual',
                       [
                         'toga',
-                        'cot'
+                        'fac'
                       ],
                       [
-                        'circumParen3',
-                        [
-                          'limb',
-                          'mul'
-                        ],
-                        [
-                          'atom',
-                          '2'
-                        ],
-                        [
-                          'limb',
-                          'fac'
-                        ]
+                        'atom',
+                        '2'
                       ]
                     ],
                     [
@@ -262,7 +137,7 @@
                         ],
                         [
                           'limb',
-                          'reap'
+                          'main'
                         ],
                         [
                           'tallWutcol',
@@ -273,8 +148,19 @@
                               'gth'
                             ],
                             [
-                              'limb',
-                              'cot'
+                              'circumParen3',
+                              [
+                                'limb',
+                                'mul'
+                              ],
+                              [
+                                'limb',
+                                'fac'
+                              ],
+                              [
+                                'limb',
+                                'fac'
+                              ]
                             ],
                             [
                               'limb',
@@ -287,7 +173,7 @@
                           ],
                           [
                             'limb',
-                            'reap'
+                            'main'
                           ],
                           [
                             'irrCentis',
@@ -297,18 +183,10 @@
                             ],
                             [
                               'limb',
-                              'cot'
+                              'fac'
                             ],
                             [
-                              'circumParen3',
-                              [
-                                'limb',
-                                'add'
-                              ],
-                              [
-                                'limb',
-                                'cot'
-                              ],
+                              'irrDotlus',
                               [
                                 'limb',
                                 'fac'
@@ -316,28 +194,159 @@
                             ],
                             [
                               'limb',
-                              'fed'
+                              '.'
+                            ],
+                            [
+                              'limb',
+                              'main'
                             ],
                             [
                               'circumParen2',
                               [
-                                'irrCensig',
-                                [
-                                  'limb',
-                                  'del'
-                                ],
-                                [
-                                  'limb',
-                                  'in'
-                                ],
-                                [
-                                  'limb',
-                                  'fed'
-                                ]
+                                'limb',
+                                'reap'
+                              ],
+                              [
+                                'limb',
+                                'fac'
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                'batteryElement',
+                [
+                  'hoonBatteryElement',
+                  'reap',
+                  [
+                    'tallBartis',
+                    [
+                      'infixEqual',
+                      [
+                        'toga',
+                        'fac'
+                      ],
+                      [
+                        'atom',
+                        '@'
+                      ]
+                    ],
+                    [
+                      'tallTislus',
+                      [
+                        'infixEqual',
+                        [
+                          'toga',
+                          'cot'
+                        ],
+                        [
+                          'circumParen3',
+                          [
+                            'limb',
+                            'mul'
+                          ],
+                          [
+                            'atom',
+                            '2'
+                          ],
+                          [
+                            'limb',
+                            'fac'
+                          ]
+                        ]
+                      ],
+                      [
+                        'tallBarhep',
+                        [
+                          'tallKetlus',
+                          [
+                            'limb',
+                            '.'
+                          ],
+                          [
+                            'limb',
+                            'reap'
+                          ],
+                          [
+                            'tallWutcol',
+                            [
+                              'circumParen3',
+                              [
+                                'limb',
+                                'gth'
                               ],
                               [
                                 'limb',
                                 'cot'
+                              ],
+                              [
+                                'limb',
+                                'top'
+                              ]
+                            ],
+                            [
+                              'limb',
+                              '.'
+                            ],
+                            [
+                              'limb',
+                              'reap'
+                            ],
+                            [
+                              'irrCentis',
+                              [
+                                'limb',
+                                '$'
+                              ],
+                              [
+                                'limb',
+                                'cot'
+                              ],
+                              [
+                                'circumParen3',
+                                [
+                                  'limb',
+                                  'add'
+                                ],
+                                [
+                                  'limb',
+                                  'cot'
+                                ],
+                                [
+                                  'limb',
+                                  'fac'
+                                ]
+                              ],
+                              [
+                                'limb',
+                                'fed'
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'irrCensig',
+                                  [
+                                    'limb',
+                                    'del'
+                                  ],
+                                  [
+                                    'limb',
+                                    'in'
+                                  ],
+                                  [
+                                    'limb',
+                                    'fed'
+                                  ]
+                                ],
+                                [
+                                  'limb',
+                                  'cot'
+                                ]
                               ]
                             ]
                           ]

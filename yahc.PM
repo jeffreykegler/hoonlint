@@ -89,6 +89,7 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
+	wedeLHS => 1,
         wideHoon             => 1,
         wideHoonJogging      => 1,
         wideHoonJogs         => 1,
@@ -385,14 +386,12 @@ whitespace ~ gap4k
 optHorizontalWhitespace ~ horizontalWhitespaceElement*
 horizontalWhitespaceElements ~ horizontalWhitespaceElement+
 horizontalWhitespaceElement ~ ace
-horizontalWhitespaceElement ~ '+=' # documentation decoration
-horizontalWhitespaceElement ~ horizontalGapElement # documentation decoration
-horizontalGapElement ~ '+=' # documentation decoration
+# horizontalWhitespaceElement ~ horizontalGapElement
+# horizontalGapElement ~ '+=' # documentation decoration
 
 GAP ~ gap4k
 
 gap4k ~ ace horizontalWhitespaceElements # a "wide" gap
-gap4k ~ horizontalGapElement optHorizontalWhitespace # a "wide" gap
 gap4k ~ tallGapPrefix optGapLines optHorizontalWhitespace
 # The prefix must contain an <NL> to ensure that this *is* a tall gap
 tallGapPrefix ~ optHorizontalWhitespace nl
@@ -642,8 +641,15 @@ hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
-infixPlus ::=  NAME ('+') hoonExpression
-infixSlash ::= NAME ('/') hoonExpression
+infixPlus ::=  wedeLHS ('+') hoonExpression
+infixSlash ::= wedeLHS ('/') hoonExpression
+
+# LHS of wede(5d)
+wedeLHS ::= wing
+wedeLHS ::= '&'
+wedeLHS ::= '|'
+wedeLHS ::= bisk4l
+wedeLHS ::= '~'
 
 hoonPrimary ::= pathHoon
 
@@ -678,7 +684,10 @@ wideHoonJog ::= wideHoon (ACE) wideHoon
 wideHoonJoggingSeparator ::= ',' ACE
 
 battery ::= batteryElement* separator=>GAP proper=>1
-batteryElement ::= ('++' GAP) NAME (GAP) hoon
+batteryElement ::= hoonBatteryElement
+batteryElement ::= moldBatteryElement
+hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
+moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
 
 # === CELLS BY RUNE ==
 
@@ -715,7 +724,6 @@ hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideBuccol
 wideBuccol ::= (BUCCOL '(') wideHoonSeq (')')
-wideBuccol ::= (':bccl(') wideHoonSeq (')')
 wideBuccol ::= ('{') wideHoonSeq ('}')
 wideBuccol ::= (',[') wideHoonSeq (']')
 
@@ -724,7 +732,6 @@ hoon ::= tallBuccen
 tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
 hoonPrimary ::= wideBuccen
 wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
-wideBuccen ::= (':bccn(') wideMoldSeq (')')
 
 # FIXED: buchep hoon hoon
 # FIXED: bucket hoon hoon
@@ -754,7 +761,6 @@ hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideBucwut
 wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
-wideBucwut ::= (':bcwt(') wideHoonSeq (')')
 wideBucwut ::= ('?(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
@@ -790,7 +796,6 @@ hoonPrimary ::= wideColsig2
 hoonPrimary ::= wideColsig3
 hoonPrimary ::= wideColsig4
 wideColsig ::= (COLSIG '(') wideHoonSeq (')')
-wideColsig ::= (':clsg(') wideHoonSeq (')')
 wideColsig2 ::= ('~[') wideHoonSeq (']')
 wideColsig3 ::= ('[') wideHoonSeq (']~')
 wideColsig4 ::= ('`') wideHoon
@@ -801,7 +806,6 @@ hoon ::= tallColtar
 tallColtar ::= (COLTAR GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideColtar
 wideColtar ::= (COLTAR '(') wideHoonSeq (')')
-wideColtar ::= (':cltr(') wideHoonSeq (')')
 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
@@ -809,7 +813,6 @@ hoon ::= tallDotket
 hoonPrimary ::= wideDotket
 tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
 wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
-wideDotket ::= (':dtkt') [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
 hoonPrimary ::= irrDottis
@@ -860,7 +863,6 @@ hoon ::= tallSemcol
 tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideSemcol
 wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
-wideSemcol ::= (':smcl(') hoon (ACE) wideHoonSeq (')')
 
 # #semsem hoon value
 # FIXED: semsem hoon hoon
@@ -871,7 +873,6 @@ hoon ::= tallSemsig
 tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideSemsig
 wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
-wideSemsig ::= (':smsg(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
@@ -902,7 +903,6 @@ hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
-wideWutbar ::= (':wtbr(') wideHoonSeq (')')
 wideWutbar ::= ('|(') wideHoonSeq (')')
 
 # FIXED: wutcol hoon hoon hoon
@@ -917,7 +917,6 @@ hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
-wideWutpam ::= (':wtpm(') wideHoonSeq (')')
 wideWutpam ::= ('&(') wideHoonSeq (')')
 
 # FIXED: wutpat wing hoon hoon
@@ -1051,25 +1050,25 @@ sub doFixedRune {
     my $lexeme = uc $runeName;
     my $tallLHS = 'tall' . ucfirst $runeName;
     my $wideLHS = 'wide' . ucfirst $runeName;
+
     # BARHEP ~ [|] [-]
     push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
+
     # hoon ::= tallBarhep
     push @result, 'hoon ::= ' . $tallLHS;
+
     # hoonPrimary ::= wideBarhep
     push @result, 'hoonPrimary ::= ' . $wideLHS;
+
     # tallBarhep ::= (BARHEP GAP) hoon (GAP) hoon
     push @result, $tallLHS . ' ::= (' . $lexeme . ' GAP)' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
         hoon => 'wideHoon',
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
+
     # wideBarhep ::= ([|] [-]) (ACE) wideHoon (ACE) wideHoon
     push @result, $wideLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @wideSamples) . q{ [)]};
-    my $regularName = join '', ':',
-      substr($glyphname1, 0, 1), substr($glyphname1, 2, 1),
-      substr($glyphname2, 0, 1), substr($glyphname2, 2, 1);
-    # wideBarhep ::= ([:] 'brhp') (ACE) wideHoon (ACE) wideHoon
-    push @result, $wideLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @wideSamples) . q{ [)]};
     return join "\n", @result, '';
 }
 

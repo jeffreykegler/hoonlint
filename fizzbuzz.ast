@@ -3,7 +3,10 @@
     'tallBartis',
     [
       'infixSlash',
-      'end',
+      [
+        'limb',
+        'end'
+      ],
       [
         'limb',
         'atom'

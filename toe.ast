@@ -5,7 +5,10 @@
       'tallBartis',
       [
         'infixSlash',
-        'feed',
+        [
+          'limb',
+          'feed'
+        ],
         [
           'circumParen2',
           [
@@ -22,7 +25,10 @@
         'tallTisbar',
         [
           'infixSlash',
-          'game',
+          [
+            'limb',
+            'game'
+          ],
           [
             'limb',
             'game'
@@ -57,7 +63,10 @@
                 'tallTisket',
                 [
                   'infixSlash',
-                  'this',
+                  [
+                    'limb',
+                    'this'
+                  ],
                   [
                     'circumParen2',
                     [
@@ -104,7 +113,10 @@
                   'tallTisfas',
                   [
                     'infixSlash',
-                    'rest',
+                    [
+                      'limb',
+                      'rest'
+                    ],
                     [
                       'circumParen2',
                       [
@@ -179,153 +191,95 @@
           'battery',
           [
             'batteryElement',
-            'side',
             [
-              'atom',
-              '@'
-            ]
-          ],
-          [
-            'batteryElement',
-            'spot',
-            [
-              'wideBuccol',
+              'hoonBatteryElement',
+              'side',
               [
-                'infixSlash',
-                'x',
-                [
-                  'atom',
-                  '@'
-                ]
-              ],
-              [
-                'infixSlash',
-                'y',
-                [
-                  'atom',
-                  '@'
-                ]
+                'atom',
+                '@'
               ]
             ]
           ],
           [
             'batteryElement',
-            'fact',
             [
-              'tallBuccen',
+              'hoonBatteryElement',
+              'spot',
               [
-                'moldCircumBrace',
+                'wideBuccol',
                 [
-                  'moldBucNuck4l',
-                  '$',
+                  'infixSlash',
                   [
-                    'nuck4l',
-                    'tie'
-                  ]
-                ],
-                [
-                  'moldBucNuck4l',
-                  '$',
-                  [
-                    'nuck4l',
-                    [
-                      'moldNullSig',
-                      '~'
-                    ]
-                  ]
-                ]
-              ],
-              [
-                'moldCircumBrace',
-                [
-                  'moldBucNuck4l',
-                  '$',
-                  [
-                    'nuck4l',
-                    'win'
-                  ]
-                ],
-                [
-                  'moldInfixFas',
-                  'p',
-                  [
-                    'moldInfixCol',
-                    [
-                      'limb',
-                      'cord'
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ],
-          [
-            'batteryElement',
-            'move',
-            [
-              'tallBuccen',
-              [
-                'moldCircumBrace',
-                [
-                  'moldBucNuck4l',
-                  '$',
-                  [
-                    'nuck4l',
+                    'limb',
                     'x'
+                  ],
+                  [
+                    'atom',
+                    '@'
                   ]
                 ],
                 [
-                  'moldInfixFas',
-                  'p',
+                  'infixSlash',
                   [
-                    'moldInfixCol',
-                    [
-                      'limb',
-                      'spot'
-                    ]
+                    'limb',
+                    'y'
+                  ],
+                  [
+                    'atom',
+                    '@'
                   ]
                 ]
-              ],
+              ]
+            ]
+          ],
+          [
+            'batteryElement',
+            [
+              'hoonBatteryElement',
+              'fact',
               [
-                'moldCircumBrace',
+                'tallBuccen',
                 [
-                  'moldBucNuck4l',
-                  '$',
+                  'moldCircumBrace',
                   [
-                    'nuck4l',
-                    'o'
-                  ]
-                ],
-                [
-                  'moldInfixFas',
-                  'p',
-                  [
-                    'moldInfixCol',
+                    'moldBucNuck4l',
+                    '$',
                     [
-                      'limb',
-                      'spot'
+                      'nuck4l',
+                      'tie'
+                    ]
+                  ],
+                  [
+                    'moldBucNuck4l',
+                    '$',
+                    [
+                      'nuck4l',
+                      [
+                        'moldNullSig',
+                        '~'
+                      ]
                     ]
                   ]
-                ]
-              ],
-              [
-                'moldCircumBrace',
-                [
-                  'moldBucNuck4l',
-                  '$',
-                  [
-                    'nuck4l',
-                    'z'
-                  ]
                 ],
                 [
-                  'moldBucNuck4l',
-                  '$',
+                  'moldCircumBrace',
                   [
-                    'nuck4l',
+                    'moldBucNuck4l',
+                    '$',
                     [
-                      'moldNullSig',
-                      '~'
+                      'nuck4l',
+                      'win'
+                    ]
+                  ],
+                  [
+                    'moldInfixFas',
+                    'p',
+                    [
+                      'moldInfixCol',
+                      [
+                        'limb',
+                        'cord'
+                      ]
                     ]
                   ]
                 ]
@@ -334,27 +288,112 @@
           ],
           [
             'batteryElement',
-            'game',
             [
-              'tallBuccol',
+              'hoonBatteryElement',
+              'move',
               [
-                'limb',
-                'w'
-              ],
-              [
-                'infixSlash',
-                'a',
+                'tallBuccen',
                 [
-                  'limb',
-                  'side'
+                  'moldCircumBrace',
+                  [
+                    'moldBucNuck4l',
+                    '$',
+                    [
+                      'nuck4l',
+                      'x'
+                    ]
+                  ],
+                  [
+                    'moldInfixFas',
+                    'p',
+                    [
+                      'moldInfixCol',
+                      [
+                        'limb',
+                        'spot'
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'moldCircumBrace',
+                  [
+                    'moldBucNuck4l',
+                    '$',
+                    [
+                      'nuck4l',
+                      'o'
+                    ]
+                  ],
+                  [
+                    'moldInfixFas',
+                    'p',
+                    [
+                      'moldInfixCol',
+                      [
+                        'limb',
+                        'spot'
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'moldCircumBrace',
+                  [
+                    'moldBucNuck4l',
+                    '$',
+                    [
+                      'nuck4l',
+                      'z'
+                    ]
+                  ],
+                  [
+                    'moldBucNuck4l',
+                    '$',
+                    [
+                      'nuck4l',
+                      [
+                        'moldNullSig',
+                        '~'
+                      ]
+                    ]
+                  ]
                 ]
-              ],
+              ]
+            ]
+          ],
+          [
+            'batteryElement',
+            [
+              'hoonBatteryElement',
+              'game',
               [
-                'infixSlash',
-                'z',
+                'tallBuccol',
                 [
                   'limb',
-                  'side'
+                  'w'
+                ],
+                [
+                  'infixSlash',
+                  [
+                    'limb',
+                    'a'
+                  ],
+                  [
+                    'limb',
+                    'side'
+                  ]
+                ],
+                [
+                  'infixSlash',
+                  [
+                    'limb',
+                    'z'
+                  ],
+                  [
+                    'limb',
+                    'side'
+                  ]
                 ]
               ]
             ]
@@ -367,259 +406,295 @@
           'battery',
           [
             'batteryElement',
-            'bo',
             [
-              'tallBarcab',
+              'hoonBatteryElement',
+              'bo',
               [
-                'infixSlash',
-                'half',
+                'tallBarcab',
                 [
-                  'limb',
-                  'side'
-                ]
-              ],
-              [
-                'battery',
-                [
-                  'batteryElement',
-                  'bit',
+                  'infixSlash',
                   [
-                    'wideBartis',
-                    '(',
+                    'limb',
+                    'half'
+                  ],
+                  [
+                    'limb',
+                    'side'
+                  ]
+                ],
+                [
+                  'battery',
+                  [
+                    'batteryElement',
                     [
-                      'infixSlash',
-                      'a',
+                      'hoonBatteryElement',
+                      'bit',
                       [
-                        'atom',
-                        '@'
-                      ]
-                    ],
-                    [
-                      'irrDottis',
-                      [
-                        'atom',
-                        '1'
-                      ],
-                      [
-                        'circumParen3',
+                        'wideBartis',
+                        '(',
                         [
-                          'limb',
-                          'cut'
-                        ],
-                        [
-                          'atom',
-                          '0'
-                        ],
-                        [
-                          'circumSelser2',
+                          'infixSlash',
                           [
                             'limb',
                             'a'
                           ],
                           [
                             'atom',
-                            '1'
+                            '@'
                           ]
                         ],
                         [
-                          'limb',
-                          'half'
-                        ]
-                      ]
-                    ],
-                    ')'
-                  ]
-                ],
-                [
-                  'batteryElement',
-                  'off',
-                  [
-                    'wideBartis',
-                    '(',
-                    [
-                      'infixSlash',
-                      'a',
-                      [
-                        'limb',
-                        'spot'
-                      ]
-                    ],
-                    [
-                      'circumParen3',
-                      [
-                        'limb',
-                        'add'
-                      ],
-                      [
-                        'limb',
-                        'x'
-                      ],
-                      [
-                        'limb',
-                        'a'
-                      ],
-                      [
-                        'circumParen3',
-                        [
-                          'limb',
-                          'mul'
-                        ],
-                        [
-                          'atom',
-                          '3'
-                        ],
-                        [
-                          'limb',
-                          'y'
-                        ],
-                        [
-                          'limb',
-                          'a'
-                        ]
-                      ]
-                    ],
-                    ')'
-                  ]
-                ],
-                [
-                  'batteryElement',
-                  'get',
-                  [
-                    'wideBartis',
-                    '(',
-                    [
-                      'infixSlash',
-                      'a',
-                      [
-                        'limb',
-                        'spot'
-                      ]
-                    ],
-                    [
-                      'circumParen2',
-                      [
-                        'limb',
-                        'bit'
-                      ],
-                      [
-                        'circumParen2',
-                        [
-                          'limb',
-                          'off'
-                        ],
-                        [
-                          'limb',
-                          'a'
-                        ]
-                      ]
-                    ],
-                    ')'
-                  ]
-                ],
-                [
-                  'batteryElement',
-                  'set',
-                  [
-                    'wideBartis',
-                    '(',
-                    [
-                      'infixSlash',
-                      'a',
-                      [
-                        'limb',
-                        'spot'
-                      ]
-                    ],
-                    [
-                      'circumParen3',
-                      [
-                        'limb',
-                        'con'
-                      ],
-                      [
-                        'limb',
-                        'half'
-                      ],
-                      [
-                        'circumParen2',
-                        [
-                          'limb',
-                          'bex'
-                        ],
-                        [
-                          'circumParen2',
+                          'irrDottis',
                           [
-                            'limb',
-                            'off'
+                            'atom',
+                            '1'
                           ],
+                          [
+                            'circumParen3',
+                            [
+                              'limb',
+                              'cut'
+                            ],
+                            [
+                              'atom',
+                              '0'
+                            ],
+                            [
+                              'circumSelser2',
+                              [
+                                'limb',
+                                'a'
+                              ],
+                              [
+                                'atom',
+                                '1'
+                              ]
+                            ],
+                            [
+                              'limb',
+                              'half'
+                            ]
+                          ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'off',
+                      [
+                        'wideBartis',
+                        '(',
+                        [
+                          'infixSlash',
                           [
                             'limb',
                             'a'
+                          ],
+                          [
+                            'limb',
+                            'spot'
                           ]
-                        ]
-                      ]
-                    ],
-                    ')'
-                  ]
-                ],
-                [
-                  'batteryElement',
-                  'win',
-                  [
-                    'tallCenlus',
-                    [
-                      'limb',
-                      'lien'
-                    ],
-                    [
-                      'circumParen3',
-                      [
-                        'limb',
-                        'rip'
-                      ],
-                      [
-                        'atom',
-                        '4'
-                      ],
-                      [
-                        'atom',
-                        '0wl04h0.4A0Aw.4A00s.0e070'
-                      ]
-                    ],
-                    [
-                      'wideBartis',
-                      '(',
-                      [
-                        'infixSlash',
-                        'a',
-                        [
-                          'atom',
-                          '@'
-                        ]
-                      ],
-                      [
-                        'irrDottis',
-                        [
-                          'limb',
-                          'a'
                         ],
                         [
                           'circumParen3',
                           [
                             'limb',
-                            'dis'
+                            'add'
+                          ],
+                          [
+                            'limb',
+                            'x'
                           ],
                           [
                             'limb',
                             'a'
                           ],
                           [
+                            'circumParen3',
+                            [
+                              'limb',
+                              'mul'
+                            ],
+                            [
+                              'atom',
+                              '3'
+                            ],
+                            [
+                              'limb',
+                              'y'
+                            ],
+                            [
+                              'limb',
+                              'a'
+                            ]
+                          ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'get',
+                      [
+                        'wideBartis',
+                        '(',
+                        [
+                          'infixSlash',
+                          [
+                            'limb',
+                            'a'
+                          ],
+                          [
+                            'limb',
+                            'spot'
+                          ]
+                        ],
+                        [
+                          'circumParen2',
+                          [
+                            'limb',
+                            'bit'
+                          ],
+                          [
+                            'circumParen2',
+                            [
+                              'limb',
+                              'off'
+                            ],
+                            [
+                              'limb',
+                              'a'
+                            ]
+                          ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'set',
+                      [
+                        'wideBartis',
+                        '(',
+                        [
+                          'infixSlash',
+                          [
+                            'limb',
+                            'a'
+                          ],
+                          [
+                            'limb',
+                            'spot'
+                          ]
+                        ],
+                        [
+                          'circumParen3',
+                          [
+                            'limb',
+                            'con'
+                          ],
+                          [
                             'limb',
                             'half'
+                          ],
+                          [
+                            'circumParen2',
+                            [
+                              'limb',
+                              'bex'
+                            ],
+                            [
+                              'circumParen2',
+                              [
+                                'limb',
+                                'off'
+                              ],
+                              [
+                                'limb',
+                                'a'
+                              ]
+                            ]
                           ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'win',
+                      [
+                        'tallCenlus',
+                        [
+                          'limb',
+                          'lien'
+                        ],
+                        [
+                          'circumParen3',
+                          [
+                            'limb',
+                            'rip'
+                          ],
+                          [
+                            'atom',
+                            '4'
+                          ],
+                          [
+                            'atom',
+                            '0wl04h0.4A0Aw.4A00s.0e070'
+                          ]
+                        ],
+                        [
+                          'wideBartis',
+                          '(',
+                          [
+                            'infixSlash',
+                            [
+                              'limb',
+                              'a'
+                            ],
+                            [
+                              'atom',
+                              '@'
+                            ]
+                          ],
+                          [
+                            'irrDottis',
+                            [
+                              'limb',
+                              'a'
+                            ],
+                            [
+                              'circumParen3',
+                              [
+                                'limb',
+                                'dis'
+                              ],
+                              [
+                                'limb',
+                                'a'
+                              ],
+                              [
+                                'limb',
+                                'half'
+                              ]
+                            ]
+                          ],
+                          ')'
                         ]
-                      ],
-                      ')'
+                      ]
                     ]
                   ]
                 ]
@@ -628,310 +703,42 @@
           ],
           [
             'batteryElement',
-            'go',
             [
-              'tallBarcab',
+              'hoonBatteryElement',
+              'go',
               [
-                'infixSlash',
-                'game',
+                'tallBarcab',
                 [
-                  'limb',
-                  'game'
-                ]
-              ],
-              [
-                'battery',
-                [
-                  'batteryElement',
-                  'do',
+                  'infixSlash',
                   [
-                    'tallBartis',
-                    [
-                      'infixSlash',
-                      'act',
-                      [
-                        'limb',
-                        'move'
-                      ]
-                    ],
-                    [
-                      'tallKethep',
-                      [
-                        'wideBuccol',
-                        [
-                          'circumParen2',
-                          [
-                            'limb',
-                            'unit'
-                          ],
-                          [
-                            'limb',
-                            'fact'
-                          ]
-                        ],
-                        [
-                          'limb',
-                          [
-                            'optKets',
-                            '^'
-                          ],
-                          'game'
-                        ]
-                      ],
-                      [
-                        'tallWuthep',
-                        '?-',
-                        [
-                          'limb',
-                          'act'
-                        ],
-                        [
-                          'wideBuccol',
-                          [
-                            'atom',
-                            [
-                              'term',
-                              [
-                                'dollarTerm',
-                                'x'
-                              ]
-                            ]
-                          ],
-                          [
-                            'atom',
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ]
-                        ],
-                        [
-                          'wideWutgar',
-                          '(',
-                          [
-                            'limb',
-                            'w'
-                          ],
-                          [
-                            'limb',
-                            'game'
-                          ],
-                          [
-                            'irrCensig',
-                            [
-                              'limb',
-                              'mo'
-                            ],
-                            [
-                              'limb',
-                              'on'
-                            ],
-                            [
-                              'limb',
-                              'p'
-                            ],
-                            [
-                              'limb',
-                              'act'
-                            ]
-                          ],
-                          ')'
-                        ],
-                        [
-                          'wideBuccol',
-                          [
-                            'atom',
-                            [
-                              'term',
-                              [
-                                'dollarTerm',
-                                'o'
-                              ]
-                            ]
-                          ],
-                          [
-                            'atom',
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ]
-                        ],
-                        [
-                          'wideWutgal',
-                          '(',
-                          [
-                            'limb',
-                            'w'
-                          ],
-                          [
-                            'limb',
-                            'game'
-                          ],
-                          [
-                            'irrCensig',
-                            [
-                              'limb',
-                              'mo'
-                            ],
-                            [
-                              'limb',
-                              'on'
-                            ],
-                            [
-                              'limb',
-                              'p'
-                            ],
-                            [
-                              'limb',
-                              'act'
-                            ]
-                          ],
-                          ')'
-                        ],
-                        [
-                          'wideBuccol',
-                          [
-                            'atom',
-                            [
-                              'term',
-                              [
-                                'dollarTerm',
-                                'z'
-                              ]
-                            ]
-                          ],
-                          [
-                            'atom',
-                            [
-                              'type',
-                              '*'
-                            ]
-                          ]
-                        ],
-                        [
-                          'circumSelser2',
-                          [
-                            'atom',
-                            '~'
-                          ],
-                          [
-                            'limb',
-                            'nu'
-                          ]
-                        ]
-                      ]
-                    ]
+                    'limb',
+                    'game'
+                  ],
+                  [
+                    'limb',
+                    'game'
                   ]
                 ],
                 [
-                  'batteryElement',
-                  'nu',
+                  'battery',
                   [
-                    'wideKetlus',
-                    '(',
+                    'batteryElement',
                     [
-                      'limb',
-                      'game'
-                    ],
-                    [
-                      'circumSelser3',
+                      'hoonBatteryElement',
+                      'do',
                       [
-                        'atom',
+                        'tallBartis',
                         [
-                          'loobean',
-                          '&'
-                        ]
-                      ],
-                      [
-                        'atom',
-                        '0'
-                      ],
-                      [
-                        'atom',
-                        '0'
-                      ]
-                    ],
-                    ')'
-                  ]
-                ],
-                [
-                  'batteryElement',
-                  'on',
-                  [
-                    'tallBarcab',
-                    [
-                      'infixSlash',
-                      'here',
-                      [
-                        'limb',
-                        'spot'
-                      ]
-                    ],
-                    [
-                      'battery',
-                      [
-                        'batteryElement',
-                        'is',
-                        [
-                          'tallWutbar',
+                          'infixSlash',
                           [
-                            'circumParen2',
-                            [
-                              'irrCensig',
-                              [
-                                'limb',
-                                'get'
-                              ],
-                              [
-                                'limb',
-                                'bo'
-                              ],
-                              [
-                                'limb',
-                                'a'
-                              ],
-                              [
-                                'limb',
-                                'game'
-                              ]
-                            ],
-                            [
-                              'limb',
-                              'here'
-                            ]
+                            'limb',
+                            'act'
                           ],
                           [
-                            'circumParen2',
-                            [
-                              'irrCensig',
-                              [
-                                'limb',
-                                'get'
-                              ],
-                              [
-                                'limb',
-                                'bo'
-                              ],
-                              [
-                                'limb',
-                                'z'
-                              ],
-                              [
-                                'limb',
-                                'game'
-                              ]
-                            ],
-                            [
-                              'limb',
-                              'here'
-                            ]
+                            'limb',
+                            'move'
                           ]
-                        ]
-                      ],
-                      [
-                        'batteryElement',
-                        'mo',
+                        ],
                         [
                           'tallKethep',
                           [
@@ -957,138 +764,224 @@
                             ]
                           ],
                           [
-                            'tallWutgal',
+                            'tallWuthep',
+                            '?-',
                             [
                               'limb',
-                              'is'
+                              'act'
                             ],
                             [
-                              'tallTisfas',
+                              'wideBuccol',
                               [
-                                'infixSlash',
-                                'next',
+                                'atom',
                                 [
-                                  'limb',
-                                  'side'
+                                  'term',
+                                  [
+                                    'dollarTerm',
+                                    'x'
+                                  ]
                                 ]
                               ],
                               [
-                                'circumParen2',
+                                'atom',
                                 [
-                                  'irrCensig',
-                                  [
-                                    'limb',
-                                    'set'
-                                  ],
-                                  [
-                                    'limb',
-                                    'bo'
-                                  ],
-                                  [
-                                    'limb',
-                                    'a'
-                                  ],
-                                  [
-                                    'limb',
-                                    'game'
-                                  ]
+                                  'type',
+                                  '*'
+                                ]
+                              ]
+                            ],
+                            [
+                              'wideWutgar',
+                              '(',
+                              [
+                                'limb',
+                                'w'
+                              ],
+                              [
+                                'limb',
+                                'game'
+                              ],
+                              [
+                                'irrCensig',
+                                [
+                                  'limb',
+                                  'mo'
                                 ],
                                 [
                                   'limb',
-                                  'here'
+                                  'on'
+                                ],
+                                [
+                                  'limb',
+                                  'p'
+                                ],
+                                [
+                                  'limb',
+                                  'act'
+                                ]
+                              ],
+                              ')'
+                            ],
+                            [
+                              'wideBuccol',
+                              [
+                                'atom',
+                                [
+                                  'term',
+                                  [
+                                    'dollarTerm',
+                                    'o'
+                                  ]
                                 ]
                               ],
                               [
-                                'tallWutcol',
+                                'atom',
                                 [
-                                  'irrCensig',
-                                  [
-                                    'limb',
-                                    'win'
-                                  ],
-                                  [
-                                    'limb',
-                                    'bo'
-                                  ],
-                                  [
-                                    'limb',
-                                    'next'
-                                  ]
+                                  'type',
+                                  '*'
+                                ]
+                              ]
+                            ],
+                            [
+                              'wideWutgal',
+                              '(',
+                              [
+                                'limb',
+                                'w'
+                              ],
+                              [
+                                'limb',
+                                'game'
+                              ],
+                              [
+                                'irrCensig',
+                                [
+                                  'limb',
+                                  'mo'
                                 ],
                                 [
-                                  'circumSelser2',
-                                  [
-                                    'circumSelser3',
-                                    [
-                                      'atom',
-                                      '~'
-                                    ],
-                                    [
-                                      'atom',
-                                      [
-                                        'term',
-                                        '%win'
-                                      ]
-                                    ],
-                                    [
-                                      'wideWutcol',
-                                      '(',
-                                      [
-                                        'limb',
-                                        'w'
-                                      ],
-                                      [
-                                        'limb',
-                                        'game'
-                                      ],
-                                      [
-                                        'atom',
-                                        [
-                                          'term',
-                                          '%x'
-                                        ]
-                                      ],
-                                      [
-                                        'atom',
-                                        [
-                                          'term',
-                                          '%o'
-                                        ]
-                                      ],
-                                      ')'
-                                    ]
-                                  ],
-                                  [
-                                    'limb',
-                                    'nu'
-                                  ]
+                                  'limb',
+                                  'on'
                                 ],
                                 [
-                                  'circumSelser2',
+                                  'limb',
+                                  'p'
+                                ],
+                                [
+                                  'limb',
+                                  'act'
+                                ]
+                              ],
+                              ')'
+                            ],
+                            [
+                              'wideBuccol',
+                              [
+                                'atom',
+                                [
+                                  'term',
                                   [
-                                    'atom',
-                                    '~'
-                                  ],
+                                    'dollarTerm',
+                                    'z'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'atom',
+                                [
+                                  'type',
+                                  '*'
+                                ]
+                              ]
+                            ],
+                            [
+                              'circumSelser2',
+                              [
+                                'atom',
+                                '~'
+                              ],
+                              [
+                                'limb',
+                                'nu'
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'nu',
+                      [
+                        'wideKetlus',
+                        '(',
+                        [
+                          'limb',
+                          'game'
+                        ],
+                        [
+                          'circumSelser3',
+                          [
+                            'atom',
+                            [
+                              'loobean',
+                              '&'
+                            ]
+                          ],
+                          [
+                            'atom',
+                            '0'
+                          ],
+                          [
+                            'atom',
+                            '0'
+                          ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'on',
+                      [
+                        'tallBarcab',
+                        [
+                          'infixSlash',
+                          [
+                            'limb',
+                            'here'
+                          ],
+                          [
+                            'limb',
+                            'spot'
+                          ]
+                        ],
+                        [
+                          'battery',
+                          [
+                            'batteryElement',
+                            [
+                              'hoonBatteryElement',
+                              'is',
+                              [
+                                'tallWutbar',
+                                [
+                                  'circumParen2',
                                   [
-                                    'irrCentis',
+                                    'irrCensig',
                                     [
                                       'limb',
-                                      'game'
+                                      'get'
                                     ],
                                     [
                                       'limb',
-                                      'w'
-                                    ],
-                                    [
-                                      'irrWutzap',
-                                      [
-                                        'limb',
-                                        'w'
-                                      ],
-                                      [
-                                        'limb',
-                                        'game'
-                                      ]
+                                      'bo'
                                     ],
                                     [
                                       'limb',
@@ -1096,19 +989,231 @@
                                     ],
                                     [
                                       'limb',
+                                      'game'
+                                    ]
+                                  ],
+                                  [
+                                    'limb',
+                                    'here'
+                                  ]
+                                ],
+                                [
+                                  'circumParen2',
+                                  [
+                                    'irrCensig',
+                                    [
+                                      'limb',
+                                      'get'
+                                    ],
+                                    [
+                                      'limb',
+                                      'bo'
+                                    ],
+                                    [
+                                      'limb',
                                       'z'
                                     ],
                                     [
                                       'limb',
                                       'game'
+                                    ]
+                                  ],
+                                  [
+                                    'limb',
+                                    'here'
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ],
+                          [
+                            'batteryElement',
+                            [
+                              'hoonBatteryElement',
+                              'mo',
+                              [
+                                'tallKethep',
+                                [
+                                  'wideBuccol',
+                                  [
+                                    'circumParen2',
+                                    [
+                                      'limb',
+                                      'unit'
                                     ],
                                     [
                                       'limb',
-                                      'z'
+                                      'fact'
+                                    ]
+                                  ],
+                                  [
+                                    'limb',
+                                    [
+                                      'optKets',
+                                      '^'
+                                    ],
+                                    'game'
+                                  ]
+                                ],
+                                [
+                                  'tallWutgal',
+                                  [
+                                    'limb',
+                                    'is'
+                                  ],
+                                  [
+                                    'tallTisfas',
+                                    [
+                                      'infixSlash',
+                                      [
+                                        'limb',
+                                        'next'
+                                      ],
+                                      [
+                                        'limb',
+                                        'side'
+                                      ]
                                     ],
                                     [
-                                      'limb',
-                                      'next'
+                                      'circumParen2',
+                                      [
+                                        'irrCensig',
+                                        [
+                                          'limb',
+                                          'set'
+                                        ],
+                                        [
+                                          'limb',
+                                          'bo'
+                                        ],
+                                        [
+                                          'limb',
+                                          'a'
+                                        ],
+                                        [
+                                          'limb',
+                                          'game'
+                                        ]
+                                      ],
+                                      [
+                                        'limb',
+                                        'here'
+                                      ]
+                                    ],
+                                    [
+                                      'tallWutcol',
+                                      [
+                                        'irrCensig',
+                                        [
+                                          'limb',
+                                          'win'
+                                        ],
+                                        [
+                                          'limb',
+                                          'bo'
+                                        ],
+                                        [
+                                          'limb',
+                                          'next'
+                                        ]
+                                      ],
+                                      [
+                                        'circumSelser2',
+                                        [
+                                          'circumSelser3',
+                                          [
+                                            'atom',
+                                            '~'
+                                          ],
+                                          [
+                                            'atom',
+                                            [
+                                              'term',
+                                              '%win'
+                                            ]
+                                          ],
+                                          [
+                                            'wideWutcol',
+                                            '(',
+                                            [
+                                              'limb',
+                                              'w'
+                                            ],
+                                            [
+                                              'limb',
+                                              'game'
+                                            ],
+                                            [
+                                              'atom',
+                                              [
+                                                'term',
+                                                '%x'
+                                              ]
+                                            ],
+                                            [
+                                              'atom',
+                                              [
+                                                'term',
+                                                '%o'
+                                              ]
+                                            ],
+                                            ')'
+                                          ]
+                                        ],
+                                        [
+                                          'limb',
+                                          'nu'
+                                        ]
+                                      ],
+                                      [
+                                        'circumSelser2',
+                                        [
+                                          'atom',
+                                          '~'
+                                        ],
+                                        [
+                                          'irrCentis',
+                                          [
+                                            'limb',
+                                            'game'
+                                          ],
+                                          [
+                                            'limb',
+                                            'w'
+                                          ],
+                                          [
+                                            'irrWutzap',
+                                            [
+                                              'limb',
+                                              'w'
+                                            ],
+                                            [
+                                              'limb',
+                                              'game'
+                                            ]
+                                          ],
+                                          [
+                                            'limb',
+                                            'a'
+                                          ],
+                                          [
+                                            'limb',
+                                            'z'
+                                          ],
+                                          [
+                                            'limb',
+                                            'game'
+                                          ],
+                                          [
+                                            'limb',
+                                            'z'
+                                          ],
+                                          [
+                                            'limb',
+                                            'next'
+                                          ]
+                                        ]
+                                      ]
                                     ]
                                   ]
                                 ]
