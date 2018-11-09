@@ -177,39 +177,33 @@
                             '$'
                           ],
                           [
-                            'flatHoonJog',
+                            'limb',
+                            'fac'
+                          ],
+                          [
+                            'irrDotlus',
                             [
                               'limb',
                               'fac'
-                            ],
-                            [
-                              'irrDotlus',
-                              [
-                                'limb',
-                                'fac'
-                              ]
                             ]
                           ],
                           [
-                            'flatHoonJog',
+                            'limb',
+                            '.'
+                          ],
+                          [
+                            'limb',
+                            'main'
+                          ],
+                          [
+                            'circumParen2',
                             [
                               'limb',
-                              '.'
+                              'reap'
                             ],
                             [
                               'limb',
-                              'main'
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'limb',
-                                'reap'
-                              ],
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'fac'
                             ]
                           ]
                         ]
@@ -302,54 +296,48 @@
                               '$'
                             ],
                             [
-                              'flatHoonJog',
+                              'limb',
+                              'cot'
+                            ],
+                            [
+                              'circumParen3',
+                              [
+                                'limb',
+                                'add'
+                              ],
                               [
                                 'limb',
                                 'cot'
                               ],
                               [
-                                'circumParen3',
-                                [
-                                  'limb',
-                                  'add'
-                                ],
-                                [
-                                  'limb',
-                                  'cot'
-                                ],
-                                [
-                                  'limb',
-                                  'fac'
-                                ]
+                                'limb',
+                                'fac'
                               ]
                             ],
                             [
-                              'flatHoonJog',
+                              'limb',
+                              'fed'
+                            ],
+                            [
+                              'circumParen2',
                               [
-                                'limb',
-                                'fed'
-                              ],
-                              [
-                                'circumParen2',
+                                'irrCensig',
                                 [
-                                  'irrCensig',
-                                  [
-                                    'limb',
-                                    'del'
-                                  ],
-                                  [
-                                    'limb',
-                                    'in'
-                                  ],
-                                  [
-                                    'limb',
-                                    'fed'
-                                  ]
+                                  'limb',
+                                  'del'
                                 ],
                                 [
                                   'limb',
-                                  'cot'
+                                  'in'
+                                ],
+                                [
+                                  'limb',
+                                  'fed'
                                 ]
+                              ],
+                              [
+                                'limb',
+                                'cot'
                               ]
                             ]
                           ]

@@ -68,16 +68,18 @@ sub prune {
 
     state $nonSemantic = {
 	doubleStringElements => 1,
-        flatHoon        => 1,
-        flatHoonJogging => 1,
-        flatHoonJogs    => 1,
-        flatHoonSeq     => 1,
+        wideHoon        => 1,
+        wideHoonJogging => 1,
+        wideHoonJogs    => 1,
+        wideHoonJog     => 1,
+        wideHoonSeq     => 1,
         hoon            => 1,
 	hoonExpression => 1,
 	hoonFile => 1,
         hoonJog     => 1,
         hoonJogging => 1,
         hoonJogs    => 1,
+        hoonJog     => 1,
 	hoonPrimary => 1,
         hoonSeq         => 1,
 	pathHoon => 1,
@@ -155,12 +157,15 @@ unicorn ~ [^\d\D]
 bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
 
+FAS ~ fas4h
 fas4h ~ [/]
 
 # HEP ~ hep4h
 hep4h ~ '-'
 KET ~ ket4h
 ket4h ~ '^'
+LUS ~ lus4h
+lus4h ~ '+'
 
 soq4h ~ [']
 
@@ -210,6 +215,122 @@ mes4k ~ hit4k hit4k
 
 gon4k ~ bas4h gay4k fas4h
 
+# === Hoon library: 4l ===
+
+# nuck(4l) is the coin parser
+nuck4l ::= SYM4K
+
+# tash(4l) is the signed dime parser
+nuck4l ::= TODO_tash4l
+TODO_tash4l ::= UNICORN
+
+# perd(4l) parses dimes or tuples without their standard prefixes
+nuck4l ::= TODO_perl4l
+TODO_perl4l ::= UNICORN
+
+# Can be either '$~' or '%~'
+# -- both seem to have the same semantics
+nuck4l ::= moldNullSig
+moldNullSig ::= '~'
+
+# perd(4l) parses sig-prefixed coins after the sig prefix
+nuck4l ::= TODO_twid4l
+TODO_twid4l ::= UNICORN
+
+nuck4l ::= bisk4l
+# bisk(4l) parses unsigned dimes of any base
+bisk4l ::= NUMBER
+
+#     :~  :-  ['a' 'z']  (cook |=(a/@ta [%$ %tas a]) sym)
+#         :-  ['0' '9']  (stag %$ bisk)
+#         :-  '-'        (stag %$ tash)
+#         :-  '.'        ;~(pfix dot perd)
+#         :-  '~'        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
+
+# === Hoon library: 5d ===
+
+# === Hoon library: 5d, molds ===
+
+mold ::= wideMold
+moldSeq ::= mold+ separator=>GAP proper=>1
+wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
+
+wede5d ::= (FAS) wideHoon
+wede5d ::= (LUS) wideHoon
+
+# Implementing scad(5d)
+
+wideMold ::= moldPrefixCab
+moldPrefixCab ::= ('_') wideHoon
+
+wideMold ::= moldPrefixCom
+moldPrefixCom ::= (',') wideHoon
+
+wideMold ::= moldBucbuc
+moldBucbuc ::= '$$'
+
+wideMold ::= moldBucpam
+moldBucpam ::= '$&'
+
+wideMold ::= moldBucbar
+moldBucbar ::= '$|'
+
+wideMold ::= moldBucSingleString
+moldBucSingleString ::= '$' SINGLESTRING
+
+wideMold ::= moldBucNuck4l
+moldBucNuck4l ::= '$' nuck4l
+
+wideMold ::= moldCenbuc
+moldCenbuc ::= '%$'
+
+wideMold ::= moldCenpam
+moldCenpam ::= '%&'
+
+wideMold ::= moldCenbar
+moldCenbar ::= '%|'
+
+wideMold ::= moldCenSingleString
+moldCenSingleString ::= ('%') SINGLESTRING
+
+wideMold ::= moldCenNuck4l
+moldCenNuck4l ::= '%' nuck4l
+
+wideMold ::= moldCircumParen
+moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
+
+wideMold ::= moldCircumBrace
+moldCircumBrace ::= ('{') wideMoldSeq ('}')
+
+wideMold ::= moldCircumBracket
+moldCircumBracket ::= ('[') wideMoldSeq (']')
+
+wideMold ::= moldTar
+moldTar ::= '*'
+
+wideMold ::= moldAura
+moldAura ~ '@' OptLCs OptUCs
+OptLCs ~ [a-z]*
+OptUCs ~ [A-Z]*
+
+wideMold ::= moldPrefixWut
+moldPrefixWut ::= ('?(') wideMoldSeq (')')
+
+wideMold ::= moldWut
+moldWut ::= '?'
+
+wideMold ::= moldSig
+moldSig ::= '~'
+
+wideMold ::= moldKet
+moldKet ~ '^'
+
+# <moldInfixCol> can start with either KET (^) or lowercase char
+wideMold ::= moldInfixCol
+moldInfixCol ::= wing+ separator=>[:] proper=>1
+
+# TODO: Finish Implementing scad(5d)
+
 # === HOON FILE ===
 :start ::= hoonFile
 # LATER: This is a simplication, which does not
@@ -223,11 +344,11 @@ leader  ::= optWs
 
 optWs ::=
 optWs ::= ACE
-optWs ::= GAP4K
+optWs ::= GAP
 
-GAP4K ~ gap4k
+GAP ~ gap4k
 
-gap4k ~ ace aces # a "flat" gap
+gap4k ~ ace aces # a "wide" gap
 gap4k ~ tallGapPrefix optGapLines optAces
 # The prefix must contain an <NL> to ensure that this *is* a tall gap
 tallGapPrefix ~ optAces nl
@@ -428,10 +549,11 @@ DOUBLESTRINGCHARS ~ doubleStringChar+
 # hex 5C is backslash
 # From syntax.vim, might need correction
 doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
-stringInterpolation ::= '{' flatHoon '}'
+stringInterpolation ::= '{' wideHoon '}'
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
+# SINGLESTRING is qut(4i)
 SINGLESTRING ::= ([']) <single soq cord> (['])
 <single soq cord> ::= qit4k* separator=>gon4k proper=>1
 
@@ -462,17 +584,17 @@ pathStringChar ~ [a-zA-Z-]
 
 # === CELLS BY TYPE ==
 
-hoonSeq ::= hoon+ separator=>GAP4K proper=>1
-hoon ::= flatHoon
-flatHoon ::= hoonExpression
+hoonSeq ::= hoon+ separator=>GAP proper=>1
+hoon ::= wideHoon
+wideHoon ::= hoonExpression
 hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
 hoonExpression ::= infixPlus
 hoonExpression ::= infixSlash
 hoonExpression ::= hoonPrimary
-infixColon ::= hoonPrimary (':') flatHoon
-infixKet ::= hoonPrimary ('^') flatHoon
+infixColon ::= hoonPrimary (':') wideHoon
+infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
 infixPlus ::=  NAME ('+') hoonExpression
 infixSlash ::= NAME ('/') hoonExpression
@@ -489,7 +611,7 @@ togaElements ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
-# parsed by the rope arm in hoon.hoon
+# the wing type is parsed by the rope(5d)
 wing ::= limb+ separator=>[.] proper=>1
 limb ::= ','
 limb ::= optKets '$'
@@ -499,28 +621,28 @@ limb ::= [+&|] DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
-flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
+wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 
 hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>GAP4K proper=>1
-hoonJog ::= hoon (GAP4K) hoon
-flatHoonJogging ::= flatHoonJogs
-flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
-flatHoonJog ::= flatHoon (ACE) flatHoon
-flatHoonJoggingSeparator ::= ',' ACE
+hoonJogs ::= hoonJog+ separator=>GAP proper=>1
+hoonJog ::= hoon (GAP) hoon
+wideHoonJogging ::= wideHoonJogs
+wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
+wideHoonJog ::= wideHoon (ACE) wideHoon
+wideHoonJoggingSeparator ::= ',' ACE
 
-battery ::= batteryElement* separator=>GAP4K proper=>1
-batteryElement ::= ('++' GAP4K) NAME (GAP4K) hoon
+battery ::= batteryElement* separator=>GAP proper=>1
+batteryElement ::= ('++' GAP) NAME (GAP) hoon
 
 # === CELLS BY RUNE ==
 
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
-tallBarcab ::= (BARCAB GAP4K) hoon (GAP4K) battery (GAP4K '--')
+tallBarcab ::= (BARCAB GAP) hoon (GAP) battery (GAP '--')
 
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
-tallBarcen ::= (BARCEN GAP4K) battery (GAP4K '--')
+tallBarcen ::= (BARCEN GAP) battery (GAP '--')
 
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
@@ -528,12 +650,12 @@ tallBarcen ::= (BARCEN GAP4K) battery (GAP4K '--')
 
 BARKET ~ [|] '^'
 hoon ::= tallBarket
-tallBarket ::= (BARKET GAP4K) hoon (GAP4K) battery (GAP4K '--')
+tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 
 # FIXED: barsig hoon hoon
 # FIXED: bartar hoon hoon
 
-# # LATER: Should eventually be (BARTIS) (GAP4K) type (GAP4K) hoon
+# # LATER: Should eventually be (BARTIS) (GAP) type (GAP) hoon
 # # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
 
@@ -544,23 +666,19 @@ tallBarket ::= (BARKET GAP4K) hoon (GAP4K) battery (GAP4K '--')
 # Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
-tallBuccol ::= (BUCCOL GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatBuccol
-flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
-flatBuccol ::= (':bccl(') flatHoonSeq (')')
-flatBuccol ::= ('{') flatHoonSeq ('}')
-flatBuccol ::= (',[') flatHoonSeq (']')
+tallBuccol ::= (BUCCOL GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideBuccol
+wideBuccol ::= (BUCCOL '(') wideHoonSeq (')')
+wideBuccol ::= (':bccl(') wideHoonSeq (')')
+wideBuccol ::= ('{') wideHoonSeq ('}')
+wideBuccol ::= (',[') wideHoonSeq (']')
 
-# BUCCEN is "2-running"
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN GAP4K) buccenBody (GAP4K '==')
-
-buccenBody ::= buccenPair+ separator=>GAP4K proper=>1
-buccenPair ::= ('[' ACE) term (ACE) foot (']')
-buccenPair ::= curlyPair
-curlyPair ::= ('{') term (ACE) foot ('}')
-foot ::= flatHoon
+tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
+hoonPrimary ::= wideBuccen
+wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
+wideBuccen ::= (':bccn(') wideMoldSeq (')')
 
 # FIXED: buchep hoon hoon
 # FIXED: bucket hoon hoon
@@ -571,19 +689,27 @@ foot ::= flatHoon
 # Undocumented runes
 # $*  ::  bunt (irregular form is *)
 hoonPrimary ::= irrBuctar
-irrBuctar ::= '*' flatHoon
+irrBuctar ::= '*' wideHoon
 
 # TODO: Should all unary expression be <hoonPrimary>?
+
+BUCSEM ~ [$] [;]
+mold ::= moldBucsem
+moldBucsem ::= (BUCSEM GAP) wing (GAP) wede5d (GAP '==')
+moldBucsem ::= (BUCSEM GAP) wing (GAP '==')
+wideMold ::= wideMoldBucsem
+wideMoldBucsem ::= (BUCSEM '(') wing (ACE) wede5d (')')
+wideMoldBucsem ::= (BUCSEM '(') wing (')')
 
 # FIXED: buctis term hoon
 
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
-tallBucwut ::= (BUCWUT GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatBucwut
-flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
-flatBucwut ::= (':bcwt(') flatHoonSeq (')')
-flatBucwut ::= ('?(') flatHoonSeq (')')
+tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideBucwut
+wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
+wideBucwut ::= (':bcwt(') wideHoonSeq (')')
+wideBucwut ::= ('?(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
 
@@ -594,13 +720,13 @@ flatBucwut ::= ('?(') flatHoonSeq (')')
 
 # FIXED: censig wing hoon hoon
 hoonPrimary ::= irrCensig
-irrCensig ::= ('~(') flatHoonSeq (')')
+irrCensig ::= ('~(') wideHoonSeq (')')
 
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
-irrCentis ::= wing ('(') flatHoonJogging (')')
+tallCentis ::= CENTIS (GAP) wing (GAP) hoonJogging (GAP '==')
+irrCentis ::= wing ('(') wideHoonJogging (')')
 
 # FIXED: colcab hoon hoon
 
@@ -612,40 +738,40 @@ irrCentis ::= wing ('(') flatHoonJogging (')')
 # Running syntax
 COLSIG ~ [:] [~]
 hoon ::= tallColsig
-tallColsig ::= (COLSIG GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatColsig
-hoonPrimary ::= flatColsig2
-hoonPrimary ::= flatColsig3
-hoonPrimary ::= flatColsig4
-flatColsig ::= (COLSIG '(') flatHoonSeq (')')
-flatColsig ::= (':clsg(') flatHoonSeq (')')
-flatColsig2 ::= ('~[') flatHoonSeq (']')
-flatColsig3 ::= ('[') flatHoonSeq (']~')
-flatColsig4 ::= ('`') flatHoon
+tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideColsig
+hoonPrimary ::= wideColsig2
+hoonPrimary ::= wideColsig3
+hoonPrimary ::= wideColsig4
+wideColsig ::= (COLSIG '(') wideHoonSeq (')')
+wideColsig ::= (':clsg(') wideHoonSeq (')')
+wideColsig2 ::= ('~[') wideHoonSeq (']')
+wideColsig3 ::= ('[') wideHoonSeq (']~')
+wideColsig4 ::= ('`') wideHoon
 
 # Running syntax
 COLTAR ~ [:] [*]
 hoon ::= tallColtar
-tallColtar ::= (COLTAR GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatColtar
-flatColtar ::= (COLTAR '(') flatHoonSeq (')')
-flatColtar ::= (':cltr(') flatHoonSeq (')')
+tallColtar ::= (COLTAR GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideColtar
+wideColtar ::= (COLTAR '(') wideHoonSeq (')')
+wideColtar ::= (':cltr(') wideHoonSeq (')')
 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
-hoonPrimary ::= flatDotket
-tallDotket ::= (DOTKET GAP4K)hoon (GAP4K) hoonSeq
-flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoonSeq [)]
-flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoonSeq [)]
+hoonPrimary ::= wideDotket
+tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
+wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
+wideDotket ::= (':dtkt') [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
 hoonPrimary ::= irrDottis
-irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
+irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
 
 # FIXED: dotlus atom
 hoonPrimary ::= irrDotlus
-irrDotlus ::= ('+(') flatHoon (')')
+irrDotlus ::= ('+(') wideHoon (')')
 
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
@@ -656,9 +782,9 @@ irrDotlus ::= ('+(') flatHoon (')')
 
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
-tallFastis ::= (FASTIS GAP4K) NAME (GAP4K) hoon
-hoonPrimary ::= flatFastis
-flatFastis ::= (FASTIS) NAME '=' hoon
+tallFastis ::= (FASTIS GAP) NAME (GAP) hoon
+hoonPrimary ::= wideFastis
+wideFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketbar hoon
 
@@ -682,16 +808,24 @@ irrKethep ::= ('`') hoon ('`') hoon
 # FIXED: siglus hoon
 # FIXED: sigpam hoon hoon
 
+# 1-fixed, then running syntax
+SEMCOL ~ [;] [:]
+hoon ::= tallSemcol
+tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideSemcol
+wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
+wideSemcol ::= (':smcl(') hoon (ACE) wideHoonSeq (')')
+
 # #semsem hoon value
 # FIXED: semsem hoon hoon
 
 # 1-fixed, then running syntax
 SEMSIG ~ [;] [~]
 hoon ::= tallSemsig
-tallSemsig ::= (SEMSIG GAP4K) hoon (GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatSemsig
-flatSemsig ::= (SEMSIG '(') hoon (ACE) flatHoonSeq (')')
-flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
+tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideSemsig
+wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
+wideSemsig ::= (':smsg(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
@@ -719,11 +853,11 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
-tallWutbar ::= (WUTBAR GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatWutbar
-flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
-flatWutbar ::= (':wtbr(') flatHoonSeq (')')
-flatWutbar ::= ('|(') flatHoonSeq (')')
+tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideWutbar
+wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
+wideWutbar ::= (':wtbr(') wideHoonSeq (')')
+wideWutbar ::= ('|(') wideHoonSeq (')')
 
 # FIXED: wutcol hoon hoon hoon
 # FIXED: wutdot hoon hoon hoon
@@ -734,26 +868,26 @@ flatWutbar ::= ('|(') flatHoonSeq (')')
 
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatWutpam
-flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
-flatWutpam ::= (':wtpm(') flatHoonSeq (')')
-flatWutpam ::= ('&(') flatHoonSeq (')')
+tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideWutpam
+wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
+wideWutpam ::= (':wtpm(') wideHoonSeq (')')
+wideWutpam ::= ('&(') wideHoonSeq (')')
 
 # FIXED: wutpat wing hoon hoon
 # FIXED: wutsig wing hoon hoon
 # FIXED: wuttis hoon wing
 
 hoonPrimary ::= irrWutzap
-irrWutzap ::= ('!') flatHoon
+irrWutzap ::= ('!') wideHoon
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
+tallWuthep ::= WUTHEP (GAP) wing (GAP) hoonJogging (GAP '==')
 
 WUTLUS ~ [?] [+]
 hoon ::= tallWutlus
-tallWutlus ::= WUTLUS (GAP4K) wing (GAP4K) hoon (GAP4K) hoonJogging (GAP4K '==')
+tallWutlus ::= WUTLUS (GAP) wing (GAP) hoon (GAP) hoonJogging (GAP '==')
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
@@ -776,7 +910,7 @@ tallZapdot ::= ZAPDOT
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
-flatHoon ::= ZAPZAP
+wideHoon ::= ZAPZAP
 
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
@@ -784,7 +918,7 @@ flatHoon ::= ZAPZAP
 # === IRREGULAR FORMS: PREFIX ===
 
 pathHoon ::= prefixCab
-prefixCab ::= ('_') flatHoon
+prefixCab ::= ('_') wideHoon
 
 # === IRREGULAR FORMS: CIRCUMFIX ===
 
@@ -796,576 +930,576 @@ prefixCab ::= ('_') flatHoon
 pathHoon ::= circumParen1
 pathHoon ::= circumParen2
 pathHoon ::= circumParen3
-circumParen1 ::= ('(') flatHoon (')')
-circumParen2 ::= ('(') flatHoon (ACE) flatHoon (')')
-circumParen3 ::= ('(') flatHoon (ACE) flatHoon (ACE) flatHoonSeq (')')
+circumParen1 ::= ('(') wideHoon (')')
+circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
+circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
 
 pathHoon ::= circumSelser1
 pathHoon ::= circumSelser2
 pathHoon ::= circumSelser3
 pathHoon ::= circumSelser4
 pathHoon ::= circumSelser5
-circumSelser1 ::= ('[') flatHoon (']')
-circumSelser2 ::= ('[') flatHoon (ACE) flatHoon (']')
-circumSelser3 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (']')
-circumSelser4 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (']')
-circumSelser5 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoonSeq (']')
+circumSelser1 ::= ('[') wideHoon (']')
+circumSelser2 ::= ('[') wideHoon (ACE) wideHoon (']')
+circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
 
 pathHoon ::= circumGalgar
-circumGalgar ::= ('<') flatHoon ('>')
+circumGalgar ::= ('<') wideHoon ('>')
 
 pathHoon ::= circumGargal
-circumGargal ::= ('>') flatHoon ('<')
+circumGargal ::= ('>') wideHoon ('<')
 
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
 hoon ::= tallBarcol
-hoonPrimary ::= flatBarcol
-tallBarcol ::= (BARCOL GAP4K)hoon (GAP4K) hoon
-flatBarcol ::= (BARCOL) [(] flatHoon (ACE) flatHoon [)]
-flatBarcol ::= (':brcl') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBarcol
+tallBarcol ::= (BARCOL GAP)hoon (GAP) hoon
+wideBarcol ::= (BARCOL) [(] wideHoon (ACE) wideHoon [)]
+wideBarcol ::= (':brcl') [(] wideHoon (ACE) wideHoon [)]
 
 # BARDOT hoon
 BARDOT ~ [|] [.]
 hoon ::= tallBardot
-hoonPrimary ::= flatBardot
-tallBardot ::= (BARDOT GAP4K)hoon
-flatBardot ::= (BARDOT) [(] flatHoon [)]
-flatBardot ::= (':brdt') [(] flatHoon [)]
+hoonPrimary ::= wideBardot
+tallBardot ::= (BARDOT GAP)hoon
+wideBardot ::= (BARDOT) [(] wideHoon [)]
+wideBardot ::= (':brdt') [(] wideHoon [)]
 
 # BARHEP hoon
 BARHEP ~ [|] [-]
 hoon ::= tallBarhep
-hoonPrimary ::= flatBarhep
-tallBarhep ::= (BARHEP GAP4K)hoon
-flatBarhep ::= (BARHEP) [(] flatHoon [)]
-flatBarhep ::= (':brhp') [(] flatHoon [)]
+hoonPrimary ::= wideBarhep
+tallBarhep ::= (BARHEP GAP)hoon
+wideBarhep ::= (BARHEP) [(] wideHoon [)]
+wideBarhep ::= (':brhp') [(] wideHoon [)]
 
 # BARSIG hoon hoon
 BARSIG ~ [|] [~]
 hoon ::= tallBarsig
-hoonPrimary ::= flatBarsig
-tallBarsig ::= (BARSIG GAP4K)hoon (GAP4K) hoon
-flatBarsig ::= (BARSIG) [(] flatHoon (ACE) flatHoon [)]
-flatBarsig ::= (':brsg') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBarsig
+tallBarsig ::= (BARSIG GAP)hoon (GAP) hoon
+wideBarsig ::= (BARSIG) [(] wideHoon (ACE) wideHoon [)]
+wideBarsig ::= (':brsg') [(] wideHoon (ACE) wideHoon [)]
 
 # BARTAR hoon hoon
 BARTAR ~ [|] [*]
 hoon ::= tallBartar
-hoonPrimary ::= flatBartar
-tallBartar ::= (BARTAR GAP4K)hoon (GAP4K) hoon
-flatBartar ::= (BARTAR) [(] flatHoon (ACE) flatHoon [)]
-flatBartar ::= (':brtr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBartar
+tallBartar ::= (BARTAR GAP)hoon (GAP) hoon
+wideBartar ::= (BARTAR) [(] wideHoon (ACE) wideHoon [)]
+wideBartar ::= (':brtr') [(] wideHoon (ACE) wideHoon [)]
 
 # BARTIS hoon hoon
 BARTIS ~ [|] [=]
 hoon ::= tallBartis
-hoonPrimary ::= flatBartis
-tallBartis ::= (BARTIS GAP4K)hoon (GAP4K) hoon
-flatBartis ::= (BARTIS) [(] flatHoon (ACE) flatHoon [)]
-flatBartis ::= (':brts') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBartis
+tallBartis ::= (BARTIS GAP)hoon (GAP) hoon
+wideBartis ::= (BARTIS) [(] wideHoon (ACE) wideHoon [)]
+wideBartis ::= (':brts') [(] wideHoon (ACE) wideHoon [)]
 
 # BARWUT hoon
 BARWUT ~ [|] [?]
 hoon ::= tallBarwut
-hoonPrimary ::= flatBarwut
-tallBarwut ::= (BARWUT GAP4K)hoon
-flatBarwut ::= (BARWUT) [(] flatHoon [)]
-flatBarwut ::= (':brwt') [(] flatHoon [)]
+hoonPrimary ::= wideBarwut
+tallBarwut ::= (BARWUT GAP)hoon
+wideBarwut ::= (BARWUT) [(] wideHoon [)]
+wideBarwut ::= (':brwt') [(] wideHoon [)]
 
 # BUCCAB hoon
 BUCCAB ~ [$] [_]
 hoon ::= tallBuccab
-hoonPrimary ::= flatBuccab
-tallBuccab ::= (BUCCAB GAP4K)hoon
-flatBuccab ::= (BUCCAB) [(] flatHoon [)]
-flatBuccab ::= (':bccb') [(] flatHoon [)]
+hoonPrimary ::= wideBuccab
+tallBuccab ::= (BUCCAB GAP)hoon
+wideBuccab ::= (BUCCAB) [(] wideHoon [)]
+wideBuccab ::= (':bccb') [(] wideHoon [)]
 
 # BUCHEP hoon hoon
 BUCHEP ~ [$] [-]
 hoon ::= tallBuchep
-hoonPrimary ::= flatBuchep
-tallBuchep ::= (BUCHEP GAP4K)hoon (GAP4K) hoon
-flatBuchep ::= (BUCHEP) [(] flatHoon (ACE) flatHoon [)]
-flatBuchep ::= (':bchp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBuchep
+tallBuchep ::= (BUCHEP GAP)hoon (GAP) hoon
+wideBuchep ::= (BUCHEP) [(] wideHoon (ACE) wideHoon [)]
+wideBuchep ::= (':bchp') [(] wideHoon (ACE) wideHoon [)]
 
 # BUCKET hoon hoon
 BUCKET ~ [$] [\^]
 hoon ::= tallBucket
-hoonPrimary ::= flatBucket
-tallBucket ::= (BUCKET GAP4K)hoon (GAP4K) hoon
-flatBucket ::= (BUCKET) [(] flatHoon (ACE) flatHoon [)]
-flatBucket ::= (':bckt') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBucket
+tallBucket ::= (BUCKET GAP)hoon (GAP) hoon
+wideBucket ::= (BUCKET) [(] wideHoon (ACE) wideHoon [)]
+wideBucket ::= (':bckt') [(] wideHoon (ACE) wideHoon [)]
 
 # BUCPAT hoon hoon
 BUCPAT ~ [$] [@]
 hoon ::= tallBucpat
-hoonPrimary ::= flatBucpat
-tallBucpat ::= (BUCPAT GAP4K)hoon (GAP4K) hoon
-flatBucpat ::= (BUCPAT) [(] flatHoon (ACE) flatHoon [)]
-flatBucpat ::= (':bcpt') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideBucpat
+tallBucpat ::= (BUCPAT GAP)hoon (GAP) hoon
+wideBucpat ::= (BUCPAT) [(] wideHoon (ACE) wideHoon [)]
+wideBucpat ::= (':bcpt') [(] wideHoon (ACE) wideHoon [)]
 
 # BUCTAR hoon
 BUCTAR ~ [$] [*]
 hoon ::= tallBuctar
-hoonPrimary ::= flatBuctar
-tallBuctar ::= (BUCTAR GAP4K)hoon
-flatBuctar ::= (BUCTAR) [(] flatHoon [)]
-flatBuctar ::= (':bctr') [(] flatHoon [)]
+hoonPrimary ::= wideBuctar
+tallBuctar ::= (BUCTAR GAP)hoon
+wideBuctar ::= (BUCTAR) [(] wideHoon [)]
+wideBuctar ::= (':bctr') [(] wideHoon [)]
 
 # BUCTIS term hoon
 BUCTIS ~ [$] [=]
 hoon ::= tallBuctis
-hoonPrimary ::= flatBuctis
-tallBuctis ::= (BUCTIS GAP4K)term (GAP4K) hoon
-flatBuctis ::= (BUCTIS) [(] term (ACE) flatHoon [)]
-flatBuctis ::= (':bcts') [(] term (ACE) flatHoon [)]
+hoonPrimary ::= wideBuctis
+tallBuctis ::= (BUCTIS GAP)term (GAP) hoon
+wideBuctis ::= (BUCTIS) [(] term (ACE) wideHoon [)]
+wideBuctis ::= (':bcts') [(] term (ACE) wideHoon [)]
 
 # CENDOT hoon hoon
 CENDOT ~ [%] [.]
 hoon ::= tallCendot
-hoonPrimary ::= flatCendot
-tallCendot ::= (CENDOT GAP4K)hoon (GAP4K) hoon
-flatCendot ::= (CENDOT) [(] flatHoon (ACE) flatHoon [)]
-flatCendot ::= (':cndt') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCendot
+tallCendot ::= (CENDOT GAP)hoon (GAP) hoon
+wideCendot ::= (CENDOT) [(] wideHoon (ACE) wideHoon [)]
+wideCendot ::= (':cndt') [(] wideHoon (ACE) wideHoon [)]
 
 # CENHEP hoon hoon
 CENHEP ~ [%] [-]
 hoon ::= tallCenhep
-hoonPrimary ::= flatCenhep
-tallCenhep ::= (CENHEP GAP4K)hoon (GAP4K) hoon
-flatCenhep ::= (CENHEP) [(] flatHoon (ACE) flatHoon [)]
-flatCenhep ::= (':cnhp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCenhep
+tallCenhep ::= (CENHEP GAP)hoon (GAP) hoon
+wideCenhep ::= (CENHEP) [(] wideHoon (ACE) wideHoon [)]
+wideCenhep ::= (':cnhp') [(] wideHoon (ACE) wideHoon [)]
 
 # CENKET hoon hoon hoon hoon
 CENKET ~ [%] [\^]
 hoon ::= tallCenket
-hoonPrimary ::= flatCenket
-tallCenket ::= (CENKET GAP4K)hoon (GAP4K) hoon (GAP4K) hoon (GAP4K) hoon
-flatCenket ::= (CENKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCenket ::= (':cnkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCenket
+tallCenket ::= (CENKET GAP)hoon (GAP) hoon (GAP) hoon (GAP) hoon
+wideCenket ::= (CENKET) [(] wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideCenket ::= (':cnkt') [(] wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # CENLUS hoon hoon hoon
 CENLUS ~ [%] [+]
 hoon ::= tallCenlus
-hoonPrimary ::= flatCenlus
-tallCenlus ::= (CENLUS GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatCenlus ::= (CENLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCenlus ::= (':cnls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCenlus
+tallCenlus ::= (CENLUS GAP)hoon (GAP) hoon (GAP) hoon
+wideCenlus ::= (CENLUS) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideCenlus ::= (':cnls') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # CENSIG wing hoon hoon
 CENSIG ~ [%] [~]
 hoon ::= tallCensig
-hoonPrimary ::= flatCensig
-tallCensig ::= (CENSIG GAP4K)wing (GAP4K) hoon (GAP4K) hoon
-flatCensig ::= (CENSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatCensig ::= (':cnsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCensig
+tallCensig ::= (CENSIG GAP)wing (GAP) hoon (GAP) hoon
+wideCensig ::= (CENSIG) [(] wing (ACE) wideHoon (ACE) wideHoon [)]
+wideCensig ::= (':cnsg') [(] wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # COLCAB hoon hoon
 COLCAB ~ [:] [_]
 hoon ::= tallColcab
-hoonPrimary ::= flatColcab
-tallColcab ::= (COLCAB GAP4K)hoon (GAP4K) hoon
-flatColcab ::= (COLCAB) [(] flatHoon (ACE) flatHoon [)]
-flatColcab ::= (':clcb') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideColcab
+tallColcab ::= (COLCAB GAP)hoon (GAP) hoon
+wideColcab ::= (COLCAB) [(] wideHoon (ACE) wideHoon [)]
+wideColcab ::= (':clcb') [(] wideHoon (ACE) wideHoon [)]
 
 # COLHEP hoon hoon
 COLHEP ~ [:] [-]
 hoon ::= tallColhep
-hoonPrimary ::= flatColhep
-tallColhep ::= (COLHEP GAP4K)hoon (GAP4K) hoon
-flatColhep ::= (COLHEP) [(] flatHoon (ACE) flatHoon [)]
-flatColhep ::= (':clhp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideColhep
+tallColhep ::= (COLHEP GAP)hoon (GAP) hoon
+wideColhep ::= (COLHEP) [(] wideHoon (ACE) wideHoon [)]
+wideColhep ::= (':clhp') [(] wideHoon (ACE) wideHoon [)]
 
 # COLLUS hoon hoon hoon
 COLLUS ~ [:] [+]
 hoon ::= tallCollus
-hoonPrimary ::= flatCollus
-tallCollus ::= (COLLUS GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatCollus ::= (COLLUS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatCollus ::= (':clls') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideCollus
+tallCollus ::= (COLLUS GAP)hoon (GAP) hoon (GAP) hoon
+wideCollus ::= (COLLUS) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideCollus ::= (':clls') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # COLKET hoon hoon hoon hoon
 COLKET ~ [:] [\^]
 hoon ::= tallColket
-hoonPrimary ::= flatColket
-tallColket ::= (COLKET GAP4K)hoon (GAP4K) hoon (GAP4K) hoon (GAP4K) hoon
-flatColket ::= (COLKET) [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatColket ::= (':clkt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideColket
+tallColket ::= (COLKET GAP)hoon (GAP) hoon (GAP) hoon (GAP) hoon
+wideColket ::= (COLKET) [(] wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideColket ::= (':clkt') [(] wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # DOTTIS hoon hoon
 DOTTIS ~ [.] [=]
 hoon ::= tallDottis
-hoonPrimary ::= flatDottis
-tallDottis ::= (DOTTIS GAP4K)hoon (GAP4K) hoon
-flatDottis ::= (DOTTIS) [(] flatHoon (ACE) flatHoon [)]
-flatDottis ::= (':dtts') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideDottis
+tallDottis ::= (DOTTIS GAP)hoon (GAP) hoon
+wideDottis ::= (DOTTIS) [(] wideHoon (ACE) wideHoon [)]
+wideDottis ::= (':dtts') [(] wideHoon (ACE) wideHoon [)]
 
 # DOTLUS atom
 DOTLUS ~ [.] [+]
 hoon ::= tallDotlus
-hoonPrimary ::= flatDotlus
-tallDotlus ::= (DOTLUS GAP4K)atom
-flatDotlus ::= (DOTLUS) [(] atom [)]
-flatDotlus ::= (':dtls') [(] atom [)]
+hoonPrimary ::= wideDotlus
+tallDotlus ::= (DOTLUS GAP)atom
+wideDotlus ::= (DOTLUS) [(] atom [)]
+wideDotlus ::= (':dtls') [(] atom [)]
 
 # DOTTAR hoon hoon
 DOTTAR ~ [.] [*]
 hoon ::= tallDottar
-hoonPrimary ::= flatDottar
-tallDottar ::= (DOTTAR GAP4K)hoon (GAP4K) hoon
-flatDottar ::= (DOTTAR) [(] flatHoon (ACE) flatHoon [)]
-flatDottar ::= (':dttr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideDottar
+tallDottar ::= (DOTTAR GAP)hoon (GAP) hoon
+wideDottar ::= (DOTTAR) [(] wideHoon (ACE) wideHoon [)]
+wideDottar ::= (':dttr') [(] wideHoon (ACE) wideHoon [)]
 
 # DOTWUT hoon
 DOTWUT ~ [.] [?]
 hoon ::= tallDotwut
-hoonPrimary ::= flatDotwut
-tallDotwut ::= (DOTWUT GAP4K)hoon
-flatDotwut ::= (DOTWUT) [(] flatHoon [)]
-flatDotwut ::= (':dtwt') [(] flatHoon [)]
+hoonPrimary ::= wideDotwut
+tallDotwut ::= (DOTWUT GAP)hoon
+wideDotwut ::= (DOTWUT) [(] wideHoon [)]
+wideDotwut ::= (':dtwt') [(] wideHoon [)]
 
 # FASSEM hoon hoon
 FASSEM ~ [/] [;]
 hoon ::= tallFassem
-hoonPrimary ::= flatFassem
-tallFassem ::= (FASSEM GAP4K)hoon (GAP4K) hoon
-flatFassem ::= (FASSEM) [(] flatHoon (ACE) flatHoon [)]
-flatFassem ::= (':fssm') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideFassem
+tallFassem ::= (FASSEM GAP)hoon (GAP) hoon
+wideFassem ::= (FASSEM) [(] wideHoon (ACE) wideHoon [)]
+wideFassem ::= (':fssm') [(] wideHoon (ACE) wideHoon [)]
 
 # KETBAR hoon
 KETBAR ~ [\^] [|]
 hoon ::= tallKetbar
-hoonPrimary ::= flatKetbar
-tallKetbar ::= (KETBAR GAP4K)hoon
-flatKetbar ::= (KETBAR) [(] flatHoon [)]
-flatKetbar ::= (':ktbr') [(] flatHoon [)]
+hoonPrimary ::= wideKetbar
+tallKetbar ::= (KETBAR GAP)hoon
+wideKetbar ::= (KETBAR) [(] wideHoon [)]
+wideKetbar ::= (':ktbr') [(] wideHoon [)]
 
 # KETHEP hoon hoon
 KETHEP ~ [\^] [-]
 hoon ::= tallKethep
-hoonPrimary ::= flatKethep
-tallKethep ::= (KETHEP GAP4K)hoon (GAP4K) hoon
-flatKethep ::= (KETHEP) [(] flatHoon (ACE) flatHoon [)]
-flatKethep ::= (':kthp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideKethep
+tallKethep ::= (KETHEP GAP)hoon (GAP) hoon
+wideKethep ::= (KETHEP) [(] wideHoon (ACE) wideHoon [)]
+wideKethep ::= (':kthp') [(] wideHoon (ACE) wideHoon [)]
 
 # KETLUS hoon hoon
 KETLUS ~ [\^] [+]
 hoon ::= tallKetlus
-hoonPrimary ::= flatKetlus
-tallKetlus ::= (KETLUS GAP4K)hoon (GAP4K) hoon
-flatKetlus ::= (KETLUS) [(] flatHoon (ACE) flatHoon [)]
-flatKetlus ::= (':ktls') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideKetlus
+tallKetlus ::= (KETLUS GAP)hoon (GAP) hoon
+wideKetlus ::= (KETLUS) [(] wideHoon (ACE) wideHoon [)]
+wideKetlus ::= (':ktls') [(] wideHoon (ACE) wideHoon [)]
 
 # KETSIG hoon
 KETSIG ~ [\^] [~]
 hoon ::= tallKetsig
-hoonPrimary ::= flatKetsig
-tallKetsig ::= (KETSIG GAP4K)hoon
-flatKetsig ::= (KETSIG) [(] flatHoon [)]
-flatKetsig ::= (':ktsg') [(] flatHoon [)]
+hoonPrimary ::= wideKetsig
+tallKetsig ::= (KETSIG GAP)hoon
+wideKetsig ::= (KETSIG) [(] wideHoon [)]
+wideKetsig ::= (':ktsg') [(] wideHoon [)]
 
 # KETTIS toga hoon
 KETTIS ~ [\^] [=]
 hoon ::= tallKettis
-hoonPrimary ::= flatKettis
-tallKettis ::= (KETTIS GAP4K)toga (GAP4K) hoon
-flatKettis ::= (KETTIS) [(] toga (ACE) flatHoon [)]
-flatKettis ::= (':ktts') [(] toga (ACE) flatHoon [)]
+hoonPrimary ::= wideKettis
+tallKettis ::= (KETTIS GAP)toga (GAP) hoon
+wideKettis ::= (KETTIS) [(] toga (ACE) wideHoon [)]
+wideKettis ::= (':ktts') [(] toga (ACE) wideHoon [)]
 
 # KETWUT hoon
 KETWUT ~ [\^] [?]
 hoon ::= tallKetwut
-hoonPrimary ::= flatKetwut
-tallKetwut ::= (KETWUT GAP4K)hoon
-flatKetwut ::= (KETWUT) [(] flatHoon [)]
-flatKetwut ::= (':ktwt') [(] flatHoon [)]
+hoonPrimary ::= wideKetwut
+tallKetwut ::= (KETWUT GAP)hoon
+wideKetwut ::= (KETWUT) [(] wideHoon [)]
+wideKetwut ::= (':ktwt') [(] wideHoon [)]
 
 # SIGBAR hoon hoon
 SIGBAR ~ [~] [|]
 hoon ::= tallSigbar
-hoonPrimary ::= flatSigbar
-tallSigbar ::= (SIGBAR GAP4K)hoon (GAP4K) hoon
-flatSigbar ::= (SIGBAR) [(] flatHoon (ACE) flatHoon [)]
-flatSigbar ::= (':sgbr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigbar
+tallSigbar ::= (SIGBAR GAP)hoon (GAP) hoon
+wideSigbar ::= (SIGBAR) [(] wideHoon (ACE) wideHoon [)]
+wideSigbar ::= (':sgbr') [(] wideHoon (ACE) wideHoon [)]
 
 # SIGBUC term hoon
 SIGBUC ~ [~] [$]
 hoon ::= tallSigbuc
-hoonPrimary ::= flatSigbuc
-tallSigbuc ::= (SIGBUC GAP4K)term (GAP4K) hoon
-flatSigbuc ::= (SIGBUC) [(] term (ACE) flatHoon [)]
-flatSigbuc ::= (':sgbc') [(] term (ACE) flatHoon [)]
+hoonPrimary ::= wideSigbuc
+tallSigbuc ::= (SIGBUC GAP)term (GAP) hoon
+wideSigbuc ::= (SIGBUC) [(] term (ACE) wideHoon [)]
+wideSigbuc ::= (':sgbc') [(] term (ACE) wideHoon [)]
 
 # SIGCEN term wing hoon hoon
 SIGCEN ~ [~] [%]
 hoon ::= tallSigcen
-hoonPrimary ::= flatSigcen
-tallSigcen ::= (SIGCEN GAP4K)term (GAP4K) wing (GAP4K) hoon (GAP4K) hoon
-flatSigcen ::= (SIGCEN) [(] term (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
-flatSigcen ::= (':sgcn') [(] term (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigcen
+tallSigcen ::= (SIGCEN GAP)term (GAP) wing (GAP) hoon (GAP) hoon
+wideSigcen ::= (SIGCEN) [(] term (ACE) wing (ACE) wideHoon (ACE) wideHoon [)]
+wideSigcen ::= (':sgcn') [(] term (ACE) wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # SIGFAS term hoon
 SIGFAS ~ [~] [/]
 hoon ::= tallSigfas
-hoonPrimary ::= flatSigfas
-tallSigfas ::= (SIGFAS GAP4K)term (GAP4K) hoon
-flatSigfas ::= (SIGFAS) [(] term (ACE) flatHoon [)]
-flatSigfas ::= (':sgfs') [(] term (ACE) flatHoon [)]
+hoonPrimary ::= wideSigfas
+tallSigfas ::= (SIGFAS GAP)term (GAP) hoon
+wideSigfas ::= (SIGFAS) [(] term (ACE) wideHoon [)]
+wideSigfas ::= (':sgfs') [(] term (ACE) wideHoon [)]
 
 # SIGGAL hoon hoon
 SIGGAL ~ [~] [<]
 hoon ::= tallSiggal
-hoonPrimary ::= flatSiggal
-tallSiggal ::= (SIGGAL GAP4K)hoon (GAP4K) hoon
-flatSiggal ::= (SIGGAL) [(] flatHoon (ACE) flatHoon [)]
-flatSiggal ::= (':sggl') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSiggal
+tallSiggal ::= (SIGGAL GAP)hoon (GAP) hoon
+wideSiggal ::= (SIGGAL) [(] wideHoon (ACE) wideHoon [)]
+wideSiggal ::= (':sggl') [(] wideHoon (ACE) wideHoon [)]
 
 # SIGGAR hoon hoon
 SIGGAR ~ [~] [>]
 hoon ::= tallSiggar
-hoonPrimary ::= flatSiggar
-tallSiggar ::= (SIGGAR GAP4K)hoon (GAP4K) hoon
-flatSiggar ::= (SIGGAR) [(] flatHoon (ACE) flatHoon [)]
-flatSiggar ::= (':sggr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSiggar
+tallSiggar ::= (SIGGAR GAP)hoon (GAP) hoon
+wideSiggar ::= (SIGGAR) [(] wideHoon (ACE) wideHoon [)]
+wideSiggar ::= (':sggr') [(] wideHoon (ACE) wideHoon [)]
 
 # SIGLUS hoon
 SIGLUS ~ [~] [+]
 hoon ::= tallSiglus
-hoonPrimary ::= flatSiglus
-tallSiglus ::= (SIGLUS GAP4K)hoon
-flatSiglus ::= (SIGLUS) [(] flatHoon [)]
-flatSiglus ::= (':sgls') [(] flatHoon [)]
+hoonPrimary ::= wideSiglus
+tallSiglus ::= (SIGLUS GAP)hoon
+wideSiglus ::= (SIGLUS) [(] wideHoon [)]
+wideSiglus ::= (':sgls') [(] wideHoon [)]
 
 # SIGPAM hoon hoon
 SIGPAM ~ [~] [&]
 hoon ::= tallSigpam
-hoonPrimary ::= flatSigpam
-tallSigpam ::= (SIGPAM GAP4K)hoon (GAP4K) hoon
-flatSigpam ::= (SIGPAM) [(] flatHoon (ACE) flatHoon [)]
-flatSigpam ::= (':sgpm') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigpam
+tallSigpam ::= (SIGPAM GAP)hoon (GAP) hoon
+wideSigpam ::= (SIGPAM) [(] wideHoon (ACE) wideHoon [)]
+wideSigpam ::= (':sgpm') [(] wideHoon (ACE) wideHoon [)]
 
 # SEMSEM hoon hoon
 SEMSEM ~ [;] [;]
 hoon ::= tallSemsem
-hoonPrimary ::= flatSemsem
-tallSemsem ::= (SEMSEM GAP4K)hoon (GAP4K) hoon
-flatSemsem ::= (SEMSEM) [(] flatHoon (ACE) flatHoon [)]
-flatSemsem ::= (':smsm') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSemsem
+tallSemsem ::= (SEMSEM GAP)hoon (GAP) hoon
+wideSemsem ::= (SEMSEM) [(] wideHoon (ACE) wideHoon [)]
+wideSemsem ::= (':smsm') [(] wideHoon (ACE) wideHoon [)]
 
 # SIGCAB hoon hoon
 SIGCAB ~ [~] [_]
 hoon ::= tallSigcab
-hoonPrimary ::= flatSigcab
-tallSigcab ::= (SIGCAB GAP4K)hoon (GAP4K) hoon
-flatSigcab ::= (SIGCAB) [(] flatHoon (ACE) flatHoon [)]
-flatSigcab ::= (':sgcb') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigcab
+tallSigcab ::= (SIGCAB GAP)hoon (GAP) hoon
+wideSigcab ::= (SIGCAB) [(] wideHoon (ACE) wideHoon [)]
+wideSigcab ::= (':sgcb') [(] wideHoon (ACE) wideHoon [)]
 
 # SIGWUT hoon hoon hoon
 SIGWUT ~ [~] [?]
 hoon ::= tallSigwut
-hoonPrimary ::= flatSigwut
-tallSigwut ::= (SIGWUT GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatSigwut ::= (SIGWUT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatSigwut ::= (':sgwt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigwut
+tallSigwut ::= (SIGWUT GAP)hoon (GAP) hoon (GAP) hoon
+wideSigwut ::= (SIGWUT) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideSigwut ::= (':sgwt') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # SIGZAP hoon hoon
 SIGZAP ~ [~] [!]
 hoon ::= tallSigzap
-hoonPrimary ::= flatSigzap
-tallSigzap ::= (SIGZAP GAP4K)hoon (GAP4K) hoon
-flatSigzap ::= (SIGZAP) [(] flatHoon (ACE) flatHoon [)]
-flatSigzap ::= (':sgzp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideSigzap
+tallSigzap ::= (SIGZAP GAP)hoon (GAP) hoon
+wideSigzap ::= (SIGZAP) [(] wideHoon (ACE) wideHoon [)]
+wideSigzap ::= (':sgzp') [(] wideHoon (ACE) wideHoon [)]
 
 # TISBAR hoon hoon
 TISBAR ~ [=] [|]
 hoon ::= tallTisbar
-hoonPrimary ::= flatTisbar
-tallTisbar ::= (TISBAR GAP4K)hoon (GAP4K) hoon
-flatTisbar ::= (TISBAR) [(] flatHoon (ACE) flatHoon [)]
-flatTisbar ::= (':tsbr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisbar
+tallTisbar ::= (TISBAR GAP)hoon (GAP) hoon
+wideTisbar ::= (TISBAR) [(] wideHoon (ACE) wideHoon [)]
+wideTisbar ::= (':tsbr') [(] wideHoon (ACE) wideHoon [)]
 
 # TISCOM hoon hoon
 TISCOM ~ [=] [,]
 hoon ::= tallTiscom
-hoonPrimary ::= flatTiscom
-tallTiscom ::= (TISCOM GAP4K)hoon (GAP4K) hoon
-flatTiscom ::= (TISCOM) [(] flatHoon (ACE) flatHoon [)]
-flatTiscom ::= (':tscm') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTiscom
+tallTiscom ::= (TISCOM GAP)hoon (GAP) hoon
+wideTiscom ::= (TISCOM) [(] wideHoon (ACE) wideHoon [)]
+wideTiscom ::= (':tscm') [(] wideHoon (ACE) wideHoon [)]
 
 # TISDOT wing hoon hoon
 TISDOT ~ [=] [.]
 hoon ::= tallTisdot
-hoonPrimary ::= flatTisdot
-tallTisdot ::= (TISDOT GAP4K)wing (GAP4K) hoon (GAP4K) hoon
-flatTisdot ::= (TISDOT) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatTisdot ::= (':tsdt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisdot
+tallTisdot ::= (TISDOT GAP)wing (GAP) hoon (GAP) hoon
+wideTisdot ::= (TISDOT) [(] wing (ACE) wideHoon (ACE) wideHoon [)]
+wideTisdot ::= (':tsdt') [(] wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISHEP hoon hoon
 TISHEP ~ [=] [-]
 hoon ::= tallTishep
-hoonPrimary ::= flatTishep
-tallTishep ::= (TISHEP GAP4K)hoon (GAP4K) hoon
-flatTishep ::= (TISHEP) [(] flatHoon (ACE) flatHoon [)]
-flatTishep ::= (':tshp') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTishep
+tallTishep ::= (TISHEP GAP)hoon (GAP) hoon
+wideTishep ::= (TISHEP) [(] wideHoon (ACE) wideHoon [)]
+wideTishep ::= (':tshp') [(] wideHoon (ACE) wideHoon [)]
 
 # TISFAS hoon hoon hoon
 TISFAS ~ [=] [/]
 hoon ::= tallTisfas
-hoonPrimary ::= flatTisfas
-tallTisfas ::= (TISFAS GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatTisfas ::= (TISFAS) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTisfas ::= (':tsfs') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisfas
+tallTisfas ::= (TISFAS GAP)hoon (GAP) hoon (GAP) hoon
+wideTisfas ::= (TISFAS) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideTisfas ::= (':tsfs') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISGAL hoon hoon
 TISGAL ~ [=] [<]
 hoon ::= tallTisgal
-hoonPrimary ::= flatTisgal
-tallTisgal ::= (TISGAL GAP4K)hoon (GAP4K) hoon
-flatTisgal ::= (TISGAL) [(] flatHoon (ACE) flatHoon [)]
-flatTisgal ::= (':tsgl') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisgal
+tallTisgal ::= (TISGAL GAP)hoon (GAP) hoon
+wideTisgal ::= (TISGAL) [(] wideHoon (ACE) wideHoon [)]
+wideTisgal ::= (':tsgl') [(] wideHoon (ACE) wideHoon [)]
 
 # TISGAR hoon hoon
 TISGAR ~ [=] [>]
 hoon ::= tallTisgar
-hoonPrimary ::= flatTisgar
-tallTisgar ::= (TISGAR GAP4K)hoon (GAP4K) hoon
-flatTisgar ::= (TISGAR) [(] flatHoon (ACE) flatHoon [)]
-flatTisgar ::= (':tsgr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisgar
+tallTisgar ::= (TISGAR GAP)hoon (GAP) hoon
+wideTisgar ::= (TISGAR) [(] wideHoon (ACE) wideHoon [)]
+wideTisgar ::= (':tsgr') [(] wideHoon (ACE) wideHoon [)]
 
 # TISKET hoon wing hoon hoon
 TISKET ~ [=] [\^]
 hoon ::= tallTisket
-hoonPrimary ::= flatTisket
-tallTisket ::= (TISKET GAP4K)hoon (GAP4K) wing (GAP4K) hoon (GAP4K) hoon
-flatTisket ::= (TISKET) [(] flatHoon (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
-flatTisket ::= (':tskt') [(] flatHoon (ACE) wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTisket
+tallTisket ::= (TISKET GAP)hoon (GAP) wing (GAP) hoon (GAP) hoon
+wideTisket ::= (TISKET) [(] wideHoon (ACE) wing (ACE) wideHoon (ACE) wideHoon [)]
+wideTisket ::= (':tskt') [(] wideHoon (ACE) wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISLUS hoon hoon
 TISLUS ~ [=] [+]
 hoon ::= tallTislus
-hoonPrimary ::= flatTislus
-tallTislus ::= (TISLUS GAP4K)hoon (GAP4K) hoon
-flatTislus ::= (TISLUS) [(] flatHoon (ACE) flatHoon [)]
-flatTislus ::= (':tsls') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTislus
+tallTislus ::= (TISLUS GAP)hoon (GAP) hoon
+wideTislus ::= (TISLUS) [(] wideHoon (ACE) wideHoon [)]
+wideTislus ::= (':tsls') [(] wideHoon (ACE) wideHoon [)]
 
 # TISSEM hoon hoon hoon
 TISSEM ~ [=] [;]
 hoon ::= tallTissem
-hoonPrimary ::= flatTissem
-tallTissem ::= (TISSEM GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatTissem ::= (TISSEM) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTissem ::= (':tssm') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTissem
+tallTissem ::= (TISSEM GAP)hoon (GAP) hoon (GAP) hoon
+wideTissem ::= (TISSEM) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideTissem ::= (':tssm') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISTAR SYM4K hoon hoon
 TISTAR ~ [=] [*]
 hoon ::= tallTistar
-hoonPrimary ::= flatTistar
-tallTistar ::= (TISTAR GAP4K)SYM4K (GAP4K) hoon (GAP4K) hoon
-flatTistar ::= (TISTAR) [(] SYM4K (ACE) flatHoon (ACE) flatHoon [)]
-flatTistar ::= (':tstr') [(] SYM4K (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTistar
+tallTistar ::= (TISTAR GAP)SYM4K (GAP) hoon (GAP) hoon
+wideTistar ::= (TISTAR) [(] SYM4K (ACE) wideHoon (ACE) wideHoon [)]
+wideTistar ::= (':tstr') [(] SYM4K (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISWUT wing hoon hoon hoon
 TISWUT ~ [=] [?]
 hoon ::= tallTiswut
-hoonPrimary ::= flatTiswut
-tallTiswut ::= (TISWUT GAP4K)wing (GAP4K) hoon (GAP4K) hoon (GAP4K) hoon
-flatTiswut ::= (TISWUT) [(] wing (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatTiswut ::= (':tswt') [(] wing (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideTiswut
+tallTiswut ::= (TISWUT GAP)wing (GAP) hoon (GAP) hoon (GAP) hoon
+wideTiswut ::= (TISWUT) [(] wing (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideTiswut ::= (':tswt') [(] wing (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTCOL hoon hoon hoon
 WUTCOL ~ [?] [:]
 hoon ::= tallWutcol
-hoonPrimary ::= flatWutcol
-tallWutcol ::= (WUTCOL GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatWutcol ::= (WUTCOL) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutcol ::= (':wtcl') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutcol
+tallWutcol ::= (WUTCOL GAP)hoon (GAP) hoon (GAP) hoon
+wideWutcol ::= (WUTCOL) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideWutcol ::= (':wtcl') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTDOT hoon hoon hoon
 WUTDOT ~ [?] [.]
 hoon ::= tallWutdot
-hoonPrimary ::= flatWutdot
-tallWutdot ::= (WUTDOT GAP4K)hoon (GAP4K) hoon (GAP4K) hoon
-flatWutdot ::= (WUTDOT) [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
-flatWutdot ::= (':wtdt') [(] flatHoon (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutdot
+tallWutdot ::= (WUTDOT GAP)hoon (GAP) hoon (GAP) hoon
+wideWutdot ::= (WUTDOT) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+wideWutdot ::= (':wtdt') [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTGAL hoon hoon
 WUTGAL ~ [?] [<]
 hoon ::= tallWutgal
-hoonPrimary ::= flatWutgal
-tallWutgal ::= (WUTGAL GAP4K)hoon (GAP4K) hoon
-flatWutgal ::= (WUTGAL) [(] flatHoon (ACE) flatHoon [)]
-flatWutgal ::= (':wtgl') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutgal
+tallWutgal ::= (WUTGAL GAP)hoon (GAP) hoon
+wideWutgal ::= (WUTGAL) [(] wideHoon (ACE) wideHoon [)]
+wideWutgal ::= (':wtgl') [(] wideHoon (ACE) wideHoon [)]
 
 # WUTGAR hoon hoon
 WUTGAR ~ [?] [>]
 hoon ::= tallWutgar
-hoonPrimary ::= flatWutgar
-tallWutgar ::= (WUTGAR GAP4K)hoon (GAP4K) hoon
-flatWutgar ::= (WUTGAR) [(] flatHoon (ACE) flatHoon [)]
-flatWutgar ::= (':wtgr') [(] flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutgar
+tallWutgar ::= (WUTGAR GAP)hoon (GAP) hoon
+wideWutgar ::= (WUTGAR) [(] wideHoon (ACE) wideHoon [)]
+wideWutgar ::= (':wtgr') [(] wideHoon (ACE) wideHoon [)]
 
 # WUTZAP hoon
 WUTZAP ~ [?] [!]
 hoon ::= tallWutzap
-hoonPrimary ::= flatWutzap
-tallWutzap ::= (WUTZAP GAP4K)hoon
-flatWutzap ::= (WUTZAP) [(] flatHoon [)]
-flatWutzap ::= (':wtzp') [(] flatHoon [)]
+hoonPrimary ::= wideWutzap
+tallWutzap ::= (WUTZAP GAP)hoon
+wideWutzap ::= (WUTZAP) [(] wideHoon [)]
+wideWutzap ::= (':wtzp') [(] wideHoon [)]
 
 # WUTKET wing hoon hoon
 WUTKET ~ [?] [\^]
 hoon ::= tallWutket
-hoonPrimary ::= flatWutket
-tallWutket ::= (WUTKET GAP4K)wing (GAP4K) hoon (GAP4K) hoon
-flatWutket ::= (WUTKET) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatWutket ::= (':wtkt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutket
+tallWutket ::= (WUTKET GAP)wing (GAP) hoon (GAP) hoon
+wideWutket ::= (WUTKET) [(] wing (ACE) wideHoon (ACE) wideHoon [)]
+wideWutket ::= (':wtkt') [(] wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTPAT wing hoon hoon
 WUTPAT ~ [?] [@]
 hoon ::= tallWutpat
-hoonPrimary ::= flatWutpat
-tallWutpat ::= (WUTPAT GAP4K)wing (GAP4K) hoon (GAP4K) hoon
-flatWutpat ::= (WUTPAT) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatWutpat ::= (':wtpt') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutpat
+tallWutpat ::= (WUTPAT GAP)wing (GAP) hoon (GAP) hoon
+wideWutpat ::= (WUTPAT) [(] wing (ACE) wideHoon (ACE) wideHoon [)]
+wideWutpat ::= (':wtpt') [(] wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTSIG wing hoon hoon
 WUTSIG ~ [?] [~]
 hoon ::= tallWutsig
-hoonPrimary ::= flatWutsig
-tallWutsig ::= (WUTSIG GAP4K)wing (GAP4K) hoon (GAP4K) hoon
-flatWutsig ::= (WUTSIG) [(] wing (ACE) flatHoon (ACE) flatHoon [)]
-flatWutsig ::= (':wtsg') [(] wing (ACE) flatHoon (ACE) flatHoon [)]
+hoonPrimary ::= wideWutsig
+tallWutsig ::= (WUTSIG GAP)wing (GAP) hoon (GAP) hoon
+wideWutsig ::= (WUTSIG) [(] wing (ACE) wideHoon (ACE) wideHoon [)]
+wideWutsig ::= (':wtsg') [(] wing (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTTIS hoon wing
 WUTTIS ~ [?] [=]
 hoon ::= tallWuttis
-hoonPrimary ::= flatWuttis
-tallWuttis ::= (WUTTIS GAP4K)hoon (GAP4K) wing
-flatWuttis ::= (WUTTIS) [(] flatHoon (ACE) wing [)]
-flatWuttis ::= (':wtts') [(] flatHoon (ACE) wing [)]
+hoonPrimary ::= wideWuttis
+tallWuttis ::= (WUTTIS GAP)hoon (GAP) wing
+wideWuttis ::= (WUTTIS) [(] wideHoon (ACE) wing [)]
+wideWuttis ::= (':wtts') [(] wideHoon (ACE) wing [)]
 
 # ZAPGAR hoon
 ZAPGAR ~ [!] [>]
 hoon ::= tallZapgar
-hoonPrimary ::= flatZapgar
-tallZapgar ::= (ZAPGAR GAP4K)hoon
-flatZapgar ::= (ZAPGAR) [(] flatHoon [)]
-flatZapgar ::= (':zpgr') [(] flatHoon [)]
+hoonPrimary ::= wideZapgar
+tallZapgar ::= (ZAPGAR GAP)hoon
+wideZapgar ::= (ZAPGAR) [(] wideHoon [)]
+wideZapgar ::= (':zpgr') [(] wideHoon [)]
 
 # ZAPTIS hoon
 ZAPTIS ~ [!] [=]
 hoon ::= tallZaptis
-hoonPrimary ::= flatZaptis
-tallZaptis ::= (ZAPTIS GAP4K)hoon
-flatZaptis ::= (ZAPTIS) [(] flatHoon [)]
-flatZaptis ::= (':zpts') [(] flatHoon [)]
+hoonPrimary ::= wideZaptis
+tallZaptis ::= (ZAPTIS GAP)hoon
+wideZaptis ::= (ZAPTIS) [(] wideHoon [)]
+wideZaptis ::= (':zpts') [(] wideHoon [)]
 
 # ZAPWUT atom hoon
 ZAPWUT ~ [!] [?]
 hoon ::= tallZapwut
-hoonPrimary ::= flatZapwut
-tallZapwut ::= (ZAPWUT GAP4K)atom (GAP4K) hoon
-flatZapwut ::= (ZAPWUT) [(] atom (ACE) flatHoon [)]
-flatZapwut ::= (':zpwt') [(] atom (ACE) flatHoon [)]
+hoonPrimary ::= wideZapwut
+tallZapwut ::= (ZAPWUT GAP)atom (GAP) hoon
+wideZapwut ::= (ZAPWUT) [(] atom (ACE) wideHoon [)]
+wideZapwut ::= (':zpwt') [(] atom (ACE) wideHoon [)]
 

@@ -1,0 +1,1465 @@
+++  hoon-version  +
+++  add
+++  dec
+++  div
+++  dvr
+++  gte
+++  gth
+++  lte
+++  lth
+++  max
+++  min
+++  mod
+++  mul
+++  sub
+++  cap
+++  mas
+++  peg
+++  bloq
+++  each
+++  gate
+++  lest
+++  list
+++  lone
+++  mold
+++  pair
+++  pole
+++  qual
+++  quip
+++  trap
+++  tree
+++  trel
+++  unit
+::::  2: layer two                                      ::
+  ::    2a: unit logic                                  ::
+  ::    2b: list logic                                  ::
+  ::    2c: bit arithmetic                              ::
+  ::    2d: bit logic                                   ::
+  ::    2e: insecure hashing                            ::
+  ::    2f: noun ordering                               ::
+  ::    2g: unsigned powers                             ::
+  ::    2h: set logic                                   ::
+  ::    2i: map logic                                   ::
+  ::    2j: jar and jug logic                           ::
+  ::    2k: queue logic                                 ::
+  ::    2l: container from container                    ::
+  ::    2m: container from noun                         ::
+  ::    2n: functional hacks                            ::
+  ::    2o: normalizing containers                      ::
+  ::    2p: serialization                               ::
+  ::    2q: molds and mold builders                     ::
+::::  2a: unit logic                                    ::
+++  biff                                                ::  apply
+++  bind                                                ::  argue
+++  bond                                                ::  replace
+++  both                                                ::  all the above
+++  clap                                                ::  combine
+++  drop                                                ::  enlist
+++  fall                                                ::  default
+++  flit                                                ::  make filter
+++  hunt                                                ::  first of units
+++  lift                                                ::  lift mold (fmap)
+++  mate                                                ::  choose
+++  need                                                ::  demand
+++  some                                                ::  lift (pure)
+::::  2b: list logic                                    ::
+++  fand                                                ::  all indices
+++  find                                                ::  first index
+++  flop                                                ::  reverse
+++  gulf                                                ::  range inclusive
+++  homo                                                ::  homogenize
+++  lent                                                ::  length
+++  levy
+++  lien                                                ::  some of
+++  limo                                                ::  listify
+++  murn                                                ::  maybe transform
+++  oust                                                ::  remove
+++  reap                                                ::  replicate
+++  reel                                                ::  right fold
+++  roll                                                ::  left fold
+++  scag                                                ::  prefix
+++  skid                                                ::  separate
+++  skim                                                ::  only
+++  skip                                                ::  except
+++  slag                                                ::  suffix
+++  snag                                                ::  index
+++  sort   !.                                           ::  quicksort
+++  spin                                                :>  stateful turn
+++  spun                                                :>  internal spin
+++  swag                                                ::  slice
+++  turn                                                ::  transform
+++  weld                                                ::  concatenate
+++  welp                                                ::  faceless weld
+++  zing                                                ::  promote
+::::  2c: bit arithmetic                                ::
+++  bex                                                 ::  binary exponent
+++  can                                                 ::  assemble
+++  cat                                                 ::  concatenate
+++  cut                                                 ::  slice
+++  end                                                 ::  tail
+++  fil                                                 ::  fill bloqstream
+++  lsh                                                 ::  left-shift
+++  met                                                 ::  measure
+++  rap                                                 ::  assemble nonzero
+++  rep                                                 ::  assemble single
+++  rip                                                 ::  disassemble
+++  rsh                                                 ::  right-shift
+++  swp  |=({a/bloq b/@} (rep a (flop (rip a b))))      ::  reverse bloq order
+++  xeb                                                 ::  binary logarithm
+++  fe                                                  ::  modulo bloq
+  ++  dif                                               ::  difference
+  ++  inv  |=(b/@ (sub (dec out) (sit b)))              ::  inverse
+  ++  net  |=  b/@  ^-  @                               ::  flip byte endianness
+  ++  out  (bex (bex a))                                ::  mod value
+  ++  rol  |=  {b/bloq c/@ d/@}  ^-  @                  ::  roll left
+  ++  ror  |=  {b/bloq c/@ d/@}  ^-  @                  ::  roll right
+  ++  sum  |=({b/@ c/@} (sit (add b c)))                ::  wrapping add
+  ++  sit  |=(b/@ (end a 1 b))                          ::  enforce modulo
+::::  2d: bit logic                                     ::
+++  con                                                 ::  binary or
+++  dis                                                 ::  binary and
+++  mix                                                 ::  binary xor
+++  not  |=  {a/bloq b/@ c/@}                           ::  binary not (sized)
+::::  2e: insecure hashing                              ::
+++  fnv  |=(a/@ (end 5 1 (mul 16.777.619 a)))           ::  FNV scrambler
+++  muk                                                 ::  standard murmur3
+  ++  fmix32
+  ++  mum                                                 ::  mug with murmur3
+  ++  trim                                              ::  31-bit nonzero
+++  mug                                                 ::  31bit nonzero FNV1a
+::::  2f: noun ordering                                 ::
+++  aor                                                 ::  a-order
+++  dor                                                 ::  d-order
+++  gor                                                 ::  g-order
+++  hor                                                 ::  h-order
+++  lor                                                 ::  l-order
+++  vor                                                 ::  v-order
+  ::  2g: unsigned powers                               ::
+++  pow                                                 ::  unsigned exponent
+++  sqt                                                 ::  unsigned sqrt/rem
+  ::  2h: set logic                                     ::
+++  in                                                  ::  set engine
+::::  2i: map logic                                     ::
+++  by                                                  ::  map engine
+::::  2j: jar and jug logic                             ::
+++  ja                                                  ::  jar engine
+++  ju                                                  ::  jug engine
+::::  2k: queue logic                                   ::
+++  to                                                  ::  queue engine
+::::  2l: container from container                      ::
+++  malt                                                ::  map from list
+++  molt                                                ::  map from pair list
+++  silt                                                ::  set from list
+::::  2m: container from noun                           ::
+++  ly                                                  ::  list from raw noun
+++  my                                                  ::  map from raw noun
+++  sy                                                  ::  set from raw noun
+++  nl
+  ++  le                                                  ::  construct list
+  ++  my                                                  ::  construct map
+  ++  mz                                                  ::  construct map
+  ++  si                                                  ::  construct set
+  ++  snag                                                ::  index
+  ++  weld                                                ::  concatenate
+::::  2n: functional hacks                              ::
+++  aftr  |*(a/gate |*(b/gate (pair b a)))              ::  pair after
+++  cork  |*({a/_|=(* **) b/gate} (corl b a))           ::  compose forward
+++  corl                                                ::  compose backwards
+++  cury                                                ::  curry left
+++  curr                                                ::  curry right
+++  fore  |*(a/gate |*(b/gate (pair a b)))              ::  pair before
+++  hard                                                ::  force remold
+++  head  |*(^ ,:+<-)                                   ::  get head
+++  same  |*(* +<)                                      ::  identity
+++  soft                                                ::  maybe remold
+++  slog                                                ::  deify printf
+++  mean                                                ::  crash with trace
+++  tail  |*(^ ,:+<+)                                   ::  get tail
+++  test  |=(^ =(+<- +<+))                              ::  equality
+::::  2o: normalizing containers                        ::
+++  jar  |*({a/mold b/mold} (map a (list b)))           ::  map of lists
+++  jug  |*({a/mold b/mold} (map a (set b)))            ::  map of sets
+++  map  |*  {a/mold b/mold}                            ::  table
+++  qeu  |*(a/mold (tree a))                            ::  queue
+++  set  |*  a/mold                                     ::  set
+::::  2p: serialization                                 ::
+++  cue                                                 ::  unpack
+++  jam                                                 ::  pack
+++  mat                                                 ::  length-encode
+++  rub                                                 ::  length-decode
+::::  2q: molds and mold builders                       ::
+++  char  @t                                            ::  UTF8 byte
+++  cord  @t                                            ::  UTF8, LSB first
+++  date  {{a/? y/@ud} m/@ud t/tarp}                    ::  parsed date
+++  knot  @ta                                           ::  ASCII text
+++  tang  (list tank)                                   ::  bottom-first error
+++  tank  $%  {$leaf p/tape}                            ::  printing formats
+++  tanq                                                ::  tomorrow's tank
+++  tape  (list @tD)                                    ::  UTF8 string as list
+++  tarp  {d/@ud h/@ud m/@ud s/@ud f/(list @ux)}        ::  parsed time
+++  term  @tas                                          ::  ascii symbol
+++  wain  (list cord)                                   ::  text lines
+++  wall  (list tape)                                   ::  text lines
+::::  3: layer three                                    ::
+  ::    3a: signed and modular ints                     ::
+  ::    3b: floating point                              ::
+  ::    3c: urbit time                                  ::
+  ::    3d: SHA hash family                             ::
+  ::    3e: (reserved)                                  ::
+  ::    3f: scrambling                                  ::
+  ::    3g: molds and mold builders                     ::
+::::  3a: signed and modular ints                       ::
+++  egcd                                                ::  schneier's egcd
+++  fo                                                  ::  modulo prime
+  ++  dif
+  ++  exp
+  ++  fra
+  ++  inv
+  ++  pro
+  ++  sit
+  ++  sum
+++  si                                                  ::  signed integer
+  ++  abs  |=(a/@s (add (end 0 1 a) (rsh 0 1 a)))       ::  absolute value
+  ++  dif  |=  {a/@s b/@s}                              ::  subtraction
+  ++  dul  |=  {a/@s b/@}                               ::  modulus
+  ++  fra  |=  {a/@s b/@s}                              ::  divide
+  ++  new  |=  {a/? b/@}                                ::  [sign value] to @s
+  ++  old  |=(a/@s [(syn a) (abs a)])                   ::  [sign value]
+  ++  pro  |=  {a/@s b/@s}                              ::  multiplication
+  ++  rem  |=({a/@s b/@s} (dif a (pro b (fra a b))))    ::  remainder
+  ++  sum  |=  {a/@s b/@s}                              ::  addition
+  ++  sun  |=(a/@u (mul 2 a))                           ::  @u to @s
+  ++  syn  |=(a/@s =(0 (end 0 1 a)))                    ::  sign test
+  ++  cmp  |=  {a/@s b/@s}                              ::  compare
+::::  3b: floating point                                ::
+++  fn  ::  float, infinity, or NaN
+++  dn  ::  decimal float, infinity, or NaN
+++  rn  ::  parsed decimal float
+++  fl                                                  ::  arb. precision fp
+    ++  rou
+    ++  rau
+    ++  add                                             ::  add; exact if e
+    ++  sub                                             ::  subtract; exact if e
+    ++  mul                                             ::  multiply
+    ++  div                                             ::  divide
+    ++  sqt                                             ::  square root
+    ++  lth                                             ::  less-than
+    ++  equ                                             ::  equals
+    ++  ibl
+    ++  uni
+    ++  xpd
+    ++  lug
+    ++  drg                                             ::  dragon4; get
+    ++  toj                                             ::  round to integer
+    ++  ned                                             ::  require ?=({$f *} a)
+    ++  shf                                             ::  a * 2^b; no rounding
+    ++  fli                                             ::  flip sign
+    ++  swr  ?+(r r $d %u, $u %d)                       ::  flipped rounding
+    ++  prc  ?>((gth p 1) p)                            ::  force >= 2 precision
+    ++  den  d                                          ::  denorm+flush+inf exp
+    ++  emn  v                                          ::  minimum exponent
+    ++  emx  (sum:si emn (sun:si w))                    ::  maximum exponent
+    ++  spd  [e=emn a=1]                                ::  smallest denormal
+    ++  spn  [e=emn a=(bex (dec prc))]                  ::  smallest normal
+    ++  lfn  [e=emx a=(fil 0 prc 1)]                    ::  largest
+    ++  lfe  (sum:si emx (sun:si prc))                  ::  2^lfe is > than all
+    ++  zer  [e=--0 a=0]
+  ++  rou                                               ::  round
+  ++  syn                                               ::  get sign
+  ++  abs                                               ::  absolute value
+  ++  add                                               ::  add
+  ++  ead                                               ::  exact add
+  ++  sub                                               ::  subtract
+  ++  mul                                               ::  multiply
+  ++  emu                                               ::  exact multiply
+  ++  div                                               ::  divide
+  ++  fma                                               ::  fused multiply-add
+  ++  sqt                                               ::  square root
+  ++  inv                                               ::  inverse
+  ++  sun                                               ::  uns integer to float
+  ++  san                                               ::  sgn integer to float
+  ++  lth                                               ::  less-than
+  ++  lte                                               ::  less-equal
+  ++  equ                                               ::  equal
+  ++  gte                                               ::  greater-equal
+  ++  gth                                               ::  greater-than
+  ++  drg                                               ::  float to decimal
+  ++  grd                                               ::  decimal to float
+  ++  toi                                               ::  round to integer @s
+  ++  toj                                               ::  round to integer fn
+++  ff                                                  ::  ieee 754 format fp
+  ++  sb  (bex (^add w p))                              ::  sign bit
+  ++  me  (dif:si (dif:si --1 b) (sun:si p))            ::  minimum exponent
+  ++  pa
+  ++  sea                                               ::  @r to fn
+  ++  bit  |=  {a/fn}  (bif (rou:pa a))                 ::  fn to @r w+ rounding
+  ++  bif                                               ::  fn to @r no rounding
+  ++  sig                                               ::  get sign
+  ++  exp                                               ::  get exponent
+  ++  add                                               ::  add
+  ++  sub                                               ::  subtract
+  ++  mul                                               ::  multiply
+  ++  div                                               ::  divide
+  ++  fma                                               ::  fused multiply-add
+  ++  sqt                                               ::  square root
+  ++  lth                                               ::  less-than
+  ++  lte                                               ::  less-equals
+  ++  equ                                               ::  equals
+  ++  gte                                               ::  greater-equals
+  ++  gth                                               ::  greater-than
+  ++  sun                                               ::  uns integer to @r
+  ++  san                                               ::  signed integer to @r
+  ++  toi                                               ::  round to integer
+  ++  drg                                               ::  @r to decimal float
+  ++  grd                                               ::  decimal float to @r
+++  rlyd  |=  a/@rd  ^-  dn  (drg:rd a)                 ::  prep @rd for print
+++  rlys  |=  a/@rs  ^-  dn  (drg:rs a)                 ::  prep @rs for print
+++  rlyh  |=  a/@rh  ^-  dn  (drg:rh a)                 ::  prep @rh for print
+++  rlyq  |=  a/@rq  ^-  dn  (drg:rq a)                 ::  prep @rq for print
+++  ryld  |=  a/dn  ^-  @rd  (grd:rd a)                 ::  finish parsing @rd
+++  ryls  |=  a/dn  ^-  @rs  (grd:rs a)                 ::  finish parsing @rs
+++  rylh  |=  a/dn  ^-  @rh  (grd:rh a)                 ::  finish parsing @rh
+++  rylq  |=  a/dn  ^-  @rq  (grd:rq a)                 ::  finish parsing @rq
+++  rd                                                  ::  double precision fp
+  ++  ma
+  ++  sea                                               ::  @rd to fn
+  ++  bit                                               ::  fn to @rd
+  ++  add  ~/  %add                                     ::  add
+  ++  sub  ~/  %sub                                     ::  subtract
+  ++  mul  ~/  %mul                                     ::  multiply
+  ++  div  ~/  %div                                     ::  divide
+  ++  fma  ~/  %fma                                     ::  fused multiply-add
+  ++  sqt  ~/  %sqt                                     ::  square root
+  ++  lth  ~/  %lth                                     ::  less-than
+  ++  lte  ~/  %lte                                     ::  less-equals
+  ++  equ  ~/  %equ                                     ::  equals
+  ++  gte  ~/  %gte                                     ::  greater-equals
+  ++  gth  ~/  %gth                                     ::  greater-than
+  ++  sun  |=  {a/@u}  ^-  @rd  (sun:ma a)              ::  uns integer to @rd
+  ++  san  |=  {a/@s}  ^-  @rd  (san:ma a)              ::  sgn integer to @rd
+  ++  sig  |=  {a/@rd}  ^-  ?  (sig:ma a)               ::  get sign
+  ++  exp  |=  {a/@rd}  ^-  @s  (exp:ma a)              ::  get exponent
+  ++  toi  |=  {a/@rd}  ^-  (unit @s)  (toi:ma a)       ::  round to integer
+  ++  drg  |=  {a/@rd}  ^-  dn  (drg:ma a)              ::  @rd to decimal float
+  ++  grd  |=  {a/dn}  ^-  @rd  (grd:ma a)              ::  decimal float to @rd
+++  rs                                                  ::  single precision fp
+  ++  ma
+  ++  sea                                               ::  @rs to fn
+  ++  bit                                               ::  fn to @rs
+  ++  add  ~/  %add                                     ::  add
+  ++  sub  ~/  %sub                                     ::  subtract
+  ++  mul  ~/  %mul                                     ::  multiply
+  ++  div  ~/  %div                                     ::  divide
+  ++  fma  ~/  %fma                                     ::  fused multiply-add
+  ++  sqt  ~/  %sqt                                     ::  square root
+  ++  lth  ~/  %lth                                     ::  less-than
+  ++  lte  ~/  %lte                                     ::  less-equals
+  ++  equ  ~/  %equ                                     ::  equals
+  ++  gte  ~/  %gte                                     ::  greater-equals
+  ++  gth  ~/  %gth                                     ::  greater-than
+  ++  sun  |=  {a/@u}  ^-  @rs  (sun:ma a)              ::  uns integer to @rs
+  ++  san  |=  {a/@s}  ^-  @rs  (san:ma a)              ::  sgn integer to @rs
+  ++  sig  |=  {a/@rs}  ^-  ?  (sig:ma a)               ::  get sign
+  ++  exp  |=  {a/@rs}  ^-  @s  (exp:ma a)              ::  get exponent
+  ++  toi  |=  {a/@rs}  ^-  (unit @s)  (toi:ma a)       ::  round to integer
+  ++  drg  |=  {a/@rs}  ^-  dn  (drg:ma a)              ::  @rs to decimal float
+  ++  grd  |=  {a/dn}  ^-  @rs  (grd:ma a)              ::  decimal float to @rs
+++  rq                                                  ::  quad precision fp
+  ++  ma
+  ++  sea                                               ::  @rq to fn
+  ++  bit                                               ::  fn to @rq
+  ++  add  ~/  %add                                     ::  add
+  ++  sub  ~/  %sub                                     ::  subtract
+  ++  mul  ~/  %mul                                     ::  multiply
+  ++  div  ~/  %div                                     ::  divide
+  ++  fma  ~/  %fma                                     ::  fused multiply-add
+  ++  sqt  ~/  %sqt                                     ::  square root
+  ++  lth  ~/  %lth                                     ::  less-than
+  ++  lte  ~/  %lte                                     ::  less-equals
+  ++  equ  ~/  %equ                                     ::  equals
+  ++  gte  ~/  %gte                                     ::  greater-equals
+  ++  gth  ~/  %gth                                     ::  greater-than
+  ++  sun  |=  {a/@u}  ^-  @rq  (sun:ma a)              ::  uns integer to @rq
+  ++  san  |=  {a/@s}  ^-  @rq  (san:ma a)              ::  sgn integer to @rq
+  ++  sig  |=  {a/@rq}  ^-  ?  (sig:ma a)               ::  get sign
+  ++  exp  |=  {a/@rq}  ^-  @s  (exp:ma a)              ::  get exponent
+  ++  toi  |=  {a/@rq}  ^-  (unit @s)  (toi:ma a)       ::  round to integer
+  ++  drg  |=  {a/@rq}  ^-  dn  (drg:ma a)              ::  @rq to decimal float
+  ++  grd  |=  {a/dn}  ^-  @rq  (grd:ma a)              ::  decimal float to @rq
+++  rh                                                  ::  half precision fp
+  ++  ma
+  ++  sea                                               ::  @rh to fn
+  ++  bit                                               ::  fn to @rh
+  ++  add  ~/  %add                                     ::  add
+  ++  sub  ~/  %sub                                     ::  subtract
+  ++  mul  ~/  %mul                                     ::  multiply
+  ++  div  ~/  %div                                     ::  divide
+  ++  fma  ~/  %fma                                     ::  fused multiply-add
+  ++  sqt  ~/  %sqt                                     ::  square root
+  ++  lth  ~/  %lth                                     ::  less-than
+  ++  lte  ~/  %lte                                     ::  less-equals
+  ++  equ  ~/  %equ                                     ::  equals
+  ++  gte  ~/  %gte                                     ::  greater-equals
+  ++  gth  ~/  %gth                                     ::  greater-than
+  ++  tos                                               ::  @rh to @rs
+  ++  fos                                               ::  @rs to @rh
+  ++  sun  |=  {a/@u}  ^-  @rh  (sun:ma a)              ::  uns integer to @rh
+  ++  san  |=  {a/@s}  ^-  @rh  (san:ma a)              ::  sgn integer to @rh
+  ++  sig  |=  {a/@rh}  ^-  ?  (sig:ma a)               ::  get sign
+  ++  exp  |=  {a/@rh}  ^-  @s  (exp:ma a)              ::  get exponent
+  ++  toi  |=  {a/@rh}  ^-  (unit @s)  (toi:ma a)       ::  round to integer
+  ++  drg  |=  {a/@rh}  ^-  dn  (drg:ma a)              ::  @rh to decimal float
+  ++  grd  |=  {a/dn}  ^-  @rh  (grd:ma a)              ::  decimal float to @rh
+::    3c: urbit time                                    ::
+++  year                                                ::  date to @d
+++  yore                                                ::  @d to date
+++  yell                                                ::  tarp from @d
+++  yule                                                ::  time atom
+++  yall                                                ::  day / to day of year
+++  yawn                                                ::  days since Jesus
+++  yelp                                                ::  leap year
+++  yo                                                  ::  time constants
+      ++  day  86.400                 ::  (mul 24 hor)
+      ++  era  146.097                ::  (add 1 (mul 4 cet))
+      ++  hor  3.600                  ::  (mul 60 mit)
+      ++  jes  106.751.991.084.417    ::  (mul 730.692.561 era)
+      ++  mit  60
+      ++  moh  `(list @ud)`[31 28 31 30 31 30 31 31 30 31 30 31 ~]
+      ++  moy  `(list @ud)`[31 29 31 30 31 30 31 31 30 31 30 31 ~]
+      ++  qad  126.144.001            ::  (add 1 (mul 4 yer))
+      ++  yer  31.536.000             ::  (mul 365 day)
+::::  3d: SHA hash family                               ::
+++  shad  |=(ruz/@ (shax (shax ruz)))                   ::  double sha-256
+++  shaf                                                ::  half sha-256
+++  sham                                                ::  128bit noun hash
+++  shas                                                ::  salted hash
+++  shax                                                ::  sha-256
+++  shay                                                ::  sha-256 with length
+++  shaw                                                ::  hash to nbits
+++  shaz                                                ::  sha-512
+++  shal                                                ::  sha-512 with length
+++  shan                                                ::  sha-1 (deprecated)
+++  og                                                  ::  shax-powered rng
+  ++  rad                                               ::  random in range
+  ++  rads                                              ::  random continuation
+  ++  raw                                               ::  random bits
+  ++  raws                                              ::  random bits
+::::  3e: AES encryption  (XX removed)                  ::
+::::  3f: scrambling                                    ::
+++  un                                                  ::  =(x (wred (wren x)))
+  ++  wren                                              ::  conceal structure
+  ++  wred                                              ::  restore structure
+  ++  xafo  |=({a/@ b/@} +((mod (add (dec b) a) 255)))
+  ++  xaro  |=({a/@ b/@} +((mod (add (dec b) (sub 255 (mod a 255))) 255)))
+  ++  zaft                                              ::  forward 255-sbox
+  ++  zart                                              ::  reverse 255-sbox
+  ++  zyft                                              ::  forward 256-sbox
+  ++  zyrt                                              ::  reverse 256-sbox
+++  ob
+  ++  feen                                              ::  conceal structure v2
+  ++  fend                                              ::  restore structure v2
+  ++  fice                                              ::  adapted from
+  ++  teil                                              ::  reverse ++fice
+  ++  rynd                                              ::  feistel round
+  ++  rund                                              ::  reverse round
+  ++  raku
+::::  3g: molds and mold builders
+++  coin  $%  {$$ p/dime}                               ::  print format
+++  dime  {p/@ta q/@}                                   ::
+++  edge  {p/hair q/(unit {p/* q/nail})}                ::  parsing output
+++  hair  {p/@ud q/@ud}                                 ::  parsing trace
+++  like  |*  a/gate                                    ::  generic edge
+++  nail  {p/hair q/tape}                               ::  parsing input
+++  path  (list knot)                                   ::  like unix path
+++  pint  {p/{p/@ q/@} q/{p/@ q/@}}                     ::  line+column range
+++  rule  _|=(nail *edge)                               ::  parsing rule
+++  spot  {p/path q/pint}                               ::  range in file
+++  tone  $%  {$0 p/*}                                  ::  success
+++  toon  $%  {$0 p/*}                                  ::  success
+++  wonk  |*(veq/edge ?~(q.veq !! p.u.q.veq))           ::  product from edge
+::::  4: layer four                                     ::
+  ::    4a: exotic bases                                ::
+  ::    4b: text processing                             ::
+  ::    4c: tank printer                                ::
+  ::    4d: parsing (tracing)                           ::
+  ::    4e: parsing (combinators)                       ::
+  ::    4f: parsing (rule builders)                     ::
+  ::    4g: parsing (outside caller)                    ::
+  ::    4h: parsing (ascii glyphs)                      ::
+  ::    4i: parsing (useful idioms)                     ::
+  ::    4j: parsing (bases and base digits)             ::
+  ::    4k: atom printing                               ::
+  ::    4l: atom parsing                                ::
+  ::    4m: formatting functions                        ::
+  ::    4n: virtualization                              ::
+  ::    4o: molds and mold builders                     ::
+::::  4a: exotic bases
+++  po                                                  ::  phonetic base
+  ++  ins  ~/  %ins                                     ::  parse prefix
+  ++  ind  ~/  %ind                                     ::  parse suffix
+  ++  tos  ~/  %tos                                     ::  fetch prefix
+  ++  tod  ~/  %tod                                     ::  fetch suffix
+++  fa                                                  ::  base58check
+  ++  cha  |=(a/char `(unit @uF)`=+(b=(cut 3 [`@`a 1] yek) ?:(=(b 0xff) ~ `b)))
+  ++  tok
+  ++  pad  |=(a/@ =+(b=(met 3 a) ?:((gte b 21) 0 (sub 21 b))))
+  ++  enc  |=(a/@ux `@ux`(mix (lsh 3 4 a) (tok a)))
+  ++  den
+::::  4b: text processing
+++  at                                                  ::  basic printing
+  ++  r
+  ++  rf    `tape`[?-(a $& '&', $| '|', * !!) ~]
+  ++  rn    `tape`[?>(=(0 a) '~') ~]
+  ++  rt    `tape`['\'' (weld (mesc (trip a)) `tape`['\'' ~])]
+  ++  rta   rt
+  ++  rtam  `tape`['%' (trip a)]
+  ++  rub   `tape`['0' 'b' (rum 2 ~ |=(b/@ (add '0' b)))]
+  ++  rud   (rum 10 ~ |=(b/@ (add '0' b)))
+  ++  rum
+  ++  rup
+  ++  ruv
+  ++  rux  `tape`['0' 'x' (rum 16 ~ |=(b/@ (add b ?:((lth b 10) 48 87))))]
+++  cass                                                ::  lowercase
+++  cuss                                                ::  uppercase
+++  crip  |=(a/tape `@t`(rap 3 a))                      ::  tape to cord
+++  mesc                                                ::  ctrl code escape
+++  runt                                                ::  prepend repeatedly
+++  sand                                                ::  atom sanity
+++  sane                                                ::  atom sanity
+++  trim                                                ::  tape split
+++  trip                                                ::  cord to tape
+++  teff                                                ::  length utf8
+++  turf                                                ::  utf8 to utf32
+++  tuba                                                ::  utf8 to utf32 tape
+++  tufa                                                ::  utf32 to utf8 tape
+++  tuft                                                ::  utf32 to utf8 text
+++  wack                                                ::  knot escape
+++  wick                                                ::  knot unescape
+++  woad                                                ::  cord unescape
+++  wood                                                ::  cord escape
+::::  4c: tank printer
+++  wash                                                ::  render tank at width
+++  re
+  ++  ram
+  ++  ug                                                ::  horrible hack
+    ++  ace                                             ::  strip ctrl chars
+    ++  act                                             ::  pretend tapes
+    ++  fix                                             ::  restore tapes
+    ++  hew                                             ::  pretend tape
+  ++  win
+    ++  din  (mod (add 2 tab) (mul 2 (div edg 3)))
+    ++  fit  (lte (lent ram) (sub edg tab))
+    ++  rig
+    ++  wig
+++  show                                                ::  XX deprecated!
+  ++  shep
+  ++  shop
+  ++  shol
+::::  4d: parsing (tracing)
+++  last  |=  {zyc/hair naz/hair}                       ::  farther trace
+++  lust  |=  {weq/char naz/hair}                       ::  detect newline
+::::  4e: parsing (combinators)
+++  bend                                                ::  conditional comp
+++  comp
+++  fail  |=(tub/nail [p=p.tub q=~])                    ::  never parse
+++  glue                                                ::  add rule
+++  less                                                ::  no first and second
+++  pfix                                                ::  discard first rule
+++  plug                                                ::  first then second
+++  pose                                                ::  first or second
+++  simu                                                ::  first and second
+++  sfix                                                ::  discard second rule
+::::  4f: parsing (rule builders)
+++  bass                                                ::  leftmost base
+++  boss                                                ::  rightmost base
+++  cold                                                ::  replace w+ constant
+++  cook                                                ::  apply gate
+++  easy                                                ::  always parse
+++  flag
+++  full                                                ::  has to fully parse
+++  funk                                                ::  add to tape first
+++  here                                                ::  place-based apply
+++  inde  |*  sef/rule                                  :: indentation block
+++  ifix
+++  jest                                                ::  match a cord
+++  just                                                ::  XX redundant, jest
+++  knee                                                ::  callbacks
+++  mask                                                ::  match char in set
+++  more                                                ::  separated, *
+++  most                                                ::  separated, +
+++  next                                                ::  consume a char
+++  perk                                                ::  parse cube fork
+++  pick                                                ::  rule for ++each
+++  plus  |*(fel/rule ;~(plug fel (star fel)))          ::
+++  punt  |*({a/rule} ;~(pose (stag ~ a) (easy ~)))     ::
+++  sear                                                ::  conditional cook
+++  shim                                                ::  match char in range
+++  stag                                                ::  add a label
+++  stet                                                ::
+++  stew                                                ::  switch by first char
+++  slug                                                ::
+++  star                                                ::  0 or more times
+++  stir
+++  stun                                                ::  parse several times
+::::  4g: parsing (outside caller)
+++  rash  |*({naf/@ sab/rule} (scan (trip naf) sab))   ::
+++  rose  |*  {los/tape sab/rule}
+++  rush  |*({naf/@ sab/rule} (rust (trip naf) sab))
+++  rust  |*  {los/tape sab/rule}
+++  scan  |*  {los/tape sab/rule}
+::::  4h: parsing (ascii glyphs)
+++  ace  (just ' ')
+++  bar  (just '|')
+++  bas  (just '\\')
+++  buc  (just '$')
+++  cab  (just '_')
+++  cen  (just '%')
+++  col  (just ':')
+++  com  (just ',')
+++  doq  (just '"')
+++  dot  (just '.')
+++  fas  (just '/')
+++  gal  (just '<')
+++  gar  (just '>')
+++  hax  (just '#')
+++  kel  (just '{')
+++  ker  (just '}')
+++  ket  (just '^')
+++  lus  (just '+')
+++  hep  (just '-')
+++  pel  (just '(')
+++  pam  (just '&')
+++  per  (just ')')
+++  pat  (just '@')
+++  sel  (just '[')
+++  sem  (just ';')
+++  ser  (just ']')
+++  sig  (just '~')
+++  soq  (just '\'')
+++  tar  (just '*')
+++  tec  (just '`')
+++  tis  (just '=')
+++  wut  (just '?')
+++  zap  (just '!')
+::::  4i: parsing (useful idioms)
+++  alf  ;~(pose low hig)                               ::  alphabetic
+++  aln  ;~(pose low hig nud)                           ::  alphanumeric
+++  alp  ;~(pose low hig nud hep)                       ::  alphanumeric and -
+++  bet  ;~(pose (cold 2 hep) (cold 3 lus))             ::  axis syntax - +
+++  bin  (bass 2 (most gon but))                        ::  binary to atom
+++  but  (cook |=(a/@ (sub a '0')) (shim '0' '1'))      ::  binary digit
+++  cit  (cook |=(a/@ (sub a '0')) (shim '0' '7'))      ::  octal digit
+++  dem  (bass 10 (most gon dit))                       ::  decimal to atom
+++  dit  (cook |=(a/@ (sub a '0')) (shim '0' '9'))      ::  decimal digit
+++  dog  ;~(plug dot gay)                               ::  .  number separator
+++  doh  ;~(plug ;~(plug hep hep) gay)                  ::  --  phon separator
+++  dun  (cold ~ ;~(plug hep hep))                      ::  -- (stop) to ~
+++  duz  (cold ~ ;~(plug tis tis))                      ::  == (stet) to ~
+++  gah  (mask [`@`10 ' ' ~])                           ::  newline or ace
+++  gap  (cold ~ ;~(plug gaq (star ;~(pose vul gah))))  ::  plural space
+++  gaq  ;~  pose                                       ::  end of line
+++  gaw  (cold ~ (star ;~(pose vul gah)))               ::  classic white
+++  gay  ;~(pose gap (easy ~))                          ::
+++  gon  ;~(pose ;~(plug bas gay fas) (easy ~))         ::  long numbers \ /
+++  gul  ;~(pose (cold 2 gal) (cold 3 gar))             ::  axis syntax < >
+++  hex  (bass 16 (most gon hit))                       ::  hex to atom
+++  hig  (shim 'A' 'Z')                                 ::  uppercase
+++  hit  ;~  pose                                       ::  hex digits
+++  iny                                                 :: indentation block
+++  low  (shim 'a' 'z')                                 ::  lowercase
+++  mes  %+  cook                                       ::  hexbyte
+++  nix  (boss 256 (star ;~(pose aln cab)))             ::
+++  nud  (shim '0' '9')                                 ::  numeric
+++  prn  ;~(less (just `@`127) (shim 32 256))           ::  non-control
+++  qat  ;~  pose                                       ::  chars in blockcord
+++  qit  ;~  pose                                       ::  chars in a cord
+++  qut  ;~  simu  soq                                  ::  cord
+++  soz  ;~(plug soq soq soq)                           ::  delimiting '''
+++  sym                                                 ::  symbol
+++  ven  ;~  (comp |=({a/@ b/@} (peg a b)))             ::  +>- axis syntax
+++  vit                                                 ::  base64 digit
+++  vul  %+  cold   ~                                   ::  comments
+::::  4j: parsing (bases and base digits)
+++  ab
+  ++  bix  (bass 16 (stun [2 2] six))
+  ++  fem  (sear |=(a/@ (cha:fa a)) aln)
+  ++  haf  (bass 256 ;~(plug tep tiq (easy ~)))
+  ++  hef  %+  sear  |=(a/@ ?:(=(a 0) ~ (some a)))
+  ++  hif  (bass 256 ;~(plug tip tiq (easy ~)))
+  ++  hof  (bass 0x1.0000 ;~(plug hef (stun [1 3] ;~(pfix hep hif))))
+  ++  huf  (bass 0x1.0000 ;~(plug hef (stun [0 3] ;~(pfix hep hif))))
+  ++  hyf  (bass 0x1.0000 ;~(plug hif (stun [3 3] ;~(pfix hep hif))))
+  ++  pev  (bass 32 ;~(plug sev (stun [0 4] siv)))
+  ++  pew  (bass 64 ;~(plug sew (stun [0 4] siw)))
+  ++  piv  (bass 32 (stun [5 5] siv))
+  ++  piw  (bass 64 (stun [5 5] siw))
+  ++  qeb  (bass 2 ;~(plug seb (stun [0 3] sib)))
+  ++  qex  (bass 16 ;~(plug sex (stun [0 3] hit)))
+  ++  qib  (bass 2 (stun [4 4] sib))
+  ++  qix  (bass 16 (stun [4 4] six))
+  ++  seb  (cold 1 (just '1'))
+  ++  sed  (cook |=(a/@ (sub a '0')) (shim '1' '9'))
+  ++  sev  ;~(pose sed sov)
+  ++  sew  ;~(pose sed sow)
+  ++  sex  ;~(pose sed sox)
+  ++  sib  (cook |=(a/@ (sub a '0')) (shim '0' '1'))
+  ++  sid  (cook |=(a/@ (sub a '0')) (shim '0' '9'))
+  ++  siv  ;~(pose sid sov)
+  ++  siw  ;~(pose sid sow)
+  ++  six  ;~(pose sid sox)
+  ++  sov  (cook |=(a/@ (sub a 87)) (shim 'a' 'v'))
+  ++  sow  ;~  pose
+  ++  sox  (cook |=(a/@ (sub a 87)) (shim 'a' 'f'))
+  ++  ted  (bass 10 ;~(plug sed (stun [0 2] sid)))
+  ++  tep  (sear |=(a/@ ?:(=(a 'doz') ~ (ins:po a))) til)
+  ++  tip  (sear |=(a/@ (ins:po a)) til)
+  ++  tiq  (sear |=(a/@ (ind:po a)) til)
+  ++  tid  (bass 10 (stun [3 3] sid))
+  ++  til  (boss 256 (stun [3 3] low))
+  ++  urs  %+  cook
+  ++  urt  %+  cook
+  ++  urx  %+  cook
+  ++  voy  ;~(pfix bas ;~(pose bas soq bix))
+++  ag
+  ++  ape  |*(fel/rule ;~(pose (cold 0 (just '0')) fel))
+  ++  bay  (ape (bass 16 ;~(plug qeb:ab (star ;~(pfix dog qib:ab)))))
+  ++  bip  =+  tod=(ape qex:ab)
+  ++  dem  (ape (bass 1.000 ;~(plug ted:ab (star ;~(pfix dog tid:ab)))))
+  ++  dim  (ape dip)
+  ++  dip  (bass 10 ;~(plug sed:ab (star sid:ab)))
+  ++  dum  (bass 10 (plus sid:ab))
+  ++  fed  %+  cook  fend:ob
+  ++  fim  (sear den:fa (bass 58 (plus fem:ab)))
+  ++  hex  (ape (bass 0x1.0000 ;~(plug qex:ab (star ;~(pfix dog qix:ab)))))
+  ++  lip  =+  tod=(ape ted:ab)
+  ++  mot  ;~  pose
+  ++  viz  (ape (bass 0x200.0000 ;~(plug pev:ab (star ;~(pfix dog piv:ab)))))
+  ++  vum  (bass 32 (plus siv:ab))
+  ++  wiz  (ape (bass 0x4000.0000 ;~(plug pew:ab (star ;~(pfix dog piw:ab)))))
+++  mu
+  ++  zag  [p=(end 4 1 (add top bot)) q=bot]
+  ++  zig  [p=(end 4 1 (add top (sub 0x1.0000 bot))) q=bot]
+  ++  zug  (mix (lsh 4 1 top) bot)
+++  ne
+  ++  c  (cut 3 [tig 1] key:fa)
+  ++  d  (add tig '0')
+  ++  x  ?:((gte tig 10) (add tig 87) d)
+  ++  v  ?:((gte tig 10) (add tig 87) d)
+  ++  w  ?:(=(tig 63) '~' ?:(=(tig 62) '-' ?:((gte tig 36) (add tig 29) x)))
+::::  4k: atom printing
+++  co  !.
+      ++  rear  |=(rom/tape =>(.(rep rom) rend))
+      ++  rent  `@ta`(rap 3 rend)
+      ++  rend
+      ++  a-co  |=(dat/@ ((d-co 1) dat))
+      ++  c-co  (em-co [58 1] |=({? b/@ c/tape} [~(c ne b) c]))
+      ++  d-co  |=(min/@ (em-co [10 min] |=({? b/@ c/tape} [~(d ne b) c])))
+      ++  r-co
+      ++  s-co
+      ++  v-co  |=(min/@ (em-co [32 min] |=({? b/@ c/tape} [~(v ne b) c])))
+      ++  w-co  |=(min/@ (em-co [64 min] |=({? b/@ c/tape} [~(w ne b) c])))
+      ++  x-co  |=(min/@ (em-co [16 min] |=({? b/@ c/tape} [~(x ne b) c])))
+      ++  y-co  |=(dat/@ ((d-co 2) dat))
+      ++  z-co  |=(dat/@ `tape`['0' 'x' ((x-co 1) dat)])
+  ++  em-co
+  ++  ed-co
+  ++  ox-co
+  ++  ro-co
+::::  4l: atom parsing
+++  so
+  ++  bisk
+  ++  crub
+  ++  nuck
+  ++  nusk
+  ++  perd
+  ++  royl
+  ++  royl-cell
+  ++  tash
+  ++  twid
+  ++  zust
+::::  4m: formatting functions
+++  scot  |=(mol/dime ~(rent co %$ mol))
+++  scow  |=(mol/dime ~(rend co %$ mol))
+++  slat  |=(mod/@tas |=(txt/@ta (slaw mod txt)))
+++  slav  |=({mod/@tas txt/@ta} (need (slaw mod txt)))
+++  slaw
+++  slay
+++  smyt                                                ::  pretty print path
+++  spat  |=(pax/path (crip (spud pax)))                ::  render path to cord
+++  spud  |=(pax/path ~(ram re (smyt pax)))             ::  render path to tape
+++  stab                                                ::  parse cord to path
+::::  4n: virtualization
+++  mack
+++  mink
+++  mock
+++  musk                                                ::  nock with block set
+      ++  block  
+      ++  result  
+      ++  seminoun  
+      ++  stencil  
+      ++  output
+  ++  abet
+  ++  apex
+    ::  1; constant
+    ::  2; recursion
+    ::  3; probe
+    ::  4; increment
+    ::  5; compare
+    ::  10; static hint
+    ::  10; dynamic hint
+  ++  combine
+  ++  fragment
+    ::  1 is the root
+  ++  require
+  ++  squash
+++  mook
+++  mush                                                ::  sane name to leaf
+++  mong
+++  mule                                                ::  typed virtual
+++  mute                                                ::  untyped virtual
+::::  4o: molds and mold builders
+++  abel  typo                                          ::  original sin: type
+++  alas  (list (pair term hoon))                       ::  alias list
+++  atom  @                                             ::  just an atom
+++  aura  @ta                                           ::  atom format
+++  axis  @                                             ::  tree address
+++  base                                                ::  base mold
+++  bean  ?                                             ::  0=&=yes, 1=|=no
+++  woof  $@(@ {$~ p/hoon})                             ::  simple embed
+++  beet  $@  @                                         ::  advanced embed
+++  chap  (pair (unit term) what)                       ::  labeled help
+++  chum  $?  lef/term                                  ::  jet name
+++  coil  $:  p/?($gold $iron $lead $zinc)              ::  core type
+++  foot  $%  {$ash p/hoon}                             ::  dry arm, geometric
+++  limb  $@  term                                      ::  wing element
+++  line  {p/{$leaf p/aura q/@} q/tile}                 ::  %bccn case
+++  metl  ?($gold $iron $zinc $lead)                    ::  core variance
+++  noun  *                                             ::  any noun
+++  null  $~                                            ::  null, nil, etc
+++  onyx  (list (pair type foot))                       ::  arm activation
+++  opal                                                ::  limb match
+++  pica  (pair ? cord)                                 ::  & prose, | code
+++  palo  (pair vein opal)                              ::  wing trace, match
+++  pock  (pair axis nock)                              ::  changes
+++  port  (each palo (pair type nock))                  ::  successful match
+++  root  hoon                                          ::  produce model
+++  tent                                                ::  model builder
+++  tiki                                                ::  test case
+++  tile  $^  {p/tile q/tile}                           ::  ordered pair
+++  toga                                                ::  face control
+++  tomb  (pair chap (map term (pair what foot)))       ::  core chapter
+++  tope                                                ::  topographic type
+++  tuna                                                ::  tagflow
+++  hoon                                                ::
+      ++  beer  $@(char {$~ p/hoon})                    ::  simple embed
+      ++  mane  $@(@tas {@tas @tas})                    ::  XML name+space
+      ++  manx  {g/marx c/marl}                         ::  dynamic XML node
+      ++  marl  (list tuna)                             ::  dynamic XML nodes
+      ++  mart  (list {n/mane v/(list beer)})           ::  dynamic XML attrs
+      ++  marx  {n/mane a/mart}                         ::  dynamic XML tag
+      ++  mare  (each manx marl)                        ::  node or nodes
+      ++  maru  (each tuna marl)                        ::  interp or nodes
+      ++  tuna                                          ::  maybe interpolation
+++  toro  (pair toga (unit root))                       ::
+++  twit  hoon                                          ::  last-gen hoon
+++  tyre  (list {p/term q/hoon})                        ::
+++  tyke  (list (unit hoon))                            ::
+++  nock  $^  {p/nock q/nock}                           ::  autocons
+++  type  $@  $?  $noun                                 ::  any nouns
+++  tyro  $-(type type)                                 ::  type converter
+++  tone  $%  {$0 p/*}                                  ::  success
+++  tony                                                ::  ++tone done right
+++  tine                                                ::  partial noun
+++  tool  $@(term tune)                                 ::  type decoration
+++  tune                                                ::  complex
+++  typo  type                                          ::  old type
+++  vase  {p/type q/*}                                  ::  type-value pair
+++  vise  {p/typo q/*}                                  ::  old vase
+++  vial  ?($read $rite $both $free)                    ::  co/contra/in/bi
+++  vair  ?($gold $iron $lead $zinc)                    ::  in/contra/bi/co
+++  vein  (list (unit axis))                            ::  search trace
+++  sect  (list pica)                                   ::  paragraph
+++  whit                                                ::  
+++  what  (unit (pair cord (list sect)))                ::  help slogan/section
+++  wing  (list limb)                                   ::  search path
+++  worm                                                ::  compiler cache
+++  writ                                                ::  type annotation
+::::  5: layer five                                     ::
+  ::    5a: compiler utilities                          ::
+  ::    5b: macro expansion                             ::
+  ::    5c: compiler backend and prettyprinter          ::
+  ::    5d: parser                                      ::
+  ::    5e: caching compiler                            ::
+  ::    5f: molds and mold builders                     ::
+  ::    5g: profiling support (XX remove)               ::
+::::  5a: compiler utilities
+++  bool  `type`(fork [%atom %f `0] [%atom %f `1] ~)    ::  make loobean
+++  cell                                                ::  make %cell type
+++  core                                                ::  make %core type
+++  help
+++  face                                                ::  make %face type
+++  fork                                                ::  make %fork type
+++  cove                                                ::  extract [0 *] axis
+++  comb                                                ::  combine two formulas
+++  cond                                                ::  ?:  compile
+++  cons                                                ::  make formula cell
+++  fitz                                                ::  odor compatibility
+++  flan                                                ::  loobean  &
+++  flip                                                ::  loobean negation
+++  flor                                                ::  loobean  |
+++  hike
+++  jock
+++  look
+++  loot
+::::  5b: macro expansion
+++  ah                                                  ::  tiki engine
+  ++  blue
+  ++  gray
+  ++  puce
+  ++  wthp  |=  opt/(list (pair root hoon))
+  ++  wtkt  |=({sic/hoon non/hoon} (gray [%wtkt puce (blue sic) (blue non)]))
+  ++  wtls  |=  {gen/hoon opt/(list (pair root hoon))}
+  ++  wtpt  |=({sic/hoon non/hoon} (gray [%wtpt puce (blue sic) (blue non)]))
+  ++  wtsg  |=({sic/hoon non/hoon} (gray [%wtsg puce (blue sic) (blue non)]))
+  ++  wtts  |=(gen/hoon (gray [%wtts (blue gen) puce]))
+++  ax
+  ++  bunt  
+  ++  clam  
+  ++  home  
+  ++  default
+  ++  trivial
+  ++  basic
+  ++  decorate
+  ++  ersatz
+  ++  factory
+  ++  sample
+    ++  basic
+    ++  fetch
+    ++  fetch-wing
+    ++  choice
+    ++  switch
+    ++  probe
+    ++  document
+    ++  construct
+++  al                                                  ::  tile engine
+  ++  hail
+  ++  home  |=(gen/hoon ^-(hoon ?:(=(1 gom) gen [%tsgr [%$ gom] gen])))
+  ++  bunt
+  ++  clam  
+  ++  whip
+++  ap                                                  ::  hoon engine
+  ++  etch
+  ++  feck
+  ++  gi
+    ++  gray
+    ++  grad
+      ++  apex
+      ++  prim
+      ++  senc
+      ++  flam  [gen wit]
+      ++  grif
+      ++  doof
+      ++  helk
+      ++  hulp
+      ++  humm
+      ++  runk
+      ++  tong
+    ++  graf
+  ++  hock
+  ++  bent
+  ++  bawl
+  ++  bile
+  ++  boil
+  ++  open
+      ++  open-mane
+      ++  open-mart
+  ++  rake  ~>(%mean.[%leaf "rake-hoon"] (need reek))
+  ++  reek
+  ++  rusk
+  ++  walk                                              ::  forward traverse
+    ++  apex
+    ++  arms
+    ++  bark 
+    ++  dubs
+    ++  expr
+    ++  exps
+    ++  heel
+    ++  lead
+    ++  moan
+    ++  moar
+    ++  moto
+    ++  nexp
+    ++  noop
+    ++  quad
+    ++  raid
+    ++  trey
+    ++  trio
+    ++  trip
+    ++  toad
+    ++  tora
+    ++  tung
+    ++  twee
+    ++  twin
+::::  5c: compiler backend and prettyprinter
+++  ut
+  ++  blow
+  ++  burn
+  ++  bran
+  ++  busk
+  ++  buss
+  ++  conk
+  ++  crop
+    ++  dext
+    ++  sint
+  ++  cool
+  ++  duck  ^-(tank ~(duck us sut))
+  ++  dune  |.(duck)
+  ++  dunk
+  ++  elbo
+  ++  ergo
+  ++  endo
+  ++  ad
+    ++  arc
+      ++  deft                                          ::  generic
+        ++  bath  *                                     ::  leg match type
+        ++  claw  *                                     ::  arm match type
+        ++  form  |*({* *} p=+<-)                       ::  attach build state
+        ++  skin  |*(p/* p)                             ::  reveal build state
+        ++  meat  |*(p/* p)                             ::  remove build state
+      ++  make                                          ::  for mint
+        ++  bath  type                                  ::  leg match type
+        ++  claw  onyx                                  ::  arm
+        ++  form  |*({* *} [p=+<- q=+<+])               ::
+        ++  skin  |*({p/* q/*} q)                       ::  unwrap baggage
+        ++  meat  |*({p/* q/*} p)                       ::  unwrap filling
+    ++  def
+      ++  pord  |*(* (form +< *nock))                   ::  wrap mint formula
+      ++  rosh  |*(* (form +< *(list pock)))            ::  wrap mint changes
+      ++  fleg  _(pord *bath)                           ::  legmatch + code
+      ++  fram  _(pord *claw)                           ::  armmatch +
+      ++  foat  _(rosh *bath)                           ::  leg with changes
+      ++  fult  _(rosh *claw)                           ::  arm with changes
+    ++  lib
+      ++  deft
+        ++  halp  $-(hoon fleg)
+        ++  vant
+              ++  tasp  $-({{axis bath} fleg foat} foat)
+              ++  tyle  $-(foat foat)
+        ++  vunt
+              ++  tasp  $-({{axis claw} fleg fult} fult)
+              ++  tyle  $-(fult foat)
+      ++  make
+        ++  halp  |~  a/hoon
+        ++  vant
+              ++  tasp  |=  {a/(pair axis type) b/fleg c/foat}
+              ++  tyle  |=(foat +<)
+        ++  vunt
+              ++  tasp  |~  {a/(pair axis claw) b/fleg c/fult}
+              ++  tyle  |~  fult
+    ++  bin
+      ++  rame
+            ++  clom  bath
+            ++  chog  fleg
+            ++  ceut  foat
+      ++  gelp
+            ++  clom  claw
+            ++  chog  fram
+            ++  ceut  fult
+      ++  ecbo  (ecco rame)
+      ++  eclo  (ecco gelp)
+      ++  ecco
+  ++  oc
+    ++  echo
+    ++  ecmo
+  ++  etco
+  ++  et
+    ++  play
+    ++  mint
+    ++  mull
+  ++  epla
+  ++  emin
+  ++  emul
+  ++  felt
+  ++  fond
+        ++  pony                                        ::  raw match
+          ++  join  |=({a/what b/what} ?~(a b a))
+          ++  lose  [%| %& p.heg]
+          ++  stop  ?~(q.heg here lose)
+          ++  twin  |=  {hax/pony yor/pony}
+          ++  $
+              ++  main
+              ++  next
+  ++  find
+  ++  fund
+  ++  fine
+  ++  fire
+  ++  fish
+  ++  fuse
+  ++  gain
+  ++  harp
+  ++  hope
+  ++  lose
+  ++  chip
+  ++  mint
+    ++  nice
+    ++  grow
+  ++  moot
+  ++  mull
+    ++  beth
+    ++  nice
+    ++  grow
+    ++  bake
+    ++  balk
+  ++  meet  |=(ref/type &((nest | ref) (nest(sut ref) | sut)))
+  ++  miss                                              ::  nonintersection
+    ++  dext
+    ++  sint
+  ++  mite  |=(ref/type |((nest | ref) (nest(sut ref) & sut)))
+  ++  nest
+    ++  deem
+    ++  deep
+    ++  dext
+    ++  meet  &(dext dext(sut ref, ref sut))
+    ++  sint
+  ++  peek
+  ++  peel
+  ++  play
+  ++  redo                                              ::  refurbish faces
+    ++  dear                                            ::  resolve tool stack
+    ++  dext                                            ::  subject traverse
+    ++  done                                            ::  complete assembly
+    ++  sint                                            ::  reduce by reference
+  ++  repo
+  ++  rest
+  ++  take
+  ++  tack
+  ++  tend
+  ++  toss
+  ++  wrap
+++  us                                                  ::  prettyprinter
+      ++  cape  {p/(map @ud wine) q/wine}               ::
+      ++  wine                                          ::
+  ++  dash
+  ++  deal  |=(lum/* (dish dole lum))
+  ++  dial
+    ++  many
+    ++  $
+  ++  dish
+  ++  doge
+  ++  dole
+  ++  duck  (dial dole)
+++  cain  sell                                          ::  $-(vase tank)
+++  noah  text                                          ::  $-(vase tape)
+++  onan  seer                                          ::  $-(vise vase)
+++  text                                                ::  tape pretty-print
+++  seem  |=(toy/typo `type`toy)                        ::  promote typo
+++  seer  |=(vix/vise `vase`vix)                        ::  promote vise
+++  sell                                                ::  tank pretty-print
+++  skol                                                ::  $-(type tank) for ~!
+++  slam                                                ::  slam a gate
+++  slab                                                ::  test if contains
+++  slap
+++  slew                                                ::  get axis in vase
+++  slim                                                ::  identical to seer?
+++  slit                                                ::  type of slam
+++  slob                                                ::  superficial arm
+++  sloe                                                ::  get arms in core
+++  slop                                                ::  cons two vases
+++  slot                                                ::  got axis in vase
+++  slym                                                ::  slam w+o sample-type
+++  spec                                                ::  reconstruct type
+::::  5d: parser
+++  vang                                                ::  set ++vast params
+++  vast                                                ::  main parsing core
+  ++  gash  %+  cook                                    ::  parse path
+  ++  gasp  ;~  pose                                    ::  parse =path= etc.
+  ++  glam  ~+((glue ace))
+  ++  hasp  ;~  pose                                    ::  path element
+  ++  limp  %+  cook
+  ++  mota  %+  cook
+  ++  glom
+  ++  docs
+    ++  apex
+    ++  apse
+    ++  beer
+    ++  body
+    ++  text  (pick line code)                          ::  text line
+    ++  line  ;~(less ace (cook crip (star prn)))       ::  prose line
+    ++  code  ;~(pfix step step (cook crip (star prn))) ::  code line
+    ++  noel  ;~(plug (punt ;~(pfix step hax)) null)    ::  header padding
+    ++  head  ;~(pfix hax step cen sym)                 ::  header line
+    ++  null  (cold ~ (star ace))                       ::  blank line
+    ++  fine                                            ::  definition line
+    ++  step  ;~(plug ace ace)
+    ++  into  |*(bod/rule (indo ;~(pfix step bod)))
+    ++  indo
+    ++  exit
+    ++  fill
+    ++  rant
+  ++  plex                                              ::  reparse static path
+  ++  phax
+  ++  posh
+  ++  poof                                              ::  path -> (list hoon)
+  ++  poon                                              ::  try to replace '='s
+  ++  poor
+  ++  porc
+  ++  rump
+  ++  rood
+  ++  rupl
+  ++  sail                                              ::  xml template
+    ++  apex                                            ::  product hoon
+    ++  top-level                                        ::  entry-point
+    ++  inline-embed                                    ::  brace interpolation
+    ++  script-or-style                                 ::  script or style
+    ++  tuna-mode                                       ::  xml node(s) kind
+    ++  wide-top                                        ::  wide outer top
+    ++  wide-inner-top                                  ::  wide inner top
+    ++  wide-attrs                                      ::  wide attributes
+    ++  wide-tail                                       ::  wide elements
+    ++  wide-elems                                      ::  wide elements
+    ++  wide-paren-elems                                ::  wide flow
+    ++  drop-top
+    ++  join-tops
+    ++  wide-quote                                      ::  wide quote
+    ++  quote-innards                                   ::  wide+tall flow
+    ++  bracketed-elem                                  ::  bracketed element
+    ++  wrapped-elems                                   ::  wrapped tuna
+    ++  a-mane                                          ::  mane as hoon
+    ++  en-class
+    ++  tag-head                                        ::  tag head
+    ++  tall-top                                        ::  tall top
+    ++  tall-attrs                                      ::  tall attributes
+    ++  tall-elem                                       ::  tall preface
+    ++  hopefully-quote                                 :: prefer "quote" form
+    ++  script-style-tail                               ::  unescaped tall tail
+    ++  tall-tail                                       ::  tall tail
+    ++  tall-kids                                       ::  child elements
+    ++  collapse-chars                                  ::  group consec chars
+  ++  cram                                              ::  parse unmark
+        ++  item  (pair mite marl:hoon)                 ::  xml node generator
+        ++  colm  @ud                                   ::  column
+        ++  tarp  marl:hoon                             ::  node or generator
+        ++  mite                                        ::  context
+        ++  trig                                        ::  line style
+        ++  trig-style                                  ::  type of parsed line
+        ++  trig-new                                    ::  start a
+        ++  graf                                        ::  paragraph element
+    ++  main
+      ++  $                                           ::  resolve
+      ++  cur-indent
+      ++  back                                          ::  column retreat
+      ++  cur-to-tarp                                   ::  item to tarp
+      ++  close-item  ^+  .                             ::  complete and pop
+      ++  read-line                                     ::  capture raw line
+      ++  look                                          ::  inspect line
+      ++  close-par                                     ::  make block
+      ++  line  ^+  .                                   ::  body line loop
+      ++  parse-block                                   ::  execute parser
+      ++  read-one                                      ::  read %one item
+      ++  open-item                                     ::  enter list/quote
+        ++  apex  ^+  .                                 ::  open container
+        ++  push                                        ::  push context
+        ++  entr                                        ::  enter container
+        ++  lent                                        ::  list entry
+    ++  parse                                           ::  individual parsers
+      ++  look                                          ::  classify line
+      ++  cash                                          ::  escaped fence
+      ++  cool                                          ::  reparse
+      ++  easy-sol                                      ::  parse start of line
+      ++  echo                                          ::  hoon literal
+      ++  non-empty
+      ++  word                                          ::  tarp parser
+      ++  work  (cook zing (star word))                 ::  indefinite tarp
+      ++  down                                          ::  parse inline tarp
+        ++  main
+        ++  item
+      ++  hrul                                          ::  empty besides fence
+      ++  tecs
+      ++  fens
+      ++  para                                          ::  paragraph
+      ++  expr                                          ::  expression
+      ++  whit                                          ::  whitespace
+      ++  head                                          ::  parse heading
+      ++  contents-to-id                                ::  # text into elem id
+  ++  scab
+  ++  espy                                              ::  face for =model
+  ++  scad
+  ++  scat  !:
+  ++  soil
+  ++  sump  (ifix [kel ker] (stag %cltr (most ace wide)))
+  ++  norm                                              ::  rune regular form
+    ++  boog                                            ::  core arms
+    ++  whap                                            ::  chapter
+    ++  wasp                                            ::  $brcb aliases
+    ++  wisp                                            ::  core tail
+    ++  toad                                            ::  untrap parser exp
+    ++  rune                                            ::  build rune
+    ++  runo                                            ::  rune plus
+    ++  glop  ~+((glue mash))                           ::  separated by space
+    ++  gunk  ~+((glue muck))                           ::  separated list
+    ++  butt  |*  zor/rule                              ::  closing == if tall
+    ++  ulva  |*  zor/rule                              ::  closing -- and tall
+    ++  hank  (most muck loaf)                          ::  gapped hoons
+    ++  hunk  (most muck loan)                          ::  gapped roots
+    ++  loaf  ?:(tol tall wide)                         ::  tall/wide hoon
+    ++  loan  ?:(tol till wyde)                         ::  tall/wide root
+    ++  mash  ?:(tol gap ;~(plug com ace))              ::  list separator
+    ++  muck  ?:(tol gap ace)                           ::  general separator
+    ++  teak  %+  knee  *tiki  |.  ~+                   ::  wing or hoon
+    ++  rack  (most mash ;~(gunk loaf loaf))            ::  list [hoon hoon]
+    ++  ruck  (most mash ;~(gunk loan loaf))            ::  list [root hoon]
+    ++  rick  (most mash ;~(gunk rope loaf))            ::  list [wing hoon]
+    ++  expa  |.(loaf)                                  ::  one hoon
+    ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+    ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
+    ++  expd  |.(;~(gunk loaf loaf loaf loaf))          ::  four hoons
+    ++  expe  |.(wisp)                                  ::  core tail
+    ++  expf  |.(;~(gunk ;~(pfix cen sym) loaf))        ::  %term and hoon
+    ++  expg  |.(;~(gunk sym loaf))                     ::  term and hoon
+    ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
+    ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+    ++  expk  |.(;~(gunk loaf ;~(plug loaf (easy ~))))  ::  list of two hoons
+    ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
+    ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
+    ++  expn  |.  ;~  gunk  rope  loaf                  ::  wing, hoon,
+    ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
+    ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
+    ++  expq  |.(;~(gunk rope loaf loaf))               ::  wing and two hoons
+    ++  expr  |.(;~(gunk loaf wisp))                    ::  hoon and core tail
+    ++  exps  |.((butt hank))                           ::  closed gapped hoons
+    ++  expt  |.(;~(gunk wise rope loaf loaf))          ::  =^
+    ++  expv  |.((butt rick))                           ::  just changes
+    ++  expw  |.(;~(gunk rope loaf loaf loaf))          ::  wing and three hoons
+    ++  expx  |.  ;~  gunk  loaf                        ::  hoon and core tail
+    ++  expz  |.(loaf(bug &))                           ::  hoon with tracing
+    ++  exqa  |.(loan)                                  ::  one hoon
+    ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
+    ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
+    ++  exqs  |.((butt hunk))                           ::  closed gapped roots
+    ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
+    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
+    ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
+    ++  exqn  |.(;~(gunk loan (stag %cltr (butt hank))))::  autoconsed hoons
+    ++  exqw  |.(;~(gunk loaf loan))                    ::  hoon and root
+    ++  exqx  |.(;~(gunk loaf loan loan))               ::  hoon, two roots
+    ++  exqy  |.(;~(gunk loaf loan loan loan))          ::  hoon, three roots
+    ++  exqz  |.(;~(gunk loaf (butt hunk)))             ::  hoon, n roots
+    ++  tkhp  |.  %+  cook  |=  {a/tiki b/(list (pair root hoon))}
+    ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+    ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
+    ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+    ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+    ++  tkts  |.  %+  cook  |=  {a/root b/tiki}
+    ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
+    ++  hinc  |.                                        ::  optional =en, hoon
+    ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
+    ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
+    ++  hinf  |.                                        ::  0-3 >s, two hoons
+    ++  hing  |.                                        ::  0-3 >s, three hoons
+    ++  bonk                                            ::  jet signature
+    ++  hinh  |.                                        ::  1/2 numbers, hoon
+    ++  bont  ;~  (bend)                                ::  term, optional hoon
+    ++  bony  (cook |=(a/(list) (lent a)) (plus tis))   ::  base 1 =en count
+    ++  bonz                                            ::  term-labelled hoons
+  ++  lang                                              ::  lung sample
+  ++  lung
+  ++  long
+  ++  lobo  (most ;~(plug com ace) ;~(glam rope wide))
+  ++  loon  (most ;~(plug com ace) ;~(glam wide wide))
+  ++  lute                                              ::  tall [] noun
+  ++  rope                                              ::  wing form
+  ++  wise                                              ::  toro form
+  ++  wrap
+  ++  tall                                              ::  full tall form
+  ++  till                                              ::  mold tall form
+  ++  wede                                              ::  wide bulb
+  ++  wide                                              ::  full wide form
+  ++  wyde                                              ::  mold wide form
+  ++  wart
+++  vest
+++  vice
+++  make                                                ::  compile cord to nock
+++  rain                                                ::  parse with % path
+++  ream                                                ::  parse cord to hoon
+++  reck                                                ::  parse hoon file
+++  ride                                                ::  end-to-end compiler
+::::  5e: caching compiler
+++  wa  !:                                              ::  cached compile
+  ++  nell  |=(ref/type (nest [%cell %noun %noun] ref)) ::  nest in cell
+  ++  nest                                              ::  nest:ut
+  ++  call                                              ::  call gate
+  ++  open                                              ::  assemble door
+  ++  neat                                              ::  type compliance
+  ++  nets                                              ::  typeless nest
+  ++  play                                              ::  play:ut
+  ++  mint                                              ::  mint:ut to noun
+  ++  slap                                              ::  ++slap, cached
+  ++  slot                                              ::  ++slot, cached
+  ++  spec                                              ::  specialize vase
+  ++  spot                                              ::  slot then spec
+  ++  stop                                              ::  spec then slot
+::::  5f: molds and mold builders
+++  arch  {fil/(unit @uvI) dir/(map @ta $~)}            ::  fundamental node
+++  arvo  (wind {p/term q/mill} mill)                   ::  arvo card
+++  beak  {p/ship q/desk r/case}                        ::  path prefix
+++  beam  {{p/ship q/desk r/case} s/spur}               ::  global name
+++  bone  @ud                                           ::  opaque duct
+++  case                                                ::  version
+++  desk  @tas                                          ::  ship desk case spur
+++  cage  (cask vase)                                   ::  global metadata
+++  cask  |*(a/mold (pair mark a))                      ::  global data
+++  cuff                                                ::  permissions
+++  curd  {p/@tas q/*}                                  ::  typeless card
+++  dock  (pair @p term)                                ::  message target
+++  duct  (list wire)                                   ::  causal history
+++  hypo  |*(a/mold (pair type a))                      ::  type associated
+++  hobo  |*  a/gate                                    ::  task wrapper
+++  kirk  (unit (set monk))                             ::  audience
+++  lens                                                ::  observation core
+      ++  v  *(unit (unit cage))                        ::  full history
+      ++  w  *(unit (unit (unit cage)))                 ::  latest diff
+      ++  x  *(unit (unit cage))                        ::  data at path
+      ++  y  *(unit (unit arch))                        ::  directory
+      ++  z  *(unit (unit cage))                        ::  current subtree
+++  mane  $@(@tas {@tas @tas})                          ::  XML name+space
+++  manx  {g/marx c/marl}                               ::  XML node
+++  marc                                                ::  structured mark
+++  mark  @tas                                          ::  content type
+++  marl  (list manx)                                   ::  XML node list
+++  mars  {t/{n/$$ a/{i/{n/$$ v/tape} t/$~}} c/$~}      ::  XML cdata
+++  mart  (list {n/mane v/tape})                        ::  XML attributes
+++  marx  {n/mane a/mart}                               ::  XML tag
+++  mash  |=(* (mass +<))                               ::  producing mass
+++  mass  (pair cord (each noun (list mash)))           ::  memory usage
+++  mill  (each vase milt)                              ::  vase+metavase
+++  milt  {p/* q/*}                                     ::  metavase
+++  mite  (list @ta)                                    ::  mime type
+++  monk  (each ship {p/@tas q/@ta})                    ::  general identity
+++  muse  {p/@tas q/duct r/arvo}                        ::  sourced move
+++  move  {p/duct q/arvo}                               ::  arvo move
+++  ovum  {p/wire q/curd}                               ::  typeless ovum
+++  pane  (list {p/@tas q/vase})                        ::  kernel modules
+++  pass  @                                             ::  public key
+++  pone  (list {p/@tas q/vise})                        ::  kernel modules old
+++  ring  @                                             ::  private key
+++  ship  @p                                            ::  network identity
+++  shop  (each ship (list @ta))                        ::  urbit/dns identity
+++  sink  (trel bone ship path)                         ::  subscription
+++  sley  $-  {* (unit (set monk)) term beam}           ::  namespace function
+++  slyd  $-  {* (unit (set monk)) term beam}           ::  super advanced
+++  slyt  $-({* *} (unit (unit)))                       ::  old namespace
+++  spur  path                                          ::  ship desk case spur
+++  time  @da                                           ::  galactic time
+++  vile                                                ::  reflexive constants
+++  wind                                                ::  new kernel action
+++  wire  path                                          ::  event pretext
+::::  5g: profiling support (XX move)
+++  doss
+++  moan                                                ::  sample metric
+++  hump
+++  pi-heck
+++  pi-noon                                             ::  sample trace
+++  pi-mope                                             ::  add sample
+++  pi-moth                                             ::  count sample
+++  pi-mumm                                             ::  print sample
+++  pi-tell                                             ::  produce dump

@@ -15,7 +15,7 @@ END_OF_WARNING
 # The "FIXED:" comments lines are descriptons of the fixed length runes
 # (1-fixed, 2-fixed, 3-fixed and 4-fixed) for auto-generation
 # of Marpa rules for the various regular formats, both
-# tall and flat.
+# tall and wide.
 #
 # The format is
 #
@@ -89,16 +89,18 @@ sub prune {
 
     state $nonSemantic = {
 	doubleStringElements => 1,
-        flatHoon        => 1,
-        flatHoonJogging => 1,
-        flatHoonJogs    => 1,
-        flatHoonSeq     => 1,
+        wideHoon        => 1,
+        wideHoonJogging => 1,
+        wideHoonJogs    => 1,
+        wideHoonJog     => 1,
+        wideHoonSeq     => 1,
         hoon            => 1,
 	hoonExpression => 1,
 	hoonFile => 1,
         hoonJog     => 1,
         hoonJogging => 1,
         hoonJogs    => 1,
+        hoonJog     => 1,
 	hoonPrimary => 1,
         hoonSeq         => 1,
 	pathHoon => 1,
@@ -176,12 +178,15 @@ unicorn ~ [^\d\D]
 bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
 
+FAS ~ fas4h
 fas4h ~ [/]
 
 # HEP ~ hep4h
 hep4h ~ '-'
 KET ~ ket4h
 ket4h ~ '^'
+LUS ~ lus4h
+lus4h ~ '+'
 
 soq4h ~ [']
 
@@ -231,6 +236,122 @@ mes4k ~ hit4k hit4k
 
 gon4k ~ bas4h gay4k fas4h
 
+# === Hoon library: 4l ===
+
+# nuck(4l) is the coin parser
+nuck4l ::= SYM4K
+
+# tash(4l) is the signed dime parser
+nuck4l ::= TODO_tash4l
+TODO_tash4l ::= UNICORN
+
+# perd(4l) parses dimes or tuples without their standard prefixes
+nuck4l ::= TODO_perl4l
+TODO_perl4l ::= UNICORN
+
+# Can be either '$~' or '%~'
+# -- both seem to have the same semantics
+nuck4l ::= moldNullSig
+moldNullSig ::= '~'
+
+# perd(4l) parses sig-prefixed coins after the sig prefix
+nuck4l ::= TODO_twid4l
+TODO_twid4l ::= UNICORN
+
+nuck4l ::= bisk4l
+# bisk(4l) parses unsigned dimes of any base
+bisk4l ::= NUMBER
+
+#     :~  :-  ['a' 'z']  (cook |=(a/@ta [%$ %tas a]) sym)
+#         :-  ['0' '9']  (stag %$ bisk)
+#         :-  '-'        (stag %$ tash)
+#         :-  '.'        ;~(pfix dot perd)
+#         :-  '~'        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
+
+# === Hoon library: 5d ===
+
+# === Hoon library: 5d, molds ===
+
+mold ::= wideMold
+moldSeq ::= mold+ separator=>GAP proper=>1
+wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
+
+wede5d ::= (FAS) wideHoon
+wede5d ::= (LUS) wideHoon
+
+# Implementing scad(5d)
+
+wideMold ::= moldPrefixCab
+moldPrefixCab ::= ('_') wideHoon
+
+wideMold ::= moldPrefixCom
+moldPrefixCom ::= (',') wideHoon
+
+wideMold ::= moldBucbuc
+moldBucbuc ::= '$$'
+
+wideMold ::= moldBucpam
+moldBucpam ::= '$&'
+
+wideMold ::= moldBucbar
+moldBucbar ::= '$|'
+
+wideMold ::= moldBucSingleString
+moldBucSingleString ::= '$' SINGLESTRING
+
+wideMold ::= moldBucNuck4l
+moldBucNuck4l ::= '$' nuck4l
+
+wideMold ::= moldCenbuc
+moldCenbuc ::= '%$'
+
+wideMold ::= moldCenpam
+moldCenpam ::= '%&'
+
+wideMold ::= moldCenbar
+moldCenbar ::= '%|'
+
+wideMold ::= moldCenSingleString
+moldCenSingleString ::= ('%') SINGLESTRING
+
+wideMold ::= moldCenNuck4l
+moldCenNuck4l ::= '%' nuck4l
+
+wideMold ::= moldCircumParen
+moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
+
+wideMold ::= moldCircumBrace
+moldCircumBrace ::= ('{') wideMoldSeq ('}')
+
+wideMold ::= moldCircumBracket
+moldCircumBracket ::= ('[') wideMoldSeq (']')
+
+wideMold ::= moldTar
+moldTar ::= '*'
+
+wideMold ::= moldAura
+moldAura ~ '@' OptLCs OptUCs
+OptLCs ~ [a-z]*
+OptUCs ~ [A-Z]*
+
+wideMold ::= moldPrefixWut
+moldPrefixWut ::= ('?(') wideMoldSeq (')')
+
+wideMold ::= moldWut
+moldWut ::= '?'
+
+wideMold ::= moldSig
+moldSig ::= '~'
+
+wideMold ::= moldKet
+moldKet ~ '^'
+
+# <moldInfixCol> can start with either KET (^) or lowercase char
+wideMold ::= moldInfixCol
+moldInfixCol ::= wing+ separator=>[:] proper=>1
+
+# TODO: Finish Implementing scad(5d)
+
 # === HOON FILE ===
 :start ::= hoonFile
 # LATER: This is a simplication, which does not
@@ -244,11 +365,11 @@ leader  ::= optWs
 
 optWs ::=
 optWs ::= ACE
-optWs ::= GAP4K
+optWs ::= GAP
 
-GAP4K ~ gap4k
+GAP ~ gap4k
 
-gap4k ~ ace aces # a "flat" gap
+gap4k ~ ace aces # a "wide" gap
 gap4k ~ tallGapPrefix optGapLines optAces
 # The prefix must contain an <NL> to ensure that this *is* a tall gap
 tallGapPrefix ~ optAces nl
@@ -449,10 +570,11 @@ DOUBLESTRINGCHARS ~ doubleStringChar+
 # hex 5C is backslash
 # From syntax.vim, might need correction
 doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
-stringInterpolation ::= '{' flatHoon '}'
+stringInterpolation ::= '{' wideHoon '}'
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
+# SINGLESTRING is qut(4i)
 SINGLESTRING ::= ([']) <single soq cord> (['])
 <single soq cord> ::= qit4k* separator=>gon4k proper=>1
 
@@ -483,17 +605,17 @@ pathStringChar ~ [a-zA-Z-]
 
 # === CELLS BY TYPE ==
 
-hoonSeq ::= hoon+ separator=>GAP4K proper=>1
-hoon ::= flatHoon
-flatHoon ::= hoonExpression
+hoonSeq ::= hoon+ separator=>GAP proper=>1
+hoon ::= wideHoon
+wideHoon ::= hoonExpression
 hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
 hoonExpression ::= infixPlus
 hoonExpression ::= infixSlash
 hoonExpression ::= hoonPrimary
-infixColon ::= hoonPrimary (':') flatHoon
-infixKet ::= hoonPrimary ('^') flatHoon
+infixColon ::= hoonPrimary (':') wideHoon
+infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
 infixPlus ::=  NAME ('+') hoonExpression
 infixSlash ::= NAME ('/') hoonExpression
@@ -510,7 +632,7 @@ togaElements ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= NIL
 
-# parsed by the rope arm in hoon.hoon
+# the wing type is parsed by the rope(5d)
 wing ::= limb+ separator=>[.] proper=>1
 limb ::= ','
 limb ::= optKets '$'
@@ -520,28 +642,28 @@ limb ::= [+&|] DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
-flatHoonSeq ::= flatHoon+ separator=>ACE proper=>1
+wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 
 hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>GAP4K proper=>1
-hoonJog ::= hoon (GAP4K) hoon
-flatHoonJogging ::= flatHoonJogs
-flatHoonJogs ::= flatHoonJog+ separator=>flatHoonJoggingSeparator proper=>1
-flatHoonJog ::= flatHoon (ACE) flatHoon
-flatHoonJoggingSeparator ::= ',' ACE
+hoonJogs ::= hoonJog+ separator=>GAP proper=>1
+hoonJog ::= hoon (GAP) hoon
+wideHoonJogging ::= wideHoonJogs
+wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
+wideHoonJog ::= wideHoon (ACE) wideHoon
+wideHoonJoggingSeparator ::= ',' ACE
 
-battery ::= batteryElement* separator=>GAP4K proper=>1
-batteryElement ::= ('++' GAP4K) NAME (GAP4K) hoon
+battery ::= batteryElement* separator=>GAP proper=>1
+batteryElement ::= ('++' GAP) NAME (GAP) hoon
 
 # === CELLS BY RUNE ==
 
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
-tallBarcab ::= (BARCAB GAP4K) hoon (GAP4K) battery (GAP4K '--')
+tallBarcab ::= (BARCAB GAP) hoon (GAP) battery (GAP '--')
 
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
-tallBarcen ::= (BARCEN GAP4K) battery (GAP4K '--')
+tallBarcen ::= (BARCEN GAP) battery (GAP '--')
 
 # FIXED: barcol hoon hoon
 # FIXED: bardot hoon
@@ -549,12 +671,12 @@ tallBarcen ::= (BARCEN GAP4K) battery (GAP4K '--')
 
 BARKET ~ [|] '^'
 hoon ::= tallBarket
-tallBarket ::= (BARKET GAP4K) hoon (GAP4K) battery (GAP4K '--')
+tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 
 # FIXED: barsig hoon hoon
 # FIXED: bartar hoon hoon
 
-# # LATER: Should eventually be (BARTIS) (GAP4K) type (GAP4K) hoon
+# # LATER: Should eventually be (BARTIS) (GAP) type (GAP) hoon
 # # where <type> is buc??? runes and irregular forms thereof
 # FIXED: bartis hoon hoon
 
@@ -565,23 +687,19 @@ tallBarket ::= (BARKET GAP4K) hoon (GAP4K) battery (GAP4K '--')
 # Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
-tallBuccol ::= (BUCCOL GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatBuccol
-flatBuccol ::= (BUCCOL '(') flatHoonSeq (')')
-flatBuccol ::= (':bccl(') flatHoonSeq (')')
-flatBuccol ::= ('{') flatHoonSeq ('}')
-flatBuccol ::= (',[') flatHoonSeq (']')
+tallBuccol ::= (BUCCOL GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideBuccol
+wideBuccol ::= (BUCCOL '(') wideHoonSeq (')')
+wideBuccol ::= (':bccl(') wideHoonSeq (')')
+wideBuccol ::= ('{') wideHoonSeq ('}')
+wideBuccol ::= (',[') wideHoonSeq (']')
 
-# BUCCEN is "2-running"
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN GAP4K) buccenBody (GAP4K '==')
-
-buccenBody ::= buccenPair+ separator=>GAP4K proper=>1
-buccenPair ::= ('[' ACE) term (ACE) foot (']')
-buccenPair ::= curlyPair
-curlyPair ::= ('{') term (ACE) foot ('}')
-foot ::= flatHoon
+tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
+hoonPrimary ::= wideBuccen
+wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
+wideBuccen ::= (':bccn(') wideMoldSeq (')')
 
 # FIXED: buchep hoon hoon
 # FIXED: bucket hoon hoon
@@ -592,19 +710,27 @@ foot ::= flatHoon
 # Undocumented runes
 # $*  ::  bunt (irregular form is *)
 hoonPrimary ::= irrBuctar
-irrBuctar ::= '*' flatHoon
+irrBuctar ::= '*' wideHoon
 
 # TODO: Should all unary expression be <hoonPrimary>?
+
+BUCSEM ~ [$] [;]
+mold ::= moldBucsem
+moldBucsem ::= (BUCSEM GAP) wing (GAP) wede5d (GAP '==')
+moldBucsem ::= (BUCSEM GAP) wing (GAP '==')
+wideMold ::= wideMoldBucsem
+wideMoldBucsem ::= (BUCSEM '(') wing (ACE) wede5d (')')
+wideMoldBucsem ::= (BUCSEM '(') wing (')')
 
 # FIXED: buctis term hoon
 
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
-tallBucwut ::= (BUCWUT GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatBucwut
-flatBucwut ::= (BUCWUT '(') flatHoonSeq (')')
-flatBucwut ::= (':bcwt(') flatHoonSeq (')')
-flatBucwut ::= ('?(') flatHoonSeq (')')
+tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideBucwut
+wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
+wideBucwut ::= (':bcwt(') wideHoonSeq (')')
+wideBucwut ::= ('?(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
 
@@ -615,13 +741,13 @@ flatBucwut ::= ('?(') flatHoonSeq (')')
 
 # FIXED: censig wing hoon hoon
 hoonPrimary ::= irrCensig
-irrCensig ::= ('~(') flatHoonSeq (')')
+irrCensig ::= ('~(') wideHoonSeq (')')
 
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
-irrCentis ::= wing ('(') flatHoonJogging (')')
+tallCentis ::= CENTIS (GAP) wing (GAP) hoonJogging (GAP '==')
+irrCentis ::= wing ('(') wideHoonJogging (')')
 
 # FIXED: colcab hoon hoon
 
@@ -633,40 +759,40 @@ irrCentis ::= wing ('(') flatHoonJogging (')')
 # Running syntax
 COLSIG ~ [:] [~]
 hoon ::= tallColsig
-tallColsig ::= (COLSIG GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatColsig
-hoonPrimary ::= flatColsig2
-hoonPrimary ::= flatColsig3
-hoonPrimary ::= flatColsig4
-flatColsig ::= (COLSIG '(') flatHoonSeq (')')
-flatColsig ::= (':clsg(') flatHoonSeq (')')
-flatColsig2 ::= ('~[') flatHoonSeq (']')
-flatColsig3 ::= ('[') flatHoonSeq (']~')
-flatColsig4 ::= ('`') flatHoon
+tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideColsig
+hoonPrimary ::= wideColsig2
+hoonPrimary ::= wideColsig3
+hoonPrimary ::= wideColsig4
+wideColsig ::= (COLSIG '(') wideHoonSeq (')')
+wideColsig ::= (':clsg(') wideHoonSeq (')')
+wideColsig2 ::= ('~[') wideHoonSeq (']')
+wideColsig3 ::= ('[') wideHoonSeq (']~')
+wideColsig4 ::= ('`') wideHoon
 
 # Running syntax
 COLTAR ~ [:] [*]
 hoon ::= tallColtar
-tallColtar ::= (COLTAR GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatColtar
-flatColtar ::= (COLTAR '(') flatHoonSeq (')')
-flatColtar ::= (':cltr(') flatHoonSeq (')')
+tallColtar ::= (COLTAR GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideColtar
+wideColtar ::= (COLTAR '(') wideHoonSeq (')')
+wideColtar ::= (':cltr(') wideHoonSeq (')')
 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
-hoonPrimary ::= flatDotket
-tallDotket ::= (DOTKET GAP4K)hoon (GAP4K) hoonSeq
-flatDotket ::= (DOTKET) [(] flatHoon (ACE) flatHoonSeq [)]
-flatDotket ::= (':dtkt') [(] flatHoon (ACE) flatHoonSeq [)]
+hoonPrimary ::= wideDotket
+tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
+wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
+wideDotket ::= (':dtkt') [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
 hoonPrimary ::= irrDottis
-irrDottis ::= ('=(') flatHoon (ACE) flatHoon (')')
+irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
 
 # FIXED: dotlus atom
 hoonPrimary ::= irrDotlus
-irrDotlus ::= ('+(') flatHoon (')')
+irrDotlus ::= ('+(') wideHoon (')')
 
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
@@ -677,9 +803,9 @@ irrDotlus ::= ('+(') flatHoon (')')
 
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
-tallFastis ::= (FASTIS GAP4K) NAME (GAP4K) hoon
-hoonPrimary ::= flatFastis
-flatFastis ::= (FASTIS) NAME '=' hoon
+tallFastis ::= (FASTIS GAP) NAME (GAP) hoon
+hoonPrimary ::= wideFastis
+wideFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketbar hoon
 
@@ -703,16 +829,24 @@ irrKethep ::= ('`') hoon ('`') hoon
 # FIXED: siglus hoon
 # FIXED: sigpam hoon hoon
 
+# 1-fixed, then running syntax
+SEMCOL ~ [;] [:]
+hoon ::= tallSemcol
+tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideSemcol
+wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
+wideSemcol ::= (':smcl(') hoon (ACE) wideHoonSeq (')')
+
 # #semsem hoon value
 # FIXED: semsem hoon hoon
 
 # 1-fixed, then running syntax
 SEMSIG ~ [;] [~]
 hoon ::= tallSemsig
-tallSemsig ::= (SEMSIG GAP4K) hoon (GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatSemsig
-flatSemsig ::= (SEMSIG '(') hoon (ACE) flatHoonSeq (')')
-flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
+tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideSemsig
+wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
+wideSemsig ::= (':smsg(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
@@ -740,11 +874,11 @@ flatSemsig ::= (':smsg(') hoon (ACE) flatHoonSeq (')')
 
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
-tallWutbar ::= (WUTBAR GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatWutbar
-flatWutbar ::= (WUTBAR '(') flatHoonSeq (')')
-flatWutbar ::= (':wtbr(') flatHoonSeq (')')
-flatWutbar ::= ('|(') flatHoonSeq (')')
+tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideWutbar
+wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
+wideWutbar ::= (':wtbr(') wideHoonSeq (')')
+wideWutbar ::= ('|(') wideHoonSeq (')')
 
 # FIXED: wutcol hoon hoon hoon
 # FIXED: wutdot hoon hoon hoon
@@ -755,26 +889,26 @@ flatWutbar ::= ('|(') flatHoonSeq (')')
 
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM GAP4K) hoonSeq (GAP4K '==')
-hoonPrimary ::= flatWutpam
-flatWutpam ::= (WUTPAM '(') flatHoonSeq (')')
-flatWutpam ::= (':wtpm(') flatHoonSeq (')')
-flatWutpam ::= ('&(') flatHoonSeq (')')
+tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
+hoonPrimary ::= wideWutpam
+wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
+wideWutpam ::= (':wtpm(') wideHoonSeq (')')
+wideWutpam ::= ('&(') wideHoonSeq (')')
 
 # FIXED: wutpat wing hoon hoon
 # FIXED: wutsig wing hoon hoon
 # FIXED: wuttis hoon wing
 
 hoonPrimary ::= irrWutzap
-irrWutzap ::= ('!') flatHoon
+irrWutzap ::= ('!') wideHoon
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (GAP4K) wing (GAP4K) hoonJogging (GAP4K '==')
+tallWuthep ::= WUTHEP (GAP) wing (GAP) hoonJogging (GAP '==')
 
 WUTLUS ~ [?] [+]
 hoon ::= tallWutlus
-tallWutlus ::= WUTLUS (GAP4K) wing (GAP4K) hoon (GAP4K) hoonJogging (GAP4K '==')
+tallWutlus ::= WUTLUS (GAP) wing (GAP) hoon (GAP) hoonJogging (GAP '==')
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
@@ -797,7 +931,7 @@ tallZapdot ::= ZAPDOT
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
-flatHoon ::= ZAPZAP
+wideHoon ::= ZAPZAP
 
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
@@ -805,7 +939,7 @@ flatHoon ::= ZAPZAP
 # === IRREGULAR FORMS: PREFIX ===
 
 pathHoon ::= prefixCab
-prefixCab ::= ('_') flatHoon
+prefixCab ::= ('_') wideHoon
 
 # === IRREGULAR FORMS: CIRCUMFIX ===
 
@@ -817,26 +951,26 @@ prefixCab ::= ('_') flatHoon
 pathHoon ::= circumParen1
 pathHoon ::= circumParen2
 pathHoon ::= circumParen3
-circumParen1 ::= ('(') flatHoon (')')
-circumParen2 ::= ('(') flatHoon (ACE) flatHoon (')')
-circumParen3 ::= ('(') flatHoon (ACE) flatHoon (ACE) flatHoonSeq (')')
+circumParen1 ::= ('(') wideHoon (')')
+circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
+circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
 
 pathHoon ::= circumSelser1
 pathHoon ::= circumSelser2
 pathHoon ::= circumSelser3
 pathHoon ::= circumSelser4
 pathHoon ::= circumSelser5
-circumSelser1 ::= ('[') flatHoon (']')
-circumSelser2 ::= ('[') flatHoon (ACE) flatHoon (']')
-circumSelser3 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (']')
-circumSelser4 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (']')
-circumSelser5 ::= ('[') flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoon (ACE) flatHoonSeq (']')
+circumSelser1 ::= ('[') wideHoon (']')
+circumSelser2 ::= ('[') wideHoon (ACE) wideHoon (']')
+circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
 
 pathHoon ::= circumGalgar
-circumGalgar ::= ('<') flatHoon ('>')
+circumGalgar ::= ('<') wideHoon ('>')
 
 pathHoon ::= circumGargal
-circumGargal ::= ('>') flatHoon ('<')
+circumGargal ::= ('>') wideHoon ('<')
 
 END_OF_DSL_MAIN
 
@@ -881,7 +1015,7 @@ my %glyphs = (
 
 # takes LC alphanumeric rune name and samples
 # for N-fixed rune and returns the Marpa rules
-# for the tall and the 2 regular flat forms.
+# for the tall and the 2 regular wide forms.
 sub doFixedRune {
     my ($runeName, @samples) = @_;
     my @result = (join ' ', '#', (uc $runeName), @samples);
@@ -891,26 +1025,26 @@ sub doFixedRune {
     my $glyph2 = $glyphs{$glyphname2};
     my $lexeme = uc $runeName;
     my $tallLHS = 'tall' . ucfirst $runeName;
-    my $flatLHS = 'flat' . ucfirst $runeName;
+    my $wideLHS = 'wide' . ucfirst $runeName;
     # BARHEP ~ [|] [-]
     push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
     # hoon ::= tallBarhep
     push @result, 'hoon ::= ' . $tallLHS;
-    # hoonPrimary ::= flatBarhep
-    push @result, 'hoonPrimary ::= ' . $flatLHS;
-    # tallBarhep ::= (BARHEP GAP4K) hoon (GAP4K) hoon
-    push @result, $tallLHS . ' ::= (' . $lexeme . ' GAP4K)' . (join ' (GAP4K) ', @samples);
-    state $flatEquiv = {
-        hoon => 'flatHoon',
+    # hoonPrimary ::= wideBarhep
+    push @result, 'hoonPrimary ::= ' . $wideLHS;
+    # tallBarhep ::= (BARHEP GAP) hoon (GAP) hoon
+    push @result, $tallLHS . ' ::= (' . $lexeme . ' GAP)' . (join ' (GAP) ', @samples);
+    state $wideEquiv = {
+        hoon => 'wideHoon',
     };
-    my @flatSamples = map { $flatEquiv->{$_} // $_; } @samples;
-    # flatBarhep ::= ([|] [-]) (ACE) flatHoon (ACE) flatHoon
-    push @result, $flatLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
+    # wideBarhep ::= ([|] [-]) (ACE) wideHoon (ACE) wideHoon
+    push @result, $wideLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @wideSamples) . q{ [)]};
     my $regularName = join '', ':',
       substr($glyphname1, 0, 1), substr($glyphname1, 2, 1),
       substr($glyphname2, 0, 1), substr($glyphname2, 2, 1);
-    # flatBarhep ::= ([:] 'brhp') (ACE) flatHoon (ACE) flatHoon
-    push @result, $flatLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @flatSamples) . q{ [)]};
+    # wideBarhep ::= ([:] 'brhp') (ACE) wideHoon (ACE) wideHoon
+    push @result, $wideLHS . q{ ::= ('} . $regularName . q{') [(] } . (join ' (ACE) ', @wideSamples) . q{ [)]};
     return join "\n", @result, '';
 }
 

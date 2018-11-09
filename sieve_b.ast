@@ -189,39 +189,33 @@
                             '$'
                           ],
                           [
-                            'flatHoonJog',
+                            'limb',
+                            'factor'
+                          ],
+                          [
+                            'irrDotlus',
                             [
                               'limb',
                               'factor'
-                            ],
-                            [
-                              'irrDotlus',
-                              [
-                                'limb',
-                                'factor'
-                              ]
                             ]
                           ],
                           [
-                            'flatHoonJog',
+                            'limb',
+                            '.'
+                          ],
+                          [
+                            'limb',
+                            'main'
+                          ],
+                          [
+                            'circumParen2',
                             [
                               'limb',
-                              '.'
+                              'reap'
                             ],
                             [
                               'limb',
-                              'main'
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'limb',
-                                'reap'
-                              ],
-                              [
-                                'limb',
-                                'factor'
-                              ]
+                              'factor'
                             ]
                           ]
                         ]

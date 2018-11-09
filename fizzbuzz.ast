@@ -186,25 +186,22 @@
                   '$'
                 ],
                 [
-                  'flatHoonJog',
+                  'limb',
+                  'count'
+                ],
+                [
+                  'circumParen3',
+                  [
+                    'limb',
+                    'add'
+                  ],
+                  [
+                    'atom',
+                    '1'
+                  ],
                   [
                     'limb',
                     'count'
-                  ],
-                  [
-                    'circumParen3',
-                    [
-                      'limb',
-                      'add'
-                    ],
-                    [
-                      'atom',
-                      '1'
-                    ],
-                    [
-                      'limb',
-                      'count'
-                    ]
                   ]
                 ]
               ]
