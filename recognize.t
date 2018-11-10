@@ -110,11 +110,11 @@ ok 58 hoons/arvo/gen/hood/begin.hoon
 ok 64 hoons/arvo/gen/help.hoon
 todo 76 hoons/arvo/gen/solid.hoon
 todo 80 hoons/arvo/gen/test.hoon
-todo 131 hoons/arvo/gen/glass.hoon
+ok 131 hoons/arvo/gen/glass.hoon
 todo 180 hoons/arvo/gen/deco.hoon
 todo 285 hoons/arvo/gen/capitalize.hoon
 ok 294 hoons/arvo/gen/brass.hoon
-todo 324 hoons/arvo/gen/metal.hoon
+ok 324 hoons/arvo/gen/metal.hoon
 todo 366 hoons/arvo/gen/musk.hoon
 ok 458 hoons/arvo/gen/al.hoon
 END_OF_LIST

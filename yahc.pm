@@ -459,6 +459,7 @@ wsChar ~ [ \n]
 # === ATOMS: SAND ===
 
 atom ::= NUMBER
+atom ::= SIG twid4l
 atom ::= loobean
 
 # @c    UTF-32                   ~-foobar
