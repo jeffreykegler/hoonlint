@@ -89,7 +89,7 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
-	wedeLHS => 1,
+	wedeFirst => 1,
         wideHoon             => 1,
         wideHoonJogging      => 1,
         wideHoonJogs         => 1,
@@ -186,15 +186,24 @@ backslash ~ [\x5c] # hex 5c is backslash
 CEN ~ cen4h
 cen4h ~ [%]
 
+DOT ~ dot4h
+dot4h ~ [.]
+
 FAS ~ fas4h
 fas4h ~ [/]
 
-# HEP ~ hep4h
-hep4h ~ '-'
+optHep ::=
+optHep ::= HEP
+HEP ~ hep4h
+hep4h ~ [-]
+
 KET ~ ket4h
 ket4h ~ '^'
 LUS ~ lus4h
 lus4h ~ '+'
+
+SIG ~ sig4h
+sig4h ~ '~'
 
 soq4h ~ [']
 
@@ -204,10 +213,30 @@ vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
 
+MOT4J ~ mot4j
+mot4j ~ [12] sid4j
+mot4j ~ sed4j
+
+dum4j ~ sid4j+
+
+qix4j ~ six4j six4j six4j six4j
+
 DIM4J ~ dim4j # a natural number
 dim4j ~ '0'
-dim4j ~ [1-9] dim4jRest
-dim4jRest ~ [0-9]
+dim4j ~ dip4j
+
+DIP4J ~ dip4j
+dip4j ~ [1-9] dip4jRest
+dip4jRest ~ [0-9]*
+
+VUM4J ~ vum4j
+vum4j ~ siv4j+
+
+sed4j ~ [1-9]
+sid4j ~ [0-9]
+# hexadecimal digit
+six4j ~ [0-9a-f]
+siv4j ~ [0-9a-v]
 
 # === Hoon library: 4k ===
 
@@ -250,6 +279,17 @@ gon4k ~ bas4h gay4k fas4h
 
 # === Hoon library: 4l ===
 
+# TODO: crub(4l) is incomplete
+
+crub4l ::= crub4l_part1
+crub4l ::= crub4l_part1 DOT DOT crub4l_part2 
+crub4l ::= crub4l_part1 DOT DOT crub4l_part2 DOT DOT crub4l_part3
+crub4l_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
+crub4l_part2 ::= dum4j DOT dum4j DOT dum4j
+crub4l_part3 ::= crub4l_part3_elements
+crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT proper=>1
+crub4l_part3_element ::= qix4j
+
 # nuck(4l) is the coin parser
 nuck4l ::= SYM4K
 
@@ -267,8 +307,10 @@ nuck4l ::= moldNullSig
 moldNullSig ::= '~'
 
 # perd(4l) parses sig-prefixed coins after the sig prefix
-nuck4l ::= TODO_twid4l
-TODO_twid4l ::= UNICORN
+nuck4l ::= SIG twid4l
+
+twid4l ::= '0' VUM4J
+twid4l ::= crub4l
 
 nuck4l ::= bisk4l
 # bisk(4l) parses unsigned dimes of any base
@@ -674,15 +716,15 @@ hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
-infixPlus ::=  wedeLHS ('+') hoonExpression
-infixSlash ::= wedeLHS ('/') hoonExpression
+infixPlus ::=  wedeFirst ('+') hoonExpression
+infixSlash ::= wedeFirst ('/') hoonExpression
 
 # LHS of wede(5d)
-wedeLHS ::= wing
-wedeLHS ::= '&'
-wedeLHS ::= '|'
-wedeLHS ::= bisk4l
-wedeLHS ::= '~'
+wedeFirst ::= wing
+wedeFirst ::= '&'
+wedeFirst ::= '|'
+wedeFirst ::= bisk4l
+wedeFirst ::= '~'
 
 hoonPrimary ::= pathHoon
 
@@ -965,9 +1007,10 @@ WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
 tallWuthep ::= WUTHEP (GAP) wing (GAP) hoonJogging (GAP '==')
 
+# TODO: WUTLUS Should be teak hoon hoonJogging
 WUTLUS ~ [?] [+]
 hoon ::= tallWutlus
-tallWutlus ::= WUTLUS (GAP) wing (GAP) hoon (GAP) hoonJogging (GAP '==')
+tallWutlus ::= WUTLUS (GAP) hoon (GAP) hoon (GAP) hoonJogging (GAP '==')
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
