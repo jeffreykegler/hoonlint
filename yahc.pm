@@ -162,6 +162,9 @@ unicorn ~ [^\d\D]
 bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
 
+CEN ~ cen4h
+cen4h ~ [%]
+
 FAS ~ fas4h
 fas4h ~ [/]
 
@@ -173,6 +176,10 @@ LUS ~ lus4h
 lus4h ~ '+'
 
 soq4h ~ [']
+
+# === Hoon library: 4i ===
+
+vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
 
@@ -254,6 +261,11 @@ bisk4l ::= NUMBER
 
 # === Hoon library: 5d ===
 
+bont5d ::= CEN SYM4K ([.] GAP) hoon
+bont5d ::= wideBont5d
+wideBont5d ::= CEN SYM4K ([.]) wideHoon
+wideBont5d ::= CEN SYM4K ([.] ACE) wideHoon
+
 # === Hoon library: 5d, molds ===
 
 mold ::= wideMold
@@ -281,7 +293,7 @@ wideMold ::= moldBucbar
 moldBucbar ::= '$|'
 
 wideMold ::= moldBucSingleString
-moldBucSingleString ::= '$' SINGLESTRING
+moldBucSingleString ::= '$' qut4k
 
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
@@ -296,7 +308,7 @@ wideMold ::= moldCenbar
 moldCenbar ::= '%|'
 
 wideMold ::= moldCenSingleString
-moldCenSingleString ::= ('%') SINGLESTRING
+moldCenSingleString ::= ('%') qut4k
 
 wideMold ::= moldCenNuck4l
 moldCenNuck4l ::= '%' nuck4l
@@ -381,21 +393,22 @@ gapLine ~ optHorizontalWhitespace nl
 
 ACE ~ ace
 ace ~ ' '
-comment ~ '::' nonNLs nl
+optAces ~ ace*
+comment ~ '::' optNonNLs nl
 
 # TODO: Is this treatment of these fas runes OK?
-comment ~ '/?' nonNLs nl
-comment ~ '/+' nonNLs nl
-comment ~ '/-' nonNLs nl
+comment ~ '/?' optNonNLs nl
+comment ~ '/+' optNonNLs nl
+comment ~ '/-' optNonNLs nl
 
 # Documentation decorations treated as comments
-comment ~ ':>' nonNLs nl
-comment ~ ':<' nonNLs nl
-comment ~ '+|' nonNLs nl
+comment ~ ':>' optNonNLs nl
+comment ~ ':<' optNonNLs nl
+comment ~ '+|' optNonNLs nl
 
 # NL ~ nl
 nl ~ [\n]
-nonNLs ~ nonNL*
+optNonNLs ~ nonNL*
 nonNL ~ [^\n]
 
 wsChars ~ wsChar*
@@ -561,7 +574,7 @@ nameLaterChar ~ [a-z0-9-]
 # === STRINGS ==
 
 atom ::= doubleString
-atom ::= SINGLESTRING
+atom ::= qut4k
 
 # LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
@@ -577,14 +590,34 @@ stringInterpolation ::= '{' wideHoon '}'
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
-# SINGLESTRING is qut(4i)
-SINGLESTRING ::= ([']) <single soq cord> (['])
+qut4k ::= <single quote string>
+qut4k ::= <triple quote string>
+<single quote string> ::= ([']) <single soq cord> (['])
 <single soq cord> ::= qit4k* separator=>gon4k proper=>1
 
-# TODO: hoon.hoon and Library syntaxes differ!
-atom ::= <TODO triple soq quote>
-<TODO triple soq quote> ::= SOZ4K UNICORN
-<SOZ4K> ~ soq4h soq4h soq4h # soz(4k) only in hoon.hoon
+# This follows hoon.hoon -- the Library source code is different
+<triple quote string> ::= (<triple quote begin>) <triple quote cord> (<triple quote terminator>)
+<triple quote cord> ::= <optional triple quote lines>
+<optional triple quote lines> ::= <triple quote line>*
+# Unlike Marpa::R3 I don't have eager lexemes, so things are bit more difficult
+# A "triple quote inert char" is one that is neither a newline or a single quote,
+# and which therefore is "inert" when it comes to determining starts or ends.
+<triple quote inert char> ~ [^\n']
+<optional triple quote inert chars> ~ <triple quote inert char>*
+
+# We classify triple quote lines by the number of consecutive initial single quotes
+# zero consecutive initial single quotes
+<triple quote line> ~ <optional triple quote inert chars> nl
+# one consecutive initial single quotes
+<triple quote line> ~ ['] <optional triple quote inert chars> nl
+# two consecutive initial single quotes
+<triple quote line> ~ ['] ['] <optional triple quote inert chars> nl
+
+<triple quote terminator> ~ ['] ['] ['] # three initial single quotes
+
+# hoon.hoon allows a comment after the initial triple quotes
+<triple quote begin> ~ ['] ['] ['] optAces vul4i
+<triple quote begin> ~ ['] ['] ['] nl
 
 # syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
 # syn region      hoonBlock         start=+'''+ end=+'''+
@@ -596,7 +629,7 @@ atom ::= path
 path ::= [/] optPathSeq
 optPathSeq ::= pathElement* separator=>[/]
 pathElement ::= PATHSTRING
-pathElement ::= SINGLESTRING
+pathElement ::= qut4k
 
 # pathHoon is hoon that is legal as part of a path
 pathElement ::= pathHoon
@@ -832,7 +865,9 @@ irrKethep ::= ('`') hoon ('`') hoon
 # FIXED: sigcen term wing hoon hoon
 # FIXED: sigfas term hoon
 # FIXED: siggal hoon hoon
-# FIXED: siggar hoon hoon
+
+# FIXED: siggar bont5d hoon
+
 # FIXED: siglus hoon
 # FIXED: sigpam hoon hoon
 
@@ -1241,12 +1276,12 @@ hoonPrimary ::= wideSiggal
 tallSiggal ::= (SIGGAL GAP)hoon (GAP) hoon
 wideSiggal ::= (SIGGAL) [(] wideHoon (ACE) wideHoon [)]
 
-# SIGGAR hoon hoon
+# SIGGAR bont5d hoon
 SIGGAR ~ [~] [>]
 hoon ::= tallSiggar
 hoonPrimary ::= wideSiggar
-tallSiggar ::= (SIGGAR GAP)hoon (GAP) hoon
-wideSiggar ::= (SIGGAR) [(] wideHoon (ACE) wideHoon [)]
+tallSiggar ::= (SIGGAR GAP)bont5d (GAP) hoon
+wideSiggar ::= (SIGGAR) [(] wideBont5d (ACE) wideHoon [)]
 
 # SIGLUS hoon
 SIGLUS ~ [~] [+]

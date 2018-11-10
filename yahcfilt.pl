@@ -9,7 +9,7 @@ use English qw( -no_match_vars );
 
 # use Test::More tests => 3;
 
-require "./yahc.pm";
+require "yahc.pm";
 
 my $hoonSource = do {
   local $RS = undef;
