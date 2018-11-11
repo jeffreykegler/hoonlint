@@ -4,20 +4,20 @@
     [
       'tallBartis',
       [
-        'infixSlash',
+        'moldInfixFas',
+        'feed',
         [
-          'limb',
-          'feed'
-        ],
-        [
-          'circumParen2',
+          'moldCircumParen',
           [
             'limb',
             'list'
           ],
           [
-            'limb',
-            'move'
+            'moldInfixCol',
+            [
+              'limb',
+              'move'
+            ]
           ]
         ]
       ],
@@ -421,53 +421,54 @@
                       'hoonBatteryElement',
                       'bit',
                       [
-                        'wideBartis',
-                        '(',
-                        [
-                          'infixSlash',
-                          [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'atom',
-                            '@'
-                          ]
-                        ],
+                        'wideWutbar',
                         [
                           'irrDottis',
                           [
-                            'atom',
-                            '1'
-                          ],
-                          [
-                            'circumParen3',
+                            'infixSlash',
                             [
                               'limb',
-                              'cut'
+                              'a'
                             ],
                             [
                               'atom',
-                              '0'
+                              '@'
+                            ]
+                          ],
+                          [
+                            'irrDottis',
+                            [
+                              'atom',
+                              '1'
                             ],
                             [
-                              'circumSelser2',
+                              'circumParen3',
                               [
                                 'limb',
-                                'a'
+                                'cut'
                               ],
                               [
                                 'atom',
-                                '1'
+                                '0'
+                              ],
+                              [
+                                'circumSelser2',
+                                [
+                                  'limb',
+                                  'a'
+                                ],
+                                [
+                                  'atom',
+                                  '1'
+                                ]
+                              ],
+                              [
+                                'limb',
+                                'half'
                               ]
-                            ],
-                            [
-                              'limb',
-                              'half'
                             ]
                           ]
-                        ],
-                        ')'
+                        ]
                       ]
                     ]
                   ],
@@ -477,54 +478,55 @@
                       'hoonBatteryElement',
                       'off',
                       [
-                        'wideBartis',
-                        '(',
+                        'wideWutbar',
                         [
-                          'infixSlash',
+                          'irrDottis',
                           [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'limb',
-                            'spot'
-                          ]
-                        ],
-                        [
-                          'circumParen3',
-                          [
-                            'limb',
-                            'add'
-                          ],
-                          [
-                            'limb',
-                            'x'
-                          ],
-                          [
-                            'limb',
-                            'a'
+                            'infixSlash',
+                            [
+                              'limb',
+                              'a'
+                            ],
+                            [
+                              'limb',
+                              'spot'
+                            ]
                           ],
                           [
                             'circumParen3',
                             [
                               'limb',
-                              'mul'
-                            ],
-                            [
-                              'atom',
-                              '3'
+                              'add'
                             ],
                             [
                               'limb',
-                              'y'
+                              'x'
                             ],
                             [
                               'limb',
                               'a'
+                            ],
+                            [
+                              'circumParen3',
+                              [
+                                'limb',
+                                'mul'
+                              ],
+                              [
+                                'atom',
+                                '3'
+                              ],
+                              [
+                                'limb',
+                                'y'
+                              ],
+                              [
+                                'limb',
+                                'a'
+                              ]
                             ]
                           ]
-                        ],
-                        ')'
+                        ]
                       ]
                     ]
                   ],
@@ -534,75 +536,25 @@
                       'hoonBatteryElement',
                       'get',
                       [
-                        'wideBartis',
-                        '(',
+                        'wideWutbar',
                         [
-                          'infixSlash',
+                          'irrDottis',
                           [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'limb',
-                            'spot'
-                          ]
-                        ],
-                        [
-                          'circumParen2',
-                          [
-                            'limb',
-                            'bit'
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'limb',
-                              'off'
-                            ],
+                            'infixSlash',
                             [
                               'limb',
                               'a'
+                            ],
+                            [
+                              'limb',
+                              'spot'
                             ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'set',
-                      [
-                        'wideBartis',
-                        '(',
-                        [
-                          'infixSlash',
-                          [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'limb',
-                            'spot'
-                          ]
-                        ],
-                        [
-                          'circumParen3',
-                          [
-                            'limb',
-                            'con'
-                          ],
-                          [
-                            'limb',
-                            'half'
                           ],
                           [
                             'circumParen2',
                             [
                               'limb',
-                              'bex'
+                              'bit'
                             ],
                             [
                               'circumParen2',
@@ -616,8 +568,60 @@
                               ]
                             ]
                           ]
-                        ],
-                        ')'
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'set',
+                      [
+                        'wideWutbar',
+                        [
+                          'irrDottis',
+                          [
+                            'infixSlash',
+                            [
+                              'limb',
+                              'a'
+                            ],
+                            [
+                              'limb',
+                              'spot'
+                            ]
+                          ],
+                          [
+                            'circumParen3',
+                            [
+                              'limb',
+                              'con'
+                            ],
+                            [
+                              'limb',
+                              'half'
+                            ],
+                            [
+                              'circumParen2',
+                              [
+                                'limb',
+                                'bex'
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'limb',
+                                  'off'
+                                ],
+                                [
+                                  'limb',
+                                  'a'
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
                       ]
                     ]
                   ],
@@ -648,42 +652,43 @@
                           ]
                         ],
                         [
-                          'wideBartis',
-                          '(',
-                          [
-                            'infixSlash',
-                            [
-                              'limb',
-                              'a'
-                            ],
-                            [
-                              'atom',
-                              '@'
-                            ]
-                          ],
+                          'wideWutbar',
                           [
                             'irrDottis',
                             [
-                              'limb',
-                              'a'
-                            ],
-                            [
-                              'circumParen3',
-                              [
-                                'limb',
-                                'dis'
-                              ],
+                              'infixSlash',
                               [
                                 'limb',
                                 'a'
                               ],
                               [
+                                'atom',
+                                '@'
+                              ]
+                            ],
+                            [
+                              'irrDottis',
+                              [
                                 'limb',
-                                'half'
+                                'a'
+                              ],
+                              [
+                                'circumParen3',
+                                [
+                                  'limb',
+                                  'dis'
+                                ],
+                                [
+                                  'limb',
+                                  'a'
+                                ],
+                                [
+                                  'limb',
+                                  'half'
+                                ]
                               ]
                             ]
-                          ],
-                          ')'
+                          ]
                         ]
                       ]
                     ]
@@ -720,14 +725,14 @@
                       [
                         'tallBartis',
                         [
-                          'infixSlash',
+                          'moldInfixFas',
+                          'act',
                           [
-                            'limb',
-                            'act'
-                          ],
-                          [
-                            'limb',
-                            'move'
+                            'moldInfixCol',
+                            [
+                              'limb',
+                              'move'
+                            ]
                           ]
                         ],
                         [
@@ -1170,7 +1175,7 @@
                                             'w'
                                           ],
                                           [
-                                            'irrWutzap',
+                                            'prefixZap',
                                             [
                                               'limb',
                                               'w'

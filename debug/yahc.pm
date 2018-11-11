@@ -21,13 +21,17 @@ sub parse {
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar         => $grammar,
-            # trace_lexers    => 1,
-            # trace_terminals => 1,
+            trace_lexers    => 1,
+            trace_terminals => 1,
         }
     );
 
     my $input_length = ${$input};
-    my $length_read  = $recce->read($input);
+    my $length_read;
+    eval { $length_read  = $recce->read($input); 1; };
+    say '===';
+    say $recce->show_progress(-20, -1);
+
     if ( $length_read != length $input_length ) {
         die "read() ended prematurely\n",
           "  input length = $input_length\n",

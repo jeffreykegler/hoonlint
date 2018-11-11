@@ -179,9 +179,15 @@ unicorn ~ [^\d\D]
 
 # === Hoon library: 4h ===
 
+BAR ~ bar4h
+bar4h ~ [|]
+
 # BACKSLASH ~ backslash
 bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
+
+CAB ~ cab4h
+cab4h ~ [_]
 
 CEN ~ cen4h
 cen4h ~ [%]
@@ -202,10 +208,19 @@ ket4h ~ '^'
 LUS ~ lus4h
 lus4h ~ '+'
 
+PAM ~ pam4h
+pam4h ~ '&'
+
 SIG ~ sig4h
 sig4h ~ '~'
 
 soq4h ~ [']
+
+TIS ~ tis4h
+tis4h ~ '='
+
+ZAP ~ zap4h
+zap4h ~ '!'
 
 # === Hoon library: 4i ===
 
@@ -776,7 +791,9 @@ limb ::= ','
 limb ::= optKets '$'
 limb ::= optKets SYM4K
 optKets ::= KET*
-limb ::= [+&|] DIM4J
+limb ::= BAR DIM4J
+limb ::= LUS DIM4J
+limb ::= PAM DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
@@ -796,7 +813,7 @@ batteryElement ::= moldBatteryElement
 # TODO: What is the meaning of these various types of battery element?
 hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
 moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
-hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) mold
+moldBatteryElement ::= ('+-' GAP) SYM4K (GAP) mold
 
 # === CELLS BY RUNE ==
 
@@ -819,9 +836,12 @@ tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 # FIXED: barsig hoon hoon
 # FIXED: bartar mold hoon
 
-# # LATER: Should eventually be (BARTIS) (GAP) type (GAP) hoon
-# # where <type> is buc??? runes and irregular forms thereof
-# FIXED: bartis hoon hoon
+# Cannot use BARTIS because BAR TIS must also be accepted
+# BARTIS mold hoon
+hoon ::= tallBartis
+hoonPrimary ::= wideBartis
+tallBartis ::= (BAR TIS GAP) mold (GAP) hoon
+wideBartis ::= (BAR TIS) [(] wideMold (ACE) wideHoon [)]
 
 # FIXED: barwut hoon
 
@@ -928,8 +948,10 @@ tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
 wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
+tallDottis ::= (TIS GAP) hoon
 hoonPrimary ::= irrDottis
 irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
+irrDottis ::= ('=') wideHoon
 
 # FIXED: dotlus atom
 hoonPrimary ::= irrDotlus
@@ -1016,9 +1038,10 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
+tallWutbar ::= (BAR GAP) hoon
 hoonPrimary ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
-wideWutbar ::= ('|(') wideHoonSeq (')')
+wideWutbar ::= (BAR) wideHoon
 
 # FIXED: wutcol hoon hoon hoon
 # FIXED: wutdot hoon hoon hoon
@@ -1032,14 +1055,11 @@ hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
-wideWutpam ::= ('&(') wideHoonSeq (')')
+wideWutpam ::= (PAM '(') wideHoonSeq (')')
 
 # FIXED: wutpat wing hoon hoon
 # FIXED: wutsig wing hoon hoon
 # FIXED: wuttis hoon wing
-
-hoonPrimary ::= irrWutzap
-irrWutzap ::= ('!') wideHoon
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
@@ -1063,7 +1083,15 @@ hoon ::= tallZapdot
 tallZapdot ::= ZAPDOT
 
 # FIXED: zapgar hoon
-# FIXED: zaptis hoon
+
+# ZAPTIS hoon
+# Cannot use ZAPTIS because ZAP TIS must also 
+# be accepted
+hoon ::= tallZaptis
+hoonPrimary ::= wideZaptis
+tallZaptis ::= (ZAP TIS GAP)hoon
+wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
+
 # FIXED: zapwut atom hoon
 
 # !;  ::  using the "type of type", emit the type for an expression
@@ -1079,7 +1107,10 @@ wideHoon ::= ZAPZAP
 # === IRREGULAR FORMS: PREFIX ===
 
 pathHoon ::= prefixCab
-prefixCab ::= ('_') wideHoon
+prefixCab ::= (CAB) wideHoon
+
+pathHoon ::= prefixZap
+prefixZap ::= (ZAP) wideHoon
 
 # === IRREGULAR FORMS: CIRCUMFIX ===
 

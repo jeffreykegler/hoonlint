@@ -2,14 +2,14 @@
   [
     'tallBartis',
     [
-      'infixSlash',
+      'moldInfixFas',
+      'end',
       [
-        'limb',
-        'end'
-      ],
-      [
-        'limb',
-        'atom'
+        'moldInfixCol',
+        [
+          'limb',
+          'atom'
+        ]
       ]
     ],
     [

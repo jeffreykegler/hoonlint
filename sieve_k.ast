@@ -2,15 +2,9 @@
   [
     'tallBartis',
     [
-      'infixEqual',
-      [
-        'toga',
-        'top'
-      ],
-      [
-        'atom',
-        '@'
-      ]
+      'moldInfixTis',
+      'top',
+      '@'
     ],
     [
       'tallKethep',
@@ -226,15 +220,9 @@
                   [
                     'tallBartis',
                     [
-                      'infixEqual',
-                      [
-                        'toga',
-                        'fac'
-                      ],
-                      [
-                        'atom',
-                        '@'
-                      ]
+                      'moldInfixTis',
+                      'fac',
+                      '@'
                     ],
                     [
                       'tallTislus',
