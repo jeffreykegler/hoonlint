@@ -29,8 +29,8 @@ sub parse {
     my $input_length = ${$input};
     my $length_read;
     eval { $length_read  = $recce->read($input); 1; };
-    say '===';
-    say $recce->show_progress(-20, -1);
+    say STDERR '===';
+    say STDERR $recce->show_progress(-20, -1);
 
     if ( $length_read != length $input_length ) {
         die "read() ended prematurely\n",

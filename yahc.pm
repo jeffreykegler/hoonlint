@@ -792,7 +792,7 @@ batteryElement ::= moldBatteryElement
 # TODO: What is the meaning of these various types of battery element?
 hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
 moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
-moldBatteryElement ::= ('+-' GAP) SYM4K (GAP) mold
+hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
 # === CELLS BY RUNE ==
 

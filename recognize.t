@@ -111,7 +111,7 @@ ok 64 hoons/arvo/gen/help.hoon
 todo 76 hoons/arvo/gen/solid.hoon
 todo 80 hoons/arvo/gen/test.hoon
 ok 131 hoons/arvo/gen/glass.hoon
-todo 180 hoons/arvo/gen/deco.hoon
+ok 180 hoons/arvo/gen/deco.hoon
 todo 285 hoons/arvo/gen/capitalize.hoon
 ok 294 hoons/arvo/gen/brass.hoon
 ok 324 hoons/arvo/gen/metal.hoon
