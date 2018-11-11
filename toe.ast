@@ -208,26 +208,14 @@
               [
                 'wideBuccol',
                 [
-                  'infixSlash',
-                  [
-                    'limb',
-                    'x'
-                  ],
-                  [
-                    'atom',
-                    '@'
-                  ]
+                  'moldInfixFas',
+                  'x',
+                  '@'
                 ],
                 [
-                  'infixSlash',
-                  [
-                    'limb',
-                    'y'
-                  ],
-                  [
-                    'atom',
-                    '@'
-                  ]
+                  'moldInfixFas',
+                  'y',
+                  '@'
                 ]
               ]
             ]
@@ -370,29 +358,32 @@
               [
                 'tallBuccol',
                 [
-                  'limb',
-                  'w'
-                ],
-                [
-                  'infixSlash',
+                  'moldInfixCol',
                   [
                     'limb',
-                    'a'
-                  ],
-                  [
-                    'limb',
-                    'side'
+                    'w'
                   ]
                 ],
                 [
-                  'infixSlash',
+                  'moldInfixFas',
+                  'a',
                   [
-                    'limb',
-                    'z'
-                  ],
+                    'moldInfixCol',
+                    [
+                      'limb',
+                      'side'
+                    ]
+                  ]
+                ],
+                [
+                  'moldInfixFas',
+                  'z',
                   [
-                    'limb',
-                    'side'
+                    'moldInfixCol',
+                    [
+                      'limb',
+                      'side'
+                    ]
                   ]
                 ]
               ]
@@ -744,23 +735,29 @@
                           [
                             'wideBuccol',
                             [
-                              'circumParen2',
+                              'moldCircumParen',
                               [
                                 'limb',
                                 'unit'
                               ],
                               [
-                                'limb',
-                                'fact'
+                                'moldInfixCol',
+                                [
+                                  'limb',
+                                  'fact'
+                                ]
                               ]
                             ],
                             [
-                              'limb',
+                              'moldInfixCol',
                               [
-                                'optKets',
-                                '^'
-                              ],
-                              'game'
+                                'limb',
+                                [
+                                  'optKets',
+                                  '^'
+                                ],
+                                'game'
+                              ]
                             ]
                           ],
                           [
@@ -773,21 +770,16 @@
                             [
                               'wideBuccol',
                               [
-                                'atom',
+                                'moldBucNuck4l',
+                                '$',
                                 [
-                                  'term',
-                                  [
-                                    'dollarTerm',
-                                    'x'
-                                  ]
+                                  'nuck4l',
+                                  'x'
                                 ]
                               ],
                               [
-                                'atom',
-                                [
-                                  'type',
-                                  '*'
-                                ]
+                                'moldTar',
+                                '*'
                               ]
                             ],
                             [
@@ -825,21 +817,16 @@
                             [
                               'wideBuccol',
                               [
-                                'atom',
+                                'moldBucNuck4l',
+                                '$',
                                 [
-                                  'term',
-                                  [
-                                    'dollarTerm',
-                                    'o'
-                                  ]
+                                  'nuck4l',
+                                  'o'
                                 ]
                               ],
                               [
-                                'atom',
-                                [
-                                  'type',
-                                  '*'
-                                ]
+                                'moldTar',
+                                '*'
                               ]
                             ],
                             [
@@ -877,21 +864,16 @@
                             [
                               'wideBuccol',
                               [
-                                'atom',
+                                'moldBucNuck4l',
+                                '$',
                                 [
-                                  'term',
-                                  [
-                                    'dollarTerm',
-                                    'z'
-                                  ]
+                                  'nuck4l',
+                                  'z'
                                 ]
                               ],
                               [
-                                'atom',
-                                [
-                                  'type',
-                                  '*'
-                                ]
+                                'moldTar',
+                                '*'
                               ]
                             ],
                             [
@@ -1036,23 +1018,29 @@
                                 [
                                   'wideBuccol',
                                   [
-                                    'circumParen2',
+                                    'moldCircumParen',
                                     [
                                       'limb',
                                       'unit'
                                     ],
                                     [
-                                      'limb',
-                                      'fact'
+                                      'moldInfixCol',
+                                      [
+                                        'limb',
+                                        'fact'
+                                      ]
                                     ]
                                   ],
                                   [
-                                    'limb',
+                                    'moldInfixCol',
                                     [
-                                      'optKets',
-                                      '^'
-                                    ],
-                                    'game'
+                                      'limb',
+                                      [
+                                        'optKets',
+                                        '^'
+                                      ],
+                                      'game'
+                                    ]
                                   ]
                                 ],
                                 [

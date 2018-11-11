@@ -378,6 +378,7 @@ moldCenNuck4l ::= '%' nuck4l
 
 wideMold ::= moldCircumParen
 moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
+moldCircumParen ::= ('(') wideHoon (')')
 
 wideMold ::= moldCircumBrace
 moldCircumBrace ::= ('{') wideMoldSeq ('}')
@@ -419,7 +420,25 @@ moldInfixTis ::= SYM4K ('=') wideMold
 wideMold ::= moldInfixFas
 moldInfixFas ::= SYM4K ('/') wideMold
 
-# TODO: Add molds from norm
+# TODO: Finish adding molds from norm
+
+# Running syntax
+mold ::= tallBuccolMold
+wideMold ::= wideBuccolMold
+tallBuccolMold ::= (BUCCOL GAP) moldSeq (GAP '==')
+wideBuccolMold ::= (BUCCOL '(') wideMoldSeq (')')
+
+# BUCPAT mold mold
+mold ::= tallBucpatMold
+wideMold ::= wideBucpatMold
+tallBucpatMold ::= (BUCPAT GAP) mold (GAP)  mold
+wideBucpatMold ::= (BUCPAT) [(] wideMold (ACE) wideMold [)]
+
+# Running syntax
+mold ::= tallBucwutMold
+wideMold ::= wideBucwutMold
+tallBucwutMold ::= (BUCWUT GAP) moldSeq (GAP '==')
+wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 
 # === HOON FILE ===
 :start ::= hoonFile
@@ -784,7 +803,7 @@ hoon ::= tallBarket
 tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 
 # FIXED: barsig hoon hoon
-# FIXED: bartar hoon hoon
+# FIXED: bartar mold hoon
 
 # # LATER: Should eventually be (BARTIS) (GAP) type (GAP) hoon
 # # where <type> is buc??? runes and irregular forms thereof
@@ -797,12 +816,16 @@ tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 # Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
-tallBuccol ::= (BUCCOL GAP) hoonSeq (GAP '==')
+tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
 hoonPrimary ::= wideBuccol
-wideBuccol ::= (BUCCOL '(') wideHoonSeq (')')
-wideBuccol ::= ('{') wideHoonSeq ('}')
-wideBuccol ::= (',[') wideHoonSeq (']')
+wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 
+# TODO: Are these used in value mode?
+# If not, delete them
+wideBuccol ::= ('{') wideMoldSeq ('}')
+wideBuccol ::= (',[') wideMoldSeq (']')
+
+# Running syntax
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
 tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
