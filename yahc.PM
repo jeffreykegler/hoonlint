@@ -423,10 +423,22 @@ moldInfixFas ::= SYM4K ('/') wideMold
 # TODO: Finish adding molds from norm
 
 # Running syntax
+mold ::= tallBuccenMold
+wideMold ::= wideBuccenMold
+tallBuccenMold ::= (BUCCEN GAP) moldSeq (GAP '==')
+wideBuccenMold ::= (BUCCEN '(') wideMoldSeq (')')
+
+# Running syntax
 mold ::= tallBuccolMold
 wideMold ::= wideBuccolMold
 tallBuccolMold ::= (BUCCOL GAP) moldSeq (GAP '==')
 wideBuccolMold ::= (BUCCOL '(') wideMoldSeq (')')
+
+# BUCHEP mold mold
+mold ::= tallBuchepMold
+wideMold ::= wideBuchepMold
+tallBuchepMold ::= (BUCHEP GAP) mold (GAP)  mold
+wideBuchepMold ::= (BUCHEP) [(] wideMold (ACE) wideMold [)]
 
 # BUCPAT mold mold
 mold ::= tallBucpatMold
@@ -781,8 +793,10 @@ wideHoonJoggingSeparator ::= ',' ACE
 battery ::= batteryElement* separator=>GAP proper=>1
 batteryElement ::= hoonBatteryElement
 batteryElement ::= moldBatteryElement
+# TODO: What is the meaning of these various types of battery element?
 hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
 moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
+hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) mold
 
 # === CELLS BY RUNE ==
 
@@ -814,6 +828,13 @@ tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 # FIXED: buccab hoon
 
 # Running syntax
+BUCCEN ~ [$] [%]
+hoon ::= tallBuccen
+tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
+hoonPrimary ::= wideBuccen
+wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
+
+# Running syntax
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
@@ -825,14 +846,7 @@ wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 wideBuccol ::= ('{') wideMoldSeq ('}')
 wideBuccol ::= (',[') wideMoldSeq (']')
 
-# Running syntax
-BUCCEN ~ [$] [%]
-hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
-hoonPrimary ::= wideBuccen
-wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
-
-# FIXED: buchep hoon hoon
+# FIXED: buchep mold mold
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
 

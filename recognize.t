@@ -115,7 +115,7 @@ todo 180 hoons/arvo/gen/deco.hoon
 todo 285 hoons/arvo/gen/capitalize.hoon
 ok 294 hoons/arvo/gen/brass.hoon
 ok 324 hoons/arvo/gen/metal.hoon
-todo 366 hoons/arvo/gen/musk.hoon
+ok 366 hoons/arvo/gen/musk.hoon
 ok 458 hoons/arvo/gen/al.hoon
 END_OF_LIST
 
