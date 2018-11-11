@@ -16,8 +16,45 @@ my $dsl = do { $RS = undef; <DATA> };
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
+sub divergence {
+    die join '', 'Unrecoverable internal error: ', @_;
+}
+
+# Given a target, an input and an offset into that input,
+# it reads using that recognizer.  The return values
+# are the parse value and a new offset in the input.
+# Errors are thrown.
+
+sub getValue {
+    my ( $target, $input, $offset ) = @_;
+    my $input_length = length ${$input};
+    my $resume_pos;
+    my $this_pos;
+
+    my $nextNL = index ${$input}, "\n", $offset;
+    if ($nextNL < 0) {
+      die join '', 'Newline missing after triple quotes: "', ${$input}, '"'
+    }
+    my $initiator = substr ${$input}, $offset, $nextNL-$offset;
+    if ($initiator ne "'''" and $initiator !~ m/^''' *::/) {
+      die join '', 'Disallowed characters after initial triple quotes: "', $initiator, '"'
+    }
+
+    pos ${$input} = $offset;
+    my ($indent) = ${$input} =~ /\G( *)[^ ]/g;
+    my $terminator = $indent . "'''";
+
+    my $terminatorPos = index ${$input}, $terminator, $offset;
+    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
+
+    say STDERR "Left main READ loop" if $main::DEBUG;
+
+    # Return ref to value and new offset
+    return \$value, $terminatorPos + length $terminator;
+}
+
 sub parse {
-    my ( $input ) = @_;
+    my ($input) = @_;
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar         => $grammar,
@@ -26,18 +63,63 @@ sub parse {
         }
     );
 
-    my $input_length = ${$input};
-    my $length_read;
-    eval { $length_read  = $recce->read($input); 1; };
-    say STDERR '===';
-    say STDERR $recce->show_progress(-20, -1);
+    my $input_length = length ${$input};
+    my $this_pos;
+    my $resume_pos;
 
-    if ( $length_read != length $input_length ) {
+    # The main read loop.  Read starting at $offset.
+    # If interrupted execute the handler logic,
+    # and, possibly, resume.
+
+  READ:
+    for (
+        $this_pos = $recce->read( $input ) ;
+        $this_pos < $input_length ;
+        $this_pos = $recce->resume($resume_pos)
+      )
+    {
+
+        # Only one event at a time is expected -- more
+        # than one is an error.  No event means parsing
+        # is exhausted.
+
+        my $events      = $recce->events();
+        my $event_count = scalar @{$events};
+        if ( $event_count < 0 ) {
+            last READ;
+        }
+        if ( $event_count != 1 ) {
+            divergence("One event expected, instead got $event_count");
+        }
+
+        # Find the event name
+
+        my $event = $events->[0];
+        my $name  = $event->[0];
+
+        if ( $name eq 'tripleQuote' ) {
+            say STDERR "$name event" if $main::DEBUG;
+            my $value_ref;
+            ( $value_ref, $resume_pos ) = getValue( $name, $input, $this_pos );
+            my $result = $recce->lexeme_read(
+                'TRIPLE QUOTE STRING',
+                $this_pos,
+                ( length ${$value_ref} ),
+                [ ${$value_ref} ]
+            );
+            say STDERR "lexeme+read('TRIPLE QUOTE STRING',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $main::DEBUG;
+            last READ;
+        }
+
         die "read() ended prematurely\n",
           "  input length = $input_length\n",
-          "  length read = $length_read\n",
+          "  length read = $this_pos\n",
           "  the cause may be an unexpected event";
-    } ## end if ( $length_read != length $input_length )
+
+    }
+
     if ( $recce->ambiguity_metric() > 1 ) {
 
         # The calls in this section are experimental as of Marpa::R2 2.090
@@ -207,7 +289,7 @@ zap4h ~ '!'
 
 # === Hoon library: 4i ===
 
-vul4i ~ '::' optNonNLs nl
+# vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
 
@@ -280,7 +362,7 @@ gon4k ~ bas4h gay4k fas4h
 # TODO: crub(4l) is incomplete
 
 crub4l ::= crub4l_part1
-crub4l ::= crub4l_part1 DOT DOT crub4l_part2 
+crub4l ::= crub4l_part1 DOT DOT crub4l_part2
 crub4l ::= crub4l_part1 DOT DOT crub4l_part2 DOT DOT crub4l_part3
 crub4l_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
 crub4l_part2 ::= dum4j DOT dum4j DOT dum4j
@@ -457,7 +539,7 @@ wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 hoonFile ::= (leader) hoonSeq (trailer)
 
 trailer ::= WS
-trailer ::= 
+trailer ::=
 leader  ::= WS
 leader  ::=
 
@@ -485,7 +567,6 @@ gapLine ~ optHorizontalWhitespace nl
 
 ACE ~ ace
 ace ~ ' '
-optAces ~ ace*
 comment ~ '::' optNonNLs nl
 
 # TODO: Is this treatment of these fas runes OK?
@@ -684,37 +765,16 @@ stringInterpolation ::= '{' wideHoon '}'
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
 qut4k ::= <single quote string>
-qut4k ::= <triple quote string>
 <single quote string> ::= ([']) <single soq cord> (['])
 <single soq cord> ::= qit4k* separator=>gon4k proper=>1
 
-# This follows hoon.hoon -- the Library source code is different
-<triple quote string> ::= (<triple quote begin>) <triple quote cord> (<triple quote terminator>)
-<triple quote cord> ::= <optional triple quote lines>
-<optional triple quote lines> ::= <triple quote line>*
-# Unlike Marpa::R3 I don't have eager lexemes, so things are bit more difficult
-# A "triple quote inert char" is one that is neither a newline or a single quote,
-# and which therefore is "inert" when it comes to determining starts or ends.
-<triple quote inert char> ~ [^\n']
-<optional triple quote inert chars> ~ <triple quote inert char>*
-
-# We classify triple quote lines by the number of consecutive initial single quotes
-# zero consecutive initial single quotes
-<triple quote line> ~ <optional triple quote inert chars> nl
-# one consecutive initial single quotes
-<triple quote line> ~ ['] <optional triple quote inert chars> nl
-# two consecutive initial single quotes
-<triple quote line> ~ ['] ['] <optional triple quote inert chars> nl
-
-<triple quote terminator> ~ ['] ['] ['] # three initial single quotes
-
-# hoon.hoon allows a comment after the initial triple quotes
-<triple quote begin> ~ ['] ['] ['] optAces vul4i
-<triple quote begin> ~ ['] ['] ['] nl
-
-# syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
-# syn region      hoonBlock         start=+'''+ end=+'''+
-# syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
+# <TRIPLE QUOTE START> triggers an event -- the quoted
+# string is actually supplies as <TRIPLE QUOTE STRING>.
+qut4k ::= <TRIPLE QUOTE START>
+qut4k ::= <TRIPLE QUOTE STRING>
+:lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
+<TRIPLE QUOTE START> ~ ['] ['] [']
+<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
 
 # === PATHS ==
 
@@ -796,7 +856,7 @@ batteryElement ::= moldBatteryElement
 # TODO: What is the meaning of these various types of battery element?
 hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
 moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
-moldBatteryElement ::= ('+-' GAP) SYM4K (GAP) mold
+hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
 # === CELLS BY RUNE ==
 
@@ -1068,7 +1128,7 @@ tallZapdot ::= ZAPDOT
 # FIXED: zapgar hoon
 
 # ZAPTIS hoon
-# Cannot use ZAPTIS because ZAP TIS must also 
+# Cannot use ZAPTIS because ZAP TIS must also
 # be accepted
 hoon ::= tallZaptis
 hoonPrimary ::= wideZaptis

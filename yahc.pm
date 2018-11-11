@@ -31,15 +31,26 @@ sub getValue {
     my $resume_pos;
     my $this_pos;
 
-    die 'getValue NYI';
+    my $nextNL = index ${$input}, "\n", $offset;
+    if ($nextNL < 0) {
+      die join '', 'Newline missing after triple quotes: "', ${$input}, '"'
+    }
+    my $initiator = substr ${$input}, $offset, $nextNL-$offset;
+    if ($initiator ne "'''" and $initiator !~ m/^''' *::/) {
+      die join '', 'Disallowed characters after initial triple quotes: "', $initiator, '"'
+    }
+
+    pos ${$input} = $offset;
+    my ($indent) = ${$input} =~ /\G( *)[^ ]/g;
+    my $terminator = $indent . "'''";
+
+    my $terminatorPos = index ${$input}, $terminator, $offset;
+    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
 
     say STDERR "Left main READ loop" if $main::DEBUG;
 
-    # Return value and new offset
-
-    my $value_ref;
-
-    return $value_ref, $this_pos;
+    # Return ref to value and new offset
+    return \$value, $terminatorPos + length $terminator;
 }
 
 sub parse {
@@ -69,11 +80,6 @@ sub parse {
       )
     {
 
-        die "read() ended prematurely\n",
-          "  input length = $input_length\n",
-          "  length read = $this_pos\n",
-          "  the cause may be an unexpected event";
-
         # Only one event at a time is expected -- more
         # than one is an error.  No event means parsing
         # is exhausted.
@@ -92,16 +98,28 @@ sub parse {
         my $event = $events->[0];
         my $name  = $event->[0];
 
-        # An "indent" event occurs whenever indentation is recognized.
-        # The Marpa parser discards indentation, but it also can generate
-        # an event.  "indent" events are only turned on if we are using
-        # implicit layout.
-
-        if ( $name eq 'reservedid' ) {
-            say STDERR 'Reserved Id event' if $main::DEBUG;
-            say STDERR show_last_expression( $recce, 'decls' ) if $main::DEBUG;
-            last READ;
+        if ( $name eq 'tripleQuote' ) {
+            say STDERR "$name event" if $main::DEBUG;
+            my $value_ref;
+            ( $value_ref, $resume_pos ) = getValue( $name, $input, $this_pos );
+            my $result = $recce->lexeme_read(
+                'TRIPLE QUOTE STRING',
+                $this_pos,
+                ( length ${$value_ref} ),
+                [ ${$value_ref} ]
+            );
+            say STDERR "lexeme_read('TRIPLE QUOTE STRING',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $main::DEBUG
+	      ;
+            next READ;
         }
+
+        die "read() ended prematurely\n",
+          "  input length = $input_length\n",
+          "  length read = $this_pos\n",
+          "  the cause may be an unexpected event";
+
     }
 
     if ( $recce->ambiguity_metric() > 1 ) {
@@ -273,7 +291,7 @@ zap4h ~ '!'
 
 # === Hoon library: 4i ===
 
-vul4i ~ '::' optNonNLs nl
+# vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
 
@@ -346,7 +364,7 @@ gon4k ~ bas4h gay4k fas4h
 # TODO: crub(4l) is incomplete
 
 crub4l ::= crub4l_part1
-crub4l ::= crub4l_part1 DOT DOT crub4l_part2 
+crub4l ::= crub4l_part1 DOT DOT crub4l_part2
 crub4l ::= crub4l_part1 DOT DOT crub4l_part2 DOT DOT crub4l_part3
 crub4l_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
 crub4l_part2 ::= dum4j DOT dum4j DOT dum4j
@@ -523,7 +541,7 @@ wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 hoonFile ::= (leader) hoonSeq (trailer)
 
 trailer ::= WS
-trailer ::= 
+trailer ::=
 leader  ::= WS
 leader  ::=
 
@@ -551,7 +569,6 @@ gapLine ~ optHorizontalWhitespace nl
 
 ACE ~ ace
 ace ~ ' '
-optAces ~ ace*
 comment ~ '::' optNonNLs nl
 
 # TODO: Is this treatment of these fas runes OK?
@@ -750,37 +767,16 @@ stringInterpolation ::= '{' wideHoon '}'
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
 qut4k ::= <single quote string>
-qut4k ::= <triple quote string>
 <single quote string> ::= ([']) <single soq cord> (['])
 <single soq cord> ::= qit4k* separator=>gon4k proper=>1
 
-# This follows hoon.hoon -- the Library source code is different
-<triple quote string> ::= (<triple quote begin>) <triple quote cord> (<triple quote terminator>)
-<triple quote cord> ::= <optional triple quote lines>
-<optional triple quote lines> ::= <triple quote line>*
-# Unlike Marpa::R3 I don't have eager lexemes, so things are bit more difficult
-# A "triple quote inert char" is one that is neither a newline or a single quote,
-# and which therefore is "inert" when it comes to determining starts or ends.
-<triple quote inert char> ~ [^\n']
-<optional triple quote inert chars> ~ <triple quote inert char>*
-
-# We classify triple quote lines by the number of consecutive initial single quotes
-# zero consecutive initial single quotes
-<triple quote line> ~ <optional triple quote inert chars> nl
-# one consecutive initial single quotes
-<triple quote line> ~ ['] <optional triple quote inert chars> nl
-# two consecutive initial single quotes
-<triple quote line> ~ ['] ['] <optional triple quote inert chars> nl
-
-<triple quote terminator> ~ ['] ['] ['] # three initial single quotes
-
-# hoon.hoon allows a comment after the initial triple quotes
-<triple quote begin> ~ ['] ['] ['] optAces vul4i
-<triple quote begin> ~ ['] ['] ['] nl
-
-# syn region      hoonString        start=+'+ skip=+\\[\\']+ end=+'+ contains=@spell
-# syn region      hoonBlock         start=+'''+ end=+'''+
-# syn region      hoonString        start=+"+ skip=+\\[\\"]+ end=+"+ contains=@spell
+# <TRIPLE QUOTE START> triggers an event -- the quoted
+# string is actually supplies as <TRIPLE QUOTE STRING>.
+qut4k ::= <TRIPLE QUOTE START>
+qut4k ::= <TRIPLE QUOTE STRING>
+:lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
+<TRIPLE QUOTE START> ~ ['] ['] [']
+<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
 
 # === PATHS ==
 
@@ -1134,7 +1130,7 @@ tallZapdot ::= ZAPDOT
 # FIXED: zapgar hoon
 
 # ZAPTIS hoon
-# Cannot use ZAPTIS because ZAP TIS must also 
+# Cannot use ZAPTIS because ZAP TIS must also
 # be accepted
 hoon ::= tallZaptis
 hoonPrimary ::= wideZaptis

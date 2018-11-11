@@ -108,7 +108,7 @@ ok 47 hoons/arvo/gen/hood/merge.hoon
 ok 53 hoons/arvo/gen/hood/invite.hoon
 ok 58 hoons/arvo/gen/hood/begin.hoon
 ok 64 hoons/arvo/gen/help.hoon
-todo 76 hoons/arvo/gen/solid.hoon
+ok 76 hoons/arvo/gen/solid.hoon
 todo 80 hoons/arvo/gen/test.hoon
 ok 131 hoons/arvo/gen/glass.hoon
 ok 180 hoons/arvo/gen/deco.hoon
