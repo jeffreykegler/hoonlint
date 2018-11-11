@@ -37,24 +37,94 @@ my $dsl = do { $RS = undef; <DATA> };
 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 
+sub divergence {
+    die join '', 'Unrecoverable internal error: ', @_;
+}
+
+# Given a target, an input and an offset into that input,
+# it reads using that recognizer.  The return values
+# are the parse value and a new offset in the input.
+# Errors are thrown.
+
+sub getValue {
+    my ( $target, $input, $offset ) = @_;
+    my $input_length = length ${$input};
+    my $resume_pos;
+    my $this_pos;
+
+    die 'getValue NYI';
+
+    say STDERR "Left main READ loop" if $main::DEBUG;
+
+    # Return value and new offset
+
+    my $value_ref;
+
+    return $value_ref, $this_pos;
+}
+
 sub parse {
-    my ( $input ) = @_;
+    my ($input) = @_;
     my $recce = Marpa::R2::Scanless::R->new(
         {
-            grammar         => $grammar,
+            grammar => $grammar,
+
             # trace_lexers    => 1,
             # trace_terminals => 1,
         }
     );
 
     my $input_length = ${$input};
-    my $length_read  = $recce->read($input);
-    if ( $length_read != length $input_length ) {
+    my $this_pos;
+    my $resume_pos;
+
+    # The main read loop.  Read starting at $offset.
+    # If interrupted execute the handler logic,
+    # and, possibly, resume.
+
+  READ:
+    for (
+        $this_pos = $recce->read( $input ) ;
+        $this_pos < $input_length ;
+        $this_pos = $recce->resume($resume_pos)
+      )
+    {
+
         die "read() ended prematurely\n",
           "  input length = $input_length\n",
-          "  length read = $length_read\n",
+          "  length read = $this_pos\n",
           "  the cause may be an unexpected event";
-    } ## end if ( $length_read != length $input_length )
+
+        # Only one event at a time is expected -- more
+        # than one is an error.  No event means parsing
+        # is exhausted.
+
+        my $events      = $recce->events();
+        my $event_count = scalar @{$events};
+        if ( $event_count < 0 ) {
+            last READ;
+        }
+        if ( $event_count != 1 ) {
+            divergence("One event expected, instead got $event_count");
+        }
+
+        # Find the event name
+
+        my $event = $events->[0];
+        my $name  = $event->[0];
+
+        # An "indent" event occurs whenever indentation is recognized.
+        # The Marpa parser discards indentation, but it also can generate
+        # an event.  "indent" events are only turned on if we are using
+        # implicit layout.
+
+        if ( $name eq 'reservedid' ) {
+            say STDERR 'Reserved Id event' if $main::DEBUG;
+            say STDERR show_last_expression( $recce, 'decls' ) if $main::DEBUG;
+            last READ;
+        }
+    }
+
     if ( $recce->ambiguity_metric() > 1 ) {
 
         # The calls in this section are experimental as of Marpa::R2 2.090
