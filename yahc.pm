@@ -598,9 +598,10 @@ circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 wideBuccol ::= ('{') wideMoldSeq ('}')
 
 # '*'
+# TODO: Finish
 # Superset of scad(5)
-hoonPrimary ::= irrBuctar
-irrBuctar ::= '*' wideHoon
+hoonPrimary ::= prefixTar
+prefixTar ::= '*' wideMold
 
 # '@'
 # Same as scad(5)
