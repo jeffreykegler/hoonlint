@@ -88,10 +88,13 @@
                   [
                     'soil5d',
                     [
-                      'doubleString',
+                      'doubleQuoteString',
                       [
-                        'doubleStringElement',
-                        'FizzBuzz'
+                        'double quote cord',
+                        [
+                          'double quote element',
+                          'FizzBuzz'
+                        ]
                       ]
                     ]
                   ]
@@ -125,10 +128,13 @@
                     [
                       'soil5d',
                       [
-                        'doubleString',
+                        'doubleQuoteString',
                         [
-                          'doubleStringElement',
-                          'Fizz'
+                          'double quote cord',
+                          [
+                            'double quote element',
+                            'Fizz'
+                          ]
                         ]
                       ]
                     ]
@@ -162,10 +168,13 @@
                       [
                         'soil5d',
                         [
-                          'doubleString',
+                          'doubleQuoteString',
                           [
-                            'doubleStringElement',
-                            'Buzz'
+                            'double quote cord',
+                            [
+                              'double quote element',
+                              'Buzz'
+                            ]
                           ]
                         ]
                       ]

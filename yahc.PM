@@ -291,6 +291,9 @@ cen4h ~ [%]
 DOT ~ dot4h
 dot4h ~ [.]
 
+# DOQ4H ~ doq4h
+doq4h ~ ["]
+
 FAS ~ fas4h
 fas4h ~ [/]
 
@@ -298,6 +301,11 @@ optHep ::=
 optHep ::= HEP
 HEP ~ hep4h
 hep4h ~ [-]
+
+KEL ~ kel4h
+kel4h ~ '{'
+KER ~ ker4h
+ker4h ~ '}'
 
 KET ~ ket4h
 ket4h ~ '^'
@@ -328,6 +336,9 @@ gay4i ~ gap4k
 # vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
+
+# Two hex numbers
+bix4j ~ six4j six4j
 
 MOT4J ~ mot4j
 mot4j ~ [12] sid4j
@@ -799,19 +810,21 @@ wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 # Implementing soil(5d)
 
 # TODO revise soil(5d) to follow hoon.hoon.
-soil5d ::= doubleString
+soil5d ::= doubleQuoteString
 
-# LATER: Add \xx hex escapes, and more backslash escapes
-# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
-doubleString ::= (["]) doubleStringElements (["])
-doubleStringElements ::= doubleStringElement*
-doubleStringElement ::= stringInterpolation
-doubleStringElement ::= DOUBLESTRINGCHARS
-DOUBLESTRINGCHARS ~ doubleStringChar+
-# hex 5C is backslash
-# From syntax.vim, might need correction
-doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
-stringInterpolation ::= '{' wideHoon '}'
+doubleQuoteString ::= (["]) <double quote cord> (["])
+<double quote cord> ::= <double quote element>*
+<double quote element> ::= <UNESCAPED DOUBLE QUOTE CHARS>
+<double quote element> ::= <ESCAPED DOUBLE QUOTE CHAR>
+<double quote element> ::= sump5d
+
+# All the printable (non-control) characters except
+# bas (x5c) kel (x7b) and doq (x22)
+<UNESCAPED DOUBLE QUOTE CHARS> ~ unescapedDoubleQuoteChar+
+unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+<ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
+
+sump5d ::= KEL wideHoonSeq KER
 
 # === HOON FILE ===
 :start ::= hoonFile
