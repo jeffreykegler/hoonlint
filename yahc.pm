@@ -420,14 +420,22 @@ wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
 
-# Implementing scad(5d)
+# TODO TO JK: Census circum irregular forms for those which should be broken out by
+# n-ary, for n==1, n==2, n>=3.
 
+# Implementing scad(5d)
+# Cases given in hoon.hoon order.  Unfortunately
+# not the same as the order in scat(5d).
+
+# '_'
 wideMold ::= moldPrefixCab
 moldPrefixCab ::= ('_') wideHoon
 
+# ','
 wideMold ::= moldPrefixCom
 moldPrefixCom ::= (',') wideHoon
 
+# '$'
 wideMold ::= moldBucbuc
 moldBucbuc ::= '$$'
 
@@ -443,6 +451,7 @@ moldBucSingleString ::= '$' qut4k
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
 
+# '%'
 wideMold ::= moldCenbuc
 moldCenbuc ::= '%$'
 
@@ -458,33 +467,42 @@ moldCenSingleString ::= ('%') qut4k
 wideMold ::= moldCenNuck4l
 moldCenNuck4l ::= '%' nuck4l
 
+
+# '('
 wideMold ::= moldCircumParen
 moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
 moldCircumParen ::= ('(') wideHoon (')')
 
+# '{'
 wideMold ::= moldCircumBrace
 moldCircumBrace ::= ('{') wideMoldSeq ('}')
 
+# '['
 wideMold ::= moldCircumBracket
 moldCircumBracket ::= ('[') wideMoldSeq (']')
 
+# '*'
 wideMold ::= moldTar
 moldTar ::= '*'
 
+# '@'
 wideMold ::= moldAura
 moldAura ~ '@' OptLCs OptUCs
 OptLCs ~ [a-z]*
 OptUCs ~ [A-Z]*
 
+# '?'
 wideMold ::= moldPrefixWut
 moldPrefixWut ::= ('?(') wideMoldSeq (')')
 
 wideMold ::= moldWut
 moldWut ::= '?'
 
+# '~'
 wideMold ::= moldSig
 moldSig ::= '~'
 
+# '^'
 wideMold ::= moldKet
 moldKet ~ '^'
 
@@ -493,16 +511,116 @@ moldKet ~ '^'
 wideMold ::= moldInfixCol
 moldInfixCol ::= wing+ separator=>[:] proper=>1
 
+# '='
 wideMold ::= moldPrefixTis
 moldPrefixTis ::= ('=') wideMold (')')
 
 wideMold ::= moldInfixTis
 moldInfixTis ::= SYM4K ('=') wideMold
 
+# ['a' 'z']
+# see the KET subcase
+
+# End of scad(5d)
+
+# From scat(5d)
+# For convenience in referring back
+# to hoon.hoon, I use scat(5d)'s order, as is.
+# Unfortunately this is not in the same
+  # order as in scad.
+
+  # ','
+
+  # '!'
+  pathHoon ::= prefixZap
+  prefixZap ::= (ZAP) wideHoon
+
+  # '_'
+  pathHoon ::= prefixCab
+  prefixCab ::= (CAB) wideHoon
+
+  # '$'
+  # '%'
+  # '&'
+  # '\''
+
+  # '('
+  # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
+  # and cenhep in https://urbit.org/docs/hoon/irregular/
+  pathHoon ::= circumParen1
+  pathHoon ::= circumParen2
+  pathHoon ::= circumParen3
+  circumParen1 ::= ('(') wideHoon (')')
+  circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
+  circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
+
+  # '{'
+
+  # '*'
+  hoonPrimary ::= irrBuctar
+  irrBuctar ::= '*' wideHoon
+
+  # '@'
+
+  # '+'
+  hoonPrimary ::= irrDotlus
+  irrDotlus ::= ('+(') wideHoon (')')
+
+  # '-'
+  # '.'
+  # ['0' '9']
+  # ':'
+
+  # '='
+  tallDottis ::= (TIS GAP) hoon
+  hoonPrimary ::= irrDottis
+  irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
+  irrDottis ::= ('=') wideHoon
+
+  # '?'
+  # '['
+pathHoon ::= circumSelser1
+pathHoon ::= circumSelser2
+pathHoon ::= circumSelser3
+pathHoon ::= circumSelser4
+pathHoon ::= circumSelser5
+circumSelser1 ::= ('[') wideHoon (']')
+circumSelser2 ::= ('[') wideHoon (ACE) wideHoon (']')
+circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
+circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
+
+# '^'
+
+# '`'
+hoonPrimary ::= irrKethep
+irrKethep ::= ('`') hoon ('`') hoon
+
+# '"'
+# ['a' 'z']
+# '|'
+
+# '~'
+hoonPrimary ::= irrCensig
+irrCensig ::= ('~(') wideHoonSeq (')')
+
+# '/'
+
+# '<'
+pathHoon ::= circumGalgar
+circumGalgar ::= ('<') wideHoon ('>')
+
+# '>'
+pathHoon ::= circumGargal
+circumGargal ::= ('>') wideHoon ('<')
+
+# TODO: Finish adding rules from scat(5d)
+
+# TODO: Where is this from?
 wideMold ::= moldInfixFas
 moldInfixFas ::= SYM4K ('/') wideMold
 
-# TODO: Finish adding molds from norm
+# Molds from norm(5d)
 
 # Running syntax
 mold ::= tallBuccenMold
@@ -533,6 +651,8 @@ mold ::= tallBucwutMold
 wideMold ::= wideBucwutMold
 tallBucwutMold ::= (BUCWUT GAP) moldSeq (GAP '==')
 wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
+
+# TODO: Finish adding molds from norm
 
 # === HOON FILE ===
 :start ::= hoonFile
@@ -915,12 +1035,9 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
 
-# FIXED: buctar hoon
-
 # Undocumented runes
 # $*  ::  bunt (irregular form is *)
-hoonPrimary ::= irrBuctar
-irrBuctar ::= '*' wideHoon
+# FIXED: buctar hoon
 
 # TODO: Should all unary expression be <hoonPrimary>?
 
@@ -949,8 +1066,6 @@ wideBucwut ::= ('?(') wideHoonSeq (')')
 # FIXED: cenlus hoon hoon hoon
 
 # FIXED: censig wing hoon hoon
-hoonPrimary ::= irrCensig
-irrCensig ::= ('~(') wideHoonSeq (')')
 
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
@@ -993,14 +1108,8 @@ tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
 wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
-tallDottis ::= (TIS GAP) hoon
-hoonPrimary ::= irrDottis
-irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
-irrDottis ::= ('=') wideHoon
 
 # FIXED: dotlus atom
-hoonPrimary ::= irrDotlus
-irrDotlus ::= ('+(') wideHoon (')')
 
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
@@ -1018,8 +1127,6 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 # FIXED: ketbar hoon
 
 # FIXED: kethep hoon hoon
-hoonPrimary ::= irrKethep
-irrKethep ::= ('`') hoon ('`') hoon
 
 # FIXED: ketlus hoon hoon
 # FIXED: ketsig hoon
@@ -1148,45 +1255,6 @@ wideHoon ::= ZAPZAP
 
 # ^.  ::  use gate to transform type
 # ^&  ::  zinc (covariant) -- see the docs on advanced types
-
-# === IRREGULAR FORMS: PREFIX ===
-
-pathHoon ::= prefixCab
-prefixCab ::= (CAB) wideHoon
-
-pathHoon ::= prefixZap
-prefixZap ::= (ZAP) wideHoon
-
-# === IRREGULAR FORMS: CIRCUMFIX ===
-
-# TODO TO JK: Census circum irregular forms for those which should be broken out by
-# n-ary, for n==1, n==2, n>=3.
-
-# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
-# and cenhep in https://urbit.org/docs/hoon/irregular/
-pathHoon ::= circumParen1
-pathHoon ::= circumParen2
-pathHoon ::= circumParen3
-circumParen1 ::= ('(') wideHoon (')')
-circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
-circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
-
-pathHoon ::= circumSelser1
-pathHoon ::= circumSelser2
-pathHoon ::= circumSelser3
-pathHoon ::= circumSelser4
-pathHoon ::= circumSelser5
-circumSelser1 ::= ('[') wideHoon (']')
-circumSelser2 ::= ('[') wideHoon (ACE) wideHoon (']')
-circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
-circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
-circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
-
-pathHoon ::= circumGalgar
-circumGalgar ::= ('<') wideHoon ('>')
-
-pathHoon ::= circumGargal
-circumGargal ::= ('>') wideHoon ('<')
 
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
