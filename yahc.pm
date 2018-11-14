@@ -638,7 +638,8 @@ irrDottis ::= ('=(') wideHoon (')')
 
 # '?'
 # Same as scad(5)
-wideBucwut ::= ('?(') wideHoonSeq (')')
+# TODO: Finish
+wideBucwut ::= ('?(') wideMoldSeq (')')
 
 # '['
 # Differs from scad(5)
