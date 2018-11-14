@@ -695,11 +695,13 @@ pathHoon ::= rupl5d
 
 # '^'
 # Differs from scad(5)
+# TODO: NYI
 
 # '`'
 # Not in scad(5)
+# TODO: Finish
 hoonPrimary ::= irrKethep
-irrKethep ::= ('`') hoon ('`') hoon
+irrKethep ::= ('`') mold ('`') hoon
 hoonPrimary ::= prefixKet
 prefixKet ::= ('`') wideHoon
 
