@@ -604,23 +604,29 @@ hoonPrimary ::= prefixTar
 prefixTar ::= '*' wideMold
 
 # '@'
+# TODO: NYI
 # Same as scad(5)
 
 # '+'
 # Not in scad(5)
+# TODO: Finish
 hoonPrimary ::= irrDotlus
 irrDotlus ::= ('+(') wideHoon (')')
 
 # '-'
+# TODO: NYI
 # Not in scad(5)
 
 # '.'
+# TODO: NYI
 # Not in scad(5)
 
 # ['0' '9']
+# TODO: NYI
 # Not in scad(5)
 
 # ':'
+# TODO: NYI
 # Not in scad(5)
 
 # '='
@@ -628,7 +634,7 @@ irrDotlus ::= ('+(') wideHoon (')')
 tallDottis ::= (TIS GAP) hoon
 hoonPrimary ::= irrDottis
 irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
-irrDottis ::= ('=') wideHoon
+irrDottis ::= ('=(') wideHoon (')')
 
 # '?'
 # Same as scad(5)
