@@ -160,18 +160,21 @@
                       'rest'
                     ],
                     [
-                      'circumSelser2',
+                      'rupl5d',
                       [
-                        'limb',
-                        'u'
-                      ],
-                      [
-                        'limb',
-                        'this'
-                      ],
-                      [
-                        'limb',
-                        'rest'
+                        'circumBracket',
+                        [
+                          'limb',
+                          'u'
+                        ],
+                        [
+                          'limb',
+                          'this'
+                        ],
+                        [
+                          'limb',
+                          'rest'
+                        ]
                       ]
                     ],
                     ')'
@@ -452,14 +455,17 @@
                                 '0'
                               ],
                               [
-                                'circumSelser2',
+                                'rupl5d',
                                 [
-                                  'limb',
-                                  'a'
-                                ],
-                                [
-                                  'atom',
-                                  '1'
+                                  'circumBracket',
+                                  [
+                                    'limb',
+                                    'a'
+                                  ],
+                                  [
+                                    'atom',
+                                    '1'
+                                  ]
                                 ]
                               ],
                               [
@@ -882,14 +888,17 @@
                               ]
                             ],
                             [
-                              'circumSelser2',
+                              'rupl5d',
                               [
-                                'atom',
-                                '~'
-                              ],
-                              [
-                                'limb',
-                                'nu'
+                                'circumBracket',
+                                [
+                                  'atom',
+                                  '~'
+                                ],
+                                [
+                                  'limb',
+                                  'nu'
+                                ]
                               ]
                             ]
                           ]
@@ -910,21 +919,24 @@
                           'game'
                         ],
                         [
-                          'circumSelser3',
+                          'rupl5d',
                           [
-                            'atom',
+                            'circumBracket',
                             [
-                              'loobean',
-                              '&'
+                              'atom',
+                              [
+                                'loobean',
+                                '&'
+                              ]
+                            ],
+                            [
+                              'atom',
+                              '0'
+                            ],
+                            [
+                              'atom',
+                              '0'
                             ]
-                          ],
-                          [
-                            'atom',
-                            '0'
-                          ],
-                          [
-                            'atom',
-                            '0'
                           ]
                         ],
                         ')'
@@ -1111,99 +1123,108 @@
                                         ]
                                       ],
                                       [
-                                        'circumSelser2',
+                                        'rupl5d',
                                         [
-                                          'circumSelser3',
+                                          'circumBracket',
+                                          [
+                                            'rupl5d',
+                                            [
+                                              'circumBracket',
+                                              [
+                                                'atom',
+                                                '~'
+                                              ],
+                                              [
+                                                'atom',
+                                                [
+                                                  'term',
+                                                  '%win'
+                                                ]
+                                              ],
+                                              [
+                                                'wideWutcol',
+                                                '(',
+                                                [
+                                                  'limb',
+                                                  'w'
+                                                ],
+                                                [
+                                                  'limb',
+                                                  'game'
+                                                ],
+                                                [
+                                                  'atom',
+                                                  [
+                                                    'term',
+                                                    '%x'
+                                                  ]
+                                                ],
+                                                [
+                                                  'atom',
+                                                  [
+                                                    'term',
+                                                    '%o'
+                                                  ]
+                                                ],
+                                                ')'
+                                              ]
+                                            ]
+                                          ],
+                                          [
+                                            'limb',
+                                            'nu'
+                                          ]
+                                        ]
+                                      ],
+                                      [
+                                        'rupl5d',
+                                        [
+                                          'circumBracket',
                                           [
                                             'atom',
                                             '~'
                                           ],
                                           [
-                                            'atom',
+                                            'irrCentis',
                                             [
-                                              'term',
-                                              '%win'
-                                            ]
-                                          ],
-                                          [
-                                            'wideWutcol',
-                                            '(',
+                                              'limb',
+                                              'game'
+                                            ],
                                             [
                                               'limb',
                                               'w'
+                                            ],
+                                            [
+                                              'prefixZap',
+                                              [
+                                                'limb',
+                                                'w'
+                                              ],
+                                              [
+                                                'limb',
+                                                'game'
+                                              ]
+                                            ],
+                                            [
+                                              'limb',
+                                              'a'
+                                            ],
+                                            [
+                                              'limb',
+                                              'z'
                                             ],
                                             [
                                               'limb',
                                               'game'
                                             ],
                                             [
-                                              'atom',
-                                              [
-                                                'term',
-                                                '%x'
-                                              ]
-                                            ],
-                                            [
-                                              'atom',
-                                              [
-                                                'term',
-                                                '%o'
-                                              ]
-                                            ],
-                                            ')'
-                                          ]
-                                        ],
-                                        [
-                                          'limb',
-                                          'nu'
-                                        ]
-                                      ],
-                                      [
-                                        'circumSelser2',
-                                        [
-                                          'atom',
-                                          '~'
-                                        ],
-                                        [
-                                          'irrCentis',
-                                          [
-                                            'limb',
-                                            'game'
-                                          ],
-                                          [
-                                            'limb',
-                                            'w'
-                                          ],
-                                          [
-                                            'prefixZap',
-                                            [
                                               'limb',
-                                              'w'
+                                              'z'
                                             ],
                                             [
                                               'limb',
-                                              'game'
+                                              'next'
                                             ]
-                                          ],
-                                          [
-                                            'limb',
-                                            'a'
-                                          ],
-                                          [
-                                            'limb',
-                                            'z'
-                                          ],
-                                          [
-                                            'limb',
-                                            'game'
-                                          ],
-                                          [
-                                            'limb',
-                                            'z'
-                                          ],
-                                          [
-                                            'limb',
-                                            'next'
                                           ]
                                         ]
                                       ]

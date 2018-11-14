@@ -425,6 +425,25 @@ wede5d ::= (LUS) wideHoon
 # TODO TO JK: Census circum irregular forms for those which should be broken out by
 # n-ary, for n==1, n==2, n>=3.
 
+# Implementing rupl(5d)
+# rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
+# syntaxes.
+
+# TODO: Finish rupl(5d)
+rupl5d ::= circumBracket
+rupl5d ::= sigCircumBracket
+rupl5d ::= circumBracketSig
+rupl5d ::= sigCircumBracketSig
+# TODO: is the whitespace really what was intended?
+circumBracket ::= ('[' ACE) hoonSeq (GAP ']')
+circumBracket ::= ('[') wideHoonSeq (']')
+sigCircumBracket ::= (SIG '[' ACE) hoonSeq (GAP ']')
+sigCircumBracket ::= (SIG '[') wideHoonSeq (']')
+circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
+circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
+sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
+sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
+
 # Implementing scad(5d)
 
 # scad(5d) implements the irregular mold syntaxes
@@ -643,19 +662,7 @@ wideBucwut ::= ('?(') wideMoldSeq (')')
 
 # '['
 # Differs from scad(5)
-pathHoon ::= circumSelser1
-pathHoon ::= circumSelser2
-pathHoon ::= circumSelser3
-pathHoon ::= circumSelser4
-pathHoon ::= circumSelser5
-circumSelser1 ::= ('[') wideHoon (']')
-circumSelser2 ::= ('[') wideHoon (ACE) wideHoon (']')
-circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
-circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
-circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
-
-hoonPrimary ::= circumBracketSig
-circumBracketSig ::= ('[') wideHoonSeq (']~')
+pathHoon ::= rupl5d
 
 # '^'
 # Differs from scad(5)
@@ -680,6 +687,7 @@ prefixBar ::= (BAR) wideHoon
 
 # '~'
 # Differs from scad(5)
+# See also the '[' subcase
 hoonPrimary ::= irrCensig
 hoonPrimary ::= circumSigBracket
 irrCensig ::= ('~(') wideHoonSeq (')')
