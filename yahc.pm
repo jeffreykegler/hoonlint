@@ -420,6 +420,8 @@ wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
 
+# TODO: Should all unary expression be <hoonPrimary>?
+
 # TODO TO JK: Census circum irregular forms for those which should be broken out by
 # n-ary, for n==1, n==2, n>=3.
 
@@ -428,14 +430,17 @@ wede5d ::= (LUS) wideHoon
 # not the same as the order in scat(5d).
 
 # '_'
+# Same as scat(5d)
 wideMold ::= moldPrefixCab
 moldPrefixCab ::= ('_') wideHoon
 
 # ','
+# Differs from scat(5d)
 wideMold ::= moldPrefixCom
 moldPrefixCom ::= (',') wideHoon
 
 # '$'
+# Differs from scat(5d)
 wideMold ::= moldBucbuc
 moldBucbuc ::= '$$'
 
@@ -452,6 +457,7 @@ wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
 
 # '%'
+# Differs from scat(5d)
 wideMold ::= moldCenbuc
 moldCenbuc ::= '%$'
 
@@ -467,31 +473,36 @@ moldCenSingleString ::= ('%') qut4k
 wideMold ::= moldCenNuck4l
 moldCenNuck4l ::= '%' nuck4l
 
-
 # '('
+# Differs from scat(5d)
 wideMold ::= moldCircumParen
 moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
 moldCircumParen ::= ('(') wideHoon (')')
 
 # '{'
+# Same as scat(5d)
 wideMold ::= moldCircumBrace
 moldCircumBrace ::= ('{') wideMoldSeq ('}')
 
 # '['
+# Differs from scat(5d)
 wideMold ::= moldCircumBracket
 moldCircumBracket ::= ('[') wideMoldSeq (']')
 
 # '*'
+# Subset of scat(5d)
 wideMold ::= moldTar
 moldTar ::= '*'
 
 # '@'
+# Same as scat(5d)
 wideMold ::= moldAura
 moldAura ~ '@' OptLCs OptUCs
 OptLCs ~ [a-z]*
 OptUCs ~ [A-Z]*
 
 # '?'
+# Same as scat(5d)
 wideMold ::= moldPrefixWut
 moldPrefixWut ::= ('?(') wideMoldSeq (')')
 
@@ -499,10 +510,12 @@ wideMold ::= moldWut
 moldWut ::= '?'
 
 # '~'
+# Differs from scat(5d)
 wideMold ::= moldSig
 moldSig ::= '~'
 
 # '^'
+# Differs from scat(5d)
 wideMold ::= moldKet
 moldKet ~ '^'
 
@@ -512,6 +525,7 @@ wideMold ::= moldInfixCol
 moldInfixCol ::= wing+ separator=>[:] proper=>1
 
 # '='
+# Differs from scat(5d)
 wideMold ::= moldPrefixTis
 moldPrefixTis ::= ('=') wideMold (')')
 
@@ -519,6 +533,7 @@ wideMold ::= moldInfixTis
 moldInfixTis ::= SYM4K ('=') wideMold
 
 # ['a' 'z']
+# Differs from scat(5d)
 # see the KET subcase
 
 # End of scad(5d)
@@ -527,58 +542,87 @@ moldInfixTis ::= SYM4K ('=') wideMold
 # For convenience in referring back
 # to hoon.hoon, I use scat(5d)'s order, as is.
 # Unfortunately this is not in the same
-  # order as in scad.
+# order as in scad.
 
-  # ','
+# ','
+# Differs from scad(5)
+wideBuccol ::= (',[') wideMoldSeq (']')
 
-  # '!'
-  pathHoon ::= prefixZap
-  prefixZap ::= (ZAP) wideHoon
+# '!'
+# Not in scad(5)
+pathHoon ::= prefixZap
+prefixZap ::= (ZAP) wideHoon
 
-  # '_'
-  pathHoon ::= prefixCab
-  prefixCab ::= (CAB) wideHoon
+# '_'
+# Same as scad(5)
+pathHoon ::= prefixCab
+prefixCab ::= (CAB) wideHoon
 
-  # '$'
-  # '%'
-  # '&'
-  # '\''
+# '$'
+# Differs from scad(5)
 
-  # '('
-  # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
-  # and cenhep in https://urbit.org/docs/hoon/irregular/
-  pathHoon ::= circumParen1
-  pathHoon ::= circumParen2
-  pathHoon ::= circumParen3
-  circumParen1 ::= ('(') wideHoon (')')
-  circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
-  circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
+# '%'
+# Differs from scad(5)
 
-  # '{'
+# '&'
+# Not in scad(5)
 
-  # '*'
-  hoonPrimary ::= irrBuctar
-  irrBuctar ::= '*' wideHoon
+# '\''
+# Not in scad(5)
 
-  # '@'
+# '('
+# Differs from scad(5)
+# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
+# and cenhep in https://urbit.org/docs/hoon/irregular/
+pathHoon ::= circumParen1
+pathHoon ::= circumParen2
+pathHoon ::= circumParen3
+circumParen1 ::= ('(') wideHoon (')')
+circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
+circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
 
-  # '+'
-  hoonPrimary ::= irrDotlus
-  irrDotlus ::= ('+(') wideHoon (')')
+# '{'
+# Same as scad(5)
+wideBuccol ::= ('{') wideMoldSeq ('}')
 
-  # '-'
-  # '.'
-  # ['0' '9']
-  # ':'
+# '*'
+# Superset of scad(5)
+hoonPrimary ::= irrBuctar
+irrBuctar ::= '*' wideHoon
 
-  # '='
-  tallDottis ::= (TIS GAP) hoon
-  hoonPrimary ::= irrDottis
-  irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
-  irrDottis ::= ('=') wideHoon
+# '@'
+# Same as scad(5)
 
-  # '?'
-  # '['
+# '+'
+# Not in scad(5)
+hoonPrimary ::= irrDotlus
+irrDotlus ::= ('+(') wideHoon (')')
+
+# '-'
+# Not in scad(5)
+
+# '.'
+# Not in scad(5)
+
+# ['0' '9']
+# Not in scad(5)
+
+# ':'
+# Not in scad(5)
+
+# '='
+# Differs from scad(5)
+tallDottis ::= (TIS GAP) hoon
+hoonPrimary ::= irrDottis
+irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
+irrDottis ::= ('=') wideHoon
+
+# '?'
+# Same as scad(5)
+wideBucwut ::= ('?(') wideHoonSeq (')')
+
+# '['
+# Differs from scad(5)
 pathHoon ::= circumSelser1
 pathHoon ::= circumSelser2
 pathHoon ::= circumSelser3
@@ -591,26 +635,39 @@ circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon ('
 circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
 
 # '^'
+# Differs from scad(5)
 
 # '`'
+# Not in scad(5)
 hoonPrimary ::= irrKethep
 irrKethep ::= ('`') hoon ('`') hoon
 
 # '"'
+# Not in scad(5)
+
 # ['a' 'z']
+# Differs from scad(5)
+
 # '|'
+# Not in scad(5)
 
 # '~'
+# Differs from scad(5)
 hoonPrimary ::= irrCensig
+hoonPrimary ::= circumSigBracket
 irrCensig ::= ('~(') wideHoonSeq (')')
+circumSigBracket ::= ('~[') wideHoonSeq (']')
 
 # '/'
+# Not in scad(5)
 
 # '<'
+# Not in scad(5)
 pathHoon ::= circumGalgar
 circumGalgar ::= ('<') wideHoon ('>')
 
 # '>'
+# Not in scad(5)
 pathHoon ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
 
@@ -692,6 +749,7 @@ ace ~ ' '
 comment ~ '::' optNonNLs nl
 
 # TODO: Is this treatment of these fas runes OK?
+# No, it is not OK, need to look at ford rune
 comment ~ '/?' optNonNLs nl
 comment ~ '/+' optNonNLs nl
 comment ~ '/-' optNonNLs nl
@@ -1026,11 +1084,6 @@ tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
 hoonPrimary ::= wideBuccol
 wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 
-# TODO: Are these used in value mode?
-# If not, delete them
-wideBuccol ::= ('{') wideMoldSeq ('}')
-wideBuccol ::= (',[') wideMoldSeq (']')
-
 # FIXED: buchep mold mold
 # FIXED: bucket hoon hoon
 # FIXED: bucpat hoon hoon
@@ -1038,8 +1091,6 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # Undocumented runes
 # $*  ::  bunt (irregular form is *)
 # FIXED: buctar hoon
-
-# TODO: Should all unary expression be <hoonPrimary>?
 
 BUCSEM ~ [$] [;]
 mold ::= moldBucsem
@@ -1056,7 +1107,6 @@ hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideBucwut
 wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
-wideBucwut ::= ('?(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
 
@@ -1071,6 +1121,7 @@ hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (GAP) wing (GAP) hoonJogging (GAP '==')
+# TODO: Where to move?  Is this a value form?  model?  both?
 irrCentis ::= wing ('(') wideHoonJogging (')')
 
 # FIXED: colcab hoon hoon
@@ -1085,11 +1136,9 @@ COLSIG ~ [:] [~]
 hoon ::= tallColsig
 tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideColsig
-hoonPrimary ::= wideColsig2
 hoonPrimary ::= wideColsig3
 hoonPrimary ::= wideColsig4
 wideColsig ::= (COLSIG '(') wideHoonSeq (')')
-wideColsig2 ::= ('~[') wideHoonSeq (']')
 wideColsig3 ::= ('[') wideHoonSeq (']~')
 wideColsig4 ::= ('`') wideHoon
 
