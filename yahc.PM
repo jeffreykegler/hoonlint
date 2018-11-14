@@ -320,6 +320,11 @@ zap4h ~ '!'
 
 # === Hoon library: 4i ===
 
+dog4i ~ dot4h gay4i
+
+gay4i ~ # empty
+gay4i ~ gap4k
+
 # vul4i ~ '::' optNonNLs nl
 
 # === Hoon library: 4j ===
@@ -351,9 +356,6 @@ siv4j ~ [0-9a-v]
 
 # === Hoon library: 4k ===
 
-gay4k ~ # empty
-gay4k ~ gap4k
-
 SYM4K ~ low4k sym4kRest
 low4k ~ [a-z]
 nud4k ~ [0-9]
@@ -370,15 +372,15 @@ carCdrPairs ~ carCdrPair+
 carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
-qit4k ::= <UNESCAPED CORD CHARS>
-qit4k ::= <ESCAPED CORD CHAR>
-<UNESCAPED CORD CHARS> ~ unescapedCordChar+
+qit4k ::= <UNESCAPED SINGLE QUOTE CHARS>
+qit4k ::= <ESCAPED SINGLE QUOTE CHAR>
+<UNESCAPED SINGLE QUOTE CHARS> ~ unescapedSingleQuoteChar+
 
 # LATER Single string element also allow escapes
 # LATER: Add \xx hex escapes, and more backslash escapes
 qut4k ::= <single quote string>
-<single quote string> ::= ([']) <single soq cord> (['])
-<single soq cord> ::= qit4k* separator=>gon4k proper=>1
+<single quote string> ::= ([']) <single quote cord> (['])
+<single quote cord> ::= qit4k* separator=>gon4k proper=>1
 
 # <TRIPLE QUOTE START> triggers an event -- the quoted
 # string is actually supplies as <TRIPLE QUOTE STRING>.
@@ -390,8 +392,8 @@ qut4k ::= <TRIPLE QUOTE STRING>
 
 # All the printable (non-control) characters except
 # bas and soq
-unescapedCordChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
-<ESCAPED CORD CHAR> ~ bas4h bas4h | bas4h soq4h | bas4h mes4k
+unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
+<ESCAPED SINGLE QUOTE CHAR> ~ bas4h bas4h | bas4h soq4h | bas4h mes4k
 
 dit4k ~ [0-9]
 
@@ -400,7 +402,7 @@ hit4k ~ [a-f][A-F]
 
 mes4k ~ hit4k hit4k
 
-gon4k ~ bas4h gay4k fas4h
+gon4k ~ bas4h gay4i fas4h
 
 # === Hoon library: 4l ===
 
@@ -722,6 +724,8 @@ prefixKet ::= ('`') wideHoon
 
 # '"'
 # Not in scad(5)
+hoonPrimary ::= infixDot
+infixDot ::= soil5d+ separator=>dog4i proper=>1
 
 # ['a' 'z']
 # Differs from scad(5)
@@ -791,6 +795,23 @@ tallBucwutMold ::= (BUCWUT GAP) moldSeq (GAP '==')
 wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 
 # TODO: Finish adding molds from norm
+
+# Implementing soil(5d)
+
+# TODO revise soil(5d) to follow hoon.hoon.
+soil5d ::= doubleString
+
+# LATER: Add \xx hex escapes, and more backslash escapes
+# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
+doubleString ::= (["]) doubleStringElements (["])
+doubleStringElements ::= doubleStringElement*
+doubleStringElement ::= stringInterpolation
+doubleStringElement ::= DOUBLESTRINGCHARS
+DOUBLESTRINGCHARS ~ doubleStringChar+
+# hex 5C is backslash
+# From syntax.vim, might need correction
+doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
+stringInterpolation ::= '{' wideHoon '}'
 
 # === HOON FILE ===
 :start ::= hoonFile
@@ -1007,20 +1028,6 @@ nameLaterChars ~ nameLaterChar*
 nameLaterChar ~ [a-z0-9-]
 
 # === STRINGS ==
-
-atom ::= doubleString
-
-# LATER: Add \xx hex escapes, and more backslash escapes
-# LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
-doubleString ::= (["]) doubleStringElements (["])
-doubleStringElements ::= doubleStringElement*
-doubleStringElement ::= stringInterpolation
-doubleStringElement ::= DOUBLESTRINGCHARS
-DOUBLESTRINGCHARS ~ doubleStringChar+
-# hex 5C is backslash
-# From syntax.vim, might need correction
-doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
-stringInterpolation ::= '{' wideHoon '}'
 
 # === PATHS ==
 
