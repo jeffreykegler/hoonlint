@@ -374,6 +374,20 @@ qit4k ::= <UNESCAPED CORD CHARS>
 qit4k ::= <ESCAPED CORD CHAR>
 <UNESCAPED CORD CHARS> ~ unescapedCordChar+
 
+# LATER Single string element also allow escapes
+# LATER: Add \xx hex escapes, and more backslash escapes
+qut4k ::= <single quote string>
+<single quote string> ::= ([']) <single soq cord> (['])
+<single soq cord> ::= qit4k* separator=>gon4k proper=>1
+
+# <TRIPLE QUOTE START> triggers an event -- the quoted
+# string is actually supplies as <TRIPLE QUOTE STRING>.
+qut4k ::= <TRIPLE QUOTE START>
+qut4k ::= <TRIPLE QUOTE STRING>
+:lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
+<TRIPLE QUOTE START> ~ ['] ['] [']
+<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
+
 # All the printable (non-control) characters except
 # bas and soq
 unescapedCordChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
@@ -629,8 +643,9 @@ hoonPrimary ::= prefixPam
 prefixPam ::= (PAM '(') wideHoonSeq (')')
 
 # '\''
-# TODO: NYI
 # Not in scad(5)
+hoonPrimary ::= singleQuoteString
+singleQuoteString ::= qut4k
 
 # '('
 # Differs from scad(5)
@@ -994,7 +1009,6 @@ nameLaterChar ~ [a-z0-9-]
 # === STRINGS ==
 
 atom ::= doubleString
-atom ::= qut4k
 
 # LATER: Add \xx hex escapes, and more backslash escapes
 # LATER: See https://urbit.org/docs/hoon/atom/knit/ for interpolation
@@ -1007,20 +1021,6 @@ DOUBLESTRINGCHARS ~ doubleStringChar+
 # From syntax.vim, might need correction
 doubleStringChar ~ [^"\x5c{] | backslash ["] | backslash backslash
 stringInterpolation ::= '{' wideHoon '}'
-
-# LATER Single string element also allow escapes
-# LATER: Add \xx hex escapes, and more backslash escapes
-qut4k ::= <single quote string>
-<single quote string> ::= ([']) <single soq cord> (['])
-<single soq cord> ::= qit4k* separator=>gon4k proper=>1
-
-# <TRIPLE QUOTE START> triggers an event -- the quoted
-# string is actually supplies as <TRIPLE QUOTE STRING>.
-qut4k ::= <TRIPLE QUOTE START>
-qut4k ::= <TRIPLE QUOTE STRING>
-:lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
-<TRIPLE QUOTE START> ~ ['] ['] [']
-<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
 
 # === PATHS ==
 
