@@ -421,7 +421,7 @@
                       'hoonBatteryElement',
                       'bit',
                       [
-                        'wideWutbar',
+                        'prefixBar',
                         [
                           'irrDottis',
                           [
@@ -442,7 +442,7 @@
                               '1'
                             ],
                             [
-                              'circumParen3',
+                              'circumParen2',
                               [
                                 'limb',
                                 'cut'
@@ -478,7 +478,7 @@
                       'hoonBatteryElement',
                       'off',
                       [
-                        'wideWutbar',
+                        'prefixBar',
                         [
                           'irrDottis',
                           [
@@ -493,7 +493,7 @@
                             ]
                           ],
                           [
-                            'circumParen3',
+                            'circumParen2',
                             [
                               'limb',
                               'add'
@@ -507,7 +507,7 @@
                               'a'
                             ],
                             [
-                              'circumParen3',
+                              'circumParen2',
                               [
                                 'limb',
                                 'mul'
@@ -536,7 +536,7 @@
                       'hoonBatteryElement',
                       'get',
                       [
-                        'wideWutbar',
+                        'prefixBar',
                         [
                           'irrDottis',
                           [
@@ -578,7 +578,7 @@
                       'hoonBatteryElement',
                       'set',
                       [
-                        'wideWutbar',
+                        'prefixBar',
                         [
                           'irrDottis',
                           [
@@ -593,7 +593,7 @@
                             ]
                           ],
                           [
-                            'circumParen3',
+                            'circumParen2',
                             [
                               'limb',
                               'con'
@@ -637,7 +637,7 @@
                           'lien'
                         ],
                         [
-                          'circumParen3',
+                          'circumParen2',
                           [
                             'limb',
                             'rip'
@@ -652,7 +652,7 @@
                           ]
                         ],
                         [
-                          'wideWutbar',
+                          'prefixBar',
                           [
                             'irrDottis',
                             [
@@ -673,7 +673,7 @@
                                 'a'
                               ],
                               [
-                                'circumParen3',
+                                'circumParen2',
                                 [
                                   'limb',
                                   'dis'

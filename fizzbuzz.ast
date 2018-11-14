@@ -68,7 +68,7 @@
                     '0'
                   ],
                   [
-                    'circumParen3',
+                    'circumParen2',
                     [
                       'limb',
                       'mod'
@@ -102,7 +102,7 @@
                       '0'
                     ],
                     [
-                      'circumParen3',
+                      'circumParen2',
                       [
                         'limb',
                         'mod'
@@ -136,7 +136,7 @@
                         '0'
                       ],
                       [
-                        'circumParen3',
+                        'circumParen2',
                         [
                           'limb',
                           'mod'
@@ -162,7 +162,7 @@
                       ]
                     ],
                     [
-                      'circumParen3',
+                      'circumParen2',
                       [
                         'limb',
                         'scow'
@@ -193,7 +193,7 @@
                   'count'
                 ],
                 [
-                  'circumParen3',
+                  'circumParen2',
                   [
                     'limb',
                     'add'

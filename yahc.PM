@@ -447,6 +447,9 @@ wede5d ::= (LUS) wideHoon
 # n-ary, for n==1, n==2, n>=3.
 
 # Implementing scad(5d)
+
+# scad(5d) implements the irregular mold syntaxes
+
 # Cases given in hoon.hoon order.  Unfortunately
 # not the same as the order in scat(5d).
 
@@ -559,7 +562,10 @@ moldInfixTis ::= SYM4K ('=') wideMold
 
 # End of scad(5d)
 
-# From scat(5d)
+# === Implementing scat(5d) ===
+
+# scat(5d) implements the irregular hoon syntaxes
+
 # For convenience in referring back
 # to hoon.hoon, I use scat(5d)'s order, as is.
 # Unfortunately this is not in the same
@@ -567,10 +573,12 @@ moldInfixTis ::= SYM4K ('=') wideMold
 
 # ','
 # Differs from scad(5)
+# TODO: Finish
 wideBuccol ::= (',[') wideMoldSeq (']')
 
 # '!'
 # Not in scad(5)
+# TODO: Finish
 pathHoon ::= prefixZap
 prefixZap ::= (ZAP) wideHoon
 
@@ -580,15 +588,21 @@ pathHoon ::= prefixCab
 prefixCab ::= (CAB) wideHoon
 
 # '$'
+# TODO: NYI
 # Differs from scad(5)
 
 # '%'
+# TODO: NYI
 # Differs from scad(5)
 
 # '&'
 # Not in scad(5)
+# TODO: Finish
+hoonPrimary ::= prefixPam
+prefixPam ::= (PAM '(') wideHoonSeq (')')
 
 # '\''
+# TODO: NYI
 # Not in scad(5)
 
 # '('
@@ -597,10 +611,8 @@ prefixCab ::= (CAB) wideHoon
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 pathHoon ::= circumParen1
 pathHoon ::= circumParen2
-pathHoon ::= circumParen3
 circumParen1 ::= ('(') wideHoon (')')
-circumParen2 ::= ('(') wideHoon (ACE) wideHoon (')')
-circumParen3 ::= ('(') wideHoon (ACE) wideHoon (ACE) wideHoonSeq (')')
+circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 
 # '{'
 # Same as scad(5)
@@ -655,6 +667,9 @@ circumSelser3 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (']')
 circumSelser4 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (']')
 circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoonSeq (']')
 
+hoonPrimary ::= circumBracketSig
+circumBracketSig ::= ('[') wideHoonSeq (']~')
+
 # '^'
 # Differs from scad(5)
 
@@ -662,6 +677,8 @@ circumSelser5 ::= ('[') wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon (A
 # Not in scad(5)
 hoonPrimary ::= irrKethep
 irrKethep ::= ('`') hoon ('`') hoon
+hoonPrimary ::= prefixKet
+prefixKet ::= ('`') wideHoon
 
 # '"'
 # Not in scad(5)
@@ -671,6 +688,8 @@ irrKethep ::= ('`') hoon ('`') hoon
 
 # '|'
 # Not in scad(5)
+hoonPrimary ::= prefixBar
+prefixBar ::= (BAR) wideHoon
 
 # '~'
 # Differs from scad(5)
@@ -1157,11 +1176,7 @@ COLSIG ~ [:] [~]
 hoon ::= tallColsig
 tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideColsig
-hoonPrimary ::= wideColsig3
-hoonPrimary ::= wideColsig4
 wideColsig ::= (COLSIG '(') wideHoonSeq (')')
-wideColsig3 ::= ('[') wideHoonSeq (']~')
-wideColsig4 ::= ('`') wideHoon
 
 # Running syntax
 COLTAR ~ [:] [*]
@@ -1188,6 +1203,7 @@ wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: fassem hoon hoon
 
+# TODO: Where to classify this?
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
 tallFastis ::= (FASTIS GAP) NAME (GAP) hoon
@@ -1263,7 +1279,6 @@ tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
 tallWutbar ::= (BAR GAP) hoon
 hoonPrimary ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
-wideWutbar ::= (BAR) wideHoon
 
 # FIXED: wutcol hoon hoon hoon
 # FIXED: wutdot hoon hoon hoon
@@ -1277,7 +1292,6 @@ hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
-wideWutpam ::= (PAM '(') wideHoonSeq (')')
 
 # FIXED: wutpat wing hoon hoon
 # FIXED: wutsig wing hoon hoon
@@ -1316,15 +1330,9 @@ wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 
 # FIXED: zapwut atom hoon
 
-# !;  ::  using the "type of type", emit the type for an expression
-# !,  ::  emit AST of expression
-
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
 wideHoon ::= ZAPZAP
-
-# ^.  ::  use gate to transform type
-# ^&  ::  zinc (covariant) -- see the docs on advanced types
 
 END_OF_DSL_MAIN
 
