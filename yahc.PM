@@ -481,6 +481,11 @@ wede5d ::= (LUS) wideHoon
 # TODO TO JK: Census circum irregular forms for those which should be broken out by
 # n-ary, for n==1, n==2, n>=3.
 
+# Implementing rump(5d)
+
+rump5d ::= rope5d
+rump5d ::= rope5d wede5d
+
 # Implementing rupl(5d)
 # rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
 # syntaxes.
@@ -533,6 +538,8 @@ moldBucSingleString ::= '$' qut4k
 
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
+
+wideMold ::= rump5d
 
 # '%'
 # Differs from scat(5d)
