@@ -206,7 +206,7 @@ sub prune {
         moldSeq              => 1,
         pathHoon             => 1,
         togaElements         => 1,
-        wing                 => 1,
+        rope5d                 => 1,
     };
 
     return [] if not defined $v;
@@ -600,7 +600,7 @@ moldKet ~ '^'
 # <moldInfixCol> can start with either KET (^) or lowercase char
 # This is scab(5d)
 wideMold ::= moldInfixCol
-moldInfixCol ::= wing+ separator=>[:] proper=>1
+moldInfixCol ::= rope5d+ separator=>[:] proper=>1
 
 # '='
 # Differs from scat(5d)
@@ -750,9 +750,7 @@ prefixBar ::= (BAR) wideHoon
 # Differs from scad(5)
 # See also the '[' subcase
 hoonPrimary ::= irrCensig
-hoonPrimary ::= circumSigBracket
 irrCensig ::= ('~(') wideHoonSeq (')')
-circumSigBracket ::= ('~[') wideHoonSeq (']')
 
 # '/'
 # Not in scad(5)
@@ -809,7 +807,8 @@ wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
 
 # Implementing soil(5d)
 
-# TODO revise soil(5d) to follow hoon.hoon.
+# TODO -- Finish soil(5d) -- add triple double strings
+
 soil5d ::= doubleQuoteString
 
 doubleQuoteString ::= (["]) <double quote cord> (["])
@@ -1076,7 +1075,7 @@ infixPlus ::=  wedeFirst ('+') hoonExpression
 infixSlash ::= wedeFirst ('/') hoonExpression
 
 # LHS of wede(5d)
-wedeFirst ::= wing
+wedeFirst ::= rope5d
 wedeFirst ::= '&'
 wedeFirst ::= '|'
 wedeFirst ::= bisk4l
@@ -1085,7 +1084,7 @@ wedeFirst ::= '~'
 hoonPrimary ::= pathHoon
 
 hoonPrimary ::= atom
-hoonPrimary ::= wing
+hoonPrimary ::= rope5d
 
 toga ::= NAME
 toga ::= togaSeq
@@ -1095,7 +1094,7 @@ togaElement ::= toga
 togaElement ::= NIL
 
 # the wing type is parsed by the rope(5d)
-wing ::= limb+ separator=>[.] proper=>1
+rope5d ::= limb+ separator=>[.] proper=>1
 limb ::= ','
 limb ::= optKets '$'
 limb ::= optKets SYM4K
@@ -1180,11 +1179,11 @@ wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 
 BUCSEM ~ [$] [;]
 mold ::= moldBucsem
-moldBucsem ::= (BUCSEM GAP) wing (GAP) wede5d (GAP '==')
-moldBucsem ::= (BUCSEM GAP) wing (GAP '==')
+moldBucsem ::= (BUCSEM GAP) rope5d (GAP) wede5d (GAP '==')
+moldBucsem ::= (BUCSEM GAP) rope5d (GAP '==')
 wideMold ::= wideMoldBucsem
-wideMoldBucsem ::= (BUCSEM '(') wing (ACE) wede5d (')')
-wideMoldBucsem ::= (BUCSEM '(') wing (')')
+wideMoldBucsem ::= (BUCSEM '(') rope5d (ACE) wede5d (')')
+wideMoldBucsem ::= (BUCSEM '(') rope5d (')')
 
 # FIXED: buctis term hoon
 
@@ -1201,14 +1200,14 @@ wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
 # FIXED: cenket hoon hoon hoon hoon
 # FIXED: cenlus hoon hoon hoon
 
-# FIXED: censig wing hoon hoon
+# FIXED: censig rope5d hoon hoon
 
 hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (GAP) wing (GAP) hoonJogging (GAP '==')
+tallCentis ::= CENTIS (GAP) rope5d (GAP) hoonJogging (GAP '==')
 # TODO: Where to move?  Is this a value form?  model?  both?
-irrCentis ::= wing ('(') wideHoonJogging (')')
+irrCentis ::= rope5d ('(') wideHoonJogging (')')
 
 # FIXED: colcab hoon hoon
 
@@ -1269,7 +1268,7 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: sigbar hoon hoon
 # FIXED: sigbuc term hoon
-# FIXED: sigcen term wing hoon hoon
+# FIXED: sigcen term rope5d hoon hoon
 # FIXED: sigfas term hoon
 # FIXED: siggal hoon hoon
 
@@ -1301,7 +1300,7 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: tisbar hoon hoon
 # FIXED: tiscom hoon hoon
-# FIXED: tisdot wing hoon hoon
+# FIXED: tisdot rope5d hoon hoon
 # FIXED: tishep hoon hoon
 
 # tisfas taco hoon hoon
@@ -1310,14 +1309,14 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: tisgal hoon hoon
 
 # FIXED: tisgar hoon hoon
-# FIXED: tisket hoon wing hoon hoon
+# FIXED: tisket hoon rope5d hoon hoon
 # FIXED: tislus hoon hoon
 
 # tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
 
 # FIXED: tistar SYM4K hoon hoon
-# FIXED: tiswut wing hoon hoon hoon
+# FIXED: tiswut rope5d hoon hoon hoon
 
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
@@ -1331,7 +1330,7 @@ wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 # FIXED: wutgal hoon hoon
 # FIXED: wutgar hoon hoon
 # FIXED: wutzap hoon
-# FIXED: wutket wing hoon hoon
+# FIXED: wutket rope5d hoon hoon
 
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
@@ -1339,13 +1338,13 @@ tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
 hoonPrimary ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
-# FIXED: wutpat wing hoon hoon
-# FIXED: wutsig wing hoon hoon
-# FIXED: wuttis hoon wing
+# FIXED: wutpat rope5d hoon hoon
+# FIXED: wutsig rope5d hoon hoon
+# FIXED: wuttis hoon rope5d
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (GAP) wing (GAP) hoonJogging (GAP '==')
+tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP '==')
 
 # TODO: WUTLUS Should be teak hoon hoonJogging
 WUTLUS ~ [?] [+]
