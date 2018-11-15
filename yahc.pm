@@ -58,6 +58,7 @@ sub parse {
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar => $grammar,
+	    ranking_method => 'high_rule_only',
 
             # trace_lexers    => 1,
             # trace_terminals => 1,
@@ -122,7 +123,9 @@ sub parse {
 
     }
 
-    if ( $recce->ambiguity_metric() > 1 ) {
+
+    if ( 0 ) {
+    # if ( $recce->ambiguity_metric() > 1 ) {
 
         # The calls in this section are experimental as of Marpa::R2 2.090
         my $asf = Marpa::R2::ASF->new( { slr => $recce } );
@@ -511,7 +514,7 @@ moldBucSingleString ::= '$' qut4k
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
 
-wideMold ::= rump5d
+wideMold ::= rump5d 
 
 # '%'
 # Differs from scat(5d)
@@ -588,12 +591,13 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 wideMold ::= moldPrefixTis
 moldPrefixTis ::= ('=') wideMold (')')
 
-wideMold ::= moldInfixTis
-moldInfixTis ::= SYM4K ('=') wideMold
-
 # ['a' 'z']
 # Differs from scat(5d)
-# see the KET subcase
+# for scab(5d), see the KET subcase
+wideMold ::= moldInfixFas
+wideMold ::= moldInfixTis
+moldInfixFas ::= SYM4K FAS wideMold rank=>1
+moldInfixTis ::= SYM4K TIS wideMold rank=>1
 
 # End of scad(5d)
 
@@ -726,6 +730,7 @@ infixDot ::= soil5d+ separator=>dog4i proper=>1
 
 # ['a' 'z']
 # Differs from scad(5)
+hoonPrimary ::= rump5d
 
 # '|'
 # Not in scad(5)

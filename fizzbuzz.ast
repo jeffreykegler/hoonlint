@@ -10,8 +10,11 @@
       [
         'wede5d',
         [
-          'limb',
-          'atom'
+          'rump5d',
+          [
+            'limb',
+            'atom'
+          ]
         ]
       ]
     ],
@@ -35,12 +38,18 @@
           [
             'circumParen2',
             [
-              'limb',
-              'list'
+              'rump5d',
+              [
+                'limb',
+                'list'
+              ]
             ],
             [
-              'limb',
-              'tape'
+              'rump5d',
+              [
+                'limb',
+                'tape'
+              ]
             ]
           ],
           [
@@ -48,12 +57,18 @@
             [
               'irrDottis',
               [
-                'limb',
-                'end'
+                'rump5d',
+                [
+                  'limb',
+                  'end'
+                ]
               ],
               [
-                'limb',
-                'count'
+                'rump5d',
+                [
+                  'limb',
+                  'count'
+                ]
               ]
             ],
             [
@@ -73,12 +88,18 @@
                   [
                     'circumParen2',
                     [
-                      'limb',
-                      'mod'
+                      'rump5d',
+                      [
+                        'limb',
+                        'mod'
+                      ]
                     ],
                     [
-                      'limb',
-                      'count'
+                      'rump5d',
+                      [
+                        'limb',
+                        'count'
+                      ]
                     ],
                     [
                       'atom',
@@ -113,12 +134,18 @@
                     [
                       'circumParen2',
                       [
-                        'limb',
-                        'mod'
+                        'rump5d',
+                        [
+                          'limb',
+                          'mod'
+                        ]
                       ],
                       [
-                        'limb',
-                        'count'
+                        'rump5d',
+                        [
+                          'limb',
+                          'count'
+                        ]
                       ],
                       [
                         'atom',
@@ -153,12 +180,18 @@
                       [
                         'circumParen2',
                         [
-                          'limb',
-                          'mod'
+                          'rump5d',
+                          [
+                            'limb',
+                            'mod'
+                          ]
                         ],
                         [
-                          'limb',
-                          'count'
+                          'rump5d',
+                          [
+                            'limb',
+                            'count'
+                          ]
                         ],
                         [
                           'atom',
@@ -185,8 +218,11 @@
                     [
                       'circumParen2',
                       [
-                        'limb',
-                        'scow'
+                        'rump5d',
+                        [
+                          'limb',
+                          'scow'
+                        ]
                       ],
                       [
                         'atom',
@@ -196,8 +232,11 @@
                         ]
                       ],
                       [
-                        'limb',
-                        'count'
+                        'rump5d',
+                        [
+                          'limb',
+                          'count'
+                        ]
                       ]
                     ]
                   ]
@@ -210,22 +249,31 @@
                   '$'
                 ],
                 [
-                  'limb',
-                  'count'
+                  'rump5d',
+                  [
+                    'limb',
+                    'count'
+                  ]
                 ],
                 [
                   'circumParen2',
                   [
-                    'limb',
-                    'add'
+                    'rump5d',
+                    [
+                      'limb',
+                      'add'
+                    ]
                   ],
                   [
                     'atom',
                     '1'
                   ],
                   [
-                    'limb',
-                    'count'
+                    'rump5d',
+                    [
+                      'limb',
+                      'count'
+                    ]
                   ]
                 ]
               ]

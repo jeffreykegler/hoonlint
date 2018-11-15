@@ -24,7 +24,7 @@ todo hoons/arvo/app/gmail.hoon
 todo hoons/arvo/app/gmail/split.hoon
 todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/app/hood.hoon
-todo hoons/arvo/app/pipe.hoon
+ok hoons/arvo/app/pipe.hoon
 todo hoons/arvo/app/static.hoon
 todo hoons/arvo/app/talk.hoon
 todo hoons/arvo/app/test.hoon
@@ -167,7 +167,7 @@ ok hoons/arvo/lib/sole.hoon
 todo hoons/arvo/lib/tester.hoon
 ok hoons/arvo/lib/time-to-id.hoon
 ok hoons/arvo/lib/tree.hoon
-todo hoons/arvo/lib/twitter.hoon
+ok hoons/arvo/lib/twitter.hoon
 ok hoons/arvo/lib/urb-split.hoon
 todo hoons/arvo/mar/ask-mail.hoon
 ok hoons/arvo/mar/atom.hoon
