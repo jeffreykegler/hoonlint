@@ -115,13 +115,10 @@
                       ]
                     ],
                     [
-                      'irrCensig',
+                      'circumSigParen',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'tap'
-                        ]
+                        'limb',
+                        'tap'
                       ],
                       [
                         'rump5d',
@@ -444,13 +441,10 @@
                               [
                                 'circumParen2',
                                 [
-                                  'irrCensig',
+                                  'circumSigParen',
                                   [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'del'
-                                    ]
+                                    'limb',
+                                    'del'
                                   ],
                                   [
                                     'rump5d',

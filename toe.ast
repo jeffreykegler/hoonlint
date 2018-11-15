@@ -108,13 +108,10 @@
                 [
                   'circumParen2',
                   [
-                    'irrCensig',
+                    'circumSigParen',
                     [
-                      'rump5d',
-                      [
-                        'limb',
-                        'do'
-                      ]
+                      'limb',
+                      'do'
                     ],
                     [
                       'rump5d',
@@ -514,66 +511,60 @@
                       'hoonBatteryElement',
                       'bit',
                       [
-                        'prefixBar',
+                        'wideBartis',
+                        '(',
+                        [
+                          'moldInfixFas',
+                          'a',
+                          '/',
+                          '@'
+                        ],
                         [
                           'irrDottis',
                           [
-                            'infixSlash',
-                            [
-                              'limb',
-                              'a'
-                            ],
-                            [
-                              'atom',
-                              '@'
-                            ]
+                            'atom',
+                            '1'
                           ],
                           [
-                            'irrDottis',
+                            'circumParen2',
                             [
-                              'atom',
-                              '1'
+                              'rump5d',
+                              [
+                                'limb',
+                                'cut'
+                              ]
                             ],
                             [
-                              'circumParen2',
+                              'atom',
+                              '0'
+                            ],
+                            [
+                              'rupl5d',
                               [
-                                'rump5d',
+                                'circumBracket',
                                 [
-                                  'limb',
-                                  'cut'
-                                ]
-                              ],
-                              [
-                                'atom',
-                                '0'
-                              ],
-                              [
-                                'rupl5d',
-                                [
-                                  'circumBracket',
+                                  'rump5d',
                                   [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'a'
-                                    ]
-                                  ],
-                                  [
-                                    'atom',
-                                    '1'
+                                    'limb',
+                                    'a'
                                   ]
-                                ]
-                              ],
-                              [
-                                'rump5d',
+                                ],
                                 [
-                                  'limb',
-                                  'half'
+                                  'atom',
+                                  '1'
                                 ]
+                              ]
+                            ],
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'half'
                               ]
                             ]
                           ]
-                        ]
+                        ],
+                        ')'
                       ]
                     ]
                   ],
@@ -583,21 +574,43 @@
                       'hoonBatteryElement',
                       'off',
                       [
-                        'prefixBar',
+                        'wideBartis',
+                        '(',
                         [
-                          'irrDottis',
+                          'rump5d',
                           [
-                            'infixSlash',
-                            [
-                              'limb',
-                              'a'
-                            ],
+                            'limb',
+                            'a'
+                          ],
+                          [
+                            'wede5d',
                             [
                               'rump5d',
                               [
                                 'limb',
                                 'spot'
                               ]
+                            ]
+                          ]
+                        ],
+                        [
+                          'circumParen2',
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'add'
+                            ]
+                          ],
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'x'
+                            ],
+                            [
+                              'limb',
+                              'a'
                             ]
                           ],
                           [
@@ -606,47 +619,27 @@
                               'rump5d',
                               [
                                 'limb',
-                                'add'
+                                'mul'
                               ]
+                            ],
+                            [
+                              'atom',
+                              '3'
                             ],
                             [
                               'rump5d',
                               [
                                 'limb',
-                                'x'
+                                'y'
                               ],
                               [
                                 'limb',
                                 'a'
                               ]
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'mul'
-                                ]
-                              ],
-                              [
-                                'atom',
-                                '3'
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'y'
-                                ],
-                                [
-                                  'limb',
-                                  'a'
-                                ]
-                              ]
                             ]
                           ]
-                        ]
+                        ],
+                        ')'
                       ]
                     ]
                   ],
@@ -656,21 +649,32 @@
                       'hoonBatteryElement',
                       'get',
                       [
-                        'prefixBar',
+                        'wideBartis',
+                        '(',
                         [
-                          'irrDottis',
+                          'rump5d',
                           [
-                            'infixSlash',
-                            [
-                              'limb',
-                              'a'
-                            ],
+                            'limb',
+                            'a'
+                          ],
+                          [
+                            'wede5d',
                             [
                               'rump5d',
                               [
                                 'limb',
                                 'spot'
                               ]
+                            ]
+                          ]
+                        ],
+                        [
+                          'circumParen2',
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'bit'
                             ]
                           ],
                           [
@@ -679,7 +683,70 @@
                               'rump5d',
                               [
                                 'limb',
-                                'bit'
+                                'off'
+                              ]
+                            ],
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'a'
+                              ]
+                            ]
+                          ]
+                        ],
+                        ')'
+                      ]
+                    ]
+                  ],
+                  [
+                    'batteryElement',
+                    [
+                      'hoonBatteryElement',
+                      'set',
+                      [
+                        'wideBartis',
+                        '(',
+                        [
+                          'rump5d',
+                          [
+                            'limb',
+                            'a'
+                          ],
+                          [
+                            'wede5d',
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'spot'
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          'circumParen2',
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'con'
+                            ]
+                          ],
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'half'
+                            ]
+                          ],
+                          [
+                            'circumParen2',
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'bex'
                               ]
                             ],
                             [
@@ -700,78 +767,8 @@
                               ]
                             ]
                           ]
-                        ]
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'set',
-                      [
-                        'prefixBar',
-                        [
-                          'irrDottis',
-                          [
-                            'infixSlash',
-                            [
-                              'limb',
-                              'a'
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'spot'
-                              ]
-                            ]
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'con'
-                              ]
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'half'
-                              ]
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'bex'
-                                ]
-                              ],
-                              [
-                                'circumParen2',
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'off'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'a'
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
+                        ],
+                        ')'
                       ]
                     ]
                   ],
@@ -808,22 +805,32 @@
                           ]
                         ],
                         [
-                          'prefixBar',
+                          'wideBartis',
+                          '(',
+                          [
+                            'moldInfixFas',
+                            'a',
+                            '/',
+                            '@'
+                          ],
                           [
                             'irrDottis',
                             [
-                              'infixSlash',
+                              'rump5d',
                               [
                                 'limb',
                                 'a'
-                              ],
-                              [
-                                'atom',
-                                '@'
                               ]
                             ],
                             [
-                              'irrDottis',
+                              'circumParen2',
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  'dis'
+                                ]
+                              ],
                               [
                                 'rump5d',
                                 [
@@ -832,31 +839,15 @@
                                 ]
                               ],
                               [
-                                'circumParen2',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'dis'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'a'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'half'
-                                  ]
+                                  'limb',
+                                  'half'
                                 ]
                               ]
                             ]
-                          ]
+                          ],
+                          ')'
                         ]
                       ]
                     ]
@@ -982,13 +973,10 @@
                                 ]
                               ],
                               [
-                                'irrCensig',
+                                'circumSigParen',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'mo'
-                                  ]
+                                  'limb',
+                                  'mo'
                                 ],
                                 [
                                   'rump5d',
@@ -1041,13 +1029,10 @@
                                 ]
                               ],
                               [
-                                'irrCensig',
+                                'circumSigParen',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'mo'
-                                  ]
+                                  'limb',
+                                  'mo'
                                 ],
                                 [
                                   'rump5d',
@@ -1180,13 +1165,10 @@
                                 [
                                   'circumParen2',
                                   [
-                                    'irrCensig',
+                                    'circumSigParen',
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'get'
-                                      ]
+                                      'limb',
+                                      'get'
                                     ],
                                     [
                                       'rump5d',
@@ -1218,13 +1200,10 @@
                                 [
                                   'circumParen2',
                                   [
-                                    'irrCensig',
+                                    'circumSigParen',
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'get'
-                                      ]
+                                      'limb',
+                                      'get'
                                     ],
                                     [
                                       'rump5d',
@@ -1322,13 +1301,10 @@
                                     [
                                       'circumParen2',
                                       [
-                                        'irrCensig',
+                                        'circumSigParen',
                                         [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'set'
-                                          ]
+                                          'limb',
+                                          'set'
                                         ],
                                         [
                                           'rump5d',
@@ -1360,13 +1336,10 @@
                                     [
                                       'tallWutcol',
                                       [
-                                        'irrCensig',
+                                        'circumSigParen',
                                         [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'win'
-                                          ]
+                                          'limb',
+                                          'win'
                                         ],
                                         [
                                           'rump5d',

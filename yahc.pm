@@ -290,6 +290,11 @@ lus4h ~ '+'
 PAM ~ pam4h
 pam4h ~ '&'
 
+PEL ~ pel4h
+pel4h ~ '('
+PER ~ per4h
+per4h ~ ')'
+
 SIG ~ sig4h
 sig4h ~ '~'
 
@@ -734,14 +739,18 @@ hoonPrimary ::= rump5d
 
 # '|'
 # Not in scad(5)
+# TODO: Finish
 hoonPrimary ::= prefixBar
-prefixBar ::= (BAR) wideHoon
+hoonPrimary ::= circumBarParen
+prefixBar ::= (BAR) wede5d rank=>1
+circumBarParen ::= (BAR PEL) wideHoonSeq (PER) rank=>1
 
 # '~'
 # Differs from scad(5)
 # See also the '[' subcase
-hoonPrimary ::= irrCensig
-irrCensig ::= ('~(') wideHoonSeq (')')
+# TODO: Finish
+hoonPrimary ::= circumSigParen
+circumSigParen ::= ('~(') rope5d (ACE) wideHoon (ACE) wideHoonSeq (')')
 
 # '/'
 # Not in scad(5)
