@@ -311,10 +311,10 @@ todo hoons/arvo/sys/vane/gall.hoon
 todo hoons/arvo/sys/vane/jael.hoon
 todo hoons/arvo/sys/vane/xmas.hoon
 todo hoons/arvo/sys/zuse.hoon
-todo hoons/arvo/tests/new-hoon/ls.hoon
+ok hoons/arvo/tests/new-hoon/ls.hoon
 todo hoons/arvo/tests/new-hoon/mp.hoon
-todo hoons/arvo/tests/new-hoon/myb.hoon
-todo hoons/arvo/tests/new-hoon/thr.hoon
+ok hoons/arvo/tests/new-hoon/myb.hoon
+ok hoons/arvo/tests/new-hoon/thr.hoon
 todo hoons/arvo/tests/zuse/crypto/keccak.hoon
 todo hoons/arvo/web/404.hoon
 todo hoons/arvo/web/dojo.hoon

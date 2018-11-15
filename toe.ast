@@ -4,16 +4,19 @@
     [
       'tallBartis',
       [
-        'moldInfixFas',
-        'feed',
+        'rump5d',
         [
-          'moldCircumParen',
+          'limb',
+          'feed'
+        ],
+        [
+          'wede5d',
           [
-            'limb',
-            'list'
-          ],
-          [
-            'moldInfixCol',
+            'circumParen2',
+            [
+              'limb',
+              'list'
+            ],
             [
               'limb',
               'move'
@@ -24,14 +27,17 @@
       [
         'tallTisbar',
         [
-          'infixSlash',
+          'rump5d',
           [
             'limb',
             'game'
           ],
           [
-            'limb',
-            'game'
+            'wede5d',
+            [
+              'limb',
+              'game'
+            ]
           ]
         ],
         [
@@ -211,14 +217,32 @@
               [
                 'wideBuccol',
                 [
-                  'moldInfixFas',
-                  'x',
-                  '@'
+                  'rump5d',
+                  [
+                    'limb',
+                    'x'
+                  ],
+                  [
+                    'wede5d',
+                    [
+                      'atom',
+                      '@'
+                    ]
+                  ]
                 ],
                 [
-                  'moldInfixFas',
-                  'y',
-                  '@'
+                  'rump5d',
+                  [
+                    'limb',
+                    'y'
+                  ],
+                  [
+                    'wede5d',
+                    [
+                      'atom',
+                      '@'
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -263,10 +287,13 @@
                     ]
                   ],
                   [
-                    'moldInfixFas',
-                    'p',
+                    'rump5d',
                     [
-                      'moldInfixCol',
+                      'limb',
+                      'p'
+                    ],
+                    [
+                      'wede5d',
                       [
                         'limb',
                         'cord'
@@ -295,10 +322,13 @@
                     ]
                   ],
                   [
-                    'moldInfixFas',
-                    'p',
+                    'rump5d',
                     [
-                      'moldInfixCol',
+                      'limb',
+                      'p'
+                    ],
+                    [
+                      'wede5d',
                       [
                         'limb',
                         'spot'
@@ -317,10 +347,13 @@
                     ]
                   ],
                   [
-                    'moldInfixFas',
-                    'p',
+                    'rump5d',
                     [
-                      'moldInfixCol',
+                      'limb',
+                      'p'
+                    ],
+                    [
+                      'wede5d',
                       [
                         'limb',
                         'spot'
@@ -361,17 +394,20 @@
               [
                 'tallBuccol',
                 [
-                  'moldInfixCol',
+                  'rump5d',
                   [
                     'limb',
                     'w'
                   ]
                 ],
                 [
-                  'moldInfixFas',
-                  'a',
+                  'rump5d',
                   [
-                    'moldInfixCol',
+                    'limb',
+                    'a'
+                  ],
+                  [
+                    'wede5d',
                     [
                       'limb',
                       'side'
@@ -379,10 +415,13 @@
                   ]
                 ],
                 [
-                  'moldInfixFas',
-                  'z',
+                  'rump5d',
                   [
-                    'moldInfixCol',
+                    'limb',
+                    'z'
+                  ],
+                  [
+                    'wede5d',
                     [
                       'limb',
                       'side'
@@ -731,10 +770,13 @@
                       [
                         'tallBartis',
                         [
-                          'moldInfixFas',
-                          'act',
+                          'rump5d',
                           [
-                            'moldInfixCol',
+                            'limb',
+                            'act'
+                          ],
+                          [
+                            'wede5d',
                             [
                               'limb',
                               'move'
@@ -752,7 +794,7 @@
                                 'unit'
                               ],
                               [
-                                'moldInfixCol',
+                                'rump5d',
                                 [
                                   'limb',
                                   'fact'
@@ -760,7 +802,7 @@
                               ]
                             ],
                             [
-                              'moldInfixCol',
+                              'rump5d',
                               [
                                 'limb',
                                 [
@@ -1041,7 +1083,7 @@
                                       'unit'
                                     ],
                                     [
-                                      'moldInfixCol',
+                                      'rump5d',
                                       [
                                         'limb',
                                         'fact'
@@ -1049,7 +1091,7 @@
                                     ]
                                   ],
                                   [
-                                    'moldInfixCol',
+                                    'rump5d',
                                     [
                                       'limb',
                                       [

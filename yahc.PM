@@ -202,6 +202,7 @@ sub prune {
         hoonJog              => 1,
         hoonPrimary          => 1,
         hoonSeq              => 1,
+        hoonUnary              => 1,
         mold                 => 1,
         moldSeq              => 1,
         pathHoon             => 1,
@@ -606,8 +607,10 @@ moldKet ~ '^'
 
 # <moldInfixCol> can start with either KET (^) or lowercase char
 # This is scab(5d)
+# TODO: Delete after development
 wideMold ::= moldInfixCol
-moldInfixCol ::= rope5d+ separator=>[:] proper=>1
+moldInfixCol ::= rope5d [:] moldInfixCol2
+moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 
 # '='
 # Differs from scat(5d)
@@ -641,11 +644,13 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # Not in scad(5)
 # TODO: Finish
 pathHoon ::= prefixZap
+hoonUnary ::= prefixZap
 prefixZap ::= (ZAP) wideHoon
 
 # '_'
 # Same as scad(5)
 pathHoon ::= prefixCab
+hoonUnary ::= prefixCab
 prefixCab ::= (CAB) wideHoon
 
 # '$'
@@ -673,6 +678,8 @@ singleQuoteString ::= qut4k
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 pathHoon ::= circumParen1
 pathHoon ::= circumParen2
+hoonPrimary ::= circumParen1
+hoonPrimary ::= circumParen2
 circumParen1 ::= ('(') wideHoon (')')
 circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 
@@ -727,6 +734,7 @@ wideBucwut ::= ('?(') wideMoldSeq (')')
 # '['
 # Differs from scad(5)
 pathHoon ::= rupl5d
+hoonPrimary ::= rupl5d
 
 # '^'
 # Differs from scad(5)
@@ -765,18 +773,16 @@ irrCensig ::= ('~(') wideHoonSeq (')')
 # '<'
 # Not in scad(5)
 pathHoon ::= circumGalgar
+hoonPrimary ::= circumGalgar
 circumGalgar ::= ('<') wideHoon ('>')
 
 # '>'
 # Not in scad(5)
 pathHoon ::= circumGargal
+hoonPrimary ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
 
 # TODO: Finish adding rules from scat(5d)
-
-# TODO: Where is this from?
-wideMold ::= moldInfixFas
-moldInfixFas ::= SYM4K ('/') wideMold
 
 # Molds from norm(5d)
 
@@ -786,6 +792,8 @@ wideMold ::= wideBuccenMold
 tallBuccenMold ::= (BUCCEN GAP) moldSeq (GAP '==')
 wideBuccenMold ::= (BUCCEN '(') wideMoldSeq (')')
 
+# [':' (rune col %bccl exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
 mold ::= tallBuccolMold
 wideMold ::= wideBuccolMold
@@ -1068,7 +1076,8 @@ pathStringChar ~ [a-zA-Z-]
 
 hoonSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wideHoon
-wideHoon ::= hoonExpression
+wideHoon ::= hoonUnary
+hoonUnary ::= hoonExpression
 hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
@@ -1087,8 +1096,6 @@ wedeFirst ::= '&'
 wedeFirst ::= '|'
 wedeFirst ::= bisk4l
 wedeFirst ::= '~'
-
-hoonPrimary ::= pathHoon
 
 hoonPrimary ::= atom
 hoonPrimary ::= rope5d
@@ -1136,6 +1143,8 @@ BARCAB ~ [|] [_]
 hoon ::= tallBarcab
 tallBarcab ::= (BARCAB GAP) hoon (GAP) battery (GAP '--')
 
+# ['%' (runo cen %brcn [~ ~] expe)]
+#   ++  expe  |.(wisp)                                  ::  core tail
 BARCEN ~ [|] [%]
 hoon ::= tallBarcen
 tallBarcen ::= (BARCEN GAP) battery (GAP '--')
@@ -1149,7 +1158,11 @@ hoon ::= tallBarket
 tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 
 # FIXED: barsig hoon hoon
+
+
 # FIXED: bartar mold hoon
+# ['*' (runo tar %brtr [~ ~] exqc)]
+#  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 
 # Cannot use BARTIS because BAR TIS must also be accepted
 # BARTIS mold hoon
@@ -1169,7 +1182,8 @@ tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
 hoonPrimary ::= wideBuccen
 wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
 
-# Running syntax
+# [':' (rune col %bccl exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
@@ -1305,7 +1319,10 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: sigwut hoon hoon hoon
 # FIXED: sigzap hoon hoon
 
-# FIXED: tisbar hoon hoon
+# ['|' (rune bar %tsbr exqc)]
+# ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
+# FIXED: tisbar mold hoon
+
 # FIXED: tiscom hoon hoon
 # FIXED: tisdot rope5d hoon hoon
 # FIXED: tishep hoon hoon
