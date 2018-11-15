@@ -753,6 +753,7 @@ hoonPrimary ::= circumSigParen
 circumSigParen ::= ('~(') rope5d (ACE) wideHoon (ACE) wideHoonSeq (')')
 
 # '/'
+# TODO: Finish
 # Not in scad(5)
 
 # '<'
@@ -1067,13 +1068,11 @@ hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
 hoonExpression ::= infixPlus
-hoonExpression ::= infixSlash
 hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
 infixPlus ::=  wedeFirst ('+') hoonExpression
-infixSlash ::= wedeFirst ('/') hoonExpression
 
 # LHS of wede(5d)
 wedeFirst ::= rope5d

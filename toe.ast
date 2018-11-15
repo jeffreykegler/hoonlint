@@ -78,25 +78,28 @@
               [
                 'tallTisket',
                 [
-                  'infixSlash',
+                  'rump5d',
                   [
                     'limb',
                     'this'
                   ],
                   [
-                    'circumParen2',
+                    'wede5d',
                     [
-                      'rump5d',
+                      'circumParen2',
                       [
-                        'limb',
-                        'unit'
-                      ]
-                    ],
-                    [
-                      'rump5d',
+                        'rump5d',
+                        [
+                          'limb',
+                          'unit'
+                        ]
+                      ],
                       [
-                        'limb',
-                        'fact'
+                        'rump5d',
+                        [
+                          'limb',
+                          'fact'
+                        ]
                       ]
                     ]
                   ]
@@ -143,25 +146,28 @@
                 [
                   'tallTisfas',
                   [
-                    'infixSlash',
+                    'rump5d',
                     [
                       'limb',
                       'rest'
                     ],
                     [
-                      'circumParen2',
+                      'wede5d',
                       [
-                        'rump5d',
+                        'circumParen2',
                         [
-                          'limb',
-                          'list'
-                        ]
-                      ],
-                      [
-                        'rump5d',
+                          'rump5d',
+                          [
+                            'limb',
+                            'list'
+                          ]
+                        ],
                         [
-                          'limb',
-                          'fact'
+                          'rump5d',
+                          [
+                            'limb',
+                            'fact'
+                          ]
                         ]
                       ]
                     ]
@@ -490,16 +496,19 @@
               [
                 'tallBarcab',
                 [
-                  'infixSlash',
+                  'rump5d',
                   [
                     'limb',
                     'half'
                   ],
                   [
-                    'rump5d',
+                    'wede5d',
                     [
-                      'limb',
-                      'side'
+                      'rump5d',
+                      [
+                        'limb',
+                        'side'
+                      ]
                     ]
                   ]
                 ],
@@ -864,16 +873,19 @@
               [
                 'tallBarcab',
                 [
-                  'infixSlash',
+                  'rump5d',
                   [
                     'limb',
                     'game'
                   ],
                   [
-                    'rump5d',
+                    'wede5d',
                     [
-                      'limb',
-                      'game'
+                      'rump5d',
+                      [
+                        'limb',
+                        'game'
+                      ]
                     ]
                   ]
                 ],
@@ -1140,16 +1152,19 @@
                       [
                         'tallBarcab',
                         [
-                          'infixSlash',
+                          'rump5d',
                           [
                             'limb',
                             'here'
                           ],
                           [
-                            'rump5d',
+                            'wede5d',
                             [
-                              'limb',
-                              'spot'
+                              'rump5d',
+                              [
+                                'limb',
+                                'spot'
+                              ]
                             ]
                           ]
                         ],
@@ -1285,16 +1300,19 @@
                                   [
                                     'tallTisfas',
                                     [
-                                      'infixSlash',
+                                      'rump5d',
                                       [
                                         'limb',
                                         'next'
                                       ],
                                       [
-                                        'rump5d',
+                                        'wede5d',
                                         [
-                                          'limb',
-                                          'side'
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'side'
+                                          ]
                                         ]
                                       ]
                                     ],
