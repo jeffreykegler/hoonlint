@@ -368,6 +368,7 @@ crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT4H proper=>1
 crub4l_part3_element ::= qix4j
 
 # nuck(4l) is the coin parser
+# TODO: Finish nuck4l
 nuck4l ::= SYM4K
 
 # tash(4l) is the signed dime parser
@@ -375,8 +376,7 @@ nuck4l ::= TODO_tash4l
 TODO_tash4l ::= UNICORN
 
 # perd(4l) parses dimes or tuples without their standard prefixes
-nuck4l ::= TODO_perl4l
-TODO_perl4l ::= UNICORN
+nuck4l ::= DOT4H perd4l
 
 # Can be either '$~' or '%~'
 # -- both seem to have the same semantics
@@ -385,6 +385,13 @@ moldNullSig ::= '~'
 
 # perd(4l) parses sig-prefixed coins after the sig prefix
 nuck4l ::= SIG twid4l
+
+# TODO: Finish perd4l
+perd4l ::= zust4l
+
+# TODO: Finish zust4l
+zust4l ::= 'y'
+zust4l ::= 'n'
 
 twid4l ::= '0' VUM4J
 twid4l ::= crub4l

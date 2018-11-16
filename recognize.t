@@ -25,7 +25,7 @@ todo hoons/arvo/app/gmail/split.hoon
 todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/app/hood.hoon
 ok hoons/arvo/app/pipe.hoon
-todo hoons/arvo/app/static.hoon
+ok hoons/arvo/app/static.hoon
 todo hoons/arvo/app/talk.hoon
 todo hoons/arvo/app/test.hoon
 ok hoons/arvo/app/time.hoon
@@ -216,7 +216,7 @@ ok hoons/arvo/mar/plan-diff.hoon
 ok hoons/arvo/mar/plan.hoon
 ok hoons/arvo/mar/purl.hoon
 ok hoons/arvo/mar/quri.hoon
-todo hoons/arvo/mar/recoverable-error.hoon
+ok hoons/arvo/mar/recoverable-error.hoon
 todo hoons/arvo/mar/rss-xml.hoon
 ok hoons/arvo/mar/ships.hoon
 todo hoons/arvo/mar/snip.hoon
@@ -284,7 +284,7 @@ ok hoons/arvo/sec/com/slack.hoon
 ok hoons/arvo/sec/com/twitter.hoon
 ok hoons/arvo/sur/down.hoon
 todo hoons/arvo/sur/gh.hoon
-todo hoons/arvo/sur/gmail-label.hoon
+ok hoons/arvo/sur/gmail-label.hoon
 ok hoons/arvo/sur/gmail-message.hoon
 ok hoons/arvo/sur/hall.hoon
 ok hoons/arvo/sur/kyev.hoon

@@ -1124,11 +1124,8 @@
                           [
                             'circumBracket',
                             [
-                              'atom',
-                              [
-                                'loobean',
-                                '&'
-                              ]
+                              'soloPam',
+                              '&'
                             ],
                             [
                               'bisk4l',
@@ -1387,10 +1384,11 @@
                                                 '~'
                                               ],
                                               [
-                                                'atom',
+                                                'cenTerm',
+                                                '%',
                                                 [
-                                                  'term',
-                                                  '%win'
+                                                  'nuck4l',
+                                                  'win'
                                                 ]
                                               ],
                                               [
@@ -1408,17 +1406,19 @@
                                                   ]
                                                 ],
                                                 [
-                                                  'atom',
+                                                  'cenTerm',
+                                                  '%',
                                                   [
-                                                    'term',
-                                                    '%x'
+                                                    'nuck4l',
+                                                    'x'
                                                   ]
                                                 ],
                                                 [
-                                                  'atom',
+                                                  'cenTerm',
+                                                  '%',
                                                   [
-                                                    'term',
-                                                    '%o'
+                                                    'nuck4l',
+                                                    'o'
                                                   ]
                                                 ],
                                                 ')'
