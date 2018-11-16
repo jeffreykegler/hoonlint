@@ -302,6 +302,7 @@ SYM4K ~ sym4k
 CEN_SYM4K ~ cen4h sym4k
 sym4k ~ low4k sym4kRest
 low4k ~ [a-z]
+hig4k ~ [A-Z]
 nud4k ~ [0-9]
 sym4kRest ~ # empty
 sym4kRest ~ sym4kRestChars
@@ -418,6 +419,14 @@ bont5d ::= wideBont5d
 wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
 wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
+# Lexemes cannot be empty so empty
+# aura name must be special cased.
+auraName ::= # empty
+auraName ::= AURA_NAME
+AURA_NAME ~ optLow4kSeq optHig4kSeq
+optLow4kSeq ~ low4k*
+optHig4kSeq ~ hig4k*
+
 # === Hoon library: 5d, molds ===
 
 mold ::= wideMold
@@ -533,9 +542,7 @@ moldTar ::= '*'
 # '@'
 # Same as scat(5d)
 wideMold ::= moldAura
-moldAura ~ '@' OptLCs OptUCs
-OptLCs ~ [a-z]*
-OptUCs ~ [A-Z]*
+moldAura ::= '@' auraName
 
 # '?'
 # Same as scat(5d)
@@ -670,6 +677,10 @@ prefixTar ::= '*' wideMold
 # '@'
 # TODO: NYI
 # Same as scad(5)
+# '@'
+# Same as scat(5d)
+hoonPrimary ::= aura
+aura ::= '@' auraName
 
 # '+'
 # Not in scad(5)
@@ -961,14 +972,6 @@ type ::= '?' # loobean
 # LATER: commented out because these create ambiguities
 # type ::= '~' # null
 # type ::= '@' # cell
-
-# === ATOMS: ROCK
-
-atom ::= AURA
-
-AURA ~ '@'
-AURA ~ '@' optAlphas
-optAlphas ~ [a-zA-Z]*
 
 # === NAMES ==
 
