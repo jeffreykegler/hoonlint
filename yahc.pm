@@ -258,10 +258,10 @@ unicorn ~ [^\d\D]
 
 # === Hoon library: 4h ===
 
-BAR ~ bar4h
+BAR4H ~ bar4h
 bar4h ~ [|]
 
-BUC ~ buc4h
+BUC4H ~ buc4h
 buc4h ~ [$]
 
 # BACKSLASH ~ backslash
@@ -301,7 +301,7 @@ ket4h ~ '^'
 LUS ~ lus4h
 lus4h ~ '+'
 
-PAM ~ pam4h
+PAM4H ~ pam4h
 pam4h ~ '&'
 
 PEL ~ pel4h
@@ -663,20 +663,44 @@ hoonUnary ::= prefixCab
 prefixCab ::= (CAB) wideHoon
 
 # '$'
-# TODO: NYI
+# For rump, see subcase ['a' 'z']
 # Differs from scad(5)
+hoonPrimary ::= bucBuc
+hoonPrimary ::= bucPam
+hoonPrimary ::= bucBar
+hoonPrimary ::= dollarTerm
+bucBuc ::= BUC4H BUC4H
+bucPam ::= BUC4H PAM4H
+bucBar ::= BUC4H BAR4H
+dollarTerm ::= BUC4H qut4k
+dollarTerm ::= BUC4H nuck4l
 
 # '%'
-# TODO: NYI
 # Differs from scad(5)
+hoonPrimary ::= cenPath
+hoonPrimary ::= cenBuc
+hoonPrimary ::= cenPam
+hoonPrimary ::= cenBar
+hoonPrimary ::= cenTerm
+hoonPrimary ::= cenDirectories
+cenPath ::= CEN4H porc5d
+cenBuc ::= CEN4H BUC4H
+cenPam ::= CEN4H PAM4H
+cenBar ::= CEN4H BAR4H
+cenTerm ::= CEN4H qut4k
+cenTerm ::= CEN4H nuck4l
+cenDirectories ::= CEN4H+
 
 # '&'
 # Not in scad(5)
 # TODO: Finish
+# For rope(5d), see subcase ['a' 'z'] and rump(5d)
 hoonPrimary ::= prefixPam
 hoonPrimary ::= pamPlusPrefix
-prefixPam ::= (PAM '(') wideHoonSeq (')')
-pamPlusPrefix ::= (PAM) wede5d
+hoonPrimary ::= soloPam
+prefixPam ::= (PAM4H '(') wideHoonSeq (')')
+pamPlusPrefix ::= (PAM4H) wede5d
+soloPam ::= PAM4H
 
 # '\''
 # Not in scad(5)
@@ -773,8 +797,10 @@ hoonPrimary ::= rump5d
 # TODO: Finish
 hoonPrimary ::= prefixBar
 hoonPrimary ::= circumBarParen
-prefixBar ::= (BAR) wede5d rank=>1
-circumBarParen ::= (BAR PEL) wideHoonSeq (PER) rank=>1
+hoonPrimary ::= soloBar
+prefixBar ::= (BAR4H) wede5d rank=>1
+circumBarParen ::= (BAR4H PEL) wideHoonSeq (PER) rank=>1
+soloBar ::= BAR4H
 
 # '~'
 # Differs from scad(5)
@@ -914,47 +940,7 @@ wsChar ~ [ \n]
 
 # === ATOMS: SAND ===
 
-atom ::= loobean
 
-# @c    UTF-32                   ~-foobar
-# @da   128-bit absolute date    ~2016.4.23..20.09.26..f27b..dead..beef..babe
-#                                ~2016.4.23
-# @dr   128-bit relative date    ~s17          (17 seconds)
-#                                ~m20          (20 minutes)
-#                                ~d42          (42 days)
-
-# @f    loobean                  &             (0, yes)
-#                                |             (1, no)
-loobean ::= '%.y'
-loobean ::= '%.n'
-loobean ::= '&'
-loobean ::= '|'
-loobean ::= '%&'
-loobean ::= '%|'
-# TODO: Same as %& and %| except "%leaf" instead of "%rock".
-# What does that imply for semantics?
-loobean ::= '$&'
-loobean ::= '$|'
-
-# @p                             ~zod          (0)
-# @rd   64-bit IEEE float        .~3.14        (pi)
-#                                .~-3.14       (negative pi)
-# @rs   32-bit IEEE float        .3.14         (pi)
-#                                .-3.14        (negative pi)
-# @rq   128-bit IEEE float       .~~~3.14      (pi)
-# @rh   16-bit IEEE float        .~~3.14       (pi)
-# @sb   signed binary            --0b10        (2)
-#                                -0b101        (-5)
-# @sd   signed decimal           --2           (2)
-#                                -5            (-5)
-# @sv   signed base32            --0v68        (200)
-#                                -0vfk         (-500)
-# @sw   signed base64            --0w38        (200)
-#                                -0w7Q         (500)
-# @sx   signed hexadecimal       --0x2         (2)
-#                                -0x5          -5
-# @t    UTF-8 text (cord)        'foobar'
-# @ta   ASCII text (knot)        ~.foobar
 
 # @ub   unsigned binary          0b10          (2)
 NUMBER ~ binaryNumber
@@ -1035,28 +1021,10 @@ type ::= '?' # loobean
 # === ATOMS: ROCK
 
 atom ::= AURA
-atom ::= term
-atom ::= currentDirectory
-
-currentDirectory ::= '%'
 
 AURA ~ '@'
 AURA ~ '@' optAlphas
 optAlphas ~ [a-zA-Z]*
-
-term ::= TERM
-term ::= dollarTerm
-dollarTerm ::= ('$') NAME
-dollarTerm ::= dollarNil
-dollarNil ::= ('$~')
-
-TERM ~ '%$' # [%rock p=%tas q=0]
-TERM ~ '%' firstTermChar
-TERM ~ '%' firstTermChar optMedialTermChars lastTermChar
-firstTermChar ~ [a-z]
-optMedialTermChars ~ medialTermChar*
-medialTermChar ~ [a-z0-9-]
-lastTermChar ~ [a-z0-9]
 
 # === NAMES ==
 
@@ -1077,7 +1045,10 @@ nameLaterChar ~ [a-z0-9-]
 rood5d ::= [/] poor5d
 poor5d ::= gash5d
 poor5d ::= gash5d CEN4H porc5d
-porc5d ::= FAS gash5d
+porc5d ::= optCen4hSeq FAS gash5d
+optCen4hSeq ::= # empty
+optCen4hSeq ::= CEN4H_SEQ
+CEN4H_SEQ ~ cen4h+
 gash5d ::= limp5d* separator=>[/]
 limp5d ::= (optFasSeq) gasp5d
 optFasSeq ::= # empty
@@ -1091,7 +1062,7 @@ TIS_SEQ ~ tis4h+
 gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
 hasp5d ::= (SEL) wideHoon (SER)
 hasp5d ::= (PEL) wideHoonSeq (PER)
-hasp5d ::= BUC
+hasp5d ::= BUC4H
 hasp5d ::= qut4k
 hasp5d ::= nuck4l
 
@@ -1125,9 +1096,9 @@ limb ::= ','
 limb ::= optKets '$'
 limb ::= optKets SYM4K
 optKets ::= KET*
-limb ::= BAR DIM4J
+limb ::= BAR4H DIM4J
 limb ::= LUS DIM4J
-limb ::= PAM DIM4J
+limb ::= PAM4H DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
@@ -1176,12 +1147,12 @@ tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 # ['*' (runo tar %brtr [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 
-# Cannot use BARTIS because BAR TIS must also be accepted
+# Cannot use BARTIS because BAR4H TIS must also be accepted
 # BARTIS mold hoon
 hoon ::= tallBartis
 hoonPrimary ::= wideBartis
-tallBartis ::= (BAR TIS GAP) mold (GAP) hoon
-wideBartis ::= (BAR TIS) [(] wideMold (ACE) wideHoon [)]
+tallBartis ::= (BAR4H TIS GAP) mold (GAP) hoon
+wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 
 # FIXED: barwut hoon
 
@@ -1385,7 +1356,7 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
-tallWutbar ::= (BAR GAP) hoon
+tallWutbar ::= (BAR4H GAP) hoon
 hoonPrimary ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 
