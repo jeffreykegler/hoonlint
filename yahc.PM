@@ -76,7 +76,7 @@ sub getValue {
     my $terminatorPos = index ${$input}, $terminator, $offset;
     my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
 
-    say STDERR "Left main READ loop" if $main::DEBUG;
+    say STDERR "Left main READ loop" if $MarpaX::YAHC::DEBUG;
 
     # Return ref to value and new offset
     return \$value, $terminatorPos + length $terminator;
@@ -129,7 +129,7 @@ sub parse {
         my $name  = $event->[0];
 
         if ( $name eq 'tripleQuote' ) {
-            say STDERR "$name event" if $main::DEBUG;
+            say STDERR "$name event" if $MarpaX::YAHC::DEBUG;
             my $value_ref;
             ( $value_ref, $resume_pos ) = getValue( $name, $input, $this_pos );
             my $result = $recce->lexeme_read(
@@ -140,7 +140,7 @@ sub parse {
             );
             say STDERR "lexeme_read('TRIPLE QUOTE STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
-              if $main::DEBUG
+              if $MarpaX::YAHC::DEBUG
 	      ;
             next READ;
         }
@@ -623,6 +623,7 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 # '='
 # Differs from scat(5d)
 wideMold ::= moldPrefixTis
+# TODO: Is this right?
 moldPrefixTis ::= ('=') wideMold (')')
 
 # ['a' 'z']
@@ -1347,6 +1348,9 @@ wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: tisgar hoon hoon
 # FIXED: tisket hoon rope5d hoon hoon
+
+#  ['+' (rune lus %tsls expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tislus hoon hoon
 
 # tissem taco hoon hoon
