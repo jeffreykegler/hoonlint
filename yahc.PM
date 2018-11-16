@@ -84,31 +84,33 @@ sub getValue {
 
 sub parse {
     my ($input) = @_;
+    my $debug = $MarpaX::YAHC::DEBUG;
     my $recce = Marpa::R2::Scanless::R->new(
         {
-            grammar => $grammar,
-	    ranking_method => 'high_rule_only',
-
-            # trace_lexers    => 1,
-            # trace_terminals => 1,
+            grammar         => $grammar,
+            ranking_method  => 'high_rule_only',
+            trace_lexers    => ( $debug ? 1 : 0 ),
+            trace_terminals => ( $debug ? 1 : 0 ),
         }
     );
 
     my $input_length = length ${$input};
     my $this_pos;
-    my $resume_pos;
+    my $ok = eval { $this_pos = $recce->read( $input ) ; 1; };
+    if (not $ok) {
+       say STDERR $recce->show_progress(0, -1) if $debug;
+       die $EVAL_ERROR;
+    }
 
     # The main read loop.  Read starting at $offset.
     # If interrupted execute the handler logic,
     # and, possibly, resume.
+    say STDERR "this_pos=$this_pos ; input_length=$input_length" if $debug;
 
   READ:
-    for (
-        $this_pos = $recce->read( $input ) ;
-        $this_pos < $input_length ;
-        $this_pos = $recce->resume($resume_pos)
-      )
-    {
+    while ( $this_pos < $input_length ) {
+
+	my $resume_pos;
 
         # Only one event at a time is expected -- more
         # than one is an error.  No event means parsing
@@ -140,18 +142,25 @@ sub parse {
             );
             say STDERR "lexeme_read('TRIPLE QUOTE STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
-              if $MarpaX::YAHC::DEBUG
-	      ;
-            next READ;
+              if $MarpaX::YAHC::DEBUG;
         }
 
-        die "read() ended prematurely\n",
-          "  input length = $input_length\n",
-          "  length read = $this_pos\n",
-          "  the cause may be an unexpected event";
+	if (not $resume_pos) {
+	  die "read() ended prematurely\n",
+	    "  input length = $input_length\n",
+	    "  length read = $this_pos\n",
+	    "  the cause may be an unexpected event";
+	}
+
+	say STDERR "this_pos=$this_pos ; input_length=$input_length" if $debug;
+
+        my $ok = eval { $this_pos = $recce->resume($resume_pos); 1; };
+        if ( not $ok ) {
+            say STDERR $recce->show_progress( 0, -1 ) if $debug;
+            die $EVAL_ERROR;
+        }
 
     }
-
 
     if ( 0 ) {
     # if ( $recce->ambiguity_metric() > 1 ) {
@@ -208,7 +217,6 @@ sub prune {
         hoonUnary              => 1,
         mold                 => 1,
         moldSeq              => 1,
-        pathHoon             => 1,
         togaElements         => 1,
         rope5d                 => 1,
     };
@@ -282,6 +290,9 @@ unicorn ~ [^\d\D]
 BAR ~ bar4h
 bar4h ~ [|]
 
+BUC ~ buc4h
+buc4h ~ [$]
+
 # BACKSLASH ~ backslash
 bas4h ~ backslash
 backslash ~ [\x5c] # hex 5c is backslash
@@ -323,6 +334,11 @@ PEL ~ pel4h
 pel4h ~ '('
 PER ~ per4h
 per4h ~ ')'
+
+SEL ~ sel4h
+sel4h ~ '['
+SER ~ ser4h
+ser4h ~ ']'
 
 SIG ~ sig4h
 sig4h ~ '~'
@@ -653,13 +669,11 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # '!'
 # Not in scad(5)
 # TODO: Finish
-pathHoon ::= prefixZap
 hoonUnary ::= prefixZap
 prefixZap ::= (ZAP) wideHoon
 
 # '_'
 # Same as scad(5)
-pathHoon ::= prefixCab
 hoonUnary ::= prefixCab
 prefixCab ::= (CAB) wideHoon
 
@@ -688,8 +702,6 @@ singleQuoteString ::= qut4k
 # Differs from scad(5)
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
-pathHoon ::= circumParen1
-pathHoon ::= circumParen2
 hoonPrimary ::= circumParen1
 hoonPrimary ::= circumParen2
 circumParen1 ::= ('(') wideHoon (')')
@@ -748,7 +760,6 @@ wideBucwut ::= ('?(') wideMoldSeq (')')
 
 # '['
 # Differs from scad(5)
-pathHoon ::= rupl5d
 hoonPrimary ::= rupl5d
 
 # '^'
@@ -788,18 +799,16 @@ hoonPrimary ::= circumSigParen
 circumSigParen ::= ('~(') rope5d (ACE) wideHoon (ACE) wideHoonSeq (')')
 
 # '/'
-# TODO: Finish
 # Not in scad(5)
+hoonPrimary ::= rood5d
 
 # '<'
 # Not in scad(5)
-pathHoon ::= circumGalgar
 hoonPrimary ::= circumGalgar
 circumGalgar ::= ('<') wideHoon ('>')
 
 # '>'
 # Not in scad(5)
-pathHoon ::= circumGargal
 hoonPrimary ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
 
@@ -1079,19 +1088,28 @@ nameLaterChar ~ [a-z0-9-]
 
 # === PATHS ==
 
-atom ::= path
-path ::= [/] optPathSeq
-optPathSeq ::= pathElement* separator=>[/]
-pathElement ::= PATHSTRING
-pathElement ::= qut4k
+# rood is the path parser
 
-# pathHoon is hoon that is legal as part of a path
-pathElement ::= pathHoon
-
-PATHSTRING ~ pathStringChars
-pathStringChars ~ pathStringChar+
-# Do path strings allow escapes?
-pathStringChar ~ [a-zA-Z-]
+rood5d ::= [/] poor5d
+poor5d ::= gash5d
+poor5d ::= gash5d CEN porc5d
+porc5d ::= FAS gash5d
+gash5d ::= limp5d* separator=>[/]
+limp5d ::= (optFasSeq) gasp5d
+optFasSeq ::= # empty
+optFasSeq ::= FAS_SEQ
+FAS_SEQ ~ fas4h+
+gasp5d ::= tisSeq
+tisSeq ~ tis4h+
+optTisSeq ::= # empty
+optTisSeq ::= TIS_SEQ
+TIS_SEQ ~ tis4h+
+gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
+hasp5d ::= (SEL) wideHoon (SER)
+hasp5d ::= (PEL) wideHoonSeq (PER)
+hasp5d ::= BUC
+hasp5d ::= qut4k
+hasp5d ::= nuck4l
 
 # === CELLS BY TYPE ==
 

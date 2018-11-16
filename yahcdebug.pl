@@ -18,8 +18,12 @@ my $hoonSource = do {
 
 local $MarpaX::YAHC::DEBUG = 1;
 
-my $astRef = MarpaX::YAHC::parse(\$hoonSource);
-die "Parse failed" if not $astRef;
+my $astRef;
+my $ok = eval { $astRef = MarpaX::YAHC::parse(\$hoonSource); 1; };
+
+if (not $ok) {
+  die "Parse failed";
+}
 
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
