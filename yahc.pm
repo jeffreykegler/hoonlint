@@ -899,7 +899,6 @@ wsChar ~ [ \n]
 
 # === ATOMS: SAND ===
 
-atom ::= NUMBER
 atom ::= SIG twid4l
 atom ::= loobean
 
