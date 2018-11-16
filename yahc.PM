@@ -793,34 +793,34 @@ circumGargal ::= ('>') wideHoon ('<')
 # Running syntax
 mold ::= tallBuccenMold
 wideMold ::= wideBuccenMold
-tallBuccenMold ::= (BUCCEN GAP) moldSeq (GAP '==')
-wideBuccenMold ::= (BUCCEN '(') wideMoldSeq (')')
+tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP '==')
+wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
 mold ::= tallBuccolMold
 wideMold ::= wideBuccolMold
-tallBuccolMold ::= (BUCCOL GAP) moldSeq (GAP '==')
-wideBuccolMold ::= (BUCCOL '(') wideMoldSeq (')')
+tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP '==')
+wideBuccolMold ::= (BUC COL '(') wideMoldSeq (')')
 
 # BUCHEP mold mold
 mold ::= tallBuchepMold
 wideMold ::= wideBuchepMold
-tallBuchepMold ::= (BUCHEP GAP) mold (GAP)  mold
-wideBuchepMold ::= (BUCHEP) [(] wideMold (ACE) wideMold [)]
+tallBuchepMold ::= (BUC HEP GAP) mold (GAP)  mold
+wideBuchepMold ::= (BUC HEP) [(] wideMold (ACE) wideMold [)]
 
 # BUCPAT mold mold
 mold ::= tallBucpatMold
 wideMold ::= wideBucpatMold
-tallBucpatMold ::= (BUCPAT GAP) mold (GAP)  mold
-wideBucpatMold ::= (BUCPAT) [(] wideMold (ACE) wideMold [)]
+tallBucpatMold ::= (BUC PAT GAP) mold (GAP)  mold
+wideBucpatMold ::= (BUC PAT) [(] wideMold (ACE) wideMold [)]
 
 # Running syntax
 mold ::= tallBucwutMold
 wideMold ::= wideBucwutMold
-tallBucwutMold ::= (BUCWUT GAP) moldSeq (GAP '==')
-wideBucwutMold ::= (BUCWUT '(') wideMoldSeq (')')
+tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP '==')
+wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 
 # TODO: Finish adding molds from norm
 
@@ -1428,16 +1428,14 @@ my %glyphs = (
 sub doFixedRune {
     my ($runeName, @samples) = @_;
     my @result = (join ' ', '#', (uc $runeName), @samples);
-    my $glyphname1 = substr($runeName, 0, 3);
-    my $glyphname2 = substr($runeName, 3, 3);
-    my $glyph1 = $glyphs{$glyphname1} or die "no glyph for $glyphname1";
-    my $glyph2 = $glyphs{$glyphname2};
-    my $lexeme = uc $runeName;
+    my $glyphName1 = substr($runeName, 0, 3);
+    my $glyphName2 = substr($runeName, 3, 3);
+    my $glyph1 = $glyphs{$glyphName1} or die "no glyph for $glyphName1";
+    my $glyph2 = $glyphs{$glyphName2};
+    my $glyphLexeme1 = (uc $glyphName1) . '4H';
+    my $glyphLexeme2 = (uc $glyphName2) . '4H';
     my $tallLHS = 'tall' . ucfirst $runeName;
     my $wideLHS = 'wide' . ucfirst $runeName;
-
-    # BARHEP ~ [|] [-]
-    push @result, $lexeme . q{ ~ [} . $glyph1 . q{] [} . $glyph2 . q{]};
 
     # hoon ::= tallBarhep
     push @result, 'hoon ::= ' . $tallLHS;
@@ -1445,8 +1443,11 @@ sub doFixedRune {
     # hoonPrimary ::= wideBarhep
     push @result, 'hoonPrimary ::= ' . $wideLHS;
 
-    # tallBarhep ::= (BARHEP GAP) hoon (GAP) hoon
-    push @result, $tallLHS . ' ::= (' . $lexeme . ' GAP)' . (join ' (GAP) ', @samples);
+    # tallBarhep ::= (BAR4H HEP4H GAP) hoon (GAP) hoon
+    push @result, $tallLHS . ' ::= ('
+      . $glyphLexeme1
+      . ' ' . $glyphLexeme2
+      . ' GAP)' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
         hoon => 'wideHoon',
         bont5d => 'wideBont5d',
@@ -1454,7 +1455,10 @@ sub doFixedRune {
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
 
     # wideBarhep ::= ([|] [-]) (ACE) wideHoon (ACE) wideHoon
-    push @result, $wideLHS . ' ::= (' . $lexeme . ') [(] ' . (join ' (ACE) ', @wideSamples) . q{ [)]};
+    push @result, $wideLHS . ' ::= ('
+    . $glyphLexeme1
+    . ' ' . $glyphLexeme2
+    . ') [(] ' . (join ' (ACE) ', @wideSamples) . q{ [)]};
     return join "\n", @result, '';
 }
 
