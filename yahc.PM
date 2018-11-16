@@ -675,7 +675,9 @@ prefixCab ::= (CAB) wideHoon
 # Not in scad(5)
 # TODO: Finish
 hoonPrimary ::= prefixPam
+hoonPrimary ::= pamPlusPrefix
 prefixPam ::= (PAM '(') wideHoonSeq (')')
+pamPlusPrefix ::= (PAM) wede5d
 
 # '\''
 # Not in scad(5)
@@ -722,8 +724,11 @@ irrDotlus ::= ('+(') wideHoon (')')
 # Not in scad(5)
 
 # ['0' '9']
-# TODO: NYI
 # Not in scad(5)
+# This subcase handles infix expressions
+# starting with a digit.
+hoonPrimary ::= bisk4l
+hoonPrimary ::= bisk4l wede5d
 
 # ':'
 # TODO: NYI
@@ -1097,19 +1102,10 @@ hoonUnary ::= hoonExpression
 hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
-hoonExpression ::= infixPlus
 hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
-infixPlus ::=  wedeFirst ('+') hoonExpression
-
-# LHS of wede(5d)
-wedeFirst ::= rope5d
-wedeFirst ::= '&'
-wedeFirst ::= '|'
-wedeFirst ::= bisk4l
-wedeFirst ::= '~'
 
 hoonPrimary ::= atom
 hoonPrimary ::= rope5d
