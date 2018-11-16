@@ -363,7 +363,9 @@ siv4j ~ [0-9a-v]
 
 # === Hoon library: 4k ===
 
-SYM4K ~ low4k sym4kRest
+SYM4K ~ sym4k
+CEN_SYM4K ~ cen4h sym4k
+sym4k ~ low4k sym4kRest
 low4k ~ [a-z]
 nud4k ~ [0-9]
 sym4kRest ~ # empty
@@ -1287,16 +1289,37 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketwut hoon
 
+
+# :~  ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
-# FIXED: sigbuc term hoon
+
+# ['$' (rune buc %sgbc expf)]
+# ++  expf  |.(;~(gunk ;~(pfix cen sym) loaf))        ::  %term and hoon
+# FIXED: sigbuc CEN_SYM4K hoon
+
+# ['_' (rune cab %sgcb expb)]
+
+# ['%' (rune cen %sgcn hind)]
 # FIXED: sigcen term rope5d hoon hoon
+
+# ['/' (rune fas %sgfs hine)]
 # FIXED: sigfas term hoon
+
+# ['<' (rune gal %sggl hinb)]
 # FIXED: siggal hoon hoon
 
+# ['>' (rune gar %sggr hinb)]
 # FIXED: siggar bont5d hoon
 
+# ['+' (rune lus %sgls hinc)]
 # FIXED: siglus hoon
+
+# ['&' (rune pam %sgpm hinf)]
 # FIXED: sigpam hoon hoon
+
+# ['=' (rune tis %sgts expb)]
+# ['?' (rune wut %sgwt hing)]
+# ['!' (rune zap %sgzp expb)]
 
 # 1-fixed, then running syntax
 SEMCOL ~ [;] [:]
@@ -1637,12 +1660,12 @@ hoonPrimary ::= wideSigbar
 tallSigbar ::= (SIGBAR GAP)hoon (GAP) hoon
 wideSigbar ::= (SIGBAR) [(] wideHoon (ACE) wideHoon [)]
 
-# SIGBUC term hoon
+# SIGBUC CEN_SYM4K hoon
 SIGBUC ~ [~] [$]
 hoon ::= tallSigbuc
 hoonPrimary ::= wideSigbuc
-tallSigbuc ::= (SIGBUC GAP)term (GAP) hoon
-wideSigbuc ::= (SIGBUC) [(] term (ACE) wideHoon [)]
+tallSigbuc ::= (SIGBUC GAP)CEN_SYM4K (GAP) hoon
+wideSigbuc ::= (SIGBUC) [(] CEN_SYM4K (ACE) wideHoon [)]
 
 # SIGCEN term rope5d hoon hoon
 SIGCEN ~ [~] [%]
