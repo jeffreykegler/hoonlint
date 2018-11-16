@@ -1,6 +1,7 @@
 # !!! DO NOT EDIT !!!
 # This code automatically written by yahc.PM
 
+
 use 5.010;
 use strict;
 use warnings;
@@ -256,75 +257,6 @@ lexeme default = latm => 1
 UNICORN ~ unicorn
 unicorn ~ [^\d\D]
 
-# === Hoon library: 4h ===
-
-BAR4H ~ bar4h
-bar4h ~ [|]
-
-BUC4H ~ buc4h
-buc4h ~ [$]
-
-# BACKSLASH ~ backslash
-bas4h ~ backslash
-backslash ~ [\x5c] # hex 5c is backslash
-
-CAB ~ cab4h
-cab4h ~ [_]
-
-CEN4H ~ cen4h
-cen4h ~ [%]
-
-COL4H ~ col4h
-col4h ~ [|]
-
-DOT4H ~ dot4h
-dot4h ~ [.]
-
-# DOQ4H ~ doq4h
-doq4h ~ ["]
-
-FAS ~ fas4h
-fas4h ~ [/]
-
-optHep ::=
-optHep ::= HEP
-HEP ~ hep4h
-hep4h ~ [-]
-
-KEL ~ kel4h
-kel4h ~ '{'
-KER ~ ker4h
-ker4h ~ '}'
-
-KET ~ ket4h
-ket4h ~ '^'
-LUS ~ lus4h
-lus4h ~ '+'
-
-PAM4H ~ pam4h
-pam4h ~ '&'
-
-PEL ~ pel4h
-pel4h ~ '('
-PER ~ per4h
-per4h ~ ')'
-
-SEL ~ sel4h
-sel4h ~ '['
-SER ~ ser4h
-ser4h ~ ']'
-
-SIG ~ sig4h
-sig4h ~ '~'
-
-soq4h ~ [']
-
-TIS ~ tis4h
-tis4h ~ '='
-
-ZAP ~ zap4h
-zap4h ~ '!'
-
 # === Hoon library: 4i ===
 
 dog4i ~ dot4h gay4i
@@ -428,6 +360,8 @@ crub4l ::= crub4l_part1
 crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2
 crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2 DOT4H DOT4H crub4l_part3
 crub4l_part1 ::= DIM4J optHep DOT4H MOT4J DOT4H DIP4J
+optHep ::= # empty
+optHep ::= HEP
 crub4l_part2 ::= dum4j DOT4H dum4j DOT4H dum4j
 crub4l_part3 ::= crub4l_part3_elements
 crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT4H proper=>1
@@ -892,6 +826,9 @@ trailer ::= WS
 trailer ::=
 leader  ::= WS
 leader  ::=
+
+# A hack to allow inaccessible symbols
+hoonFile ::= UNICORN inaccessible_ok
 
 # === WHITESPACE ===
 
@@ -1414,6 +1351,177 @@ wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 ZAPZAP ~ [!] [!]
 wideHoon ::= ZAPZAP
 
+
+BAR ~ bar4h
+BAR4H ~ bar4h
+bar4h ~ [|]
+inaccessible_ok ::= BAR
+inaccessible_ok ::= BAR4H
+BAS ~ bas4h
+BAS4H ~ bas4h
+bas4h ~ [\\]
+inaccessible_ok ::= BAS
+inaccessible_ok ::= BAS4H
+BUC ~ buc4h
+BUC4H ~ buc4h
+buc4h ~ [$]
+inaccessible_ok ::= BUC
+inaccessible_ok ::= BUC4H
+CAB ~ cab4h
+CAB4H ~ cab4h
+cab4h ~ [_]
+inaccessible_ok ::= CAB
+inaccessible_ok ::= CAB4H
+CEN ~ cen4h
+CEN4H ~ cen4h
+cen4h ~ [%]
+inaccessible_ok ::= CEN
+inaccessible_ok ::= CEN4H
+COL ~ col4h
+COL4H ~ col4h
+col4h ~ [:]
+inaccessible_ok ::= COL
+inaccessible_ok ::= COL4H
+COM ~ com4h
+COM4H ~ com4h
+com4h ~ [,]
+inaccessible_ok ::= COM
+inaccessible_ok ::= COM4H
+DOQ ~ doq4h
+DOQ4H ~ doq4h
+doq4h ~ ["]
+inaccessible_ok ::= DOQ
+inaccessible_ok ::= DOQ4H
+DOT ~ dot4h
+DOT4H ~ dot4h
+dot4h ~ [.]
+inaccessible_ok ::= DOT
+inaccessible_ok ::= DOT4H
+FAS ~ fas4h
+FAS4H ~ fas4h
+fas4h ~ [/]
+inaccessible_ok ::= FAS
+inaccessible_ok ::= FAS4H
+GAL ~ gal4h
+GAL4H ~ gal4h
+gal4h ~ [<]
+inaccessible_ok ::= GAL
+inaccessible_ok ::= GAL4H
+GAR ~ gar4h
+GAR4H ~ gar4h
+gar4h ~ [>]
+inaccessible_ok ::= GAR
+inaccessible_ok ::= GAR4H
+HAX ~ hax4h
+HAX4H ~ hax4h
+hax4h ~ [#]
+inaccessible_ok ::= HAX
+inaccessible_ok ::= HAX4H
+HEP ~ hep4h
+HEP4H ~ hep4h
+hep4h ~ [-]
+inaccessible_ok ::= HEP
+inaccessible_ok ::= HEP4H
+KEL ~ kel4h
+KEL4H ~ kel4h
+kel4h ~ [{]
+inaccessible_ok ::= KEL
+inaccessible_ok ::= KEL4H
+KER ~ ker4h
+KER4H ~ ker4h
+ker4h ~ [}]
+inaccessible_ok ::= KER
+inaccessible_ok ::= KER4H
+KET ~ ket4h
+KET4H ~ ket4h
+ket4h ~ [\^]
+inaccessible_ok ::= KET
+inaccessible_ok ::= KET4H
+LUS ~ lus4h
+LUS4H ~ lus4h
+lus4h ~ [+]
+inaccessible_ok ::= LUS
+inaccessible_ok ::= LUS4H
+PAL ~ pal4h
+PAL4H ~ pal4h
+pal4h ~ [(]
+inaccessible_ok ::= PAL
+inaccessible_ok ::= PAL4H
+PAM ~ pam4h
+PAM4H ~ pam4h
+pam4h ~ [&]
+inaccessible_ok ::= PAM
+inaccessible_ok ::= PAM4H
+PAR ~ par4h
+PAR4H ~ par4h
+par4h ~ [)]
+inaccessible_ok ::= PAR
+inaccessible_ok ::= PAR4H
+PAT ~ pat4h
+PAT4H ~ pat4h
+pat4h ~ [@]
+inaccessible_ok ::= PAT
+inaccessible_ok ::= PAT4H
+PEL ~ pel4h
+PEL4H ~ pel4h
+pel4h ~ [(]
+inaccessible_ok ::= PEL
+inaccessible_ok ::= PEL4H
+PER ~ per4h
+PER4H ~ per4h
+per4h ~ [)]
+inaccessible_ok ::= PER
+inaccessible_ok ::= PER4H
+SEL ~ sel4h
+SEL4H ~ sel4h
+sel4h ~ [\x5b]
+inaccessible_ok ::= SEL
+inaccessible_ok ::= SEL4H
+SEM ~ sem4h
+SEM4H ~ sem4h
+sem4h ~ [;]
+inaccessible_ok ::= SEM
+inaccessible_ok ::= SEM4H
+SER ~ ser4h
+SER4H ~ ser4h
+ser4h ~ [\x5d]
+inaccessible_ok ::= SER
+inaccessible_ok ::= SER4H
+SIG ~ sig4h
+SIG4H ~ sig4h
+sig4h ~ [~]
+inaccessible_ok ::= SIG
+inaccessible_ok ::= SIG4H
+SOQ ~ soq4h
+SOQ4H ~ soq4h
+soq4h ~ [']
+inaccessible_ok ::= SOQ
+inaccessible_ok ::= SOQ4H
+TAR ~ tar4h
+TAR4H ~ tar4h
+tar4h ~ [*]
+inaccessible_ok ::= TAR
+inaccessible_ok ::= TAR4H
+TEC ~ tec4h
+TEC4H ~ tec4h
+tec4h ~ [`]
+inaccessible_ok ::= TEC
+inaccessible_ok ::= TEC4H
+TIS ~ tis4h
+TIS4H ~ tis4h
+tis4h ~ [=]
+inaccessible_ok ::= TIS
+inaccessible_ok ::= TIS4H
+WUT ~ wut4h
+WUT4H ~ wut4h
+wut4h ~ [?]
+inaccessible_ok ::= WUT
+inaccessible_ok ::= WUT4H
+ZAP ~ zap4h
+ZAP4H ~ zap4h
+zap4h ~ [!]
+inaccessible_ok ::= ZAP
+inaccessible_ok ::= ZAP4H
 # BARCOL hoon hoon
 BARCOL ~ [|] [:]
 hoon ::= tallBarcol

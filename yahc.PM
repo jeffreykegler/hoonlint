@@ -285,75 +285,6 @@ lexeme default = latm => 1
 UNICORN ~ unicorn
 unicorn ~ [^\d\D]
 
-# === Hoon library: 4h ===
-
-BAR4H ~ bar4h
-bar4h ~ [|]
-
-BUC4H ~ buc4h
-buc4h ~ [$]
-
-# BACKSLASH ~ backslash
-bas4h ~ backslash
-backslash ~ [\x5c] # hex 5c is backslash
-
-CAB ~ cab4h
-cab4h ~ [_]
-
-CEN4H ~ cen4h
-cen4h ~ [%]
-
-COL4H ~ col4h
-col4h ~ [|]
-
-DOT4H ~ dot4h
-dot4h ~ [.]
-
-# DOQ4H ~ doq4h
-doq4h ~ ["]
-
-FAS ~ fas4h
-fas4h ~ [/]
-
-optHep ::=
-optHep ::= HEP
-HEP ~ hep4h
-hep4h ~ [-]
-
-KEL ~ kel4h
-kel4h ~ '{'
-KER ~ ker4h
-ker4h ~ '}'
-
-KET ~ ket4h
-ket4h ~ '^'
-LUS ~ lus4h
-lus4h ~ '+'
-
-PAM4H ~ pam4h
-pam4h ~ '&'
-
-PEL ~ pel4h
-pel4h ~ '('
-PER ~ per4h
-per4h ~ ')'
-
-SEL ~ sel4h
-sel4h ~ '['
-SER ~ ser4h
-ser4h ~ ']'
-
-SIG ~ sig4h
-sig4h ~ '~'
-
-soq4h ~ [']
-
-TIS ~ tis4h
-tis4h ~ '='
-
-ZAP ~ zap4h
-zap4h ~ '!'
-
 # === Hoon library: 4i ===
 
 dog4i ~ dot4h gay4i
@@ -457,6 +388,8 @@ crub4l ::= crub4l_part1
 crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2
 crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2 DOT4H DOT4H crub4l_part3
 crub4l_part1 ::= DIM4J optHep DOT4H MOT4J DOT4H DIP4J
+optHep ::= # empty
+optHep ::= HEP
 crub4l_part2 ::= dum4j DOT4H dum4j DOT4H dum4j
 crub4l_part3 ::= crub4l_part3_elements
 crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT4H proper=>1
@@ -921,6 +854,9 @@ trailer ::= WS
 trailer ::=
 leader  ::= WS
 leader  ::=
+
+# A hack to allow inaccessible symbols
+hoonFile ::= UNICORN inaccessible_ok
 
 # === WHITESPACE ===
 
@@ -1451,7 +1387,7 @@ END_OF_DSL_MAIN
 # and are omitted
 my %glyphs = (
     bar => '|',
-    bas => '\\',
+    bas => '\\\\',
     buc => '$',
     cab => '_',
     cen => '%',
@@ -1472,9 +1408,11 @@ my %glyphs = (
     pam => '&',
     par => ')',
     pat => '@',
-    sel => '\xb5', # '['
+    pel => '(',
+    per => ')',
+    sel => '\x5b', # '['
     sem => ';',
-    ser => ']',
+    ser => '\x5d', # ']'
     sig => '~',
     soq => '\'',
     tar => '*',
@@ -1522,7 +1460,21 @@ sub doFixedRune {
 
 # === DSL Piece: Automatically generated Marpa rules ===
 
-my @dsl_auto_rules = ();
+my @glyphRules = ();
+for my $glyphName (sort keys %glyphs) {
+    my $glyph = $glyphs{$glyphName};
+    my $ucGlyphName = uc $glyphName;
+    my $uc4hGlyphName = $ucGlyphName . '4H';
+    my $lcGlyphName = $glyphName . '4h';
+    push @glyphRules, "$ucGlyphName ~ $lcGlyphName";
+    push @glyphRules, "$uc4hGlyphName ~ $lcGlyphName";
+    push @glyphRules, "$lcGlyphName ~ [" . $glyph . q{]};
+    push @glyphRules, "inaccessible_ok ::= $ucGlyphName";
+    push @glyphRules, "inaccessible_ok ::= $uc4hGlyphName";
+}
+my $glyphAutoRules = join "\n", @glyphRules; 
+
+my @dslAutoRules = ();
 DESC: for my $desc (split "\n", $dsl_main) {
     my $originalDesc = $desc;
     chomp $desc; # remove newline
@@ -1531,11 +1483,10 @@ DESC: for my $desc (split "\n", $dsl_main) {
     $desc =~ s/\s+$//; # eliminate trailing spaces
     my ($rune, @samples) = split /\s+/, $desc;
     die $originalDesc if not $rune;
-    push @dsl_auto_rules, doFixedRune( $rune, @samples );
+    push @dslAutoRules, doFixedRune( $rune, @samples );
 }
-my $dsl_auto_rules = join "\n", @dsl_auto_rules;
+my $dslAutoRules = join "\n", @dslAutoRules;
 
 # Print the two pieces
-say join '', $dsl_warning, $dsl_main, $dsl_auto_rules;
-
+say join "\n", $dsl_warning, $dsl_main, $glyphAutoRules, $dslAutoRules;
 
