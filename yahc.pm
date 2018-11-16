@@ -271,10 +271,13 @@ backslash ~ [\x5c] # hex 5c is backslash
 CAB ~ cab4h
 cab4h ~ [_]
 
-CEN ~ cen4h
+CEN4H ~ cen4h
 cen4h ~ [%]
 
-DOT ~ dot4h
+COL4H ~ col4h
+col4h ~ [|]
+
+DOT4H ~ dot4h
 dot4h ~ [.]
 
 # DOQ4H ~ doq4h
@@ -404,6 +407,10 @@ qut4k ::= <TRIPLE QUOTE STRING>
 unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
 <ESCAPED SINGLE QUOTE CHAR> ~ bas4h bas4h | bas4h soq4h | bas4h mes4k
 
+dem4k ::= DIT4K_SEQ+ separator=>gon4k proper=>1
+
+DIT4K_SEQ ~ dit4kSeq
+dit4kSeq ~ dit4k+
 dit4k ~ [0-9]
 
 hit4k ~ dit4k
@@ -418,12 +425,12 @@ gon4k ~ bas4h gay4i fas4h
 # TODO: crub(4l) is incomplete
 
 crub4l ::= crub4l_part1
-crub4l ::= crub4l_part1 DOT DOT crub4l_part2
-crub4l ::= crub4l_part1 DOT DOT crub4l_part2 DOT DOT crub4l_part3
-crub4l_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
-crub4l_part2 ::= dum4j DOT dum4j DOT dum4j
+crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2
+crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2 DOT4H DOT4H crub4l_part3
+crub4l_part1 ::= DIM4J optHep DOT4H MOT4J DOT4H DIP4J
+crub4l_part2 ::= dum4j DOT4H dum4j DOT4H dum4j
 crub4l_part3 ::= crub4l_part3_elements
-crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT proper=>1
+crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT4H proper=>1
 crub4l_part3_element ::= qix4j
 
 # nuck(4l) is the coin parser
@@ -460,10 +467,15 @@ bisk4l ::= NUMBER
 
 # === Hoon library: 5d ===
 
-bont5d ::= CEN SYM4K ([.] GAP) hoon
+bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H DOT4H dem4k
+bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H dem4k
+bonk5d ::= CEN4H SYM4K DOT4H dem4k
+bonk5d ::= CEN4H SYM4K
+
+bont5d ::= CEN4H SYM4K ([.] GAP) hoon
 bont5d ::= wideBont5d
-wideBont5d ::= CEN SYM4K ([.]) wideHoon
-wideBont5d ::= CEN SYM4K ([.] ACE) wideHoon
+wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
+wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
 # === Hoon library: 5d, molds ===
 
@@ -1064,7 +1076,7 @@ nameLaterChar ~ [a-z0-9-]
 
 rood5d ::= [/] poor5d
 poor5d ::= gash5d
-poor5d ::= gash5d CEN porc5d
+poor5d ::= gash5d CEN4H porc5d
 porc5d ::= FAS gash5d
 gash5d ::= limp5d* separator=>[/]
 limp5d ::= (optFasSeq) gasp5d
@@ -1289,7 +1301,6 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 
 # FIXED: ketwut hoon
 
-
 # :~  ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
 
@@ -1300,10 +1311,13 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 # ['_' (rune cab %sgcb expb)]
 
 # ['%' (rune cen %sgcn hind)]
-# FIXED: sigcen term rope5d hoon hoon
+# TODO implement bonz(5d)
+# ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
+# FIXED: sigcen bonk5d rope5d hoon hoon
 
 # ['/' (rune fas %sgfs hine)]
-# FIXED: sigfas term hoon
+# ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
+# FIXED: sigfas bonk5d hoon
 
 # ['<' (rune gal %sggl hinb)]
 # FIXED: siggal hoon hoon
@@ -1667,19 +1681,19 @@ hoonPrimary ::= wideSigbuc
 tallSigbuc ::= (SIGBUC GAP)CEN_SYM4K (GAP) hoon
 wideSigbuc ::= (SIGBUC) [(] CEN_SYM4K (ACE) wideHoon [)]
 
-# SIGCEN term rope5d hoon hoon
+# SIGCEN bonk5d rope5d hoon hoon
 SIGCEN ~ [~] [%]
 hoon ::= tallSigcen
 hoonPrimary ::= wideSigcen
-tallSigcen ::= (SIGCEN GAP)term (GAP) rope5d (GAP) hoon (GAP) hoon
-wideSigcen ::= (SIGCEN) [(] term (ACE) rope5d (ACE) wideHoon (ACE) wideHoon [)]
+tallSigcen ::= (SIGCEN GAP)bonk5d (GAP) rope5d (GAP) hoon (GAP) hoon
+wideSigcen ::= (SIGCEN) [(] bonk5d (ACE) rope5d (ACE) wideHoon (ACE) wideHoon [)]
 
-# SIGFAS term hoon
+# SIGFAS bonk5d hoon
 SIGFAS ~ [~] [/]
 hoon ::= tallSigfas
 hoonPrimary ::= wideSigfas
-tallSigfas ::= (SIGFAS GAP)term (GAP) hoon
-wideSigfas ::= (SIGFAS) [(] term (ACE) wideHoon [)]
+tallSigfas ::= (SIGFAS GAP)bonk5d (GAP) hoon
+wideSigfas ::= (SIGFAS) [(] bonk5d (ACE) wideHoon [)]
 
 # SIGGAL hoon hoon
 SIGGAL ~ [~] [<]
