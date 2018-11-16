@@ -768,6 +768,7 @@ circumBarParen ::= (BAR PEL) wideHoonSeq (PER) rank=>1
 # TODO: Finish
 hoonPrimary ::= circumSigParen
 circumSigParen ::= ('~(') rope5d (ACE) wideHoon (ACE) wideHoonSeq (')')
+hoonPrimary ::= SIG twid4l
 
 # '/'
 # Not in scad(5)
@@ -899,7 +900,6 @@ wsChar ~ [ \n]
 
 # === ATOMS: SAND ===
 
-atom ::= SIG twid4l
 atom ::= loobean
 
 # @c    UTF-32                   ~-foobar
@@ -1204,7 +1204,9 @@ wideMold ::= wideMoldBucsem
 wideMoldBucsem ::= (BUCSEM '(') rope5d (ACE) wede5d (')')
 wideMoldBucsem ::= (BUCSEM '(') rope5d (')')
 
-# FIXED: buctis term hoon
+# ['=' (rune tis %bcts exqg)]
+# ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
+# FIXED: buctis SYM4K mold
 
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
@@ -1481,12 +1483,12 @@ hoonPrimary ::= wideBuctar
 tallBuctar ::= (BUCTAR GAP)hoon
 wideBuctar ::= (BUCTAR) [(] wideHoon [)]
 
-# BUCTIS term hoon
+# BUCTIS SYM4K mold
 BUCTIS ~ [$] [=]
 hoon ::= tallBuctis
 hoonPrimary ::= wideBuctis
-tallBuctis ::= (BUCTIS GAP)term (GAP) hoon
-wideBuctis ::= (BUCTIS) [(] term (ACE) wideHoon [)]
+tallBuctis ::= (BUCTIS GAP)SYM4K (GAP) mold
+wideBuctis ::= (BUCTIS) [(] SYM4K (ACE) mold [)]
 
 # CENDOT hoon hoon
 CENDOT ~ [%] [.]
