@@ -725,7 +725,9 @@ hoonPrimary ::= rupl5d
 
 # '^'
 # Differs from scad(5)
-# TODO: NYI
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
+hoonPrimary ::= soloKet
+soloKet ::= KET
 
 # '`'
 # Not in scad(5)
@@ -968,7 +970,6 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 atom ::= type
 type ::= '*' # noun
-type ::= '^' # cell
 type ::= '?' # loobean
 # LATER: commented out because these create ambiguities
 # type ::= '~' # null
