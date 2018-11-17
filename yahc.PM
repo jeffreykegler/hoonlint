@@ -1056,7 +1056,6 @@ infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
 
 hoonPrimary ::= atom
-hoonPrimary ::= rope5d
 
 toga ::= NAME
 toga ::= togaSeq
