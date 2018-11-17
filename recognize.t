@@ -17,11 +17,11 @@ my $fileList = <<'END_OF_LIST';
 todo hoons/arvo/app/ask.hoon
 ok hoons/arvo/app/curl.hoon
 todo hoons/arvo/app/dojo.hoon
-todo hoons/arvo/app/fora.hoon
+ok hoons/arvo/app/fora.hoon
 todo hoons/arvo/app/gh.hoon
 ok hoons/arvo/app/github.hoon
 todo hoons/arvo/app/gmail.hoon
-todo hoons/arvo/app/gmail/split.hoon
+ok hoons/arvo/app/gmail/split.hoon
 todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/app/hood.hoon
 ok hoons/arvo/app/pipe.hoon
@@ -152,7 +152,7 @@ todo hoons/arvo/lib/hood/kiln.hoon
 todo hoons/arvo/lib/hood/womb.hoon
 todo hoons/arvo/lib/hood/write.hoon
 ok hoons/arvo/lib/http.hoon
-todo hoons/arvo/lib/httr-to-json.hoon
+ok hoons/arvo/lib/httr-to-json.hoon
 todo hoons/arvo/lib/interpolate.hoon
 ok hoons/arvo/lib/map-to-json.hoon
 todo hoons/arvo/lib/new-hoon.hoon
@@ -315,7 +315,7 @@ ok hoons/arvo/tests/new-hoon/ls.hoon
 todo hoons/arvo/tests/new-hoon/mp.hoon
 ok hoons/arvo/tests/new-hoon/myb.hoon
 ok hoons/arvo/tests/new-hoon/thr.hoon
-todo hoons/arvo/tests/zuse/crypto/keccak.hoon
+ok hoons/arvo/tests/zuse/crypto/keccak.hoon
 todo hoons/arvo/web/404.hoon
 todo hoons/arvo/web/dojo.hoon
 todo hoons/arvo/web/listen.hoon

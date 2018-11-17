@@ -35,18 +35,14 @@
       [
         'tallTislus',
         [
-          'infixEqual',
+          'long5dWide',
           [
-            'toga',
-            'fed'
-          ],
-          [
-            'circumParen2',
+            'infixEqual',
             [
               'rump5d',
               [
                 'limb',
-                'sy'
+                'fed'
               ]
             ],
             [
@@ -55,18 +51,28 @@
                 'rump5d',
                 [
                   'limb',
-                  'gulf'
+                  'sy'
                 ]
               ],
               [
-                'bisk4l',
-                '2'
-              ],
-              [
-                'rump5d',
+                'circumParen2',
                 [
-                  'limb',
-                  'top'
+                  'rump5d',
+                  [
+                    'limb',
+                    'gulf'
+                  ]
+                ],
+                [
+                  'bisk4l',
+                  '2'
+                ],
+                [
+                  'rump5d',
+                  [
+                    'limb',
+                    'top'
+                  ]
                 ]
               ]
             ]
@@ -151,14 +157,20 @@
                   [
                     'tallTislus',
                     [
-                      'infixEqual',
+                      'long5dWide',
                       [
-                        'toga',
-                        'fac'
-                      ],
-                      [
-                        'bisk4l',
-                        '2'
+                        'infixEqual',
+                        [
+                          'rump5d',
+                          [
+                            'limb',
+                            'fac'
+                          ]
+                        ],
+                        [
+                          'bisk4l',
+                          '2'
+                        ]
                       ]
                     ],
                     [
@@ -313,29 +325,35 @@
                     [
                       'tallTislus',
                       [
-                        'infixEqual',
+                        'long5dWide',
                         [
-                          'toga',
-                          'cot'
-                        ],
-                        [
-                          'circumParen2',
+                          'infixEqual',
                           [
                             'rump5d',
                             [
                               'limb',
-                              'mul'
+                              'cot'
                             ]
                           ],
                           [
-                            'bisk4l',
-                            '2'
-                          ],
-                          [
-                            'rump5d',
+                            'circumParen2',
                             [
-                              'limb',
-                              'fac'
+                              'rump5d',
+                              [
+                                'limb',
+                                'mul'
+                              ]
+                            ],
+                            [
+                              'bisk4l',
+                              '2'
+                            ],
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'fac'
+                              ]
                             ]
                           ]
                         ]

@@ -35,25 +35,31 @@
       [
         'tallTisfas',
         [
-          'infixEqual',
+          'long5dWide',
           [
-            'toga',
-            'field'
-          ],
-          [
-            'circumParen2',
+            'infixEqual',
             [
               'rump5d',
               [
                 'limb',
-                'set'
+                'field'
               ]
             ],
             [
-              'aura',
-              '@',
+              'circumParen2',
               [
-                'auraName'
+                'rump5d',
+                [
+                  'limb',
+                  'set'
+                ]
+              ],
+              [
+                'aura',
+                '@',
+                [
+                  'auraName'
+                ]
               ]
             ]
           ]
@@ -165,16 +171,22 @@
                   [
                     'tallTisfas',
                     [
-                      'infixEqual',
+                      'long5dWide',
                       [
-                        'toga',
-                        'factor'
-                      ],
-                      [
-                        'aura',
-                        '@',
+                        'infixEqual',
                         [
-                          'auraName'
+                          'rump5d',
+                          [
+                            'limb',
+                            'factor'
+                          ]
+                        ],
+                        [
+                          'aura',
+                          '@',
+                          [
+                            'auraName'
+                          ]
                         ]
                       ]
                     ],
@@ -334,16 +346,22 @@
                     [
                       'tallTisfas',
                       [
-                        'infixEqual',
+                        'long5dWide',
                         [
-                          'toga',
-                          'count'
-                        ],
-                        [
-                          'aura',
-                          '@',
+                          'infixEqual',
                           [
-                            'auraName'
+                            'rump5d',
+                            [
+                              'limb',
+                              'count'
+                            ]
+                          ],
+                          [
+                            'aura',
+                            '@',
+                            [
+                              'auraName'
+                            ]
                           ]
                         ]
                       ],

@@ -21,14 +21,20 @@
     [
       'tallTislus',
       [
-        'infixEqual',
+        'long5dWide',
         [
-          'toga',
-          'count'
-        ],
-        [
-          'bisk4l',
-          '1'
+          'infixEqual',
+          [
+            'rump5d',
+            [
+              'limb',
+              'count'
+            ]
+          ],
+          [
+            'bisk4l',
+            '1'
+          ]
         ]
       ],
       [

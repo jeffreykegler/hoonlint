@@ -1005,15 +1005,15 @@ hoon ::= wideHoon
 wideHoon ::= hoonUnary
 hoonUnary ::= hoonExpression
 hoonExpression ::= infixColon
-hoonExpression ::= infixKet
-hoonExpression ::= infixEqual
 hoonExpression ::= hoonPrimary
 hoonPrimary ::= long5dWide
 hoonPrimary ::= scat5d
 hoonPrimary ::= norm5dWide
 infixColon ::= hoonPrimary (':') wideHoon
-infixKet ::= hoonPrimary ('^') wideHoon
-infixEqual ::= toga ('=') hoonExpression
+long5dWide ::= infixKet
+long5dWide ::= infixEqual
+infixKet ::= scat5d ('^') wideHoon
+infixEqual ::= scat5d ('=') wideHoon
 
 toga ::= SYM4K
 toga ::= togaSeq
