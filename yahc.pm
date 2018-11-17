@@ -280,6 +280,7 @@ mot4j ~ sed4j
 
 dum4j ~ sid4j+
 
+QIX4J ~ qix4j
 qix4j ~ six4j six4j six4j six4j
 
 DIM4J ~ dim4j # a natural number
@@ -360,16 +361,36 @@ gon4k ~ bas4h gay4i fas4h
 
 # TODO: crub(4l) is incomplete
 
-crub4l ::= crub4l_part1
-crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2
-crub4l ::= crub4l_part1 DOT4H DOT4H crub4l_part2 DOT4H DOT4H crub4l_part3
-crub4l_part1 ::= DIM4J optHep DOT4H MOT4J DOT4H DIP4J
+crub4l ::= date
+crub4l ::= timePeriod
+
+date ::= date_part1
+date ::= date_part1 DOT DOT date_part2
+date ::= date_part1 DOT DOT date_part2 DOT DOT date_part3
+date_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
 optHep ::= # empty
 optHep ::= HEP
-crub4l_part2 ::= dum4j DOT4H dum4j DOT4H dum4j
-crub4l_part3 ::= crub4l_part3_elements
-crub4l_part3_elements ::= crub4l_part3_element+ separator=>DOT4H proper=>1
-crub4l_part3_element ::= qix4j
+date_part2 ::= dum4j DOT dum4j DOT dum4j
+date_part3 ::= qix4jSeq
+
+qix4jSeq ::= QIX4J+ separator=>DOT proper=>1
+
+timePeriod ::= timePeriodKernel timePeriodFraction
+timePeriod ::= timePeriodKernel
+timePeriodKernel ::= timePeriodByUnit+ separator=>DOT proper=>1
+timePeriodByUnit ::= timePeriodDays
+timePeriodByUnit ::= timePeriodHours
+timePeriodByUnit ::= timePeriodMinutes
+timePeriodByUnit ::= timePeriodSeconds
+timePeriodDays ::= LAPSE_DAYS
+LAPSE_DAYS ~ 'd' dim4j
+timePeriodHours ::= LAPSE_HOURS
+LAPSE_HOURS ~ 'h' dim4j
+timePeriodMinutes ::= LAPSE_MINUTES
+LAPSE_MINUTES ~ 'm' dim4j
+timePeriodSeconds ::= LAPSE_SECONDS
+LAPSE_SECONDS ~ 's' dim4j
+timePeriodFraction ::= (DOT DOT) qix4jSeq
 
 # nuck(4l) is the coin parser
 # TODO: Finish nuck4l
