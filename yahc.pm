@@ -192,7 +192,6 @@ sub prune {
         moldSeq              => 1,
         norm5d               => 1,
         norm5dWide          => 1,
-        togaElements         => 1,
         rope5d               => 1,
         scat5d               => 1,
     };
@@ -1019,17 +1018,9 @@ hasp5d ::= nuck4l
 hoonSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wideHoon
 wideHoon ::= hoonUnary
-hoonUnary ::= hoonExpression
-hoonExpression ::= hoonPrimary
+hoonUnary ::= hoonPrimary
 hoonPrimary ::= norm5dWide rank=>10
 hoonPrimary ::= long5dWide rank=>8
-
-toga ::= SYM4K
-toga ::= togaSeq
-togaSeq ::= ('[') togaElements (']')
-togaElements ::= togaElement+ separator=>ACE proper=>1
-togaElement ::= toga
-togaElement ::= SIG
 
 # the wing type is parsed by the rope(5d)
 rope5d ::= limb+ separator=>[.] proper=>1
@@ -1204,7 +1195,9 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # FIXED: ketlus hoon hoon
 # FIXED: ketsig hoon
 
-# FIXED: kettis toga hoon
+# ['=' (rune tis %ktts expg)]
+# ++  expg  |.(;~(gunk sym loaf))                     ::  term and hoon
+# FIXED: kettis SYM4K hoon
 
 # FIXED: ketwut hoon
 
@@ -1713,11 +1706,11 @@ norm5dWide ::= wideKetsig
 tallKetsig ::= (KET4H SIG4H GAP)hoon
 wideKetsig ::= (KET4H SIG4H) [(] wideHoon [)]
 
-# KETTIS toga hoon
+# KETTIS SYM4K hoon
 hoon ::= tallKettis
 norm5dWide ::= wideKettis
-tallKettis ::= (KET4H TIS4H GAP)toga (GAP) hoon
-wideKettis ::= (KET4H TIS4H) [(] toga (ACE) wideHoon [)]
+tallKettis ::= (KET4H TIS4H GAP)SYM4K (GAP) hoon
+wideKettis ::= (KET4H TIS4H) [(] SYM4K (ACE) wideHoon [)]
 
 # KETWUT hoon
 hoon ::= tallKetwut
