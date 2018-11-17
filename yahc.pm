@@ -717,7 +717,10 @@ irrDottis ::= ('=(') wideHoon (')')
 # '?'
 # Same as scad(5)
 # TODO: Finish
-wideBucwut ::= ('?(') wideMoldSeq (')')
+hoonPrimary ::= circumWutParen
+hoonPrimary ::= soloWut
+circumWutParen ::= (WUT PEL) wideMoldSeq (PER)
+soloWut ::= WUT
 
 # '['
 # Differs from scad(5)
@@ -899,9 +902,6 @@ nonNL ~ [^\n]
 wsChars ~ wsChar*
 wsChar ~ [ \n]
 
-# === ATOMS: SAND ===
-
-
 
 # @ub   unsigned binary          0b10          (2)
 NUMBER ~ binaryNumber
@@ -966,14 +966,8 @@ hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
-# TODO: Are these %sand atoms?
-
 atom ::= type
 type ::= '*' # noun
-type ::= '?' # loobean
-# LATER: commented out because these create ambiguities
-# type ::= '~' # null
-# type ::= '@' # cell
 
 # === NAMES ==
 
