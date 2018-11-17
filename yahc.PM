@@ -697,10 +697,11 @@ circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 wideBuccol ::= ('{') wideMoldSeq ('}')
 
 # '*'
-# TODO: Finish
 # Superset of scad(5)
 hoonPrimary ::= prefixTar
-prefixTar ::= '*' wideMold
+hoonPrimary ::= soloTar
+prefixTar ::= TAR wideMold
+soloTar ::= TAR
 
 # '@'
 # TODO: NYI
@@ -930,7 +931,6 @@ nonNL ~ [^\n]
 wsChars ~ wsChar*
 wsChar ~ [ \n]
 
-
 # @ub   unsigned binary          0b10          (2)
 NUMBER ~ binaryNumber
 # syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
@@ -994,9 +994,6 @@ hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
-atom ::= type
-type ::= '*' # noun
-
 # === NAMES ==
 
 NAME ~ name
@@ -1050,8 +1047,6 @@ hoonExpression ::= hoonPrimary
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
-
-hoonPrimary ::= atom
 
 toga ::= NAME
 toga ::= togaSeq
@@ -1215,7 +1210,9 @@ wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 
 # FIXED: dottis hoon hoon
 
-# FIXED: dotlus atom
+# :~  ['+' (rune lus %dtls expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: dotlus hoon
 
 # FIXED: dottar hoon hoon
 # FIXED: dotwut hoon
@@ -1378,7 +1375,21 @@ hoonPrimary ::= wideZaptis
 tallZaptis ::= (ZAP TIS GAP)hoon
 wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 
-# FIXED: zapwut atom hoon
+# ['?' (rune wut %zpwt hinh)]
+# ++  hinh  |.                                        ::  1/2 numbers, hoon
+#         ;~  gunk
+#           ;~  pose
+#             dem
+#             (ifix [sel ser] ;~(plug dem ;~(pfix ace dem)))
+#           ==
+#           loaf
+#         ==
+wideHoon ::= tallZapWut
+tallZapWut ::= (ZAP WUT GAP) dem4k (GAP) hoon
+tallZapWut ::= (ZAP WUT GAP SEL) dem4k (ACE) dem4k (SER GAP) hoon
+hoonPrimary ::= wideZapWut
+wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) hoon
+wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is nullary
 ZAPZAP ~ [!] [!]
