@@ -471,11 +471,13 @@ wede5d ::= (LUS) wideHoon
 # Implementing long(5d)
 
 long5dWide ::= infixTis
+long5dWide ::= infixCol
 long5dWide ::= infixKet
 long5dWide ::= circumScatParen
 long5dWide ::= scat5d
 
 infixTis ::= scat5d (TIS) wideHoon rank=>12
+infixCol ::= scat5d (COL) wideHoon rank=>10
 infixKet ::= scat5d (KET) wideHoon rank=>8
 circumScatParen ::= scat5d (PEL) lobo5d (PER) rank=>2
 
@@ -711,7 +713,8 @@ circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 
 # '{'
 # Same as scad(5)
-wideBuccol ::= ('{') wideMoldSeq ('}')
+scat5d ::= circumBraces
+circumBraces ::= ('{') wideMoldSeq ('}')
 
 # '*'
 # Superset of scad(5)
@@ -1043,11 +1046,9 @@ hoonSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wideHoon
 wideHoon ::= hoonUnary
 hoonUnary ::= hoonExpression
-hoonExpression ::= infixColon
 hoonExpression ::= hoonPrimary
 hoonPrimary ::= norm5dWide rank=>10
 hoonPrimary ::= long5dWide rank=>8
-infixColon ::= hoonPrimary (':') wideHoon
 
 toga ::= SYM4K
 toga ::= togaSeq

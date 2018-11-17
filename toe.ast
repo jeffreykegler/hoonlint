@@ -273,7 +273,7 @@
               'hoonBatteryElement',
               'spot',
               [
-                'wideBuccol',
+                'circumBraces',
                 [
                   'moldInfixFas',
                   'x',
@@ -948,7 +948,7 @@
                         [
                           'tallKethep',
                           [
-                            'wideBuccol',
+                            'circumBraces',
                             [
                               'moldCircumParen',
                               [
@@ -986,7 +986,7 @@
                               'act'
                             ],
                             [
-                              'wideBuccol',
+                              'circumBraces',
                               [
                                 'moldBucNuck4l',
                                 '$',
@@ -1042,7 +1042,7 @@
                               ')'
                             ],
                             [
-                              'wideBuccol',
+                              'circumBraces',
                               [
                                 'moldBucNuck4l',
                                 '$',
@@ -1098,7 +1098,7 @@
                               ')'
                             ],
                             [
-                              'wideBuccol',
+                              'circumBraces',
                               [
                                 'moldBucNuck4l',
                                 '$',
@@ -1285,7 +1285,7 @@
                               [
                                 'tallKethep',
                                 [
-                                  'wideBuccol',
+                                  'circumBraces',
                                   [
                                     'moldCircumParen',
                                     [
