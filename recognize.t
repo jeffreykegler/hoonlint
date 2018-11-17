@@ -276,7 +276,7 @@ todo hoons/arvo/ren/urb/tree.hoon
 ok hoons/arvo/sec/com/asana.hoon
 ok hoons/arvo/sec/com/digitalocean.hoon
 ok hoons/arvo/sec/com/dropboxapi.hoon
-todo hoons/arvo/sec/com/facebook.hoon
+ok hoons/arvo/sec/com/facebook.hoon
 ok hoons/arvo/sec/com/github.hoon
 ok hoons/arvo/sec/com/googleapis.hoon
 ok hoons/arvo/sec/com/instagram.hoon

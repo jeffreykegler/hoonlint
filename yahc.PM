@@ -350,7 +350,7 @@ carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
 qit4k ::= <UNESCAPED SINGLE QUOTE CHARS>
-qit4k ::= <ESCAPED SINGLE QUOTE CHAR>
+qit4k ::= EscapedSingleQuoteChar
 <UNESCAPED SINGLE QUOTE CHARS> ~ unescapedSingleQuoteChar+
 
 # LATER Single string element also allow escapes
@@ -370,7 +370,9 @@ qut4k ::= <TRIPLE QUOTE STRING>
 # All the printable (non-control) characters except
 # bas and soq
 unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
-<ESCAPED SINGLE QUOTE CHAR> ~ bas4h bas4h | bas4h soq4h | bas4h mes4k
+EscapedSingleQuoteChar ::= (BAS4H) BAS4H | (BAS4H) SOQ4H
+EscapedSingleQuoteChar ::= AsciiHexChar
+AsciiHexChar ::= (BAS4H) MES4K
 
 dem4k ::= DIT4K_SEQ+ separator=>gon4k proper=>1
 
@@ -378,10 +380,12 @@ DIT4K_SEQ ~ dit4kSeq
 dit4kSeq ~ dit4k+
 dit4k ~ [0-9]
 
-hit4k ~ dit4k
-hit4k ~ [a-f][A-F]
-
+MES4K ~ mes4k
 mes4k ~ hit4k hit4k
+
+# HIT4K ~ hit4k
+hit4k ~ dit4k
+hit4k ~ [a-fA-F]
 
 gon4k ~ bas4h gay4i fas4h
 
@@ -1431,7 +1435,7 @@ END_OF_DSL_MAIN
 # and are omitted
 my %glyphs = (
     bar => '|',
-    bas => '\\\\',
+    bas => '\x5c', # '\'
     buc => '$',
     cab => '_',
     cen => '%',
