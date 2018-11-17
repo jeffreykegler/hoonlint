@@ -256,8 +256,11 @@
               'hoonBatteryElement',
               'side',
               [
-                'atom',
-                '@'
+                'aura',
+                '@',
+                [
+                  'auraName'
+                ]
               ]
             ]
           ],
@@ -272,13 +275,25 @@
                   'moldInfixFas',
                   'x',
                   '/',
-                  '@'
+                  [
+                    'moldAura',
+                    '@',
+                    [
+                      'auraName'
+                    ]
+                  ]
                 ],
                 [
                   'moldInfixFas',
                   'y',
                   '/',
-                  '@'
+                  [
+                    'moldAura',
+                    '@',
+                    [
+                      'auraName'
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -526,7 +541,13 @@
                           'moldInfixFas',
                           'a',
                           '/',
-                          '@'
+                          [
+                            'moldAura',
+                            '@',
+                            [
+                              'auraName'
+                            ]
+                          ]
                         ],
                         [
                           'irrDottis',
@@ -820,7 +841,13 @@
                             'moldInfixFas',
                             'a',
                             '/',
-                            '@'
+                            [
+                              'moldAura',
+                              '@',
+                              [
+                                'auraName'
+                              ]
+                            ]
                           ],
                           [
                             'irrDottis',

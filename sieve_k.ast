@@ -5,7 +5,13 @@
       'moldInfixTis',
       'top',
       '=',
-      '@'
+      [
+        'moldAura',
+        '@',
+        [
+          'auraName'
+        ]
+      ]
     ],
     [
       'tallKethep',
@@ -19,8 +25,11 @@
           ]
         ],
         [
-          'atom',
-          '@'
+          'aura',
+          '@',
+          [
+            'auraName'
+          ]
         ]
       ],
       [
@@ -290,7 +299,13 @@
                       'moldInfixTis',
                       'fac',
                       '=',
-                      '@'
+                      [
+                        'moldAura',
+                        '@',
+                        [
+                          'auraName'
+                        ]
+                      ]
                     ],
                     [
                       'tallTislus',

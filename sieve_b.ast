@@ -5,7 +5,13 @@
       'moldInfixTis',
       'thru',
       '=',
-      '@'
+      [
+        'moldAura',
+        '@',
+        [
+          'auraName'
+        ]
+      ]
     ],
     [
       'tallKethep',
@@ -19,8 +25,11 @@
           ]
         ],
         [
-          'atom',
-          '@'
+          'aura',
+          '@',
+          [
+            'auraName'
+          ]
         ]
       ],
       [
@@ -41,8 +50,11 @@
               ]
             ],
             [
-              'atom',
-              '@'
+              'aura',
+              '@',
+              [
+                'auraName'
+              ]
             ]
           ]
         ],
@@ -159,8 +171,11 @@
                         'factor'
                       ],
                       [
-                        'atom',
-                        '@'
+                        'aura',
+                        '@',
+                        [
+                          'auraName'
+                        ]
                       ]
                     ],
                     [
@@ -305,7 +320,13 @@
                       'moldInfixTis',
                       'factor',
                       '=',
-                      '@'
+                      [
+                        'moldAura',
+                        '@',
+                        [
+                          'auraName'
+                        ]
+                      ]
                     ],
                     [
                       'tallTisfas',
@@ -316,8 +337,11 @@
                           'count'
                         ],
                         [
-                          'atom',
-                          '@'
+                          'aura',
+                          '@',
+                          [
+                            'auraName'
+                          ]
                         ]
                       ],
                       [
