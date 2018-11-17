@@ -1049,57 +1049,62 @@ moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
 hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
 # Implementing norm(5d) for hoons
-
-BARCAB ~ [|] [_]
+ 
+# ['_' (runo cab %brcb [~ ~] exqr)]
 hoon ::= tallBarcab
-tallBarcab ::= (BARCAB GAP) hoon (GAP) battery (GAP '--')
+tallBarcab ::= (BAR CAB GAP) hoon (GAP) battery (GAP '--')
 
 # ['%' (runo cen %brcn [~ ~] expe)]
-#   ++  expe  |.(wisp)                                  ::  core tail
-BARCEN ~ [|] [%]
+# ++  expe  |.(wisp)                                  ::  core tail
 hoon ::= tallBarcen
-tallBarcen ::= (BARCEN GAP) battery (GAP '--')
+tallBarcen ::= (BAR CEN GAP) battery (GAP '--')
 
+# [':' (runo col %brcl [~ ~] expb)]
 # FIXED: barcol hoon hoon
+
+# ['.' (runo dot %brdt [~ ~] expa)]
 # FIXED: bardot hoon
+
+# ['-' (runo hep %brhp [~ ~] expa)]
 # FIXED: barhep hoon
 
-BARKET ~ [|] '^'
+# ['^' (runo ket %brkt [~ ~] expx)]
+# ++  expx  |.  ;~  gunk  loaf [...] wisp ::  hoon and core tail
 hoon ::= tallBarket
-tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
+tallBarket ::= (BAR KET GAP) hoon (GAP) battery (GAP '--')
 
-# FIXED: barsig hoon hoon
+# ['~' (runo sig %brsg [~ ~] exqc)]
+#  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
+# FIXED: barsig mold hoon
 
-
-# FIXED: bartar mold hoon
 # ['*' (runo tar %brtr [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
+# FIXED: bartar mold hoon
 
-# Cannot use BARTIS because BAR4H TIS must also be accepted
-# BARTIS mold hoon
+# ['=' (runo tis %brts [~ ~] exqc)]
+# ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 hoon ::= tallBartis
 norm5dWide ::= wideBartis
 tallBartis ::= (BAR4H TIS GAP) mold (GAP) hoon
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 
+# ['?' (runo wut %brwt [~ ~] expa)]
 # FIXED: barwut hoon
 
 # FIXED: buccab hoon
 
 # Running syntax
-BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
-tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
+tallBuccen ::= (BUC CEN GAP) moldSeq (GAP '==')
 norm5dWide ::= wideBuccen
-wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
+wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
-tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
+tallBuccol ::= (BUC COL GAP) moldSeq (GAP '==')
 norm5dWide ::= wideBuccol
-wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
+wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 
 # FIXED: buchep mold mold
 # FIXED: bucket hoon hoon
@@ -1121,11 +1126,10 @@ wideBucsem ::= (BUC SEM '(') mold (')')
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
 # FIXED: buctis SYM4K mold
 
-BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
-tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
+tallBucwut ::= (BUC WUT GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideBucwut
-wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
+wideBucwut ::= (BUC WUT '(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
 
@@ -1559,11 +1563,11 @@ norm5dWide ::= wideBarhep
 tallBarhep ::= (BAR4H HEP4H GAP)hoon
 wideBarhep ::= (BAR4H HEP4H) [(] wideHoon [)]
 
-# BARSIG hoon hoon
+# BARSIG mold hoon
 hoon ::= tallBarsig
 norm5dWide ::= wideBarsig
-tallBarsig ::= (BAR4H SIG4H GAP)hoon (GAP) hoon
-wideBarsig ::= (BAR4H SIG4H) [(] wideHoon (ACE) wideHoon [)]
+tallBarsig ::= (BAR4H SIG4H GAP)mold (GAP) hoon
+wideBarsig ::= (BAR4H SIG4H) [(] mold (ACE) wideHoon [)]
 
 # BARTAR mold hoon
 hoon ::= tallBartar
