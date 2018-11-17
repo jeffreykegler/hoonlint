@@ -1216,18 +1216,33 @@ tallFastis ::= (FASTIS GAP) SYM4K (GAP) hoon
 norm5dWide ::= wideFastis
 wideFastis ::= (FASTIS) SYM4K '=' hoon
 
+
+# ['|' (rune bar %ktbr expa)]
 # FIXED: ketbar hoon
 
+# ['.' (rune dot %ktdt expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: ketdot hoon hoon
+
+# ['-' (rune hep %kthp exqc)]
 # FIXED: kethep hoon hoon
 
+# ['+' (rune lus %ktls expb)]
 # FIXED: ketlus hoon hoon
+
+# ['&' (rune pam %ktpm expa)]
+
+# ['~' (rune sig %ktsg expa)]
 # FIXED: ketsig hoon
 
 # ['=' (rune tis %ktts expg)]
 # ++  expg  |.(;~(gunk sym loaf))                     ::  term and hoon
 # FIXED: kettis SYM4K hoon
 
+# ['?' (rune wut %ktwt expa)]
 # FIXED: ketwut hoon
+
+# ['%' (rune cen %ktcn expa)]
 
 # :~  ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
