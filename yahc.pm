@@ -169,13 +169,13 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
-	wedeFirst => 1,
+        wedeFirst            => 1,
         wideHoon             => 1,
         wideHoonJogging      => 1,
         wideHoonJogs         => 1,
         wideHoonJog          => 1,
         wideHoonSeq          => 1,
-        wideMold          => 1,
+        wideMold             => 1,
         wideMoldSeq          => 1,
         hoon                 => 1,
         hoonExpression       => 1,
@@ -186,11 +186,14 @@ sub prune {
         hoonJog              => 1,
         hoonPrimary          => 1,
         hoonSeq              => 1,
-        hoonUnary              => 1,
+        hoonUnary            => 1,
         mold                 => 1,
         moldSeq              => 1,
+        norm5d               => 1,
+        norm5d_wide          => 1,
         togaElements         => 1,
-        rope5d                 => 1,
+        rope5d               => 1,
+        scat5d               => 1,
     };
 
     return [] if not defined $v;
@@ -613,10 +616,10 @@ prefixCab ::= (CAB) wideHoon
 # '$'
 # For rump, see subcase ['a' 'z']
 # Differs from scad(5)
-hoonPrimary ::= bucBuc
-hoonPrimary ::= bucPam
-hoonPrimary ::= bucBar
-hoonPrimary ::= dollarTerm
+scat5d ::= bucBuc
+scat5d ::= bucPam
+scat5d ::= bucBar
+scat5d ::= dollarTerm
 bucBuc ::= BUC4H BUC4H
 bucPam ::= BUC4H PAM4H
 bucBar ::= BUC4H BAR4H
@@ -625,12 +628,12 @@ dollarTerm ::= BUC4H nuck4l
 
 # '%'
 # Differs from scad(5)
-hoonPrimary ::= cenPath
-hoonPrimary ::= cenBuc
-hoonPrimary ::= cenPam
-hoonPrimary ::= cenBar
-hoonPrimary ::= cenTerm
-hoonPrimary ::= cenDirectories
+scat5d ::= cenPath
+scat5d ::= cenBuc
+scat5d ::= cenPam
+scat5d ::= cenBar
+scat5d ::= cenTerm
+scat5d ::= cenDirectories
 cenPath ::= CEN4H porc5d
 cenBuc ::= CEN4H BUC4H
 cenPam ::= CEN4H PAM4H
@@ -643,24 +646,24 @@ cenDirectories ::= CEN4H+
 # Not in scad(5)
 # TODO: Finish
 # For rope(5d), see subcase ['a' 'z'] and rump(5d)
-hoonPrimary ::= prefixPam
-hoonPrimary ::= pamPlusPrefix
-hoonPrimary ::= soloPam
+scat5d ::= prefixPam
+scat5d ::= pamPlusPrefix
+scat5d ::= soloPam
 prefixPam ::= (PAM4H '(') wideHoonSeq (')')
 pamPlusPrefix ::= (PAM4H) wede5d
 soloPam ::= PAM4H
 
 # '\''
 # Not in scad(5)
-hoonPrimary ::= singleQuoteString
+scat5d ::= singleQuoteString
 singleQuoteString ::= qut4k
 
 # '('
 # Differs from scad(5)
 # See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
 # and cenhep in https://urbit.org/docs/hoon/irregular/
-hoonPrimary ::= circumParen1
-hoonPrimary ::= circumParen2
+scat5d ::= circumParen1
+scat5d ::= circumParen2
 circumParen1 ::= ('(') wideHoon (')')
 circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
 
@@ -670,8 +673,8 @@ wideBuccol ::= ('{') wideMoldSeq ('}')
 
 # '*'
 # Superset of scad(5)
-hoonPrimary ::= prefixTar
-hoonPrimary ::= soloTar
+scat5d ::= prefixTar
+scat5d ::= soloTar
 prefixTar ::= TAR wideMold
 soloTar ::= TAR
 
@@ -680,13 +683,13 @@ soloTar ::= TAR
 # Same as scad(5)
 # '@'
 # Same as scat(5d)
-hoonPrimary ::= aura
+scat5d ::= aura
 aura ::= '@' auraName
 
 # '+'
 # Not in scad(5)
 # TODO: Finish
-hoonPrimary ::= irrDotlus
+scat5d ::= irrDotlus
 irrDotlus ::= ('+(') wideHoon (')')
 
 # '-'
@@ -701,8 +704,8 @@ irrDotlus ::= ('+(') wideHoon (')')
 # Not in scad(5)
 # This subcase handles infix expressions
 # starting with a digit.
-hoonPrimary ::= bisk4l
-hoonPrimary ::= bisk4l wede5d
+scat5d ::= bisk4l
+scat5d ::= bisk4l wede5d
 
 # ':'
 # TODO: NYI
@@ -711,51 +714,51 @@ hoonPrimary ::= bisk4l wede5d
 # '='
 # Differs from scad(5)
 tallDottis ::= (TIS GAP) hoon
-hoonPrimary ::= irrDottis
+scat5d ::= irrDottis
 irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
 irrDottis ::= ('=(') wideHoon (')')
 
 # '?'
 # Same as scad(5)
 # TODO: Finish
-hoonPrimary ::= circumWutParen
-hoonPrimary ::= soloWut
+scat5d ::= circumWutParen
+scat5d ::= soloWut
 circumWutParen ::= (WUT PEL) wideMoldSeq (PER)
 soloWut ::= WUT
 
 # '['
 # Differs from scad(5)
-hoonPrimary ::= rupl5d
+scat5d ::= rupl5d
 
 # '^'
 # Differs from scad(5)
 # For rope(5d) see ['a' 'z'] subcase and rump(5d)
-hoonPrimary ::= soloKet
+scat5d ::= soloKet
 soloKet ::= KET
 
 # '`'
 # Not in scad(5)
 # TODO: Finish
-hoonPrimary ::= irrKethep
+scat5d ::= irrKethep
 irrKethep ::= ('`') mold ('`') hoon
-hoonPrimary ::= prefixKet
+scat5d ::= prefixKet
 prefixKet ::= ('`') wideHoon
 
 # '"'
 # Not in scad(5)
-hoonPrimary ::= infixDot
+scat5d ::= infixDot
 infixDot ::= soil5d+ separator=>dog4i proper=>1
 
 # ['a' 'z']
 # Differs from scad(5)
-hoonPrimary ::= rump5d
+scat5d ::= rump5d
 
 # '|'
 # Not in scad(5)
 # TODO: Finish
-hoonPrimary ::= prefixBar
-hoonPrimary ::= circumBarParen
-hoonPrimary ::= soloBar
+scat5d ::= prefixBar
+scat5d ::= circumBarParen
+scat5d ::= soloBar
 prefixBar ::= (BAR4H) wede5d rank=>1
 circumBarParen ::= (BAR4H PEL) wideHoonSeq (PER) rank=>1
 soloBar ::= BAR4H
@@ -763,30 +766,28 @@ soloBar ::= BAR4H
 # '~'
 # Differs from scad(5)
 # See also rupl(5d) in the '[' subcase
-hoonPrimary ::= circumSigParen
-hoonPrimary ::= circumSigBracket
-hoonPrimary ::= (SIG) twid4l
-hoonPrimary ::= (SIG) wede5d
-hoonPrimary ::= soloSig
+scat5d ::= circumSigParen
+scat5d ::= circumSigBracket
+scat5d ::= (SIG) twid4l
+scat5d ::= (SIG) wede5d
+scat5d ::= soloSig
 circumSigBracket ::= (SIG SEL) wideHoonSeq (SER)
 circumSigParen ::= (SIG PEL) rope5d (ACE) wideHoon (ACE) wideHoonSeq (PER)
 soloSig ::= SIG
 
 # '/'
 # Not in scad(5)
-hoonPrimary ::= rood5d
+scat5d ::= rood5d
 
 # '<'
 # Not in scad(5)
-hoonPrimary ::= circumGalgar
+scat5d ::= circumGalgar
 circumGalgar ::= ('<') wideHoon ('>')
 
 # '>'
 # Not in scad(5)
-hoonPrimary ::= circumGargal
+scat5d ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
-
-# TODO: Finish adding rules from scat(5d)
 
 # Molds from norm(5d)
 
@@ -1016,6 +1017,7 @@ hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
 hoonExpression ::= hoonPrimary
+hoonPrimary ::= scat5d
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
