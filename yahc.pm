@@ -756,11 +756,15 @@ soloBar ::= BAR4H
 
 # '~'
 # Differs from scad(5)
-# See also the '[' subcase
-# TODO: Finish
+# See also rupl(5d) in the '[' subcase
 hoonPrimary ::= circumSigParen
-circumSigParen ::= ('~(') rope5d (ACE) wideHoon (ACE) wideHoonSeq (')')
-hoonPrimary ::= SIG twid4l
+hoonPrimary ::= circumSigBracket
+hoonPrimary ::= (SIG) twid4l
+hoonPrimary ::= (SIG) wede5d
+hoonPrimary ::= soloSig
+circumSigBracket ::= (SIG SEL) wideHoonSeq (SER)
+circumSigParen ::= (SIG PEL) rope5d (ACE) wideHoon (ACE) wideHoonSeq (PER)
+soloSig ::= SIG
 
 # '/'
 # Not in scad(5)
@@ -962,9 +966,6 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 # TODO: Are these %sand atoms?
 
-atom ::= NIL
-NIL ~ '~'
-
 atom ::= type
 type ::= '*' # noun
 type ::= '^' # cell
@@ -1034,7 +1035,7 @@ toga ::= togaSeq
 togaSeq ::= ('[') togaElements (']')
 togaElements ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
-togaElement ::= NIL
+togaElement ::= SIG
 
 # the wing type is parsed by the rope(5d)
 rope5d ::= limb+ separator=>[.] proper=>1

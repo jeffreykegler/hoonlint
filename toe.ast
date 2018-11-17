@@ -72,7 +72,7 @@
                 'feed'
               ],
               [
-                'atom',
+                'soloSig',
                 '~'
               ],
               [
@@ -1114,7 +1114,7 @@
                               [
                                 'circumBracket',
                                 [
-                                  'atom',
+                                  'soloSig',
                                   '~'
                                 ],
                                 [
@@ -1407,7 +1407,7 @@
                                             [
                                               'circumBracket',
                                               [
-                                                'atom',
+                                                'soloSig',
                                                 '~'
                                               ],
                                               [
@@ -1466,7 +1466,7 @@
                                         [
                                           'circumBracket',
                                           [
-                                            'atom',
+                                            'soloSig',
                                             '~'
                                           ],
                                           [
