@@ -218,7 +218,7 @@ sub prune {
         mold                 => 1,
         moldSeq              => 1,
         norm5d               => 1,
-        norm5d_wide          => 1,
+        norm5dWide          => 1,
         togaElements         => 1,
         rope5d               => 1,
         scat5d               => 1,
@@ -467,10 +467,11 @@ wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
 
-# TODO: Should all unary expression be <hoonPrimary>?
+# Implementing long(5d)
 
-# TODO TO JK: Census circum irregular forms for those which should be broken out by
-# n-ary, for n==1, n==2, n>=3.
+# TODO: Where to implement?  long(5d)?
+long5dWide ::= irrCentis
+irrCentis ::= rope5d ('(') wideHoonJogging (')')
 
 # Implementing rump(5d)
 
@@ -635,6 +636,8 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # TODO: Finish
 hoonUnary ::= prefixZap
 prefixZap ::= (ZAP) wideHoon
+scat5d ::= wideZapzap
+wideZapzap ~ zap4h zap4h
 
 # '_'
 # Same as scad(5)
@@ -995,18 +998,6 @@ hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
-# === NAMES ==
-
-NAME ~ name
-name ~ nameFirstChar nameLaterChars
-name ~ '$'
-
-nameFirstChar ~ [a-z]
-nameLaterChars ~ nameLaterChar*
-nameLaterChar ~ [a-z0-9-]
-
-# === STRINGS ==
-
 # === PATHS ==
 
 # rood is the path parser
@@ -1045,12 +1036,14 @@ hoonExpression ::= infixColon
 hoonExpression ::= infixKet
 hoonExpression ::= infixEqual
 hoonExpression ::= hoonPrimary
+hoonPrimary ::= long5dWide
 hoonPrimary ::= scat5d
+hoonPrimary ::= norm5dWide
 infixColon ::= hoonPrimary (':') wideHoon
 infixKet ::= hoonPrimary ('^') wideHoon
 infixEqual ::= toga ('=') hoonExpression
 
-toga ::= NAME
+toga ::= SYM4K
 toga ::= togaSeq
 togaSeq ::= ('[') togaElements (']')
 togaElements ::= togaElement+ separator=>ACE proper=>1
@@ -1087,7 +1080,7 @@ hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
 moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
 hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
-# === CELLS BY RUNE ==
+# Implementing norm(5d) for hoons
 
 BARCAB ~ [|] [_]
 hoon ::= tallBarcab
@@ -1117,7 +1110,7 @@ tallBarket ::= (BARKET GAP) hoon (GAP) battery (GAP '--')
 # Cannot use BARTIS because BAR4H TIS must also be accepted
 # BARTIS mold hoon
 hoon ::= tallBartis
-hoonPrimary ::= wideBartis
+norm5dWide ::= wideBartis
 tallBartis ::= (BAR4H TIS GAP) mold (GAP) hoon
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 
@@ -1129,7 +1122,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 BUCCEN ~ [$] [%]
 hoon ::= tallBuccen
 tallBuccen ::= (BUCCEN GAP) moldSeq (GAP '==')
-hoonPrimary ::= wideBuccen
+norm5dWide ::= wideBuccen
 wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
 
 # [':' (rune col %bccl exqs)]
@@ -1137,7 +1130,7 @@ wideBuccen ::= (BUCCEN '(') wideMoldSeq (')')
 BUCCOL ~ [$] [:]
 hoon ::= tallBuccol
 tallBuccol ::= (BUCCOL GAP) moldSeq (GAP '==')
-hoonPrimary ::= wideBuccol
+norm5dWide ::= wideBuccol
 wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 
 # FIXED: buchep mold mold
@@ -1153,7 +1146,7 @@ wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 # Typo in hoon.hoon -- actually "loan" is a mold
 hoon ::= tallBucsem
 tallBucsem ::= (BUC SEM GAP) mold
-hoonPrimary ::= wideBucsem
+norm5dWide ::= wideBucsem
 wideBucsem ::= (BUC SEM '(') mold (')')
 
 # ['=' (rune tis %bcts exqg)]
@@ -1163,7 +1156,7 @@ wideBucsem ::= (BUC SEM '(') mold (')')
 BUCWUT ~ [$] [?]
 hoon ::= tallBucwut
 tallBucwut ::= (BUCWUT GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideBucwut
+norm5dWide ::= wideBucwut
 wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
 
 # FIXED: cendot hoon hoon
@@ -1175,12 +1168,9 @@ wideBucwut ::= (BUCWUT '(') wideHoonSeq (')')
 
 # FIXED: censig rope5d hoon hoon
 
-hoonPrimary ::= irrCentis
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (GAP) rope5d (GAP) hoonJogging (GAP '==')
-# TODO: Where to move?  Is this a value form?  model?  both?
-irrCentis ::= rope5d ('(') wideHoonJogging (')')
 
 # FIXED: colcab hoon hoon
 
@@ -1193,20 +1183,20 @@ irrCentis ::= rope5d ('(') wideHoonJogging (')')
 COLSIG ~ [:] [~]
 hoon ::= tallColsig
 tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideColsig
+norm5dWide ::= wideColsig
 wideColsig ::= (COLSIG '(') wideHoonSeq (')')
 
 # Running syntax
 COLTAR ~ [:] [*]
 hoon ::= tallColtar
 tallColtar ::= (COLTAR GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideColtar
+norm5dWide ::= wideColtar
 wideColtar ::= (COLTAR '(') wideHoonSeq (')')
 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
-hoonPrimary ::= wideDotket
+norm5dWide ::= wideDotket
 tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
 wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 
@@ -1226,9 +1216,9 @@ wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
 # TODO: Where to classify this?
 FASTIS ~ [\/] [=]
 hoon ::= tallFastis
-tallFastis ::= (FASTIS GAP) NAME (GAP) hoon
-hoonPrimary ::= wideFastis
-wideFastis ::= (FASTIS) NAME '=' hoon
+tallFastis ::= (FASTIS GAP) SYM4K (GAP) hoon
+norm5dWide ::= wideFastis
+wideFastis ::= (FASTIS) SYM4K '=' hoon
 
 # FIXED: ketbar hoon
 
@@ -1279,7 +1269,7 @@ wideFastis ::= (FASTIS) NAME '=' hoon
 SEMCOL ~ [;] [:]
 hoon ::= tallSemcol
 tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideSemcol
+norm5dWide ::= wideSemcol
 wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
 
 # #semsem hoon value
@@ -1289,7 +1279,7 @@ wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
 SEMSIG ~ [;] [~]
 hoon ::= tallSemsig
 tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideSemsig
+norm5dWide ::= wideSemsig
 wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
@@ -1326,7 +1316,7 @@ WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
 tallWutbar ::= (BAR4H GAP) hoon
-hoonPrimary ::= wideWutbar
+norm5dWide ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 
 # FIXED: wutcol hoon hoon hoon
@@ -1339,7 +1329,7 @@ wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
 tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
-hoonPrimary ::= wideWutpam
+norm5dWide ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
 # FIXED: wutpat rope5d hoon hoon
@@ -1373,7 +1363,7 @@ tallZapdot ::= ZAPDOT
 # Cannot use ZAPTIS because ZAP TIS must also
 # be accepted
 hoon ::= tallZaptis
-hoonPrimary ::= wideZaptis
+norm5dWide ::= wideZaptis
 tallZaptis ::= (ZAP TIS GAP)hoon
 wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 
@@ -1386,16 +1376,14 @@ wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 #           ==
 #           loaf
 #         ==
-wideHoon ::= tallZapWut
+hoon ::= tallZapWut
+norm5dWide ::= wideZapWut
 tallZapWut ::= (ZAP WUT GAP) dem4k (GAP) hoon
 tallZapWut ::= (ZAP WUT GAP SEL) dem4k (ACE) dem4k (SER GAP) hoon
-hoonPrimary ::= wideZapWut
 wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) hoon
 wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
-# zapzap (= crash) is nullary
-ZAPZAP ~ [!] [!]
-wideHoon ::= ZAPZAP
+# zapzap (= crash) is implemented in scat5d
 
 END_OF_DSL_MAIN
 
@@ -1458,8 +1446,8 @@ sub doFixedRune {
     # hoon ::= tallBarhep
     push @result, 'hoon ::= ' . $tallLHS;
 
-    # hoonPrimary ::= wideBarhep
-    push @result, 'hoonPrimary ::= ' . $wideLHS;
+    # norm5dWide ::= wideBarhep
+    push @result, 'norm5dWide ::= ' . $wideLHS;
 
     # tallBarhep ::= (BAR4H HEP4H GAP) hoon (GAP) hoon
     push @result, $tallLHS . ' ::= ('

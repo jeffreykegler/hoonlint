@@ -244,36 +244,39 @@
                 ]
               ],
               [
-                'irrCentis',
+                'long5dWide',
                 [
-                  'limb',
-                  '$'
-                ],
-                [
-                  'rump5d',
+                  'irrCentis',
                   [
                     'limb',
-                    'count'
-                  ]
-                ],
-                [
-                  'circumParen2',
-                  [
-                    'rump5d',
-                    [
-                      'limb',
-                      'add'
-                    ]
-                  ],
-                  [
-                    'bisk4l',
-                    '1'
+                    '$'
                   ],
                   [
                     'rump5d',
                     [
                       'limb',
                       'count'
+                    ]
+                  ],
+                  [
+                    'circumParen2',
+                    [
+                      'rump5d',
+                      [
+                        'limb',
+                        'add'
+                      ]
+                    ],
+                    [
+                      'bisk4l',
+                      '1'
+                    ],
+                    [
+                      'rump5d',
+                      [
+                        'limb',
+                        'count'
+                      ]
                     ]
                   ]
                 ]

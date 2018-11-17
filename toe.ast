@@ -173,27 +173,30 @@
                     ]
                   ],
                   [
-                    'irrCentis',
+                    'long5dWide',
                     [
-                      'limb',
-                      '$'
-                    ],
-                    [
-                      'rump5d',
+                      'irrCentis',
                       [
                         'limb',
-                        'feed'
-                      ]
-                    ],
-                    [
-                      'rump5d',
-                      [
-                        'limb',
-                        't'
+                        '$'
                       ],
                       [
-                        'limb',
-                        'feed'
+                        'rump5d',
+                        [
+                          'limb',
+                          'feed'
+                        ]
+                      ],
+                      [
+                        'rump5d',
+                        [
+                          'limb',
+                          't'
+                        ],
+                        [
+                          'limb',
+                          'feed'
+                        ]
                       ]
                     ]
                   ],
@@ -1470,62 +1473,65 @@
                                             '~'
                                           ],
                                           [
-                                            'irrCentis',
+                                            'long5dWide',
                                             [
-                                              'limb',
-                                              'game'
-                                            ],
-                                            [
-                                              'rump5d',
+                                              'irrCentis',
                                               [
                                                 'limb',
-                                                'w'
-                                              ]
-                                            ],
-                                            [
-                                              'prefixZap',
+                                                'game'
+                                              ],
                                               [
                                                 'rump5d',
                                                 [
                                                   'limb',
                                                   'w'
+                                                ]
+                                              ],
+                                              [
+                                                'prefixZap',
+                                                [
+                                                  'rump5d',
+                                                  [
+                                                    'limb',
+                                                    'w'
+                                                  ],
+                                                  [
+                                                    'limb',
+                                                    'game'
+                                                  ]
+                                                ]
+                                              ],
+                                              [
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'a'
+                                                ]
+                                              ],
+                                              [
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'z'
                                                 ],
                                                 [
                                                   'limb',
                                                   'game'
                                                 ]
-                                              ]
-                                            ],
-                                            [
-                                              'rump5d',
-                                              [
-                                                'limb',
-                                                'a'
-                                              ]
-                                            ],
-                                            [
-                                              'rump5d',
-                                              [
-                                                'limb',
-                                                'z'
                                               ],
                                               [
-                                                'limb',
-                                                'game'
-                                              ]
-                                            ],
-                                            [
-                                              'rump5d',
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'z'
+                                                ]
+                                              ],
                                               [
-                                                'limb',
-                                                'z'
-                                              ]
-                                            ],
-                                            [
-                                              'rump5d',
-                                              [
-                                                'limb',
-                                                'next'
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'next'
+                                                ]
                                               ]
                                             ]
                                           ]

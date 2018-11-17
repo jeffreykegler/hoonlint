@@ -252,53 +252,56 @@
                             ]
                           ],
                           [
-                            'irrCentis',
+                            'long5dWide',
                             [
-                              'limb',
-                              '$'
-                            ],
-                            [
-                              'rump5d',
+                              'irrCentis',
                               [
                                 'limb',
-                                'factor'
-                              ]
-                            ],
-                            [
-                              'irrDotlus',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'factor'
-                                ]
-                              ]
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                '.'
-                              ],
-                              [
-                                'limb',
-                                'main'
-                              ]
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'reap'
-                                ]
+                                '$'
                               ],
                               [
                                 'rump5d',
                                 [
                                   'limb',
                                   'factor'
+                                ]
+                              ],
+                              [
+                                'irrDotlus',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'factor'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  '.'
+                                ],
+                                [
+                                  'limb',
+                                  'main'
+                                ]
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'reap'
+                                  ]
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'factor'
+                                  ]
                                 ]
                               ]
                             ]
