@@ -1118,13 +1118,13 @@ wideBuccol ::= (BUCCOL '(') wideMoldSeq (')')
 # $*  ::  bunt (irregular form is *)
 # FIXED: buctar hoon
 
-BUCSEM ~ [$] [;]
-mold ::= moldBucsem
-moldBucsem ::= (BUCSEM GAP) rope5d (GAP) wede5d (GAP '==')
-moldBucsem ::= (BUCSEM GAP) rope5d (GAP '==')
-wideMold ::= wideMoldBucsem
-wideMoldBucsem ::= (BUCSEM '(') rope5d (ACE) wede5d (')')
-wideMoldBucsem ::= (BUCSEM '(') rope5d (')')
+# [';' (rune sem %bcsm exqa)]
+# ++  exqa  |.(loan)                                  ::  one hoon
+# Typo in hoon.hoon -- actually "loan" is a mold
+hoon ::= tallBucsem
+tallBucsem ::= (BUC SEM GAP) mold
+hoonPrimary ::= wideBucsem
+wideBucsem ::= (BUC SEM '(') mold (')')
 
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
