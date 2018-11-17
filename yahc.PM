@@ -470,8 +470,8 @@ wede5d ::= (LUS) wideHoon
 # Implementing long(5d)
 
 # TODO: Where to implement?  long(5d)?
-long5dWide ::= irrCentis
-irrCentis ::= rope5d ('(') wideHoonJogging (')')
+long5dWide ::= circumScatParen
+circumScatParen ::= scat5d ('(') wideHoonJogging (')')
 
 # Implementing rump(5d)
 
