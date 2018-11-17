@@ -2,11 +2,11 @@
 
 .PHONY: all test test_suite undoc_tests \
   fizzbuzz sieve_b sieve_k toe \
-  recognize
+  recognize count_todo
 
 all: test
 
-test: test_suite undoc_tests
+test: test_suite undoc_tests count_todo
 
 test_suite: fizzbuzz sieve_b sieve_k toe recognize
 
@@ -33,6 +33,9 @@ recognize:
 	prove --verbose -I. recognize.t 2>&1 | tee recognize.try
 
 undoc_tests:
+
+count_todo:
+	echo $$(egrep 'Failed .*TODO' recognize.try | wc -l) TODO
 
 ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
