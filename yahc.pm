@@ -187,6 +187,7 @@ sub prune {
         hoonPrimary          => 1,
         hoonSeq              => 1,
         hoonUnary            => 1,
+	long5dWide => 1,
         mold                 => 1,
         moldSeq              => 1,
         norm5d               => 1,
@@ -441,9 +442,19 @@ wede5d ::= (LUS) wideHoon
 
 # Implementing long(5d)
 
-# TODO: Where to implement?  long(5d)?
+long5dWide ::= infixTis
+long5dWide ::= infixKet
 long5dWide ::= circumScatParen
-circumScatParen ::= scat5d ('(') wideHoonJogging (')')
+long5dWide ::= scat5d
+
+infixTis ::= scat5d (TIS) wideHoon rank=>12
+infixKet ::= scat5d (KET) wideHoon rank=>8
+circumScatParen ::= scat5d (PEL) lobo5d (PER) rank=>2
+
+lobo5d ::= wideHoonJogs
+wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
+wideHoonJog ::= rope5d (ACE) wideHoon
+wideHoonJoggingSeparator ::= COM ACE
 
 # Implementing rump(5d)
 
@@ -1006,14 +1017,9 @@ wideHoon ::= hoonUnary
 hoonUnary ::= hoonExpression
 hoonExpression ::= infixColon
 hoonExpression ::= hoonPrimary
-hoonPrimary ::= long5dWide
-hoonPrimary ::= scat5d
-hoonPrimary ::= norm5dWide
+hoonPrimary ::= norm5dWide rank=>10
+hoonPrimary ::= long5dWide rank=>8
 infixColon ::= hoonPrimary (':') wideHoon
-long5dWide ::= infixKet
-long5dWide ::= infixEqual
-infixKet ::= scat5d ('^') wideHoon
-infixEqual ::= scat5d ('=') wideHoon
 
 toga ::= SYM4K
 toga ::= togaSeq
@@ -1039,10 +1045,6 @@ wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 hoonJogging ::= hoonJogs
 hoonJogs ::= hoonJog+ separator=>GAP proper=>1
 hoonJog ::= hoon (GAP) hoon
-wideHoonJogging ::= wideHoonJogs
-wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
-wideHoonJog ::= wideHoon (ACE) wideHoon
-wideHoonJoggingSeparator ::= ',' ACE
 
 battery ::= batteryElement* separator=>GAP proper=>1
 batteryElement ::= hoonBatteryElement

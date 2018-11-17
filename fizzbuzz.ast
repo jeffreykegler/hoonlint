@@ -21,20 +21,17 @@
     [
       'tallTislus',
       [
-        'long5dWide',
+        'infixTis',
         [
-          'infixEqual',
+          'rump5d',
           [
-            'rump5d',
-            [
-              'limb',
-              'count'
-            ]
-          ],
-          [
-            'bisk4l',
-            '1'
+            'limb',
+            'count'
           ]
+        ],
+        [
+          'bisk4l',
+          '1'
         ]
       ],
       [
@@ -250,19 +247,19 @@
                 ]
               ],
               [
-                'long5dWide',
+                'circumScatParen',
                 [
-                  'irrCentis',
+                  'rump5d',
                   [
                     'limb',
                     '$'
-                  ],
+                  ]
+                ],
+                [
+                  'lobo5d',
                   [
-                    'rump5d',
-                    [
-                      'limb',
-                      'count'
-                    ]
+                    'limb',
+                    'count'
                   ],
                   [
                     'circumParen2',

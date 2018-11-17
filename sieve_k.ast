@@ -35,14 +35,21 @@
       [
         'tallTislus',
         [
-          'long5dWide',
+          'infixTis',
           [
-            'infixEqual',
+            'rump5d',
+            [
+              'limb',
+              'fed'
+            ]
+          ],
+          [
+            'circumParen2',
             [
               'rump5d',
               [
                 'limb',
-                'fed'
+                'sy'
               ]
             ],
             [
@@ -51,28 +58,18 @@
                 'rump5d',
                 [
                   'limb',
-                  'sy'
+                  'gulf'
                 ]
               ],
               [
-                'circumParen2',
+                'bisk4l',
+                '2'
+              ],
+              [
+                'rump5d',
                 [
-                  'rump5d',
-                  [
-                    'limb',
-                    'gulf'
-                  ]
-                ],
-                [
-                  'bisk4l',
-                  '2'
-                ],
-                [
-                  'rump5d',
-                  [
-                    'limb',
-                    'top'
-                  ]
+                  'limb',
+                  'top'
                 ]
               ]
             ]
@@ -157,20 +154,17 @@
                   [
                     'tallTislus',
                     [
-                      'long5dWide',
+                      'infixTis',
                       [
-                        'infixEqual',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'fac'
-                          ]
-                        ],
-                        [
-                          'bisk4l',
-                          '2'
+                          'limb',
+                          'fac'
                         ]
+                      ],
+                      [
+                        'bisk4l',
+                        '2'
                       ]
                     ],
                     [
@@ -243,19 +237,19 @@
                             ]
                           ],
                           [
-                            'long5dWide',
+                            'circumScatParen',
                             [
-                              'irrCentis',
+                              'rump5d',
                               [
                                 'limb',
                                 '$'
-                              ],
+                              ]
+                            ],
+                            [
+                              'lobo5d',
                               [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'fac'
-                                ]
+                                'limb',
+                                'fac'
                               ],
                               [
                                 'irrDotlus',
@@ -268,15 +262,12 @@
                                 ]
                               ],
                               [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  '.'
-                                ],
-                                [
-                                  'limb',
-                                  'main'
-                                ]
+                                'limb',
+                                '.'
+                              ],
+                              [
+                                'limb',
+                                'main'
                               ],
                               [
                                 'circumParen2',
@@ -325,35 +316,32 @@
                     [
                       'tallTislus',
                       [
-                        'long5dWide',
+                        'infixTis',
                         [
-                          'infixEqual',
+                          'rump5d',
+                          [
+                            'limb',
+                            'cot'
+                          ]
+                        ],
+                        [
+                          'circumParen2',
                           [
                             'rump5d',
                             [
                               'limb',
-                              'cot'
+                              'mul'
                             ]
                           ],
                           [
-                            'circumParen2',
+                            'bisk4l',
+                            '2'
+                          ],
+                          [
+                            'rump5d',
                             [
-                              'rump5d',
-                              [
-                                'limb',
-                                'mul'
-                              ]
-                            ],
-                            [
-                              'bisk4l',
-                              '2'
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'limb',
+                              'fac'
                             ]
                           ]
                         ]
@@ -411,19 +399,19 @@
                               ]
                             ],
                             [
-                              'long5dWide',
+                              'circumScatParen',
                               [
-                                'irrCentis',
+                                'rump5d',
                                 [
                                   'limb',
                                   '$'
-                                ],
+                                ]
+                              ],
+                              [
+                                'lobo5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'cot'
-                                  ]
+                                  'limb',
+                                  'cot'
                                 ],
                                 [
                                   'circumParen2',
@@ -450,11 +438,8 @@
                                   ]
                                 ],
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'fed'
-                                  ]
+                                  'limb',
+                                  'fed'
                                 ],
                                 [
                                   'circumParen2',

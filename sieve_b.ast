@@ -35,31 +35,28 @@
       [
         'tallTisfas',
         [
-          'long5dWide',
+          'infixTis',
           [
-            'infixEqual',
+            'rump5d',
+            [
+              'limb',
+              'field'
+            ]
+          ],
+          [
+            'circumParen2',
             [
               'rump5d',
               [
                 'limb',
-                'field'
+                'set'
               ]
             ],
             [
-              'circumParen2',
+              'aura',
+              '@',
               [
-                'rump5d',
-                [
-                  'limb',
-                  'set'
-                ]
-              ],
-              [
-                'aura',
-                '@',
-                [
-                  'auraName'
-                ]
+                'auraName'
               ]
             ]
           ]
@@ -171,22 +168,19 @@
                   [
                     'tallTisfas',
                     [
-                      'long5dWide',
+                      'infixTis',
                       [
-                        'infixEqual',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'factor'
-                          ]
-                        ],
+                          'limb',
+                          'factor'
+                        ]
+                      ],
+                      [
+                        'aura',
+                        '@',
                         [
-                          'aura',
-                          '@',
-                          [
-                            'auraName'
-                          ]
+                          'auraName'
                         ]
                       ]
                     ],
@@ -264,19 +258,19 @@
                             ]
                           ],
                           [
-                            'long5dWide',
+                            'circumScatParen',
                             [
-                              'irrCentis',
+                              'rump5d',
                               [
                                 'limb',
                                 '$'
-                              ],
+                              ]
+                            ],
+                            [
+                              'lobo5d',
                               [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'factor'
-                                ]
+                                'limb',
+                                'factor'
                               ],
                               [
                                 'irrDotlus',
@@ -289,15 +283,12 @@
                                 ]
                               ],
                               [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  '.'
-                                ],
-                                [
-                                  'limb',
-                                  'main'
-                                ]
+                                'limb',
+                                '.'
+                              ],
+                              [
+                                'limb',
+                                'main'
                               ],
                               [
                                 'circumParen2',
@@ -346,22 +337,19 @@
                     [
                       'tallTisfas',
                       [
-                        'long5dWide',
+                        'infixTis',
                         [
-                          'infixEqual',
+                          'rump5d',
                           [
-                            'rump5d',
-                            [
-                              'limb',
-                              'count'
-                            ]
-                          ],
+                            'limb',
+                            'count'
+                          ]
+                        ],
+                        [
+                          'aura',
+                          '@',
                           [
-                            'aura',
-                            '@',
-                            [
-                              'auraName'
-                            ]
+                            'auraName'
                           ]
                         ]
                       ],

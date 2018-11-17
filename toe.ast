@@ -173,19 +173,19 @@
                     ]
                   ],
                   [
-                    'long5dWide',
+                    'circumScatParen',
                     [
-                      'irrCentis',
+                      'rump5d',
                       [
                         'limb',
                         '$'
-                      ],
+                      ]
+                    ],
+                    [
+                      'lobo5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'feed'
-                        ]
+                        'limb',
+                        'feed'
                       ],
                       [
                         'rump5d',
@@ -1473,19 +1473,19 @@
                                             '~'
                                           ],
                                           [
-                                            'long5dWide',
+                                            'circumScatParen',
                                             [
-                                              'irrCentis',
+                                              'rump5d',
                                               [
                                                 'limb',
                                                 'game'
-                                              ],
+                                              ]
+                                            ],
+                                            [
+                                              'lobo5d',
                                               [
-                                                'rump5d',
-                                                [
-                                                  'limb',
-                                                  'w'
-                                                ]
+                                                'limb',
+                                                'w'
                                               ],
                                               [
                                                 'prefixZap',
@@ -1502,11 +1502,8 @@
                                                 ]
                                               ],
                                               [
-                                                'rump5d',
-                                                [
-                                                  'limb',
-                                                  'a'
-                                                ]
+                                                'limb',
+                                                'a'
                                               ],
                                               [
                                                 'rump5d',
@@ -1520,11 +1517,8 @@
                                                 ]
                                               ],
                                               [
-                                                'rump5d',
-                                                [
-                                                  'limb',
-                                                  'z'
-                                                ]
+                                                'limb',
+                                                'z'
                                               ],
                                               [
                                                 'rump5d',
