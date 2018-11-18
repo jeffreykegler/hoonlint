@@ -753,8 +753,11 @@ scat5d ::= bisk4l
 scat5d ::= bisk4l wede5d
 
 # ':'
-# TODO: NYI
 # Not in scad(5)
+scat5d ::= circumColParen
+scat5d ::= prefixColFas
+circumColParen ::= (COL PEL) wideHoonSeq (PER)
+prefixColFas ::= (COL FAS) wideHoon
 
 # '='
 # Differs from scad(5)

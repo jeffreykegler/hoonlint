@@ -141,9 +141,9 @@ todo hoons/arvo/lib/down-jet/parse.hoon
 todo hoons/arvo/lib/down-jet/rend.hoon
 todo hoons/arvo/lib/elem-to-react-json.hoon
 todo hoons/arvo/lib/frontmatter.hoon
-todo hoons/arvo/lib/gh-parse.hoon
+ok hoons/arvo/lib/gh-parse.hoon
 todo hoons/arvo/lib/hall.hoon
-todo hoons/arvo/lib/hall-json.hoon
+ok hoons/arvo/lib/hall-json.hoon
 ok hoons/arvo/lib/hall-legacy.hoon
 ok hoons/arvo/lib/hep-to-cab.hoon
 todo hoons/arvo/lib/hood/drum.hoon
@@ -158,7 +158,7 @@ ok hoons/arvo/lib/map-to-json.hoon
 todo hoons/arvo/lib/new-hoon.hoon
 todo hoons/arvo/lib/oauth1.hoon
 todo hoons/arvo/lib/oauth2.hoon
-todo hoons/arvo/lib/old-phon.hoon
+ok hoons/arvo/lib/old-phon.hoon
 ok hoons/arvo/lib/old-zuse.hoon
 ok hoons/arvo/lib/pretty-file.hoon
 ok hoons/arvo/lib/prey.hoon
@@ -186,7 +186,7 @@ ok hoons/arvo/mar/gh/commit.hoon
 ok hoons/arvo/mar/gh/issue-comment.hoon
 ok hoons/arvo/mar/gh/issue.hoon
 ok hoons/arvo/mar/gh/issues.hoon
-todo hoons/arvo/mar/gh/list-issues.hoon
+ok hoons/arvo/mar/gh/list-issues.hoon
 ok hoons/arvo/mar/gh/poke.hoon
 ok hoons/arvo/mar/gh/repository.hoon
 ok hoons/arvo/mar/gmail/req.hoon
@@ -238,7 +238,7 @@ ok hoons/arvo/mar/twit/usel.hoon
 ok hoons/arvo/mar/txt-diff.hoon
 todo hoons/arvo/mar/txt.hoon
 ok hoons/arvo/mar/umd.hoon
-todo hoons/arvo/mar/unicode-data.hoon
+ok hoons/arvo/mar/unicode-data.hoon
 todo hoons/arvo/mar/urb.hoon
 ok hoons/arvo/mar/urbit.hoon
 ok hoons/arvo/mar/will.hoon
@@ -312,7 +312,7 @@ todo hoons/arvo/sys/vane/jael.hoon
 todo hoons/arvo/sys/vane/xmas.hoon
 todo hoons/arvo/sys/zuse.hoon
 ok hoons/arvo/tests/new-hoon/ls.hoon
-todo hoons/arvo/tests/new-hoon/mp.hoon
+ok hoons/arvo/tests/new-hoon/mp.hoon
 ok hoons/arvo/tests/new-hoon/myb.hoon
 ok hoons/arvo/tests/new-hoon/thr.hoon
 ok hoons/arvo/tests/zuse/crypto/keccak.hoon
