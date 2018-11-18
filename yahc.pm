@@ -969,17 +969,40 @@ tallBucwut ::= (BUC WUT GAP) moldSeq (GAP '==')
 norm5dWide ::= wideBucwut
 wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+# ['_' (rune cab %cncb exph)]
+# ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
+# TODO: NYI
 
+# ['.' (rune dot %cndt expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: cendot hoon hoon
 
+# ['-' (rune hep %cnhp expk)]
+# ++  expk  |.(;~(gunk loaf ;~(plug loaf (easy ~))))  ::  list of two hoons
 # FIXED: cenhep hoon hoon
 
+# ['^' (rune ket %cnkt expd)]
+# ++  expd  |.(;~(gunk loaf loaf loaf loaf))          ::  four hoons
 # FIXED: cenket hoon hoon hoon hoon
+
+# ['+' (rune lus %cnls expc)]
+# ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
 # FIXED: cenlus hoon hoon hoon
 
+# ['~' (rune sig %cnsg expn)]
+# ++  expn  |.  ;~  gunk  rope  loaf                  ::  wing, hoon,
+# 		;~(plug loaf (easy ~))              ::  list of one hoon
+# 	      ==    
 # FIXED: censig rope5d hoon hoon
 
+# ['*' (rune tar %cntr expm)]
+#  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
+# TODO: NYI
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+
+# ['=' (rune tis %cnts exph)]
+# ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
 hoon ::= tallCentis
 CENTIS ~ [%] [=]
 tallCentis ::= CENTIS (GAP) rope5d (GAP) hoonJogging (GAP '==')
