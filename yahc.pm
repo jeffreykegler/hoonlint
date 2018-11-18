@@ -1004,8 +1004,9 @@ wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
 hoon ::= tallCentis
-CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (GAP) rope5d (GAP) hoonJogging (GAP '==')
+tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP '==')
+norm5dWide ::= wideCentis
+wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
 # FIXED: colcab hoon hoon
 
@@ -1480,6 +1481,14 @@ limb ::= PAM4H DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
+# Implementing rick(5d)
+
+rick5d ::= rick5dJog+ separator=>GAP proper=>1
+rick5dJog ::= rope5d (GAP) hoon
+
+wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
+wideRick5dJog ::= rope5d (COM ACE) hoon
+
 # Implementing ruck(5d)
 
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
@@ -1701,13 +1710,13 @@ wideBarhep ::= (BAR4H HEP4H) [(] wideHoon [)]
 hoon ::= tallBarsig
 norm5dWide ::= wideBarsig
 tallBarsig ::= (BAR4H SIG4H GAP)mold (GAP) hoon
-wideBarsig ::= (BAR4H SIG4H) [(] mold (ACE) wideHoon [)]
+wideBarsig ::= (BAR4H SIG4H) [(] wideMold (ACE) wideHoon [)]
 
 # BARTAR mold hoon
 hoon ::= tallBartar
 norm5dWide ::= wideBartar
 tallBartar ::= (BAR4H TAR4H GAP)mold (GAP) hoon
-wideBartar ::= (BAR4H TAR4H) [(] mold (ACE) wideHoon [)]
+wideBartar ::= (BAR4H TAR4H) [(] wideMold (ACE) wideHoon [)]
 
 # BARWUT hoon
 hoon ::= tallBarwut
@@ -1725,31 +1734,31 @@ wideBuccab ::= (BUC4H CAB4H) [(] wideHoon [)]
 hoon ::= tallBuchep
 norm5dWide ::= wideBuchep
 tallBuchep ::= (BUC4H HEP4H GAP)mold (GAP) mold
-wideBuchep ::= (BUC4H HEP4H) [(] mold (ACE) mold [)]
+wideBuchep ::= (BUC4H HEP4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCKET mold mold
 hoon ::= tallBucket
 norm5dWide ::= wideBucket
 tallBucket ::= (BUC4H KET4H GAP)mold (GAP) mold
-wideBucket ::= (BUC4H KET4H) [(] mold (ACE) mold [)]
+wideBucket ::= (BUC4H KET4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCPAT mold mold
 hoon ::= tallBucpat
 norm5dWide ::= wideBucpat
 tallBucpat ::= (BUC4H PAT4H GAP)mold (GAP) mold
-wideBucpat ::= (BUC4H PAT4H) [(] mold (ACE) mold [)]
+wideBucpat ::= (BUC4H PAT4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCSEM mold
 hoon ::= tallBucsem
 norm5dWide ::= wideBucsem
 tallBucsem ::= (BUC4H SEM4H GAP)mold
-wideBucsem ::= (BUC4H SEM4H) [(] mold [)]
+wideBucsem ::= (BUC4H SEM4H) [(] wideMold [)]
 
 # BUCTIS SYM4K mold
 hoon ::= tallBuctis
 norm5dWide ::= wideBuctis
 tallBuctis ::= (BUC4H TIS4H GAP)SYM4K (GAP) mold
-wideBuctis ::= (BUC4H TIS4H) [(] SYM4K (ACE) mold [)]
+wideBuctis ::= (BUC4H TIS4H) [(] SYM4K (ACE) wideMold [)]
 
 # CENDOT hoon hoon
 hoon ::= tallCendot
@@ -1953,7 +1962,7 @@ wideSigzap ::= (SIG4H ZAP4H) [(] wideHoon (ACE) wideHoon [)]
 hoon ::= tallTisbar
 norm5dWide ::= wideTisbar
 tallTisbar ::= (TIS4H BAR4H GAP)mold (GAP) hoon
-wideTisbar ::= (TIS4H BAR4H) [(] mold (ACE) wideHoon [)]
+wideTisbar ::= (TIS4H BAR4H) [(] wideMold (ACE) wideHoon [)]
 
 # TISCOM hoon hoon
 hoon ::= tallTiscom

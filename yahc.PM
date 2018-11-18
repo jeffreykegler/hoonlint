@@ -1032,8 +1032,9 @@ wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
 hoon ::= tallCentis
-CENTIS ~ [%] [=]
-tallCentis ::= CENTIS (GAP) rope5d (GAP) hoonJogging (GAP '==')
+tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP '==')
+norm5dWide ::= wideCentis
+wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
 # FIXED: colcab hoon hoon
 
@@ -1508,6 +1509,14 @@ limb ::= PAM4H DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
+# Implementing rick(5d)
+
+rick5d ::= rick5dJog+ separator=>GAP proper=>1
+rick5dJog ::= rope5d (GAP) hoon
+
+wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
+wideRick5dJog ::= rope5d (COM ACE) hoon
+
 # Implementing ruck(5d)
 
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
@@ -1607,7 +1616,11 @@ sub doFixedRune {
       . ' GAP)' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
         bont5d => 'wideBont5d',
+        mold => 'wideMold',
         hoon => 'wideHoon',
+        rack5d => 'wideRack5d',
+        rick5d => 'wideRick5d',
+        ruck5d => 'wideRuck5d',
         teak => 'wideTeak',
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;

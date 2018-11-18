@@ -430,77 +430,79 @@
                               ],
                               [
                                 'tallCentis',
-                                '%=',
                                 [
                                   'limb',
                                   '$'
                                 ],
                                 [
-                                  'rump5d',
+                                  'rick5d',
                                   [
-                                    'limb',
-                                    'count'
-                                  ]
-                                ],
-                                [
-                                  'circumParen2',
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'add'
-                                    ]
-                                  ],
-                                  [
-                                    'rump5d',
+                                    'rick5dJog',
                                     [
                                       'limb',
                                       'count'
-                                    ]
-                                  ],
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'factor'
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'field'
-                                  ]
-                                ],
-                                [
-                                  'circumParen2',
-                                  [
-                                    'circumSigParen',
-                                    [
-                                      'limb',
-                                      'del'
                                     ],
                                     [
-                                      'rump5d',
+                                      'circumParen2',
                                       [
-                                        'limb',
-                                        'in'
-                                      ]
-                                    ],
-                                    [
-                                      'rump5d',
+                                        'rump5d',
+                                        [
+                                          'limb',
+                                          'add'
+                                        ]
+                                      ],
                                       [
-                                        'limb',
-                                        'field'
+                                        'rump5d',
+                                        [
+                                          'limb',
+                                          'count'
+                                        ]
+                                      ],
+                                      [
+                                        'rump5d',
+                                        [
+                                          'limb',
+                                          'factor'
+                                        ]
                                       ]
                                     ]
                                   ],
                                   [
-                                    'rump5d',
+                                    'rick5dJog',
                                     [
                                       'limb',
-                                      'count'
+                                      'field'
+                                    ],
+                                    [
+                                      'circumParen2',
+                                      [
+                                        'circumSigParen',
+                                        [
+                                          'limb',
+                                          'del'
+                                        ],
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'in'
+                                          ]
+                                        ],
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'field'
+                                          ]
+                                        ]
+                                      ],
+                                      [
+                                        'rump5d',
+                                        [
+                                          'limb',
+                                          'count'
+                                        ]
+                                      ]
                                     ]
                                   ]
                                 ]
