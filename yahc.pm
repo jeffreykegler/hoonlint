@@ -1047,18 +1047,6 @@ hoonUnary ::= hoonPrimary
 hoonPrimary ::= norm5dWide rank=>10
 hoonPrimary ::= long5dWide rank=>8
 
-# the wing type is parsed by the rope(5d)
-rope5d ::= limb+ separator=>[.] proper=>1
-limb ::= ','
-limb ::= optKets '$'
-limb ::= optKets SYM4K
-optKets ::= KET*
-limb ::= BAR4H DIM4J
-limb ::= LUS DIM4J
-limb ::= PAM4H DIM4J
-limb ::= VEN4K
-limb ::= '.'
-
 wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 
 hoonJogging ::= hoonJogs
@@ -1354,10 +1342,14 @@ WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
 tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP '==')
 
-# TODO: WUTLUS Should be teak hoon hoonJogging
-WUTLUS ~ [?] [+]
+# ['+' ;~(pfix lus (toad tkls))]
+# ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
+# 			(~(wtls ah a) b c)
+#	      (butt ;~(gunk teak loaf ruck))
 hoon ::= tallWutlus
-tallWutlus ::= WUTLUS (GAP) hoon (GAP) hoon (GAP) hoonJogging (GAP '==')
+tallWutlus ::= (WUT LUS GAP) teak (GAP) hoon (GAP) ruck5d (GAP '==')
+norm5dWide ::= wideWutlus
+wideWutlus ::= (WUT LUS PEL) teak (ACE) hoon (ACE) wideRuck5d (PAR)
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
@@ -1398,6 +1390,48 @@ wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) hoon
 wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is implemented in scat5d
+
+# Implementing rope(5d)
+
+# the wing type is parsed by the rope(5d)
+rope5d ::= limb+ separator=>[.] proper=>1
+limb ::= ','
+limb ::= optKets '$'
+limb ::= optKets SYM4K
+optKets ::= KET*
+limb ::= BAR4H DIM4J
+limb ::= LUS DIM4J
+limb ::= PAM4H DIM4J
+limb ::= VEN4K
+limb ::= '.'
+
+# Implementing ruck(5d)
+
+ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
+ruck5dJog ::= mold (GAP) hoon
+
+wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
+wideRuck5dJog ::= mold (COM ACE) hoon
+
+# Implementing teak(5d)
+
+# teak is
+#
+# 1) a mold, if possible, hoon otherwise,
+#
+# 2) an assignment to <SYM4K>, which is again, of a mold,
+# if possible, of a hoon otherwise
+
+teak ::= teakChoice
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
+teakChoice ::= hoon rank=>1
+teakChoice ::= wideTeak rank=>0
+wideTeak ::= wideTeakChoice
+wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
+wideTeakChoice ::= rope5d rank=>2
+wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
+wideTeakChoice ::= wideHoon rank=>1
 
 
 BAR ~ bar4h
