@@ -837,7 +837,7 @@ circumGalgar ::= ('<') wideHoon ('>')
 scat5d ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
 
-# Molds from norm(5d)
+# Implementing norm(5d) -- molds
 
 # Running syntax
 mold ::= tallBuccenMold
@@ -872,199 +872,6 @@ tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP '==')
 wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 
 # TODO: Finish adding molds from norm
-
-# Implementing soil(5d)
-
-# TODO -- Finish soil(5d) -- add triple double strings
-
-soil5d ::= doubleQuoteString
-
-doubleQuoteString ::= (["]) <double quote cord> (["])
-<double quote cord> ::= <double quote element>*
-<double quote element> ::= <UNESCAPED DOUBLE QUOTE CHARS>
-<double quote element> ::= <ESCAPED DOUBLE QUOTE CHAR>
-<double quote element> ::= sump5d
-
-# All the printable (non-control) characters except
-# bas (x5c) kel (x7b) and doq (x22)
-<UNESCAPED DOUBLE QUOTE CHARS> ~ unescapedDoubleQuoteChar+
-unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
-<ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
-
-sump5d ::= KEL wideHoonSeq KER
-
-# === HOON FILE ===
-:start ::= hoonFile
-# LATER: This is a simplication, which does not
-# catch all the subtleties of "ford" files
-hoonFile ::= (leader) hoonSeq (trailer)
-
-trailer ::= WS
-trailer ::=
-leader  ::= WS
-leader  ::=
-
-# A hack to allow inaccessible symbols
-hoonFile ::= UNICORN inaccessible_ok
-
-# === WHITESPACE ===
-
-WS ~ whitespace
-whitespace ~ ace
-whitespace ~ gap4k
-optHorizontalWhitespace ~ horizontalWhitespaceElement*
-horizontalWhitespaceElements ~ horizontalWhitespaceElement+
-horizontalWhitespaceElement ~ ace
-# horizontalWhitespaceElement ~ horizontalGapElement
-# horizontalGapElement ~ '+=' # documentation decoration
-
-GAP ~ gap4k
-
-gap4k ~ ace horizontalWhitespaceElements # a "wide" gap
-gap4k ~ tallGapPrefix optGapLines optHorizontalWhitespace
-# The prefix must contain an <NL> to ensure that this *is* a tall gap
-tallGapPrefix ~ optHorizontalWhitespace nl
-tallGapPrefix ~ optHorizontalWhitespace comment
-optGapLines ~ gapLine*
-gapLine ~ optHorizontalWhitespace comment
-gapLine ~ optHorizontalWhitespace nl
-
-ACE ~ ace
-ace ~ ' '
-comment ~ '::' optNonNLs nl
-
-# TODO: Is this treatment of these fas runes OK?
-# No, it is not OK, need to look at ford rune
-comment ~ '/?' optNonNLs nl
-comment ~ '/+' optNonNLs nl
-comment ~ '/-' optNonNLs nl
-
-# Documentation decorations treated as comments
-comment ~ ':>' optNonNLs nl
-comment ~ ':<' optNonNLs nl
-comment ~ '+|' optNonNLs nl
-
-# NL ~ nl
-nl ~ [\n]
-optNonNLs ~ nonNL*
-nonNL ~ [^\n]
-
-wsChars ~ wsChar*
-wsChar ~ [ \n]
-
-# @ub   unsigned binary          0b10          (2)
-NUMBER ~ binaryNumber
-# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
-binaryNumber ~ '0b' binaryPrefix binaryGroups
-binaryPrefix ~ binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit binaryDigit
-binaryPrefix ~ binaryDigit binaryDigit binaryDigit binaryDigit
-binaryDigit ~ [01]
-binaryGroups ~ binaryGroup*
-binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
-
-# @uc   bitcoin address          0c1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-# @ud   unsigned decimal         42            (42)
-#                                1.420         (1420)
-NUMBER ~ decimalNumber
-# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
-decimalNumber ~ decimalPrefix decimalGroups
-decimalPrefix ~ decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit
-decimalPrefix ~ decimalDigit decimalDigit decimalDigit
-decimalDigit ~ [0-9]
-decimalGroups ~ decimalGroup*
-decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
-
-# @uv   unsigned base32          0v3ic5h.6urr6
-NUMBER ~ vNumber
-# syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
-vNumber ~ '0v' vNumPrefix vNumGroups
-vNumPrefix ~ vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit
-vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
-vNumDigit ~ [0-9a-v]
-vNumGroups ~ vNumGroup*
-vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
-
-# @uw   unsigned base64          0wsC5.yrSZC
-NUMBER ~ wNumber
-# syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
-wNumber ~ '0w' wNumPrefix wNumGroups
-wNumPrefix ~ wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit
-wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
-wNumDigit ~ [-~0-9a-zA-Z]
-wNumGroups ~ wNumGroup*
-wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
-
-# @ux   unsigned hexadecimal     0xcafe.babe
-NUMBER ~ hexNumber
-# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
-hexNumber ~ '0x' hexPrefix hexGroups
-hexPrefix ~ hexDigit
-hexPrefix ~ hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit
-hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
-hexDigit ~ [0-9a-fA-F]
-hexGroups ~ hexGroup*
-hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
-
-# === PATHS ==
-
-# rood is the path parser
-
-rood5d ::= [/] poor5d
-poor5d ::= gash5d
-poor5d ::= gash5d CEN4H porc5d
-porc5d ::= optCen4hSeq FAS gash5d
-optCen4hSeq ::= # empty
-optCen4hSeq ::= CEN4H_SEQ
-CEN4H_SEQ ~ cen4h+
-gash5d ::= limp5d* separator=>[/]
-limp5d ::= (optFasSeq) gasp5d
-optFasSeq ::= # empty
-optFasSeq ::= FAS_SEQ
-FAS_SEQ ~ fas4h+
-gasp5d ::= tisSeq
-tisSeq ~ tis4h+
-optTisSeq ::= # empty
-optTisSeq ::= TIS_SEQ
-TIS_SEQ ~ tis4h+
-gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
-hasp5d ::= (SEL) wideHoon (SER)
-hasp5d ::= (PEL) wideHoonSeq (PER)
-hasp5d ::= BUC4H
-hasp5d ::= qut4k
-hasp5d ::= nuck4l
-
-# === CELLS BY TYPE ==
-
-hoonSeq ::= hoon+ separator=>GAP proper=>1
-hoon ::= wideHoon
-wideHoon ::= hoonUnary
-hoonUnary ::= hoonPrimary
-hoonPrimary ::= norm5dWide rank=>10
-hoonPrimary ::= long5dWide rank=>8
-
-wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
-
-hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>GAP proper=>1
-hoonJog ::= hoon (GAP) hoon
-
-battery ::= batteryElement* separator=>GAP proper=>1
-batteryElement ::= hoonBatteryElement
-batteryElement ::= moldBatteryElement
-# TODO: What is the meaning of these various types of battery element?
-hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
-moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
-hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
 # Implementing norm(5d) for hoons
  
@@ -1401,6 +1208,199 @@ wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) hoon
 wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is implemented in scat5d
+
+# Implementing soil(5d)
+
+# TODO -- Finish soil(5d) -- add triple double strings
+
+soil5d ::= doubleQuoteString
+
+doubleQuoteString ::= (["]) <double quote cord> (["])
+<double quote cord> ::= <double quote element>*
+<double quote element> ::= <UNESCAPED DOUBLE QUOTE CHARS>
+<double quote element> ::= <ESCAPED DOUBLE QUOTE CHAR>
+<double quote element> ::= sump5d
+
+# All the printable (non-control) characters except
+# bas (x5c) kel (x7b) and doq (x22)
+<UNESCAPED DOUBLE QUOTE CHARS> ~ unescapedDoubleQuoteChar+
+unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+<ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
+
+sump5d ::= KEL wideHoonSeq KER
+
+# === HOON FILE ===
+:start ::= hoonFile
+# LATER: This is a simplication, which does not
+# catch all the subtleties of "ford" files
+hoonFile ::= (leader) hoonSeq (trailer)
+
+trailer ::= WS
+trailer ::=
+leader  ::= WS
+leader  ::=
+
+# A hack to allow inaccessible symbols
+hoonFile ::= UNICORN inaccessible_ok
+
+# === WHITESPACE ===
+
+WS ~ whitespace
+whitespace ~ ace
+whitespace ~ gap4k
+optHorizontalWhitespace ~ horizontalWhitespaceElement*
+horizontalWhitespaceElements ~ horizontalWhitespaceElement+
+horizontalWhitespaceElement ~ ace
+# horizontalWhitespaceElement ~ horizontalGapElement
+# horizontalGapElement ~ '+=' # documentation decoration
+
+GAP ~ gap4k
+
+gap4k ~ ace horizontalWhitespaceElements # a "wide" gap
+gap4k ~ tallGapPrefix optGapLines optHorizontalWhitespace
+# The prefix must contain an <NL> to ensure that this *is* a tall gap
+tallGapPrefix ~ optHorizontalWhitespace nl
+tallGapPrefix ~ optHorizontalWhitespace comment
+optGapLines ~ gapLine*
+gapLine ~ optHorizontalWhitespace comment
+gapLine ~ optHorizontalWhitespace nl
+
+ACE ~ ace
+ace ~ ' '
+comment ~ '::' optNonNLs nl
+
+# TODO: Is this treatment of these fas runes OK?
+# No, it is not OK, need to look at ford rune
+comment ~ '/?' optNonNLs nl
+comment ~ '/+' optNonNLs nl
+comment ~ '/-' optNonNLs nl
+
+# Documentation decorations treated as comments
+comment ~ ':>' optNonNLs nl
+comment ~ ':<' optNonNLs nl
+comment ~ '+|' optNonNLs nl
+
+# NL ~ nl
+nl ~ [\n]
+optNonNLs ~ nonNL*
+nonNL ~ [^\n]
+
+wsChars ~ wsChar*
+wsChar ~ [ \n]
+
+# @ub   unsigned binary          0b10          (2)
+NUMBER ~ binaryNumber
+# syn match       hoonNumber        "0b[01]\{1,4\}\%(\.\_s*[01]\{4\}\)*"
+binaryNumber ~ '0b' binaryPrefix binaryGroups
+binaryPrefix ~ binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit binaryDigit
+binaryPrefix ~ binaryDigit binaryDigit binaryDigit binaryDigit
+binaryDigit ~ [01]
+binaryGroups ~ binaryGroup*
+binaryGroup ~ [.] wsChars binaryDigit binaryDigit binaryDigit binaryDigit
+
+# @uc   bitcoin address          0c1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+# @ud   unsigned decimal         42            (42)
+#                                1.420         (1420)
+NUMBER ~ decimalNumber
+# syn match       hoonNumber        "\d\{1,3\}\%(\.\_s\?\d\{3\}\)*"
+decimalNumber ~ decimalPrefix decimalGroups
+decimalPrefix ~ decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit
+decimalPrefix ~ decimalDigit decimalDigit decimalDigit
+decimalDigit ~ [0-9]
+decimalGroups ~ decimalGroup*
+decimalGroup ~ [.] wsChars decimalDigit decimalDigit decimalDigit
+
+# @uv   unsigned base32          0v3ic5h.6urr6
+NUMBER ~ vNumber
+# syn match       hoonNumber        "0v[0-9a-v]\{1,5\}\%(\.\_s*[0-9a-v]\{5\}\)*"
+vNumber ~ '0v' vNumPrefix vNumGroups
+vNumPrefix ~ vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit
+vNumPrefix ~ vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+vNumDigit ~ [0-9a-v]
+vNumGroups ~ vNumGroup*
+vNumGroup ~ [.] wsChars vNumDigit vNumDigit vNumDigit vNumDigit vNumDigit
+
+# @uw   unsigned base64          0wsC5.yrSZC
+NUMBER ~ wNumber
+# syn match       hoonNumber        "0w[-~0-9a-zA-Z]\{1,5\}\%(\.\_s*[-~0-9a-zA-Z]\{5\}\)*"
+wNumber ~ '0w' wNumPrefix wNumGroups
+wNumPrefix ~ wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit
+wNumPrefix ~ wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
+wNumDigit ~ [-~0-9a-zA-Z]
+wNumGroups ~ wNumGroup*
+wNumGroup ~ [.] wsChars wNumDigit wNumDigit wNumDigit wNumDigit wNumDigit
+
+# @ux   unsigned hexadecimal     0xcafe.babe
+NUMBER ~ hexNumber
+# syn match       hoonNumber        "0x\x\{1,4\}\%(\.\_s*\x\{4\}\)*"
+hexNumber ~ '0x' hexPrefix hexGroups
+hexPrefix ~ hexDigit
+hexPrefix ~ hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit
+hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
+hexDigit ~ [0-9a-fA-F]
+hexGroups ~ hexGroup*
+hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
+
+# === PATHS ==
+
+# rood is the path parser
+
+rood5d ::= [/] poor5d
+poor5d ::= gash5d
+poor5d ::= gash5d CEN4H porc5d
+porc5d ::= optCen4hSeq FAS gash5d
+optCen4hSeq ::= # empty
+optCen4hSeq ::= CEN4H_SEQ
+CEN4H_SEQ ~ cen4h+
+gash5d ::= limp5d* separator=>[/]
+limp5d ::= (optFasSeq) gasp5d
+optFasSeq ::= # empty
+optFasSeq ::= FAS_SEQ
+FAS_SEQ ~ fas4h+
+gasp5d ::= tisSeq
+tisSeq ~ tis4h+
+optTisSeq ::= # empty
+optTisSeq ::= TIS_SEQ
+TIS_SEQ ~ tis4h+
+gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
+hasp5d ::= (SEL) wideHoon (SER)
+hasp5d ::= (PEL) wideHoonSeq (PER)
+hasp5d ::= BUC4H
+hasp5d ::= qut4k
+hasp5d ::= nuck4l
+
+# === CELLS BY TYPE ==
+
+hoonSeq ::= hoon+ separator=>GAP proper=>1
+hoon ::= wideHoon
+wideHoon ::= hoonUnary
+hoonUnary ::= hoonPrimary
+hoonPrimary ::= norm5dWide rank=>10
+hoonPrimary ::= long5dWide rank=>8
+
+wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
+
+hoonJogging ::= hoonJogs
+hoonJogs ::= hoonJog+ separator=>GAP proper=>1
+hoonJog ::= hoon (GAP) hoon
+
+battery ::= batteryElement* separator=>GAP proper=>1
+batteryElement ::= hoonBatteryElement
+batteryElement ::= moldBatteryElement
+# TODO: What is the meaning of these various types of battery element?
+hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
+moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
+hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
 
 # Implementing rope(5d)
 
