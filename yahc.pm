@@ -169,6 +169,8 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
+	teakChoice => 1,
+	wideTeakChoice => 1,
         wedeFirst            => 1,
         wideHoon             => 1,
         wideHoonJogging      => 1,
@@ -1335,7 +1337,13 @@ norm5dWide ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
 # FIXED: wutpat rope5d hoon hoon
-# FIXED: wutsig rope5d hoon hoon
+
+# ['~' ;~(pfix sig (toad tksg))]
+# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+# 			  (~(wtsg ah a) b c)
+# 		;~(gunk teak loaf loaf)
+# FIXED: wutsig teak hoon hoon
+
 # FIXED: wuttis hoon rope5d
 
 WUTHEP ~ [?] [-]
@@ -1988,11 +1996,11 @@ norm5dWide ::= wideWutpat
 tallWutpat ::= (WUT4H PAT4H GAP)rope5d (GAP) hoon (GAP) hoon
 wideWutpat ::= (WUT4H PAT4H) [(] rope5d (ACE) wideHoon (ACE) wideHoon [)]
 
-# WUTSIG rope5d hoon hoon
+# WUTSIG teak hoon hoon
 hoon ::= tallWutsig
 norm5dWide ::= wideWutsig
-tallWutsig ::= (WUT4H SIG4H GAP)rope5d (GAP) hoon (GAP) hoon
-wideWutsig ::= (WUT4H SIG4H) [(] rope5d (ACE) wideHoon (ACE) wideHoon [)]
+tallWutsig ::= (WUT4H SIG4H GAP)teak (GAP) hoon (GAP) hoon
+wideWutsig ::= (WUT4H SIG4H) [(] wideTeak (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTTIS hoon rope5d
 hoon ::= tallWuttis

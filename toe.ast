@@ -68,8 +68,14 @@
             [
               'tallWutsig',
               [
-                'limb',
-                'feed'
+                'teak',
+                [
+                  'rump5d',
+                  [
+                    'limb',
+                    'feed'
+                  ]
+                ]
               ],
               [
                 'soloSig',
@@ -204,8 +210,11 @@
                     'wideWutsig',
                     '(',
                     [
-                      'limb',
-                      'this'
+                      'wideTeak',
+                      [
+                        'limb',
+                        'this'
+                      ]
                     ],
                     [
                       'rump5d',

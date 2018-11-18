@@ -197,6 +197,8 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
+	teakChoice => 1,
+	wideTeakChoice => 1,
         wedeFirst            => 1,
         wideHoon             => 1,
         wideHoonJogging      => 1,
@@ -1363,7 +1365,13 @@ norm5dWide ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
 # FIXED: wutpat rope5d hoon hoon
-# FIXED: wutsig rope5d hoon hoon
+
+# ['~' ;~(pfix sig (toad tksg))]
+# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+# 			  (~(wtsg ah a) b c)
+# 		;~(gunk teak loaf loaf)
+# FIXED: wutsig teak hoon hoon
+
 # FIXED: wuttis hoon rope5d
 
 WUTHEP ~ [?] [-]
