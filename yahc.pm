@@ -922,9 +922,8 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: barwut hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['_' (rune cab %bccb expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: buccab hoon
 
 # [':' (rune col %bccl exqs)]
@@ -935,6 +934,7 @@ norm5dWide ::= wideBuccol
 wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 
 # ['%' (rune cen %bccn exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
 hoon ::= tallBuccen
 tallBuccen ::= (BUC CEN GAP) moldSeq (GAP '==')
@@ -942,11 +942,18 @@ norm5dWide ::= wideBuccen
 wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 
 # ['-' (rune hep %bchp exqb)]
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
 # FIXED: buchep mold mold
+
 # ['^' (rune ket %bckt exqb)]
-# FIXED: bucket hoon hoon
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
+# FIXED: bucket mold mold
+
 # ['@' (rune pat %bcpt exqb)]
-# FIXED: bucpat hoon hoon
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
+# FIXED: bucpat mold mold
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # [';' (rune sem %bcsm exqa)]
 # ++  exqa  |.(loan)                                  ::  one hoon
@@ -961,6 +968,7 @@ wideBucsem ::= (BUC SEM '(') mold (')')
 # FIXED: buctis SYM4K mold
 
 # ['?' (rune wut %bcwt exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 hoon ::= tallBucwut
 tallBucwut ::= (BUC WUT GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideBucwut
@@ -1699,17 +1707,17 @@ norm5dWide ::= wideBuchep
 tallBuchep ::= (BUC4H HEP4H GAP)mold (GAP) mold
 wideBuchep ::= (BUC4H HEP4H) [(] mold (ACE) mold [)]
 
-# BUCKET hoon hoon
+# BUCKET mold mold
 hoon ::= tallBucket
 norm5dWide ::= wideBucket
-tallBucket ::= (BUC4H KET4H GAP)hoon (GAP) hoon
-wideBucket ::= (BUC4H KET4H) [(] wideHoon (ACE) wideHoon [)]
+tallBucket ::= (BUC4H KET4H GAP)mold (GAP) mold
+wideBucket ::= (BUC4H KET4H) [(] mold (ACE) mold [)]
 
-# BUCPAT hoon hoon
+# BUCPAT mold mold
 hoon ::= tallBucpat
 norm5dWide ::= wideBucpat
-tallBucpat ::= (BUC4H PAT4H GAP)hoon (GAP) hoon
-wideBucpat ::= (BUC4H PAT4H) [(] wideHoon (ACE) wideHoon [)]
+tallBucpat ::= (BUC4H PAT4H GAP)mold (GAP) mold
+wideBucpat ::= (BUC4H PAT4H) [(] mold (ACE) mold [)]
 
 # BUCTIS SYM4K mold
 hoon ::= tallBuctis
