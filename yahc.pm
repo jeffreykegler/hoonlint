@@ -953,15 +953,10 @@ wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
 # FIXED: bucpat mold mold
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # [';' (rune sem %bcsm exqa)]
 # ++  exqa  |.(loan)                                  ::  one hoon
 # Typo in hoon.hoon -- actually "loan" is a mold
-hoon ::= tallBucsem
-tallBucsem ::= (BUC SEM GAP) mold
-norm5dWide ::= wideBucsem
-wideBucsem ::= (BUC SEM '(') mold (')')
+# FIXED: bucsem mold
 
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
@@ -970,9 +965,11 @@ wideBucsem ::= (BUC SEM '(') mold (')')
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 hoon ::= tallBucwut
-tallBucwut ::= (BUC WUT GAP) hoonSeq (GAP '==')
+tallBucwut ::= (BUC WUT GAP) moldSeq (GAP '==')
 norm5dWide ::= wideBucwut
-wideBucwut ::= (BUC WUT '(') wideHoonSeq (')')
+wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # FIXED: cendot hoon hoon
 
@@ -1718,6 +1715,12 @@ hoon ::= tallBucpat
 norm5dWide ::= wideBucpat
 tallBucpat ::= (BUC4H PAT4H GAP)mold (GAP) mold
 wideBucpat ::= (BUC4H PAT4H) [(] mold (ACE) mold [)]
+
+# BUCSEM mold
+hoon ::= tallBucsem
+norm5dWide ::= wideBucsem
+tallBucsem ::= (BUC4H SEM4H GAP)mold
+wideBucsem ::= (BUC4H SEM4H) [(] mold [)]
 
 # BUCTIS SYM4K mold
 hoon ::= tallBuctis
