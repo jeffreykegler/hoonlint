@@ -887,12 +887,15 @@ hoon ::= tallBarcen
 tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: barcol hoon hoon
 
 # ['.' (runo dot %brdt [~ ~] expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: bardot hoon
 
 # ['-' (runo hep %brhp [~ ~] expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: barhep hoon
 
 # ['^' (runo ket %brkt [~ ~] expx)]
@@ -916,15 +919,13 @@ tallBartis ::= (BAR4H TIS GAP) mold (GAP) hoon
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 
 # ['?' (runo wut %brwt [~ ~] expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: barwut hoon
 
-# FIXED: buccab hoon
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
-# Running syntax
-hoon ::= tallBuccen
-tallBuccen ::= (BUC CEN GAP) moldSeq (GAP '==')
-norm5dWide ::= wideBuccen
-wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
+# ['_' (rune cab %bccb expa)]
+# FIXED: buccab hoon
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -933,13 +934,19 @@ tallBuccol ::= (BUC COL GAP) moldSeq (GAP '==')
 norm5dWide ::= wideBuccol
 wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 
-# FIXED: buchep mold mold
-# FIXED: bucket hoon hoon
-# FIXED: bucpat hoon hoon
+# ['%' (rune cen %bccn exqs)]
+# Running syntax
+hoon ::= tallBuccen
+tallBuccen ::= (BUC CEN GAP) moldSeq (GAP '==')
+norm5dWide ::= wideBuccen
+wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 
-# Undocumented runes
-# $*  ::  bunt (irregular form is *)
-# FIXED: buctar hoon
+# ['-' (rune hep %bchp exqb)]
+# FIXED: buchep mold mold
+# ['^' (rune ket %bckt exqb)]
+# FIXED: bucket hoon hoon
+# ['@' (rune pat %bcpt exqb)]
+# FIXED: bucpat hoon hoon
 
 # [';' (rune sem %bcsm exqa)]
 # ++  exqa  |.(loan)                                  ::  one hoon
@@ -953,6 +960,7 @@ wideBucsem ::= (BUC SEM '(') mold (')')
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
 # FIXED: buctis SYM4K mold
 
+# ['?' (rune wut %bcwt exqs)]
 hoon ::= tallBucwut
 tallBucwut ::= (BUC WUT GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideBucwut
@@ -1702,12 +1710,6 @@ hoon ::= tallBucpat
 norm5dWide ::= wideBucpat
 tallBucpat ::= (BUC4H PAT4H GAP)hoon (GAP) hoon
 wideBucpat ::= (BUC4H PAT4H) [(] wideHoon (ACE) wideHoon [)]
-
-# BUCTAR hoon
-hoon ::= tallBuctar
-norm5dWide ::= wideBuctar
-tallBuctar ::= (BUC4H TAR4H GAP)hoon
-wideBuctar ::= (BUC4H TAR4H) [(] wideHoon [)]
 
 # BUCTIS SYM4K mold
 hoon ::= tallBuctis
