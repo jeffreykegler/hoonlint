@@ -1242,7 +1242,6 @@ waspElement  ::= SYM4K (GAP) hoon
 
 # Implementing wisp(5d)
 
-
 wisp5d ::= ('--')
 wisp5d ::= whap5d GAP ('--')
 
