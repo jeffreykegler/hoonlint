@@ -904,13 +904,15 @@ wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 # Implementing norm(5d) for hoons
  
 # ['_' (runo cab %brcb [~ ~] exqr)]
+# ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
+# wisp must be tall, therefore wasp and BARCAB must be tall
 hoon ::= tallBarcab
-tallBarcab ::= (BAR CAB GAP) hoon (GAP) battery (GAP '--')
+tallBarcab ::= (BAR CAB GAP) mold (GAP) wasp5d wisp5d
 
 # ['%' (runo cen %brcn [~ ~] expe)]
 # ++  expe  |.(wisp)                                  ::  core tail
 hoon ::= tallBarcen
-tallBarcen ::= (BAR CEN GAP) battery (GAP '--')
+tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
 # FIXED: barcol hoon hoon
@@ -924,7 +926,7 @@ tallBarcen ::= (BAR CEN GAP) battery (GAP '--')
 # ['^' (runo ket %brkt [~ ~] expx)]
 # ++  expx  |.  ;~  gunk  loaf [...] wisp ::  hoon and core tail
 hoon ::= tallBarket
-tallBarket ::= (BAR KET GAP) hoon (GAP) battery (GAP '--')
+tallBarket ::= (BAR KET GAP) hoon (GAP) wisp5d
 
 # ['~' (runo sig %brsg [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
@@ -1257,6 +1259,40 @@ unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 
 sump5d ::= KEL wideHoonSeq KER
 
+# Implementing wasp(5d)
+# Always occurs with wisp(5d), which must be tall,
+# so wisp is always tall
+
+wasp5d ::= # empty
+wasp5d ::= (LUS TAR GAP) waspElements (GAP)
+waspElements ::= waspElement+ separator=>GAP proper=>1
+waspElement  ::= SYM4K (GAP) hoon
+
+# Implementing wisp(5d)
+
+wisp5d ::= ('--')
+wisp5d ::= whap5d GAP ('--')
+
+# Implementing whap(5d)
+# Always tall
+
+whap5d ::= boog5d+ separator=>GAP proper=>1
+
+# Implementing boog(5d)
+# Always tall
+
+# TODO: Needs elaboration from hoon.hoon
+# TODO: Need to add apse:docs
+# TODO: What is the meaning of these various types of battery element?
+boog5d ::= lusLusCell
+boog5d ::= lusHepCell
+boog5d ::= lusTisCell
+lusLusCell ::= ('++' GAP) BUC (GAP) hoon
+lusLusCell ::= ('++' GAP) SYM4K (GAP) hoon
+lusHepCell ::= ('+-' GAP) SYM4K (GAP) hoon
+lusHepCell ::= ('+-' GAP) BUC (GAP) hoon
+lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
+
 # === HOON FILE ===
 :start ::= hoonFile
 # LATER: This is a simplication, which does not
@@ -1422,14 +1458,6 @@ hoonJogging ::= hoonJogs
 hoonJogs ::= hoonJog+ separator=>GAP proper=>1
 hoonJog ::= hoon (GAP) hoon
 
-battery ::= batteryElement* separator=>GAP proper=>1
-batteryElement ::= hoonBatteryElement
-batteryElement ::= moldBatteryElement
-# TODO: What is the meaning of these various types of battery element?
-hoonBatteryElement ::= ('++' GAP) SYM4K (GAP) hoon
-moldBatteryElement ::= ('+=' GAP) SYM4K (GAP) mold
-hoonBatteryElement ::= ('+-' GAP) SYM4K (GAP) hoon
-
 # Implementing rope(5d)
 
 # the wing type is parsed by the rope(5d)
@@ -1542,9 +1570,9 @@ sub doFixedRune {
       . ' ' . $glyphLexeme2
       . ' GAP)' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
+        bont5d => 'wideBont5d',
         hoon => 'wideHoon',
         teak => 'wideTeak',
-        bont5d => 'wideBont5d',
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
 

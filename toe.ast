@@ -261,99 +261,224 @@
       [
         'tallBarcen',
         [
-          'battery',
+          'wisp5d',
           [
-            'batteryElement',
+            'whap5d',
             [
-              'hoonBatteryElement',
-              'side',
+              'boog5d',
               [
-                'aura',
-                '@',
+                'lusLusCell',
+                'side',
                 [
-                  'auraName'
-                ]
-              ]
-            ]
-          ],
-          [
-            'batteryElement',
-            [
-              'hoonBatteryElement',
-              'spot',
-              [
-                'circumBraces',
-                [
-                  'moldInfixFas',
-                  'x',
-                  '/',
+                  'aura',
+                  '@',
                   [
-                    'moldAura',
-                    '@',
-                    [
-                      'auraName'
-                    ]
-                  ]
-                ],
-                [
-                  'moldInfixFas',
-                  'y',
-                  '/',
-                  [
-                    'moldAura',
-                    '@',
-                    [
-                      'auraName'
-                    ]
+                    'auraName'
                   ]
                 ]
               ]
-            ]
-          ],
-          [
-            'batteryElement',
+            ],
             [
-              'hoonBatteryElement',
-              'fact',
+              'boog5d',
               [
-                'tallBuccen',
+                'lusLusCell',
+                'spot',
                 [
-                  'moldCircumBrace',
+                  'circumBraces',
                   [
-                    'moldBucNuck4l',
-                    '$',
+                    'moldInfixFas',
+                    'x',
+                    '/',
                     [
-                      'nuck4l',
-                      'tie'
+                      'moldAura',
+                      '@',
+                      [
+                        'auraName'
+                      ]
                     ]
                   ],
                   [
-                    'moldBucNuck4l',
-                    '$',
+                    'moldInfixFas',
+                    'y',
+                    '/',
                     [
-                      'nuck4l',
+                      'moldAura',
+                      '@',
                       [
-                        'moldNullSig',
-                        '~'
+                        'auraName'
                       ]
                     ]
                   ]
-                ],
+                ]
+              ]
+            ],
+            [
+              'boog5d',
+              [
+                'lusLusCell',
+                'fact',
                 [
-                  'moldCircumBrace',
+                  'tallBuccen',
                   [
-                    'moldBucNuck4l',
-                    '$',
+                    'moldCircumBrace',
                     [
-                      'nuck4l',
-                      'win'
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        'tie'
+                      ]
+                    ],
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        [
+                          'moldNullSig',
+                          '~'
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    'moldCircumBrace',
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        'win'
+                      ]
+                    ],
+                    [
+                      'rump5d',
+                      [
+                        'limb',
+                        'p'
+                      ],
+                      [
+                        'wede5d',
+                        [
+                          'rump5d',
+                          [
+                            'limb',
+                            'cord'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              'boog5d',
+              [
+                'lusLusCell',
+                'move',
+                [
+                  'tallBuccen',
+                  [
+                    'moldCircumBrace',
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        'x'
+                      ]
+                    ],
+                    [
+                      'rump5d',
+                      [
+                        'limb',
+                        'p'
+                      ],
+                      [
+                        'wede5d',
+                        [
+                          'rump5d',
+                          [
+                            'limb',
+                            'spot'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    'moldCircumBrace',
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        'o'
+                      ]
+                    ],
+                    [
+                      'rump5d',
+                      [
+                        'limb',
+                        'p'
+                      ],
+                      [
+                        'wede5d',
+                        [
+                          'rump5d',
+                          [
+                            'limb',
+                            'spot'
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    'moldCircumBrace',
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        'z'
+                      ]
+                    ],
+                    [
+                      'moldBucNuck4l',
+                      '$',
+                      [
+                        'nuck4l',
+                        [
+                          'moldNullSig',
+                          '~'
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              'boog5d',
+              [
+                'lusLusCell',
+                'game',
+                [
+                  'tallBuccol',
+                  [
+                    'rump5d',
+                    [
+                      'limb',
+                      'w'
                     ]
                   ],
                   [
                     'rump5d',
                     [
                       'limb',
-                      'p'
+                      'a'
                     ],
                     [
                       'wede5d',
@@ -361,96 +486,25 @@
                         'rump5d',
                         [
                           'limb',
-                          'cord'
+                          'side'
                         ]
                       ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ],
-          [
-            'batteryElement',
-            [
-              'hoonBatteryElement',
-              'move',
-              [
-                'tallBuccen',
-                [
-                  'moldCircumBrace',
-                  [
-                    'moldBucNuck4l',
-                    '$',
-                    [
-                      'nuck4l',
-                      'x'
                     ]
                   ],
                   [
                     'rump5d',
                     [
                       'limb',
-                      'p'
-                    ],
-                    [
-                      'wede5d',
-                      [
-                        'rump5d',
-                        [
-                          'limb',
-                          'spot'
-                        ]
-                      ]
-                    ]
-                  ]
-                ],
-                [
-                  'moldCircumBrace',
-                  [
-                    'moldBucNuck4l',
-                    '$',
-                    [
-                      'nuck4l',
-                      'o'
-                    ]
-                  ],
-                  [
-                    'rump5d',
-                    [
-                      'limb',
-                      'p'
-                    ],
-                    [
-                      'wede5d',
-                      [
-                        'rump5d',
-                        [
-                          'limb',
-                          'spot'
-                        ]
-                      ]
-                    ]
-                  ]
-                ],
-                [
-                  'moldCircumBrace',
-                  [
-                    'moldBucNuck4l',
-                    '$',
-                    [
-                      'nuck4l',
                       'z'
-                    ]
-                  ],
-                  [
-                    'moldBucNuck4l',
-                    '$',
+                    ],
                     [
-                      'nuck4l',
+                      'wede5d',
                       [
-                        'moldNullSig',
-                        '~'
+                        'rump5d',
+                        [
+                          'limb',
+                          'side'
+                        ]
                       ]
                     ]
                   ]
@@ -458,337 +512,270 @@
               ]
             ]
           ],
-          [
-            'batteryElement',
-            [
-              'hoonBatteryElement',
-              'game',
-              [
-                'tallBuccol',
-                [
-                  'rump5d',
-                  [
-                    'limb',
-                    'w'
-                  ]
-                ],
-                [
-                  'rump5d',
-                  [
-                    'limb',
-                    'a'
-                  ],
-                  [
-                    'wede5d',
-                    [
-                      'rump5d',
-                      [
-                        'limb',
-                        'side'
-                      ]
-                    ]
-                  ]
-                ],
-                [
-                  'rump5d',
-                  [
-                    'limb',
-                    'z'
-                  ],
-                  [
-                    'wede5d',
-                    [
-                      'rump5d',
-                      [
-                        'limb',
-                        'side'
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
+          '                                        ::  24
+    '
         ]
       ],
       [
         'tallBarcen',
         [
-          'battery',
+          'wisp5d',
           [
-            'batteryElement',
+            'whap5d',
             [
-              'hoonBatteryElement',
-              'bo',
+              'boog5d',
               [
-                'tallBarcab',
+                'lusLusCell',
+                'bo',
                 [
-                  'rump5d',
+                  'tallBarcab',
                   [
-                    'limb',
-                    'half'
-                  ],
-                  [
-                    'wede5d',
+                    'rump5d',
                     [
-                      'rump5d',
+                      'limb',
+                      'half'
+                    ],
+                    [
+                      'wede5d',
                       [
-                        'limb',
-                        'side'
+                        'rump5d',
+                        [
+                          'limb',
+                          'side'
+                        ]
                       ]
                     ]
-                  ]
-                ],
-                [
-                  'battery',
+                  ],
                   [
-                    'batteryElement',
+                    'wasp5d'
+                  ],
+                  [
+                    'wisp5d',
                     [
-                      'hoonBatteryElement',
-                      'bit',
+                      'whap5d',
                       [
-                        'wideBartis',
-                        '(',
+                        'boog5d',
                         [
-                          'moldInfixFas',
-                          'a',
-                          '/',
+                          'lusLusCell',
+                          'bit',
                           [
-                            'moldAura',
-                            '@',
+                            'wideBartis',
+                            '(',
                             [
-                              'auraName'
-                            ]
+                              'moldInfixFas',
+                              'a',
+                              '/',
+                              [
+                                'moldAura',
+                                '@',
+                                [
+                                  'auraName'
+                                ]
+                              ]
+                            ],
+                            [
+                              'irrDottis',
+                              [
+                                'bisk4l',
+                                '1'
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'cut'
+                                  ]
+                                ],
+                                [
+                                  'bisk4l',
+                                  '0'
+                                ],
+                                [
+                                  'rupl5d',
+                                  [
+                                    'circumBracket',
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'a'
+                                      ]
+                                    ],
+                                    [
+                                      'bisk4l',
+                                      '1'
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'half'
+                                  ]
+                                ]
+                              ]
+                            ],
+                            ')'
                           ]
-                        ],
+                        ]
+                      ],
+                      [
+                        'boog5d',
                         [
-                          'irrDottis',
+                          'lusLusCell',
+                          'off',
                           [
-                            'bisk4l',
-                            '1'
-                          ],
-                          [
-                            'circumParen2',
+                            'wideBartis',
+                            '(',
                             [
                               'rump5d',
                               [
                                 'limb',
-                                'cut'
+                                'a'
+                              ],
+                              [
+                                'wede5d',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'spot'
+                                  ]
+                                ]
                               ]
                             ],
                             [
-                              'bisk4l',
-                              '0'
+                              'circumParen2',
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  'add'
+                                ]
+                              ],
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  'x'
+                                ],
+                                [
+                                  'limb',
+                                  'a'
+                                ]
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'mul'
+                                  ]
+                                ],
+                                [
+                                  'bisk4l',
+                                  '3'
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'y'
+                                  ],
+                                  [
+                                    'limb',
+                                    'a'
+                                  ]
+                                ]
+                              ]
+                            ],
+                            ')'
+                          ]
+                        ]
+                      ],
+                      [
+                        'boog5d',
+                        [
+                          'lusLusCell',
+                          'get',
+                          [
+                            'wideBartis',
+                            '(',
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'a'
+                              ],
+                              [
+                                'wede5d',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'spot'
+                                  ]
+                                ]
+                              ]
                             ],
                             [
-                              'rupl5d',
+                              'circumParen2',
                               [
-                                'circumBracket',
+                                'rump5d',
+                                [
+                                  'limb',
+                                  'bit'
+                                ]
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'off'
+                                  ]
+                                ],
                                 [
                                   'rump5d',
                                   [
                                     'limb',
                                     'a'
                                   ]
-                                ],
-                                [
-                                  'bisk4l',
-                                  '1'
                                 ]
                               ]
                             ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'half'
-                              ]
-                            ]
+                            ')'
                           ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'off',
+                        ]
+                      ],
                       [
-                        'wideBartis',
-                        '(',
+                        'boog5d',
                         [
-                          'rump5d',
+                          'lusLusCell',
+                          'set',
                           [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'wede5d',
+                            'wideBartis',
+                            '(',
                             [
                               'rump5d',
                               [
                                 'limb',
-                                'spot'
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          'circumParen2',
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'add'
-                            ]
-                          ],
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'x'
-                            ],
-                            [
-                              'limb',
-                              'a'
-                            ]
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'mul'
-                              ]
-                            ],
-                            [
-                              'bisk4l',
-                              '3'
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'y'
+                                'a'
                               ],
                               [
-                                'limb',
-                                'a'
-                              ]
-                            ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'get',
-                      [
-                        'wideBartis',
-                        '(',
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'wede5d',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'spot'
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          'circumParen2',
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'bit'
-                            ]
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'off'
-                              ]
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'a'
-                              ]
-                            ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'set',
-                      [
-                        'wideBartis',
-                        '(',
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'a'
-                          ],
-                          [
-                            'wede5d',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'spot'
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          'circumParen2',
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'con'
-                            ]
-                          ],
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'half'
-                            ]
-                          ],
-                          [
-                            'circumParen2',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'bex'
+                                'wede5d',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'spot'
+                                  ]
+                                ]
                               ]
                             ],
                             [
@@ -797,93 +784,7 @@
                                 'rump5d',
                                 [
                                   'limb',
-                                  'off'
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'a'
-                                ]
-                              ]
-                            ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'win',
-                      [
-                        'tallCenlus',
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'lien'
-                          ]
-                        ],
-                        [
-                          'circumParen2',
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              'rip'
-                            ]
-                          ],
-                          [
-                            'bisk4l',
-                            '4'
-                          ],
-                          [
-                            'bisk4l',
-                            '0wl04h0.4A0Aw.4A00s.0e070'
-                          ]
-                        ],
-                        [
-                          'wideBartis',
-                          '(',
-                          [
-                            'moldInfixFas',
-                            'a',
-                            '/',
-                            [
-                              'moldAura',
-                              '@',
-                              [
-                                'auraName'
-                              ]
-                            ]
-                          ],
-                          [
-                            'irrDottis',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'a'
-                              ]
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'dis'
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'a'
+                                  'con'
                                 ]
                               ],
                               [
@@ -892,233 +793,389 @@
                                   'limb',
                                   'half'
                                 ]
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'bex'
+                                  ]
+                                ],
+                                [
+                                  'circumParen2',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'off'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'a'
+                                    ]
+                                  ]
+                                ]
                               ]
+                            ],
+                            ')'
+                          ]
+                        ]
+                      ],
+                      [
+                        'boog5d',
+                        [
+                          'lusLusCell',
+                          'win',
+                          [
+                            'tallCenlus',
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                'lien'
+                              ]
+                            ],
+                            [
+                              'circumParen2',
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  'rip'
+                                ]
+                              ],
+                              [
+                                'bisk4l',
+                                '4'
+                              ],
+                              [
+                                'bisk4l',
+                                '0wl04h0.4A0Aw.4A00s.0e070'
+                              ]
+                            ],
+                            [
+                              'wideBartis',
+                              '(',
+                              [
+                                'moldInfixFas',
+                                'a',
+                                '/',
+                                [
+                                  'moldAura',
+                                  '@',
+                                  [
+                                    'auraName'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'irrDottis',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'a'
+                                  ]
+                                ],
+                                [
+                                  'circumParen2',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'dis'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'a'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'half'
+                                    ]
+                                  ]
+                                ]
+                              ],
+                              ')'
                             ]
-                          ],
-                          ')'
+                          ]
                         ]
                       ]
-                    ]
+                    ],
+                    '                    ::  35
+  '
                   ]
                 ]
               ]
-            ]
-          ],
-          [
-            'batteryElement',
+            ],
             [
-              'hoonBatteryElement',
-              'go',
+              'boog5d',
               [
-                'tallBarcab',
+                'lusLusCell',
+                'go',
                 [
-                  'rump5d',
+                  'tallBarcab',
                   [
-                    'limb',
-                    'game'
-                  ],
-                  [
-                    'wede5d',
+                    'rump5d',
                     [
-                      'rump5d',
+                      'limb',
+                      'game'
+                    ],
+                    [
+                      'wede5d',
                       [
-                        'limb',
-                        'game'
+                        'rump5d',
+                        [
+                          'limb',
+                          'game'
+                        ]
                       ]
                     ]
-                  ]
-                ],
-                [
-                  'battery',
+                  ],
                   [
-                    'batteryElement',
+                    'wasp5d'
+                  ],
+                  [
+                    'wisp5d',
                     [
-                      'hoonBatteryElement',
-                      'do',
+                      'whap5d',
                       [
-                        'tallBartis',
+                        'boog5d',
                         [
-                          'rump5d',
+                          'lusLusCell',
+                          'do',
                           [
-                            'limb',
-                            'act'
-                          ],
-                          [
-                            'wede5d',
+                            'tallBartis',
                             [
                               'rump5d',
                               [
                                 'limb',
-                                'move'
+                                'act'
+                              ],
+                              [
+                                'wede5d',
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'move'
+                                  ]
+                                ]
+                              ]
+                            ],
+                            [
+                              'tallKethep',
+                              [
+                                'circumBraces',
+                                [
+                                  'moldCircumParen',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'unit'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'fact'
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    [
+                                      'optKets',
+                                      '^'
+                                    ],
+                                    'game'
+                                  ]
+                                ]
+                              ],
+                              [
+                                'tallWuthep',
+                                '?-',
+                                [
+                                  'limb',
+                                  'act'
+                                ],
+                                [
+                                  'circumBraces',
+                                  [
+                                    'moldBucNuck4l',
+                                    '$',
+                                    [
+                                      'nuck4l',
+                                      'x'
+                                    ]
+                                  ],
+                                  [
+                                    'moldTar',
+                                    '*'
+                                  ]
+                                ],
+                                [
+                                  'wideWutgar',
+                                  '(',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'w'
+                                    ],
+                                    [
+                                      'limb',
+                                      'game'
+                                    ]
+                                  ],
+                                  [
+                                    'circumSigParen',
+                                    [
+                                      'limb',
+                                      'mo'
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'on'
+                                      ]
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'p'
+                                      ],
+                                      [
+                                        'limb',
+                                        'act'
+                                      ]
+                                    ]
+                                  ],
+                                  ')'
+                                ],
+                                [
+                                  'circumBraces',
+                                  [
+                                    'moldBucNuck4l',
+                                    '$',
+                                    [
+                                      'nuck4l',
+                                      'o'
+                                    ]
+                                  ],
+                                  [
+                                    'moldTar',
+                                    '*'
+                                  ]
+                                ],
+                                [
+                                  'wideWutgal',
+                                  '(',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'w'
+                                    ],
+                                    [
+                                      'limb',
+                                      'game'
+                                    ]
+                                  ],
+                                  [
+                                    'circumSigParen',
+                                    [
+                                      'limb',
+                                      'mo'
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'on'
+                                      ]
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'p'
+                                      ],
+                                      [
+                                        'limb',
+                                        'act'
+                                      ]
+                                    ]
+                                  ],
+                                  ')'
+                                ],
+                                [
+                                  'circumBraces',
+                                  [
+                                    'moldBucNuck4l',
+                                    '$',
+                                    [
+                                      'nuck4l',
+                                      'z'
+                                    ]
+                                  ],
+                                  [
+                                    'moldTar',
+                                    '*'
+                                  ]
+                                ],
+                                [
+                                  'rupl5d',
+                                  [
+                                    'circumBracket',
+                                    [
+                                      'soloSig',
+                                      '~'
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'nu'
+                                      ]
+                                    ]
+                                  ]
+                                ]
                               ]
                             ]
                           ]
-                        ],
+                        ]
+                      ],
+                      [
+                        'boog5d',
                         [
-                          'tallKethep',
+                          'lusLusCell',
+                          'nu',
                           [
-                            'circumBraces',
-                            [
-                              'moldCircumParen',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'unit'
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'fact'
-                                ]
-                              ]
-                            ],
+                            'wideKetlus',
+                            '(',
                             [
                               'rump5d',
                               [
                                 'limb',
-                                [
-                                  'optKets',
-                                  '^'
-                                ],
                                 'game'
-                              ]
-                            ]
-                          ],
-                          [
-                            'tallWuthep',
-                            '?-',
-                            [
-                              'limb',
-                              'act'
-                            ],
-                            [
-                              'circumBraces',
-                              [
-                                'moldBucNuck4l',
-                                '$',
-                                [
-                                  'nuck4l',
-                                  'x'
-                                ]
-                              ],
-                              [
-                                'moldTar',
-                                '*'
-                              ]
-                            ],
-                            [
-                              'wideWutgar',
-                              '(',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'w'
-                                ],
-                                [
-                                  'limb',
-                                  'game'
-                                ]
-                              ],
-                              [
-                                'circumSigParen',
-                                [
-                                  'limb',
-                                  'mo'
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'on'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'p'
-                                  ],
-                                  [
-                                    'limb',
-                                    'act'
-                                  ]
-                                ]
-                              ],
-                              ')'
-                            ],
-                            [
-                              'circumBraces',
-                              [
-                                'moldBucNuck4l',
-                                '$',
-                                [
-                                  'nuck4l',
-                                  'o'
-                                ]
-                              ],
-                              [
-                                'moldTar',
-                                '*'
-                              ]
-                            ],
-                            [
-                              'wideWutgal',
-                              '(',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'w'
-                                ],
-                                [
-                                  'limb',
-                                  'game'
-                                ]
-                              ],
-                              [
-                                'circumSigParen',
-                                [
-                                  'limb',
-                                  'mo'
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'on'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'p'
-                                  ],
-                                  [
-                                    'limb',
-                                    'act'
-                                  ]
-                                ]
-                              ],
-                              ')'
-                            ],
-                            [
-                              'circumBraces',
-                              [
-                                'moldBucNuck4l',
-                                '$',
-                                [
-                                  'nuck4l',
-                                  'z'
-                                ]
-                              ],
-                              [
-                                'moldTar',
-                                '*'
                               ]
                             ],
                             [
@@ -1126,408 +1183,249 @@
                               [
                                 'circumBracket',
                                 [
-                                  'soloSig',
-                                  '~'
+                                  'soloPam',
+                                  '&'
                                 ],
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'nu'
-                                  ]
+                                  'bisk4l',
+                                  '0'
+                                ],
+                                [
+                                  'bisk4l',
+                                  '0'
                                 ]
                               ]
-                            ]
+                            ],
+                            ')'
                           ]
                         ]
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'nu',
+                      ],
                       [
-                        'wideKetlus',
-                        '(',
+                        'boog5d',
                         [
-                          'rump5d',
+                          'lusLusCell',
+                          'on',
                           [
-                            'limb',
-                            'game'
-                          ]
-                        ],
-                        [
-                          'rupl5d',
-                          [
-                            'circumBracket',
-                            [
-                              'soloPam',
-                              '&'
-                            ],
-                            [
-                              'bisk4l',
-                              '0'
-                            ],
-                            [
-                              'bisk4l',
-                              '0'
-                            ]
-                          ]
-                        ],
-                        ')'
-                      ]
-                    ]
-                  ],
-                  [
-                    'batteryElement',
-                    [
-                      'hoonBatteryElement',
-                      'on',
-                      [
-                        'tallBarcab',
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'here'
-                          ],
-                          [
-                            'wede5d',
+                            'tallBarcab',
                             [
                               'rump5d',
                               [
                                 'limb',
-                                'spot'
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          'battery',
-                          [
-                            'batteryElement',
-                            [
-                              'hoonBatteryElement',
-                              'is',
+                                'here'
+                              ],
                               [
-                                'tallWutbar',
+                                'wede5d',
                                 [
-                                  'circumParen2',
+                                  'rump5d',
                                   [
-                                    'circumSigParen',
-                                    [
-                                      'limb',
-                                      'get'
-                                    ],
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'bo'
-                                      ]
-                                    ],
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'a'
-                                      ],
-                                      [
-                                        'limb',
-                                        'game'
-                                      ]
-                                    ]
-                                  ],
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'here'
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  'circumParen2',
-                                  [
-                                    'circumSigParen',
-                                    [
-                                      'limb',
-                                      'get'
-                                    ],
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'bo'
-                                      ]
-                                    ],
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'z'
-                                      ],
-                                      [
-                                        'limb',
-                                        'game'
-                                      ]
-                                    ]
-                                  ],
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'here'
-                                    ]
+                                    'limb',
+                                    'spot'
                                   ]
                                 ]
                               ]
-                            ]
-                          ],
-                          [
-                            'batteryElement',
+                            ],
                             [
-                              'hoonBatteryElement',
-                              'mo',
+                              'wasp5d'
+                            ],
+                            [
+                              'wisp5d',
                               [
-                                'tallKethep',
+                                'whap5d',
                                 [
-                                  'circumBraces',
+                                  'boog5d',
                                   [
-                                    'moldCircumParen',
+                                    'lusLusCell',
+                                    'is',
                                     [
-                                      'rump5d',
+                                      'tallWutbar',
                                       [
-                                        'limb',
-                                        'unit'
-                                      ]
-                                    ],
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'fact'
-                                      ]
-                                    ]
-                                  ],
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      [
-                                        'optKets',
-                                        '^'
-                                      ],
-                                      'game'
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  'tallWutgal',
-                                  [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'is'
-                                    ]
-                                  ],
-                                  [
-                                    'tallTisfas',
-                                    [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'next'
-                                      ],
-                                      [
-                                        'wede5d',
+                                        'circumParen2',
                                         [
-                                          'rump5d',
+                                          'circumSigParen',
                                           [
                                             'limb',
-                                            'side'
-                                          ]
-                                        ]
-                                      ]
-                                    ],
-                                    [
-                                      'circumParen2',
-                                      [
-                                        'circumSigParen',
-                                        [
-                                          'limb',
-                                          'set'
-                                        ],
-                                        [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'bo'
-                                          ]
-                                        ],
-                                        [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'a'
+                                            'get'
                                           ],
                                           [
-                                            'limb',
-                                            'game'
-                                          ]
-                                        ]
-                                      ],
-                                      [
-                                        'rump5d',
-                                        [
-                                          'limb',
-                                          'here'
-                                        ]
-                                      ]
-                                    ],
-                                    [
-                                      'tallWutcol',
-                                      [
-                                        'circumSigParen',
-                                        [
-                                          'limb',
-                                          'win'
-                                        ],
-                                        [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'bo'
-                                          ]
-                                        ],
-                                        [
-                                          'rump5d',
-                                          [
-                                            'limb',
-                                            'next'
-                                          ]
-                                        ]
-                                      ],
-                                      [
-                                        'rupl5d',
-                                        [
-                                          'circumBracket',
-                                          [
-                                            'rupl5d',
+                                            'rump5d',
                                             [
-                                              'circumBracket',
-                                              [
-                                                'soloSig',
-                                                '~'
-                                              ],
-                                              [
-                                                'cenTerm',
-                                                '%',
-                                                [
-                                                  'nuck4l',
-                                                  'win'
-                                                ]
-                                              ],
-                                              [
-                                                'wideWutcol',
-                                                '(',
-                                                [
-                                                  'rump5d',
-                                                  [
-                                                    'limb',
-                                                    'w'
-                                                  ],
-                                                  [
-                                                    'limb',
-                                                    'game'
-                                                  ]
-                                                ],
-                                                [
-                                                  'cenTerm',
-                                                  '%',
-                                                  [
-                                                    'nuck4l',
-                                                    'x'
-                                                  ]
-                                                ],
-                                                [
-                                                  'cenTerm',
-                                                  '%',
-                                                  [
-                                                    'nuck4l',
-                                                    'o'
-                                                  ]
-                                                ],
-                                                ')'
-                                              ]
+                                              'limb',
+                                              'bo'
                                             ]
                                           ],
                                           [
                                             'rump5d',
                                             [
                                               'limb',
-                                              'nu'
+                                              'a'
+                                            ],
+                                            [
+                                              'limb',
+                                              'game'
                                             ]
+                                          ]
+                                        ],
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'here'
                                           ]
                                         ]
                                       ],
                                       [
-                                        'rupl5d',
+                                        'circumParen2',
                                         [
-                                          'circumBracket',
+                                          'circumSigParen',
                                           [
-                                            'soloSig',
-                                            '~'
+                                            'limb',
+                                            'get'
                                           ],
                                           [
-                                            'circumScatParen',
+                                            'rump5d',
                                             [
-                                              'rump5d',
-                                              [
-                                                'limb',
-                                                'game'
-                                              ]
+                                              'limb',
+                                              'bo'
+                                            ]
+                                          ],
+                                          [
+                                            'rump5d',
+                                            [
+                                              'limb',
+                                              'z'
                                             ],
                                             [
-                                              'lobo5d',
+                                              'limb',
+                                              'game'
+                                            ]
+                                          ]
+                                        ],
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'here'
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'boog5d',
+                                  [
+                                    'lusLusCell',
+                                    'mo',
+                                    [
+                                      'tallKethep',
+                                      [
+                                        'circumBraces',
+                                        [
+                                          'moldCircumParen',
+                                          [
+                                            'rump5d',
+                                            [
+                                              'limb',
+                                              'unit'
+                                            ]
+                                          ],
+                                          [
+                                            'rump5d',
+                                            [
+                                              'limb',
+                                              'fact'
+                                            ]
+                                          ]
+                                        ],
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            [
+                                              'optKets',
+                                              '^'
+                                            ],
+                                            'game'
+                                          ]
+                                        ]
+                                      ],
+                                      [
+                                        'tallWutgal',
+                                        [
+                                          'rump5d',
+                                          [
+                                            'limb',
+                                            'is'
+                                          ]
+                                        ],
+                                        [
+                                          'tallTisfas',
+                                          [
+                                            'rump5d',
+                                            [
+                                              'limb',
+                                              'next'
+                                            ],
+                                            [
+                                              'wede5d',
                                               [
-                                                'limb',
-                                                'w'
-                                              ],
-                                              [
-                                                'prefixZap',
+                                                'rump5d',
                                                 [
-                                                  'rump5d',
-                                                  [
-                                                    'limb',
-                                                    'w'
-                                                  ],
-                                                  [
-                                                    'limb',
-                                                    'game'
-                                                  ]
+                                                  'limb',
+                                                  'side'
                                                 ]
-                                              ],
+                                              ]
+                                            ]
+                                          ],
+                                          [
+                                            'circumParen2',
+                                            [
+                                              'circumSigParen',
                                               [
                                                 'limb',
-                                                'a'
+                                                'set'
                                               ],
                                               [
                                                 'rump5d',
                                                 [
                                                   'limb',
-                                                  'z'
+                                                  'bo'
+                                                ]
+                                              ],
+                                              [
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'a'
                                                 ],
                                                 [
                                                   'limb',
                                                   'game'
                                                 ]
-                                              ],
+                                              ]
+                                            ],
+                                            [
+                                              'rump5d',
                                               [
                                                 'limb',
-                                                'z'
+                                                'here'
+                                              ]
+                                            ]
+                                          ],
+                                          [
+                                            'tallWutcol',
+                                            [
+                                              'circumSigParen',
+                                              [
+                                                'limb',
+                                                'win'
+                                              ],
+                                              [
+                                                'rump5d',
+                                                [
+                                                  'limb',
+                                                  'bo'
+                                                ]
                                               ],
                                               [
                                                 'rump5d',
@@ -1536,6 +1434,136 @@
                                                   'next'
                                                 ]
                                               ]
+                                            ],
+                                            [
+                                              'rupl5d',
+                                              [
+                                                'circumBracket',
+                                                [
+                                                  'rupl5d',
+                                                  [
+                                                    'circumBracket',
+                                                    [
+                                                      'soloSig',
+                                                      '~'
+                                                    ],
+                                                    [
+                                                      'cenTerm',
+                                                      '%',
+                                                      [
+                                                        'nuck4l',
+                                                        'win'
+                                                      ]
+                                                    ],
+                                                    [
+                                                      'wideWutcol',
+                                                      '(',
+                                                      [
+                                                        'rump5d',
+                                                        [
+                                                          'limb',
+                                                          'w'
+                                                        ],
+                                                        [
+                                                          'limb',
+                                                          'game'
+                                                        ]
+                                                      ],
+                                                      [
+                                                        'cenTerm',
+                                                        '%',
+                                                        [
+                                                          'nuck4l',
+                                                          'x'
+                                                        ]
+                                                      ],
+                                                      [
+                                                        'cenTerm',
+                                                        '%',
+                                                        [
+                                                          'nuck4l',
+                                                          'o'
+                                                        ]
+                                                      ],
+                                                      ')'
+                                                    ]
+                                                  ]
+                                                ],
+                                                [
+                                                  'rump5d',
+                                                  [
+                                                    'limb',
+                                                    'nu'
+                                                  ]
+                                                ]
+                                              ]
+                                            ],
+                                            [
+                                              'rupl5d',
+                                              [
+                                                'circumBracket',
+                                                [
+                                                  'soloSig',
+                                                  '~'
+                                                ],
+                                                [
+                                                  'circumScatParen',
+                                                  [
+                                                    'rump5d',
+                                                    [
+                                                      'limb',
+                                                      'game'
+                                                    ]
+                                                  ],
+                                                  [
+                                                    'lobo5d',
+                                                    [
+                                                      'limb',
+                                                      'w'
+                                                    ],
+                                                    [
+                                                      'prefixZap',
+                                                      [
+                                                        'rump5d',
+                                                        [
+                                                          'limb',
+                                                          'w'
+                                                        ],
+                                                        [
+                                                          'limb',
+                                                          'game'
+                                                        ]
+                                                      ]
+                                                    ],
+                                                    [
+                                                      'limb',
+                                                      'a'
+                                                    ],
+                                                    [
+                                                      'rump5d',
+                                                      [
+                                                        'limb',
+                                                        'z'
+                                                      ],
+                                                      [
+                                                        'limb',
+                                                        'game'
+                                                      ]
+                                                    ],
+                                                    [
+                                                      'limb',
+                                                      'z'
+                                                    ],
+                                                    [
+                                                      'rump5d',
+                                                      [
+                                                        'limb',
+                                                        'next'
+                                                      ]
+                                                    ]
+                                                  ]
+                                                ]
+                                              ]
                                             ]
                                           ]
                                         ]
@@ -1543,17 +1571,23 @@
                                     ]
                                   ]
                                 ]
-                              ]
+                              ],
+                              '       ::  59
+    '
                             ]
                           ]
                         ]
                       ]
-                    ]
+                    ],
+                    '                                                  ::  60
+  '
                   ]
                 ]
               ]
             ]
-          ]
+          ],
+          '                                                    ::  62
+'
         ]
       ]
     ]

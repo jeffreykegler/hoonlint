@@ -155,7 +155,7 @@ ok hoons/arvo/lib/http.hoon
 ok hoons/arvo/lib/httr-to-json.hoon
 todo hoons/arvo/lib/interpolate.hoon
 ok hoons/arvo/lib/map-to-json.hoon
-todo hoons/arvo/lib/new-hoon.hoon
+ok hoons/arvo/lib/new-hoon.hoon
 todo hoons/arvo/lib/oauth1.hoon
 todo hoons/arvo/lib/oauth2.hoon
 ok hoons/arvo/lib/old-phon.hoon

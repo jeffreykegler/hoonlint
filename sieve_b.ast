@@ -114,226 +114,59 @@
           [
             'tallBarcen',
             [
-              'battery',
+              'wisp5d',
               [
-                'batteryElement',
+                'whap5d',
                 [
-                  'hoonBatteryElement',
-                  'abet',
+                  'boog5d',
                   [
-                    'circumParen2',
+                    'lusLusCell',
+                    'abet',
                     [
-                      'rump5d',
-                      [
-                        'limb',
-                        'sort'
-                      ]
-                    ],
-                    [
-                      'circumSigParen',
-                      [
-                        'limb',
-                        'tap'
-                      ],
+                      'circumParen2',
                       [
                         'rump5d',
                         [
                           'limb',
-                          'in'
+                          'sort'
                         ]
                       ],
                       [
-                        'rump5d',
+                        'circumSigParen',
                         [
                           'limb',
-                          'field'
-                        ]
-                      ]
-                    ],
-                    [
-                      'rump5d',
-                      [
-                        'limb',
-                        'lth'
-                      ]
-                    ]
-                  ]
-                ]
-              ],
-              [
-                'batteryElement',
-                [
-                  'hoonBatteryElement',
-                  'main',
-                  [
-                    'tallTisfas',
-                    [
-                      'infixTis',
-                      [
-                        'rump5d',
-                        [
-                          'limb',
-                          'factor'
-                        ]
-                      ],
-                      [
-                        'aura',
-                        '@',
-                        [
-                          'auraName'
-                        ]
-                      ]
-                    ],
-                    [
-                      'bisk4l',
-                      '2'
-                    ],
-                    [
-                      'tallBarhep',
-                      [
-                        'tallKetlus',
+                          'tap'
+                        ],
                         [
                           'rump5d',
                           [
                             'limb',
-                            '.'
-                          ],
-                          [
-                            'limb',
-                            'main'
+                            'in'
                           ]
                         ],
                         [
-                          'tallWutcol',
+                          'rump5d',
                           [
-                            'circumParen2',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'gth'
-                              ]
-                            ],
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'mul'
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'factor'
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'factor'
-                                ]
-                              ]
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                'thru'
-                              ]
-                            ]
-                          ],
-                          [
-                            'rump5d',
-                            [
-                              'limb',
-                              '.'
-                            ],
-                            [
-                              'limb',
-                              'main'
-                            ]
-                          ],
-                          [
-                            'circumScatParen',
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                '$'
-                              ]
-                            ],
-                            [
-                              'lobo5d',
-                              [
-                                'limb',
-                                'factor'
-                              ],
-                              [
-                                'irrDotlus',
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'factor'
-                                  ]
-                                ]
-                              ],
-                              [
-                                'limb',
-                                '.'
-                              ],
-                              [
-                                'limb',
-                                'main'
-                              ],
-                              [
-                                'circumParen2',
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'reap'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'factor'
-                                  ]
-                                ]
-                              ]
-                            ]
+                            'limb',
+                            'field'
                           ]
+                        ]
+                      ],
+                      [
+                        'rump5d',
+                        [
+                          'limb',
+                          'lth'
                         ]
                       ]
                     ]
                   ]
-                ]
-              ],
-              [
-                'batteryElement',
+                ],
                 [
-                  'hoonBatteryElement',
-                  'reap',
+                  'boog5d',
                   [
-                    'tallBartis',
-                    [
-                      'moldInfixTis',
-                      'factor',
-                      '=',
-                      [
-                        'moldAura',
-                        '@',
-                        [
-                          'auraName'
-                        ]
-                      ]
-                    ],
+                    'lusLusCell',
+                    'main',
                     [
                       'tallTisfas',
                       [
@@ -342,7 +175,7 @@
                           'rump5d',
                           [
                             'limb',
-                            'count'
+                            'factor'
                           ]
                         ],
                         [
@@ -354,25 +187,8 @@
                         ]
                       ],
                       [
-                        'circumParen2',
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'mul'
-                          ]
-                        ],
-                        [
-                          'bisk4l',
-                          '2'
-                        ],
-                        [
-                          'rump5d',
-                          [
-                            'limb',
-                            'factor'
-                          ]
-                        ]
+                        'bisk4l',
+                        '2'
                       ],
                       [
                         'tallBarhep',
@@ -386,7 +202,7 @@
                             ],
                             [
                               'limb',
-                              'reap'
+                              'main'
                             ]
                           ],
                           [
@@ -401,10 +217,27 @@
                                 ]
                               ],
                               [
-                                'rump5d',
+                                'circumParen2',
                                 [
-                                  'limb',
-                                  'count'
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'mul'
+                                  ]
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'factor'
+                                  ]
+                                ],
+                                [
+                                  'rump5d',
+                                  [
+                                    'limb',
+                                    'factor'
+                                  ]
                                 ]
                               ],
                               [
@@ -423,30 +256,150 @@
                               ],
                               [
                                 'limb',
+                                'main'
+                              ]
+                            ],
+                            [
+                              'circumScatParen',
+                              [
+                                'rump5d',
+                                [
+                                  'limb',
+                                  '$'
+                                ]
+                              ],
+                              [
+                                'lobo5d',
+                                [
+                                  'limb',
+                                  'factor'
+                                ],
+                                [
+                                  'irrDotlus',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'factor'
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  'limb',
+                                  '.'
+                                ],
+                                [
+                                  'limb',
+                                  'main'
+                                ],
+                                [
+                                  'circumParen2',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'reap'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'factor'
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  'boog5d',
+                  [
+                    'lusLusCell',
+                    'reap',
+                    [
+                      'tallBartis',
+                      [
+                        'moldInfixTis',
+                        'factor',
+                        '=',
+                        [
+                          'moldAura',
+                          '@',
+                          [
+                            'auraName'
+                          ]
+                        ]
+                      ],
+                      [
+                        'tallTisfas',
+                        [
+                          'infixTis',
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'count'
+                            ]
+                          ],
+                          [
+                            'aura',
+                            '@',
+                            [
+                              'auraName'
+                            ]
+                          ]
+                        ],
+                        [
+                          'circumParen2',
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'mul'
+                            ]
+                          ],
+                          [
+                            'bisk4l',
+                            '2'
+                          ],
+                          [
+                            'rump5d',
+                            [
+                              'limb',
+                              'factor'
+                            ]
+                          ]
+                        ],
+                        [
+                          'tallBarhep',
+                          [
+                            'tallKetlus',
+                            [
+                              'rump5d',
+                              [
+                                'limb',
+                                '.'
+                              ],
+                              [
+                                'limb',
                                 'reap'
                               ]
                             ],
                             [
-                              'tallCentis',
-                              '%=',
-                              [
-                                'limb',
-                                '$'
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'count'
-                                ]
-                              ],
+                              'tallWutcol',
                               [
                                 'circumParen2',
                                 [
                                   'rump5d',
                                   [
                                     'limb',
-                                    'add'
+                                    'gth'
                                   ]
                                 ],
                                 [
@@ -460,7 +413,7 @@
                                   'rump5d',
                                   [
                                     'limb',
-                                    'factor'
+                                    'thru'
                                   ]
                                 ]
                               ],
@@ -468,29 +421,48 @@
                                 'rump5d',
                                 [
                                   'limb',
-                                  'field'
+                                  '.'
+                                ],
+                                [
+                                  'limb',
+                                  'reap'
                                 ]
                               ],
                               [
-                                'circumParen2',
+                                'tallCentis',
+                                '%=',
                                 [
-                                  'circumSigParen',
+                                  'limb',
+                                  '$'
+                                ],
+                                [
+                                  'rump5d',
                                   [
                                     'limb',
-                                    'del'
-                                  ],
+                                    'count'
+                                  ]
+                                ],
+                                [
+                                  'circumParen2',
                                   [
                                     'rump5d',
                                     [
                                       'limb',
-                                      'in'
+                                      'add'
                                     ]
                                   ],
                                   [
                                     'rump5d',
                                     [
                                       'limb',
-                                      'field'
+                                      'count'
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'factor'
                                     ]
                                   ]
                                 ],
@@ -498,7 +470,38 @@
                                   'rump5d',
                                   [
                                     'limb',
-                                    'count'
+                                    'field'
+                                  ]
+                                ],
+                                [
+                                  'circumParen2',
+                                  [
+                                    'circumSigParen',
+                                    [
+                                      'limb',
+                                      'del'
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'in'
+                                      ]
+                                    ],
+                                    [
+                                      'rump5d',
+                                      [
+                                        'limb',
+                                        'field'
+                                      ]
+                                    ]
+                                  ],
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'count'
+                                    ]
                                   ]
                                 ]
                               ]
@@ -509,7 +512,9 @@
                     ]
                   ]
                 ]
-              ]
+              ],
+              '                                                    ::  25
+'
             ]
           ]
         ]
