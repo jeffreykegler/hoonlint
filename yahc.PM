@@ -999,7 +999,10 @@ wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 
 # ['_' (rune cab %cncb exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
-# TODO: NYI
+hoon ::= tallCencab
+tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP '==')
+norm5dWide ::= wideCencab
+wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 
 # ['.' (rune dot %cndt expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons

@@ -18,7 +18,7 @@ todo hoons/arvo/app/ask.hoon
 ok hoons/arvo/app/curl.hoon
 todo hoons/arvo/app/dojo.hoon
 ok hoons/arvo/app/fora.hoon
-todo hoons/arvo/app/gh.hoon
+ok hoons/arvo/app/gh.hoon
 ok hoons/arvo/app/github.hoon
 todo hoons/arvo/app/gmail.hoon
 ok hoons/arvo/app/gmail/split.hoon
@@ -153,7 +153,7 @@ todo hoons/arvo/lib/hood/womb.hoon
 todo hoons/arvo/lib/hood/write.hoon
 ok hoons/arvo/lib/http.hoon
 ok hoons/arvo/lib/httr-to-json.hoon
-todo hoons/arvo/lib/interpolate.hoon
+ok hoons/arvo/lib/interpolate.hoon
 ok hoons/arvo/lib/map-to-json.hoon
 ok hoons/arvo/lib/new-hoon.hoon
 todo hoons/arvo/lib/oauth1.hoon
