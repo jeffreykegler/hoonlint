@@ -997,9 +997,10 @@ wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 
 # ['*' (rune tar %cntr expm)]
 #  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
-# TODO: NYI
-
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+hoon ::= tallCentar
+tallCentar ::= (CEN TAR GAP) rope5d (GAP) hoon (GAP) rick5d (GAP '==')
+norm5dWide ::= wideCentar
+wideCentar ::= (CEN TAR PEL) rope5d (ACE) wideHoon (GAP) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
@@ -1007,6 +1008,8 @@ hoon ::= tallCentis
 tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP '==')
 norm5dWide ::= wideCentis
 wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # FIXED: colcab hoon hoon
 

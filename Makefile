@@ -2,11 +2,13 @@
 
 .PHONY: all test test_suite undoc_tests \
   fizzbuzz sieve_b sieve_k toe \
-  recognize count_todo
+  recognize msg count_todo
 
 all: test
 
 test: test_suite undoc_tests count_todo
+
+msg: count_todo
 
 test_suite: fizzbuzz sieve_b sieve_k toe recognize
 
