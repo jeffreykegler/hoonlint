@@ -1147,6 +1147,28 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketwut hoon
 
+# [':' (rune col %smcl expi)]
+# ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+hoon ::= tallSemcol
+tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP '==')
+norm5dWide ::= wideSemcol
+wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
+
+# ['/' (rune fas %smfs expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: semfas hoon
+
+# [';' (rune sem %smsm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: semsem hoon hoon
+
+# ['~' (rune sig %smsg expi)]
+# ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+hoon ::= tallSemsig
+tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP '==')
+norm5dWide ::= wideSemsig
+wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
+
 # TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # :~  ['|' (rune bar %sgbr expb)]
@@ -1182,23 +1204,6 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # ['=' (rune tis %sgts expb)]
 # ['?' (rune wut %sgwt hing)]
 # ['!' (rune zap %sgzp expb)]
-
-# 1-fixed, then running syntax
-SEMCOL ~ [;] [:]
-hoon ::= tallSemcol
-tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
-norm5dWide ::= wideSemcol
-wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
-
-# #semsem hoon value
-# FIXED: semsem hoon hoon
-
-# 1-fixed, then running syntax
-SEMSIG ~ [;] [~]
-hoon ::= tallSemsig
-tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
-norm5dWide ::= wideSemsig
-wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon

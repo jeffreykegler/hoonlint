@@ -1119,6 +1119,28 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketwut hoon
 
+# [':' (rune col %smcl expi)]
+# ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+hoon ::= tallSemcol
+tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP '==')
+norm5dWide ::= wideSemcol
+wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
+
+# ['/' (rune fas %smfs expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: semfas hoon
+
+# [';' (rune sem %smsm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: semsem hoon hoon
+
+# ['~' (rune sig %smsg expi)]
+# ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+hoon ::= tallSemsig
+tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP '==')
+norm5dWide ::= wideSemsig
+wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
+
 # TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # :~  ['|' (rune bar %sgbr expb)]
@@ -1154,23 +1176,6 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # ['=' (rune tis %sgts expb)]
 # ['?' (rune wut %sgwt hing)]
 # ['!' (rune zap %sgzp expb)]
-
-# 1-fixed, then running syntax
-SEMCOL ~ [;] [:]
-hoon ::= tallSemcol
-tallSemcol ::= (SEMCOL GAP) hoon (GAP) hoonSeq (GAP '==')
-norm5dWide ::= wideSemcol
-wideSemcol ::= (SEMCOL '(') hoon (ACE) wideHoonSeq (')')
-
-# #semsem hoon value
-# FIXED: semsem hoon hoon
-
-# 1-fixed, then running syntax
-SEMSIG ~ [;] [~]
-hoon ::= tallSemsig
-tallSemsig ::= (SEMSIG GAP) hoon (GAP) hoonSeq (GAP '==')
-norm5dWide ::= wideSemsig
-wideSemsig ::= (SEMSIG '(') hoon (ACE) wideHoonSeq (')')
 
 # FIXED: sigcab hoon hoon
 # FIXED: sigwut hoon hoon hoon
@@ -1935,6 +1940,18 @@ norm5dWide ::= wideKetwut
 tallKetwut ::= (KET4H WUT4H GAP)hoon
 wideKetwut ::= (KET4H WUT4H) [(] wideHoon [)]
 
+# SEMFAS hoon
+hoon ::= tallSemfas
+norm5dWide ::= wideSemfas
+tallSemfas ::= (SEM4H FAS4H GAP)hoon
+wideSemfas ::= (SEM4H FAS4H) [(] wideHoon [)]
+
+# SEMSEM hoon hoon
+hoon ::= tallSemsem
+norm5dWide ::= wideSemsem
+tallSemsem ::= (SEM4H SEM4H GAP)hoon (GAP) hoon
+wideSemsem ::= (SEM4H SEM4H) [(] wideHoon (ACE) wideHoon [)]
+
 # SIGBAR hoon hoon
 hoon ::= tallSigbar
 norm5dWide ::= wideSigbar
@@ -1982,12 +1999,6 @@ hoon ::= tallSigpam
 norm5dWide ::= wideSigpam
 tallSigpam ::= (SIG4H PAM4H GAP)hoon (GAP) hoon
 wideSigpam ::= (SIG4H PAM4H) [(] wideHoon (ACE) wideHoon [)]
-
-# SEMSEM hoon hoon
-hoon ::= tallSemsem
-norm5dWide ::= wideSemsem
-tallSemsem ::= (SEM4H SEM4H GAP)hoon (GAP) hoon
-wideSemsem ::= (SEM4H SEM4H) [(] wideHoon (ACE) wideHoon [)]
 
 # SIGCAB hoon hoon
 hoon ::= tallSigcab
