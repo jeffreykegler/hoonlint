@@ -49,7 +49,7 @@
           [
             'tallKethep',
             [
-              'circumParen2',
+              'moldCircumParen',
               [
                 'rump5d',
                 [
@@ -977,7 +977,7 @@
                             [
                               'tallKethep',
                               [
-                                'circumBraces',
+                                'moldCircumBrace',
                                 [
                                   'moldCircumParen',
                                   [
@@ -1319,7 +1319,7 @@
                                     [
                                       'tallKethep',
                                       [
-                                        'circumBraces',
+                                        'moldCircumBrace',
                                         [
                                           'moldCircumParen',
                                           [

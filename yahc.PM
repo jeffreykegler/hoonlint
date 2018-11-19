@@ -355,8 +355,6 @@ qit4k ::= <UNESCAPED SINGLE QUOTE CHARS>
 qit4k ::= EscapedSingleQuoteChar
 <UNESCAPED SINGLE QUOTE CHARS> ~ unescapedSingleQuoteChar+
 
-# LATER Single string element also allow escapes
-# LATER: Add \xx hex escapes, and more backslash escapes
 qut4k ::= <single quote string>
 <single quote string> ::= ([']) <single quote cord> (['])
 <single quote cord> ::= qit4k* separator=>gon4k proper=>1
@@ -671,6 +669,10 @@ moldInfixTis ::= SYM4K TIS wideMold rank=>1
 # Differs from scad(5)
 # TODO: Finish
 wideBuccol ::= (',[') wideMoldSeq (']')
+
+# TODO: <hoonUnary> was a Marpa hack (that it, not in hoon.hoon)
+# to duplicate Hoon precedence.  It may no longer be necessary.
+# This needs to be tested.
 
 # '!'
 # Not in scad(5)
@@ -1096,9 +1098,9 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wideHoonSeq (PER)
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: dotwut hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
- 
 # FAS group are (usually?) ford runes:
+# They are not in hoon.hoon, and so were not part of the
+# corrections to match hoon.hoon.
 
 # FIXED: fassem hoon hoon
 
@@ -1109,23 +1111,32 @@ tallFastis ::= (FASTIS GAP) SYM4K (GAP) hoon
 norm5dWide ::= wideFastis
 wideFastis ::= (FASTIS) SYM4K '=' hoon
 
-
 # ['|' (rune bar %ktbr expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketbar hoon
+
+# ['%' (rune cen %ktcn expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: ketcen hoon
 
 # ['.' (rune dot %ktdt expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: ketdot hoon hoon
 
 # ['-' (rune hep %kthp exqc)]
-# FIXED: kethep hoon hoon
+# ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
+# FIXED: kethep mold hoon
 
 # ['+' (rune lus %ktls expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: ketlus hoon hoon
 
 # ['&' (rune pam %ktpm expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: ketpam hoon
 
 # ['~' (rune sig %ktsg expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketsig hoon
 
 # ['=' (rune tis %ktts expg)]
@@ -1133,9 +1144,10 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # FIXED: kettis SYM4K hoon
 
 # ['?' (rune wut %ktwt expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketwut hoon
 
-# ['%' (rune cen %ktcn expa)]
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # :~  ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
@@ -1357,7 +1369,7 @@ lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
 
 # === HOON FILE ===
 :start ::= hoonFile
-# LATER: This is a simplication, which does not
+# TODO: This is a simplication, which may not
 # catch all the subtleties of "ford" files
 hoonFile ::= (leader) hoonSeq (trailer)
 

@@ -16,7 +16,7 @@
     [
       'tallKethep',
       [
-        'circumParen2',
+        'moldCircumParen',
         [
           'rump5d',
           [
@@ -25,7 +25,7 @@
           ]
         ],
         [
-          'aura',
+          'moldAura',
           '@',
           [
             'auraName'
