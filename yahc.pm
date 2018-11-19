@@ -1012,29 +1012,38 @@ tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP '==')
 norm5dWide ::= wideCentis
 wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
+# ['_' (rune cab %clcb expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: colcab hoon hoon
 
+# ['-' (rune hep %clhp expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: colhep hoon hoon
 
+# ['+' (rune lus %clls expc)]
+# ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
 # FIXED: collus hoon hoon hoon
+
+# ['^' (rune ket %clkt expd)]
+# ++  expd  |.(;~(gunk loaf loaf loaf loaf))          ::  four hoons
 # FIXED: colket hoon hoon hoon hoon
 
-# Running syntax
-COLSIG ~ [:] [~]
+# ['~' (rune sig %clsg exps)]
+#  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColsig
-tallColsig ::= (COLSIG GAP) hoonSeq (GAP '==')
+tallColsig ::= (COL SIG GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideColsig
-wideColsig ::= (COLSIG '(') wideHoonSeq (')')
+wideColsig ::= (COL SIG '(') wideHoonSeq (')')
 
-# Running syntax
-COLTAR ~ [:] [*]
+# ['*' (rune tar %cltr exps)]
+#  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColtar
-tallColtar ::= (COLTAR GAP) hoonSeq (GAP '==')
+tallColtar ::= (COL TAR GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideColtar
-wideColtar ::= (COLTAR '(') wideHoonSeq (')')
+wideColtar ::= (COL TAR '(') wideHoonSeq (')')
 
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+ 
 # DOTKET hoon hoon
 DOTKET ~ [.] [\^]
 hoon ::= tallDotket
