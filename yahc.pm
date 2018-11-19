@@ -542,7 +542,7 @@ moldBucSingleString ::= '$' qut4k
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
 
-wideMold ::= rump5d 
+wideMold ::= rump5d
 
 # '%'
 # Differs from scat(5d)
@@ -876,7 +876,7 @@ wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 # TODO: Finish adding molds from norm
 
 # Implementing norm(5d) for hoons
- 
+
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
 # wisp must be tall, therefore wasp and BARCAB must be tall
@@ -997,7 +997,7 @@ wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 # ['~' (rune sig %cnsg expn)]
 # ++  expn  |.  ;~  gunk  rope  loaf                  ::  wing, hoon,
 # 		;~(plug loaf (easy ~))              ::  list of one hoon
-# 	      ==    
+# 	      ==
 # FIXED: censig rope5d hoon hoon
 
 # ['*' (rune tar %cntr expm)]
@@ -1141,9 +1141,7 @@ tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideSemsig
 wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
-# :~  ['|' (rune bar %sgbr expb)]
+# ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
 
 # ['$' (rune buc %sgbc expf)]
@@ -1151,6 +1149,10 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: sigbuc CEN_SYM4K hoon
 
 # ['_' (rune cab %sgcb expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: sigcab hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['%' (rune cen %sgcn hind)]
 # TODO implement bonz(5d)
@@ -1174,11 +1176,11 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: sigpam hoon hoon
 
 # ['=' (rune tis %sgts expb)]
-# ['?' (rune wut %sgwt hing)]
-# ['!' (rune zap %sgzp expb)]
 
-# FIXED: sigcab hoon hoon
+# ['?' (rune wut %sgwt hing)]
 # FIXED: sigwut hoon hoon hoon
+
+# ['!' (rune zap %sgzp expb)]
 # FIXED: sigzap hoon hoon
 
 # ['|' (rune bar %tsbr exqc)]
@@ -1964,6 +1966,12 @@ norm5dWide ::= wideSigbuc
 tallSigbuc ::= (SIG4H BUC4H GAP)CEN_SYM4K (GAP) hoon
 wideSigbuc ::= (SIG4H BUC4H) [(] CEN_SYM4K (ACE) wideHoon [)]
 
+# SIGCAB hoon hoon
+hoon ::= tallSigcab
+norm5dWide ::= wideSigcab
+tallSigcab ::= (SIG4H CAB4H GAP)hoon (GAP) hoon
+wideSigcab ::= (SIG4H CAB4H) [(] wideHoon (ACE) wideHoon [)]
+
 # SIGCEN bonk5d rope5d hoon hoon
 hoon ::= tallSigcen
 norm5dWide ::= wideSigcen
@@ -1999,12 +2007,6 @@ hoon ::= tallSigpam
 norm5dWide ::= wideSigpam
 tallSigpam ::= (SIG4H PAM4H GAP)hoon (GAP) hoon
 wideSigpam ::= (SIG4H PAM4H) [(] wideHoon (ACE) wideHoon [)]
-
-# SIGCAB hoon hoon
-hoon ::= tallSigcab
-norm5dWide ::= wideSigcab
-tallSigcab ::= (SIG4H CAB4H GAP)hoon (GAP) hoon
-wideSigcab ::= (SIG4H CAB4H) [(] wideHoon (ACE) wideHoon [)]
 
 # SIGWUT hoon hoon hoon
 hoon ::= tallSigwut

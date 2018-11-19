@@ -6,7 +6,7 @@ use English qw( -no_match_vars );
 # This code uses as its grammar reference the code in
 # the arvo repo: https://github.com/urbit/arvo
 # File sys/hoon.hoon: https://github.com/urbit/arvo/blob/master/sys/hoon.hoon
-# as of commit 7dc3eb1cfacaaafd917697a544bdcf7f22e09eeb 
+# as of commit 7dc3eb1cfacaaafd917697a544bdcf7f22e09eeb
 
 # Organization is by hoon.hoon (and Hoon Library) sections: 4a, 5d, etc.;
 # and within that alphabetically by "face" name
@@ -570,7 +570,7 @@ moldBucSingleString ::= '$' qut4k
 wideMold ::= moldBucNuck4l
 moldBucNuck4l ::= '$' nuck4l
 
-wideMold ::= rump5d 
+wideMold ::= rump5d
 
 # '%'
 # Differs from scat(5d)
@@ -904,7 +904,7 @@ wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 # TODO: Finish adding molds from norm
 
 # Implementing norm(5d) for hoons
- 
+
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
 # wisp must be tall, therefore wasp and BARCAB must be tall
@@ -1025,7 +1025,7 @@ wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 # ['~' (rune sig %cnsg expn)]
 # ++  expn  |.  ;~  gunk  rope  loaf                  ::  wing, hoon,
 # 		;~(plug loaf (easy ~))              ::  list of one hoon
-# 	      ==    
+# 	      ==
 # FIXED: censig rope5d hoon hoon
 
 # ['*' (rune tar %cntr expm)]
@@ -1169,9 +1169,7 @@ tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideSemsig
 wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
-# :~  ['|' (rune bar %sgbr expb)]
+# ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
 
 # ['$' (rune buc %sgbc expf)]
@@ -1179,6 +1177,10 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: sigbuc CEN_SYM4K hoon
 
 # ['_' (rune cab %sgcb expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: sigcab hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['%' (rune cen %sgcn hind)]
 # TODO implement bonz(5d)
@@ -1202,11 +1204,11 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: sigpam hoon hoon
 
 # ['=' (rune tis %sgts expb)]
-# ['?' (rune wut %sgwt hing)]
-# ['!' (rune zap %sgzp expb)]
 
-# FIXED: sigcab hoon hoon
+# ['?' (rune wut %sgwt hing)]
 # FIXED: sigwut hoon hoon hoon
+
+# ['!' (rune zap %sgzp expb)]
 # FIXED: sigzap hoon hoon
 
 # ['|' (rune bar %tsbr exqc)]
@@ -1689,7 +1691,7 @@ for my $glyphName (sort keys %glyphs) {
     push @glyphRules, "inaccessible_ok ::= $ucGlyphName";
     push @glyphRules, "inaccessible_ok ::= $uc4hGlyphName";
 }
-my $glyphAutoRules = join "\n", @glyphRules; 
+my $glyphAutoRules = join "\n", @glyphRules;
 
 my @dslAutoRules = ();
 DESC: for my $desc (split "\n", $dsl_main) {
