@@ -1040,26 +1040,36 @@ wideColsig ::= (COL SIG '(') wideHoonSeq (')')
 hoon ::= tallColtar
 tallColtar ::= (COL TAR GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideColtar
-wideColtar ::= (COL TAR '(') wideHoonSeq (')')
+wideColtar ::= (COL TAR PEL) wideHoonSeq (PER)
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
- 
-# DOTKET hoon hoon
-DOTKET ~ [.] [\^]
+# ['^' (rune ket %dtkt exqn)]
+# ++  exqn  |.(;~(gunk loan (stag %cltr (butt hank))))::  autoconsed hoons
+# I do not understand hoon.hoon comment ("autoconsed hoons"), but
+# follow the code
 hoon ::= tallDotket
+tallDotket ::= (DOT KET GAP) mold (GAP) hoonSeq (GAP '==')
 norm5dWide ::= wideDotket
-tallDotket ::= (DOTKET GAP)hoon (GAP) hoonSeq
-wideDotket ::= (DOTKET) [(] wideHoon (ACE) wideHoonSeq [)]
+wideDotket ::= (DOT KET PEL) wideMold (ACE) wideHoonSeq (PER)
 
-# FIXED: dottis hoon hoon
-
+# ['+' (rune lus %dtls expa)]
 # :~  ['+' (rune lus %dtls expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: dotlus hoon
 
+# ['*' (rune tar %dttr expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: dottar hoon hoon
+
+# ['=' (rune tis %dtts expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: dottis hoon hoon
+
+# ['?' (rune wut %dtwt expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: dotwut hoon
 
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+ 
 # FAS group are (usually?) ford runes:
 
 # FIXED: fassem hoon hoon
@@ -1829,12 +1839,6 @@ norm5dWide ::= wideColket
 tallColket ::= (COL4H KET4H GAP)hoon (GAP) hoon (GAP) hoon (GAP) hoon
 wideColket ::= (COL4H KET4H) [(] wideHoon (ACE) wideHoon (ACE) wideHoon (ACE) wideHoon [)]
 
-# DOTTIS hoon hoon
-hoon ::= tallDottis
-norm5dWide ::= wideDottis
-tallDottis ::= (DOT4H TIS4H GAP)hoon (GAP) hoon
-wideDottis ::= (DOT4H TIS4H) [(] wideHoon (ACE) wideHoon [)]
-
 # DOTLUS hoon
 hoon ::= tallDotlus
 norm5dWide ::= wideDotlus
@@ -1846,6 +1850,12 @@ hoon ::= tallDottar
 norm5dWide ::= wideDottar
 tallDottar ::= (DOT4H TAR4H GAP)hoon (GAP) hoon
 wideDottar ::= (DOT4H TAR4H) [(] wideHoon (ACE) wideHoon [)]
+
+# DOTTIS hoon hoon
+hoon ::= tallDottis
+norm5dWide ::= wideDottis
+tallDottis ::= (DOT4H TIS4H GAP)hoon (GAP) hoon
+wideDottis ::= (DOT4H TIS4H) [(] wideHoon (ACE) wideHoon [)]
 
 # DOTWUT hoon
 hoon ::= tallDotwut
