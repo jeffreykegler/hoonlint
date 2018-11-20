@@ -262,7 +262,7 @@ lexeme default = latm => 1
 UNICORN ~ unicorn
 unicorn ~ [^\d\D]
 
-# === Hoon library: 4i ===
+# === Hoon 4i library ===
 
 dog4i ~ dot4h gay4i
 
@@ -271,7 +271,7 @@ gay4i ~ gap4k
 
 # vul4i ~ '::' optNonNLs nl
 
-# === Hoon library: 4j ===
+# === Hoon 4j library ===
 
 # Two hex numbers
 bix4j ~ six4j six4j
@@ -302,7 +302,7 @@ sid4j ~ [0-9]
 six4j ~ [0-9a-f]
 siv4j ~ [0-9a-v]
 
-# === Hoon library: 4k ===
+# === Hoon 4k library ===
 
 SYM4K ~ sym4k
 CEN_SYM4K ~ cen4h sym4k
@@ -361,7 +361,7 @@ hit4k ~ [a-fA-F]
 
 gon4k ~ bas4h gay4i fas4h
 
-# === Hoon library: 4l ===
+# === Hoon 4l library ===
 
 # TODO: crub(4l) is incomplete
 
@@ -435,28 +435,28 @@ bisk4l ::= NUMBER
 #         :-  '.'        ;~(pfix dot perd)
 #         :-  '~'        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
 
-# === Hoon library: 5d ===
+# === Hoon 5d library ===
 
-# Implementing bonk(5d)
+# 5d library: bonk
 
 bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H DOT4H dem4k
 bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H dem4k
 bonk5d ::= CEN4H SYM4K DOT4H dem4k
 bonk5d ::= CEN4H SYM4K
 
-# Implementing bont(5d)
+# 5d library: bont
 
 bont5d ::= CEN4H SYM4K ([.] GAP) hoon
 bont5d ::= wideBont5d
 wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
 wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
-# Implementing bony(5d)
+# 5d library: bony
 
 # one or more equal signs
 bony5d ::= TIS+
 
-# Implementing bonz(5d)
+# 5d library: bonz
 
 bonz5d ::= (TIS TIS GAP) optBonzElements (GAP TIS TIS)
 bonz5d ::= wideBonz5d
@@ -479,12 +479,12 @@ mold ::= wideMold
 moldSeq ::= mold+ separator=>GAP proper=>1
 wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 
-# Implementing wede(5d)
+# 5d library: wede
 
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
 
-# Implementing boog(5d)
+# 5d library: boog
 # Always tall
 
 # TODO: Needs elaboration from hoon.hoon
@@ -499,7 +499,7 @@ lusHepCell ::= ('+-' GAP) SYM4K (GAP) hoon
 lusHepCell ::= ('+-' GAP) BUC (GAP) hoon
 lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
 
-# Implementing long(5d)
+# 5d library: long
 
 long5dWide ::= infixTis
 long5dWide ::= infixCol
@@ -519,7 +519,7 @@ wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
 wideHoonJog ::= rope5d (ACE) wideHoon
 wideHoonJoggingSeparator ::= COM ACE
 
-# Implementing rope(5d)
+# 5d library: rope
 
 # the wing type is parsed by the rope(5d)
 rope5d ::= limb+ separator=>[.] proper=>1
@@ -533,7 +533,7 @@ limb ::= PAM4H DIM4J
 limb ::= VEN4K
 limb ::= '.'
 
-# Implementing rick(5d)
+# 5d library: rick
 
 rick5d ::= rick5dJog+ separator=>GAP proper=>1
 rick5dJog ::= rope5d (GAP) hoon
@@ -541,7 +541,7 @@ rick5dJog ::= rope5d (GAP) hoon
 wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
 wideRick5dJog ::= rope5d (COM ACE) hoon
 
-# Implementing ruck(5d)
+# 5d library: ruck
 
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
 ruck5dJog ::= mold (GAP) hoon
@@ -549,7 +549,7 @@ ruck5dJog ::= mold (GAP) hoon
 wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
 wideRuck5dJog ::= mold (COM ACE) hoon
 
-# Implementing teak(5d)
+# 5d library: teak
 
 # teak is
 #
@@ -569,12 +569,12 @@ wideTeakChoice ::= rope5d rank=>2
 wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
 wideTeakChoice ::= wideHoon rank=>1
 
-# Implementing rump(5d)
+# 5d library: rump
 
 rump5d ::= rope5d
 rump5d ::= rope5d wede5d
 
-# Implementing rupl(5d)
+# 5d library: rupl
 # rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
 # syntaxes.
 
@@ -593,7 +593,7 @@ circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
 sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
 sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
 
-# Implementing scad(5d)
+# 5d library: scad
 
 # scad(5d) implements the irregular mold syntaxes
 
@@ -924,7 +924,7 @@ circumGalgar ::= ('<') wideHoon ('>')
 scat5d ::= circumGargal
 circumGargal ::= ('>') wideHoon ('<')
 
-# Implementing norm(5d) -- molds
+# 5d library: norm
 
 # Running syntax
 mold ::= tallBuccenMold
@@ -960,7 +960,7 @@ wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 
 # TODO: Finish adding molds from norm
 
-# Implementing norm(5d) for hoons
+# 5d library: norm
 
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
@@ -1443,7 +1443,7 @@ wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is implemented in scat5d
 
-# Implementing soil(5d)
+# 5d library: soil
 
 # TODO -- Finish soil(5d) -- add triple double strings
 
@@ -1463,7 +1463,7 @@ unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 
 sump5d ::= KEL wideHoonSeq KER
 
-# Implementing wasp(5d)
+# 5d library: wasp
 # Always occurs with wisp(5d), which must be tall,
 # so wisp is always tall
 
@@ -1472,15 +1472,17 @@ wasp5d ::= (LUS TAR GAP) waspElements (GAP)
 waspElements ::= waspElement+ separator=>GAP proper=>1
 waspElement  ::= SYM4K (GAP) hoon
 
-# Implementing wisp(5d)
+# 5d library: wisp
 
 wisp5d ::= ('--')
 wisp5d ::= whap5d GAP ('--')
 
-# Implementing whap(5d)
+# 5d library: whap
 # Always tall
 
 whap5d ::= boog5d+ separator=>GAP proper=>1
+
+# End of 5d library
 
 # === HOON FILE ===
 :start ::= hoonFile
@@ -1604,17 +1606,25 @@ hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
-# === PATHS ==
-
+# 5d library: rood
 # rood is the path parser
 
 rood5d ::= [/] poor5d
+
+# 5d library: poor
+
 poor5d ::= gash5d
 poor5d ::= gash5d CEN4H porc5d
+
+# 5d library: porc
+
 porc5d ::= optCen4hSeq FAS gash5d
 optCen4hSeq ::= # empty
 optCen4hSeq ::= CEN4H_SEQ
 CEN4H_SEQ ~ cen4h+
+
+# 5d library: gash
+
 gash5d ::= limp5d* separator=>[/]
 limp5d ::= (optFasSeq) gasp5d
 optFasSeq ::= # empty
@@ -1625,7 +1635,13 @@ tisSeq ~ tis4h+
 optTisSeq ::= # empty
 optTisSeq ::= TIS_SEQ
 TIS_SEQ ~ tis4h+
+
+# 5d library: gasp
+
 gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
+
+# 5d library: hasp
+
 hasp5d ::= (SEL) wideHoon (SER)
 hasp5d ::= (PEL) wideHoonSeq (PER)
 hasp5d ::= BUC4H
