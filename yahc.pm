@@ -1225,14 +1225,18 @@ wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigzap hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['|' (rune bar %tsbr exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 # FIXED: tisbar mold hoon
 
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
+hoon ::= tallTiscol
+tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS) hoon
+norm5dWide ::= wideTiscol
+wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # [',' (rune com %tscm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
