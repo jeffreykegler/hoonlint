@@ -475,6 +475,15 @@ bont5d ::= wideBont5d
 wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
 wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
+bonz5d ::= (TIS TIS GAP) optBonzElements (GAP TIS TIS)
+bonz5d ::= wideBonz5d
+wideBonz5d ::= SIG
+wideBonz5d ::= (PEL) optWideBonzElements (PER)
+optBonzElements ::= bonzElement* separator=>GAP
+bonzElement ::= CEN SYM4K (GAP) hoon
+optWideBonzElements ::= wideBonzElement* separator=>ACE
+wideBonzElement ::= CEN SYM4K (ACE) hoon
+
 # Lexemes cannot be empty so empty
 # aura name must be special cased.
 auraName ::= # empty
@@ -872,7 +881,7 @@ circumGargal ::= ('>') wideHoon ('<')
 # Running syntax
 mold ::= tallBuccenMold
 wideMold ::= wideBuccenMold
-tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP '==')
+tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
 wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
 
 # [':' (rune col %bccl exqs)]
@@ -880,7 +889,7 @@ wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
 # Running syntax
 mold ::= tallBuccolMold
 wideMold ::= wideBuccolMold
-tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP '==')
+tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 wideBuccolMold ::= (BUC COL '(') wideMoldSeq (')')
 
 # BUCHEP mold mold
@@ -898,7 +907,7 @@ wideBucpatMold ::= (BUC PAT) [(] wideMold (ACE) wideMold [)]
 # Running syntax
 mold ::= tallBucwutMold
 wideMold ::= wideBucwutMold
-tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP '==')
+tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
 wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 
 # TODO: Finish adding molds from norm
@@ -959,7 +968,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 hoon ::= tallBuccol
-tallBuccol ::= (BUC COL GAP) moldSeq (GAP '==')
+tallBuccol ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBuccol
 wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 
@@ -967,7 +976,7 @@ wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
 hoon ::= tallBuccen
-tallBuccen ::= (BUC CEN GAP) moldSeq (GAP '==')
+tallBuccen ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBuccen
 wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 
@@ -995,14 +1004,14 @@ wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 hoon ::= tallBucwut
-tallBucwut ::= (BUC WUT GAP) moldSeq (GAP '==')
+tallBucwut ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBucwut
 wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 
 # ['_' (rune cab %cncb exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
 hoon ::= tallCencab
-tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP '==')
+tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 norm5dWide ::= wideCencab
 wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 
@@ -1031,14 +1040,14 @@ wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 # ['*' (rune tar %cntr expm)]
 #  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
 hoon ::= tallCentar
-tallCentar ::= (CEN TAR GAP) rope5d (GAP) hoon (GAP) rick5d (GAP '==')
+tallCentar ::= (CEN TAR GAP) rope5d (GAP) hoon (GAP) rick5d (GAP TIS TIS)
 norm5dWide ::= wideCentar
 wideCentar ::= (CEN TAR PEL) rope5d (ACE) wideHoon (GAP) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
 hoon ::= tallCentis
-tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP '==')
+tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 norm5dWide ::= wideCentis
 wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
@@ -1061,14 +1070,14 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 # ['~' (rune sig %clsg exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColsig
-tallColsig ::= (COL SIG GAP) hoonSeq (GAP '==')
+tallColsig ::= (COL SIG GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideColsig
 wideColsig ::= (COL SIG '(') wideHoonSeq (')')
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColtar
-tallColtar ::= (COL TAR GAP) hoonSeq (GAP '==')
+tallColtar ::= (COL TAR GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideColtar
 wideColtar ::= (COL TAR PEL) wideHoonSeq (PER)
 
@@ -1077,7 +1086,7 @@ wideColtar ::= (COL TAR PEL) wideHoonSeq (PER)
 # I do not understand hoon.hoon comment ("autoconsed hoons"), but
 # follow the code
 hoon ::= tallDotket
-tallDotket ::= (DOT KET GAP) mold (GAP) hoonSeq (GAP '==')
+tallDotket ::= (DOT KET GAP) mold (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideDotket
 wideDotket ::= (DOT KET PEL) wideMold (ACE) wideHoonSeq (PER)
 
@@ -1150,7 +1159,7 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # [':' (rune col %smcl expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
 hoon ::= tallSemcol
-tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP '==')
+tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideSemcol
 wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
 
@@ -1165,7 +1174,7 @@ wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
 # ['~' (rune sig %smsg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
 hoon ::= tallSemsig
-tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP '==')
+tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideSemsig
 wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 
@@ -1180,12 +1189,11 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigcab hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['%' (rune cen %sgcn hind)]
-# TODO implement bonz(5d)
 # ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
-# FIXED: sigcen bonk5d rope5d hoon hoon
+# FIXED: sigcen bonk5d rope5d bonz5d hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['/' (rune fas %sgfs hine)]
 # ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
@@ -1239,7 +1247,7 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
-tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP '==')
+tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP TIS TIS)
 tallWutbar ::= (BAR4H GAP) hoon
 norm5dWide ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
@@ -1253,7 +1261,7 @@ wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 
 WUTPAM ~ [?] [&]
 hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP '==')
+tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutpam
 wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
@@ -1269,14 +1277,14 @@ wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
 
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP '==')
+tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP TIS TIS)
 
 # ['+' ;~(pfix lus (toad tkls))]
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
 # 			(~(wtls ah a) b c)
 #	      (butt ;~(gunk teak loaf ruck))
 hoon ::= tallWutlus
-tallWutlus ::= (WUT LUS GAP) teak (GAP) hoon (GAP) ruck5d (GAP '==')
+tallWutlus ::= (WUT LUS GAP) teak (GAP) hoon (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWutlus
 wideWutlus ::= (WUT LUS PEL) teak (ACE) hoon (ACE) wideRuck5d (PAR)
 
@@ -1660,6 +1668,7 @@ sub doFixedRune {
       . ' GAP)' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
         bont5d => 'wideBont5d',
+        bonz5d => 'wideBonz5d',
         mold => 'wideMold',
         hoon => 'wideHoon',
         rack5d => 'wideRack5d',
