@@ -1264,8 +1264,6 @@ tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS) hoon
 norm5dWide ::= wideTiscol
 wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # [',' (rune com %tscm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tiscom hoon hoon
@@ -1277,6 +1275,8 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 # ['-' (rune hep %tshp expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tishep hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['/' (rune fas %tsfs expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
