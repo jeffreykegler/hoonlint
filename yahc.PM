@@ -507,11 +507,6 @@ mold ::= wideMold
 moldSeq ::= mold+ separator=>GAP proper=>1
 wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 
-# 5d library: wede
-
-wede5d ::= (FAS) wideHoon
-wede5d ::= (LUS) wideHoon
-
 # 5d library: boog
 # Always tall
 
@@ -526,6 +521,31 @@ lusLusCell ::= ('++' GAP) SYM4K (GAP) hoon
 lusHepCell ::= ('+-' GAP) SYM4K (GAP) hoon
 lusHepCell ::= ('+-' GAP) BUC (GAP) hoon
 lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
+
+# 5d library: gash
+
+gash5d ::= limp5d* separator=>[/]
+limp5d ::= (optFasSeq) gasp5d
+optFasSeq ::= # empty
+optFasSeq ::= FAS_SEQ
+FAS_SEQ ~ fas4h+
+gasp5d ::= tisSeq
+tisSeq ~ tis4h+
+optTisSeq ::= # empty
+optTisSeq ::= TIS_SEQ
+TIS_SEQ ~ tis4h+
+
+# 5d library: gasp
+
+gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
+
+# 5d library: hasp
+
+hasp5d ::= (SEL) wideHoon (SER)
+hasp5d ::= (PEL) wideHoonSeq (PER)
+hasp5d ::= BUC4H
+hasp5d ::= qut4k
+hasp5d ::= nuck4l
 
 # 5d library: long
 
@@ -1500,6 +1520,11 @@ wasp5d ::= (LUS TAR GAP) waspElements (GAP)
 waspElements ::= waspElement+ separator=>GAP proper=>1
 waspElement  ::= SYM4K (GAP) hoon
 
+# 5d library: wede
+
+wede5d ::= (FAS) wideHoon
+wede5d ::= (LUS) wideHoon
+
 # 5d library: wisp
 
 wisp5d ::= ('--')
@@ -1650,31 +1675,6 @@ porc5d ::= optCen4hSeq FAS gash5d
 optCen4hSeq ::= # empty
 optCen4hSeq ::= CEN4H_SEQ
 CEN4H_SEQ ~ cen4h+
-
-# 5d library: gash
-
-gash5d ::= limp5d* separator=>[/]
-limp5d ::= (optFasSeq) gasp5d
-optFasSeq ::= # empty
-optFasSeq ::= FAS_SEQ
-FAS_SEQ ~ fas4h+
-gasp5d ::= tisSeq
-tisSeq ~ tis4h+
-optTisSeq ::= # empty
-optTisSeq ::= TIS_SEQ
-TIS_SEQ ~ tis4h+
-
-# 5d library: gasp
-
-gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
-
-# 5d library: hasp
-
-hasp5d ::= (SEL) wideHoon (SER)
-hasp5d ::= (PEL) wideHoonSeq (PER)
-hasp5d ::= BUC4H
-hasp5d ::= qut4k
-hasp5d ::= nuck4l
 
 # === CELLS BY TYPE ==
 
