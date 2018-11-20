@@ -28,19 +28,14 @@
       [
         'tallTisbar',
         [
-          'rump5d',
+          'moldInfixFas',
+          'game',
+          '/',
           [
-            'limb',
-            'game'
-          ],
-          [
-            'wede5d',
+            'rump5d',
             [
-              'rump5d',
-              [
-                'limb',
-                'game'
-              ]
+              'limb',
+              'game'
             ]
           ]
         ],
@@ -84,28 +79,28 @@
               [
                 'tallTisket',
                 [
-                  'rump5d',
+                  'infixFas',
                   [
-                    'limb',
-                    'this'
+                    'rump5d',
+                    [
+                      'limb',
+                      'this'
+                    ]
                   ],
                   [
-                    'wede5d',
+                    'circumParen2',
                     [
-                      'circumParen2',
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'unit'
-                        ]
-                      ],
+                        'limb',
+                        'unit'
+                      ]
+                    ],
+                    [
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'fact'
-                        ]
+                        'limb',
+                        'fact'
                       ]
                     ]
                   ]
@@ -152,28 +147,28 @@
                 [
                   'tallTisfas',
                   [
-                    'rump5d',
+                    'infixFas',
                     [
-                      'limb',
-                      'rest'
+                      'rump5d',
+                      [
+                        'limb',
+                        'rest'
+                      ]
                     ],
                     [
-                      'wede5d',
+                      'circumParen2',
                       [
-                        'circumParen2',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'list'
-                          ]
-                        ],
+                          'limb',
+                          'list'
+                        ]
+                      ],
+                      [
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'fact'
-                          ]
+                          'limb',
+                          'fact'
                         ]
                       ]
                     ]
@@ -352,19 +347,14 @@
                       ]
                     ],
                     [
-                      'rump5d',
+                      'moldInfixFas',
+                      'p',
+                      '/',
                       [
-                        'limb',
-                        'p'
-                      ],
-                      [
-                        'wede5d',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'cord'
-                          ]
+                          'limb',
+                          'cord'
                         ]
                       ]
                     ]
@@ -390,19 +380,14 @@
                       ]
                     ],
                     [
-                      'rump5d',
+                      'moldInfixFas',
+                      'p',
+                      '/',
                       [
-                        'limb',
-                        'p'
-                      ],
-                      [
-                        'wede5d',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'spot'
-                          ]
+                          'limb',
+                          'spot'
                         ]
                       ]
                     ]
@@ -418,19 +403,14 @@
                       ]
                     ],
                     [
-                      'rump5d',
+                      'moldInfixFas',
+                      'p',
+                      '/',
                       [
-                        'limb',
-                        'p'
-                      ],
-                      [
-                        'wede5d',
+                        'rump5d',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'spot'
-                          ]
+                          'limb',
+                          'spot'
                         ]
                       ]
                     ]
@@ -475,36 +455,26 @@
                     ]
                   ],
                   [
-                    'rump5d',
+                    'moldInfixFas',
+                    'a',
+                    '/',
                     [
-                      'limb',
-                      'a'
-                    ],
-                    [
-                      'wede5d',
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'side'
-                        ]
+                        'limb',
+                        'side'
                       ]
                     ]
                   ],
                   [
-                    'rump5d',
+                    'moldInfixFas',
+                    'z',
+                    '/',
                     [
-                      'limb',
-                      'z'
-                    ],
-                    [
-                      'wede5d',
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'side'
-                        ]
+                        'limb',
+                        'side'
                       ]
                     ]
                   ]
@@ -530,19 +500,14 @@
                 [
                   'tallBarcab',
                   [
-                    'rump5d',
+                    'moldInfixFas',
+                    'half',
+                    '/',
                     [
-                      'limb',
-                      'half'
-                    ],
-                    [
-                      'wede5d',
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'side'
-                        ]
+                        'limb',
+                        'side'
                       ]
                     ]
                   ],
@@ -631,19 +596,14 @@
                             'wideBartis',
                             '(',
                             [
-                              'rump5d',
+                              'moldInfixFas',
+                              'a',
+                              '/',
                               [
-                                'limb',
-                                'a'
-                              ],
-                              [
-                                'wede5d',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'spot'
-                                  ]
+                                  'limb',
+                                  'spot'
                                 ]
                               ]
                             ],
@@ -706,19 +666,14 @@
                             'wideBartis',
                             '(',
                             [
-                              'rump5d',
+                              'moldInfixFas',
+                              'a',
+                              '/',
                               [
-                                'limb',
-                                'a'
-                              ],
-                              [
-                                'wede5d',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'spot'
-                                  ]
+                                  'limb',
+                                  'spot'
                                 ]
                               ]
                             ],
@@ -762,19 +717,14 @@
                             'wideBartis',
                             '(',
                             [
-                              'rump5d',
+                              'moldInfixFas',
+                              'a',
+                              '/',
                               [
-                                'limb',
-                                'a'
-                              ],
-                              [
-                                'wede5d',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'spot'
-                                  ]
+                                  'limb',
+                                  'spot'
                                 ]
                               ]
                             ],
@@ -927,19 +877,14 @@
                 [
                   'tallBarcab',
                   [
-                    'rump5d',
+                    'moldInfixFas',
+                    'game',
+                    '/',
                     [
-                      'limb',
-                      'game'
-                    ],
-                    [
-                      'wede5d',
+                      'rump5d',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'game'
-                        ]
+                        'limb',
+                        'game'
                       ]
                     ]
                   ],
@@ -958,19 +903,14 @@
                           [
                             'tallBartis',
                             [
-                              'rump5d',
+                              'moldInfixFas',
+                              'act',
+                              '/',
                               [
-                                'limb',
-                                'act'
-                              ],
-                              [
-                                'wede5d',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'move'
-                                  ]
+                                  'limb',
+                                  'move'
                                 ]
                               ]
                             ],
@@ -1208,19 +1148,14 @@
                           [
                             'tallBarcab',
                             [
-                              'rump5d',
+                              'moldInfixFas',
+                              'here',
+                              '/',
                               [
-                                'limb',
-                                'here'
-                              ],
-                              [
-                                'wede5d',
+                                'rump5d',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'spot'
-                                  ]
+                                  'limb',
+                                  'spot'
                                 ]
                               ]
                             ],
@@ -1361,19 +1296,19 @@
                                         [
                                           'tallTisfas',
                                           [
-                                            'rump5d',
+                                            'infixFas',
                                             [
-                                              'limb',
-                                              'next'
+                                              'rump5d',
+                                              [
+                                                'limb',
+                                                'next'
+                                              ]
                                             ],
                                             [
-                                              'wede5d',
+                                              'rump5d',
                                               [
-                                                'rump5d',
-                                                [
-                                                  'limb',
-                                                  'side'
-                                                ]
+                                                'limb',
+                                                'side'
                                               ]
                                             ]
                                           ],

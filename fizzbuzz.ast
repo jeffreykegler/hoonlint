@@ -2,19 +2,14 @@
   [
     'tallBartis',
     [
-      'rump5d',
+      'moldInfixFas',
+      'end',
+      '/',
       [
-        'limb',
-        'end'
-      ],
-      [
-        'wede5d',
+        'rump5d',
         [
-          'rump5d',
-          [
-            'limb',
-            'atom'
-          ]
+          'limb',
+          'atom'
         ]
       ]
     ],

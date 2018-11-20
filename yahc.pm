@@ -521,18 +521,18 @@ hasp5d ::= nuck4l
 
 # 5d library: long
 
-long5dWide ::= infixTis
-long5dWide ::= infixCol
-long5dWide ::= infixKet
-long5dWide ::= infixFas
-long5dWide ::= circumScatParen
-long5dWide ::= scat5d
+long5dWide ::= infixTis rank=>60
+long5dWide ::= infixCol rank=>50
+long5dWide ::= infixKet rank=>40
+long5dWide ::= infixFas rank=>30
+long5dWide ::= circumScatParen rank=>20
+long5dWide ::= scat5d rank=>10
 
-infixTis ::= scat5d (TIS) wideHoon rank=>60
-infixCol ::= scat5d (COL) wideHoon rank=>50
-infixKet ::= scat5d (KET) wideHoon rank=>40
-infixFas ::= scat5d (FAS) wideHoon rank=>30
-circumScatParen ::= scat5d (PEL) lobo5d (PER) rank=>20
+infixTis ::= scat5d (TIS) wideHoon
+infixCol ::= scat5d (COL) wideHoon
+infixKet ::= scat5d (KET) wideHoon
+infixFas ::= scat5d (FAS) wideHoon
+circumScatParen ::= scat5d (PEL) lobo5d (PER)
 
 lobo5d ::= wideHoonJogs
 wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
@@ -652,222 +652,12 @@ moldPrefixTis ::= ('=') wideMold (')')
 # ['a' 'z']
 # Differs from scat(5d)
 # for scab(5d), see the KET subcase
-wideMold ::= moldInfixFas
-wideMold ::= moldInfixTis
-moldInfixFas ::= SYM4K FAS wideMold rank=>1
-moldInfixTis ::= SYM4K TIS wideMold rank=>1
+wideMold ::= moldInfixFas rank=>1
+wideMold ::= moldInfixTis rank=>1
+moldInfixFas ::= SYM4K FAS wideMold
+moldInfixTis ::= SYM4K TIS wideMold
 
 # End of scad(5d)
-
-# 5d library: scat
-# scat(5d) implements the irregular hoon syntaxes
-
-# For convenience in referring back
-# to hoon.hoon, I use scat(5d)'s order, as is.
-# Unfortunately this is not in the same
-# order as in scad.
-
-# ','
-# Differs from scad(5)
-# TODO: Finish
-wideBuccol ::= (',[') wideMoldSeq (']')
-
-# TODO: <hoonUnary> was a Marpa hack (that it, not in hoon.hoon)
-# to duplicate Hoon precedence.  It may no longer be necessary.
-# This needs to be tested.
-
-# '!'
-# Not in scad(5)
-# TODO: Finish
-hoonUnary ::= prefixZap
-prefixZap ::= (ZAP) wideHoon
-scat5d ::= wideZapzap
-wideZapzap ~ zap4h zap4h
-
-# '_'
-# Same as scad(5)
-hoonUnary ::= prefixCab
-prefixCab ::= (CAB) wideHoon
-
-# '$'
-# For rump, see subcase ['a' 'z']
-# Differs from scad(5)
-scat5d ::= bucBuc
-scat5d ::= bucPam
-scat5d ::= bucBar
-scat5d ::= dollarTerm
-bucBuc ::= BUC4H BUC4H
-bucPam ::= BUC4H PAM4H
-bucBar ::= BUC4H BAR4H
-dollarTerm ::= BUC4H qut4k
-dollarTerm ::= BUC4H nuck4l
-
-# '%'
-# Differs from scad(5)
-scat5d ::= cenPath
-scat5d ::= cenBuc
-scat5d ::= cenPam
-scat5d ::= cenBar
-scat5d ::= cenTerm
-scat5d ::= cenDirectories
-cenPath ::= CEN4H porc5d
-cenBuc ::= CEN4H BUC4H
-cenPam ::= CEN4H PAM4H
-cenBar ::= CEN4H BAR4H
-cenTerm ::= CEN4H qut4k
-cenTerm ::= CEN4H nuck4l
-cenDirectories ::= CEN4H+
-
-# '&'
-# Not in scad(5)
-# TODO: Finish
-# For rope(5d), see subcase ['a' 'z'] and rump(5d)
-scat5d ::= prefixPam
-scat5d ::= pamPlusPrefix
-scat5d ::= soloPam
-prefixPam ::= (PAM4H '(') wideHoonSeq (')')
-pamPlusPrefix ::= (PAM4H) wede5d
-soloPam ::= PAM4H
-
-# '\''
-# Not in scad(5)
-scat5d ::= singleQuoteString
-singleQuoteString ::= qut4k
-
-# '('
-# Differs from scad(5)
-# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
-# and cenhep in https://urbit.org/docs/hoon/irregular/
-scat5d ::= circumParen1
-scat5d ::= circumParen2
-circumParen1 ::= ('(') wideHoon (')')
-circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
-
-# '{'
-# Same as scad(5)
-scat5d ::= circumBraces
-circumBraces ::= ('{') wideMoldSeq ('}')
-
-# '*'
-# Superset of scad(5)
-scat5d ::= prefixTar
-scat5d ::= soloTar
-prefixTar ::= TAR wideMold
-soloTar ::= TAR
-
-# '@'
-# TODO: NYI
-# Same as scad(5)
-# '@'
-# Same as scat(5d)
-scat5d ::= aura
-aura ::= '@' auraName
-
-# '+'
-# Not in scad(5)
-# TODO: Finish
-scat5d ::= irrDotlus
-irrDotlus ::= ('+(') wideHoon (')')
-
-# '-'
-# TODO: NYI
-# Not in scad(5)
-
-# '.'
-# TODO: NYI
-# Not in scad(5)
-
-# ['0' '9']
-# Not in scad(5)
-# This subcase handles infix expressions
-# starting with a digit.
-scat5d ::= bisk4l
-scat5d ::= bisk4l wede5d
-
-# ':'
-# Not in scad(5)
-scat5d ::= circumColParen
-scat5d ::= prefixColFas
-circumColParen ::= (COL PEL) wideHoonSeq (PER)
-prefixColFas ::= (COL FAS) wideHoon
-
-# '='
-# Differs from scad(5)
-tallDottis ::= (TIS GAP) hoon
-scat5d ::= irrDottis
-irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
-irrDottis ::= ('=(') wideHoon (')')
-
-# '?'
-# Same as scad(5)
-# TODO: Finish
-scat5d ::= circumWutParen
-scat5d ::= soloWut
-circumWutParen ::= (WUT PEL) wideMoldSeq (PER)
-soloWut ::= WUT
-
-# '['
-# Differs from scad(5)
-scat5d ::= rupl5d
-
-# '^'
-# Differs from scad(5)
-# For rope(5d) see ['a' 'z'] subcase and rump(5d)
-scat5d ::= soloKet
-soloKet ::= KET
-
-# '`'
-# Not in scad(5)
-# TODO: Finish
-scat5d ::= irrKethep
-irrKethep ::= ('`') mold ('`') hoon
-scat5d ::= prefixKet
-prefixKet ::= ('`') wideHoon
-
-# '"'
-# Not in scad(5)
-scat5d ::= infixDot
-infixDot ::= soil5d+ separator=>dog4i proper=>1
-
-# ['a' 'z']
-# Differs from scad(5)
-scat5d ::= rump5d
-
-# '|'
-# Not in scad(5)
-# TODO: Finish
-scat5d ::= prefixBar
-scat5d ::= circumBarParen
-scat5d ::= soloBar
-prefixBar ::= (BAR4H) wede5d rank=>1
-circumBarParen ::= (BAR4H PEL) wideHoonSeq (PER) rank=>1
-soloBar ::= BAR4H
-
-# '~'
-# Differs from scad(5)
-# See also rupl(5d) in the '[' subcase
-scat5d ::= circumSigParen
-scat5d ::= circumSigBracket
-scat5d ::= (SIG) twid4l
-scat5d ::= (SIG) wede5d
-scat5d ::= soloSig
-circumSigBracket ::= (SIG SEL) wideHoonSeq (SER)
-circumSigParen ::= (SIG PEL) rope5d (ACE) wideHoon (ACE) wideHoonSeq (PER)
-soloSig ::= SIG
-
-# '/'
-# Not in scad(5)
-scat5d ::= rood5d
-
-# '<'
-# Not in scad(5)
-scat5d ::= circumGalgar
-circumGalgar ::= ('<') wideHoon ('>')
-
-# '>'
-# Not in scad(5)
-scat5d ::= circumGargal
-circumGargal ::= ('>') wideHoon ('<')
 
 # 5d library: norm
 
@@ -1458,6 +1248,216 @@ circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
 circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
 sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
 sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
+
+# 5d library: scat
+# scat(5d) implements the irregular hoon syntaxes
+
+# For convenience in referring back
+# to hoon.hoon, I use scat(5d)'s order, as is.
+# Unfortunately this is not in the same
+# order as in scad.
+
+# ','
+# Differs from scad(5)
+# TODO: Finish
+wideBuccol ::= (',[') wideMoldSeq (']')
+
+# TODO: <hoonUnary> was a Marpa hack (that it, not in hoon.hoon)
+# to duplicate Hoon precedence.  It may no longer be necessary.
+# This needs to be tested.
+
+# '!'
+# Not in scad(5)
+# TODO: Finish
+hoonUnary ::= prefixZap
+prefixZap ::= (ZAP) wideHoon
+scat5d ::= wideZapzap
+wideZapzap ~ zap4h zap4h
+
+# '_'
+# Same as scad(5)
+hoonUnary ::= prefixCab
+prefixCab ::= (CAB) wideHoon
+
+# '$'
+# For rump, see subcase ['a' 'z']
+# Differs from scad(5)
+scat5d ::= bucBuc
+scat5d ::= bucPam
+scat5d ::= bucBar
+scat5d ::= dollarTerm
+bucBuc ::= BUC4H BUC4H
+bucPam ::= BUC4H PAM4H
+bucBar ::= BUC4H BAR4H
+dollarTerm ::= BUC4H qut4k
+dollarTerm ::= BUC4H nuck4l
+
+# '%'
+# Differs from scad(5)
+scat5d ::= cenPath
+scat5d ::= cenBuc
+scat5d ::= cenPam
+scat5d ::= cenBar
+scat5d ::= cenTerm
+scat5d ::= cenDirectories
+cenPath ::= CEN4H porc5d
+cenBuc ::= CEN4H BUC4H
+cenPam ::= CEN4H PAM4H
+cenBar ::= CEN4H BAR4H
+cenTerm ::= CEN4H qut4k
+cenTerm ::= CEN4H nuck4l
+cenDirectories ::= CEN4H+
+
+# '&'
+# Not in scad(5)
+# TODO: Finish
+# For rope(5d), see subcase ['a' 'z'] and rump(5d)
+scat5d ::= prefixPam
+scat5d ::= pamPlusPrefix
+scat5d ::= soloPam
+prefixPam ::= (PAM4H '(') wideHoonSeq (')')
+pamPlusPrefix ::= (PAM4H) wede5d
+soloPam ::= PAM4H
+
+# '\''
+# Not in scad(5)
+scat5d ::= singleQuoteString
+singleQuoteString ::= qut4k
+
+# '('
+# Differs from scad(5)
+# See https://raw.githubusercontent.com/urbit/old-urbit.org/master/doc/hoon/lan/irregular.markdown
+# and cenhep in https://urbit.org/docs/hoon/irregular/
+scat5d ::= circumParen1
+scat5d ::= circumParen2
+circumParen1 ::= ('(') wideHoon (')')
+circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
+
+# '{'
+# Same as scad(5)
+scat5d ::= circumBraces
+circumBraces ::= ('{') wideMoldSeq ('}')
+
+# '*'
+# Superset of scad(5)
+scat5d ::= prefixTar
+scat5d ::= soloTar
+prefixTar ::= TAR wideMold
+soloTar ::= TAR
+
+# '@'
+# TODO: NYI
+# Same as scad(5)
+# '@'
+# Same as scat(5d)
+scat5d ::= aura
+aura ::= '@' auraName
+
+# '+'
+# Not in scad(5)
+# TODO: Finish
+scat5d ::= irrDotlus
+irrDotlus ::= ('+(') wideHoon (')')
+
+# '-'
+# TODO: NYI
+# Not in scad(5)
+
+# '.'
+# TODO: NYI
+# Not in scad(5)
+
+# ['0' '9']
+# Not in scad(5)
+# This subcase handles infix expressions
+# starting with a digit.
+scat5d ::= bisk4l
+scat5d ::= bisk4l wede5d
+
+# ':'
+# Not in scad(5)
+scat5d ::= circumColParen
+scat5d ::= prefixColFas
+circumColParen ::= (COL PEL) wideHoonSeq (PER)
+prefixColFas ::= (COL FAS) wideHoon
+
+# '='
+# Differs from scad(5)
+tallDottis ::= (TIS GAP) hoon
+scat5d ::= irrDottis
+irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
+irrDottis ::= ('=(') wideHoon (')')
+
+# '?'
+# Same as scad(5)
+# TODO: Finish
+scat5d ::= circumWutParen
+scat5d ::= soloWut
+circumWutParen ::= (WUT PEL) wideMoldSeq (PER)
+soloWut ::= WUT
+
+# '['
+# Differs from scad(5)
+scat5d ::= rupl5d
+
+# '^'
+# Differs from scad(5)
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
+scat5d ::= soloKet
+soloKet ::= KET
+
+# '`'
+# Not in scad(5)
+# TODO: Finish
+scat5d ::= irrKethep
+irrKethep ::= ('`') mold ('`') hoon
+scat5d ::= prefixKet
+prefixKet ::= ('`') wideHoon
+
+# '"'
+# Not in scad(5)
+scat5d ::= infixDot
+infixDot ::= soil5d+ separator=>dog4i proper=>1
+
+# ['a' 'z']
+# Differs from scad(5)
+scat5d ::= rump5d
+
+# '|'
+# Not in scad(5)
+# TODO: Finish
+scat5d ::= prefixBar rank=>1
+scat5d ::= circumBarParen rank=>1
+scat5d ::= soloBar
+prefixBar ::= (BAR4H) wede5d
+circumBarParen ::= (BAR4H PEL) wideHoonSeq (PER)
+soloBar ::= BAR4H
+
+# '~'
+# Differs from scad(5)
+# See also rupl(5d) in the '[' subcase
+scat5d ::= circumSigParen
+scat5d ::= circumSigBracket
+scat5d ::= (SIG) twid4l
+scat5d ::= (SIG) wede5d
+scat5d ::= soloSig
+circumSigBracket ::= (SIG SEL) wideHoonSeq (SER)
+circumSigParen ::= (SIG PEL) rope5d (ACE) wideHoon (ACE) wideHoonSeq (PER)
+soloSig ::= SIG
+
+# '/'
+# Not in scad(5)
+scat5d ::= rood5d
+
+# '<'
+# Not in scad(5)
+scat5d ::= circumGalgar
+circumGalgar ::= ('<') wideHoon ('>')
+
+# '>'
+# Not in scad(5)
+scat5d ::= circumGargal
+circumGargal ::= ('>') wideHoon ('<')
 
 # 5d library: soil
 
