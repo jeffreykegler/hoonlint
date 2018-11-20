@@ -1416,6 +1416,23 @@ wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is implemented in scat5d
 
+# 5d library: poor
+
+poor5d ::= gash5d
+poor5d ::= gash5d CEN4H porc5d
+
+# 5d library: porc
+
+porc5d ::= optCen4hSeq FAS gash5d
+optCen4hSeq ::= # empty
+optCen4hSeq ::= CEN4H_SEQ
+CEN4H_SEQ ~ cen4h+
+
+# 5d library: rood
+# rood is the path parser
+
+rood5d ::= [/] poor5d
+
 # 5d library: rope
 
 # the wing type is parsed by the rope(5d)
@@ -1657,23 +1674,6 @@ hexPrefix ~ hexDigit hexDigit hexDigit hexDigit
 hexDigit ~ [0-9a-fA-F]
 hexGroups ~ hexGroup*
 hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
-
-# 5d library: rood
-# rood is the path parser
-
-rood5d ::= [/] poor5d
-
-# 5d library: poor
-
-poor5d ::= gash5d
-poor5d ::= gash5d CEN4H porc5d
-
-# 5d library: porc
-
-porc5d ::= optCen4hSeq FAS gash5d
-optCen4hSeq ::= # empty
-optCen4hSeq ::= CEN4H_SEQ
-CEN4H_SEQ ~ cen4h+
 
 # === CELLS BY TYPE ==
 
