@@ -1180,8 +1180,6 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 #  ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
 # FIXED: siggar bont5d hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['+' (rune lus %sgls hinc)]
 # ++  hinc  |.                                        ::  optional =en, hoon
 #           ;~(pose ;~(gunk bony loaf) (stag ~ loaf)) ::
@@ -1198,11 +1196,19 @@ wideSiglus ::= (SIG LUS '(') hoon (')')
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf))
 #  ==
-# FIXED: sigpam hoon hoon
+hoon ::= tallSigpam
+tallSigpam ::= (SIG PAM GAP) oneToThreeGars (GAP) hoon (GAP) hoon
+tallSigpam ::= (SIG PAM GAP) hoon (GAP) hoon
+norm5dWide ::= wideSigpam
+wideSigpam ::= (SIG PAM PEL) oneToThreeGars (ACE) hoon (ACE) hoon (PER)
+wideSigpam ::= (SIG PAM PEL) hoon (ACE) hoon (PER)
+oneToThreeGars ::= GAR | GAR GAR | GAR GAR GAR
 
 # ['=' (rune tis %sgts expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigtis hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['?' (rune wut %sgwt hing)]
 # ++  hing  |.                                        ::  0-3 >s, three hoons
@@ -2028,12 +2034,6 @@ hoon ::= tallSiggar
 norm5dWide ::= wideSiggar
 tallSiggar ::= (SIG4H GAR4H GAP)bont5d (GAP) hoon
 wideSiggar ::= (SIG4H GAR4H) [(] wideBont5d (ACE) wideHoon [)]
-
-# SIGPAM hoon hoon
-hoon ::= tallSigpam
-norm5dWide ::= wideSigpam
-tallSigpam ::= (SIG4H PAM4H GAP)hoon (GAP) hoon
-wideSigpam ::= (SIG4H PAM4H) [(] wideHoon (ACE) wideHoon [)]
 
 # SIGTIS hoon hoon
 hoon ::= tallSigtis
