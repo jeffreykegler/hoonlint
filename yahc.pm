@@ -1435,26 +1435,6 @@ ruck5dJog ::= mold (GAP) hoon
 wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
 wideRuck5dJog ::= mold (COM ACE) hoon
 
-# 5d library: teak
-
-# teak is
-#
-# 1) a mold, if possible, hoon otherwise,
-#
-# 2) an assignment to <SYM4K>, which is again, of a mold,
-# if possible, of a hoon otherwise
-
-teak ::= teakChoice
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
-teakChoice ::= hoon rank=>1
-teakChoice ::= wideTeak rank=>0
-wideTeak ::= wideTeakChoice
-wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
-wideTeakChoice ::= rope5d rank=>2
-wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
-wideTeakChoice ::= wideHoon rank=>1
-
 # 5d library: rump
 
 rump5d ::= rope5d
@@ -1498,6 +1478,26 @@ unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 <ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
 
 sump5d ::= KEL wideHoonSeq KER
+
+# 5d library: teak
+
+# teak is
+#
+# 1) a mold, if possible, hoon otherwise,
+#
+# 2) an assignment to <SYM4K>, which is again, of a mold,
+# if possible, of a hoon otherwise
+
+teak ::= teakChoice
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
+teakChoice ::= hoon rank=>1
+teakChoice ::= wideTeak rank=>0
+wideTeak ::= wideTeakChoice
+wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
+wideTeakChoice ::= rope5d rank=>2
+wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
+wideTeakChoice ::= wideHoon rank=>1
 
 # 5d library: wasp
 # Always occurs with wisp(5d), which must be tall,
