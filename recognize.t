@@ -302,7 +302,7 @@ ok hoons/arvo/sur/unicode-data.hoon
 todo hoons/arvo/sys/arvo.hoon
 todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/vane/ames.hoon
-todo hoons/arvo/sys/vane/behn.hoon
+ok hoons/arvo/sys/vane/behn.hoon
 todo hoons/arvo/sys/vane/clay.hoon
 todo hoons/arvo/sys/vane/dill.hoon
 todo hoons/arvo/sys/vane/eyre.hoon

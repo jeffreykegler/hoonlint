@@ -952,18 +952,22 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 #     ++  expt  |.(;~(gunk wise rope loaf loaf))          ::  =^
 # FIXED: tisket wise5d rope5d hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['+' (rune lus %tsls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tislus hoon hoon
 
 # [';' (rune sem %tssm expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
-# FIXED: tissem hoon hoon hoon
+# FIXED: tissem wise5d hoon hoon
 
 # ['~' (rune sig %tssg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+hoon ::= tallTissig
+tallTissig ::= (TIS SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
+norm5dWide ::= wideTissig
+wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['*' (rune tar %tstr expl)]
 # ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
@@ -2168,11 +2172,11 @@ norm5dWide ::= wideTislus
 tallTislus ::= (TIS4H LUS4H GAP)hoon (GAP) hoon
 wideTislus ::= (TIS4H LUS4H) [(] wideHoon (ACE) wideHoon [)]
 
-# TISSEM hoon hoon hoon
+# TISSEM wise5d hoon hoon
 hoon ::= tallTissem
 norm5dWide ::= wideTissem
-tallTissem ::= (TIS4H SEM4H GAP)hoon (GAP) hoon (GAP) hoon
-wideTissem ::= (TIS4H SEM4H) [(] wideHoon (ACE) wideHoon (ACE) wideHoon [)]
+tallTissem ::= (TIS4H SEM4H GAP)wise5d (GAP) hoon (GAP) hoon
+wideTissem ::= (TIS4H SEM4H) [(] wise5d (ACE) wideHoon (ACE) wideHoon [)]
 
 # TISTAR SYM4K hoon hoon
 hoon ::= tallTistar
