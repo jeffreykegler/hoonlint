@@ -539,126 +539,6 @@ wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
 wideHoonJog ::= rope5d (ACE) wideHoon
 wideHoonJoggingSeparator ::= COM ACE
 
-# 5d library: scad
-
-# scad(5d) implements the irregular mold syntaxes
-
-# Cases given in hoon.hoon order.  Unfortunately
-# not the same as the order in scat(5d).
-
-# '_'
-# Same as scat(5d)
-wideMold ::= moldPrefixCab
-moldPrefixCab ::= ('_') wideHoon
-
-# ','
-# Differs from scat(5d)
-wideMold ::= moldPrefixCom
-moldPrefixCom ::= (',') wideHoon
-
-# '$'
-# Differs from scat(5d)
-wideMold ::= moldBucbuc
-moldBucbuc ::= '$$'
-
-wideMold ::= moldBucpam
-moldBucpam ::= '$&'
-
-wideMold ::= moldBucbar
-moldBucbar ::= '$|'
-
-wideMold ::= moldBucSingleString
-moldBucSingleString ::= '$' qut4k
-
-wideMold ::= moldBucNuck4l
-moldBucNuck4l ::= '$' nuck4l
-
-wideMold ::= rump5d
-
-# '%'
-# Differs from scat(5d)
-wideMold ::= moldCenbuc
-moldCenbuc ::= '%$'
-
-wideMold ::= moldCenpam
-moldCenpam ::= '%&'
-
-wideMold ::= moldCenbar
-moldCenbar ::= '%|'
-
-wideMold ::= moldCenSingleString
-moldCenSingleString ::= ('%') qut4k
-
-wideMold ::= moldCenNuck4l
-moldCenNuck4l ::= '%' nuck4l
-
-# '('
-# Differs from scat(5d)
-wideMold ::= moldCircumParen
-moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
-moldCircumParen ::= ('(') wideHoon (')')
-
-# '{'
-# Same as scat(5d)
-wideMold ::= moldCircumBrace
-moldCircumBrace ::= ('{') wideMoldSeq ('}')
-
-# '['
-# Differs from scat(5d)
-wideMold ::= moldCircumBracket
-moldCircumBracket ::= ('[') wideMoldSeq (']')
-
-# '*'
-# Subset of scat(5d)
-wideMold ::= moldTar
-moldTar ::= '*'
-
-# '@'
-# Same as scat(5d)
-wideMold ::= moldAura
-moldAura ::= '@' auraName
-
-# '?'
-# Same as scat(5d)
-wideMold ::= moldPrefixWut
-moldPrefixWut ::= ('?(') wideMoldSeq (')')
-
-wideMold ::= moldWut
-moldWut ::= '?'
-
-# '~'
-# Differs from scat(5d)
-wideMold ::= moldSig
-moldSig ::= '~'
-
-# '^'
-# Differs from scat(5d)
-wideMold ::= moldKet
-moldKet ~ '^'
-
-# <moldInfixCol> can start with either KET (^) or lowercase char
-# This is scab(5d)
-# TODO: Delete after development
-wideMold ::= moldInfixCol
-moldInfixCol ::= rope5d [:] moldInfixCol2
-moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
-
-# '='
-# Differs from scat(5d)
-wideMold ::= moldPrefixTis
-# TODO: Is this right?
-moldPrefixTis ::= ('=') wideMold (')')
-
-# ['a' 'z']
-# Differs from scat(5d)
-# for scab(5d), see the KET subcase
-wideMold ::= moldInfixFas rank=>1
-wideMold ::= moldInfixTis rank=>1
-moldInfixFas ::= SYM4K FAS wideMold
-moldInfixTis ::= SYM4K TIS wideMold
-
-# End of scad(5d)
-
 # 5d library: norm
 
 # Running syntax
@@ -1248,6 +1128,126 @@ circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
 circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
 sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
 sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
+
+# 5d library: scad
+
+# scad(5d) implements the irregular mold syntaxes
+
+# Cases given in hoon.hoon order.  Unfortunately
+# not the same as the order in scat(5d).
+
+# '_'
+# Same as scat(5d)
+wideMold ::= moldPrefixCab
+moldPrefixCab ::= ('_') wideHoon
+
+# ','
+# Differs from scat(5d)
+wideMold ::= moldPrefixCom
+moldPrefixCom ::= (',') wideHoon
+
+# '$'
+# Differs from scat(5d)
+wideMold ::= moldBucbuc
+moldBucbuc ::= '$$'
+
+wideMold ::= moldBucpam
+moldBucpam ::= '$&'
+
+wideMold ::= moldBucbar
+moldBucbar ::= '$|'
+
+wideMold ::= moldBucSingleString
+moldBucSingleString ::= '$' qut4k
+
+wideMold ::= moldBucNuck4l
+moldBucNuck4l ::= '$' nuck4l
+
+wideMold ::= rump5d
+
+# '%'
+# Differs from scat(5d)
+wideMold ::= moldCenbuc
+moldCenbuc ::= '%$'
+
+wideMold ::= moldCenpam
+moldCenpam ::= '%&'
+
+wideMold ::= moldCenbar
+moldCenbar ::= '%|'
+
+wideMold ::= moldCenSingleString
+moldCenSingleString ::= ('%') qut4k
+
+wideMold ::= moldCenNuck4l
+moldCenNuck4l ::= '%' nuck4l
+
+# '('
+# Differs from scat(5d)
+wideMold ::= moldCircumParen
+moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
+moldCircumParen ::= ('(') wideHoon (')')
+
+# '{'
+# Same as scat(5d)
+wideMold ::= moldCircumBrace
+moldCircumBrace ::= ('{') wideMoldSeq ('}')
+
+# '['
+# Differs from scat(5d)
+wideMold ::= moldCircumBracket
+moldCircumBracket ::= ('[') wideMoldSeq (']')
+
+# '*'
+# Subset of scat(5d)
+wideMold ::= moldTar
+moldTar ::= '*'
+
+# '@'
+# Same as scat(5d)
+wideMold ::= moldAura
+moldAura ::= '@' auraName
+
+# '?'
+# Same as scat(5d)
+wideMold ::= moldPrefixWut
+moldPrefixWut ::= ('?(') wideMoldSeq (')')
+
+wideMold ::= moldWut
+moldWut ::= '?'
+
+# '~'
+# Differs from scat(5d)
+wideMold ::= moldSig
+moldSig ::= '~'
+
+# '^'
+# Differs from scat(5d)
+wideMold ::= moldKet
+moldKet ~ '^'
+
+# <moldInfixCol> can start with either KET (^) or lowercase char
+# This is scab(5d)
+# TODO: Delete after development
+wideMold ::= moldInfixCol
+moldInfixCol ::= rope5d [:] moldInfixCol2
+moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
+
+# '='
+# Differs from scat(5d)
+wideMold ::= moldPrefixTis
+# TODO: Is this right?
+moldPrefixTis ::= ('=') wideMold (')')
+
+# ['a' 'z']
+# Differs from scat(5d)
+# for scab(5d), see the KET subcase
+wideMold ::= moldInfixFas rank=>1
+wideMold ::= moldInfixTis rank=>1
+moldInfixFas ::= SYM4K FAS wideMold
+moldInfixTis ::= SYM4K TIS wideMold
+
+# End of scad(5d)
 
 # 5d library: scat
 # scat(5d) implements the irregular hoon syntaxes
