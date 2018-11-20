@@ -964,12 +964,11 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tishep hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['/' (rune fas %tsfs expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
-# tisfas taco hoon hoon
-# FIXED: tisfas hoon hoon hoon
+# FIXED: tisfas wise5d hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['<' (rune gal %tsgl expb)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
@@ -1540,6 +1539,13 @@ waspElement  ::= SYM4K (GAP) hoon
 
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
+
+# 5d library: wise
+
+wise5d ::= SYM4K
+wise5d ::= (TIS) wideMold
+wise5d ::= SYM4K (TIS) wideMold
+wise5d ::= SYM4K (FAS) wideMold
 
 # 5d library: wisp
 

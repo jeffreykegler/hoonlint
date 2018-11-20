@@ -35,16 +35,10 @@
       [
         'tallTisfas',
         [
-          'infixTis',
+          'wise5d',
+          'field',
           [
-            'rump5d',
-            [
-              'limb',
-              'field'
-            ]
-          ],
-          [
-            'circumParen2',
+            'moldCircumParen',
             [
               'rump5d',
               [
@@ -53,7 +47,7 @@
               ]
             ],
             [
-              'aura',
+              'moldAura',
               '@',
               [
                 'auraName'
@@ -170,16 +164,10 @@
                     [
                       'tallTisfas',
                       [
-                        'infixTis',
+                        'wise5d',
+                        'factor',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'factor'
-                          ]
-                        ],
-                        [
-                          'aura',
+                          'moldAura',
                           '@',
                           [
                             'auraName'
@@ -339,16 +327,10 @@
                       [
                         'tallTisfas',
                         [
-                          'infixTis',
+                          'wise5d',
+                          'count',
                           [
-                            'rump5d',
-                            [
-                              'limb',
-                              'count'
-                            ]
-                          ],
-                          [
-                            'aura',
+                            'moldAura',
                             '@',
                             [
                               'auraName'

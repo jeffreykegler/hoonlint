@@ -147,16 +147,10 @@
                 [
                   'tallTisfas',
                   [
-                    'infixFas',
+                    'wise5d',
+                    'rest',
                     [
-                      'rump5d',
-                      [
-                        'limb',
-                        'rest'
-                      ]
-                    ],
-                    [
-                      'circumParen2',
+                      'moldCircumParen',
                       [
                         'rump5d',
                         [
@@ -1296,14 +1290,8 @@
                                         [
                                           'tallTisfas',
                                           [
-                                            'infixFas',
-                                            [
-                                              'rump5d',
-                                              [
-                                                'limb',
-                                                'next'
-                                              ]
-                                            ],
+                                            'wise5d',
+                                            'next',
                                             [
                                               'rump5d',
                                               [
