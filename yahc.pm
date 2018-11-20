@@ -539,80 +539,6 @@ wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
 wideHoonJog ::= rope5d (ACE) wideHoon
 wideHoonJoggingSeparator ::= COM ACE
 
-# 5d library: rope
-
-# the wing type is parsed by the rope(5d)
-rope5d ::= limb+ separator=>[.] proper=>1
-limb ::= ','
-limb ::= optKets '$'
-limb ::= optKets SYM4K
-optKets ::= KET*
-limb ::= BAR4H DIM4J
-limb ::= LUS DIM4J
-limb ::= PAM4H DIM4J
-limb ::= VEN4K
-limb ::= '.'
-
-# 5d library: rick
-
-rick5d ::= rick5dJog+ separator=>GAP proper=>1
-rick5dJog ::= rope5d (GAP) hoon
-
-wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
-wideRick5dJog ::= rope5d (COM ACE) hoon
-
-# 5d library: ruck
-
-ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
-ruck5dJog ::= mold (GAP) hoon
-
-wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
-wideRuck5dJog ::= mold (COM ACE) hoon
-
-# 5d library: teak
-
-# teak is
-#
-# 1) a mold, if possible, hoon otherwise,
-#
-# 2) an assignment to <SYM4K>, which is again, of a mold,
-# if possible, of a hoon otherwise
-
-teak ::= teakChoice
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
-teakChoice ::= hoon rank=>1
-teakChoice ::= wideTeak rank=>0
-wideTeak ::= wideTeakChoice
-wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
-wideTeakChoice ::= rope5d rank=>2
-wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
-wideTeakChoice ::= wideHoon rank=>1
-
-# 5d library: rump
-
-rump5d ::= rope5d
-rump5d ::= rope5d wede5d
-
-# 5d library: rupl
-# rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
-# syntaxes.
-
-# TODO: Finish rupl(5d)
-rupl5d ::= circumBracket
-rupl5d ::= sigCircumBracket
-rupl5d ::= circumBracketSig
-rupl5d ::= sigCircumBracketSig
-# TODO: is the whitespace really what was intended?
-circumBracket ::= ('[' ACE) hoonSeq (GAP ']')
-circumBracket ::= ('[') wideHoonSeq (']')
-sigCircumBracket ::= (SIG '[' ACE) hoonSeq (GAP ']')
-sigCircumBracket ::= (SIG '[') wideHoonSeq (']')
-circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
-circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
-sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
-sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
-
 # 5d library: scad
 
 # scad(5d) implements the irregular mold syntaxes
@@ -1461,6 +1387,80 @@ wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) hoon
 wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) hoon
 
 # zapzap (= crash) is implemented in scat5d
+
+# 5d library: rope
+
+# the wing type is parsed by the rope(5d)
+rope5d ::= limb+ separator=>[.] proper=>1
+limb ::= ','
+limb ::= optKets '$'
+limb ::= optKets SYM4K
+optKets ::= KET*
+limb ::= BAR4H DIM4J
+limb ::= LUS DIM4J
+limb ::= PAM4H DIM4J
+limb ::= VEN4K
+limb ::= '.'
+
+# 5d library: rick
+
+rick5d ::= rick5dJog+ separator=>GAP proper=>1
+rick5dJog ::= rope5d (GAP) hoon
+
+wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
+wideRick5dJog ::= rope5d (COM ACE) hoon
+
+# 5d library: ruck
+
+ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
+ruck5dJog ::= mold (GAP) hoon
+
+wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
+wideRuck5dJog ::= mold (COM ACE) hoon
+
+# 5d library: teak
+
+# teak is
+#
+# 1) a mold, if possible, hoon otherwise,
+#
+# 2) an assignment to <SYM4K>, which is again, of a mold,
+# if possible, of a hoon otherwise
+
+teak ::= teakChoice
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
+teakChoice ::= hoon rank=>1
+teakChoice ::= wideTeak rank=>0
+wideTeak ::= wideTeakChoice
+wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
+wideTeakChoice ::= rope5d rank=>2
+wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
+wideTeakChoice ::= wideHoon rank=>1
+
+# 5d library: rump
+
+rump5d ::= rope5d
+rump5d ::= rope5d wede5d
+
+# 5d library: rupl
+# rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
+# syntaxes.
+
+# TODO: Finish rupl(5d)
+rupl5d ::= circumBracket
+rupl5d ::= sigCircumBracket
+rupl5d ::= circumBracketSig
+rupl5d ::= sigCircumBracketSig
+# TODO: is the whitespace really what was intended?
+circumBracket ::= ('[' ACE) hoonSeq (GAP ']')
+circumBracket ::= ('[') wideHoonSeq (']')
+sigCircumBracket ::= (SIG '[' ACE) hoonSeq (GAP ']')
+sigCircumBracket ::= (SIG '[') wideHoonSeq (']')
+circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
+circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
+sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
+sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
 
 # 5d library: soil
 
