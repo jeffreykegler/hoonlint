@@ -761,8 +761,7 @@ moldInfixTis ::= SYM4K TIS wideMold rank=>1
 
 # End of scad(5d)
 
-# === Implementing scat(5d) ===
-
+# 5d library: scat
 # scat(5d) implements the irregular hoon syntaxes
 
 # For convenience in referring back
