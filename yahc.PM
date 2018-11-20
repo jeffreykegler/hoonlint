@@ -1193,30 +1193,48 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
 # FIXED: sigcen bonk5d rope5d bonz5d hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['/' (rune fas %sgfs hine)]
 # ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
 # FIXED: sigfas bonk5d hoon
 
 # ['<' (rune gal %sggl hinb)]
-# FIXED: siggal hoon hoon
+#  ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
+# FIXED: siggal bont5d hoon
 
 # ['>' (rune gar %sggr hinb)]
+#  ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
 # FIXED: siggar bont5d hoon
 
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+
 # ['+' (rune lus %sgls hinc)]
+# ++  hinc  |.                                        ::  optional =en, hoon
+#           ;~(pose ;~(gunk bony loaf) (stag ~ loaf)) ::
+
 # FIXED: siglus hoon
 
 # ['&' (rune pam %sgpm hinf)]
+# ++  hinf  |.                                        ::  0-3 >s, two hoons
+#  ;~  pose
+#    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf)
+#    (stag 0 ;~(gunk loaf loaf))
+#  ==
 # FIXED: sigpam hoon hoon
 
 # ['=' (rune tis %sgts expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED: sigtis hoon hoon
 
 # ['?' (rune wut %sgwt hing)]
+# ++  hing  |.                                        ::  0-3 >s, three hoons
+#  ;~  pose
+#    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf loaf)
+#    (stag 0 ;~(gunk loaf loaf loaf))
+#  ==
 # FIXED: sigwut hoon hoon hoon
 
 # ['!' (rune zap %sgzp expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigzap hoon hoon
 
 # ['|' (rune bar %tsbr exqc)]
