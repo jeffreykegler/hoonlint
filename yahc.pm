@@ -1231,26 +1231,56 @@ wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 # FIXED: tisbar mold hoon
 
+# [':' (rune col %tscl expp)]
+# ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
+
+# [',' (rune com %tscm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tiscom hoon hoon
+
+# ['.' (rune dot %tsdt expq)]
+# ++  expq  |.(;~(gunk rope loaf loaf))               ::  wing and two hoons
 # FIXED: tisdot rope5d hoon hoon
+
+# ['-' (rune hep %tshp expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tishep hoon hoon
 
+# ['/' (rune fas %tsfs expo)]
+# ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
 # tisfas taco hoon hoon
 # FIXED: tisfas hoon hoon hoon
 
+# ['<' (rune gal %tsgl expb)]
+# ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
 # FIXED: tisgal hoon hoon
 
+# ['>' (rune gar %tsgr expb)]
+# ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
 # FIXED: tisgar hoon hoon
+
+# ['^' (rune ket %tskt expt)]
+#     ++  expt  |.(;~(gunk wise rope loaf loaf))          ::  =^
 # FIXED: tisket hoon rope5d hoon hoon
 
-#  ['+' (rune lus %tsls expb)]
+# ['+' (rune lus %tsls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tislus hoon hoon
 
+# [';' (rune sem %tssm expo)]
+# ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
 # tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
 
+# ['~' (rune sig %tssg expi)]
+# ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
+
+# ['*' (rune tar %tstr expl)]
+# ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
 # FIXED: tistar SYM4K hoon hoon
+
+# ['?' (rune wut %tswt expw)]
+#     ++  expw  |.(;~(gunk rope loaf loaf loaf))          ::  wing and three hoons
 # FIXED: tiswut rope5d hoon hoon hoon
 
 WUTBAR ~ [?] [|]
