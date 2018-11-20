@@ -1236,19 +1236,24 @@ oneToThreeGars ::= GAR | GAR GAR | GAR GAR GAR
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigtis hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['?' (rune wut %sgwt hing)]
 # ++  hing  |.                                        ::  0-3 >s, three hoons
 #  ;~  pose
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf loaf))
 #  ==
-# FIXED: sigwut hoon hoon hoon
+hoon ::= tallSigwut
+tallSigwut ::= (SIG WUT GAP) oneToThreeGars (GAP) hoon (GAP) hoon (GAP) hoon
+tallSigwut ::= (SIG WUT GAP) hoon (GAP) hoon (GAP) hoon
+norm5dWide ::= wideSigwut
+wideSigwut ::= (SIG WUT PEL) oneToThreeGars (ACE) hoon (ACE) hoon (ACE) hoon (PER)
+wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 
 # ['!' (rune zap %sgzp expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: sigzap hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['|' (rune bar %tsbr exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
