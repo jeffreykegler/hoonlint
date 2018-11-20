@@ -447,6 +447,9 @@ bont5d ::= wideBont5d
 wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
 wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
+# one or more equal signs
+bony5d ::= TIS+
+
 bonz5d ::= (TIS TIS GAP) optBonzElements (GAP TIS TIS)
 bonz5d ::= wideBonz5d
 wideBonz5d ::= SIG
@@ -1182,8 +1185,12 @@ wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
 # ['+' (rune lus %sgls hinc)]
 # ++  hinc  |.                                        ::  optional =en, hoon
 #           ;~(pose ;~(gunk bony loaf) (stag ~ loaf)) ::
-
-# FIXED: siglus hoon
+hoon ::= tallSiglus
+tallSiglus ::= (SIG LUS GAP) bony5d (GAP) hoon
+tallSiglus ::= (SIG LUS GAP) hoon
+norm5dWide ::= wideSiglus
+wideSiglus ::= (SIG LUS '(') bony5d (ACE) hoon (')')
+wideSiglus ::= (SIG LUS '(') hoon (')')
 
 # ['&' (rune pam %sgpm hinf)]
 # ++  hinf  |.                                        ::  0-3 >s, two hoons
@@ -2021,12 +2028,6 @@ hoon ::= tallSiggar
 norm5dWide ::= wideSiggar
 tallSiggar ::= (SIG4H GAR4H GAP)bont5d (GAP) hoon
 wideSiggar ::= (SIG4H GAR4H) [(] wideBont5d (ACE) wideHoon [)]
-
-# SIGLUS hoon
-hoon ::= tallSiglus
-norm5dWide ::= wideSiglus
-tallSiglus ::= (SIG4H LUS4H GAP)hoon
-wideSiglus ::= (SIG4H LUS4H) [(] wideHoon [)]
 
 # SIGPAM hoon hoon
 hoon ::= tallSigpam
