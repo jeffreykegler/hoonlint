@@ -968,19 +968,19 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
 # FIXED: tisfas wise5d hoon hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['<' (rune gal %tsgl expb)]
-# ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tisgal hoon hoon
 
 # ['>' (rune gar %tsgr expb)]
-# ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: tisgar hoon hoon
 
 # ['^' (rune ket %tskt expt)]
 #     ++  expt  |.(;~(gunk wise rope loaf loaf))          ::  =^
-# FIXED: tisket hoon rope5d hoon hoon
+# FIXED: tisket wise5d rope5d hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['+' (rune lus %tsls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
@@ -988,7 +988,6 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 
 # [';' (rune sem %tssm expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
-# tissem taco hoon hoon
 # FIXED: tissem hoon hoon hoon
 
 # ['~' (rune sig %tssg expi)]
