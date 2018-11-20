@@ -465,18 +465,26 @@ bisk4l ::= NUMBER
 
 # === Hoon library: 5d ===
 
+# Implementing bonk(5d)
+
 bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H DOT4H dem4k
 bonk5d ::= CEN4H SYM4K COL4H SYM4K DOT4H dem4k
 bonk5d ::= CEN4H SYM4K DOT4H dem4k
 bonk5d ::= CEN4H SYM4K
+
+# Implementing bont(5d)
 
 bont5d ::= CEN4H SYM4K ([.] GAP) hoon
 bont5d ::= wideBont5d
 wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
 wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
 
+# Implementing bony(5d)
+
 # one or more equal signs
 bony5d ::= TIS+
+
+# Implementing bonz(5d)
 
 bonz5d ::= (TIS TIS GAP) optBonzElements (GAP TIS TIS)
 bonz5d ::= wideBonz5d
@@ -495,14 +503,29 @@ AURA_NAME ~ optLow4kSeq optHig4kSeq
 optLow4kSeq ~ low4k*
 optHig4kSeq ~ hig4k*
 
-# === Hoon library: 5d, molds ===
-
 mold ::= wideMold
 moldSeq ::= mold+ separator=>GAP proper=>1
 wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 
+# Implementing wede(5d)
+
 wede5d ::= (FAS) wideHoon
 wede5d ::= (LUS) wideHoon
+
+# Implementing boog(5d)
+# Always tall
+
+# TODO: Needs elaboration from hoon.hoon
+# TODO: Need to add apse:docs
+# TODO: What is the meaning of these various types of battery element?
+boog5d ::= lusLusCell
+boog5d ::= lusHepCell
+boog5d ::= lusTisCell
+lusLusCell ::= ('++' GAP) BUC (GAP) hoon
+lusLusCell ::= ('++' GAP) SYM4K (GAP) hoon
+lusHepCell ::= ('+-' GAP) SYM4K (GAP) hoon
+lusHepCell ::= ('+-' GAP) BUC (GAP) hoon
+lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
 
 # Implementing long(5d)
 
@@ -523,6 +546,56 @@ lobo5d ::= wideHoonJogs
 wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
 wideHoonJog ::= rope5d (ACE) wideHoon
 wideHoonJoggingSeparator ::= COM ACE
+
+# Implementing rope(5d)
+
+# the wing type is parsed by the rope(5d)
+rope5d ::= limb+ separator=>[.] proper=>1
+limb ::= ','
+limb ::= optKets '$'
+limb ::= optKets SYM4K
+optKets ::= KET*
+limb ::= BAR4H DIM4J
+limb ::= LUS DIM4J
+limb ::= PAM4H DIM4J
+limb ::= VEN4K
+limb ::= '.'
+
+# Implementing rick(5d)
+
+rick5d ::= rick5dJog+ separator=>GAP proper=>1
+rick5dJog ::= rope5d (GAP) hoon
+
+wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
+wideRick5dJog ::= rope5d (COM ACE) hoon
+
+# Implementing ruck(5d)
+
+ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
+ruck5dJog ::= mold (GAP) hoon
+
+wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
+wideRuck5dJog ::= mold (COM ACE) hoon
+
+# Implementing teak(5d)
+
+# teak is
+#
+# 1) a mold, if possible, hoon otherwise,
+#
+# 2) an assignment to <SYM4K>, which is again, of a mold,
+# if possible, of a hoon otherwise
+
+teak ::= teakChoice
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
+teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
+teakChoice ::= hoon rank=>1
+teakChoice ::= wideTeak rank=>0
+wideTeak ::= wideTeakChoice
+wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
+wideTeakChoice ::= rope5d rank=>2
+wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
+wideTeakChoice ::= wideHoon rank=>1
 
 # Implementing rump(5d)
 
@@ -1437,21 +1510,6 @@ wisp5d ::= whap5d GAP ('--')
 
 whap5d ::= boog5d+ separator=>GAP proper=>1
 
-# Implementing boog(5d)
-# Always tall
-
-# TODO: Needs elaboration from hoon.hoon
-# TODO: Need to add apse:docs
-# TODO: What is the meaning of these various types of battery element?
-boog5d ::= lusLusCell
-boog5d ::= lusHepCell
-boog5d ::= lusTisCell
-lusLusCell ::= ('++' GAP) BUC (GAP) hoon
-lusLusCell ::= ('++' GAP) SYM4K (GAP) hoon
-lusHepCell ::= ('+-' GAP) SYM4K (GAP) hoon
-lusHepCell ::= ('+-' GAP) BUC (GAP) hoon
-lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
-
 # === HOON FILE ===
 :start ::= hoonFile
 # TODO: This is a simplication, which may not
@@ -1616,56 +1674,6 @@ wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 hoonJogging ::= hoonJogs
 hoonJogs ::= hoonJog+ separator=>GAP proper=>1
 hoonJog ::= hoon (GAP) hoon
-
-# Implementing rope(5d)
-
-# the wing type is parsed by the rope(5d)
-rope5d ::= limb+ separator=>[.] proper=>1
-limb ::= ','
-limb ::= optKets '$'
-limb ::= optKets SYM4K
-optKets ::= KET*
-limb ::= BAR4H DIM4J
-limb ::= LUS DIM4J
-limb ::= PAM4H DIM4J
-limb ::= VEN4K
-limb ::= '.'
-
-# Implementing rick(5d)
-
-rick5d ::= rick5dJog+ separator=>GAP proper=>1
-rick5dJog ::= rope5d (GAP) hoon
-
-wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
-wideRick5dJog ::= rope5d (COM ACE) hoon
-
-# Implementing ruck(5d)
-
-ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
-ruck5dJog ::= mold (GAP) hoon
-
-wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
-wideRuck5dJog ::= mold (COM ACE) hoon
-
-# Implementing teak(5d)
-
-# teak is
-#
-# 1) a mold, if possible, hoon otherwise,
-#
-# 2) an assignment to <SYM4K>, which is again, of a mold,
-# if possible, of a hoon otherwise
-
-teak ::= teakChoice
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
-teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
-teakChoice ::= hoon rank=>1
-teakChoice ::= wideTeak rank=>0
-wideTeak ::= wideTeakChoice
-wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
-wideTeakChoice ::= rope5d rank=>2
-wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
-wideTeakChoice ::= wideHoon rank=>1
 
 END_OF_DSL_MAIN
 
