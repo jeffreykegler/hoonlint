@@ -976,6 +976,7 @@ wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: tiswut rope5d hoon hoon hoon
 
 # ['|' (rune bar %wtbr exps)]
+#  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallWutbar
 tallWutbar ::= (WUT BAR GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutbar
@@ -997,14 +998,21 @@ wideWutbar ::= (WUT BAR '(') wideHoonSeq (')')
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: wutgar hoon hoon
 
+# ['-' ;~(pfix hep (toad tkhp))]
+# ++  tkhp  |.  %+  cook  |=  {a/tiki b/(list (pair root hoon))}
+#			(~(wthp ah a) b)
+#	      (butt ;~(gunk teak ruck))
+hoon ::= tallWuthep
+tallWuthep ::= (WUT HEP GAP) teak5d (GAP) hoonJogging (GAP TIS TIS)
+norm5dWide ::= wideWuthep
+wideWuthep ::= (WUT HEP PER) teak5d (ACE) hoonJogging (PAR)
+
 # TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
-# ['-' ;~(pfix hep (toad tkhp))]
-WUTHEP ~ [?] [-]
-hoon ::= tallWuthep
-tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP TIS TIS)
-
 # ['^' ;~(pfix ket (toad tkkt))]
+# ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+#			(~(wtkt ah a) b c)
+#	      ;~(gunk teak loaf loaf)
 # FIXED: wutket rope5d hoon hoon
 
 # ['+' ;~(pfix lus (toad tkls))]
@@ -1012,27 +1020,33 @@ tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP TIS TIS)
 # 			(~(wtls ah a) b c)
 #	      (butt ;~(gunk teak loaf ruck))
 hoon ::= tallWutlus
-tallWutlus ::= (WUT LUS GAP) teak (GAP) hoon (GAP) ruck5d (GAP TIS TIS)
+tallWutlus ::= (WUT LUS GAP) teak5d (GAP) hoon (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWutlus
-wideWutlus ::= (WUT LUS PEL) teak (ACE) hoon (ACE) wideRuck5d (PAR)
+wideWutlus ::= (WUT LUS PEL) teak5d (ACE) hoon (ACE) wideRuck5d (PAR)
 
 # ['&' (rune pam %wtpm exps)]
-WUTPAM ~ [?] [&]
+#  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP TIS TIS)
+tallWutpam ::= (WUT PAM GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutpam
-wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
+wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 
 # ['@' ;~(pfix pat (toad tkpt))]
+# ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+#			(~(wtpt ah a) b c)
+#	      ;~(gunk teak loaf loaf)
 # FIXED: wutpat rope5d hoon hoon
 
 # ['~' ;~(pfix sig (toad tksg))]
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 # 			  (~(wtsg ah a) b c)
 # 		;~(gunk teak loaf loaf)
-# FIXED: wutsig teak hoon hoon
+# FIXED: wutsig teak5d hoon hoon
 
 # ['=' ;~(pfix tis (toad tkts))]
+# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+# 			(~(wtsg ah a) b c)
+# 	      ;~(gunk teak loaf loaf)
 # FIXED: wuttis hoon rope5d
 
 # ['!' (rune zap %wtzp expa)]
@@ -1508,12 +1522,12 @@ sump5d ::= KEL wideHoonSeq KER
 # 2) an assignment to <SYM4K>, which is again, of a mold,
 # if possible, of a hoon otherwise
 
-teak ::= teakChoice
+teak5d ::= teakChoice
 teakChoice ::= (KET TIS GAP) SYM4K (GAP) rope5d rank=>2
 teakChoice ::= (KET TIS GAP) SYM4K (GAP) hoon rank=>1
 teakChoice ::= hoon rank=>1
-teakChoice ::= wideTeak rank=>0
-wideTeak ::= wideTeakChoice
+teakChoice ::= wideTeak5d rank=>0
+wideTeak5d ::= wideTeakChoice
 wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
 wideTeakChoice ::= rope5d rank=>2
 wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
@@ -2244,11 +2258,11 @@ norm5dWide ::= wideWutpat
 tallWutpat ::= (WUT4H PAT4H GAP)rope5d (GAP) hoon (GAP) hoon
 wideWutpat ::= (WUT4H PAT4H) [(] rope5d (ACE) wideHoon (ACE) wideHoon [)]
 
-# WUTSIG teak hoon hoon
+# WUTSIG teak5d hoon hoon
 hoon ::= tallWutsig
 norm5dWide ::= wideWutsig
-tallWutsig ::= (WUT4H SIG4H GAP)teak (GAP) hoon (GAP) hoon
-wideWutsig ::= (WUT4H SIG4H) [(] wideTeak (ACE) wideHoon (ACE) wideHoon [)]
+tallWutsig ::= (WUT4H SIG4H GAP)teak5d (GAP) hoon (GAP) hoon
+wideWutsig ::= (WUT4H SIG4H) [(] wideTeak5d (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTTIS hoon rope5d
 hoon ::= tallWuttis

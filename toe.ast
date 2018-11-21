@@ -63,7 +63,7 @@
             [
               'tallWutsig',
               [
-                'teak',
+                'teak5d',
                 [
                   'rump5d',
                   [
@@ -193,7 +193,7 @@
                     'wideWutsig',
                     '(',
                     [
-                      'wideTeak',
+                      'wideTeak5d',
                       [
                         'limb',
                         'this'
@@ -937,10 +937,15 @@
                               ],
                               [
                                 'tallWuthep',
-                                '?-',
                                 [
-                                  'limb',
-                                  'act'
+                                  'teak5d',
+                                  [
+                                    'rump5d',
+                                    [
+                                      'limb',
+                                      'act'
+                                    ]
+                                  ]
                                 ],
                                 [
                                   'circumBraces',
