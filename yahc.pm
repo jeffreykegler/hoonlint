@@ -537,11 +537,9 @@ wideHoonJoggingSeparator ::= COM ACE
 
 # 5d library: norm
 
-# Running syntax
-mold ::= tallBuccenMold
-wideMold ::= wideBuccenMold
-tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
-wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
+# Mold runes
+ 
+# ['_' (rune cab %bccb expa)]
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -551,19 +549,37 @@ wideMold ::= wideBuccolMold
 tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 wideBuccolMold ::= (BUC COL '(') wideMoldSeq (')')
 
-# BUCHEP mold mold
+# ['%' (rune cen %bccn exqs)]
+mold ::= tallBuccenMold
+wideMold ::= wideBuccenMold
+tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
+wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
+
+# ['-' (rune hep %bchp exqb)]
 mold ::= tallBuchepMold
 wideMold ::= wideBuchepMold
 tallBuchepMold ::= (BUC HEP GAP) mold (GAP)  mold
 wideBuchepMold ::= (BUC HEP) [(] wideMold (ACE) wideMold [)]
 
-# BUCPAT mold mold
+# ['^' (rune ket %bckt exqb)]
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
+mold ::= tallBucketMold
+wideMold ::= wideBucketMold
+tallBucketMold ::= (BUC KET GAP) mold (GAP)  mold
+wideBucketMold ::= (BUC KET PEL) wideMold (ACE) wideMold (PER)
+
+# ['@' (rune pat %bcpt exqb)]
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
 mold ::= tallBucpatMold
 wideMold ::= wideBucpatMold
 tallBucpatMold ::= (BUC PAT GAP) mold (GAP)  mold
-wideBucpatMold ::= (BUC PAT) [(] wideMold (ACE) wideMold [)]
+wideBucpatMold ::= (BUC PAT PEL) wideMold (ACE) wideMold (PER)
 
-# Running syntax
+# [';' (rune sem %bcsm expa)]
+
+# ['=' (rune tis %bcts exqg)]
+
+# ['?' (rune wut %bcwt exqs)]
 mold ::= tallBucwutMold
 wideMold ::= wideBucwutMold
 tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
@@ -572,6 +588,8 @@ wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
 # TODO: Finish adding molds from norm
 
 # 5d library: norm
+
+# Hoon runes
 
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
