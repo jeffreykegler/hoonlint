@@ -967,8 +967,6 @@ tallTissig ::= (TIS SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideTissig
 wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['*' (rune tar %tstr expl)]
 # ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
 # FIXED: tistar SYM4K hoon hoon
@@ -978,24 +976,28 @@ wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
 # FIXED: tiswut rope5d hoon hoon hoon
 
 # ['|' (rune bar %wtbr exps)]
-WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
-tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP TIS TIS)
-tallWutbar ::= (BAR4H GAP) hoon
+tallWutbar ::= (WUT BAR GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutbar
-wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
+wideWutbar ::= (WUT BAR '(') wideHoonSeq (')')
 
 # [':' (rune col %wtcl expc)]
+# ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
 # FIXED: wutcol hoon hoon hoon
 
 # ['.' (rune dot %wtdt expc)]
+# ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
 # FIXED: wutdot hoon hoon hoon
 
 # ['<' (rune gal %wtgl expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: wutgal hoon hoon
 
 # ['>' (rune gar %wtgr expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
 # FIXED: wutgar hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['-' ;~(pfix hep (toad tkhp))]
 WUTHEP ~ [?] [-]
