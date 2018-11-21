@@ -916,7 +916,7 @@ wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
 hoon ::= tallTiscol
-tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS) hoon
+tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS GAP) hoon
 norm5dWide ::= wideTiscol
 wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 
@@ -1387,7 +1387,7 @@ aura ::= '@' auraName
 # Not in scad(5)
 # TODO: Finish
 scat5d ::= irrDotlus
-irrDotlus ::= ('+(') wideHoon (')')
+irrDotlus ::= (LUS PEL) wideHoon (PER)
 
 # '-'
 # TODO: NYI
