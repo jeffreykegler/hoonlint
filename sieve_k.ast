@@ -9,7 +9,7 @@
         'moldAura',
         '@',
         [
-          'auraName'
+          'mota5d'
         ]
       ]
     ],
@@ -28,7 +28,7 @@
           'moldAura',
           '@',
           [
-            'auraName'
+            'mota5d'
           ]
         ]
       ],
@@ -311,7 +311,7 @@
                           'moldAura',
                           '@',
                           [
-                            'auraName'
+                            'mota5d'
                           ]
                         ]
                       ],

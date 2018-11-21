@@ -491,14 +491,6 @@ bonzElement ::= CEN SYM4K (GAP) hoon
 optWideBonzElements ::= wideBonzElement* separator=>ACE
 wideBonzElement ::= CEN SYM4K (ACE) hoon
 
-# Lexemes cannot be empty so empty
-# aura name must be special cased.
-auraName ::= # empty
-auraName ::= AURA_NAME
-AURA_NAME ~ optLow4kSeq optHig4kSeq
-optLow4kSeq ~ low4k*
-optHig4kSeq ~ hig4k*
-
 mold ::= wideMold
 moldSeq ::= mold+ separator=>GAP proper=>1
 wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
@@ -562,6 +554,16 @@ lobo5d ::= wideHoonJogs
 wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
 wideHoonJog ::= rope5d (ACE) wideHoon
 wideHoonJoggingSeparator ::= COM ACE
+
+# 5d library: mota
+
+# Lexemes cannot be empty so empty
+# aura name must be special cased.
+mota5d ::= # empty
+mota5d ::= AURA_NAME
+AURA_NAME ~ optLow4kSeq optHig4kSeq
+optLow4kSeq ~ low4k*
+optHig4kSeq ~ hig4k*
 
 # 5d library: norm
 
@@ -1282,7 +1284,7 @@ moldTar ::= '*'
 # '@'
 # Same as scat(5d)
 wideMold ::= moldAura
-moldAura ::= '@' auraName
+moldAura ::= '@' mota5d
 
 # '?'
 # Same as scat(5d)
@@ -1427,7 +1429,7 @@ soloTar ::= TAR
 # '@'
 # Same as scat(5d)
 scat5d ::= aura
-aura ::= '@' auraName
+aura ::= '@' mota5d
 
 # '+'
 # Not in scad(5)
@@ -1484,11 +1486,17 @@ soloKet ::= KET
 
 # '`'
 # Not in scad(5)
-# TODO: Finish
-scat5d ::= irrKethep
-irrKethep ::= ('`') mold ('`') hoon
-scat5d ::= prefixKet
-prefixKet ::= ('`') wideHoon
+scat5d ::= prefixTecChoices
+prefixTecChoices ::= prefixTecAura rank=>5
+prefixTecChoices ::= prefixTecTar rank=>4
+prefixTecChoices ::= prefixTecMold rank=>3
+prefixTecChoices ::= prefixTecHoon rank=>2
+prefixTecChoices ::= prefixSoloTec rank=>1
+prefixTecAura ::= (TEC PAT) mota5d (TEC) wideHoon
+prefixTecTar ::= (TEC TAR TEC) wideHoon
+prefixTecMold ::= (TEC) wideMold (TEC) wideHoon
+prefixTecHoon ::= (TEC LUS) wideHoon (TEC) wideHoon
+prefixSoloTec ::= (TEC) wideHoon
 
 # '"'
 # Not in scad(5)
