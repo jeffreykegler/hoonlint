@@ -140,7 +140,7 @@ todo hoons/arvo/lib/down-jet.hoon
 todo hoons/arvo/lib/down-jet/parse.hoon
 todo hoons/arvo/lib/down-jet/rend.hoon
 todo hoons/arvo/lib/elem-to-react-json.hoon
-todo hoons/arvo/lib/frontmatter.hoon
+ok hoons/arvo/lib/frontmatter.hoon
 ok hoons/arvo/lib/gh-parse.hoon
 todo hoons/arvo/lib/hall.hoon
 ok hoons/arvo/lib/hall-json.hoon

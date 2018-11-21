@@ -210,10 +210,6 @@ sub prune {
         hoon                 => 1,
         hoonExpression       => 1,
         hoonFile             => 1,
-        hoonJog              => 1,
-        hoonJogging          => 1,
-        hoonJogs             => 1,
-        hoonJog              => 1,
         hoonPrimary          => 1,
         hoonSeq              => 1,
         hoonUnary            => 1,
@@ -1031,17 +1027,15 @@ wideWutbar ::= (WUT BAR '(') wideHoonSeq (')')
 #			(~(wthp ah a) b)
 #	      (butt ;~(gunk teak ruck))
 hoon ::= tallWuthep
-tallWuthep ::= (WUT HEP GAP) teak5d (GAP) hoonJogging (GAP TIS TIS)
+tallWuthep ::= (WUT HEP GAP) teak5d (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWuthep
-wideWuthep ::= (WUT HEP PER) teak5d (ACE) hoonJogging (PAR)
-
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+wideWuthep ::= (WUT HEP PER) teak5d (ACE) wideRuck5d (PAR)
 
 # ['^' ;~(pfix ket (toad tkkt))]
 # ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtkt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutket rope5d hoon hoon
+# FIXED: wutket teak5d hoon hoon
 
 # ['+' ;~(pfix lus (toad tkls))]
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
@@ -1063,7 +1057,7 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtpt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutpat rope5d hoon hoon
+# FIXED: wutpat teak5d hoon hoon
 
 # ['~' ;~(pfix sig (toad tksg))]
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
@@ -1075,7 +1069,9 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 # 			(~(wtsg ah a) b c)
 # 	      ;~(gunk teak loaf loaf)
-# FIXED: wuttis hoon rope5d
+# FIXED: wuttis teak5d hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['!' (rune zap %wtzp expa)]
 # FIXED: wutzap hoon
@@ -1726,10 +1722,6 @@ hoonPrimary ::= norm5dWide rank=>10
 hoonPrimary ::= long5dWide rank=>8
 
 wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
-
-hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>GAP proper=>1
-hoonJog ::= hoon (GAP) hoon
 
 END_OF_DSL_MAIN
 

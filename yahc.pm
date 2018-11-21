@@ -182,10 +182,6 @@ sub prune {
         hoon                 => 1,
         hoonExpression       => 1,
         hoonFile             => 1,
-        hoonJog              => 1,
-        hoonJogging          => 1,
-        hoonJogs             => 1,
-        hoonJog              => 1,
         hoonPrimary          => 1,
         hoonSeq              => 1,
         hoonUnary            => 1,
@@ -1003,17 +999,15 @@ wideWutbar ::= (WUT BAR '(') wideHoonSeq (')')
 #			(~(wthp ah a) b)
 #	      (butt ;~(gunk teak ruck))
 hoon ::= tallWuthep
-tallWuthep ::= (WUT HEP GAP) teak5d (GAP) hoonJogging (GAP TIS TIS)
+tallWuthep ::= (WUT HEP GAP) teak5d (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWuthep
-wideWuthep ::= (WUT HEP PER) teak5d (ACE) hoonJogging (PAR)
-
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
+wideWuthep ::= (WUT HEP PER) teak5d (ACE) wideRuck5d (PAR)
 
 # ['^' ;~(pfix ket (toad tkkt))]
 # ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtkt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutket rope5d hoon hoon
+# FIXED: wutket teak5d hoon hoon
 
 # ['+' ;~(pfix lus (toad tkls))]
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
@@ -1035,7 +1029,7 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtpt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutpat rope5d hoon hoon
+# FIXED: wutpat teak5d hoon hoon
 
 # ['~' ;~(pfix sig (toad tksg))]
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
@@ -1047,7 +1041,9 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 # 			(~(wtsg ah a) b c)
 # 	      ;~(gunk teak loaf loaf)
-# FIXED: wuttis hoon rope5d
+# FIXED: wuttis teak5d hoon hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['!' (rune zap %wtzp expa)]
 # FIXED: wutzap hoon
@@ -1699,10 +1695,6 @@ hoonPrimary ::= long5dWide rank=>8
 
 wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
 
-hoonJogging ::= hoonJogs
-hoonJogs ::= hoonJog+ separator=>GAP proper=>1
-hoonJog ::= hoon (GAP) hoon
-
 
 BAR ~ bar4h
 BAR4H ~ bar4h
@@ -2246,17 +2238,17 @@ norm5dWide ::= wideWutgar
 tallWutgar ::= (WUT4H GAR4H GAP)hoon (GAP) hoon
 wideWutgar ::= (WUT4H GAR4H) [(] wideHoon (ACE) wideHoon [)]
 
-# WUTKET rope5d hoon hoon
+# WUTKET teak5d hoon hoon
 hoon ::= tallWutket
 norm5dWide ::= wideWutket
-tallWutket ::= (WUT4H KET4H GAP)rope5d (GAP) hoon (GAP) hoon
-wideWutket ::= (WUT4H KET4H) [(] rope5d (ACE) wideHoon (ACE) wideHoon [)]
+tallWutket ::= (WUT4H KET4H GAP)teak5d (GAP) hoon (GAP) hoon
+wideWutket ::= (WUT4H KET4H) [(] wideTeak5d (ACE) wideHoon (ACE) wideHoon [)]
 
-# WUTPAT rope5d hoon hoon
+# WUTPAT teak5d hoon hoon
 hoon ::= tallWutpat
 norm5dWide ::= wideWutpat
-tallWutpat ::= (WUT4H PAT4H GAP)rope5d (GAP) hoon (GAP) hoon
-wideWutpat ::= (WUT4H PAT4H) [(] rope5d (ACE) wideHoon (ACE) wideHoon [)]
+tallWutpat ::= (WUT4H PAT4H GAP)teak5d (GAP) hoon (GAP) hoon
+wideWutpat ::= (WUT4H PAT4H) [(] wideTeak5d (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTSIG teak5d hoon hoon
 hoon ::= tallWutsig
@@ -2264,11 +2256,11 @@ norm5dWide ::= wideWutsig
 tallWutsig ::= (WUT4H SIG4H GAP)teak5d (GAP) hoon (GAP) hoon
 wideWutsig ::= (WUT4H SIG4H) [(] wideTeak5d (ACE) wideHoon (ACE) wideHoon [)]
 
-# WUTTIS hoon rope5d
+# WUTTIS teak5d hoon hoon
 hoon ::= tallWuttis
 norm5dWide ::= wideWuttis
-tallWuttis ::= (WUT4H TIS4H GAP)hoon (GAP) rope5d
-wideWuttis ::= (WUT4H TIS4H) [(] wideHoon (ACE) rope5d [)]
+tallWuttis ::= (WUT4H TIS4H GAP)teak5d (GAP) hoon (GAP) hoon
+wideWuttis ::= (WUT4H TIS4H) [(] wideTeak5d (ACE) wideHoon (ACE) wideHoon [)]
 
 # WUTZAP hoon
 hoon ::= tallWutzap
