@@ -271,6 +271,9 @@ gay4i ~ gap4k
 LOW4I ~ low4i
 low4i ~ [a-z]
 
+NUD4I ~ nud4i
+nud4i ~ [0-9]
+
 # vul4i ~ '::' optNonNLs nl
 
 # === Hoon 4j library ===
@@ -338,7 +341,8 @@ qex4j ~ sex4j hit4k hit4k
 qex4j ~ sex4j hit4k hit4k hit4k
 
 qix4j ~ six4j six4j six4j six4j
-qix4jSeq ~ qix4j+ separator=>DOT proper=>1
+QIX4J_SEQ ~ qix4jSeq
+qix4jSeq ~ qix4j+ separator=>dot4h proper=>1
 
 # tep, tip and tiq have different semantics in hoon.hoon
 TEP4J ~ low4i low4i low4i
@@ -346,10 +350,10 @@ TIP4J ~ low4i low4i low4i
 TIQ4J ~ low4i low4i low4i
 
 urs4j ::= ursChoice*
-ursChoice ::= nud4i | LOW4I | HEP | DOT | SIG | CAB
+ursChoice ::= NUD4I | LOW4I | HEP | DOT | SIG | CAB
 
 urx4j ::= urxChoice*
-urxChoice ::= nud4i | LOW4I | HEP | CAB | DOT
+urxChoice ::= NUD4I | LOW4I | HEP | CAB | DOT
 urxChoice ::= SIG hex4j DOT
 urxChoice ::= SIG SIG DOT
 
@@ -362,11 +366,11 @@ SYM4K ~ sym4k
 CEN_SYM4K ~ cen4h sym4k
 sym4k ~ low4i sym4kRest
 hig4k ~ [A-Z]
-nud4k ~ [0-9]
+
 sym4kRest ~ # empty
 sym4kRest ~ sym4kRestChars
 sym4kRestChars ~ sym4kRestChar+
-sym4kRestChar ~ low4i | nud4k | hep4h
+sym4kRestChar ~ low4i | nud4i | hep4h
 
 VEN4K ~ ven4k
 ven4k ~ carCdr
@@ -432,7 +436,7 @@ date_part1 ::= DIM4J optHep DOT MOT4J DOT DIP4J
 optHep ::= # empty
 optHep ::= HEP
 date_part2 ::= dum4j DOT dum4j DOT dum4j
-date_part3 ::= qix4jSeq
+date_part3 ::= QIX4J_SEQ
 
 timePeriod ::= timePeriodKernel timePeriodFraction
 timePeriod ::= timePeriodKernel
@@ -449,7 +453,7 @@ timePeriodMinutes ::= LAPSE_MINUTES
 LAPSE_MINUTES ~ 'm' dim4j
 timePeriodSeconds ::= LAPSE_SECONDS
 LAPSE_SECONDS ~ 's' dim4j
-timePeriodFraction ::= (DOT DOT) qix4jSeq
+timePeriodFraction ::= (DOT DOT) QIX4J_SEQ
 
 # nuck(4l) is the coin parser
 # TODO: Finish nuck4l
