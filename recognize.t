@@ -29,7 +29,7 @@ ok hoons/arvo/app/static.hoon
 todo hoons/arvo/app/talk.hoon
 ok hoons/arvo/app/test.hoon
 ok hoons/arvo/app/time.hoon
-todo hoons/arvo/app/twit.hoon
+ok hoons/arvo/app/twit.hoon
 ok hoons/arvo/gen/al.hoon
 ok hoons/arvo/gen/ask/admins.hoon
 ok hoons/arvo/gen/brass.hoon
@@ -142,12 +142,12 @@ todo hoons/arvo/lib/down-jet/rend.hoon
 todo hoons/arvo/lib/elem-to-react-json.hoon
 ok hoons/arvo/lib/frontmatter.hoon
 ok hoons/arvo/lib/gh-parse.hoon
-todo hoons/arvo/lib/hall.hoon
+ok hoons/arvo/lib/hall.hoon
 ok hoons/arvo/lib/hall-json.hoon
 ok hoons/arvo/lib/hall-legacy.hoon
 ok hoons/arvo/lib/hep-to-cab.hoon
 todo hoons/arvo/lib/hood/drum.hoon
-todo hoons/arvo/lib/hood/helm.hoon
+ok hoons/arvo/lib/hood/helm.hoon
 todo hoons/arvo/lib/hood/kiln.hoon
 todo hoons/arvo/lib/hood/womb.hoon
 todo hoons/arvo/lib/hood/write.hoon
