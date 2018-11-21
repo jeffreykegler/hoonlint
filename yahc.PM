@@ -1098,8 +1098,6 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: zaptis hoon
 
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # ['?' (rune wut %zpwt hinh)]
 # ++  hinh  |.                                        ::  1/2 numbers, hoon
 #         ;~  gunk
