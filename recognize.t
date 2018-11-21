@@ -27,7 +27,7 @@ todo hoons/arvo/app/hood.hoon
 ok hoons/arvo/app/pipe.hoon
 ok hoons/arvo/app/static.hoon
 todo hoons/arvo/app/talk.hoon
-todo hoons/arvo/app/test.hoon
+ok hoons/arvo/app/test.hoon
 ok hoons/arvo/app/time.hoon
 todo hoons/arvo/app/twit.hoon
 ok hoons/arvo/gen/al.hoon
@@ -133,7 +133,7 @@ ok hoons/arvo/gen/womb/balance.hoon
 ok hoons/arvo/gen/womb/balances.hoon
 ok hoons/arvo/gen/womb/shop.hoon
 ok hoons/arvo/gen/womb/stats.hoon
-todo hoons/arvo/lib/basic-auth.hoon
+ok hoons/arvo/lib/basic-auth.hoon
 todo hoons/arvo/lib/connector.hoon
 ok hoons/arvo/lib/cram.hoon
 todo hoons/arvo/lib/down-jet.hoon

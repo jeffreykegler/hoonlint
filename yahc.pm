@@ -690,7 +690,7 @@ wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
 hoon ::= tallCencab
 tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 norm5dWide ::= wideCencab
-wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
+wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['.' (rune dot %cndt expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
@@ -719,7 +719,7 @@ wideCencab ::= (CEN CAB PEL) rope5d (GAP) wideRick5d (PAR)
 hoon ::= tallCentar
 tallCentar ::= (CEN TAR GAP) rope5d (GAP) hoon (GAP) rick5d (GAP TIS TIS)
 norm5dWide ::= wideCentar
-wideCentar ::= (CEN TAR PEL) rope5d (ACE) wideHoon (GAP) wideRick5d (PAR)
+wideCentar ::= (CEN TAR PEL) rope5d (ACE) wideHoon (ACE) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
@@ -1142,15 +1142,15 @@ limb ::= '.'
 rick5d ::= rick5dJog+ separator=>GAP proper=>1
 rick5dJog ::= rope5d (GAP) hoon
 
-wideRick5d ::= wideRick5dJog+ separator=>GAP proper=>1
-wideRick5dJog ::= rope5d (COM ACE) hoon
+wideRick5d ::= wideRick5dJog+ separator=>ACE proper=>1
+wideRick5dJog ::= rope5d (ACE) hoon
 
 # 5d library: ruck
 
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
 ruck5dJog ::= mold (GAP) hoon
 
-wideRuck5d ::= wideRuck5dJog+ separator=>GAP proper=>1
+wideRuck5d ::= wideRuck5dJog+ separator=>ACE proper=>1
 wideRuck5dJog ::= mold (ACE) hoon
 
 # 5d library: rump
