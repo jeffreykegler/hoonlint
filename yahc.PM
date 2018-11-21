@@ -1102,7 +1102,7 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 
 # [',' (rune com %zpcm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED zapcom hoon hoon
+# FIXED: zapcom hoon hoon
 
 # ['>' (rune gar %zpgr expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon

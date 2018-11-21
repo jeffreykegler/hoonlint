@@ -1074,7 +1074,7 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 
 # [',' (rune com %zpcm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED zapcom hoon hoon
+# FIXED: zapcom hoon hoon
 
 # ['>' (rune gar %zpgr expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -2297,6 +2297,12 @@ hoon ::= tallZapdot
 norm5dWide ::= wideZapdot
 tallZapdot ::= (ZAP4H DOT4H GAP)hoon
 wideZapdot ::= (ZAP4H DOT4H) [(] wideHoon [)]
+
+# ZAPCOM hoon hoon
+hoon ::= tallZapcom
+norm5dWide ::= wideZapcom
+tallZapcom ::= (ZAP4H COM4H GAP)hoon (GAP) hoon
+wideZapcom ::= (ZAP4H COM4H) [(] wideHoon (ACE) wideHoon [)]
 
 # ZAPGAR hoon
 hoon ::= tallZapgar
