@@ -1075,30 +1075,30 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: wutzap hoon
  
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # [':' ;~(pfix col (toad expz))]
-ZAPCOL ~ [!] [:]
-hoon ::= tallZapcol
-tallZapcol ::= ZAPCOL
+#    ++  expz  |.(loaf(bug &))                           ::  hoon with tracing
+# FIXED: zapcol hoon
 
 # ['.' ;~(pfix dot (toad |.(loaf(bug |))))]
-ZAPDOT ~ [!] [.]
-hoon ::= tallZapdot
-tallZapdot ::= ZAPDOT
+# FIXED: zapdot hoon
 
 # [',' (rune com %zpcm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED zapcom hoon hoon
 
 # ['>' (rune gar %zpgr expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: zapgar hoon
 
 # [';' (rune sem %zpsm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED zapsem hoon hoon
 
 # ['=' (rune tis %zpts expa)]
-hoon ::= tallZaptis
-tallZaptis ::= (ZAP TIS GAP) hoon
-norm5dWide ::= wideZaptis
-wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: zaptis hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['?' (rune wut %zpwt hinh)]
 # ++  hinh  |.                                        ::  1/2 numbers, hoon

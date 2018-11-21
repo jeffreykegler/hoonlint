@@ -1047,30 +1047,30 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: wutzap hoon
  
-# TODO: CORRECTION OF NORM for HOONS -- TO HERE
-
 # [':' ;~(pfix col (toad expz))]
-ZAPCOL ~ [!] [:]
-hoon ::= tallZapcol
-tallZapcol ::= ZAPCOL
+#    ++  expz  |.(loaf(bug &))                           ::  hoon with tracing
+# FIXED: zapcol hoon
 
 # ['.' ;~(pfix dot (toad |.(loaf(bug |))))]
-ZAPDOT ~ [!] [.]
-hoon ::= tallZapdot
-tallZapdot ::= ZAPDOT
+# FIXED: zapdot hoon
 
 # [',' (rune com %zpcm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED zapcom hoon hoon
 
 # ['>' (rune gar %zpgr expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: zapgar hoon
 
 # [';' (rune sem %zpsm expb)]
+# ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
+# FIXED zapsem hoon hoon
 
 # ['=' (rune tis %zpts expa)]
-hoon ::= tallZaptis
-tallZaptis ::= (ZAP TIS GAP) hoon
-norm5dWide ::= wideZaptis
-wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: zaptis hoon
+
+# TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
 # ['?' (rune wut %zpwt hinh)]
 # ++  hinh  |.                                        ::  1/2 numbers, hoon
@@ -2270,9 +2270,27 @@ norm5dWide ::= wideWutzap
 tallWutzap ::= (WUT4H ZAP4H GAP)hoon
 wideWutzap ::= (WUT4H ZAP4H) [(] wideHoon [)]
 
+# ZAPCOL hoon
+hoon ::= tallZapcol
+norm5dWide ::= wideZapcol
+tallZapcol ::= (ZAP4H COL4H GAP)hoon
+wideZapcol ::= (ZAP4H COL4H) [(] wideHoon [)]
+
+# ZAPDOT hoon
+hoon ::= tallZapdot
+norm5dWide ::= wideZapdot
+tallZapdot ::= (ZAP4H DOT4H GAP)hoon
+wideZapdot ::= (ZAP4H DOT4H) [(] wideHoon [)]
+
 # ZAPGAR hoon
 hoon ::= tallZapgar
 norm5dWide ::= wideZapgar
 tallZapgar ::= (ZAP4H GAR4H GAP)hoon
 wideZapgar ::= (ZAP4H GAR4H) [(] wideHoon [)]
+
+# ZAPTIS hoon
+hoon ::= tallZaptis
+norm5dWide ::= wideZaptis
+tallZaptis ::= (ZAP4H TIS4H GAP)hoon
+wideZaptis ::= (ZAP4H TIS4H) [(] wideHoon [)]
 
