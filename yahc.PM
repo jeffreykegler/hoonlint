@@ -1005,6 +1005,7 @@ wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
 #     ++  expw  |.(;~(gunk rope loaf loaf loaf))          ::  wing and three hoons
 # FIXED: tiswut rope5d hoon hoon hoon
 
+# ['|' (rune bar %wtbr exps)]
 WUTBAR ~ [?] [|]
 hoon ::= tallWutbar
 tallWutbar ::= (WUTBAR GAP) hoonSeq (GAP TIS TIS)
@@ -1012,32 +1013,25 @@ tallWutbar ::= (BAR4H GAP) hoon
 norm5dWide ::= wideWutbar
 wideWutbar ::= (WUTBAR '(') wideHoonSeq (')')
 
+# [':' (rune col %wtcl expc)]
 # FIXED: wutcol hoon hoon hoon
+
+# ['.' (rune dot %wtdt expc)]
 # FIXED: wutdot hoon hoon hoon
+
+# ['<' (rune gal %wtgl expb)]
 # FIXED: wutgal hoon hoon
+
+# ['>' (rune gar %wtgr expb)]
 # FIXED: wutgar hoon hoon
-# FIXED: wutzap hoon
-# FIXED: wutket rope5d hoon hoon
 
-WUTPAM ~ [?] [&]
-hoon ::= tallWutpam
-tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP TIS TIS)
-norm5dWide ::= wideWutpam
-wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
-
-# FIXED: wutpat rope5d hoon hoon
-
-# ['~' ;~(pfix sig (toad tksg))]
-# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
-# 			  (~(wtsg ah a) b c)
-# 		;~(gunk teak loaf loaf)
-# FIXED: wutsig teak hoon hoon
-
-# FIXED: wuttis hoon rope5d
-
+# ['-' ;~(pfix hep (toad tkhp))]
 WUTHEP ~ [?] [-]
 hoon ::= tallWuthep
 tallWuthep ::= WUTHEP (GAP) rope5d (GAP) hoonJogging (GAP TIS TIS)
+
+# ['^' ;~(pfix ket (toad tkkt))]
+# FIXED: wutket rope5d hoon hoon
 
 # ['+' ;~(pfix lus (toad tkls))]
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
@@ -1047,6 +1041,28 @@ hoon ::= tallWutlus
 tallWutlus ::= (WUT LUS GAP) teak (GAP) hoon (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWutlus
 wideWutlus ::= (WUT LUS PEL) teak (ACE) hoon (ACE) wideRuck5d (PAR)
+
+# ['&' (rune pam %wtpm exps)]
+WUTPAM ~ [?] [&]
+hoon ::= tallWutpam
+tallWutpam ::= (WUTPAM GAP) hoonSeq (GAP TIS TIS)
+norm5dWide ::= wideWutpam
+wideWutpam ::= (WUTPAM '(') wideHoonSeq (')')
+
+# ['@' ;~(pfix pat (toad tkpt))]
+# FIXED: wutpat rope5d hoon hoon
+
+# ['~' ;~(pfix sig (toad tksg))]
+# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
+# 			  (~(wtsg ah a) b c)
+# 		;~(gunk teak loaf loaf)
+# FIXED: wutsig teak hoon hoon
+
+# ['=' ;~(pfix tis (toad tkts))]
+# FIXED: wuttis hoon rope5d
+
+# ['!' (rune zap %wtzp expa)]
+# FIXED: wutzap hoon
 
 # Undocumented runes
 # !:  ::  turn on debugging printfs
