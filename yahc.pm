@@ -260,10 +260,16 @@ unicorn ~ [^\d\D]
 
 # === Hoon 4i library ===
 
+DOG4I ~ dog4i
 dog4i ~ dot4h gay4i
+
+doh4i ~ hep4h hep4h gay4i
 
 gay4i ~ # empty
 gay4i ~ gap4k
+
+LOW4I ~ low4i
+low4i ~ [a-z]
 
 # vul4i ~ '::' optNonNLs nl
 
@@ -278,9 +284,6 @@ mot4j ~ sed4j
 
 dum4j ~ sid4j+
 
-QIX4J ~ qix4j
-qix4j ~ six4j six4j six4j six4j
-
 DIM4J ~ dim4j # a natural number
 dim4j ~ '0'
 dim4j ~ dip4j
@@ -289,27 +292,81 @@ DIP4J ~ dip4j
 dip4j ~ [1-9] dip4jRest
 dip4jRest ~ [0-9]*
 
-VUM4J ~ vum4j
-vum4j ~ siv4j+
+fed4j ::= huf4j
+fed4j ::= huf4j doh4i hyf4jSeq
+fed4j ::= hof4j
+fed4j ::= haf4j
+fed4j ::= TIQ4J
+
+haf4j ::= TEP4J TIP4J
+
+# In hoon.hoon, hef and hif differ in semantics.
+hef4j ::= TIP4J TIQ4J
+
+hex4j ~ '0' qex4j
+hex4j ~ '0' qex4j dog4i qix4jSeq
+
+# In hoon.hoon, hef and hif differ in semantics.
+hif4j ::= TIP4J TIQ4J
+
+hof4j ::= hef4j HEP hif4j
+hof4j ::= hef4j HEP hif4j HEP hif4j
+hof4j ::= hef4j HEP hif4j HEP hif4j HEP hif4j
+
+huf4j ::= hef4j
+huf4j ::= hef4j HEP hif4j
+huf4j ::= hef4j HEP hif4j HEP hif4j
+huf4j ::= hef4j HEP hif4j HEP hif4j HEP hif4j
+
+hyf4j ::= hif4j HEP hif4j
+hyf4jSeq ::= hyf4j+ separator=>DOT proper=>1
 
 sed4j ~ [1-9]
+
+sex4j ~ [1-9a-f]
+
 sid4j ~ [0-9]
+
 # hexadecimal digit
 six4j ~ [0-9a-f]
+
 siv4j ~ [0-9a-v]
+
+qex4j ~ sex4j
+qex4j ~ sex4j hit4k
+qex4j ~ sex4j hit4k hit4k
+qex4j ~ sex4j hit4k hit4k hit4k
+
+qix4j ~ six4j six4j six4j six4j
+qix4jSeq ~ qix4j+ separator=>DOT proper=>1
+
+# tep, tip and tiq have different semantics in hoon.hoon
+TEP4J ~ low4i low4i low4i
+TIP4J ~ low4i low4i low4i
+TIQ4J ~ low4i low4i low4i
+
+urs4j ::= ursChoice*
+ursChoice ::= nud4i | LOW4I | HEP | DOT | SIG | CAB
+
+urx4j ::= urxChoice*
+urxChoice ::= nud4i | LOW4I | HEP | CAB | DOT
+urxChoice ::= SIG hex4j DOT
+urxChoice ::= SIG SIG DOT
+
+VUM4J ~ vum4j
+vum4j ~ siv4j+
 
 # === Hoon 4k library ===
 
 SYM4K ~ sym4k
 CEN_SYM4K ~ cen4h sym4k
-sym4k ~ low4k sym4kRest
-low4k ~ [a-z]
+sym4k ~ low4i sym4kRest
 hig4k ~ [A-Z]
 nud4k ~ [0-9]
 sym4kRest ~ # empty
 sym4kRest ~ sym4kRestChars
 sym4kRestChars ~ sym4kRestChar+
-sym4kRestChar ~ low4k | nud4k | hep4h
+sym4kRestChar ~ low4i | nud4k | hep4h
 
 VEN4K ~ ven4k
 ven4k ~ carCdr
@@ -363,6 +420,10 @@ gon4k ~ bas4h gay4i fas4h
 
 crub4l ::= date
 crub4l ::= timePeriod
+crub4l ::= fed4j
+crub4l ::= DOT urs4j
+crub4l ::= SIG urx4j
+crub4l ::= HEP urx4j
 
 date ::= date_part1
 date ::= date_part1 DOT DOT date_part2
@@ -372,8 +433,6 @@ optHep ::= # empty
 optHep ::= HEP
 date_part2 ::= dum4j DOT dum4j DOT dum4j
 date_part3 ::= qix4jSeq
-
-qix4jSeq ::= QIX4J+ separator=>DOT proper=>1
 
 timePeriod ::= timePeriodKernel timePeriodFraction
 timePeriod ::= timePeriodKernel
@@ -534,7 +593,7 @@ wideHoonJoggingSeparator ::= COM ACE
 mota5d ::= # empty
 mota5d ::= AURA_NAME
 AURA_NAME ~ optLow4kSeq optHig4kSeq
-optLow4kSeq ~ low4k*
+optLow4kSeq ~ low4i*
 optHig4kSeq ~ hig4k*
 
 # 5d library: norm
@@ -1473,7 +1532,7 @@ prefixSoloTec ::= (TEC) wideHoon
 # '"'
 # Not in scad(5)
 scat5d ::= infixDot
-infixDot ::= soil5d+ separator=>dog4i proper=>1
+infixDot ::= soil5d+ separator=>DOG4I proper=>1
 
 # ['a' 'z']
 # Differs from scad(5)
