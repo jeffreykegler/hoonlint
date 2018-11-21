@@ -1071,31 +1071,33 @@ wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
 # 	      ;~(gunk teak loaf loaf)
 # FIXED: wuttis teak5d hoon hoon
 
+# ['!' (rune zap %wtzp expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+# FIXED: wutzap hoon
+ 
 # TODO: CORRECTION OF NORM for HOONS -- TO HERE
 
-# ['!' (rune zap %wtzp expa)]
-# FIXED: wutzap hoon
-
-# Undocumented runes
-# !:  ::  turn on debugging printfs
+# [':' ;~(pfix col (toad expz))]
 ZAPCOL ~ [!] [:]
 hoon ::= tallZapcol
 tallZapcol ::= ZAPCOL
 
-# Undocumented runes
-# !.  ::  turn off debugging printfs
+# ['.' ;~(pfix dot (toad |.(loaf(bug |))))]
 ZAPDOT ~ [!] [.]
 hoon ::= tallZapdot
 tallZapdot ::= ZAPDOT
 
+# [',' (rune com %zpcm expb)]
+
+# ['>' (rune gar %zpgr expa)]
 # FIXED: zapgar hoon
 
-# ZAPTIS hoon
-# Cannot use ZAPTIS because ZAP TIS must also
-# be accepted
+# [';' (rune sem %zpsm expb)]
+
+# ['=' (rune tis %zpts expa)]
 hoon ::= tallZaptis
+tallZaptis ::= (ZAP TIS GAP) hoon
 norm5dWide ::= wideZaptis
-tallZaptis ::= (ZAP TIS GAP)hoon
 wideZaptis ::= (ZAP TIS) [(] wideHoon [)]
 
 # ['?' (rune wut %zpwt hinh)]
