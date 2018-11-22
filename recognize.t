@@ -134,7 +134,7 @@ ok hoons/arvo/gen/womb/balances.hoon
 ok hoons/arvo/gen/womb/shop.hoon
 ok hoons/arvo/gen/womb/stats.hoon
 ok hoons/arvo/lib/basic-auth.hoon
-todo hoons/arvo/lib/connector.hoon
+ok hoons/arvo/lib/connector.hoon
 ok hoons/arvo/lib/cram.hoon
 todo hoons/arvo/lib/down-jet.hoon
 todo hoons/arvo/lib/down-jet/parse.hoon
@@ -149,7 +149,7 @@ ok hoons/arvo/lib/hep-to-cab.hoon
 todo hoons/arvo/lib/hood/drum.hoon
 ok hoons/arvo/lib/hood/helm.hoon
 todo hoons/arvo/lib/hood/kiln.hoon
-todo hoons/arvo/lib/hood/womb.hoon
+ok hoons/arvo/lib/hood/womb.hoon
 todo hoons/arvo/lib/hood/write.hoon
 ok hoons/arvo/lib/http.hoon
 ok hoons/arvo/lib/httr-to-json.hoon

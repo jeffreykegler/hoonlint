@@ -1215,8 +1215,9 @@ wideRick5dJog ::= rope5d (ACE) hoon
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
 ruck5dJog ::= mold (GAP) hoon
 
-wideRuck5d ::= wideRuck5dJog+ separator=>ACE proper=>1
+wideRuck5d ::= wideRuck5dJog+ separator=>commaAce proper=>1
 wideRuck5dJog ::= mold (ACE) hoon
+commaAce ::= COM ACE
 
 # 5d library: rump
 
