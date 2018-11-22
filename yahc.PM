@@ -698,21 +698,32 @@ wideBucwutMold ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # [':' (rune col %cnhp exqz)]
 #    ++  exqz  |.(;~(gunk loaf (butt hunk)))             ::  hoon, n roots
-mold ::= tallCenhepMold
-wideMold ::= wideCenhepMold
-tallCenhepMold ::= (CEN HEP GAP) hoon (GAP) moldSeq (GAP TIS TIS)
-wideCenhepMold ::= (CEN HEP PEL) wideHoon (GAP) wideMoldSeq (PER)
-
-# TODO: Mold runes done TO HERE
+mold ::= tallCencolMold
+wideMold ::= wideCencolMold
+tallCencolMold ::= (CEN COL GAP) hoon (GAP) moldSeq (GAP TIS TIS)
+wideCencolMold ::= (CEN COL PEL) wideHoon (GAP) wideMoldSeq (PER)
 
 # ['-' (rune hep %cnhp exqk)]
 #    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
+mold ::= tallCenhepMold
+wideMold ::= wideCenhepMold
+tallCenhepMold ::= (CEN HEP GAP) hoon (GAP)  mold
+wideCenhepMold ::= (CEN HEP PEL) wideHoon (ACE) wideMold (PER)
 
 # :~  ['^' (rune ket %cnkt exqy)]
 #    ++  exqy  |.(;~(gunk loaf loan loan loan))          ::  hoon, three roots
+mold ::= tallCenketMold
+wideMold ::= wideCenketMold
+tallCenketMold ::= (CEN KET GAP) hoon (GAP)  mold (GAP) mold (GAP) mold
+wideCenketMold ::= (CEN KET PEL) wideHoon (ACE) wideMold (ACE) wideMold
+  (ACE) wideMold (PER)
 
 # ['+' (rune lus %cnls exqx)]
 #   ++  exqx  |.(;~(gunk loaf loan loan))               ::  hoon, two roots
+mold ::= tallCenlusMold
+wideMold ::= wideCenlusMold
+tallCenlusMold ::= (CEN LUS GAP) hoon (GAP)  mold (GAP) mold
+wideCenlusMold ::= (CEN LUS PEL) wideHoon (ACE) wideMold (ACE) wideMold (PER)
   
 # 5d library: norm
 

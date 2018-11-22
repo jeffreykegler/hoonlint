@@ -146,7 +146,7 @@ ok hoons/arvo/lib/hall.hoon
 ok hoons/arvo/lib/hall-json.hoon
 ok hoons/arvo/lib/hall-legacy.hoon
 ok hoons/arvo/lib/hep-to-cab.hoon
-todo hoons/arvo/lib/hood/drum.hoon
+ok hoons/arvo/lib/hood/drum.hoon
 ok hoons/arvo/lib/hood/helm.hoon
 todo hoons/arvo/lib/hood/kiln.hoon
 ok hoons/arvo/lib/hood/womb.hoon
