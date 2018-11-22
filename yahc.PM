@@ -1656,6 +1656,7 @@ circumGargal ::= ('>') wideHoonSeq ('<')
 
 # TODO -- Finish soil(5d) -- add triple double strings
 
+soil5d ::= tripleDoubleQuoteString
 soil5d ::= doubleQuoteString
 
 doubleQuoteString ::= (["]) <double quote cord> (["])
@@ -1669,6 +1670,23 @@ doubleQuoteString ::= (["]) <double quote cord> (["])
 <UNESCAPED DOUBLE QUOTE CHARS> ~ unescapedDoubleQuoteChar+
 unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 <ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
+
+tripleDoubleQuoteString ::=
+  (TRIPLE_DOUBLE_INITIAL) <triple double quote cord> (TRIPLE_DOUBLE_FINAL)
+<triple double quote cord> ::= <triple double quote element>*
+<triple double quote element> ::= <UNESCAPED TRIPLE DOUBLE QUOTE CHARS>
+<triple double quote element> ::= <ESCAPED TRIPLE DOUBLE QUOTE CHAR>
+<triple double quote element> ::= NL
+<triple double quote element> ::= sump5d
+
+# All the printable (non-control) characters except
+# bas (x5c) and kel (x7b)
+<UNESCAPED TRIPLE DOUBLE QUOTE CHARS> ~ unescapedTripleDoubleQuoteChar+
+unescapedTripleDoubleQuoteChar ~ [\x20-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+<ESCAPED TRIPLE DOUBLE QUOTE CHAR> ~ bas4h bas4h |  bas4h kel4h | bas4h bix4j
+
+TRIPLE_DOUBLE_INITIAL ~ doq4h doq4h doq4h nl
+TRIPLE_DOUBLE_FINAL ~ nl doq4h doq4h doq4h
 
 sump5d ::= KEL wideHoonSeq KER
 
@@ -1777,7 +1795,7 @@ comment ~ ':>' optNonNLs nl
 comment ~ ':<' optNonNLs nl
 comment ~ '+|' optNonNLs nl
 
-# NL ~ nl
+NL ~ nl
 nl ~ [\n]
 optNonNLs ~ nonNL*
 nonNL ~ [^\n]
