@@ -26,7 +26,7 @@ todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/app/hood.hoon
 ok hoons/arvo/app/pipe.hoon
 ok hoons/arvo/app/static.hoon
-todo hoons/arvo/app/talk.hoon
+ok hoons/arvo/app/talk.hoon
 ok hoons/arvo/app/test.hoon
 ok hoons/arvo/app/time.hoon
 ok hoons/arvo/app/twit.hoon
@@ -283,13 +283,13 @@ ok hoons/arvo/sec/com/instagram.hoon
 ok hoons/arvo/sec/com/slack.hoon
 ok hoons/arvo/sec/com/twitter.hoon
 ok hoons/arvo/sur/down.hoon
-todo hoons/arvo/sur/gh.hoon
+ok hoons/arvo/sur/gh.hoon
 ok hoons/arvo/sur/gmail-label.hoon
 ok hoons/arvo/sur/gmail-message.hoon
 ok hoons/arvo/sur/hall.hoon
 ok hoons/arvo/sur/kyev.hoon
 ok hoons/arvo/sur/lens.hoon
-todo hoons/arvo/sur/markdown.hoon
+ok hoons/arvo/sur/markdown.hoon
 ok hoons/arvo/sur/plan/acct.hoon
 ok hoons/arvo/sur/plan/diff.hoon
 ok hoons/arvo/sur/recoverable-error.hoon
@@ -304,7 +304,7 @@ todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/vane/ames.hoon
 ok hoons/arvo/sys/vane/behn.hoon
 todo hoons/arvo/sys/vane/clay.hoon
-todo hoons/arvo/sys/vane/dill.hoon
+ok hoons/arvo/sys/vane/dill.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/sys/vane/ford.hoon
 ok hoons/arvo/sys/vane/gall.hoon

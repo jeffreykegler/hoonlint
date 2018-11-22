@@ -654,10 +654,12 @@ wideMold ::= wideBucsemMold
 tallBucsemMold ::= (BUC SEM GAP) hoon
 wideBucsemMold ::= (BUC SEM PEL) wideHoon (PER)
 
-# TODO: Mold runes done TO HERE
-
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
+mold ::= tallBuctisMold
+wideMold ::= wideBuctisMold
+tallBuctisMold ::= (BUC TIS GAP) SYM4K (GAP)  mold
+wideBuctisMold ::= (BUC TIS PEL) SYM4K (ACE) wideMold (PER)
 
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -668,6 +670,12 @@ wideBucwutMold ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # [':' (rune col %cnhp exqz)]
 #    ++  exqz  |.(;~(gunk loaf (butt hunk)))             ::  hoon, n roots
+mold ::= tallCenhepMold
+wideMold ::= wideCenhepMold
+tallCenhepMold ::= (CEN HEP GAP) hoon (GAP) moldSeq (GAP TIS TIS)
+wideCenhepMold ::= (CEN HEP PEL) wideHoon (GAP) wideMoldSeq (PER)
+
+# TODO: Mold runes done TO HERE
 
 # ['-' (rune hep %cnhp exqk)]
 #    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
