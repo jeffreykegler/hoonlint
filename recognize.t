@@ -25,8 +25,8 @@ todo hoons/arvo/web/dojo.hoon
 todo hoons/arvo/web/404.hoon
 todo hoons/arvo/sys/zuse.hoon
 todo hoons/arvo/sys/vane/xmas.hoon
-todo hoons/arvo/sys/vane/jael.hoon
-todo hoons/arvo/sys/vane/ford.hoon
+ok hoons/arvo/sys/vane/jael.hoon
+ok hoons/arvo/sys/vane/ford.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/sys/vane/clay.hoon
 todo hoons/arvo/sys/vane/ames.hoon

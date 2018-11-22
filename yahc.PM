@@ -1157,7 +1157,7 @@ wideWutbar ::= (WUT BAR PEL) wideHoonSeq (PER)
 hoon ::= tallWuthep
 tallWuthep ::= (WUT HEP GAP) teak5d (GAP) ruck5d (GAP TIS TIS)
 norm5dWide ::= wideWuthep
-wideWuthep ::= (WUT HEP PER) teak5d (ACE) wideRuck5d (PAR)
+wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
 
 # ['^' ;~(pfix ket (toad tkkt))]
 # ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
