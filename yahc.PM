@@ -731,12 +731,12 @@ wideCenlusMold ::= (CEN LUS PEL) wide5d (ACE) wideMold (ACE) wideMold (PER)
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
 # wisp must be tall, therefore wasp and BARCAB must be tall
-tall5d ::= tallBarcab
+norm5d ::= tallBarcab
 tallBarcab ::= (BAR CAB GAP) mold (GAP) wasp5d wisp5d
 
 # ['%' (runo cen %brcn [~ ~] expe)]
 # ++  expe  |.(wisp)                                  ::  core tail
-tall5d ::= tallBarcen
+norm5d ::= tallBarcen
 tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
@@ -753,7 +753,7 @@ tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # ['^' (runo ket %brkt [~ ~] expx)]
 # ++  expx  |.  ;~  gunk  loaf [...] wisp ::  hoon and core tail
-tall5d ::= tallBarket
+norm5d ::= tallBarket
 tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['~' (runo sig %brsg [~ ~] exqc)]
@@ -766,7 +766,7 @@ tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['=' (runo tis %brts [~ ~] exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-tall5d ::= tallBartis
+norm5d ::= tallBartis
 wideNorm5d ::= wideBartis
 tallBartis ::= (BAR4H TIS GAP) mold (GAP) tall5d
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
@@ -781,7 +781,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-tall5d ::= tallBuccol
+norm5d ::= tallBuccol
 tallBuccol ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccol
 wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
@@ -789,7 +789,7 @@ wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
 # ['%' (rune cen %bccn exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
-tall5d ::= tallBuccen
+norm5d ::= tallBuccen
 tallBuccen ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccen
 wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
@@ -817,14 +817,14 @@ wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-tall5d ::= tallBucwut
+norm5d ::= tallBucwut
 tallBucwut ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBucwut
 wideBucwut ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # ['_' (rune cab %cncb exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
-tall5d ::= tallCencab
+norm5d ::= tallCencab
 tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCencab
 wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
@@ -853,14 +853,14 @@ wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['*' (rune tar %cntr expm)]
 #  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
-tall5d ::= tallCentar
+norm5d ::= tallCentar
 tallCentar ::= (CEN TAR GAP) rope5d (GAP) tall5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCentar
 wideCentar ::= (CEN TAR PEL) rope5d (ACE) wide5d (ACE) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
-tall5d ::= tallCentis
+norm5d ::= tallCentis
 tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCentis
 wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
@@ -883,14 +883,14 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['~' (rune sig %clsg exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-tall5d ::= tallColsig
+norm5d ::= tallColsig
 tallColsig ::= (COL SIG GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColsig
 wideColsig ::= (COL SIG PEL) wide5dSeq (PER)
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-tall5d ::= tallColtar
+norm5d ::= tallColtar
 tallColtar ::= (COL TAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColtar
 wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
@@ -899,7 +899,7 @@ wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 # ++  exqn  |.(;~(gunk loan (stag %cltr (butt hank))))::  autoconsed hoons
 # I do not understand hoon.hoon comment ("autoconsed hoons"), but
 # follow the code
-tall5d ::= tallDotket
+norm5d ::= tallDotket
 tallDotket ::= (DOT KET GAP) mold (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideDotket
 wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
@@ -929,7 +929,7 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
 # TODO: Where to classify this?
 FASTIS ~ [\/] [=]
-tall5d ::= tallFastis
+norm5d ::= tallFastis
 tallFastis ::= (FASTIS GAP) SYM4K (GAP) tall5d
 wideNorm5d ::= wideFastis
 wideFastis ::= (FASTIS) SYM4K '=' tall5d
@@ -972,7 +972,7 @@ wideFastis ::= (FASTIS) SYM4K '=' tall5d
 
 # [':' (rune col %smcl expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-tall5d ::= tallSemcol
+norm5d ::= tallSemcol
 tallSemcol ::= (SEM COL GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemcol
 wideSemcol ::= (SEM COL PEL) tall5d (ACE) wide5dSeq (PER)
@@ -987,7 +987,7 @@ wideSemcol ::= (SEM COL PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['~' (rune sig %smsg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-tall5d ::= tallSemsig
+norm5d ::= tallSemsig
 tallSemsig ::= (SEM SIG GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemsig
 wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
@@ -1022,7 +1022,7 @@ wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
 # ['+' (rune lus %sgls hinc)]
 # ++  hinc  |.                                        ::  optional =en, hoon
 #           ;~(pose ;~(gunk bony loaf) (stag ~ loaf)) ::
-tall5d ::= tallSiglus
+norm5d ::= tallSiglus
 tallSiglus ::= (SIG LUS GAP) bony5d (GAP) tall5d
 tallSiglus ::= (SIG LUS GAP) tall5d
 wideNorm5d ::= wideSiglus
@@ -1035,7 +1035,7 @@ wideSiglus ::= (SIG LUS PEL) tall5d (PER)
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf))
 #  ==
-tall5d ::= tallSigpam
+norm5d ::= tallSigpam
 tallSigpam ::= (SIG PAM GAP) oneToThreeGars (GAP) tall5d (GAP) tall5d
 tallSigpam ::= (SIG PAM GAP) tall5d (GAP) tall5d
 wideNorm5d ::= wideSigpam
@@ -1053,7 +1053,7 @@ oneToThreeGars ::= GAR | GAR GAR | GAR GAR GAR
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf loaf))
 #  ==
-tall5d ::= tallSigwut
+norm5d ::= tallSigwut
 tallSigwut ::= (SIG WUT GAP) oneToThreeGars (GAP) tall5d (GAP) tall5d (GAP) tall5d
 tallSigwut ::= (SIG WUT GAP) tall5d (GAP) tall5d (GAP) tall5d
 wideNorm5d ::= wideSigwut
@@ -1070,7 +1070,7 @@ wideSigwut ::= (SIG WUT PEL) tall5d (ACE) tall5d (ACE) tall5d (PER)
 
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
-tall5d ::= tallTiscol
+norm5d ::= tallTiscol
 tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS GAP) tall5d
 wideNorm5d ::= wideTiscol
 wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
@@ -1113,7 +1113,7 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
 
 # ['~' (rune sig %tssg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-tall5d ::= tallTissig
+norm5d ::= tallTissig
 tallTissig ::= (TIS SIG GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideTissig
 wideTissig ::= (TIS SIG PEL) tall5d (ACE) wide5dSeq (PER)
@@ -1128,7 +1128,7 @@ wideTissig ::= (TIS SIG PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['|' (rune bar %wtbr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-tall5d ::= tallWutbar
+norm5d ::= tallWutbar
 tallWutbar ::= (WUT BAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutbar
 wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
@@ -1153,7 +1153,7 @@ wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
 # ++  tkhp  |.  %+  cook  |=  {a/tiki b/(list (pair root hoon))}
 #			(~(wthp ah a) b)
 #	      (butt ;~(gunk teak ruck))
-tall5d ::= tallWuthep
+norm5d ::= tallWuthep
 tallWuthep ::= (WUT HEP GAP) teak5d (GAP) ruck5d (GAP TIS TIS)
 wideNorm5d ::= wideWuthep
 wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
@@ -1168,14 +1168,14 @@ wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
 # 			(~(wtls ah a) b c)
 #	      (butt ;~(gunk teak loaf ruck))
-tall5d ::= tallWutlus
+norm5d ::= tallWutlus
 tallWutlus ::= (WUT LUS GAP) teak5d (GAP) tall5d (GAP) ruck5d (GAP TIS TIS)
 wideNorm5d ::= wideWutlus
 wideWutlus ::= (WUT LUS PEL) teak5d (ACE) tall5d (ACE) wideRuck5d (PAR)
 
 # ['&' (rune pam %wtpm exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-tall5d ::= tallWutpam
+norm5d ::= tallWutpam
 tallWutpam ::= (WUT PAM GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutpam
 wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
@@ -1234,7 +1234,7 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 #           ==
 #           loaf
 #         ==
-tall5d ::= tallZapWut
+norm5d ::= tallZapWut
 wideNorm5d ::= wideZapWut
 tallZapWut ::= (ZAP WUT GAP) dem4k (GAP) tall5d
 tallZapWut ::= (ZAP WUT GAP SEL) dem4k (ACE) dem4k (SER GAP) tall5d
@@ -1864,7 +1864,8 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
-tall5d ::= wide5d
+tall5d ::= norm5d rank=>20
+tall5d ::= wide5d rank=>10
 wide5d ::= wide5dChoices
 
 # TODO: Precedence needs to be tested
@@ -1931,8 +1932,8 @@ sub doFixedRune {
     my $tallLHS = 'tall' . ucfirst $runeName;
     my $wideLHS = 'wide' . ucfirst $runeName;
 
-    # tall5d ::= tallBarhep
-    push @result, 'tall5d ::= ' . $tallLHS;
+    # norm5d ::= tallBarhep
+    push @result, 'norm5d ::= ' . $tallLHS;
 
     # wideNorm5d ::= wideBarhep
     push @result, 'wideNorm5d ::= ' . $wideLHS;
