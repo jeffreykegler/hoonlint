@@ -212,7 +212,6 @@ sub prune {
         hoonFile             => 1,
         hoonPrimary          => 1,
         hoonSeq              => 1,
-        hoonUnary            => 1,
 	long5dWide => 1,
         mold                 => 1,
         moldSeq              => 1,
@@ -1449,21 +1448,17 @@ moldInfixTis ::= SYM4K TIS wideMold
 # TODO: Finish
 wideBuccol ::= (',[') wideMoldSeq (']')
 
-# TODO: <hoonUnary> was a Marpa hack (that it, not in hoon.hoon)
-# to duplicate Hoon precedence.  It may no longer be necessary.
-# This needs to be tested.
-
 # '!'
 # Not in scad(5)
 # TODO: Finish
-hoonUnary ::= prefixZap
+hoonPrimary ::= prefixZap
 prefixZap ::= (ZAP) wideHoon
 scat5d ::= wideZapzap
 wideZapzap ~ zap4h zap4h
 
 # '_'
 # Same as scad(5)
-hoonUnary ::= prefixCab
+hoonPrimary ::= prefixCab
 prefixCab ::= (CAB) wideHoon
 
 # '$'
@@ -1870,8 +1865,9 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 hoonSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wideHoon
-wideHoon ::= hoonUnary
-hoonUnary ::= hoonPrimary
+wideHoon ::= hoonPrimary
+
+# TODO: Precedence needs to be tested
 hoonPrimary ::= norm5dWide rank=>10
 hoonPrimary ::= long5dWide rank=>8
 
