@@ -742,7 +742,7 @@ tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: barcol hoon tall5d
+# FIXED: barcol tall5d tall5d
 
 # ['.' (runo dot %brdt [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -832,25 +832,25 @@ wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['.' (rune dot %cndt expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: cendot hoon hoon
+# FIXED: cendot tall5d tall5d
 
 # ['-' (rune hep %cnhp expk)]
 # ++  expk  |.(;~(gunk loaf ;~(plug loaf (easy ~))))  ::  list of two hoons
-# FIXED: cenhep hoon hoon
+# FIXED: cenhep tall5d tall5d
 
 # ['^' (rune ket %cnkt expd)]
 # ++  expd  |.(;~(gunk loaf loaf loaf loaf))          ::  four hoons
-# FIXED: cenket hoon hoon hoon hoon
+# FIXED: cenket tall5d tall5d tall5d tall5d
 
 # ['+' (rune lus %cnls expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
-# FIXED: cenlus hoon hoon hoon
+# FIXED: cenlus tall5d tall5d tall5d
 
 # ['~' (rune sig %cnsg expn)]
 # ++  expn  |.  ;~  gunk  rope  loaf                  ::  wing, hoon,
 # 		;~(plug loaf (easy ~))              ::  list of one hoon
 # 	      ==
-# FIXED: censig rope5d hoon hoon
+# FIXED: censig rope5d tall5d tall5d
 
 # ['*' (rune tar %cntr expm)]
 #  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
@@ -868,19 +868,19 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['_' (rune cab %clcb expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: colcab hoon hoon
+# FIXED: colcab tall5d tall5d
 
 # ['-' (rune hep %clhp expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: colhep hoon hoon
+# FIXED: colhep tall5d tall5d
 
 # ['+' (rune lus %clls expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
-# FIXED: collus hoon hoon hoon
+# FIXED: collus tall5d tall5d tall5d
 
 # ['^' (rune ket %clkt expd)]
 # ++  expd  |.(;~(gunk loaf loaf loaf loaf))          ::  four hoons
-# FIXED: colket hoon hoon hoon hoon
+# FIXED: colket tall5d tall5d tall5d tall5d
 
 # ['~' (rune sig %clsg exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
@@ -908,25 +908,25 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 # ['+' (rune lus %dtls expa)]
 # :~  ['+' (rune lus %dtls expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: dotlus hoon
+# FIXED: dotlus tall5d
 
 # ['*' (rune tar %dttr expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: dottar hoon hoon
+# FIXED: dottar tall5d tall5d
 
 # ['=' (rune tis %dtts expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: dottis hoon hoon
+# FIXED: dottis tall5d tall5d
 
 # ['?' (rune wut %dtwt expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: dotwut hoon
+# FIXED: dotwut tall5d
 
 # FAS group are (usually?) ford runes:
 # They are not in hoon.hoon, and so were not part of the
 # corrections to match hoon.hoon.
 
-# FIXED: fassem hoon hoon
+# FIXED: fassem tall5d tall5d
 
 # TODO: Where to classify this?
 FASTIS ~ [\/] [=]
@@ -937,39 +937,39 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 
 # ['|' (rune bar %ktbr expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: ketbar hoon
+# FIXED: ketbar tall5d
 
 # ['%' (rune cen %ktcn expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: ketcen hoon
+# FIXED: ketcen tall5d
 
 # ['.' (rune dot %ktdt expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: ketdot hoon hoon
+# FIXED: ketdot tall5d tall5d
 
 # ['-' (rune hep %kthp exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: kethep mold hoon
+# FIXED: kethep mold tall5d
 
 # ['+' (rune lus %ktls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: ketlus hoon hoon
+# FIXED: ketlus tall5d tall5d
 
 # ['&' (rune pam %ktpm expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: ketpam hoon
+# FIXED: ketpam tall5d
 
 # ['~' (rune sig %ktsg expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: ketsig hoon
+# FIXED: ketsig tall5d
 
 # ['=' (rune tis %ktts expg)]
 # ++  expg  |.(;~(gunk sym loaf))                     ::  term and hoon
-# FIXED: kettis SYM4K hoon
+# FIXED: kettis SYM4K tall5d
 
 # ['?' (rune wut %ktwt expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: ketwut hoon
+# FIXED: ketwut tall5d
 
 # [':' (rune col %smcl expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
@@ -980,11 +980,11 @@ wideSemcol ::= (SEM COL PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['/' (rune fas %smfs expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: semfas hoon
+# FIXED: semfas tall5d
 
 # [';' (rune sem %smsm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: semsem hoon hoon
+# FIXED: semsem tall5d tall5d
 
 # ['~' (rune sig %smsg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
@@ -994,31 +994,31 @@ wideNorm5d ::= wideSemsig
 wideSemsig ::= (SEM SIG PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['|' (rune bar %sgbr expb)]
-# FIXED: sigbar hoon hoon
+# FIXED: sigbar tall5d tall5d
 
 # ['$' (rune buc %sgbc expf)]
 # ++  expf  |.(;~(gunk ;~(pfix cen sym) loaf))        ::  %term and hoon
-# FIXED: sigbuc CEN_SYM4K hoon
+# FIXED: sigbuc CEN_SYM4K tall5d
 
 # ['_' (rune cab %sgcb expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: sigcab hoon hoon
+# FIXED: sigcab tall5d tall5d
 
 # ['%' (rune cen %sgcn hind)]
 # ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
-# FIXED: sigcen bonk5d rope5d bonz5d hoon
+# FIXED: sigcen bonk5d rope5d bonz5d tall5d
 
 # ['/' (rune fas %sgfs hine)]
 # ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
-# FIXED: sigfas bonk5d hoon
+# FIXED: sigfas bonk5d tall5d
 
 # ['<' (rune gal %sggl hinb)]
 #  ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
-# FIXED: siggal bont5d hoon
+# FIXED: siggal bont5d tall5d
 
 # ['>' (rune gar %sggr hinb)]
 #  ++  hinb  |.(;~(gunk bont loaf))                    ::  hint and hoon
-# FIXED: siggar bont5d hoon
+# FIXED: siggar bont5d tall5d
 
 # ['+' (rune lus %sgls hinc)]
 # ++  hinc  |.                                        ::  optional =en, hoon
@@ -1046,7 +1046,7 @@ oneToThreeGars ::= GAR | GAR GAR | GAR GAR GAR
 
 # ['=' (rune tis %sgts expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: sigtis hoon hoon
+# FIXED: sigtis tall5d tall5d
 
 # ['?' (rune wut %sgwt hing)]
 # ++  hing  |.                                        ::  0-3 >s, three hoons
@@ -1063,11 +1063,11 @@ wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 
 # ['!' (rune zap %sgzp expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: sigzap hoon hoon
+# FIXED: sigzap tall5d tall5d
 
 # ['|' (rune bar %tsbr exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: tisbar mold hoon
+# FIXED: tisbar mold tall5d
 
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
@@ -1078,39 +1078,39 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
 
 # [',' (rune com %tscm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: tiscom hoon hoon
+# FIXED: tiscom tall5d tall5d
 
 # ['.' (rune dot %tsdt expq)]
 # ++  expq  |.(;~(gunk rope loaf loaf))               ::  wing and two hoons
-# FIXED: tisdot rope5d hoon hoon
+# FIXED: tisdot rope5d tall5d tall5d
 
 # ['-' (rune hep %tshp expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: tishep hoon hoon
+# FIXED: tishep tall5d tall5d
 
 # ['/' (rune fas %tsfs expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
-# FIXED: tisfas wise5d hoon hoon
+# FIXED: tisfas wise5d tall5d tall5d
 
 # ['<' (rune gal %tsgl expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: tisgal hoon hoon
+# FIXED: tisgal tall5d tall5d
 
 # ['>' (rune gar %tsgr expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: tisgar hoon hoon
+# FIXED: tisgar tall5d tall5d
 
 # ['^' (rune ket %tskt expt)]
 #     ++  expt  |.(;~(gunk wise rope loaf loaf))          ::  =^
-# FIXED: tisket wise5d rope5d hoon hoon
+# FIXED: tisket wise5d rope5d tall5d tall5d
 
 # ['+' (rune lus %tsls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: tislus hoon hoon
+# FIXED: tislus tall5d tall5d
 
 # [';' (rune sem %tssm expo)]
 # ++  expo  |.(;~(gunk wise loaf loaf))               ::  =;
-# FIXED: tissem wise5d hoon hoon
+# FIXED: tissem wise5d tall5d tall5d
 
 # ['~' (rune sig %tssg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
@@ -1121,11 +1121,11 @@ wideTissig ::= (TIS SIG PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['*' (rune tar %tstr expl)]
 # ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
-# FIXED: tistar SYM4K hoon hoon
+# FIXED: tistar SYM4K tall5d tall5d
 
 # ['?' (rune wut %tswt expw)]
 #     ++  expw  |.(;~(gunk rope loaf loaf loaf))          ::  wing and three hoons
-# FIXED: tiswut rope5d hoon hoon hoon
+# FIXED: tiswut rope5d tall5d tall5d tall5d
 
 # ['|' (rune bar %wtbr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
@@ -1136,19 +1136,19 @@ wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
 
 # [':' (rune col %wtcl expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
-# FIXED: wutcol hoon hoon hoon
+# FIXED: wutcol tall5d tall5d tall5d
 
 # ['.' (rune dot %wtdt expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
-# FIXED: wutdot hoon hoon hoon
+# FIXED: wutdot tall5d tall5d tall5d
 
 # ['<' (rune gal %wtgl expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: wutgal hoon hoon
+# FIXED: wutgal tall5d tall5d
 
 # ['>' (rune gar %wtgr expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: wutgar hoon hoon
+# FIXED: wutgar tall5d tall5d
 
 # ['-' ;~(pfix hep (toad tkhp))]
 # ++  tkhp  |.  %+  cook  |=  {a/tiki b/(list (pair root hoon))}
@@ -1163,7 +1163,7 @@ wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
 # ++  tkkt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtkt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutket teak5d hoon hoon
+# FIXED: wutket teak5d tall5d tall5d
 
 # ['+' ;~(pfix lus (toad tkls))]
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
@@ -1185,38 +1185,38 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 # ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 #			(~(wtpt ah a) b c)
 #	      ;~(gunk teak loaf loaf)
-# FIXED: wutpat teak5d hoon hoon
+# FIXED: wutpat teak5d tall5d tall5d
 
 # ['~' ;~(pfix sig (toad tksg))]
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 # 			  (~(wtsg ah a) b c)
 # 		;~(gunk teak loaf loaf)
-# FIXED: wutsig teak5d hoon hoon
+# FIXED: wutsig teak5d tall5d tall5d
 
 # ['=' ;~(pfix tis (toad tkts))]
 # ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
 # 			(~(wtsg ah a) b c)
 # 	      ;~(gunk teak loaf loaf)
-# FIXED: wuttis teak5d hoon hoon
+# FIXED: wuttis teak5d tall5d tall5d
 
 # ['!' (rune zap %wtzp expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: wutzap hoon
+# FIXED: wutzap tall5d
  
 # [':' ;~(pfix col (toad expz))]
 #    ++  expz  |.(loaf(bug &))                           ::  hoon with tracing
-# FIXED: zapcol hoon
+# FIXED: zapcol tall5d
 
 # ['.' ;~(pfix dot (toad |.(loaf(bug |))))]
-# FIXED: zapdot hoon
+# FIXED: zapdot tall5d
 
 # [',' (rune com %zpcm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: zapcom hoon hoon
+# FIXED: zapcom tall5d tall5d
 
 # ['>' (rune gar %zpgr expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: zapgar hoon
+# FIXED: zapgar tall5d
 
 # [';' (rune sem %zpsm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
@@ -1224,7 +1224,7 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 
 # ['=' (rune tis %zpts expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: zaptis hoon
+# FIXED: zaptis tall5d
 
 # ['?' (rune wut %zpwt hinh)]
 # ++  hinh  |.                                        ::  1/2 numbers, hoon
