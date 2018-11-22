@@ -180,7 +180,6 @@ sub prune {
         wide5dSeq          => 1,
         wideMold             => 1,
         wideMoldSeq          => 1,
-        hoon                 => 1,
         hoonExpression       => 1,
         hoonFile             => 1,
         tall5d => 1,
@@ -704,12 +703,12 @@ wideCenlusMold ::= (CEN LUS PEL) wide5d (ACE) wideMold (ACE) wideMold (PER)
 # ['_' (runo cab %brcb [~ ~] exqr)]
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
 # wisp must be tall, therefore wasp and BARCAB must be tall
-hoon ::= tallBarcab
+tall5d ::= tallBarcab
 tallBarcab ::= (BAR CAB GAP) mold (GAP) wasp5d wisp5d
 
 # ['%' (runo cen %brcn [~ ~] expe)]
 # ++  expe  |.(wisp)                                  ::  core tail
-hoon ::= tallBarcen
+tall5d ::= tallBarcen
 tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
@@ -726,7 +725,7 @@ tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # ['^' (runo ket %brkt [~ ~] expx)]
 # ++  expx  |.  ;~  gunk  loaf [...] wisp ::  hoon and core tail
-hoon ::= tallBarket
+tall5d ::= tallBarket
 tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['~' (runo sig %brsg [~ ~] exqc)]
@@ -739,7 +738,7 @@ tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['=' (runo tis %brts [~ ~] exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-hoon ::= tallBartis
+tall5d ::= tallBartis
 wideNorm5d ::= wideBartis
 tallBartis ::= (BAR4H TIS GAP) mold (GAP) tall5d
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
@@ -754,7 +753,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-hoon ::= tallBuccol
+tall5d ::= tallBuccol
 tallBuccol ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccol
 wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
@@ -762,7 +761,7 @@ wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
 # ['%' (rune cen %bccn exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
-hoon ::= tallBuccen
+tall5d ::= tallBuccen
 tallBuccen ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccen
 wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
@@ -790,14 +789,14 @@ wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-hoon ::= tallBucwut
+tall5d ::= tallBucwut
 tallBucwut ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
 wideNorm5d ::= wideBucwut
 wideBucwut ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # ['_' (rune cab %cncb exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
-hoon ::= tallCencab
+tall5d ::= tallCencab
 tallCencab ::= (CEN CAB GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCencab
 wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
@@ -826,14 +825,14 @@ wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['*' (rune tar %cntr expm)]
 #  ++  expm  |.((butt ;~(gunk rope loaf rick)))        ::  several [tile hoon]s
-hoon ::= tallCentar
+tall5d ::= tallCentar
 tallCentar ::= (CEN TAR GAP) rope5d (GAP) tall5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCentar
 wideCentar ::= (CEN TAR PEL) rope5d (ACE) wide5d (ACE) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
-hoon ::= tallCentis
+tall5d ::= tallCentis
 tallCentis ::= (CEN TIS GAP) rope5d (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCentis
 wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
@@ -856,14 +855,14 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 
 # ['~' (rune sig %clsg exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-hoon ::= tallColsig
+tall5d ::= tallColsig
 tallColsig ::= (COL SIG GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColsig
 wideColsig ::= (COL SIG PEL) wide5dSeq (PER)
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-hoon ::= tallColtar
+tall5d ::= tallColtar
 tallColtar ::= (COL TAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColtar
 wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
@@ -872,7 +871,7 @@ wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 # ++  exqn  |.(;~(gunk loan (stag %cltr (butt hank))))::  autoconsed hoons
 # I do not understand hoon.hoon comment ("autoconsed hoons"), but
 # follow the code
-hoon ::= tallDotket
+tall5d ::= tallDotket
 tallDotket ::= (DOT KET GAP) mold (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideDotket
 wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
@@ -902,7 +901,7 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
 # TODO: Where to classify this?
 FASTIS ~ [\/] [=]
-hoon ::= tallFastis
+tall5d ::= tallFastis
 tallFastis ::= (FASTIS GAP) SYM4K (GAP) tall5d
 wideNorm5d ::= wideFastis
 wideFastis ::= (FASTIS) SYM4K '=' tall5d
@@ -945,7 +944,7 @@ wideFastis ::= (FASTIS) SYM4K '=' tall5d
 
 # [':' (rune col %smcl expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-hoon ::= tallSemcol
+tall5d ::= tallSemcol
 tallSemcol ::= (SEM COL GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemcol
 wideSemcol ::= (SEM COL PEL) tall5d (ACE) wide5dSeq (PER)
@@ -960,7 +959,7 @@ wideSemcol ::= (SEM COL PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['~' (rune sig %smsg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-hoon ::= tallSemsig
+tall5d ::= tallSemsig
 tallSemsig ::= (SEM SIG GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemsig
 wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
@@ -995,7 +994,7 @@ wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
 # ['+' (rune lus %sgls hinc)]
 # ++  hinc  |.                                        ::  optional =en, hoon
 #           ;~(pose ;~(gunk bony loaf) (stag ~ loaf)) ::
-hoon ::= tallSiglus
+tall5d ::= tallSiglus
 tallSiglus ::= (SIG LUS GAP) bony5d (GAP) tall5d
 tallSiglus ::= (SIG LUS GAP) tall5d
 wideNorm5d ::= wideSiglus
@@ -1008,7 +1007,7 @@ wideSiglus ::= (SIG LUS PEL) tall5d (PER)
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf))
 #  ==
-hoon ::= tallSigpam
+tall5d ::= tallSigpam
 tallSigpam ::= (SIG PAM GAP) oneToThreeGars (GAP) tall5d (GAP) tall5d
 tallSigpam ::= (SIG PAM GAP) tall5d (GAP) tall5d
 wideNorm5d ::= wideSigpam
@@ -1026,7 +1025,7 @@ oneToThreeGars ::= GAR | GAR GAR | GAR GAR GAR
 #    ;~(gunk (cook lent (stun [1 3] gar)) loaf loaf loaf)
 #    (stag 0 ;~(gunk loaf loaf loaf))
 #  ==
-hoon ::= tallSigwut
+tall5d ::= tallSigwut
 tallSigwut ::= (SIG WUT GAP) oneToThreeGars (GAP) tall5d (GAP) tall5d (GAP) tall5d
 tallSigwut ::= (SIG WUT GAP) tall5d (GAP) tall5d (GAP) tall5d
 wideNorm5d ::= wideSigwut
@@ -1043,7 +1042,7 @@ wideSigwut ::= (SIG WUT PEL) tall5d (ACE) tall5d (ACE) tall5d (PER)
 
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
-hoon ::= tallTiscol
+tall5d ::= tallTiscol
 tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS GAP) tall5d
 wideNorm5d ::= wideTiscol
 wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
@@ -1086,7 +1085,7 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
 
 # ['~' (rune sig %tssg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
-hoon ::= tallTissig
+tall5d ::= tallTissig
 tallTissig ::= (TIS SIG GAP) tall5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideTissig
 wideTissig ::= (TIS SIG PEL) tall5d (ACE) wide5dSeq (PER)
@@ -1101,7 +1100,7 @@ wideTissig ::= (TIS SIG PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['|' (rune bar %wtbr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-hoon ::= tallWutbar
+tall5d ::= tallWutbar
 tallWutbar ::= (WUT BAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutbar
 wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
@@ -1126,7 +1125,7 @@ wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
 # ++  tkhp  |.  %+  cook  |=  {a/tiki b/(list (pair root hoon))}
 #			(~(wthp ah a) b)
 #	      (butt ;~(gunk teak ruck))
-hoon ::= tallWuthep
+tall5d ::= tallWuthep
 tallWuthep ::= (WUT HEP GAP) teak5d (GAP) ruck5d (GAP TIS TIS)
 wideNorm5d ::= wideWuthep
 wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
@@ -1141,14 +1140,14 @@ wideWuthep ::= (WUT HEP PEL) teak5d (ACE) wideRuck5d (PER)
 # ++  tkls  |.  %+  cook  |=  {a/tiki b/hoon c/(list (pair root hoon))}
 # 			(~(wtls ah a) b c)
 #	      (butt ;~(gunk teak loaf ruck))
-hoon ::= tallWutlus
+tall5d ::= tallWutlus
 tallWutlus ::= (WUT LUS GAP) teak5d (GAP) tall5d (GAP) ruck5d (GAP TIS TIS)
 wideNorm5d ::= wideWutlus
 wideWutlus ::= (WUT LUS PEL) teak5d (ACE) tall5d (ACE) wideRuck5d (PAR)
 
 # ['&' (rune pam %wtpm exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
-hoon ::= tallWutpam
+tall5d ::= tallWutpam
 tallWutpam ::= (WUT PAM GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutpam
 wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
@@ -1207,7 +1206,7 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 #           ==
 #           loaf
 #         ==
-hoon ::= tallZapWut
+tall5d ::= tallZapWut
 wideNorm5d ::= wideZapWut
 tallZapWut ::= (ZAP WUT GAP) dem4k (GAP) tall5d
 tallZapWut ::= (ZAP WUT GAP SEL) dem4k (ACE) dem4k (SER GAP) tall5d
@@ -1837,8 +1836,7 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
-tall5d ::= hoon
-hoon ::= wide5d
+tall5d ::= wide5d
 wide5d ::= wide5dChoices
 
 # TODO: Precedence needs to be tested
@@ -2019,433 +2017,433 @@ zap4h ~ [!]
 inaccessible_ok ::= ZAP
 inaccessible_ok ::= ZAP4H
 # BARCOL tall5d tall5d
-hoon ::= tallBarcol
+tall5d ::= tallBarcol
 wideNorm5d ::= wideBarcol
 tallBarcol ::= (BAR4H COL4H GAP)tall5d (GAP) tall5d
 wideBarcol ::= (BAR4H COL4H) [(] wide5d (ACE) wide5d [)]
 
 # BARDOT tall5d
-hoon ::= tallBardot
+tall5d ::= tallBardot
 wideNorm5d ::= wideBardot
 tallBardot ::= (BAR4H DOT4H GAP)tall5d
 wideBardot ::= (BAR4H DOT4H) [(] wide5d [)]
 
 # BARHEP tall5d
-hoon ::= tallBarhep
+tall5d ::= tallBarhep
 wideNorm5d ::= wideBarhep
 tallBarhep ::= (BAR4H HEP4H GAP)tall5d
 wideBarhep ::= (BAR4H HEP4H) [(] wide5d [)]
 
 # BARSIG mold tall5d
-hoon ::= tallBarsig
+tall5d ::= tallBarsig
 wideNorm5d ::= wideBarsig
 tallBarsig ::= (BAR4H SIG4H GAP)mold (GAP) tall5d
 wideBarsig ::= (BAR4H SIG4H) [(] wideMold (ACE) wide5d [)]
 
 # BARTAR mold tall5d
-hoon ::= tallBartar
+tall5d ::= tallBartar
 wideNorm5d ::= wideBartar
 tallBartar ::= (BAR4H TAR4H GAP)mold (GAP) tall5d
 wideBartar ::= (BAR4H TAR4H) [(] wideMold (ACE) wide5d [)]
 
 # BARWUT tall5d
-hoon ::= tallBarwut
+tall5d ::= tallBarwut
 wideNorm5d ::= wideBarwut
 tallBarwut ::= (BAR4H WUT4H GAP)tall5d
 wideBarwut ::= (BAR4H WUT4H) [(] wide5d [)]
 
 # BUCCAB tall5d
-hoon ::= tallBuccab
+tall5d ::= tallBuccab
 wideNorm5d ::= wideBuccab
 tallBuccab ::= (BUC4H CAB4H GAP)tall5d
 wideBuccab ::= (BUC4H CAB4H) [(] wide5d [)]
 
 # BUCHEP mold mold
-hoon ::= tallBuchep
+tall5d ::= tallBuchep
 wideNorm5d ::= wideBuchep
 tallBuchep ::= (BUC4H HEP4H GAP)mold (GAP) mold
 wideBuchep ::= (BUC4H HEP4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCKET mold mold
-hoon ::= tallBucket
+tall5d ::= tallBucket
 wideNorm5d ::= wideBucket
 tallBucket ::= (BUC4H KET4H GAP)mold (GAP) mold
 wideBucket ::= (BUC4H KET4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCPAT mold mold
-hoon ::= tallBucpat
+tall5d ::= tallBucpat
 wideNorm5d ::= wideBucpat
 tallBucpat ::= (BUC4H PAT4H GAP)mold (GAP) mold
 wideBucpat ::= (BUC4H PAT4H) [(] wideMold (ACE) wideMold [)]
 
 # BUCSEM mold
-hoon ::= tallBucsem
+tall5d ::= tallBucsem
 wideNorm5d ::= wideBucsem
 tallBucsem ::= (BUC4H SEM4H GAP)mold
 wideBucsem ::= (BUC4H SEM4H) [(] wideMold [)]
 
 # BUCTIS SYM4K mold
-hoon ::= tallBuctis
+tall5d ::= tallBuctis
 wideNorm5d ::= wideBuctis
 tallBuctis ::= (BUC4H TIS4H GAP)SYM4K (GAP) mold
 wideBuctis ::= (BUC4H TIS4H) [(] SYM4K (ACE) wideMold [)]
 
 # CENDOT tall5d tall5d
-hoon ::= tallCendot
+tall5d ::= tallCendot
 wideNorm5d ::= wideCendot
 tallCendot ::= (CEN4H DOT4H GAP)tall5d (GAP) tall5d
 wideCendot ::= (CEN4H DOT4H) [(] wide5d (ACE) wide5d [)]
 
 # CENHEP tall5d tall5d
-hoon ::= tallCenhep
+tall5d ::= tallCenhep
 wideNorm5d ::= wideCenhep
 tallCenhep ::= (CEN4H HEP4H GAP)tall5d (GAP) tall5d
 wideCenhep ::= (CEN4H HEP4H) [(] wide5d (ACE) wide5d [)]
 
 # CENKET tall5d tall5d tall5d tall5d
-hoon ::= tallCenket
+tall5d ::= tallCenket
 wideNorm5d ::= wideCenket
 tallCenket ::= (CEN4H KET4H GAP)tall5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
 wideCenket ::= (CEN4H KET4H) [(] wide5d (ACE) wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # CENLUS tall5d tall5d tall5d
-hoon ::= tallCenlus
+tall5d ::= tallCenlus
 wideNorm5d ::= wideCenlus
 tallCenlus ::= (CEN4H LUS4H GAP)tall5d (GAP) tall5d (GAP) tall5d
 wideCenlus ::= (CEN4H LUS4H) [(] wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # CENSIG rope5d tall5d tall5d
-hoon ::= tallCensig
+tall5d ::= tallCensig
 wideNorm5d ::= wideCensig
 tallCensig ::= (CEN4H SIG4H GAP)rope5d (GAP) tall5d (GAP) tall5d
 wideCensig ::= (CEN4H SIG4H) [(] rope5d (ACE) wide5d (ACE) wide5d [)]
 
 # COLCAB tall5d tall5d
-hoon ::= tallColcab
+tall5d ::= tallColcab
 wideNorm5d ::= wideColcab
 tallColcab ::= (COL4H CAB4H GAP)tall5d (GAP) tall5d
 wideColcab ::= (COL4H CAB4H) [(] wide5d (ACE) wide5d [)]
 
 # COLHEP tall5d tall5d
-hoon ::= tallColhep
+tall5d ::= tallColhep
 wideNorm5d ::= wideColhep
 tallColhep ::= (COL4H HEP4H GAP)tall5d (GAP) tall5d
 wideColhep ::= (COL4H HEP4H) [(] wide5d (ACE) wide5d [)]
 
 # COLLUS tall5d tall5d tall5d
-hoon ::= tallCollus
+tall5d ::= tallCollus
 wideNorm5d ::= wideCollus
 tallCollus ::= (COL4H LUS4H GAP)tall5d (GAP) tall5d (GAP) tall5d
 wideCollus ::= (COL4H LUS4H) [(] wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # COLKET tall5d tall5d tall5d tall5d
-hoon ::= tallColket
+tall5d ::= tallColket
 wideNorm5d ::= wideColket
 tallColket ::= (COL4H KET4H GAP)tall5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
 wideColket ::= (COL4H KET4H) [(] wide5d (ACE) wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # DOTLUS tall5d
-hoon ::= tallDotlus
+tall5d ::= tallDotlus
 wideNorm5d ::= wideDotlus
 tallDotlus ::= (DOT4H LUS4H GAP)tall5d
 wideDotlus ::= (DOT4H LUS4H) [(] wide5d [)]
 
 # DOTTAR tall5d tall5d
-hoon ::= tallDottar
+tall5d ::= tallDottar
 wideNorm5d ::= wideDottar
 tallDottar ::= (DOT4H TAR4H GAP)tall5d (GAP) tall5d
 wideDottar ::= (DOT4H TAR4H) [(] wide5d (ACE) wide5d [)]
 
 # DOTTIS tall5d tall5d
-hoon ::= tallDottis
+tall5d ::= tallDottis
 wideNorm5d ::= wideDottis
 tallDottis ::= (DOT4H TIS4H GAP)tall5d (GAP) tall5d
 wideDottis ::= (DOT4H TIS4H) [(] wide5d (ACE) wide5d [)]
 
 # DOTWUT tall5d
-hoon ::= tallDotwut
+tall5d ::= tallDotwut
 wideNorm5d ::= wideDotwut
 tallDotwut ::= (DOT4H WUT4H GAP)tall5d
 wideDotwut ::= (DOT4H WUT4H) [(] wide5d [)]
 
 # FASSEM tall5d tall5d
-hoon ::= tallFassem
+tall5d ::= tallFassem
 wideNorm5d ::= wideFassem
 tallFassem ::= (FAS4H SEM4H GAP)tall5d (GAP) tall5d
 wideFassem ::= (FAS4H SEM4H) [(] wide5d (ACE) wide5d [)]
 
 # KETBAR tall5d
-hoon ::= tallKetbar
+tall5d ::= tallKetbar
 wideNorm5d ::= wideKetbar
 tallKetbar ::= (KET4H BAR4H GAP)tall5d
 wideKetbar ::= (KET4H BAR4H) [(] wide5d [)]
 
 # KETCEN tall5d
-hoon ::= tallKetcen
+tall5d ::= tallKetcen
 wideNorm5d ::= wideKetcen
 tallKetcen ::= (KET4H CEN4H GAP)tall5d
 wideKetcen ::= (KET4H CEN4H) [(] wide5d [)]
 
 # KETDOT tall5d tall5d
-hoon ::= tallKetdot
+tall5d ::= tallKetdot
 wideNorm5d ::= wideKetdot
 tallKetdot ::= (KET4H DOT4H GAP)tall5d (GAP) tall5d
 wideKetdot ::= (KET4H DOT4H) [(] wide5d (ACE) wide5d [)]
 
 # KETHEP mold tall5d
-hoon ::= tallKethep
+tall5d ::= tallKethep
 wideNorm5d ::= wideKethep
 tallKethep ::= (KET4H HEP4H GAP)mold (GAP) tall5d
 wideKethep ::= (KET4H HEP4H) [(] wideMold (ACE) wide5d [)]
 
 # KETLUS tall5d tall5d
-hoon ::= tallKetlus
+tall5d ::= tallKetlus
 wideNorm5d ::= wideKetlus
 tallKetlus ::= (KET4H LUS4H GAP)tall5d (GAP) tall5d
 wideKetlus ::= (KET4H LUS4H) [(] wide5d (ACE) wide5d [)]
 
 # KETPAM tall5d
-hoon ::= tallKetpam
+tall5d ::= tallKetpam
 wideNorm5d ::= wideKetpam
 tallKetpam ::= (KET4H PAM4H GAP)tall5d
 wideKetpam ::= (KET4H PAM4H) [(] wide5d [)]
 
 # KETSIG tall5d
-hoon ::= tallKetsig
+tall5d ::= tallKetsig
 wideNorm5d ::= wideKetsig
 tallKetsig ::= (KET4H SIG4H GAP)tall5d
 wideKetsig ::= (KET4H SIG4H) [(] wide5d [)]
 
 # KETTIS SYM4K tall5d
-hoon ::= tallKettis
+tall5d ::= tallKettis
 wideNorm5d ::= wideKettis
 tallKettis ::= (KET4H TIS4H GAP)SYM4K (GAP) tall5d
 wideKettis ::= (KET4H TIS4H) [(] SYM4K (ACE) wide5d [)]
 
 # KETWUT tall5d
-hoon ::= tallKetwut
+tall5d ::= tallKetwut
 wideNorm5d ::= wideKetwut
 tallKetwut ::= (KET4H WUT4H GAP)tall5d
 wideKetwut ::= (KET4H WUT4H) [(] wide5d [)]
 
 # SEMFAS tall5d
-hoon ::= tallSemfas
+tall5d ::= tallSemfas
 wideNorm5d ::= wideSemfas
 tallSemfas ::= (SEM4H FAS4H GAP)tall5d
 wideSemfas ::= (SEM4H FAS4H) [(] wide5d [)]
 
 # SEMSEM tall5d tall5d
-hoon ::= tallSemsem
+tall5d ::= tallSemsem
 wideNorm5d ::= wideSemsem
 tallSemsem ::= (SEM4H SEM4H GAP)tall5d (GAP) tall5d
 wideSemsem ::= (SEM4H SEM4H) [(] wide5d (ACE) wide5d [)]
 
 # SIGBAR tall5d tall5d
-hoon ::= tallSigbar
+tall5d ::= tallSigbar
 wideNorm5d ::= wideSigbar
 tallSigbar ::= (SIG4H BAR4H GAP)tall5d (GAP) tall5d
 wideSigbar ::= (SIG4H BAR4H) [(] wide5d (ACE) wide5d [)]
 
 # SIGBUC CEN_SYM4K tall5d
-hoon ::= tallSigbuc
+tall5d ::= tallSigbuc
 wideNorm5d ::= wideSigbuc
 tallSigbuc ::= (SIG4H BUC4H GAP)CEN_SYM4K (GAP) tall5d
 wideSigbuc ::= (SIG4H BUC4H) [(] CEN_SYM4K (ACE) wide5d [)]
 
 # SIGCAB tall5d tall5d
-hoon ::= tallSigcab
+tall5d ::= tallSigcab
 wideNorm5d ::= wideSigcab
 tallSigcab ::= (SIG4H CAB4H GAP)tall5d (GAP) tall5d
 wideSigcab ::= (SIG4H CAB4H) [(] wide5d (ACE) wide5d [)]
 
 # SIGCEN bonk5d rope5d bonz5d tall5d
-hoon ::= tallSigcen
+tall5d ::= tallSigcen
 wideNorm5d ::= wideSigcen
 tallSigcen ::= (SIG4H CEN4H GAP)bonk5d (GAP) rope5d (GAP) bonz5d (GAP) tall5d
 wideSigcen ::= (SIG4H CEN4H) [(] bonk5d (ACE) rope5d (ACE) wideBonz5d (ACE) wide5d [)]
 
 # SIGFAS bonk5d tall5d
-hoon ::= tallSigfas
+tall5d ::= tallSigfas
 wideNorm5d ::= wideSigfas
 tallSigfas ::= (SIG4H FAS4H GAP)bonk5d (GAP) tall5d
 wideSigfas ::= (SIG4H FAS4H) [(] bonk5d (ACE) wide5d [)]
 
 # SIGGAL bont5d tall5d
-hoon ::= tallSiggal
+tall5d ::= tallSiggal
 wideNorm5d ::= wideSiggal
 tallSiggal ::= (SIG4H GAL4H GAP)bont5d (GAP) tall5d
 wideSiggal ::= (SIG4H GAL4H) [(] wideBont5d (ACE) wide5d [)]
 
 # SIGGAR bont5d tall5d
-hoon ::= tallSiggar
+tall5d ::= tallSiggar
 wideNorm5d ::= wideSiggar
 tallSiggar ::= (SIG4H GAR4H GAP)bont5d (GAP) tall5d
 wideSiggar ::= (SIG4H GAR4H) [(] wideBont5d (ACE) wide5d [)]
 
 # SIGTIS tall5d tall5d
-hoon ::= tallSigtis
+tall5d ::= tallSigtis
 wideNorm5d ::= wideSigtis
 tallSigtis ::= (SIG4H TIS4H GAP)tall5d (GAP) tall5d
 wideSigtis ::= (SIG4H TIS4H) [(] wide5d (ACE) wide5d [)]
 
 # SIGZAP tall5d tall5d
-hoon ::= tallSigzap
+tall5d ::= tallSigzap
 wideNorm5d ::= wideSigzap
 tallSigzap ::= (SIG4H ZAP4H GAP)tall5d (GAP) tall5d
 wideSigzap ::= (SIG4H ZAP4H) [(] wide5d (ACE) wide5d [)]
 
 # TISBAR mold tall5d
-hoon ::= tallTisbar
+tall5d ::= tallTisbar
 wideNorm5d ::= wideTisbar
 tallTisbar ::= (TIS4H BAR4H GAP)mold (GAP) tall5d
 wideTisbar ::= (TIS4H BAR4H) [(] wideMold (ACE) wide5d [)]
 
 # TISCOM tall5d tall5d
-hoon ::= tallTiscom
+tall5d ::= tallTiscom
 wideNorm5d ::= wideTiscom
 tallTiscom ::= (TIS4H COM4H GAP)tall5d (GAP) tall5d
 wideTiscom ::= (TIS4H COM4H) [(] wide5d (ACE) wide5d [)]
 
 # TISDOT rope5d tall5d tall5d
-hoon ::= tallTisdot
+tall5d ::= tallTisdot
 wideNorm5d ::= wideTisdot
 tallTisdot ::= (TIS4H DOT4H GAP)rope5d (GAP) tall5d (GAP) tall5d
 wideTisdot ::= (TIS4H DOT4H) [(] rope5d (ACE) wide5d (ACE) wide5d [)]
 
 # TISHEP tall5d tall5d
-hoon ::= tallTishep
+tall5d ::= tallTishep
 wideNorm5d ::= wideTishep
 tallTishep ::= (TIS4H HEP4H GAP)tall5d (GAP) tall5d
 wideTishep ::= (TIS4H HEP4H) [(] wide5d (ACE) wide5d [)]
 
 # TISFAS wise5d tall5d tall5d
-hoon ::= tallTisfas
+tall5d ::= tallTisfas
 wideNorm5d ::= wideTisfas
 tallTisfas ::= (TIS4H FAS4H GAP)wise5d (GAP) tall5d (GAP) tall5d
 wideTisfas ::= (TIS4H FAS4H) [(] wise5d (ACE) wide5d (ACE) wide5d [)]
 
 # TISGAL tall5d tall5d
-hoon ::= tallTisgal
+tall5d ::= tallTisgal
 wideNorm5d ::= wideTisgal
 tallTisgal ::= (TIS4H GAL4H GAP)tall5d (GAP) tall5d
 wideTisgal ::= (TIS4H GAL4H) [(] wide5d (ACE) wide5d [)]
 
 # TISGAR tall5d tall5d
-hoon ::= tallTisgar
+tall5d ::= tallTisgar
 wideNorm5d ::= wideTisgar
 tallTisgar ::= (TIS4H GAR4H GAP)tall5d (GAP) tall5d
 wideTisgar ::= (TIS4H GAR4H) [(] wide5d (ACE) wide5d [)]
 
 # TISKET wise5d rope5d tall5d tall5d
-hoon ::= tallTisket
+tall5d ::= tallTisket
 wideNorm5d ::= wideTisket
 tallTisket ::= (TIS4H KET4H GAP)wise5d (GAP) rope5d (GAP) tall5d (GAP) tall5d
 wideTisket ::= (TIS4H KET4H) [(] wise5d (ACE) rope5d (ACE) wide5d (ACE) wide5d [)]
 
 # TISLUS tall5d tall5d
-hoon ::= tallTislus
+tall5d ::= tallTislus
 wideNorm5d ::= wideTislus
 tallTislus ::= (TIS4H LUS4H GAP)tall5d (GAP) tall5d
 wideTislus ::= (TIS4H LUS4H) [(] wide5d (ACE) wide5d [)]
 
 # TISSEM wise5d tall5d tall5d
-hoon ::= tallTissem
+tall5d ::= tallTissem
 wideNorm5d ::= wideTissem
 tallTissem ::= (TIS4H SEM4H GAP)wise5d (GAP) tall5d (GAP) tall5d
 wideTissem ::= (TIS4H SEM4H) [(] wise5d (ACE) wide5d (ACE) wide5d [)]
 
 # TISTAR SYM4K tall5d tall5d
-hoon ::= tallTistar
+tall5d ::= tallTistar
 wideNorm5d ::= wideTistar
 tallTistar ::= (TIS4H TAR4H GAP)SYM4K (GAP) tall5d (GAP) tall5d
 wideTistar ::= (TIS4H TAR4H) [(] SYM4K (ACE) wide5d (ACE) wide5d [)]
 
 # TISWUT rope5d tall5d tall5d tall5d
-hoon ::= tallTiswut
+tall5d ::= tallTiswut
 wideNorm5d ::= wideTiswut
 tallTiswut ::= (TIS4H WUT4H GAP)rope5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
 wideTiswut ::= (TIS4H WUT4H) [(] rope5d (ACE) wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTCOL tall5d tall5d tall5d
-hoon ::= tallWutcol
+tall5d ::= tallWutcol
 wideNorm5d ::= wideWutcol
 tallWutcol ::= (WUT4H COL4H GAP)tall5d (GAP) tall5d (GAP) tall5d
 wideWutcol ::= (WUT4H COL4H) [(] wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTDOT tall5d tall5d tall5d
-hoon ::= tallWutdot
+tall5d ::= tallWutdot
 wideNorm5d ::= wideWutdot
 tallWutdot ::= (WUT4H DOT4H GAP)tall5d (GAP) tall5d (GAP) tall5d
 wideWutdot ::= (WUT4H DOT4H) [(] wide5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTGAL tall5d tall5d
-hoon ::= tallWutgal
+tall5d ::= tallWutgal
 wideNorm5d ::= wideWutgal
 tallWutgal ::= (WUT4H GAL4H GAP)tall5d (GAP) tall5d
 wideWutgal ::= (WUT4H GAL4H) [(] wide5d (ACE) wide5d [)]
 
 # WUTGAR tall5d tall5d
-hoon ::= tallWutgar
+tall5d ::= tallWutgar
 wideNorm5d ::= wideWutgar
 tallWutgar ::= (WUT4H GAR4H GAP)tall5d (GAP) tall5d
 wideWutgar ::= (WUT4H GAR4H) [(] wide5d (ACE) wide5d [)]
 
 # WUTKET teak5d tall5d tall5d
-hoon ::= tallWutket
+tall5d ::= tallWutket
 wideNorm5d ::= wideWutket
 tallWutket ::= (WUT4H KET4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWutket ::= (WUT4H KET4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTPAT teak5d tall5d tall5d
-hoon ::= tallWutpat
+tall5d ::= tallWutpat
 wideNorm5d ::= wideWutpat
 tallWutpat ::= (WUT4H PAT4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWutpat ::= (WUT4H PAT4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTSIG teak5d tall5d tall5d
-hoon ::= tallWutsig
+tall5d ::= tallWutsig
 wideNorm5d ::= wideWutsig
 tallWutsig ::= (WUT4H SIG4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWutsig ::= (WUT4H SIG4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTTIS teak5d tall5d tall5d
-hoon ::= tallWuttis
+tall5d ::= tallWuttis
 wideNorm5d ::= wideWuttis
 tallWuttis ::= (WUT4H TIS4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWuttis ::= (WUT4H TIS4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
 # WUTZAP tall5d
-hoon ::= tallWutzap
+tall5d ::= tallWutzap
 wideNorm5d ::= wideWutzap
 tallWutzap ::= (WUT4H ZAP4H GAP)tall5d
 wideWutzap ::= (WUT4H ZAP4H) [(] wide5d [)]
 
 # ZAPCOL tall5d
-hoon ::= tallZapcol
+tall5d ::= tallZapcol
 wideNorm5d ::= wideZapcol
 tallZapcol ::= (ZAP4H COL4H GAP)tall5d
 wideZapcol ::= (ZAP4H COL4H) [(] wide5d [)]
 
 # ZAPDOT tall5d
-hoon ::= tallZapdot
+tall5d ::= tallZapdot
 wideNorm5d ::= wideZapdot
 tallZapdot ::= (ZAP4H DOT4H GAP)tall5d
 wideZapdot ::= (ZAP4H DOT4H) [(] wide5d [)]
 
 # ZAPCOM tall5d tall5d
-hoon ::= tallZapcom
+tall5d ::= tallZapcom
 wideNorm5d ::= wideZapcom
 tallZapcom ::= (ZAP4H COM4H GAP)tall5d (GAP) tall5d
 wideZapcom ::= (ZAP4H COM4H) [(] wide5d (ACE) wide5d [)]
 
 # ZAPGAR tall5d
-hoon ::= tallZapgar
+tall5d ::= tallZapgar
 wideNorm5d ::= wideZapgar
 tallZapgar ::= (ZAP4H GAR4H GAP)tall5d
 wideZapgar ::= (ZAP4H GAR4H) [(] wide5d [)]
 
 # ZAPTIS tall5d
-hoon ::= tallZaptis
+tall5d ::= tallZaptis
 wideNorm5d ::= wideZaptis
 tallZaptis ::= (ZAP4H TIS4H GAP)tall5d
 wideZaptis ::= (ZAP4H TIS4H) [(] wide5d [)]
