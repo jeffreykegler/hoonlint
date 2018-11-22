@@ -211,7 +211,7 @@ sub prune {
         hoon                 => 1,
         hoonExpression       => 1,
         hoonFile             => 1,
-        hoonPrimary          => 1,
+        tall5d => 1,
         tall5dSeq              => 1,
 	long5dWide => 1,
         mold                 => 1,
@@ -742,15 +742,15 @@ tallBarcen ::= (BAR CEN GAP) wisp5d
 
 # [':' (runo col %brcl [~ ~] expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
-# FIXED: barcol hoon hoon
+# FIXED: barcol hoon tall5d
 
 # ['.' (runo dot %brdt [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: bardot hoon
+# FIXED: bardot tall5d
 
 # ['-' (runo hep %brhp [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: barhep hoon
+# FIXED: barhep tall5d
 
 # ['^' (runo ket %brkt [~ ~] expx)]
 # ++  expx  |.  ;~  gunk  loaf [...] wisp ::  hoon and core tail
@@ -759,11 +759,11 @@ tallBarket ::= (BAR KET GAP) hoon (GAP) wisp5d
 
 # ['~' (runo sig %brsg [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: barsig mold hoon
+# FIXED: barsig mold tall5d
 
 # ['*' (runo tar %brtr [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: bartar mold hoon
+# FIXED: bartar mold tall5d
 
 # ['=' (runo tis %brts [~ ~] exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
@@ -774,11 +774,11 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 
 # ['?' (runo wut %brwt [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: barwut hoon
+# FIXED: barwut tall5d
 
 # ['_' (rune cab %bccb expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: buccab hoon
+# FIXED: buccab tall5d
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -1864,7 +1864,8 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 # === CELLS BY TYPE ==
 
-tall5dSeq ::= hoon+ separator=>GAP proper=>1
+tall5dSeq ::= tall5d+ separator=>GAP proper=>1
+tall5d ::= hoon
 hoon ::= wide5d
 wide5d ::= wide5dChoices
 
@@ -1947,7 +1948,7 @@ sub doFixedRune {
         bont5d => 'wideBont5d',
         bonz5d => 'wideBonz5d',
         mold => 'wideMold',
-        hoon => 'wide5d',
+        tall5d => 'wide5d',
         rack5d => 'wideRack5d',
         rick5d => 'wideRick5d',
         ruck5d => 'wideRuck5d',
