@@ -1571,12 +1571,12 @@ scat5d ::= rood5d
 # '<'
 # Not in scad(5)
 scat5d ::= circumGalgar
-circumGalgar ::= ('<') wideHoon ('>')
+circumGalgar ::= ('<') wideHoonSeq ('>')
 
 # '>'
 # Not in scad(5)
 scat5d ::= circumGargal
-circumGargal ::= ('>') wideHoon ('<')
+circumGargal ::= ('>') wideHoonSeq ('<')
 
 # 5d library: soil
 

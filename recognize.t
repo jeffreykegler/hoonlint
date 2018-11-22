@@ -16,7 +16,7 @@ require "./yahc.pm";
 my $fileList = <<'END_OF_LIST';
 todo hoons/arvo/app/ask.hoon
 ok hoons/arvo/app/curl.hoon
-todo hoons/arvo/app/dojo.hoon
+ok hoons/arvo/app/dojo.hoon
 ok hoons/arvo/app/fora.hoon
 ok hoons/arvo/app/gh.hoon
 ok hoons/arvo/app/github.hoon
@@ -307,7 +307,7 @@ todo hoons/arvo/sys/vane/clay.hoon
 todo hoons/arvo/sys/vane/dill.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/sys/vane/ford.hoon
-todo hoons/arvo/sys/vane/gall.hoon
+ok hoons/arvo/sys/vane/gall.hoon
 todo hoons/arvo/sys/vane/jael.hoon
 todo hoons/arvo/sys/vane/xmas.hoon
 todo hoons/arvo/sys/zuse.hoon
