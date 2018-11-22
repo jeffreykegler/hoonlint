@@ -184,7 +184,7 @@ sub prune {
         hoonExpression       => 1,
         hoonFile             => 1,
         hoonPrimary          => 1,
-        hoonSeq              => 1,
+        tall5dSeq              => 1,
 	long5dWide => 1,
         mold                 => 1,
         moldSeq              => 1,
@@ -857,14 +857,14 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 # ['~' (rune sig %clsg exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColsig
-tallColsig ::= (COL SIG GAP) hoonSeq (GAP TIS TIS)
+tallColsig ::= (COL SIG GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColsig
 wideColsig ::= (COL SIG PEL) wide5dSeq (PER)
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColtar
-tallColtar ::= (COL TAR GAP) hoonSeq (GAP TIS TIS)
+tallColtar ::= (COL TAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideColtar
 wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 
@@ -873,7 +873,7 @@ wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 # I do not understand hoon.hoon comment ("autoconsed hoons"), but
 # follow the code
 hoon ::= tallDotket
-tallDotket ::= (DOT KET GAP) mold (GAP) hoonSeq (GAP TIS TIS)
+tallDotket ::= (DOT KET GAP) mold (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideDotket
 wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
@@ -946,7 +946,7 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 # [':' (rune col %smcl expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
 hoon ::= tallSemcol
-tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
+tallSemcol ::= (SEM COL GAP) hoon (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemcol
 wideSemcol ::= (SEM COL PEL) hoon (ACE) wide5dSeq (PER)
 
@@ -961,7 +961,7 @@ wideSemcol ::= (SEM COL PEL) hoon (ACE) wide5dSeq (PER)
 # ['~' (rune sig %smsg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
 hoon ::= tallSemsig
-tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
+tallSemsig ::= (SEM SIG GAP) hoon (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemsig
 wideSemsig ::= (SEM SIG PEL) hoon (ACE) wide5dSeq (PER)
 
@@ -1087,7 +1087,7 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
 # ['~' (rune sig %tssg expi)]
 # ++  expi  |.((butt ;~(gunk loaf hank)))             ::  one or more hoons
 hoon ::= tallTissig
-tallTissig ::= (TIS SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
+tallTissig ::= (TIS SIG GAP) hoon (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideTissig
 wideTissig ::= (TIS SIG PEL) hoon (ACE) wide5dSeq (PER)
 
@@ -1102,7 +1102,7 @@ wideTissig ::= (TIS SIG PEL) hoon (ACE) wide5dSeq (PER)
 # ['|' (rune bar %wtbr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallWutbar
-tallWutbar ::= (WUT BAR GAP) hoonSeq (GAP TIS TIS)
+tallWutbar ::= (WUT BAR GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutbar
 wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
 
@@ -1149,7 +1149,7 @@ wideWutlus ::= (WUT LUS PEL) teak5d (ACE) hoon (ACE) wideRuck5d (PAR)
 # ['&' (rune pam %wtpm exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallWutpam
-tallWutpam ::= (WUT PAM GAP) hoonSeq (GAP TIS TIS)
+tallWutpam ::= (WUT PAM GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutpam
 wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 
@@ -1279,13 +1279,13 @@ rupl5d ::= sigCircumBracket
 rupl5d ::= circumBracketSig
 rupl5d ::= sigCircumBracketSig
 # TODO: is the whitespace really what was intended?
-circumBracket ::= ('[' ACE) hoonSeq (GAP ']')
+circumBracket ::= ('[' ACE) tall5dSeq (GAP ']')
 circumBracket ::= ('[') wide5dSeq (']')
-sigCircumBracket ::= (SIG '[' ACE) hoonSeq (GAP ']')
+sigCircumBracket ::= (SIG '[' ACE) tall5dSeq (GAP ']')
 sigCircumBracket ::= (SIG '[') wide5dSeq (']')
-circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
+circumBracketSig ::= ('[' ACE) tall5dSeq (GAP ']' SIG)
 circumBracketSig ::= ('[') wide5dSeq (']' SIG)
-sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
+sigCircumBracketSig ::= (SIG '[' ACE) tall5dSeq (GAP ']' SIG)
 sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 
 # 5d library: scad
@@ -1715,7 +1715,7 @@ whap5d ::= boog5d+ separator=>GAP proper=>1
 :start ::= hoonFile
 # TODO: This is a simplication, which may not
 # catch all the subtleties of "ford" files
-hoonFile ::= (leader) hoonSeq (trailer)
+hoonFile ::= (leader) tall5dSeq (trailer)
 
 trailer ::= WS
 trailer ::=
@@ -1836,7 +1836,7 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 # === CELLS BY TYPE ==
 
-hoonSeq ::= hoon+ separator=>GAP proper=>1
+tall5dSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wide5d
 wide5d ::= wide5dChoices
 
