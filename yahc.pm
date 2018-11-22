@@ -1207,7 +1207,7 @@ limb ::= '.'
 rick5d ::= rick5dJog+ separator=>GAP proper=>1
 rick5dJog ::= rope5d (GAP) hoon
 
-wideRick5d ::= wideRick5dJog+ separator=>ACE proper=>1
+wideRick5d ::= wideRick5dJog+ separator=>commaAce proper=>1
 wideRick5dJog ::= rope5d (ACE) hoon
 
 # 5d library: ruck

@@ -164,7 +164,7 @@ ok hoons/arvo/lib/pretty-file.hoon
 ok hoons/arvo/lib/prey.hoon
 ok hoons/arvo/lib/show-dir.hoon
 ok hoons/arvo/lib/sole.hoon
-todo hoons/arvo/lib/tester.hoon
+ok hoons/arvo/lib/tester.hoon
 ok hoons/arvo/lib/time-to-id.hoon
 ok hoons/arvo/lib/tree.hoon
 ok hoons/arvo/lib/twitter.hoon
