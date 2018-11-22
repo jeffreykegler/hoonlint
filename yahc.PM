@@ -200,11 +200,11 @@ sub prune {
 	teakChoice => 1,
 	wideTeakChoice => 1,
         wedeFirst            => 1,
-        wideHoon             => 1,
-        wideHoonJogging      => 1,
-        wideHoonJogs         => 1,
-        wideHoonJog          => 1,
-        wideHoonSeq          => 1,
+        wide5d             => 1,
+        wide5dJogging      => 1,
+        wide5dJogs         => 1,
+        wide5dJog          => 1,
+        wide5dSeq          => 1,
         wideMold             => 1,
         wideMoldSeq          => 1,
         hoon                 => 1,
@@ -534,8 +534,8 @@ bonk5d ::= CEN4H SYM4K
 
 bont5d ::= CEN4H SYM4K ([.] GAP) hoon
 bont5d ::= wideBont5d
-wideBont5d ::= CEN4H SYM4K ([.]) wideHoon
-wideBont5d ::= CEN4H SYM4K ([.] ACE) wideHoon
+wideBont5d ::= CEN4H SYM4K ([.]) wide5d
+wideBont5d ::= CEN4H SYM4K ([.] ACE) wide5d
 
 # 5d library: bony
 
@@ -591,8 +591,8 @@ gasp5d ::= (optTisSeq) hasp5d (optTisSeq)
 
 # 5d library: hasp
 
-hasp5d ::= (SEL) wideHoon (SER)
-hasp5d ::= (PEL) wideHoonSeq (PER)
+hasp5d ::= (SEL) wide5d (SER)
+hasp5d ::= (PEL) wide5dSeq (PER)
 hasp5d ::= BUC4H
 hasp5d ::= qut4k
 hasp5d ::= nuck4l
@@ -606,16 +606,16 @@ long5dWide ::= infixFas rank=>30
 long5dWide ::= circumScatParen rank=>20
 long5dWide ::= scat5d rank=>10
 
-infixTis ::= scat5d (TIS) wideHoon
-infixCol ::= scat5d (COL) wideHoon
-infixKet ::= scat5d (KET) wideHoon
-infixFas ::= scat5d (FAS) wideHoon
+infixTis ::= scat5d (TIS) wide5d
+infixCol ::= scat5d (COL) wide5d
+infixKet ::= scat5d (KET) wide5d
+infixFas ::= scat5d (FAS) wide5d
 circumScatParen ::= scat5d (PEL) lobo5d (PER)
 
-lobo5d ::= wideHoonJogs
-wideHoonJogs ::= wideHoonJog+ separator=>wideHoonJoggingSeparator proper=>1
-wideHoonJog ::= rope5d (ACE) wideHoon
-wideHoonJoggingSeparator ::= COM ACE
+lobo5d ::= wide5dJogs
+wide5dJogs ::= wide5dJog+ separator=>wide5dJoggingSeparator proper=>1
+wide5dJog ::= rope5d (ACE) wide5d
+wide5dJoggingSeparator ::= COM ACE
 
 # 5d library: mota
 
@@ -636,7 +636,7 @@ optHig4kSeq ~ hig4k*
 mold ::= tallBuccabMold
 wideMold ::= wideBuccabMold
 tallBuccabMold ::= (BUC CAB GAP) hoon
-wideBuccabMold ::= (BUC CAB PEL) wideHoon (PER)
+wideBuccabMold ::= (BUC CAB PEL) wide5d (PER)
 
 # ['%' (rune cen %bccn exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -679,7 +679,7 @@ wideBucpatMold ::= (BUC PAT PEL) wideMold (ACE) wideMold (PER)
 mold ::= tallBucsemMold
 wideMold ::= wideBucsemMold
 tallBucsemMold ::= (BUC SEM GAP) hoon
-wideBucsemMold ::= (BUC SEM PEL) wideHoon (PER)
+wideBucsemMold ::= (BUC SEM PEL) wide5d (PER)
 
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
@@ -700,21 +700,21 @@ wideBucwutMold ::= (BUC WUT PEL) wideMoldSeq (PER)
 mold ::= tallCencolMold
 wideMold ::= wideCencolMold
 tallCencolMold ::= (CEN COL GAP) hoon (GAP) moldSeq (GAP TIS TIS)
-wideCencolMold ::= (CEN COL PEL) wideHoon (GAP) wideMoldSeq (PER)
+wideCencolMold ::= (CEN COL PEL) wide5d (GAP) wideMoldSeq (PER)
 
 # ['-' (rune hep %cnhp exqk)]
 #    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
 mold ::= tallCenhepMold
 wideMold ::= wideCenhepMold
 tallCenhepMold ::= (CEN HEP GAP) hoon (GAP)  mold
-wideCenhepMold ::= (CEN HEP PEL) wideHoon (ACE) wideMold (PER)
+wideCenhepMold ::= (CEN HEP PEL) wide5d (ACE) wideMold (PER)
 
 # :~  ['^' (rune ket %cnkt exqy)]
 #    ++  exqy  |.(;~(gunk loaf loan loan loan))          ::  hoon, three roots
 mold ::= tallCenketMold
 wideMold ::= wideCenketMold
 tallCenketMold ::= (CEN KET GAP) hoon (GAP)  mold (GAP) mold (GAP) mold
-wideCenketMold ::= (CEN KET PEL) wideHoon (ACE) wideMold (ACE) wideMold
+wideCenketMold ::= (CEN KET PEL) wide5d (ACE) wideMold (ACE) wideMold
   (ACE) wideMold (PER)
 
 # ['+' (rune lus %cnls exqx)]
@@ -722,7 +722,7 @@ wideCenketMold ::= (CEN KET PEL) wideHoon (ACE) wideMold (ACE) wideMold
 mold ::= tallCenlusMold
 wideMold ::= wideCenlusMold
 tallCenlusMold ::= (CEN LUS GAP) hoon (GAP)  mold (GAP) mold
-wideCenlusMold ::= (CEN LUS PEL) wideHoon (ACE) wideMold (ACE) wideMold (PER)
+wideCenlusMold ::= (CEN LUS PEL) wide5d (ACE) wideMold (ACE) wideMold (PER)
   
 # 5d library: norm
 
@@ -769,7 +769,7 @@ tallBarket ::= (BAR KET GAP) hoon (GAP) wisp5d
 hoon ::= tallBartis
 wideNorm5d ::= wideBartis
 tallBartis ::= (BAR4H TIS GAP) mold (GAP) hoon
-wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
+wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 
 # ['?' (runo wut %brwt [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -856,7 +856,7 @@ wideCencab ::= (CEN CAB PEL) rope5d (ACE) wideRick5d (PAR)
 hoon ::= tallCentar
 tallCentar ::= (CEN TAR GAP) rope5d (GAP) hoon (GAP) rick5d (GAP TIS TIS)
 wideNorm5d ::= wideCentar
-wideCentar ::= (CEN TAR PEL) rope5d (ACE) wideHoon (ACE) wideRick5d (PAR)
+wideCentar ::= (CEN TAR PEL) rope5d (ACE) wide5d (ACE) wideRick5d (PAR)
 
 # ['=' (rune tis %cnts exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
@@ -886,14 +886,14 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 hoon ::= tallColsig
 tallColsig ::= (COL SIG GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideColsig
-wideColsig ::= (COL SIG PEL) wideHoonSeq (PER)
+wideColsig ::= (COL SIG PEL) wide5dSeq (PER)
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
 hoon ::= tallColtar
 tallColtar ::= (COL TAR GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideColtar
-wideColtar ::= (COL TAR PEL) wideHoonSeq (PER)
+wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 
 # ['^' (rune ket %dtkt exqn)]
 # ++  exqn  |.(;~(gunk loan (stag %cltr (butt hank))))::  autoconsed hoons
@@ -902,7 +902,7 @@ wideColtar ::= (COL TAR PEL) wideHoonSeq (PER)
 hoon ::= tallDotket
 tallDotket ::= (DOT KET GAP) mold (GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideDotket
-wideDotket ::= (DOT KET PEL) wideMold (ACE) wideHoonSeq (PER)
+wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
 # ['+' (rune lus %dtls expa)]
 # :~  ['+' (rune lus %dtls expa)]
@@ -975,7 +975,7 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 hoon ::= tallSemcol
 tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemcol
-wideSemcol ::= (SEM COL PEL) hoon (ACE) wideHoonSeq (PER)
+wideSemcol ::= (SEM COL PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['/' (rune fas %smfs expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -990,7 +990,7 @@ wideSemcol ::= (SEM COL PEL) hoon (ACE) wideHoonSeq (PER)
 hoon ::= tallSemsig
 tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideSemsig
-wideSemsig ::= (SEM SIG PEL) hoon (ACE) wideHoonSeq (PER)
+wideSemsig ::= (SEM SIG PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
@@ -1073,7 +1073,7 @@ wideSigwut ::= (SIG WUT PEL) hoon (ACE) hoon (ACE) hoon (PER)
 hoon ::= tallTiscol
 tallTiscol ::= (TIS COL GAP) rick5d (GAP TIS TIS GAP) hoon
 wideNorm5d ::= wideTiscol
-wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
+wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wide5d (PAR)
 
 # [',' (rune com %tscm expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
@@ -1116,7 +1116,7 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 hoon ::= tallTissig
 tallTissig ::= (TIS SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideTissig
-wideTissig ::= (TIS SIG PEL) hoon (ACE) wideHoonSeq (PER)
+wideTissig ::= (TIS SIG PEL) hoon (ACE) wide5dSeq (PER)
 
 # ['*' (rune tar %tstr expl)]
 # ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
@@ -1131,7 +1131,7 @@ wideTissig ::= (TIS SIG PEL) hoon (ACE) wideHoonSeq (PER)
 hoon ::= tallWutbar
 tallWutbar ::= (WUT BAR GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutbar
-wideWutbar ::= (WUT BAR PEL) wideHoonSeq (PER)
+wideWutbar ::= (WUT BAR PEL) wide5dSeq (PER)
 
 # [':' (rune col %wtcl expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
@@ -1178,7 +1178,7 @@ wideWutlus ::= (WUT LUS PEL) teak5d (ACE) hoon (ACE) wideRuck5d (PAR)
 hoon ::= tallWutpam
 tallWutpam ::= (WUT PAM GAP) hoonSeq (GAP TIS TIS)
 wideNorm5d ::= wideWutpam
-wideWutpam ::= (WUT PAM PEL) wideHoonSeq (PER)
+wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 
 # ['@' ;~(pfix pat (toad tkpt))]
 # ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
@@ -1307,13 +1307,13 @@ rupl5d ::= circumBracketSig
 rupl5d ::= sigCircumBracketSig
 # TODO: is the whitespace really what was intended?
 circumBracket ::= ('[' ACE) hoonSeq (GAP ']')
-circumBracket ::= ('[') wideHoonSeq (']')
+circumBracket ::= ('[') wide5dSeq (']')
 sigCircumBracket ::= (SIG '[' ACE) hoonSeq (GAP ']')
-sigCircumBracket ::= (SIG '[') wideHoonSeq (']')
+sigCircumBracket ::= (SIG '[') wide5dSeq (']')
 circumBracketSig ::= ('[' ACE) hoonSeq (GAP ']' SIG)
-circumBracketSig ::= ('[') wideHoonSeq (']' SIG)
+circumBracketSig ::= ('[') wide5dSeq (']' SIG)
 sigCircumBracketSig ::= (SIG '[' ACE) hoonSeq (GAP ']' SIG)
-sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
+sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 
 # 5d library: scad
 
@@ -1325,12 +1325,12 @@ sigCircumBracketSig ::= (SIG '[') wideHoonSeq (']' SIG)
 # '_'
 # Same as scat(5d)
 wideMold ::= moldPrefixCab
-moldPrefixCab ::= ('_') wideHoon
+moldPrefixCab ::= ('_') wide5d
 
 # ','
 # Differs from scat(5d)
 wideMold ::= moldPrefixCom
-moldPrefixCom ::= (',') wideHoon
+moldPrefixCom ::= (',') wide5d
 
 # '$'
 # Differs from scat(5d)
@@ -1371,8 +1371,8 @@ moldCenNuck4l ::= '%' nuck4l
 # '('
 # Differs from scat(5d)
 wideMold ::= moldCircumParen
-moldCircumParen ::= (PEL) wideHoon (ACE) wideMoldSeq (PER)
-moldCircumParen ::= (PEL) wideHoon (PER)
+moldCircumParen ::= (PEL) wide5d (ACE) wideMoldSeq (PER)
+moldCircumParen ::= (PEL) wide5d (PER)
 
 # '{'
 # Same as scat(5d)
@@ -1452,14 +1452,14 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # Not in scad(5)
 # TODO: Finish
 hoonPrimary ::= prefixZap
-prefixZap ::= (ZAP) wideHoon
+prefixZap ::= (ZAP) wide5d
 scat5d ::= wideZapzap
 wideZapzap ~ zap4h zap4h
 
 # '_'
 # Same as scad(5)
 hoonPrimary ::= prefixCab
-prefixCab ::= (CAB) wideHoon
+prefixCab ::= (CAB) wide5d
 
 # '$'
 # For rump, see subcase ['a' 'z']
@@ -1497,7 +1497,7 @@ cenDirectories ::= CEN4H+
 scat5d ::= prefixPam
 scat5d ::= pamPlusPrefix
 scat5d ::= soloPam
-prefixPam ::= (PAM4H PEL) wideHoonSeq (PER)
+prefixPam ::= (PAM4H PEL) wide5dSeq (PER)
 pamPlusPrefix ::= (PAM4H) wede5d
 soloPam ::= PAM4H
 
@@ -1512,8 +1512,8 @@ singleQuoteString ::= qut4k
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 scat5d ::= circumParen1
 scat5d ::= circumParen2
-circumParen1 ::= (PEL) wideHoon (PER)
-circumParen2 ::= (PEL) wideHoon (ACE) wideHoonSeq (PER)
+circumParen1 ::= (PEL) wide5d (PER)
+circumParen2 ::= (PEL) wide5d (ACE) wide5dSeq (PER)
 
 # '{'
 # Same as scad(5)
@@ -1539,7 +1539,7 @@ aura ::= '@' mota5d
 # Not in scad(5)
 # TODO: Finish
 scat5d ::= irrDotlus
-irrDotlus ::= (LUS PEL) wideHoon (PER)
+irrDotlus ::= (LUS PEL) wide5d (PER)
 
 # '-'
 # TODO: NYI
@@ -1560,15 +1560,15 @@ scat5d ::= bisk4l wede5d
 # Not in scad(5)
 scat5d ::= circumColParen
 scat5d ::= prefixColFas
-circumColParen ::= (COL PEL) wideHoonSeq (PER)
-prefixColFas ::= (COL FAS) wideHoon
+circumColParen ::= (COL PEL) wide5dSeq (PER)
+prefixColFas ::= (COL FAS) wide5d
 
 # '='
 # Differs from scad(5)
 tallDottis ::= (TIS GAP) hoon
 scat5d ::= irrDottis
-irrDottis ::= ('=(') wideHoon (ACE) wideHoon (PER)
-irrDottis ::= ('=(') wideHoon (PER)
+irrDottis ::= ('=(') wide5d (ACE) wide5d (PER)
+irrDottis ::= ('=(') wide5d (PER)
 
 # '?'
 # Same as scad(5)
@@ -1596,11 +1596,11 @@ prefixTecChoices ::= prefixTecTar rank=>4
 prefixTecChoices ::= prefixTecMold rank=>3
 prefixTecChoices ::= prefixTecHoon rank=>2
 prefixTecChoices ::= prefixSoloTec rank=>1
-prefixTecAura ::= (TEC PAT) mota5d (TEC) wideHoon
-prefixTecTar ::= (TEC TAR TEC) wideHoon
-prefixTecMold ::= (TEC) wideMold (TEC) wideHoon
-prefixTecHoon ::= (TEC LUS) wideHoon (TEC) wideHoon
-prefixSoloTec ::= (TEC) wideHoon
+prefixTecAura ::= (TEC PAT) mota5d (TEC) wide5d
+prefixTecTar ::= (TEC TAR TEC) wide5d
+prefixTecMold ::= (TEC) wideMold (TEC) wide5d
+prefixTecHoon ::= (TEC LUS) wide5d (TEC) wide5d
+prefixSoloTec ::= (TEC) wide5d
 
 # '"'
 # Not in scad(5)
@@ -1618,7 +1618,7 @@ scat5d ::= prefixBar rank=>1
 scat5d ::= circumBarParen rank=>1
 scat5d ::= soloBar
 prefixBar ::= (BAR4H) wede5d
-circumBarParen ::= (BAR4H PEL) wideHoonSeq (PER)
+circumBarParen ::= (BAR4H PEL) wide5dSeq (PER)
 soloBar ::= BAR4H
 
 # '~'
@@ -1629,8 +1629,8 @@ scat5d ::= circumSigBracket
 scat5d ::= (SIG) twid4l
 scat5d ::= (SIG) wede5d
 scat5d ::= soloSig
-circumSigBracket ::= (SIG SEL) wideHoonSeq (SER)
-circumSigParen ::= (SIG PEL) rope5d (ACE) wideHoon (ACE) wideHoonSeq (PER)
+circumSigBracket ::= (SIG SEL) wide5dSeq (SER)
+circumSigParen ::= (SIG PEL) rope5d (ACE) wide5d (ACE) wide5dSeq (PER)
 soloSig ::= SIG
 
 # '/'
@@ -1640,12 +1640,12 @@ scat5d ::= rood5d
 # '<'
 # Not in scad(5)
 scat5d ::= circumGalgar
-circumGalgar ::= ('<') wideHoonSeq ('>')
+circumGalgar ::= ('<') wide5dSeq ('>')
 
 # '>'
 # Not in scad(5)
 scat5d ::= circumGargal
-circumGargal ::= ('>') wideHoonSeq ('<')
+circumGargal ::= ('>') wide5dSeq ('<')
 
 # 5d library: soil
 
@@ -1683,7 +1683,7 @@ unescapedTripleDoubleQuoteChar ~ [\x20-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 TRIPLE_DOUBLE_INITIAL ~ doq4h doq4h doq4h nl
 TRIPLE_DOUBLE_FINAL ~ nl doq4h doq4h doq4h
 
-sump5d ::= KEL wideHoonSeq KER
+sump5d ::= KEL wide5dSeq KER
 
 # 5d library: teak
 
@@ -1702,8 +1702,8 @@ teakChoice ::= wideTeak5d rank=>0
 wideTeak5d ::= wideTeakChoice
 wideTeakChoice ::= SYM4K (TIS) rope5d rank=>2
 wideTeakChoice ::= rope5d rank=>2
-wideTeakChoice ::= SYM4K (TIS) wideHoon rank=>1
-wideTeakChoice ::= wideHoon rank=>1
+wideTeakChoice ::= SYM4K (TIS) wide5d rank=>1
+wideTeakChoice ::= wide5d rank=>1
 
 # 5d library: wasp
 # Always occurs with wisp(5d), which must be tall,
@@ -1716,8 +1716,8 @@ waspElement  ::= SYM4K (GAP) hoon
 
 # 5d library: wede
 
-wede5d ::= (FAS) wideHoon
-wede5d ::= (LUS) wideHoon
+wede5d ::= (FAS) wide5d
+wede5d ::= (LUS) wide5d
 
 # 5d library: wise
 
@@ -1864,14 +1864,14 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 hoonSeq ::= hoon+ separator=>GAP proper=>1
-hoon ::= wideHoon
-wideHoon ::= hoonPrimary
+hoon ::= wide5d
+wide5d ::= hoonPrimary
 
 # TODO: Precedence needs to be tested
 hoonPrimary ::= wideNorm5d rank=>10
 hoonPrimary ::= long5dWide rank=>8
 
-wideHoonSeq ::= wideHoon+ separator=>ACE proper=>1
+wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 END_OF_DSL_MAIN
 
@@ -1946,7 +1946,7 @@ sub doFixedRune {
         bont5d => 'wideBont5d',
         bonz5d => 'wideBonz5d',
         mold => 'wideMold',
-        hoon => 'wideHoon',
+        hoon => 'wide5d',
         rack5d => 'wideRack5d',
         rick5d => 'wideRick5d',
         ruck5d => 'wideRuck5d',
@@ -1954,7 +1954,7 @@ sub doFixedRune {
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
 
-    # wideBarhep ::= ([|] [-]) (ACE) wideHoon (ACE) wideHoon
+    # wideBarhep ::= ([|] [-]) (ACE) wide5d (ACE) wide5d
     push @result, $wideLHS . ' ::= ('
     . $glyphLexeme1
     . ' ' . $glyphLexeme2
