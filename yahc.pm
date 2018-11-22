@@ -173,6 +173,7 @@ sub prune {
 	wideTeakChoice => 1,
         wedeFirst            => 1,
         wide5d             => 1,
+        wide5dChoices             => 1,
         wide5dJogging      => 1,
         wide5dJogs         => 1,
         wide5dJog          => 1,
@@ -1423,14 +1424,14 @@ wideBuccol ::= (',[') wideMoldSeq (']')
 # '!'
 # Not in scad(5)
 # TODO: Finish
-hoonPrimary ::= prefixZap
+scat5d ::= prefixZap
 prefixZap ::= (ZAP) wide5d
 scat5d ::= wideZapzap
 wideZapzap ~ zap4h zap4h
 
 # '_'
 # Same as scad(5)
-hoonPrimary ::= prefixCab
+scat5d ::= prefixCab
 prefixCab ::= (CAB) wide5d
 
 # '$'
@@ -1837,11 +1838,11 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 hoonSeq ::= hoon+ separator=>GAP proper=>1
 hoon ::= wide5d
-wide5d ::= hoonPrimary
+wide5d ::= wide5dChoices
 
 # TODO: Precedence needs to be tested
-hoonPrimary ::= wideNorm5d rank=>10
-hoonPrimary ::= long5dWide rank=>8
+wide5dChoices ::= wideNorm5d rank=>10
+wide5dChoices ::= long5dWide rank=>8
 
 wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
