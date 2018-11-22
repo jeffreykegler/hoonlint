@@ -605,6 +605,18 @@ optHig4kSeq ~ hig4k*
 # Mold runes
  
 # ['_' (rune cab %bccb expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+mold ::= tallBuccabMold
+wideMold ::= wideBuccabMold
+tallBuccabMold ::= (BUC CAB GAP) hoon
+wideBuccabMold ::= (BUC CAB PEL) wideHoon (PER)
+
+# ['%' (rune cen %bccn exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
+mold ::= tallBuccenMold
+wideMold ::= wideBuccenMold
+tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
+wideBuccenMold ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -612,19 +624,14 @@ optHig4kSeq ~ hig4k*
 mold ::= tallBuccolMold
 wideMold ::= wideBuccolMold
 tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
-wideBuccolMold ::= (BUC COL '(') wideMoldSeq (')')
-
-# ['%' (rune cen %bccn exqs)]
-mold ::= tallBuccenMold
-wideMold ::= wideBuccenMold
-tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
-wideBuccenMold ::= (BUC CEN '(') wideMoldSeq (')')
+wideBuccolMold ::= (BUC COL PEL) wideMoldSeq (PER)
 
 # ['-' (rune hep %bchp exqb)]
+# ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
 mold ::= tallBuchepMold
 wideMold ::= wideBuchepMold
 tallBuchepMold ::= (BUC HEP GAP) mold (GAP)  mold
-wideBuchepMold ::= (BUC HEP) [(] wideMold (ACE) wideMold [)]
+wideBuchepMold ::= (BUC HEP PEL) wideMold (ACE) wideMold (PER)
 
 # ['^' (rune ket %bckt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
@@ -641,17 +648,36 @@ tallBucpatMold ::= (BUC PAT GAP) mold (GAP)  mold
 wideBucpatMold ::= (BUC PAT PEL) wideMold (ACE) wideMold (PER)
 
 # [';' (rune sem %bcsm expa)]
+# ++  expa  |.(loaf)                                  ::  one hoon
+mold ::= tallBucsemMold
+wideMold ::= wideBucsemMold
+tallBucsemMold ::= (BUC SEM GAP) hoon
+wideBucsemMold ::= (BUC SEM PEL) wideHoon (PER)
+
+# TODO: Mold runes done TO HERE
 
 # ['=' (rune tis %bcts exqg)]
+# ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
 
 # ['?' (rune wut %bcwt exqs)]
+# ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 mold ::= tallBucwutMold
 wideMold ::= wideBucwutMold
 tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
-wideBucwutMold ::= (BUC WUT '(') wideMoldSeq (')')
+wideBucwutMold ::= (BUC WUT PEL) wideMoldSeq (PER)
 
-# TODO: Finish adding molds from norm
+# [':' (rune col %cnhp exqz)]
+#    ++  exqz  |.(;~(gunk loaf (butt hunk)))             ::  hoon, n roots
 
+# ['-' (rune hep %cnhp exqk)]
+#    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
+
+# :~  ['^' (rune ket %cnkt exqy)]
+#    ++  exqy  |.(;~(gunk loaf loan loan loan))          ::  hoon, three roots
+
+# ['+' (rune lus %cnls exqx)]
+#   ++  exqx  |.(;~(gunk loaf loan loan))               ::  hoon, two roots
+  
 # 5d library: norm
 
 # Hoon runes
@@ -712,7 +738,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wideHoon [)]
 hoon ::= tallBuccol
 tallBuccol ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBuccol
-wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
+wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
 
 # ['%' (rune cen %bccn exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
@@ -720,7 +746,7 @@ wideBuccol ::= (BUC COL '(') wideMoldSeq (')')
 hoon ::= tallBuccen
 tallBuccen ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBuccen
-wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
+wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # ['-' (rune hep %bchp exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
@@ -748,7 +774,7 @@ wideBuccen ::= (BUC CEN '(') wideMoldSeq (')')
 hoon ::= tallBucwut
 tallBucwut ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
 norm5dWide ::= wideBucwut
-wideBucwut ::= (BUC WUT '(') wideMoldSeq (')')
+wideBucwut ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # ['_' (rune cab %cncb exph)]
 # ++  exph  |.((butt ;~(gunk rope rick)))             ::  wing, [tile hoon]s
@@ -814,7 +840,7 @@ wideCentis ::= (CEN TIS PEL) rope5d (ACE) wideRick5d (PAR)
 hoon ::= tallColsig
 tallColsig ::= (COL SIG GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideColsig
-wideColsig ::= (COL SIG '(') wideHoonSeq (')')
+wideColsig ::= (COL SIG PEL) wideHoonSeq (PER)
 
 # ['*' (rune tar %cltr exps)]
 #  ++  exps  |.((butt hank))                           ::  closed gapped hoons
@@ -903,7 +929,7 @@ wideFastis ::= (FASTIS) SYM4K '=' hoon
 hoon ::= tallSemcol
 tallSemcol ::= (SEM COL GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideSemcol
-wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
+wideSemcol ::= (SEM COL PEL) hoon (ACE) wideHoonSeq (PER)
 
 # ['/' (rune fas %smfs expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -918,7 +944,7 @@ wideSemcol ::= (SEM COL '(') hoon (ACE) wideHoonSeq (')')
 hoon ::= tallSemsig
 tallSemsig ::= (SEM SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideSemsig
-wideSemsig ::= (SEM SIG '(') hoon (ACE) wideHoonSeq (')')
+wideSemsig ::= (SEM SIG PEL) hoon (ACE) wideHoonSeq (PER)
 
 # ['|' (rune bar %sgbr expb)]
 # FIXED: sigbar hoon hoon
@@ -954,8 +980,8 @@ hoon ::= tallSiglus
 tallSiglus ::= (SIG LUS GAP) bony5d (GAP) hoon
 tallSiglus ::= (SIG LUS GAP) hoon
 norm5dWide ::= wideSiglus
-wideSiglus ::= (SIG LUS '(') bony5d (ACE) hoon (')')
-wideSiglus ::= (SIG LUS '(') hoon (')')
+wideSiglus ::= (SIG LUS PEL) bony5d (ACE) hoon (PER)
+wideSiglus ::= (SIG LUS PEL) hoon (PER)
 
 # ['&' (rune pam %sgpm hinf)]
 # ++  hinf  |.                                        ::  0-3 >s, two hoons
@@ -1044,7 +1070,7 @@ wideTiscol ::= (TIS COL PEL) wideRick5d (ACE) wideHoon (PAR)
 hoon ::= tallTissig
 tallTissig ::= (TIS SIG GAP) hoon (GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideTissig
-wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
+wideTissig ::= (TIS SIG PEL) hoon (ACE) wideHoonSeq (PER)
 
 # ['*' (rune tar %tstr expl)]
 # ++  expl  |.(;~(gunk (stag ~ sym) loaf loaf))       ::  term, two hoons
@@ -1059,7 +1085,7 @@ wideTissig ::= (TIS SIG '(') hoon (ACE) wideHoonSeq (')')
 hoon ::= tallWutbar
 tallWutbar ::= (WUT BAR GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutbar
-wideWutbar ::= (WUT BAR '(') wideHoonSeq (')')
+wideWutbar ::= (WUT BAR PEL) wideHoonSeq (PER)
 
 # [':' (rune col %wtcl expc)]
 # ++  expc  |.(;~(gunk loaf loaf loaf))               ::  three hoons
@@ -1106,7 +1132,7 @@ wideWutlus ::= (WUT LUS PEL) teak5d (ACE) hoon (ACE) wideRuck5d (PAR)
 hoon ::= tallWutpam
 tallWutpam ::= (WUT PAM GAP) hoonSeq (GAP TIS TIS)
 norm5dWide ::= wideWutpam
-wideWutpam ::= (WUT PAM '(') wideHoonSeq (')')
+wideWutpam ::= (WUT PAM PEL) wideHoonSeq (PER)
 
 # ['@' ;~(pfix pat (toad tkpt))]
 # ++  tkpt  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
@@ -1299,8 +1325,8 @@ moldCenNuck4l ::= '%' nuck4l
 # '('
 # Differs from scat(5d)
 wideMold ::= moldCircumParen
-moldCircumParen ::= ('(') wideHoon (ACE) wideMoldSeq (')')
-moldCircumParen ::= ('(') wideHoon (')')
+moldCircumParen ::= (PEL) wideHoon (ACE) wideMoldSeq (PER)
+moldCircumParen ::= (PEL) wideHoon (PER)
 
 # '{'
 # Same as scat(5d)
@@ -1325,7 +1351,7 @@ moldAura ::= '@' mota5d
 # '?'
 # Same as scat(5d)
 wideMold ::= moldPrefixWut
-moldPrefixWut ::= ('?(') wideMoldSeq (')')
+moldPrefixWut ::= ('?(') wideMoldSeq (PER)
 
 wideMold ::= moldWut
 moldWut ::= '?'
@@ -1351,7 +1377,7 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 # Differs from scat(5d)
 wideMold ::= moldPrefixTis
 # TODO: Is this right?
-moldPrefixTis ::= ('=') wideMold (')')
+moldPrefixTis ::= ('=') wideMold (PER)
 
 # ['a' 'z']
 # Differs from scat(5d)
@@ -1429,7 +1455,7 @@ cenDirectories ::= CEN4H+
 scat5d ::= prefixPam
 scat5d ::= pamPlusPrefix
 scat5d ::= soloPam
-prefixPam ::= (PAM4H '(') wideHoonSeq (')')
+prefixPam ::= (PAM4H PEL) wideHoonSeq (PER)
 pamPlusPrefix ::= (PAM4H) wede5d
 soloPam ::= PAM4H
 
@@ -1444,8 +1470,8 @@ singleQuoteString ::= qut4k
 # and cenhep in https://urbit.org/docs/hoon/irregular/
 scat5d ::= circumParen1
 scat5d ::= circumParen2
-circumParen1 ::= ('(') wideHoon (')')
-circumParen2 ::= ('(') wideHoon (ACE) wideHoonSeq (')')
+circumParen1 ::= (PEL) wideHoon (PER)
+circumParen2 ::= (PEL) wideHoon (ACE) wideHoonSeq (PER)
 
 # '{'
 # Same as scad(5)
@@ -1499,8 +1525,8 @@ prefixColFas ::= (COL FAS) wideHoon
 # Differs from scad(5)
 tallDottis ::= (TIS GAP) hoon
 scat5d ::= irrDottis
-irrDottis ::= ('=(') wideHoon (ACE) wideHoon (')')
-irrDottis ::= ('=(') wideHoon (')')
+irrDottis ::= ('=(') wideHoon (ACE) wideHoon (PER)
+irrDottis ::= ('=(') wideHoon (PER)
 
 # '?'
 # Same as scad(5)
@@ -1698,6 +1724,7 @@ comment ~ '/?' optNonNLs nl
 comment ~ '/+' optNonNLs nl
 comment ~ '/-' optNonNLs nl
 
+# TODO: Is this treatment of documentation runes OK?
 # Documentation decorations treated as comments
 comment ~ ':>' optNonNLs nl
 comment ~ ':<' optNonNLs nl
