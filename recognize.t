@@ -22,7 +22,7 @@ todo hoons/arvo/web/pack/js/tree-urb.hoon
 todo hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
 todo hoons/arvo/web/listen.hoon
 todo hoons/arvo/web/dojo.hoon
-todo hoons/arvo/web/404.hoon
+ok hoons/arvo/web/404.hoon
 ok hoons/arvo/sys/zuse.hoon
 ok hoons/arvo/sys/vane/xmas.hoon
 ok hoons/arvo/sys/vane/jael.hoon

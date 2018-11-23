@@ -1321,10 +1321,36 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 
 # 5d library: sail
 
-# TODO: NYI
 sailApex5d ::= (SEM) tallTopSail
 
+# TODO: tall-top not fully implemented
 tallTopSail ::= scriptOrStyle scriptStyleTail
+tallTopSail ::= tallElem
+
+tallElem ::= tagHead optTallAttrs tallTail
+
+tagHead ::= aMane tagHeadInitial tagHeadKernel tagHeadFinal wideAttrs
+tagHeadInitial ::= # empty
+tagHeadInitial ::= HAX SYM4K
+tagHeadKernel ::= # empty
+tagHeadKernel ::= tagHeadKernelElements
+tagHeadKernelElements ::= tagHeadKernelElement+
+tagHeadKernelElement ::= DOT SYM4K
+tagHeadFinal ::= # empty
+tagHeadFinal ::= FAS soil5d
+tagHeadFinal ::= PAT soil5d
+
+optTallAttrs ::= # empty
+optTallAttrs ::= tallAttributes
+tallAttributes ::= tallAttribute+
+tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
+
+# TODO: Finish tall-tail
+tallTail ::= SEM
+tallTail ::= COL wrappedElems
+
+# TODO Finish wrapped-elems
+wrappedElems ::= qut4k
 
 # TODO: This is a guess -- I am not clear what hoon.hoon
 # is doing at this point
