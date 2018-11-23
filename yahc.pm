@@ -1322,17 +1322,30 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 # 5d library: sail
 
 # TODO: NYI
-sailApex5d ::= UNICORN tallTopSail
+sailApex5d ::= (SEM) tallTopSail
 
 tallTopSail ::= scriptOrStyle scriptStyleTail
 
-# TODO: What is this?
-scriptOrStyle ::= # empty
+# TODO: This is a guess -- I am not clear what hoon.hoon
+# is doing at this point
+scriptOrStyle ::= SYM4K
+scriptOrStyle ::= SYM4K wideAttrs
+
+wideAttrs ::= (PEL PER)
+wideAttrs ::= (PEL) wideAttrBody (PER)
+wideAttrBody ::= wideAttribute+ separator=>commaAce proper=>1
+wideAttribute ::= aMane (ACE) hopefullyQuote
+
+aMane ::= SYM4K
+aMane ::= SYM4K CAB SYM4K
+
+# TODO: hoon.hoon comment expresses dissatisfaction at
+# this solution
+hopefullyQuote ::= wide5d
 
 scriptStyleTail ::= (GAP) scriptStyleTailElements (GAP TIS TIS)
 scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
-scriptStyleTailElement ::= (SEM ACE) PRN4I_SEQ
-scriptStyleTailElement ::= (SEM ACE)
+scriptStyleTailElement ::= (SEM) PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
 
 # 5d library: scad
