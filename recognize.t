@@ -33,7 +33,7 @@ ok hoons/arvo/sys/vane/ames.hoon
 todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/arvo.hoon
 todo hoons/arvo/sur/twitter.hoon
-todo hoons/arvo/sur/rfc.hoon
+ok hoons/arvo/sur/rfc.hoon
 todo hoons/arvo/ren/urb/tree.hoon
 todo hoons/arvo/ren/urb.hoon
 todo hoons/arvo/ren/tree/json.hoon
@@ -61,9 +61,9 @@ todo hoons/arvo/mar/elem.hoon
 todo hoons/arvo/mar/down.hoon
 todo hoons/arvo/mar/css.hoon
 todo hoons/arvo/mar/ask-mail.hoon
-todo hoons/arvo/lib/oauth2.hoon
-todo hoons/arvo/lib/oauth1.hoon
-todo hoons/arvo/lib/hood/write.hoon
+ok hoons/arvo/lib/oauth2.hoon
+ok hoons/arvo/lib/oauth1.hoon
+ok hoons/arvo/lib/hood/write.hoon
 todo hoons/arvo/lib/hood/kiln.hoon
 ok hoons/arvo/lib/elem-to-react-json.hoon
 todo hoons/arvo/lib/down-jet/rend.hoon
@@ -74,7 +74,7 @@ todo hoons/arvo/gen/capitalize.hoon
 todo hoons/arvo/app/hood.hoon
 todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/app/gmail.hoon
-todo hoons/arvo/app/ask.hoon
+ok hoons/arvo/app/ask.hoon
 ok hoons/arvo/tests/zuse/crypto/keccak.hoon
 ok hoons/arvo/tests/new-hoon/thr.hoon
 ok hoons/arvo/tests/new-hoon/myb.hoon

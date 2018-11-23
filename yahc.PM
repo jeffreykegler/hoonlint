@@ -49,13 +49,13 @@ sub divergence {
     die join '', 'Unrecoverable internal error: ', @_;
 }
 
-# Given a target, an input and an offset into that input,
-# it reads using that recognizer.  The return values
+# Given an input and an offset into that input,
+# it reads a triple quote (''').  The return values
 # are the parse value and a new offset in the input.
 # Errors are thrown.
 
-sub getValue {
-    my ( $target, $input, $offset ) = @_;
+sub getTripleQuote {
+    my ( $input, $offset ) = @_;
     my $input_length = length ${$input};
     my $resume_pos;
     my $this_pos;
@@ -72,6 +72,43 @@ sub getValue {
     pos ${$input} = $offset;
     my ($indent) = ${$input} =~ /\G( *)[^ ]/g;
     my $terminator = $indent . "'''";
+
+    my $terminatorPos = index ${$input}, $terminator, $nextNL;
+    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
+
+    say STDERR "Left main READ loop" if $MarpaX::YAHC::DEBUG;
+
+    # Return ref to value and new offset
+    return \$value, $terminatorPos + length $terminator;
+}
+
+# Given an input and an offset into that input,
+# it reads a triple double quote (""").  The return values
+# are the parse value and a new offset in the input.
+# Errors are thrown.
+
+# TODO: Needs to implement reading of sump(5d)
+
+sub getTripleDoubleQuote {
+    my ( $input, $offset ) = @_;
+    my $input_length = length ${$input};
+    my $resume_pos;
+    my $this_pos;
+
+    my $nextNL = index ${$input}, "\n", $offset;
+    if ($nextNL < 0) {
+      die join '', 'Newline missing after triple double quotes: "',
+	${$input}, '"'
+    }
+    my $initiator = substr ${$input}, $offset, $nextNL-$offset;
+    if ($initiator ne q{"""}) {
+      die join '',
+	'Disallowed characters after initial triple double quotes: "', $initiator, '"'
+    }
+
+    pos ${$input} = $offset;
+    my ($indent) = ${$input} =~ /\G( *)[^ ]/g;
+    my $terminator = $indent . q{"""};
 
     my $terminatorPos = index ${$input}, $terminator, $nextNL;
     my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
@@ -130,10 +167,11 @@ sub parse {
         my $event = $events->[0];
         my $name  = $event->[0];
 
+	say STDERR "$name event" if $MarpaX::YAHC::DEBUG;
+
         if ( $name eq 'tripleQuote' ) {
-            say STDERR "$name event" if $MarpaX::YAHC::DEBUG;
             my $value_ref;
-            ( $value_ref, $resume_pos ) = getValue( $name, $input, $this_pos );
+            ( $value_ref, $resume_pos ) = getTripleQuote( $input, $this_pos );
             my $result = $recce->lexeme_read(
                 'TRIPLE QUOTE STRING',
                 $this_pos,
@@ -144,6 +182,22 @@ sub parse {
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
         }
+
+	# TODO: tripeDoubleQuote must allow sump(5d)
+        if ( $name eq 'tripleDoubleQuote' ) {
+            my $value_ref;
+            ( $value_ref, $resume_pos )
+	      = getTripleDoubleQuote( $input, $this_pos );
+            my $result = $recce->lexeme_read(
+                'TRIPLE DOUBLE QUOTE STRING',
+                $this_pos,
+                ( length ${$value_ref} ),
+                [ ${$value_ref} ]
+            );
+            say STDERR "lexeme_read('TRIPLE DOUBLE QUOTE STRING',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $MarpaX::YAHC::DEBUG;
+	}
 
 	if (not $resume_pos) {
 	  die "read() ended prematurely\n",
@@ -1772,11 +1826,7 @@ circumGargal ::= ('>') wide5dSeq ('<')
 
 # 5d library: soil
 
-# TODO -- Finish soil(5d) -- add triple double strings
-
-soil5d ::= tripleDoubleQuoteString
 soil5d ::= doubleQuoteString
-
 doubleQuoteString ::= (["]) <double quote cord> (["])
 <double quote cord> ::= <double quote element>*
 <double quote element> ::= <UNESCAPED DOUBLE QUOTE CHARS>
@@ -1789,22 +1839,11 @@ doubleQuoteString ::= (["]) <double quote cord> (["])
 unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 <ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
 
-tripleDoubleQuoteString ::=
-  (TRIPLE_DOUBLE_INITIAL) <triple double quote cord> (TRIPLE_DOUBLE_FINAL)
-<triple double quote cord> ::= <triple double quote element>*
-<triple double quote element> ::= <UNESCAPED TRIPLE DOUBLE QUOTE CHARS>
-<triple double quote element> ::= <ESCAPED TRIPLE DOUBLE QUOTE CHAR>
-<triple double quote element> ::= NL
-<triple double quote element> ::= sump5d
-
-# All the printable (non-control) characters except
-# bas (x5c) and kel (x7b)
-<UNESCAPED TRIPLE DOUBLE QUOTE CHARS> ~ unescapedTripleDoubleQuoteChar+
-unescapedTripleDoubleQuoteChar ~ [\x20-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
-<ESCAPED TRIPLE DOUBLE QUOTE CHAR> ~ bas4h bas4h |  bas4h kel4h | bas4h bix4j
-
-TRIPLE_DOUBLE_INITIAL ~ doq4h doq4h doq4h nl
-TRIPLE_DOUBLE_FINAL ~ nl doq4h doq4h doq4h
+soil5d ::= <TRIPLE DOUBLE QUOTE STRING>
+soil5d ::= TRIPLE_DOUBLE_START
+:lexeme ~ TRIPLE_DOUBLE_START event=>tripleDoubleQuote pause=>before
+TRIPLE_DOUBLE_START ~ doq4h doq4h doq4h nl
+<TRIPLE DOUBLE QUOTE STRING> ~ unicorn
 
 sump5d ::= KEL wide5dSeq KER
 
@@ -1909,6 +1948,7 @@ comment ~ ':>' optNonNLs nl
 comment ~ ':<' optNonNLs nl
 comment ~ '+|' optNonNLs nl
 
+inaccessible_ok ::= NL
 NL ~ nl
 nl ~ [\n]
 optNonNLs ~ nonNL*
