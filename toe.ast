@@ -306,7 +306,6 @@
                     'moldCircumBrace',
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         'tie'
@@ -314,7 +313,6 @@
                     ],
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         [
@@ -328,7 +326,6 @@
                     'moldCircumBrace',
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         'win'
@@ -361,7 +358,6 @@
                     'moldCircumBrace',
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         'x'
@@ -384,7 +380,6 @@
                     'moldCircumBrace',
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         'o'
@@ -407,7 +402,6 @@
                     'moldCircumBrace',
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         'z'
@@ -415,7 +409,6 @@
                     ],
                     [
                       'moldBucNuck4l',
-                      '$',
                       [
                         'nuck4l',
                         [
@@ -955,7 +948,6 @@
                                       'moldCircumBrace',
                                       [
                                         'moldBucNuck4l',
-                                        '$',
                                         [
                                           'nuck4l',
                                           'x'
@@ -1014,7 +1006,6 @@
                                       'moldCircumBrace',
                                       [
                                         'moldBucNuck4l',
-                                        '$',
                                         [
                                           'nuck4l',
                                           'o'
@@ -1073,7 +1064,6 @@
                                       'moldCircumBrace',
                                       [
                                         'moldBucNuck4l',
-                                        '$',
                                         [
                                           'nuck4l',
                                           'z'

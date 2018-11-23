@@ -273,9 +273,23 @@ low4i ~ [a-z]
 NUD4I ~ nud4i
 nud4i ~ [0-9]
 
+# the printable characters
+prn4i ~ [\x20-\x7e\x80-\xff]
+PRN4I_SEQ ~ prn4i+
+
 # vul4i ~ '::' optNonNLs nl
 
 # === Hoon 4j library ===
+
+bip4j ::= bip4j_Piece
+  (DOG4I) bip4j_Piece
+  (DOG4I) bip4j_Piece
+  (DOG4I) bip4j_Piece
+  (DOG4I) bip4j_Piece
+  (DOG4I) bip4j_Piece
+  (DOG4I) bip4j_Piece
+bip4j_Piece ::= '0'
+bip4j_Piece ::= QEX4J
 
 # Two hex numbers
 bix4j ~ six4j six4j
@@ -323,6 +337,13 @@ huf4j ::= hef4j HEP hif4j HEP hif4j HEP hif4j
 hyf4j ::= hif4j HEP hif4j
 hyf4jSeq ::= hyf4j+ separator=>DOT proper=>1
 
+lip4j ::= lib4j_Piece
+  (DOG4I) lib4j_Piece
+  (DOG4I) lib4j_Piece
+  (DOG4I) lib4j_Piece
+lib4j_Piece ::= '0'
+lib4j_Piece ::= ted4j
+
 sed4j ~ [1-9]
 
 sex4j ~ [1-9a-f]
@@ -334,6 +355,12 @@ six4j ~ [0-9a-f]
 
 siv4j ~ [0-9a-v]
 
+ted4j ~ sed4j 
+ted4j ~ sed4j sid4j
+ted4j ~ sed4j sid4j sid4j
+ted4j ~ sed4j sid4j sid4j sid4j
+
+QEX4J ~ qex4j
 qex4j ~ sex4j
 qex4j ~ sex4j hit4k
 qex4j ~ sex4j hit4k hit4k
@@ -476,7 +503,12 @@ nuck4l ::= SIG twid4l
 # TODO: Finish perd4l
 perd4l ::= zust4l
 
-# TODO: Finish zust4l
+# TODO: royl(4l) NYI
+royl4l ::= UNICORN 
+
+zust4l ::= bip4j
+zust4l ::= lip4j
+zust4l ::= royl4l
 zust4l ::= 'y'
 zust4l ::= 'n'
 
@@ -1287,6 +1319,22 @@ circumBracketSig ::= ('[') wide5dSeq (']' SIG)
 sigCircumBracketSig ::= (SIG '[' ACE) tall5dSeq (GAP ']' SIG)
 sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 
+# 5d library: sail
+
+# TODO: NYI
+sailApex5d ::= UNICORN tallTopSail
+
+tallTopSail ::= scriptOrStyle scriptStyleTail
+
+# TODO: What is this?
+scriptOrStyle ::= # empty
+
+scriptStyleTail ::= (GAP) scriptStyleTailElements (GAP TIS TIS)
+scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
+scriptStyleTailElement ::= (SEM ACE) PRN4I_SEQ
+scriptStyleTailElement ::= (SEM ACE)
+scriptStyleTailElement ::= (SEM)
+
 # 5d library: scad
 
 # scad(5d) implements the irregular mold syntaxes
@@ -1297,29 +1345,29 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 # '_'
 # Same as scat(5d)
 wideMold ::= moldPrefixCab
-moldPrefixCab ::= ('_') wide5d
+moldPrefixCab ::= (CAB) wide5d
 
 # ','
 # Differs from scat(5d)
 wideMold ::= moldPrefixCom
-moldPrefixCom ::= (',') wide5d
+moldPrefixCom ::= (COM) wide5d
 
 # '$'
 # Differs from scat(5d)
 wideMold ::= moldBucbuc
-moldBucbuc ::= '$$'
+moldBucbuc ::= (BUC BUC)
 
 wideMold ::= moldBucpam
-moldBucpam ::= '$&'
+moldBucpam ::= (BUC PAM)
 
 wideMold ::= moldBucbar
-moldBucbar ::= '$|'
+moldBucbar ::= (BUC BAR)
 
 wideMold ::= moldBucSingleString
-moldBucSingleString ::= '$' qut4k
+moldBucSingleString ::= (BUC) qut4k
 
 wideMold ::= moldBucNuck4l
-moldBucNuck4l ::= '$' nuck4l
+moldBucNuck4l ::= (BUC) nuck4l
 
 wideMold ::= rump5d
 
@@ -1838,6 +1886,7 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
 tall5d ::= norm5d rank=>20
 tall5d ::= wide5d rank=>10
+tall5d ::= sailApex5d
 wide5d ::= wide5dChoices
 
 # TODO: Precedence needs to be tested
