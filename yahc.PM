@@ -1438,14 +1438,24 @@ tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
 tallTail ::= # empty
 tallTail ::= SEM
 tallTail ::= COL wrappedElems
+tallTail ::= COL ACE wideQuoteInnards
 
 wideTail ::= # empty
 wideTail ::= SEM
 wideTail ::= COL wrappedElems
 
-# TODO Finish wrapped-elems
+wrappedElems ::= wideParenElems
 wrappedElems ::= qut4k
 wrappedElems ::= wideTopSail
+
+wideParenElems ::= (PEL) (PER)
+wideParenElems ::= (PEL) wideInnerTops (PER)
+
+wideInnerTops ::= wideInnerTop
+wideInnerTop  ::= wideTopSail
+wideInnerTop  ::= tunaMode wideTopSail
+
+tunaMode ::= HEP | LUS | TAR | CEN
 
 # TODO: This is a guess -- I am not clear what hoon.hoon
 # is doing at this point
@@ -1471,8 +1481,8 @@ scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
 scriptStyleTailElement ::= (SEM) PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
 
-# TODO: Finish wide-top
 wideTopSail ::= wideQuote
+wideTopSail ::= wideParenElems
 wideTopSail ::= tagHead wideTail
 
 wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
@@ -1496,7 +1506,16 @@ unescapedWideInnardChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
 unescapedWideInnardChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 
 # TODO: Finish inlineEmbed
+inlineEmbed ::= (SEM) wideBracketedElem
+inlineEmbed ::= tunaMode sump5d
 inlineEmbed ::= sump5d
+
+wideBracketedElem ::= (KEL) tagHead wideElems (KER)
+
+wideElems ::=
+wideElems ::= <sail wide elements>
+<sail wide elements> ::= <sail wide element>+
+<sail wide element> ::= (ACE) wideInnerTop
 
 # 5d library: scad
 
