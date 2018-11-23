@@ -1947,6 +1947,7 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
+tall5d ::= fordRune rank=>30
 tall5d ::= norm5d rank=>20
 tall5d ::= wide5d rank=>10
 tall5d ::= sailApex5d
@@ -1960,9 +1961,11 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 # === FORD RUNES ===
 
-# TODO: Is this treatment of these fas runes OK?
-# No, it is not OK, need to look at ford rune
-vaneRuneAsComment ~ '/?' optNonNLs nl
+# DIT4K_SEQ is a guess, it may be too restrictive
+fordRune ::= fordFaswut
+fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ
+
+# TODO: Treat these as actual runes, not comments
 vaneRuneAsComment ~ '/+' optNonNLs nl
 vaneRuneAsComment ~ '/-' optNonNLs nl
 
