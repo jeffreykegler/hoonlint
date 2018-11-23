@@ -1866,12 +1866,7 @@ ACE ~ ace
 ace ~ ' '
 comment ~ '::' optNonNLs nl
 
-# TODO: Is this treatment of these fas runes OK?
-# No, it is not OK, need to look at ford rune
-comment ~ '/?' optNonNLs nl
-comment ~ '/+' optNonNLs nl
-comment ~ '/-' optNonNLs nl
-
+comment ~ vaneRuneAsComment
 # TODO: Is this treatment of documentation runes OK?
 # Documentation decorations treated as comments
 comment ~ ':>' optNonNLs nl
@@ -1962,6 +1957,14 @@ wide5dChoices ::= wideNorm5d rank=>10
 wide5dChoices ::= long5dWide rank=>8
 
 wide5dSeq ::= wide5d+ separator=>ACE proper=>1
+
+# === FORD RUNES ===
+
+# TODO: Is this treatment of these fas runes OK?
+# No, it is not OK, need to look at ford rune
+vaneRuneAsComment ~ '/?' optNonNLs nl
+vaneRuneAsComment ~ '/+' optNonNLs nl
+vaneRuneAsComment ~ '/-' optNonNLs nl
 
 END_OF_DSL_MAIN
 
