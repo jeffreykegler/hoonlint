@@ -45,7 +45,7 @@ sub getValue {
     my ($indent) = ${$input} =~ /\G( *)[^ ]/g;
     my $terminator = $indent . "'''";
 
-    my $terminatorPos = index ${$input}, $terminator, $offset;
+    my $terminatorPos = index ${$input}, $terminator, $nextNL;
     my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
 
     say STDERR "Left main READ loop" if $MarpaX::YAHC::DEBUG;
@@ -1324,19 +1324,25 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 sailApex5d ::= (SEM) tallTopSail
 
 # TODO: tall-top not fully implemented
+tallTopSail ::= ACES wideQuoteInnards
 tallTopSail ::= scriptOrStyle scriptStyleTail
 tallTopSail ::= tallElem
+tallTopSail ::= wideQuote
 
 tallElem ::= tagHead optTallAttrs tallTail
 
-tagHead ::= aMane tagHeadInitial tagHeadKernel tagHeadFinal wideAttrs
+tagHead ::= aMane optTagHeadInitial optTagHeadKernel optTagHeadFinal optWideAttrs
+optTagHeadInitial ::= # empty
+optTagHeadInitial ::= tagHeadInitial
 tagHeadInitial ::= # empty
 tagHeadInitial ::= HAX SYM4K
-tagHeadKernel ::= # empty
+optTagHeadKernel ::= # empty
+optTagHeadKernel ::= tagHeadKernel
 tagHeadKernel ::= tagHeadKernelElements
 tagHeadKernelElements ::= tagHeadKernelElement+
 tagHeadKernelElement ::= DOT SYM4K
-tagHeadFinal ::= # empty
+optTagHeadFinal ::= # empty
+optTagHeadFinal ::= tagHeadFinal 
 tagHeadFinal ::= FAS soil5d
 tagHeadFinal ::= PAT soil5d
 
@@ -1351,12 +1357,15 @@ tallTail ::= COL wrappedElems
 
 # TODO Finish wrapped-elems
 wrappedElems ::= qut4k
+wrappedElems ::= wideTop
 
 # TODO: This is a guess -- I am not clear what hoon.hoon
 # is doing at this point
 scriptOrStyle ::= SYM4K
 scriptOrStyle ::= SYM4K wideAttrs
 
+optWideAttrs ::= # empty
+optWideAttrs ::= wideAttrs
 wideAttrs ::= (PEL PER)
 wideAttrs ::= (PEL) wideAttrBody (PER)
 wideAttrBody ::= wideAttribute+ separator=>commaAce proper=>1
@@ -1373,6 +1382,32 @@ scriptStyleTail ::= (GAP) scriptStyleTailElements (GAP TIS TIS)
 scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
 scriptStyleTailElement ::= (SEM) PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
+
+# TODO: Finish wide-top
+wideTop ::= wideQuote
+
+wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
+# TODO: Triple double quote form of wide-quote NYI
+
+wideQuoteInnards ::= wideQuoteInnardChoice+
+# Relies on ranking to work
+wideQuoteInnardChoice ::= <ESCAPED WIDE INNARD CHAR> rank=>50
+wideQuoteInnardChoice ::= <UNESCAPED WIDE INNARD CHARS> rank=>40
+wideQuoteInnardChoice ::= inlineEmbed
+
+<ESCAPED WIDE INNARD CHAR> ~
+  bas4h hep4h | bas4h lus4h | bas4h tar4h | bas4h cen4h |
+  bas4h sem4h | bas4h kel4h |
+  bas4h bas4h | bas4h doq4h | bas4h bix4j
+# All the printable (non-control) characters except
+# doq (x22), cen (x25), tar (x2a), lus (x2b), hep (x2d),
+# sem (x3b), bas (x5c) and kel (x7b)
+<UNESCAPED WIDE INNARD CHARS> ~ unescapedWideInnardChar+
+unescapedWideInnardChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
+unescapedWideInnardChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+
+# TODO: Finish inlineEmbed
+inlineEmbed ::= sump5d
 
 # 5d library: scad
 
@@ -1834,6 +1869,7 @@ optGapLines ~ gapLine*
 gapLine ~ optHorizontalWhitespace comment
 gapLine ~ optHorizontalWhitespace nl
 
+ACES ~ ace+
 ACE ~ ace
 ace ~ ' '
 comment ~ '::' optNonNLs nl

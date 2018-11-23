@@ -65,7 +65,7 @@ todo hoons/arvo/lib/oauth2.hoon
 todo hoons/arvo/lib/oauth1.hoon
 todo hoons/arvo/lib/hood/write.hoon
 todo hoons/arvo/lib/hood/kiln.hoon
-todo hoons/arvo/lib/elem-to-react-json.hoon
+ok hoons/arvo/lib/elem-to-react-json.hoon
 todo hoons/arvo/lib/down-jet/rend.hoon
 todo hoons/arvo/lib/down-jet/parse.hoon
 todo hoons/arvo/lib/down-jet.hoon
