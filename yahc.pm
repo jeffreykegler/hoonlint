@@ -1376,6 +1376,7 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 # 5d library: sail
 
 sailApex5d ::= (SEM) tallTopSail
+wideSailApex5d ::= (SEM) wideTopSail
 
 # TODO: tall-top not fully implemented
 tallTopSail ::= ACES wideQuoteInnards
@@ -1406,12 +1407,17 @@ tallAttributes ::= tallAttribute+
 tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
 
 # TODO: Finish tall-tail
+tallTail ::= # empty
 tallTail ::= SEM
 tallTail ::= COL wrappedElems
 
+wideTail ::= # empty
+wideTail ::= SEM
+wideTail ::= COL wrappedElems
+
 # TODO Finish wrapped-elems
 wrappedElems ::= qut4k
-wrappedElems ::= wideTop
+wrappedElems ::= wideTopSail
 
 # TODO: This is a guess -- I am not clear what hoon.hoon
 # is doing at this point
@@ -1438,7 +1444,8 @@ scriptStyleTailElement ::= (SEM) PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
 
 # TODO: Finish wide-top
-wideTop ::= wideQuote
+wideTopSail ::= wideQuote
+wideTopSail ::= tagHead wideTail
 
 wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
 # TODO: Triple double quote form of wide-quote NYI
@@ -2004,6 +2011,7 @@ wide5d ::= wide5dChoices
 # TODO: Precedence needs to be tested
 wide5dChoices ::= wideNorm5d rank=>10
 wide5dChoices ::= long5dWide rank=>8
+wide5dChoices ::= wideSailApex5d
 
 wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
