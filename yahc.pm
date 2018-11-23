@@ -1933,7 +1933,9 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 # === FORD RUNES ===
 
-# DIT4K_SEQ is a guess, it may be too restrictive
+# TODO: DIT4K_SEQ is a guess, it may be too restrictive
+# The Ford "commentary" doc describes this as unary,
+# but I cannot locate the code that implements it.
 fordRune ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ
 
