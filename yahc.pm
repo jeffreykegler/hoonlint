@@ -1566,8 +1566,9 @@ irrDotlus ::= (LUS PEL) wide5d (PER)
 # Not in scad(5)
 
 # '.'
-# TODO: NYI
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
 # Not in scad(5)
+scat5d ::= DOT perd4l
 
 # ['0' '9']
 # Not in scad(5)

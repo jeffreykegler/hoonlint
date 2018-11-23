@@ -24,12 +24,12 @@ todo hoons/arvo/web/listen.hoon
 todo hoons/arvo/web/dojo.hoon
 todo hoons/arvo/web/404.hoon
 ok hoons/arvo/sys/zuse.hoon
-todo hoons/arvo/sys/vane/xmas.hoon
+ok hoons/arvo/sys/vane/xmas.hoon
 ok hoons/arvo/sys/vane/jael.hoon
 ok hoons/arvo/sys/vane/ford.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/sys/vane/clay.hoon
-todo hoons/arvo/sys/vane/ames.hoon
+ok hoons/arvo/sys/vane/ames.hoon
 todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/arvo.hoon
 todo hoons/arvo/sur/twitter.hoon
