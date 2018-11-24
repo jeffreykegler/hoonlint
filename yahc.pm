@@ -655,6 +655,10 @@ hasp5d ::= BUC4H
 hasp5d ::= qut4k
 hasp5d ::= nuck4l
 
+# 5d library: lute
+
+lute5d ::= (SEL GAP) tall5dSeq (GAP SER)
+
 # 5d library: long
 
 long5dWide ::= infixTis rank=>60
@@ -1350,7 +1354,9 @@ rupl5d ::= circumBracket
 rupl5d ::= sigCircumBracket
 rupl5d ::= circumBracketSig
 rupl5d ::= sigCircumBracketSig
-# TODO: is the whitespace really what was intended?
+
+# Initial ACE of tall form is intended -- it
+# distinguishes this from lute(5d)
 circumBracket ::= ('[' ACE) tall5dSeq (GAP ']')
 circumBracket ::= ('[') wide5dSeq (']')
 sigCircumBracket ::= (SIG '[' ACE) tall5dSeq (GAP ']')
@@ -1423,7 +1429,7 @@ wrappedElems ::= wideTopSail
 wideParenElems ::= (PEL) (PER)
 wideParenElems ::= (PEL) wideInnerTops (PER)
 
-wideInnerTops ::= wideInnerTop
+wideInnerTops ::= wideInnerTop+ separator=>ACE proper=>1
 wideInnerTop  ::= wideTopSail
 wideInnerTop  ::= tunaMode wideTopSail
 
@@ -2017,9 +2023,10 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
-tall5d ::= fordRune rank=>30
-tall5d ::= norm5d rank=>20
-tall5d ::= wide5d rank=>10
+tall5d ::= fordRune rank=>40
+tall5d ::= norm5d rank=>30
+tall5d ::= wide5d rank=>20
+tall5d ::= lute5d rank=>20
 tall5d ::= sailApex5d
 wide5d ::= wide5dChoices
 
