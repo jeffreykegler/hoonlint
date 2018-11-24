@@ -979,19 +979,6 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: dotwut tall5d
 
-# FAS group are (usually?) ford runes:
-# They are not in hoon.hoon, and so were not part of the
-# corrections to match hoon.hoon.
-
-# FIXED: fassem tall5d tall5d
-
-# TODO: Where to classify this?
-FASTIS ~ [\/] [=]
-norm5d ::= tallFastis
-tallFastis ::= (FASTIS GAP) SYM4K (GAP) tall5d
-wideNorm5d ::= wideFastis
-wideFastis ::= (FASTIS) SYM4K '=' tall5d
-
 # ['|' (rune bar %ktbr expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: ketbar tall5d
@@ -1316,7 +1303,7 @@ CEN4H_SEQ ~ cen4h+
 # 5d library: rood
 # rood is the path parser
 
-rood5d ::= [/] poor5d
+rood5d ::= FAS poor5d
 
 # 5d library: rope
 
@@ -2044,11 +2031,27 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 # === FORD RUNES ===
 
+fordRune ::= wideFordRune
+
 # TODO: DIT4K_SEQ is a guess, it may be too restrictive
 # The Ford "commentary" doc describes this as unary,
 # but I cannot locate the code that implements it.
 fordRune ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ
+
+# TODO: fassem tall5d tall5d
+
+# TODO: Where to classify this?
+fordRune ::= tallFastis
+tallFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
+wideFordRune ::= wideFastis
+wideFastis ::= (FAS TIS) SYM4K '=' wideHorn
+
+wideFordRune ::= wideCircumFas
+wideCircumFas ::= (FAS) SYM4K (FAS)
+
+horn ::= fordRune
+wideHorn ::= wideFordRune
 
 # TODO: Treat these as actual runes, not comments
 vaneRuneAsComment ~ '/+' optNonNLs nl
@@ -2374,12 +2377,6 @@ norm5d ::= tallDotwut
 wideNorm5d ::= wideDotwut
 tallDotwut ::= (DOT4H WUT4H GAP)tall5d
 wideDotwut ::= (DOT4H WUT4H) [(] wide5d [)]
-
-# FASSEM tall5d tall5d
-norm5d ::= tallFassem
-wideNorm5d ::= wideFassem
-tallFassem ::= (FAS4H SEM4H GAP)tall5d (GAP) tall5d
-wideFassem ::= (FAS4H SEM4H) [(] wide5d (ACE) wide5d [)]
 
 # KETBAR tall5d
 norm5d ::= tallKetbar
