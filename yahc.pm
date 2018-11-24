@@ -1054,7 +1054,7 @@ wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['%' (rune cen %sgcn hind)]
 # ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
-# FIXED: sigcen bonk5d rope5d bonz5d tall5d
+# FIXED: sigcen bonk5d tall5d bonz5d tall5d
 
 # ['/' (rune fas %sgfs hine)]
 # ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
@@ -2470,11 +2470,11 @@ wideNorm5d ::= wideSigcab
 tallSigcab ::= (SIG4H CAB4H GAP)tall5d (GAP) tall5d
 wideSigcab ::= (SIG4H CAB4H) [(] wide5d (ACE) wide5d [)]
 
-# SIGCEN bonk5d rope5d bonz5d tall5d
+# SIGCEN bonk5d tall5d bonz5d tall5d
 norm5d ::= tallSigcen
 wideNorm5d ::= wideSigcen
-tallSigcen ::= (SIG4H CEN4H GAP)bonk5d (GAP) rope5d (GAP) bonz5d (GAP) tall5d
-wideSigcen ::= (SIG4H CEN4H) [(] bonk5d (ACE) rope5d (ACE) wideBonz5d (ACE) wide5d [)]
+tallSigcen ::= (SIG4H CEN4H GAP)bonk5d (GAP) tall5d (GAP) bonz5d (GAP) tall5d
+wideSigcen ::= (SIG4H CEN4H) [(] bonk5d (ACE) wide5d (ACE) wideBonz5d (ACE) wide5d [)]
 
 # SIGFAS bonk5d tall5d
 norm5d ::= tallSigfas

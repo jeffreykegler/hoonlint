@@ -1082,7 +1082,7 @@ wideSemsig ::= (SEM SIG PEL) tall5d (ACE) wide5dSeq (PER)
 
 # ['%' (rune cen %sgcn hind)]
 # ++  hind  |.(;~(gunk bonk loaf bonz loaf))          ::  jet hoon "bon"s hoon
-# FIXED: sigcen bonk5d rope5d bonz5d tall5d
+# FIXED: sigcen bonk5d tall5d bonz5d tall5d
 
 # ['/' (rune fas %sgfs hine)]
 # ++  hine  |.(;~(gunk bonk loaf))                    ::  jet-hint and hoon
