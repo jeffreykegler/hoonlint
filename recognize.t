@@ -14,15 +14,12 @@ require "./yahc.pm";
 # Size is for developer convenience -- not used in
 # the code
 my $fileList = <<'END_OF_LIST';
-todo hoons/arvo/lib/hood/kiln.hoon
-ok hoons/arvo/mar/ask-mail.hoon
 todo hoons/arvo/mar/css.hoon
 todo hoons/arvo/mar/down.hoon
 todo hoons/arvo/mar/elem.hoon
 todo hoons/arvo/mar/js.hoon
 todo hoons/arvo/mar/rss-xml.hoon
 todo hoons/arvo/mar/snip.hoon
-ok hoons/arvo/mar/txt.hoon
 todo hoons/arvo/mar/urb.hoon
 todo hoons/arvo/ren/css.hoon
 todo hoons/arvo/ren/js.hoon
@@ -40,9 +37,7 @@ todo hoons/arvo/ren/tree/json.hoon
 todo hoons/arvo/ren/urb.hoon
 todo hoons/arvo/ren/urb/tree.hoon
 todo hoons/arvo/sur/twitter.hoon
-todo hoons/arvo/sys/arvo.hoon
 todo hoons/arvo/sys/hoon.hoon
-todo hoons/arvo/sys/vane/clay.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/web/dojo.hoon
 todo hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
@@ -55,6 +50,11 @@ todo hoons/arvo/app/hood.hoon
 todo hoons/arvo/gen/capitalize.hoon
 todo hoons/arvo/gen/test.hoon
 todo hoons/arvo/lib/down-jet.hoon
+ok hoons/arvo/lib/hood/kiln.hoon
+ok hoons/arvo/mar/ask-mail.hoon
+ok hoons/arvo/mar/txt.hoon
+ok hoons/arvo/sys/arvo.hoon
+ok hoons/arvo/sys/vane/clay.hoon
 ok hoons/arvo/mar/helm-hi.hoon
 ok hoons/arvo/mar/hoon.hoon
 ok hoons/arvo/lib/down-jet/parse.hoon

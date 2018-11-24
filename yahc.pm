@@ -1523,19 +1523,19 @@ wideMold ::= rump5d
 # '%'
 # Differs from scat(5d)
 wideMold ::= moldCenbuc
-moldCenbuc ::= '%$'
+moldCenbuc ::= CEN BUC
 
 wideMold ::= moldCenpam
-moldCenpam ::= '%&'
+moldCenpam ::= CEN PAM
 
 wideMold ::= moldCenbar
-moldCenbar ::= '%|'
+moldCenbar ::= CEN BAR
 
 wideMold ::= moldCenSingleString
-moldCenSingleString ::= ('%') qut4k
+moldCenSingleString ::= (CEN) qut4k
 
 wideMold ::= moldCenNuck4l
-moldCenNuck4l ::= '%' nuck4l
+moldCenNuck4l ::= CEN nuck4l
 
 # '('
 # Differs from scat(5d)
@@ -1566,7 +1566,7 @@ moldAura ::= '@' mota5d
 # '?'
 # Same as scat(5d)
 wideMold ::= moldPrefixWut
-moldPrefixWut ::= ('?(') wideMoldSeq (PER)
+moldPrefixWut ::= (WUT PEL) wideMoldSeq (PER)
 
 wideMold ::= moldWut
 moldWut ::= '?'
@@ -1615,7 +1615,7 @@ moldInfixTis ::= SYM4K TIS wideMold
 # ','
 # Differs from scad(5)
 # TODO: Finish
-wideBuccol ::= (',[') wideMoldSeq (']')
+wideBuccol ::= (COM '[') wideMoldSeq (']')
 
 # '!'
 # Not in scad(5)
@@ -1737,8 +1737,8 @@ prefixColFas ::= (COL FAS) wide5d
 # Differs from scad(5)
 tallDottis ::= (TIS GAP) tall5d
 scat5d ::= irrDottis
-irrDottis ::= ('=(') wide5d (ACE) wide5d (PER)
-irrDottis ::= ('=(') wide5d (PER)
+irrDottis ::= (TIS PEL) wide5d (ACE) wide5d (PER)
+irrDottis ::= (TIS PEL) wide5d (PER)
 
 # '?'
 # Same as scad(5)
