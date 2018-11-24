@@ -27,7 +27,7 @@ todo hoons/arvo/mar/css.hoon
 todo hoons/arvo/mar/down.hoon
 todo hoons/arvo/mar/elem.hoon
 ok hoons/arvo/mar/helm-hi.hoon
-todo hoons/arvo/mar/hoon.hoon
+ok hoons/arvo/mar/hoon.hoon
 todo hoons/arvo/mar/js.hoon
 todo hoons/arvo/mar/rss-xml.hoon
 todo hoons/arvo/mar/snip.hoon
@@ -54,7 +54,7 @@ todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/vane/clay.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/web/dojo.hoon
-todo hoons/arvo/web/listen.hoon
+ok hoons/arvo/web/listen.hoon
 todo hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
 todo hoons/arvo/web/pack/js/tree-urb.hoon
 todo hoons/arvo/web/unmark/all.hoon

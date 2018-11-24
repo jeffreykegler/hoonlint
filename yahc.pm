@@ -1382,7 +1382,11 @@ wideSailApex5d ::= (SEM) wideTopSail
 tallTopSail ::= ACES wideQuoteInnards
 tallTopSail ::= scriptOrStyle scriptStyleTail
 tallTopSail ::= tallElem
-tallTopSail ::= wideQuote
+tallTopSail ::= wideTopSail
+
+wideTopSail ::= wideQuote
+wideTopSail ::= wideParenElems
+wideTopSail ::= tagHead wideTail
 
 tallElem ::= tagHead optTallAttrs tallTail
 
@@ -1411,6 +1415,14 @@ tallTail ::= # empty
 tallTail ::= SEM
 tallTail ::= COL wrappedElems
 tallTail ::= COL ACE wideQuoteInnards
+tallTail ::= (GAP) tallKids (GAP TIS TIS)
+
+tallKids ::= tallKid+ separator=>GAP proper=>1
+tallKid  ::= sailApex5d
+tallKid  ::= cram
+
+# TODO: What is cram?
+cram ::= UNICORN
 
 wideTail ::= # empty
 wideTail ::= SEM
@@ -1431,8 +1443,8 @@ tunaMode ::= HEP | LUS | TAR | CEN
 
 # TODO: This is a guess -- I am not clear what hoon.hoon
 # is doing at this point
-scriptOrStyle ::= SYM4K
-scriptOrStyle ::= SYM4K wideAttrs
+scriptOrStyle ::= 'script' wideAttrs
+scriptOrStyle ::= 'style' wideAttrs
 
 optWideAttrs ::= # empty
 optWideAttrs ::= wideAttrs
@@ -1450,12 +1462,8 @@ hopefullyQuote ::= wide5d
 
 scriptStyleTail ::= (GAP) scriptStyleTailElements (GAP TIS TIS)
 scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
-scriptStyleTailElement ::= (SEM) PRN4I_SEQ
+scriptStyleTailElement ::= (SEM) ACE PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
-
-wideTopSail ::= wideQuote
-wideTopSail ::= wideParenElems
-wideTopSail ::= tagHead wideTail
 
 wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
 # TODO: Triple double quote form of wide-quote NYI
