@@ -568,8 +568,9 @@ timePeriodFraction ::= (DOT DOT) QIX4J_SEQ
 nuck4l ::= SYM4K
 
 # tash(4l) is the signed dime parser
-nuck4l ::= TODO_tash4l
-TODO_tash4l ::= UNICORN
+nuck4l ::= tash4l
+tash4l ::= HEP bisk4l
+tash4l ::= HEP HEP bisk4l
 
 # perd(4l) parses dimes or tuples without their standard prefixes
 nuck4l ::= DOT4H perd4l
@@ -1746,8 +1747,12 @@ scat5d ::= irrDotlus
 irrDotlus ::= (LUS PEL) wide5d (PER)
 
 # '-'
-# TODO: NYI
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
 # Not in scad(5)
+scat5d ::= tash4l
+scat5d ::= hepSoilSeq
+hepSoilSeq ::= hepSolSeqItem+ separator=>DOG4I proper=>1
+hepSolSeqItem ::= HEP soil5d
 
 # '.'
 # For rope(5d) see ['a' 'z'] subcase and rump(5d)
