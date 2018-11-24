@@ -15,7 +15,6 @@ require "./yahc.pm";
 # the code
 my $fileList = <<'END_OF_LIST';
 todo hoons/arvo/mar/css.hoon
-todo hoons/arvo/mar/down.hoon
 todo hoons/arvo/mar/elem.hoon
 todo hoons/arvo/mar/js.hoon
 todo hoons/arvo/mar/rss-xml.hoon
@@ -50,6 +49,7 @@ todo hoons/arvo/app/hood.hoon
 todo hoons/arvo/gen/capitalize.hoon
 todo hoons/arvo/gen/test.hoon
 todo hoons/arvo/lib/down-jet.hoon
+ok hoons/arvo/mar/down.hoon
 ok hoons/arvo/lib/hood/kiln.hoon
 ok hoons/arvo/mar/ask-mail.hoon
 ok hoons/arvo/mar/txt.hoon
