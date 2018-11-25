@@ -1379,6 +1379,7 @@ wideSailApex5d ::= (SEM) wideTopSail
 tallTopSail ::= ACES wideQuoteInnards
 tallTopSail ::= scriptOrStyle scriptStyleTail
 tallTopSail ::= tallElem
+tallTopSail ::= (TIS) tallTail
 tallTopSail ::= tunaMode (GAP) tall5d
 tallTopSail ::= wideTopSail
 
