@@ -488,13 +488,22 @@ carCdrPairs ~ carCdrPair+
 carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
-qit4k ::= <UNESCAPED SINGLE QUOTE CHARS>
-qit4k ::= EscapedSingleQuoteChar
-<UNESCAPED SINGLE QUOTE CHARS> ~ unescapedSingleQuoteChar+
-
 qut4k ::= <single quote string>
 <single quote string> ::= ([']) <single quote cord> (['])
-<single quote cord> ::= qit4k* separator=>gon4k proper=>1
+<single quote cord> ::= qut4k_Piece* separator=>gon4k proper=>1
+qut4k_Piece ::= qit4k+
+qit4k ::= <SINGLE QUOTED CHARS>
+qit4k ::= <SINGLE QUOTED BAS>
+qit4k ::= <SINGLE QUOTED SOQ>
+qit4k ::= <SINGLE QUOTED HEX CHAR>
+
+<SINGLE QUOTED CHARS> ~ unescapedSingleQuoteChar+
+# All the printable (non-control) characters except
+# bas (x5c) and soq (x27)
+unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
+<SINGLE QUOTED BAS> ~ bas4h bas4h
+<SINGLE QUOTED SOQ> ~ bas4h soq4h
+<SINGLE QUOTED HEX CHAR> ~ bas4h mes4k
 
 # <TRIPLE QUOTE START> triggers an event -- the quoted
 # string is actually supplies as <TRIPLE QUOTE STRING>.
@@ -504,20 +513,13 @@ qut4k ::= <TRIPLE QUOTE STRING>
 <TRIPLE QUOTE START> ~ ['] ['] [']
 <TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
 
-# All the printable (non-control) characters except
-# bas and soq
-unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
-EscapedSingleQuoteChar ::= (BAS4H) BAS4H | (BAS4H) SOQ4H
-EscapedSingleQuoteChar ::= AsciiHexChar
-AsciiHexChar ::= (BAS4H) MES4K
-
 dem4k ::= DIT4K_SEQ+ separator=>gon4k proper=>1
 
 DIT4K_SEQ ~ dit4kSeq
 dit4kSeq ~ dit4k+
 dit4k ~ [0-9]
 
-MES4K ~ mes4k
+# MES4K ~ mes4k
 mes4k ~ hit4k hit4k
 
 # HIT4K ~ hit4k
