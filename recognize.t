@@ -14,7 +14,6 @@ require "./yahc.pm";
 # Size is for developer convenience -- not used in
 # the code
 my $fileList = <<'END_OF_LIST';
-todo hoons/arvo/sys/hoon.hoon
 todo hoons/arvo/sys/vane/eyre.hoon
 todo hoons/arvo/web/dojo.hoon
 todo hoons/arvo/web/unmark/test.hoon
@@ -44,6 +43,7 @@ todo hoons/arvo/web/pack/js/tree-urb.hoon
 todo hoons/arvo/web/unmark/all.hoon
 todo hoons/arvo/app/gmail.hoon
 todo hoons/arvo/app/hall.hoon
+ok hoons/arvo/sys/hoon.hoon
 ok hoons/arvo/sur/twitter.hoon
 ok hoons/arvo/mar/css.hoon
 ok hoons/arvo/mar/elem.hoon

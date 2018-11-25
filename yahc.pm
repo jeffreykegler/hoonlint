@@ -373,8 +373,9 @@ haf4j ::= TEP4J TIP4J
 # In hoon.hoon, hef and hif differ in semantics.
 hef4j ::= TIP4J TIQ4J
 
-hex4j ~ '0' qex4j
-hex4j ~ '0' qex4j dog4i qix4jSeq
+hex4j ~ '0'
+hex4j ~ qex4j
+hex4j ~ qex4j dog4i qix4jSeq
 
 # In hoon.hoon, hef and hif differ in semantics.
 hif4j ::= TIP4J TIQ4J
