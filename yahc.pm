@@ -1377,7 +1377,7 @@ sailApex5d ::= (SEM) tallTopSail
 wideSailApex5d ::= (SEM) wideTopSail
 
 # TODO: tall-top not fully implemented
-tallTopSail ::= ACES wideQuoteInnards
+tallTopSail ::= ACES optWideQuoteInnards
 tallTopSail ::= scriptOrStyle scriptStyleTail
 tallTopSail ::= tallElem
 tallTopSail ::= (TIS) tallTail
@@ -1414,7 +1414,7 @@ tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
 tallTail ::= # empty
 tallTail ::= SEM
 tallTail ::= COL wrappedElems
-tallTail ::= COL ACE wideQuoteInnards
+tallTail ::= COL ACE optWideQuoteInnards
 tallTail ::= (GAP) tallKids (GAP TIS TIS)
 
 tallKids ::= tallKid+ separator=>GAP proper=>1
@@ -1465,15 +1465,17 @@ scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
 scriptStyleTailElement ::= (SEM) ACE PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
 
-wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
+wideQuote ::= (DOQ) optWideQuoteInnards (DOQ)
 # TODO: Triple double quote form of wide-quote NYI
 
-wideQuoteInnards ::= wideQuoteInnardChoice+
+optWideQuoteInnards ::=
+optWideQuoteInnards ::= wideQuoteInnardsChoices
+wideQuoteInnardsChoices ::= wideQuoteInnardsChoice+
 # Relies on ranking to work
-wideQuoteInnardChoice ::= <TRICKY WIDE INNARD CHAR> rank=>50
-wideQuoteInnardChoice ::= <ESCAPED WIDE INNARD CHAR> rank=>50
-wideQuoteInnardChoice ::= <NORMAL WIDE INNARD CHARS> rank=>40
-wideQuoteInnardChoice ::= inlineEmbed
+wideQuoteInnardsChoice ::= <TRICKY WIDE INNARD CHAR> rank=>50
+wideQuoteInnardsChoice ::= <ESCAPED WIDE INNARD CHAR> rank=>50
+wideQuoteInnardsChoice ::= <NORMAL WIDE INNARD CHARS> rank=>40
+wideQuoteInnardsChoice ::= inlineEmbed
 
 <ESCAPED WIDE INNARD CHAR> ~
   bas4h hep4h | bas4h lus4h | bas4h tar4h | bas4h cen4h |
@@ -1484,9 +1486,9 @@ wideQuoteInnardChoice ::= inlineEmbed
 # sem (x3b), bas (x5c) and kel (x7b)
 # For efficiency we want to slurp in as many "normal"
 # characters at once as we can.
-<NORMAL WIDE INNARD CHARS> ~ unescapedWideInnardChar+
-unescapedWideInnardChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
-unescapedWideInnardChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+<NORMAL WIDE INNARD CHARS> ~ unescapedWideInnardsChar+
+unescapedWideInnardsChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
+unescapedWideInnardsChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 # The "tricky characters are those which may lead off an
 # <inlineEmbed>.  These are characters with special meanings
 # which may also represent themselves, even when not escaped
