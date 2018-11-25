@@ -243,6 +243,7 @@ sub parse {
 # and contain a Haskell Standard symbol name, followed by zero or
 # more acceptable nodes.
 sub prune {
+    no warnings 'recursion';
     my ($v) = @_;
 
     state $deleteIfEmpty = {
@@ -1497,8 +1498,9 @@ wideQuote ::= (DOQ) wideQuoteInnards (DOQ)
 
 wideQuoteInnards ::= wideQuoteInnardChoice+
 # Relies on ranking to work
+wideQuoteInnardChoice ::= <TRICKY WIDE INNARD CHAR> rank=>50
 wideQuoteInnardChoice ::= <ESCAPED WIDE INNARD CHAR> rank=>50
-wideQuoteInnardChoice ::= <UNESCAPED WIDE INNARD CHARS> rank=>40
+wideQuoteInnardChoice ::= <NORMAL WIDE INNARD CHARS> rank=>40
 wideQuoteInnardChoice ::= inlineEmbed
 
 <ESCAPED WIDE INNARD CHAR> ~
@@ -1508,9 +1510,16 @@ wideQuoteInnardChoice ::= inlineEmbed
 # All the printable (non-control) characters except
 # doq (x22), cen (x25), tar (x2a), lus (x2b), hep (x2d),
 # sem (x3b), bas (x5c) and kel (x7b)
-<UNESCAPED WIDE INNARD CHARS> ~ unescapedWideInnardChar+
+# For efficiency we want to slurp in as many "normal"
+# characters at once as we can.
+<NORMAL WIDE INNARD CHARS> ~ unescapedWideInnardChar+
 unescapedWideInnardChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
 unescapedWideInnardChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
+# The "tricky characters are those which may lead off an
+# <inlineEmbed>.  These are characters with special meanings
+# which may also represent themselves, even when not escaped
+# This makes a *big* difference in efficiency.
+<TRICKY WIDE INNARD CHAR> ~ cen4h | tar4h | lus4h | hep4h | sem4h
 
 # TODO: Finish inlineEmbed
 inlineEmbed ::= (SEM) wideBracketedElem
