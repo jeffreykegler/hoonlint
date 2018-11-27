@@ -2063,7 +2063,7 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
-tall5d ::= fordRune rank=>40
+tall5d ::= hornRune rank=>40
 tall5d ::= norm5d rank=>30
 tall5d ::= wide5d rank=>20
 tall5d ::= lute5d rank=>20
@@ -2079,17 +2079,32 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 # === FORD RUNES ===
 
-fordRune ::= wideFordRune
+horn ::= hornRune
+horn ::= wideHorn
+wideHorn ::= wideHornRune
 
-optFordFaswut ::= # empty
-optFordFaswut ::= fordFaswut
-fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
+hornRune ::= wideHornRune
 
 optFordFashep ::= # empty
 optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
 
+hornRune ::= fordFasket
+fordFasket ::= (FAS KET GAP) tall5d (GAP) horn
+wideHornRune ::= wideFordFasket
+wideFordFasket ::= (FAS KET) wide5d (KET) horn
+
 optFordFaslus ::= # empty
 optFordFaslus ::= (FAS LUS GAP) fordHoofSeq (GAP)
+
+# TODO: Where to classify this?
+hornRune ::= tallFastis
+tallFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
+wideHornRune ::= wideFastis
+wideFastis ::= (FAS TIS) SYM4K '=' wideHorn
+
+optFordFaswut ::= # empty
+optFordFaswut ::= fordFaswut
+fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
 fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
 
@@ -2106,17 +2121,8 @@ fordHoodCase ::= nuck4l
 
 fordHoodShip ::= SIG fed4j
 
-# TODO: Where to classify this?
-fordRune ::= tallFastis
-tallFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
-wideFordRune ::= wideFastis
-wideFastis ::= (FAS TIS) SYM4K '=' wideHorn
-
-wideFordRune ::= wideCircumFas
+wideHornRune ::= wideCircumFas
 wideCircumFas ::= (FAS) SYM4K (FAS)
-
-horn ::= fordRune
-wideHorn ::= wideFordRune
 
 
 BAR ~ bar4h
