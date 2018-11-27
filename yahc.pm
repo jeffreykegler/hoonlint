@@ -1932,14 +1932,15 @@ fordFile ::= UNICORN inaccessible_ok
 # TODO: This is a simplication, which may not
 # catch all the subtleties of "ford" files
 fordFile ::=
-  (fordWhitespace)
+  (optGay4i)
   optFordFaswut
+  # optFordFashep
   optHornSeq
   hoopSeq
-  (fordWhitespace)
+  (optGay4i)
 
-fordWhitespace ::= # empty
-fordWhitespace ::= GAY4I
+optGay4i ::= # empty
+optGay4i ::= GAY4I
 
 optHornSeq ::= # empty
 optHornSeq ::= hornSeq (GAP)
@@ -2076,7 +2077,8 @@ optFordFaswut ::=
 optFordFaswut ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
-# TODO: fassem tall5d tall5d
+# optFordFashep ::= (FAS HEP GAP) hoofSeq (GAP)
+# hoofSeq ::= 
 
 # TODO: Where to classify this?
 fordRune ::= tallFastis
@@ -2092,7 +2094,6 @@ wideHorn ::= wideFordRune
 
 # TODO: Treat these as actual runes, not comments
 vaneRuneAsComment ~ '/+' optNonNLs nl
-vaneRuneAsComment ~ '/-' optNonNLs nl
 
 
 BAR ~ bar4h
