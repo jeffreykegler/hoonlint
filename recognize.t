@@ -18,8 +18,6 @@ todo hoons/arvo/web/unmark/test.hoon
 todo hoons/arvo/app/hood.hoon
 todo hoons/arvo/gen/capitalize.hoon
 todo hoons/arvo/gen/test.hoon
-todo hoons/arvo/lib/down-jet.hoon
-todo hoons/arvo/mar/rss-xml.hoon
 todo hoons/arvo/mar/urb.hoon
 todo hoons/arvo/ren/css.hoon
 todo hoons/arvo/ren/js.hoon
@@ -41,6 +39,8 @@ todo hoons/arvo/web/pack/js/tree-urb.hoon
 todo hoons/arvo/web/unmark/all.hoon
 todo hoons/arvo/app/gmail.hoon
 todo hoons/arvo/app/hall.hoon
+ok hoons/arvo/lib/down-jet.hoon
+ok hoons/arvo/mar/rss-xml.hoon
 ok hoons/arvo/web/dojo.hoon
 ok hoons/arvo/sys/vane/eyre.hoon
 ok hoons/arvo/sys/hoon.hoon

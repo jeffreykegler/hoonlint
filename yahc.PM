@@ -1962,7 +1962,7 @@ fordFile ::= UNICORN inaccessible_ok
 fordFile ::=
   (optGay4i)
   optFordFaswut
-  # optFordFashep
+  optFordFashep
   optHornSeq
   fordHoopSeq
   (optGay4i)
@@ -1983,6 +1983,11 @@ fordHave ::= FAS fordHath
 fordHath ::= poor5d
 
 # === WHITESPACE ===
+
+optClassicWhitespace ::= # empty
+optClassicWhitespace ::= classicWhitespace
+classicWhitespace ::= GAP
+classicWhitespace ::= ACE
 
 optHorizontalWhitespace ~ horizontalWhitespaceElement*
 horizontalWhitespaceElements ~ horizontalWhitespaceElement+
@@ -2104,12 +2109,27 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 fordRune ::= wideFordRune
 
-optFordFaswut ::=
+optFordFaswut ::= # empty
 optFordFaswut ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
-# optFordFashep ::= (FAS HEP GAP) hoofSeq (GAP)
-# hoofSeq ::= 
+optFordFashep ::= # empty
+optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
+
+fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
+
+commaWS ::= COM
+commaWS ::= COM optClassicWhitespace
+
+fordHoof ::= TAR fordHoot
+fordHoof ::= fordHoot
+
+fordHoot ::= SYM4K
+fordHoot ::= SYM4K (FAS) fordHoodCase (FAS) fordHoodShip
+
+fordHoodCase ::= nuck4l
+
+fordHoodShip ::= SIG fed4j
 
 # TODO: Where to classify this?
 fordRune ::= tallFastis
