@@ -224,28 +224,30 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
-	teakChoice => 1,
-	wideTeakChoice => 1,
-        wedeFirst            => 1,
-        wide5d             => 1,
-        wide5dChoices             => 1,
-        wide5dJogging      => 1,
-        wide5dJogs         => 1,
-        wide5dJog          => 1,
-        wide5dSeq          => 1,
-        wideMold             => 1,
-        wideMoldSeq          => 1,
+        fordFile             => 1,
         hoonExpression       => 1,
-        hoonFile             => 1,
-        tall5d => 1,
-        tall5dSeq              => 1,
+	hoop => 1,
+	hoopSeq => 1,
 	long5dWide => 1,
         mold                 => 1,
         moldSeq              => 1,
         norm5d               => 1,
-        wideNorm5d          => 1,
         rope5d               => 1,
         scat5d               => 1,
+        tall5d => 1,
+        tall5dSeq              => 1,
+	teakChoice => 1,
+        wedeFirst            => 1,
+        wide5d             => 1,
+        wide5dChoices             => 1,
+        wide5dJog          => 1,
+        wide5dJogging      => 1,
+        wide5dJogs         => 1,
+        wide5dSeq          => 1,
+        wideMold             => 1,
+        wideMoldSeq          => 1,
+        wideNorm5d          => 1,
+	wideTeakChoice => 1,
     };
 
     return [] if not defined $v;
@@ -319,6 +321,7 @@ dog4i ~ dot4h gay4i
 
 doh4i ~ hep4h hep4h gay4i
 
+GAY4I ~ gay4i
 gay4i ~ # empty
 gay4i ~ gap4k
 
@@ -1921,29 +1924,31 @@ whap5d ::= boog5d+ separator=>GAP proper=>1
 # End of 5d library
 
 # === HOON FILE ===
-:start ::= hoonFile
-# TODO: This is a simplication, which may not
-# catch all the subtleties of "ford" files
-hoonFile ::= (leader) tall5dSeq (trailer)
-
-trailer ::= WS
-trailer ::=
-leader  ::= WS
-leader  ::=
+:start ::= fordFile
 
 # A hack to allow inaccessible symbols
-hoonFile ::= UNICORN inaccessible_ok
+fordFile ::= UNICORN inaccessible_ok
+
+# TODO: This is a simplication, which may not
+# catch all the subtleties of "ford" files
+fordFile ::=
+  (fordWhitespace)
+  hoopSeq
+  (fordWhitespace)
+
+fordWhitespace ::= # empty
+fordWhitespace ::= GAY4I
+
+hoopSeq ::= hoop+ separator=>GAP proper=>1
+
+# TODO: finish "hoop"
+hoop ::= tall5d
 
 # === WHITESPACE ===
 
-WS ~ whitespace
-whitespace ~ ace
-whitespace ~ gap4k
 optHorizontalWhitespace ~ horizontalWhitespaceElement*
 horizontalWhitespaceElements ~ horizontalWhitespaceElement+
 horizontalWhitespaceElement ~ ace
-# horizontalWhitespaceElement ~ horizontalGapElement
-# horizontalGapElement ~ '+=' # documentation decoration
 
 GAP ~ gap4k
 
