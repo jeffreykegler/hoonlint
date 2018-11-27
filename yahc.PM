@@ -1963,6 +1963,7 @@ fordFile ::=
   (optGay4i)
   optFordFaswut
   optFordFashep
+  optFordFaslus
   optHornSeq
   fordHoopSeq
   (optGay4i)
@@ -2009,7 +2010,6 @@ ACE ~ ace
 ace ~ ' '
 comment ~ '::' optNonNLs nl
 
-comment ~ vaneRuneAsComment
 # TODO: Is this treatment of documentation runes OK?
 # Documentation decorations treated as comments
 comment ~ ':>' optNonNLs nl
@@ -2116,6 +2116,9 @@ fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 optFordFashep ::= # empty
 optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
 
+optFordFaslus ::= # empty
+optFordFaslus ::= (FAS LUS GAP) fordHoofSeq (GAP)
+
 fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
 
 commaWS ::= COM
@@ -2142,9 +2145,6 @@ wideCircumFas ::= (FAS) SYM4K (FAS)
 
 horn ::= fordRune
 wideHorn ::= wideFordRune
-
-# TODO: Treat these as actual runes, not comments
-vaneRuneAsComment ~ '/+' optNonNLs nl
 
 END_OF_DSL_MAIN
 
