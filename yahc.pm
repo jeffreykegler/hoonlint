@@ -226,8 +226,8 @@ sub prune {
         doubleStringElements => 1,
         fordFile             => 1,
         hoonExpression       => 1,
-	hoop => 1,
-	hoopSeq => 1,
+	fordHoop => 1,
+	fordHoopSeq => 1,
 	long5dWide => 1,
         mold                 => 1,
         moldSeq              => 1,
@@ -1936,7 +1936,7 @@ fordFile ::=
   optFordFaswut
   # optFordFashep
   optHornSeq
-  hoopSeq
+  fordHoopSeq
   (optGay4i)
 
 optGay4i ::= # empty
@@ -1946,10 +1946,13 @@ optHornSeq ::= # empty
 optHornSeq ::= hornSeq (GAP)
 hornSeq ::= horn+ separator=>GAP proper=>1
 
-hoopSeq ::= hoop+ separator=>GAP proper=>1
+fordHoopSeq ::= fordHoop+ separator=>GAP proper=>1
 
-# TODO: finish "hoop"
-hoop ::= tall5d
+fordHoop ::= FAS FAS GAP fordHave
+fordHoop ::= tall5d
+
+fordHave ::= FAS fordHath
+fordHath ::= poor5d
 
 # === WHITESPACE ===
 
