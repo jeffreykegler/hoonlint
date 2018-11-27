@@ -1933,11 +1933,17 @@ fordFile ::= UNICORN inaccessible_ok
 # catch all the subtleties of "ford" files
 fordFile ::=
   (fordWhitespace)
+  optFordFaswut
+  optHornSeq
   hoopSeq
   (fordWhitespace)
 
 fordWhitespace ::= # empty
 fordWhitespace ::= GAY4I
+
+optHornSeq ::= # empty
+optHornSeq ::= hornSeq (GAP)
+hornSeq ::= horn+ separator=>GAP proper=>1
 
 hoopSeq ::= hoop+ separator=>GAP proper=>1
 
@@ -2066,11 +2072,9 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 
 fordRune ::= wideFordRune
 
-# TODO: DIT4K_SEQ is a guess, it may be too restrictive
-# The Ford "commentary" doc describes this as unary,
-# but I cannot locate the code that implements it.
-fordRune ::= fordFaswut
-fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ
+optFordFaswut ::=
+optFordFaswut ::= fordFaswut
+fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
 # TODO: fassem tall5d tall5d
 
