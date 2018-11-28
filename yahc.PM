@@ -2116,6 +2116,11 @@ wideHorn ::= wideHornRune
 
 hornRune ::= wideHornRune
 
+hornRune ::= fordFasbuc
+fordFasbuc ::= (FAS BUC GAP) tall5d
+wideHornRune ::= wideFordFasbuc
+wideFordFasbuc ::= (FAS BUC SEL) wide5dSeq (SER)
+
 hornRune ::= fordFascab
 fordFascab ::= (FAS CAB GAP) horn
 wideHornRune ::= wideFordFascab
@@ -2165,6 +2170,11 @@ hornRune ::= fordFassem
 fordFassem ::= (FAS SEM GAP) tall5d (GAP) horn
 wideHornRune ::= wideFordFassem
 wideFordFassem ::= (FAS SEM) wide5d (SEM) horn
+
+hornRune ::= fordFassig
+fordFassig ::= (FAS SIG GAP) tall5d
+wideHornRune ::= wideFordFassig
+wideFordFassig ::= (FAS SIG SEL) wide5dSeq (SER)
 
 hornRune ::= fordFastis
 fordFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
