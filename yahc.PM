@@ -2150,6 +2150,9 @@ fordFascomBody ::= fordFascomElements
 fordFascomElements ::= fordFascomElement+ separator=>GAP proper=>1
 fordFascomElement ::= fordHith (GAP) horn
 
+hornRune ::= fordFasdot
+fordFasdot ::= (FAS DOT GAP) optHornSeq (GAP TIS TIS)
+
 hornRune ::= fordFashax
 fordFashax ::= (FAS HAX GAP) horn
 wideHornRune ::= wideFordFashax
