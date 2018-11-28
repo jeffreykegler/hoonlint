@@ -2096,11 +2096,15 @@ wideFordFasket ::= (FAS KET) wide5d (KET) horn
 optFordFaslus ::= # empty
 optFordFaslus ::= (FAS LUS GAP) fordHoofSeq (GAP)
 
-# TODO: Where to classify this?
-hornRune ::= tallFastis
-tallFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
-wideHornRune ::= wideFastis
-wideFastis ::= (FAS TIS) SYM4K '=' wideHorn
+hornRune ::= fordFassem
+fordFassem ::= (FAS SEM GAP) tall5d (GAP) horn
+wideHornRune ::= wideFordFassem
+wideFordFassem ::= (FAS SEM) wide5d (SEM) horn
+
+hornRune ::= fordFastis
+fordFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
+wideHornRune ::= wideFordFastis
+wideFordFastis ::= (FAS TIS) SYM4K '=' wideHorn
 
 optFordFaswut ::= # empty
 optFordFaswut ::= fordFaswut
