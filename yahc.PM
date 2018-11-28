@@ -2126,6 +2126,13 @@ fordFascol ::= (FAS COL GAP) fordHive (GAP) horn
 wideHornRune ::= wideFordFascol
 wideFordFascol ::= (FAS COL) fordHive (COL) horn
 
+hornRune ::= fordFascom
+fordFascom ::= (FAS COM GAP) fordFascomBody (GAP TIS TIS)
+fordFascomBody ::= # empty
+fordFascomBody ::= fordFascomElements
+fordFascomElements ::= fordFascomElement+ separator=>GAP proper=>1
+fordFascomElement ::= fordHith (GAP) horn
+
 optFordFashep ::= # empty
 optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
 
@@ -2158,11 +2165,13 @@ optFordFaswut ::= # empty
 optFordFaswut ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
-fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
-
 commaWS ::= COM
 commaWS ::= COM optClassicWhitespace
 
+fordHith ::= (FAS) optFordHithElements
+optFordHithElements ::= hasp5d* separator=>FAS
+
+fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
 fordHoof ::= TAR fordHoot
 fordHoof ::= fordHoot
 
