@@ -261,6 +261,7 @@ sub prune {
         moldSeq              => 1,
         norm5d               => 1,
         rope5d               => 1,
+        rump5d               => 1,
         scat5d               => 1,
         tall5d => 1,
         tall5dSeq              => 1,

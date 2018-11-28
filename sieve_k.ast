@@ -30,11 +30,8 @@
       [
         'moldCircumParen',
         [
-          'rump5d',
-          [
-            'limb',
-            'list'
-          ]
+          'limb',
+          'list'
         ],
         [
           'moldAura',
@@ -49,40 +46,28 @@
         [
           'infixTis',
           [
-            'rump5d',
-            [
-              'limb',
-              'fed'
-            ]
+            'limb',
+            'fed'
           ],
           [
             'circumParen2',
             [
-              'rump5d',
-              [
-                'limb',
-                'sy'
-              ]
+              'limb',
+              'sy'
             ],
             [
               'circumParen2',
               [
-                'rump5d',
-                [
-                  'limb',
-                  'gulf'
-                ]
+                'limb',
+                'gulf'
               ],
               [
                 'bisk4l',
                 '2'
               ],
               [
-                'rump5d',
-                [
-                  'limb',
-                  'top'
-                ]
+                'limb',
+                'top'
               ]
             ]
           ]
@@ -92,18 +77,12 @@
           [
             'infixCol',
             [
-              'rump5d',
-              [
-                'limb',
-                'abet'
-              ]
+              'limb',
+              'abet'
             ],
             [
-              'rump5d',
-              [
-                'limb',
-                'main'
-              ]
+              'limb',
+              'main'
             ]
           ],
           [
@@ -120,11 +99,8 @@
                     [
                       'circumParen2',
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'sort'
-                        ]
+                        'limb',
+                        'sort'
                       ],
                       [
                         'circumParen1',
@@ -135,27 +111,18 @@
                             'tap'
                           ],
                           [
-                            'rump5d',
-                            [
-                              'limb',
-                              'in'
-                            ]
+                            'limb',
+                            'in'
                           ],
                           [
-                            'rump5d',
-                            [
-                              'limb',
-                              'fed'
-                            ]
+                            'limb',
+                            'fed'
                           ]
                         ]
                       ],
                       [
-                        'rump5d',
-                        [
-                          'limb',
-                          'lth'
-                        ]
+                        'limb',
+                        'lth'
                       ]
                     ]
                   ]
@@ -170,11 +137,8 @@
                       [
                         'infixTis',
                         [
-                          'rump5d',
-                          [
-                            'limb',
-                            'fac'
-                          ]
+                          'limb',
+                          'fac'
                         ],
                         [
                           'bisk4l',
@@ -186,7 +150,41 @@
                         [
                           'tallKetlus',
                           [
-                            'rump5d',
+                            'limb',
+                            '.'
+                          ],
+                          [
+                            'limb',
+                            'main'
+                          ],
+                          [
+                            'tallWutcol',
+                            [
+                              'circumParen2',
+                              [
+                                'limb',
+                                'gth'
+                              ],
+                              [
+                                'circumParen2',
+                                [
+                                  'limb',
+                                  'mul'
+                                ],
+                                [
+                                  'limb',
+                                  'fac'
+                                ],
+                                [
+                                  'limb',
+                                  'fac'
+                                ]
+                              ],
+                              [
+                                'limb',
+                                'top'
+                              ]
+                            ],
                             [
                               'limb',
                               '.'
@@ -194,70 +192,12 @@
                             [
                               'limb',
                               'main'
-                            ]
-                          ],
-                          [
-                            'tallWutcol',
-                            [
-                              'circumParen2',
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'gth'
-                                ]
-                              ],
-                              [
-                                'circumParen2',
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'mul'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'fac'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'fac'
-                                  ]
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  'top'
-                                ]
-                              ]
-                            ],
-                            [
-                              'rump5d',
-                              [
-                                'limb',
-                                '.'
-                              ],
-                              [
-                                'limb',
-                                'main'
-                              ]
                             ],
                             [
                               'circumScatParen',
                               [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  '$'
-                                ]
+                                'limb',
+                                '$'
                               ],
                               [
                                 'lobo5d',
@@ -268,11 +208,8 @@
                                 [
                                   'irrDotlus',
                                   [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'fac'
-                                    ]
+                                    'limb',
+                                    'fac'
                                   ]
                                 ],
                                 [
@@ -286,18 +223,12 @@
                                 [
                                   'circumParen2',
                                   [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'reap'
-                                    ]
+                                    'limb',
+                                    'reap'
                                   ],
                                   [
-                                    'rump5d',
-                                    [
-                                      'limb',
-                                      'fac'
-                                    ]
+                                    'limb',
+                                    'fac'
                                   ]
                                 ]
                               ]
@@ -332,31 +263,22 @@
                         [
                           'infixTis',
                           [
-                            'rump5d',
-                            [
-                              'limb',
-                              'cot'
-                            ]
+                            'limb',
+                            'cot'
                           ],
                           [
                             'circumParen2',
                             [
-                              'rump5d',
-                              [
-                                'limb',
-                                'mul'
-                              ]
+                              'limb',
+                              'mul'
                             ],
                             [
                               'bisk4l',
                               '2'
                             ],
                             [
-                              'rump5d',
-                              [
-                                'limb',
-                                'fac'
-                              ]
+                              'limb',
+                              'fac'
                             ]
                           ]
                         ],
@@ -365,7 +287,30 @@
                           [
                             'tallKetlus',
                             [
-                              'rump5d',
+                              'limb',
+                              '.'
+                            ],
+                            [
+                              'limb',
+                              'reap'
+                            ],
+                            [
+                              'tallWutcol',
+                              [
+                                'circumParen2',
+                                [
+                                  'limb',
+                                  'gth'
+                                ],
+                                [
+                                  'limb',
+                                  'cot'
+                                ],
+                                [
+                                  'limb',
+                                  'top'
+                                ]
+                              ],
                               [
                                 'limb',
                                 '.'
@@ -373,53 +318,12 @@
                               [
                                 'limb',
                                 'reap'
-                              ]
-                            ],
-                            [
-                              'tallWutcol',
-                              [
-                                'circumParen2',
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'gth'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'cot'
-                                  ]
-                                ],
-                                [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    'top'
-                                  ]
-                                ]
-                              ],
-                              [
-                                'rump5d',
-                                [
-                                  'limb',
-                                  '.'
-                                ],
-                                [
-                                  'limb',
-                                  'reap'
-                                ]
                               ],
                               [
                                 'circumScatParen',
                                 [
-                                  'rump5d',
-                                  [
-                                    'limb',
-                                    '$'
-                                  ]
+                                  'limb',
+                                  '$'
                                 ],
                                 [
                                   'lobo5d',
@@ -430,25 +334,16 @@
                                   [
                                     'circumParen2',
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'add'
-                                      ]
+                                      'limb',
+                                      'add'
                                     ],
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'cot'
-                                      ]
+                                      'limb',
+                                      'cot'
                                     ],
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'fac'
-                                      ]
+                                      'limb',
+                                      'fac'
                                     ]
                                   ],
                                   [
@@ -464,26 +359,17 @@
                                         'del'
                                       ],
                                       [
-                                        'rump5d',
-                                        [
-                                          'limb',
-                                          'in'
-                                        ]
+                                        'limb',
+                                        'in'
                                       ],
                                       [
-                                        'rump5d',
-                                        [
-                                          'limb',
-                                          'fed'
-                                        ]
+                                        'limb',
+                                        'fed'
                                       ]
                                     ],
                                     [
-                                      'rump5d',
-                                      [
-                                        'limb',
-                                        'cot'
-                                      ]
+                                      'limb',
+                                      'cot'
                                     ]
                                   ]
                                 ]
