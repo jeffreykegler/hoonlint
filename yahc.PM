@@ -2175,6 +2175,9 @@ optFordFaswut ::= # empty
 optFordFaswut ::= fordFaswut
 fordFaswut ::= (FAS WUT GAP) DIT4K_SEQ (GAP)
 
+wideHornRune ::= wideFaszap
+wideFaszap ::= (FAS ZAP) SYM4K (FAS)
+
 commaWS ::= COM
 commaWS ::= COM optClassicWhitespace
 
