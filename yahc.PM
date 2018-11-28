@@ -2116,6 +2116,11 @@ wideHorn ::= wideHornRune
 
 hornRune ::= wideHornRune
 
+hornRune ::= fordFascab
+fordFascab ::= (FAS CAB GAP) horn
+wideHornRune ::= wideFordFascab
+wideFordFascab ::= (FAS CAB) horn
+
 hornRune ::= fordFascol
 fordFascol ::= (FAS COL GAP) fordHive (GAP) horn
 wideHornRune ::= wideFordFascol

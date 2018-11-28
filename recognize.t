@@ -14,7 +14,6 @@ require "./yahc.pm";
 # Size is for developer convenience -- not used in
 # the code
 my $fileList = <<'END_OF_LIST';
-todo hoons/arvo/gen/test.hoon
 todo hoons/arvo/ren/css.hoon
 todo hoons/arvo/ren/js.hoon
 todo hoons/arvo/ren/rss-xml.hoon
@@ -22,12 +21,10 @@ todo hoons/arvo/ren/run.hoon
 todo hoons/arvo/ren/test-tree.hoon
 todo hoons/arvo/ren/tree/body.hoon
 todo hoons/arvo/ren/tree/combine.hoon
-todo hoons/arvo/ren/tree/comments.hoon
 todo hoons/arvo/ren/tree/elem.hoon
 todo hoons/arvo/ren/tree/head.hoon
 todo hoons/arvo/ren/tree/include.hoon
 todo hoons/arvo/ren/tree/index.hoon
-todo hoons/arvo/ren/tree/json.hoon
 todo hoons/arvo/ren/urb.hoon
 todo hoons/arvo/ren/urb/tree.hoon
 todo hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
@@ -35,6 +32,9 @@ todo hoons/arvo/web/pack/js/tree-urb.hoon
 todo hoons/arvo/web/unmark/all.hoon
 todo hoons/arvo/app/hall.hoon
 todo hoons/arvo/web/unmark/test.hoon
+ok hoons/arvo/ren/tree/comments.hoon
+ok hoons/arvo/gen/test.hoon
+ok hoons/arvo/ren/tree/json.hoon
 ok hoons/arvo/gen/capitalize.hoon
 ok hoons/arvo/mar/urb.hoon
 ok hoons/arvo/app/gmail.hoon
