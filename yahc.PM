@@ -2148,7 +2148,7 @@ fordFascom ::= (FAS COM GAP) fordFascomBody (GAP TIS TIS)
 fordFascomBody ::= # empty
 fordFascomBody ::= fordFascomElements
 fordFascomElements ::= fordFascomElement+ separator=>GAP proper=>1
-fordFascomElement ::= fordHith (GAP) horn
+fordFascomElement ::= (FAS) fordHith (GAP) horn
 
 hornRune ::= fordFasdot
 fordFasdot ::= (FAS DOT GAP) optHornSeq (GAP TIS TIS)
@@ -2201,7 +2201,7 @@ wideFaszap ::= (FAS ZAP) SYM4K (FAS)
 commaWS ::= COM
 commaWS ::= COM optClassicWhitespace
 
-fordHith ::= (FAS) optFordHithElements
+fordHith ::= optFordHithElements
 optFordHithElements ::= hasp5d* separator=>FAS proper=>1
 
 fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
