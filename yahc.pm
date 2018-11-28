@@ -615,9 +615,9 @@ bonz5d ::= (TIS TIS GAP) optBonzElements (GAP TIS TIS)
 bonz5d ::= wideBonz5d
 wideBonz5d ::= SIG
 wideBonz5d ::= (PEL) optWideBonzElements (PER)
-optBonzElements ::= bonzElement* separator=>GAP
+optBonzElements ::= bonzElement* separator=>GAP proper=>1
 bonzElement ::= CEN SYM4K (GAP) tall5d
-optWideBonzElements ::= wideBonzElement* separator=>ACE
+optWideBonzElements ::= wideBonzElement* separator=>ACE proper=>1
 wideBonzElement ::= CEN SYM4K (ACE) tall5d
 
 mold ::= wideMold
@@ -641,7 +641,7 @@ lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
 
 # 5d library: gash
 
-gash5d ::= limp5d* separator=>[/]
+gash5d ::= limp5d* separator=>[/] proper=>1
 limp5d ::= (optFasSeq) gasp5d
 optFasSeq ::= # empty
 optFasSeq ::= FAS_SEQ
@@ -1465,7 +1465,7 @@ aMane ::= SYM4K CAB SYM4K
 hopefullyQuote ::= wide5d
 
 scriptStyleTail ::= (GAP) scriptStyleTailElements (GAP TIS TIS)
-scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP
+scriptStyleTailElements ::= scriptStyleTailElement+ separator=>GAP proper=>1
 scriptStyleTailElement ::= (SEM) ACE PRN4I_SEQ
 scriptStyleTailElement ::= (SEM)
 
@@ -1947,6 +1947,7 @@ optGay4i ::= GAY4I
 optHornSeq ::= # empty
 optHornSeq ::= hornSeq (GAP)
 hornSeq ::= horn+ separator=>GAP proper=>1
+wideHornSeq ::= horn+ separator=>ACE proper=>1
 
 fordHoopSeq ::= fordHoop+ separator=>GAP proper=>1
 
@@ -2089,6 +2090,11 @@ wideHorn ::= wideHornRune
 
 hornRune ::= wideHornRune
 
+hornRune ::= fordFasbar
+fordFasbar ::= (FAS BAR GAP) hornSeq (GAP TIS TIS)
+wideHornRune ::= wideFordFasbar
+wideFordFasbar ::= (FAS BAR PEL) wideHornSeq (PER)
+
 hornRune ::= fordFasbuc
 fordFasbuc ::= (FAS BUC GAP) tall5d
 wideHornRune ::= wideFordFasbuc
@@ -2165,7 +2171,7 @@ commaWS ::= COM
 commaWS ::= COM optClassicWhitespace
 
 fordHith ::= (FAS) optFordHithElements
-optFordHithElements ::= hasp5d* separator=>FAS
+optFordHithElements ::= hasp5d* separator=>FAS proper=>1
 
 fordHoofSeq ::= fordHoof+ separator=>commaWS proper=>1
 fordHoof ::= TAR fordHoot
