@@ -2132,6 +2132,13 @@ wideFordFasket ::= (FAS KET) wide5d (KET) horn
 optFordFaslus ::= # empty
 optFordFaslus ::= (FAS LUS GAP) fordHoofSeq (GAP)
 
+hornRune ::= fordFaspam
+fordFaspam ::= (FAS PAM GAP) SYM4K (GAP) horn
+wideHornRune ::= wideFordFaspam
+wideFordFaspam ::= (FAS PAM) faspamSyms horn
+faspamSyms ::= faspamSym+
+faspamSym ::= SYM4K PAM
+
 hornRune ::= fordFassem
 fordFassem ::= (FAS SEM GAP) tall5d (GAP) horn
 wideHornRune ::= wideFordFassem
