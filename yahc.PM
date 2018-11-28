@@ -1983,6 +1983,9 @@ fordHoop ::= tall5d
 fordHave ::= FAS fordHath
 fordHath ::= poor5d
 
+fordHive ::= (FAS) gash5d
+fordHive ::= (FAS) gash5d CEN porc5d
+
 # === WHITESPACE ===
 
 optClassicWhitespace ::= # empty
@@ -2112,6 +2115,11 @@ horn ::= wideHorn
 wideHorn ::= wideHornRune
 
 hornRune ::= wideHornRune
+
+hornRune ::= fordFascol
+fordFascol ::= (FAS COL GAP) fordHive (GAP) horn
+wideHornRune ::= wideFordFascol
+wideFordFascol ::= (FAS COL) fordHive (COL) horn
 
 optFordFashep ::= # empty
 optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
