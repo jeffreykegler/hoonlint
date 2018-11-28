@@ -203,6 +203,7 @@ sub parse {
 
     my $valueRef = $recce->value();
     if ( !$valueRef ) {
+	say STDERR $recce->show_progress( 0, -1 ) if $debug;
         die "input read, but there was no parse";
     }
 
@@ -1945,7 +1946,7 @@ optGay4i ::= # empty
 optGay4i ::= GAY4I
 
 optHornSeq ::= # empty
-optHornSeq ::= hornSeq (GAP)
+optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
 wideHornSeq ::= horn+ separator=>ACE proper=>1
 

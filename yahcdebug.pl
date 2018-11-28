@@ -22,6 +22,7 @@ my $astRef;
 my $ok = eval { $astRef = MarpaX::YAHC::parse(\$hoonSource); 1; };
 
 if (not $ok) {
+  say STDERR $EVAL_ERROR;
   die "Parse failed";
 }
 
