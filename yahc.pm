@@ -545,7 +545,6 @@ LAPSE_SECONDS ~ 's' dim4j
 timePeriodFraction ::= (DOT DOT) QIX4J_SEQ
 
 # nuck(4l) is the coin parser
-# TODO: Finish nuck4l
 nuck4l ::= SYM4K
 
 # tash(4l) is the signed dime parser
@@ -1359,7 +1358,6 @@ rump5d ::= rope5d wede5d
 # rupl(5d) seems to implement the hoon '[...]', ~[...], and [...]~
 # syntaxes.
 
-# TODO: Finish rupl(5d)
 rupl5d ::= circumBracket
 rupl5d ::= sigCircumBracket
 rupl5d ::= circumBracketSig
@@ -1442,12 +1440,10 @@ wideParenElems ::= (PEL) wideInnerTops (PER)
 
 wideInnerTops ::= wideInnerTop+ separator=>ACE proper=>1
 wideInnerTop  ::= wideTopSail
-wideInnerTop  ::= tunaMode wideTopSail
+wideInnerTop  ::= tunaMode wide5d
 
 tunaMode ::= HEP | LUS | TAR | CEN
 
-# TODO: This is a guess -- I am not clear what hoon.hoon
-# is doing at this point
 scriptOrStyle ::= 'script' wideAttrs
 scriptOrStyle ::= 'style' wideAttrs
 
@@ -1500,7 +1496,6 @@ unescapedWideInnardsChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 # This makes a *big* difference in efficiency.
 <TRICKY WIDE INNARD CHAR> ~ cen4h | tar4h | lus4h | hep4h | sem4h
 
-# TODO: Finish inlineEmbed
 inlineEmbed ::= (SEM) wideBracketedElem
 inlineEmbed ::= tunaMode sump5d
 inlineEmbed ::= sump5d
@@ -1611,7 +1606,6 @@ moldKet ~ '^'
 
 # <moldInfixCol> can start with either KET (^) or lowercase char
 # This is scab(5d)
-# TODO: Delete after development
 wideMold ::= moldInfixCol
 moldInfixCol ::= rope5d [:] moldInfixCol2
 moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
@@ -1725,10 +1719,8 @@ prefixTar ::= TAR wideMold
 soloTar ::= TAR
 
 # '@'
-# TODO: NYI
+# TODO: Finished?
 # Same as scad(5)
-# '@'
-# Same as scat(5d)
 scat5d ::= aura
 aura ::= '@' mota5d
 
@@ -1931,8 +1923,6 @@ whap5d ::= boog5d+ separator=>GAP proper=>1
 # A hack to allow inaccessible symbols
 fordFile ::= UNICORN inaccessible_ok
 
-# TODO: This is a simplication, which may not
-# catch all the subtleties of "ford" files
 fordFile ::=
   (optGay4i)
   optFordFaswut
