@@ -2121,6 +2121,11 @@ fordFascab ::= (FAS CAB GAP) horn
 wideHornRune ::= wideFordFascab
 wideFordFascab ::= (FAS CAB) horn
 
+hornRune ::= fordFascen
+fordFascen ::= (FAS CEN GAP) horn
+wideHornRune ::= wideFordFascen
+wideFordFascen ::= (FAS CEN) horn
+
 hornRune ::= fordFascol
 fordFascol ::= (FAS COL GAP) fordHive (GAP) horn
 wideHornRune ::= wideFordFascol
@@ -2132,6 +2137,11 @@ fordFascomBody ::= # empty
 fordFascomBody ::= fordFascomElements
 fordFascomElements ::= fordFascomElement+ separator=>GAP proper=>1
 fordFascomElement ::= fordHith (GAP) horn
+
+hornRune ::= fordFashax
+fordFashax ::= (FAS HAX GAP) horn
+wideHornRune ::= wideFordFashax
+wideFordFashax ::= (FAS HAX) horn
 
 optFordFashep ::= # empty
 optFordFashep ::= (FAS HEP GAP) fordHoofSeq (GAP)
