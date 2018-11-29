@@ -230,8 +230,8 @@ sub prune {
 	fordHoop => 1,
 	fordHoopSeq => 1,
 	long5dWide => 1,
-        mold                 => 1,
-        moldSeq              => 1,
+        till5d                 => 1,
+        till5dSeq              => 1,
         norm5d               => 1,
         rope5d               => 1,
         rump5d               => 1,
@@ -417,7 +417,7 @@ six4j ~ [0-9a-f]
 
 siv4j ~ [0-9a-v]
 
-ted4j ~ sed4j 
+ted4j ~ sed4j
 ted4j ~ sed4j sid4j
 ted4j ~ sed4j sid4j sid4j
 ted4j ~ sed4j sid4j sid4j sid4j
@@ -568,7 +568,7 @@ nuck4l ::= SIG twid4l
 perd4l ::= zust4l
 
 # TODO: royl(4l) NYI
-royl4l ::= UNICORN 
+royl4l ::= UNICORN
 
 zust4l ::= bip4j
 zust4l ::= lip4j
@@ -621,8 +621,8 @@ bonzElement ::= CEN SYM4K (GAP) tall5d
 optWideBonzElements ::= wideBonzElement* separator=>ACE proper=>1
 wideBonzElement ::= CEN SYM4K (ACE) tall5d
 
-mold ::= wideMold
-moldSeq ::= mold+ separator=>GAP proper=>1
+till5d ::= wideMold
+till5dSeq ::= till5d+ separator=>GAP proper=>1
 wideMoldSeq ::= wideMold+ separator=>ACE proper=>1
 
 # 5d library: boog
@@ -638,7 +638,7 @@ lusLusCell ::= ('++' GAP) BUC (GAP) tall5d
 lusLusCell ::= ('++' GAP) SYM4K (GAP) tall5d
 lusHepCell ::= ('+-' GAP) SYM4K (GAP) tall5d
 lusHepCell ::= ('+-' GAP) BUC (GAP) tall5d
-lusTisCell ::= ('+=' GAP) SYM4K (GAP) mold
+lusTisCell ::= ('+=' GAP) SYM4K (GAP) till5d
 
 # 5d library: gash
 
@@ -709,100 +709,100 @@ optHig4kSeq ~ hig4k*
 # 5d library: norm
 
 # Mold runes
- 
+
 # ['_' (rune cab %bccb expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-mold ::= tallBuccabMold
+till5d ::= tallBuccabMold
 wideMold ::= wideBuccabMold
 tallBuccabMold ::= (BUC CAB GAP) tall5d
 wideBuccabMold ::= (BUC CAB PEL) wide5d (PER)
 
 # ['%' (rune cen %bccn exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-mold ::= tallBuccenMold
+till5d ::= tallBuccenMold
 wideMold ::= wideBuccenMold
-tallBuccenMold ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
+tallBuccenMold ::= (BUC CEN GAP) till5dSeq (GAP TIS TIS)
 wideBuccenMold ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
-mold ::= tallBuccolMold
+till5d ::= tallBuccolMold
 wideMold ::= wideBuccolMold
-tallBuccolMold ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
+tallBuccolMold ::= (BUC COL GAP) till5dSeq (GAP TIS TIS)
 wideBuccolMold ::= (BUC COL PEL) wideMoldSeq (PER)
 
 # ['-' (rune hep %bchp exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-mold ::= tallBuchepMold
+till5d ::= tallBuchepMold
 wideMold ::= wideBuchepMold
-tallBuchepMold ::= (BUC HEP GAP) mold (GAP)  mold
+tallBuchepMold ::= (BUC HEP GAP) till5d (GAP) till5d
 wideBuchepMold ::= (BUC HEP PEL) wideMold (ACE) wideMold (PER)
 
 # ['^' (rune ket %bckt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-mold ::= tallBucketMold
+till5d ::= tallBucketMold
 wideMold ::= wideBucketMold
-tallBucketMold ::= (BUC KET GAP) mold (GAP)  mold
+tallBucketMold ::= (BUC KET GAP) till5d (GAP) till5d
 wideBucketMold ::= (BUC KET PEL) wideMold (ACE) wideMold (PER)
 
 # ['@' (rune pat %bcpt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-mold ::= tallBucpatMold
+till5d ::= tallBucpatMold
 wideMold ::= wideBucpatMold
-tallBucpatMold ::= (BUC PAT GAP) mold (GAP)  mold
+tallBucpatMold ::= (BUC PAT GAP) till5d (GAP) till5d
 wideBucpatMold ::= (BUC PAT PEL) wideMold (ACE) wideMold (PER)
 
 # [';' (rune sem %bcsm expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-mold ::= tallBucsemMold
+till5d ::= tallBucsemMold
 wideMold ::= wideBucsemMold
 tallBucsemMold ::= (BUC SEM GAP) tall5d
 wideBucsemMold ::= (BUC SEM PEL) wide5d (PER)
 
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
-mold ::= tallBuctisMold
+till5d ::= tallBuctisMold
 wideMold ::= wideBuctisMold
-tallBuctisMold ::= (BUC TIS GAP) SYM4K (GAP)  mold
+tallBuctisMold ::= (BUC TIS GAP) SYM4K (GAP) till5d
 wideBuctisMold ::= (BUC TIS PEL) SYM4K (ACE) wideMold (PER)
 
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
-mold ::= tallBucwutMold
+till5d ::= tallBucwutMold
 wideMold ::= wideBucwutMold
-tallBucwutMold ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
+tallBucwutMold ::= (BUC WUT GAP) till5dSeq (GAP TIS TIS)
 wideBucwutMold ::= (BUC WUT PEL) wideMoldSeq (PER)
 
 # [':' (rune col %cnhp exqz)]
 #    ++  exqz  |.(;~(gunk loaf (butt hunk)))             ::  hoon, n roots
-mold ::= tallCencolMold
+till5d ::= tallCencolMold
 wideMold ::= wideCencolMold
-tallCencolMold ::= (CEN COL GAP) tall5d (GAP) moldSeq (GAP TIS TIS)
+tallCencolMold ::= (CEN COL GAP) tall5d (GAP) till5dSeq (GAP TIS TIS)
 wideCencolMold ::= (CEN COL PEL) wide5d (GAP) wideMoldSeq (PER)
 
 # ['-' (rune hep %cnhp exqk)]
 #    ++  exqk  |.(;~(gunk loaf ;~(plug loan (easy ~))))  ::  hoon with one root
-mold ::= tallCenhepMold
+till5d ::= tallCenhepMold
 wideMold ::= wideCenhepMold
-tallCenhepMold ::= (CEN HEP GAP) tall5d (GAP)  mold
+tallCenhepMold ::= (CEN HEP GAP) tall5d (GAP) till5d
 wideCenhepMold ::= (CEN HEP PEL) wide5d (ACE) wideMold (PER)
 
 # :~  ['^' (rune ket %cnkt exqy)]
 #    ++  exqy  |.(;~(gunk loaf loan loan loan))          ::  hoon, three roots
-mold ::= tallCenketMold
+till5d ::= tallCenketMold
 wideMold ::= wideCenketMold
-tallCenketMold ::= (CEN KET GAP) tall5d (GAP)  mold (GAP) mold (GAP) mold
+tallCenketMold ::= (CEN KET GAP) tall5d (GAP) till5d (GAP) till5d (GAP) till5d
 wideCenketMold ::= (CEN KET PEL) wide5d (ACE) wideMold (ACE) wideMold
   (ACE) wideMold (PER)
 
 # ['+' (rune lus %cnls exqx)]
 #   ++  exqx  |.(;~(gunk loaf loan loan))               ::  hoon, two roots
-mold ::= tallCenlusMold
+till5d ::= tallCenlusMold
 wideMold ::= wideCenlusMold
-tallCenlusMold ::= (CEN LUS GAP) tall5d (GAP)  mold (GAP) mold
+tallCenlusMold ::= (CEN LUS GAP) tall5d (GAP) till5d (GAP) till5d
 wideCenlusMold ::= (CEN LUS PEL) wide5d (ACE) wideMold (ACE) wideMold (PER)
-  
+
 # 5d library: norm
 
 # Hoon runes
@@ -811,7 +811,7 @@ wideCenlusMold ::= (CEN LUS PEL) wide5d (ACE) wideMold (ACE) wideMold (PER)
 # ++  exqr  |.(;~(gunk loan ;~(plug wasp wisp)))      ::  root/aliases?/tail
 # wisp must be tall, therefore wasp and BARCAB must be tall
 norm5d ::= tallBarcab
-tallBarcab ::= (BAR CAB GAP) mold (GAP) wasp5d wisp5d
+tallBarcab ::= (BAR CAB GAP) till5d (GAP) wasp5d wisp5d
 
 # ['%' (runo cen %brcn [~ ~] expe)]
 # ++  expe  |.(wisp)                                  ::  core tail
@@ -837,17 +837,17 @@ tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['~' (runo sig %brsg [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: barsig mold tall5d
+# FIXED: barsig till5d tall5d
 
 # ['*' (runo tar %brtr [~ ~] exqc)]
 #  ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: bartar mold tall5d
+# FIXED: bartar till5d tall5d
 
 # ['=' (runo tis %brts [~ ~] exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
 norm5d ::= tallBartis
 wideNorm5d ::= wideBartis
-tallBartis ::= (BAR4H TIS GAP) mold (GAP) tall5d
+tallBartis ::= (BAR4H TIS GAP) till5d (GAP) tall5d
 wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 
 # ['?' (runo wut %brwt [~ ~] expa)]
@@ -861,7 +861,7 @@ wideBartis ::= (BAR4H TIS) [(] wideMold (ACE) wide5d [)]
 # [':' (rune col %bccl exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 norm5d ::= tallBuccol
-tallBuccol ::= (BUC COL GAP) moldSeq (GAP TIS TIS)
+tallBuccol ::= (BUC COL GAP) till5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccol
 wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
 
@@ -869,35 +869,35 @@ wideBuccol ::= (BUC COL PEL) wideMoldSeq (PER)
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 # Running syntax
 norm5d ::= tallBuccen
-tallBuccen ::= (BUC CEN GAP) moldSeq (GAP TIS TIS)
+tallBuccen ::= (BUC CEN GAP) till5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideBuccen
 wideBuccen ::= (BUC CEN PEL) wideMoldSeq (PER)
 
 # ['-' (rune hep %bchp exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-# FIXED: buchep mold mold
+# FIXED: buchep till5d till5d
 
 # ['^' (rune ket %bckt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-# FIXED: bucket mold mold
+# FIXED: bucket till5d till5d
 
 # ['@' (rune pat %bcpt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-# FIXED: bucpat mold mold
+# FIXED: bucpat till5d till5d
 
 # [';' (rune sem %bcsm exqa)]
 # ++  exqa  |.(loan)                                  ::  one hoon
 # Typo in hoon.hoon -- actually "loan" is a mold
-# FIXED: bucsem mold
+# FIXED: bucsem till5d
 
 # ['=' (rune tis %bcts exqg)]
 # ++  exqg  |.(;~(gunk sym loan))                     ::  term and root
-# FIXED: buctis SYM4K mold
+# FIXED: buctis SYM4K till5d
 
 # ['?' (rune wut %bcwt exqs)]
 # ++  exqs  |.((butt hunk))                           ::  closed gapped roots
 norm5d ::= tallBucwut
-tallBucwut ::= (BUC WUT GAP) moldSeq (GAP TIS TIS)
+tallBucwut ::= (BUC WUT GAP) till5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideBucwut
 wideBucwut ::= (BUC WUT PEL) wideMoldSeq (PER)
 
@@ -979,7 +979,7 @@ wideColtar ::= (COL TAR PEL) wide5dSeq (PER)
 # I do not understand hoon.hoon comment ("autoconsed hoons"), but
 # follow the code
 norm5d ::= tallDotket
-tallDotket ::= (DOT KET GAP) mold (GAP) tall5dSeq (GAP TIS TIS)
+tallDotket ::= (DOT KET GAP) till5d (GAP) tall5dSeq (GAP TIS TIS)
 wideNorm5d ::= wideDotket
 wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
@@ -1014,7 +1014,7 @@ wideDotket ::= (DOT KET PEL) wideMold (ACE) wide5dSeq (PER)
 
 # ['-' (rune hep %kthp exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: kethep mold tall5d
+# FIXED: kethep till5d tall5d
 
 # ['+' (rune lus %ktls expb)]
 # ++  expb  |.(;~(gunk loaf loaf))                    ::  two hoons
@@ -1132,7 +1132,7 @@ wideSigwut ::= (SIG WUT PEL) tall5d (ACE) tall5d (ACE) tall5d (PER)
 
 # ['|' (rune bar %tsbr exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-# FIXED: tisbar mold tall5d
+# FIXED: tisbar till5d tall5d
 
 # [':' (rune col %tscl expp)]
 # ++  expp  |.(;~(gunk (butt rick) loaf))             ::  [wing hoon]s, hoon
@@ -1262,12 +1262,12 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 #    ++  tkts  |.  %+  cook  |=  {a/root b/tiki}
 #                            (~(wtts ah b) a)
 #                  ;~(gunk loan teak)
-# FIXED: wuttis mold teak5d
+# FIXED: wuttis till5d teak5d
 
 # ['!' (rune zap %wtzp expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
 # FIXED: wutzap tall5d
- 
+
 # [':' ;~(pfix col (toad expz))]
 #    ++  expz  |.(loaf(bug &))                           ::  hoon with tracing
 # FIXED: zapcol tall5d
@@ -1351,10 +1351,10 @@ wideRick5dJog ::= rope5d (ACE) tall5d
 # 5d library: ruck
 
 ruck5d ::= ruck5dJog+ separator=>GAP proper=>1
-ruck5dJog ::= mold (GAP) tall5d
+ruck5dJog ::= till5d (GAP) tall5d
 
 wideRuck5d ::= wideRuck5dJog+ separator=>commaAce proper=>1
-wideRuck5dJog ::= mold (ACE) tall5d
+wideRuck5dJog ::= till5d (ACE) tall5d
 commaAce ::= COM ACE
 
 # 5d library: rump
@@ -1412,7 +1412,7 @@ tagHeadKernel ::= tagHeadKernelElements
 tagHeadKernelElements ::= tagHeadKernelElement+
 tagHeadKernelElement ::= DOT SYM4K
 optTagHeadFinal ::= # empty
-optTagHeadFinal ::= tagHeadFinal 
+optTagHeadFinal ::= tagHeadFinal
 tagHeadFinal ::= FAS soil5d
 tagHeadFinal ::= PAT soil5d
 
@@ -2378,17 +2378,17 @@ wideNorm5d ::= wideBarhep
 tallBarhep ::= (BAR4H HEP4H GAP)tall5d
 wideBarhep ::= (BAR4H HEP4H) [(] wide5d [)]
 
-# BARSIG mold tall5d
+# BARSIG till5d tall5d
 norm5d ::= tallBarsig
 wideNorm5d ::= wideBarsig
-tallBarsig ::= (BAR4H SIG4H GAP)mold (GAP) tall5d
-wideBarsig ::= (BAR4H SIG4H) [(] wideMold (ACE) wide5d [)]
+tallBarsig ::= (BAR4H SIG4H GAP)till5d (GAP) tall5d
+wideBarsig ::= (BAR4H SIG4H) [(] till5d (ACE) wide5d [)]
 
-# BARTAR mold tall5d
+# BARTAR till5d tall5d
 norm5d ::= tallBartar
 wideNorm5d ::= wideBartar
-tallBartar ::= (BAR4H TAR4H GAP)mold (GAP) tall5d
-wideBartar ::= (BAR4H TAR4H) [(] wideMold (ACE) wide5d [)]
+tallBartar ::= (BAR4H TAR4H GAP)till5d (GAP) tall5d
+wideBartar ::= (BAR4H TAR4H) [(] till5d (ACE) wide5d [)]
 
 # BARWUT tall5d
 norm5d ::= tallBarwut
@@ -2402,35 +2402,35 @@ wideNorm5d ::= wideBuccab
 tallBuccab ::= (BUC4H CAB4H GAP)tall5d
 wideBuccab ::= (BUC4H CAB4H) [(] wide5d [)]
 
-# BUCHEP mold mold
+# BUCHEP till5d till5d
 norm5d ::= tallBuchep
 wideNorm5d ::= wideBuchep
-tallBuchep ::= (BUC4H HEP4H GAP)mold (GAP) mold
-wideBuchep ::= (BUC4H HEP4H) [(] wideMold (ACE) wideMold [)]
+tallBuchep ::= (BUC4H HEP4H GAP)till5d (GAP) till5d
+wideBuchep ::= (BUC4H HEP4H) [(] till5d (ACE) till5d [)]
 
-# BUCKET mold mold
+# BUCKET till5d till5d
 norm5d ::= tallBucket
 wideNorm5d ::= wideBucket
-tallBucket ::= (BUC4H KET4H GAP)mold (GAP) mold
-wideBucket ::= (BUC4H KET4H) [(] wideMold (ACE) wideMold [)]
+tallBucket ::= (BUC4H KET4H GAP)till5d (GAP) till5d
+wideBucket ::= (BUC4H KET4H) [(] till5d (ACE) till5d [)]
 
-# BUCPAT mold mold
+# BUCPAT till5d till5d
 norm5d ::= tallBucpat
 wideNorm5d ::= wideBucpat
-tallBucpat ::= (BUC4H PAT4H GAP)mold (GAP) mold
-wideBucpat ::= (BUC4H PAT4H) [(] wideMold (ACE) wideMold [)]
+tallBucpat ::= (BUC4H PAT4H GAP)till5d (GAP) till5d
+wideBucpat ::= (BUC4H PAT4H) [(] till5d (ACE) till5d [)]
 
-# BUCSEM mold
+# BUCSEM till5d
 norm5d ::= tallBucsem
 wideNorm5d ::= wideBucsem
-tallBucsem ::= (BUC4H SEM4H GAP)mold
-wideBucsem ::= (BUC4H SEM4H) [(] wideMold [)]
+tallBucsem ::= (BUC4H SEM4H GAP)till5d
+wideBucsem ::= (BUC4H SEM4H) [(] till5d [)]
 
-# BUCTIS SYM4K mold
+# BUCTIS SYM4K till5d
 norm5d ::= tallBuctis
 wideNorm5d ::= wideBuctis
-tallBuctis ::= (BUC4H TIS4H GAP)SYM4K (GAP) mold
-wideBuctis ::= (BUC4H TIS4H) [(] SYM4K (ACE) wideMold [)]
+tallBuctis ::= (BUC4H TIS4H GAP)SYM4K (GAP) till5d
+wideBuctis ::= (BUC4H TIS4H) [(] SYM4K (ACE) till5d [)]
 
 # CENDOT tall5d tall5d
 norm5d ::= tallCendot
@@ -2528,11 +2528,11 @@ wideNorm5d ::= wideKetdot
 tallKetdot ::= (KET4H DOT4H GAP)tall5d (GAP) tall5d
 wideKetdot ::= (KET4H DOT4H) [(] wide5d (ACE) wide5d [)]
 
-# KETHEP mold tall5d
+# KETHEP till5d tall5d
 norm5d ::= tallKethep
 wideNorm5d ::= wideKethep
-tallKethep ::= (KET4H HEP4H GAP)mold (GAP) tall5d
-wideKethep ::= (KET4H HEP4H) [(] wideMold (ACE) wide5d [)]
+tallKethep ::= (KET4H HEP4H GAP)till5d (GAP) tall5d
+wideKethep ::= (KET4H HEP4H) [(] till5d (ACE) wide5d [)]
 
 # KETLUS tall5d tall5d
 norm5d ::= tallKetlus
@@ -2630,11 +2630,11 @@ wideNorm5d ::= wideSigzap
 tallSigzap ::= (SIG4H ZAP4H GAP)tall5d (GAP) tall5d
 wideSigzap ::= (SIG4H ZAP4H) [(] wide5d (ACE) wide5d [)]
 
-# TISBAR mold tall5d
+# TISBAR till5d tall5d
 norm5d ::= tallTisbar
 wideNorm5d ::= wideTisbar
-tallTisbar ::= (TIS4H BAR4H GAP)mold (GAP) tall5d
-wideTisbar ::= (TIS4H BAR4H) [(] wideMold (ACE) wide5d [)]
+tallTisbar ::= (TIS4H BAR4H GAP)till5d (GAP) tall5d
+wideTisbar ::= (TIS4H BAR4H) [(] till5d (ACE) wide5d [)]
 
 # TISCOM tall5d tall5d
 norm5d ::= tallTiscom
@@ -2744,11 +2744,11 @@ wideNorm5d ::= wideWutsig
 tallWutsig ::= (WUT4H SIG4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWutsig ::= (WUT4H SIG4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
-# WUTTIS mold teak5d
+# WUTTIS till5d teak5d
 norm5d ::= tallWuttis
 wideNorm5d ::= wideWuttis
-tallWuttis ::= (WUT4H TIS4H GAP)mold (GAP) teak5d
-wideWuttis ::= (WUT4H TIS4H) [(] wideMold (ACE) wideTeak5d [)]
+tallWuttis ::= (WUT4H TIS4H GAP)till5d (GAP) teak5d
+wideWuttis ::= (WUT4H TIS4H) [(] till5d (ACE) wideTeak5d [)]
 
 # WUTZAP tall5d
 norm5d ::= tallWutzap
