@@ -1393,17 +1393,18 @@ sigCircumBracketSig ::= (SIG '[') wide5dSeq (']' SIG)
 sailApex5d ::= (SEM) tallTopSail
 wideSailApex5d ::= (SEM) wideTopSail
 
-# TODO: tall-top not fully implemented
-tallTopSail ::= ACES optWideQuoteInnards
-tallTopSail ::= scriptOrStyle scriptStyleTail
-tallTopSail ::= tallElem
-tallTopSail ::= (TIS) tallTail
-tallTopSail ::= tunaMode (GAP) tall5d
-tallTopSail ::= wideTopSail
+tallTopSail ::= ACES optWideQuoteInnards rank=>100
+tallTopSail ::= scriptOrStyle scriptStyleTail rank=>80
+tallTopSail ::= tallElem rank=>70
+tallTopSail ::= wideQuote rank=>60
+tallTopSail ::= (TIS) tallTail rank=>50
+tallTopSail ::= (GAR GAP) cram rank=>40
+tallTopSail ::= tunaMode (GAP) tall5d rank=>30
+# TODO: can tallTopSail (= tall-top ) also be empty?
 
-wideTopSail ::= wideQuote
-wideTopSail ::= wideParenElems
-wideTopSail ::= tagHead wideTail
+wideTopSail ::= wideQuote rank=>20
+wideTopSail ::= wideParenElems rank=>10
+wideTopSail ::= tagHead wideTail rank=>0
 
 tallElem ::= tagHead optTallAttrs tallTail
 
@@ -1435,11 +1436,15 @@ tallTail ::= COL ACE optWideQuoteInnards
 tallTail ::= (GAP) tallKids (GAP TIS TIS)
 
 tallKids ::= tallKid+ separator=>GAP proper=>1
-tallKid  ::= sailApex5d
-tallKid  ::= cram
+tallKid  ::= sailApex5d rank=>20
+tallKid  ::= cram rank=>0
 
 # TODO: What is cram?
-cram ::= UNICORN
+cram ::= <CRAM STRING>
+cram ::= CRAM_START
+:lexeme ~ CRAM_START event=>cram pause=>before
+CRAM_START ~ gar4h
+<CRAM STRING> ~ unicorn # supplied by a combinator
 
 wideTail ::= # empty
 wideTail ::= SEM
