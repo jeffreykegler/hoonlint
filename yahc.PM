@@ -1279,10 +1279,10 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 # FIXED: wutsig teak5d tall5d tall5d
 
 # ['=' ;~(pfix tis (toad tkts))]
-# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
-# 			(~(wtsg ah a) b c)
-# 	      ;~(gunk teak loaf loaf)
-# FIXED: wuttis teak5d tall5d tall5d
+#    ++  tkts  |.  %+  cook  |=  {a/root b/tiki}
+#                            (~(wtts ah b) a)
+#                  ;~(gunk loan teak)
+# FIXED: wuttis mold teak5d
 
 # ['!' (rune zap %wtzp expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon

@@ -1251,10 +1251,10 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 # FIXED: wutsig teak5d tall5d tall5d
 
 # ['=' ;~(pfix tis (toad tkts))]
-# ++  tksg  |.  %+  cook  |=  {a/tiki b/hoon c/hoon}
-# 			(~(wtsg ah a) b c)
-# 	      ;~(gunk teak loaf loaf)
-# FIXED: wuttis teak5d tall5d tall5d
+#    ++  tkts  |.  %+  cook  |=  {a/root b/tiki}
+#                            (~(wtts ah b) a)
+#                  ;~(gunk loan teak)
+# FIXED: wuttis mold teak5d
 
 # ['!' (rune zap %wtzp expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
@@ -2736,11 +2736,11 @@ wideNorm5d ::= wideWutsig
 tallWutsig ::= (WUT4H SIG4H GAP)teak5d (GAP) tall5d (GAP) tall5d
 wideWutsig ::= (WUT4H SIG4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
 
-# WUTTIS teak5d tall5d tall5d
+# WUTTIS mold teak5d
 norm5d ::= tallWuttis
 wideNorm5d ::= wideWuttis
-tallWuttis ::= (WUT4H TIS4H GAP)teak5d (GAP) tall5d (GAP) tall5d
-wideWuttis ::= (WUT4H TIS4H) [(] wideTeak5d (ACE) wide5d (ACE) wide5d [)]
+tallWuttis ::= (WUT4H TIS4H GAP)mold (GAP) teak5d
+wideWuttis ::= (WUT4H TIS4H) [(] wideMold (ACE) wideTeak5d [)]
 
 # WUTZAP tall5d
 norm5d ::= tallWutzap
