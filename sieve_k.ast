@@ -46,8 +46,11 @@
         [
           'infixTis',
           [
-            'limb',
-            'fed'
+            'toga',
+            [
+              'limb',
+              'fed'
+            ]
           ],
           [
             'circumParen2',
@@ -137,8 +140,11 @@
                       [
                         'infixTis',
                         [
-                          'limb',
-                          'fac'
+                          'toga',
+                          [
+                            'limb',
+                            'fac'
+                          ]
                         ],
                         [
                           'bisk4l',
@@ -263,8 +269,11 @@
                         [
                           'infixTis',
                           [
-                            'limb',
-                            'cot'
+                            'toga',
+                            [
+                              'limb',
+                              'cot'
+                            ]
                           ],
                           [
                             'circumParen2',

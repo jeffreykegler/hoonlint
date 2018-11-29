@@ -267,6 +267,7 @@ sub prune {
         tall5d => 1,
         tall5dSeq              => 1,
 	teakChoice => 1,
+	togaElements => 1,
         wedeFirst            => 1,
         wide5d             => 1,
         wide5dChoices             => 1,
@@ -705,10 +706,17 @@ long5dWide ::= infixFas rank=>30
 long5dWide ::= circumScatParen rank=>20
 long5dWide ::= scat5d rank=>10
 
-infixTis ::= scat5d (TIS) wide5d
+toga ::= rope5d
+toga ::= togaSeq
+togaSeq ::= ('[') togaElements (']')
+togaElements ::= togaElement+ separator=>ACE proper=>1
+togaElement ::= toga
+togaElement ::= SIG
+
+infixTis ::= toga (TIS) wide5d
 infixCol ::= scat5d (COL) wide5d
 infixKet ::= scat5d (KET) wide5d
-infixFas ::= scat5d (FAS) wide5d
+infixFas ::= toga (FAS) wide5d
 circumScatParen ::= scat5d (PEL) lobo5d (PER)
 
 lobo5d ::= wide5dJogs

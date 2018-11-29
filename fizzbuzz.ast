@@ -27,8 +27,11 @@
       [
         'infixTis',
         [
-          'limb',
-          'count'
+          'toga',
+          [
+            'limb',
+            'count'
+          ]
         ],
         [
           'bisk4l',
