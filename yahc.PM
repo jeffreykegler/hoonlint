@@ -119,6 +119,48 @@ sub getTripleDoubleQuote {
     return \$value, $terminatorPos + length $terminator;
 }
 
+# Given an input and an offset into that input,
+# it reads unmarkdown.  The return values
+# are the parse value and a new offset in the input.
+# Reading is not intelligent -- it finds a terminator, and
+# treats the unmarkdown as a string.
+# Errors are thrown.
+
+sub getCram {
+    my ( $input, $origOffset ) = @_;
+    my $input_length = length ${$input};
+    my $resume_pos;
+    my $this_pos;
+
+    my $semiPos = rindex ${$input}, ';', $origOffset;
+    my $previousNlPos = rindex ${$input}, "\n", $semiPos;
+    my $indent = $semiPos - ($previousNlPos + 1);
+    my $firstNlPos = index ${$input}, "\n", $origOffset;
+    my $valueStartPos      = $firstNlPos + 1;
+
+    if ($indent <= 0) {
+	my $nextNlPos = $firstNlPos;
+        LINE: while ($nextNlPos >= 0) {
+            pos ${$input} = $nextNlPos + 1;
+            if ( ${$input} =~ m/\G [ ]* == [\n]/xms ) {
+                my $terminatorStartPos = $LAST_MATCH_START[0];
+                my $terminatorEndPos   = $LAST_MATCH_END[0];
+                my $value              = substr( ${$input}, $valueStartPos,
+                    $terminatorStartPos - $valueStartPos );
+                return \$value, $terminatorEndPos + 1;
+            }
+	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
+        }
+	# If here, end of string is EOF
+	my $inputLength = length ${$input};
+	my $value = substr ${$input}, $valueStartPos, $inputLength - $valueStartPos;
+	return \$value, $inputLength;
+    }
+
+    my $badStart = substr ${$input}, $origOffset, 50;
+    die join '', 'Called getCram: "', $badStart, '"'
+}
+
 sub parse {
     my ($input) = @_;
     my $debug = $MarpaX::YAHC::DEBUG;
@@ -165,11 +207,11 @@ sub parse {
         # Find the event name
 
         my $event = $events->[0];
-        my $name  = $event->[0];
+        my $eventName  = $event->[0];
 
-	say STDERR "$name event" if $MarpaX::YAHC::DEBUG;
+	say STDERR "$eventName event" if $MarpaX::YAHC::DEBUG;
 
-        if ( $name eq 'tripleQuote' ) {
+        if ( $eventName eq 'tripleQuote' ) {
             my $value_ref;
             ( $value_ref, $resume_pos ) = getTripleQuote( $input, $this_pos );
             my $result = $recce->lexeme_read(
@@ -184,7 +226,7 @@ sub parse {
         }
 
 	# TODO: tripeDoubleQuote must allow sump(5d)
-        if ( $name eq 'tripleDoubleQuote' ) {
+        if ( $eventName eq 'tripleDoubleQuote' ) {
             my $value_ref;
             ( $value_ref, $resume_pos )
 	      = getTripleDoubleQuote( $input, $this_pos );
@@ -199,11 +241,26 @@ sub parse {
               if $MarpaX::YAHC::DEBUG;
 	}
 
+        if ( $eventName eq 'cram' ) {
+            my $value_ref;
+            ( $value_ref, $resume_pos )
+	      = getCram( $input, $this_pos );
+            my $result = $recce->lexeme_read(
+                'CRAM STRING',
+                $this_pos,
+                ( length ${$value_ref} ),
+                [ ${$value_ref} ]
+            );
+            say STDERR "lexeme_read('CRAM STRING',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $MarpaX::YAHC::DEBUG;
+	}
+
 	if (not $resume_pos) {
 	  die "read() ended prematurely\n",
 	    "  input length = $input_length\n",
 	    "  length read = $this_pos\n",
-	    "  the cause may be an unexpected event";
+	    qq{  the cause was an "$eventName" event};
 	}
 
 	say STDERR "this_pos=$this_pos ; input_length=$input_length" if $debug;
@@ -1426,7 +1483,7 @@ tallTopSail ::= scriptOrStyle scriptStyleTail rank=>80
 tallTopSail ::= tallElem rank=>70
 tallTopSail ::= wideQuote rank=>60
 tallTopSail ::= (TIS) tallTail rank=>50
-tallTopSail ::= (GAR GAP) cram rank=>40
+tallTopSail ::= (GAR GAP) CRAM rank=>40
 tallTopSail ::= tunaMode (GAP) tall5d rank=>30
 # TODO: can tallTopSail (= tall-top ) also be empty?
 
@@ -1465,14 +1522,10 @@ tallTail ::= (GAP) tallKids (GAP TIS TIS)
 
 tallKids ::= tallKid+ separator=>GAP proper=>1
 tallKid  ::= sailApex5d rank=>20
-tallKid  ::= cram rank=>0
+tallKid  ::= CRAM rank=>0
 
-# TODO: What is cram?
-cram ::= <CRAM STRING>
-cram ::= CRAM_START
-:lexeme ~ CRAM_START event=>cram pause=>before
-CRAM_START ~ gar4h
-<CRAM STRING> ~ unicorn # supplied by a combinator
+event '^CRAM' = predicted CRAM
+CRAM ~ unicorn # supplied by a combinator
 
 wideTail ::= # empty
 wideTail ::= SEM
