@@ -213,17 +213,44 @@ sub parse {
               if $MarpaX::YAHC::DEBUG;
 	}
 
-        if ( $eventName eq 'cram' ) {
+        if ( $eventName eq 'TALL_KID_CRAM' ) {
+	    my ( $start, $length ) = $recce->pause_span();
+	    my $pre_cram_string = substr ${$input}, $start, $length;
+            my $result = $recce->lexeme_read(
+                'TALL_KID_PRECRAM_GAP',
+                $start,
+                $length - 1,
+		[ $pre_cram_string ]
+            );
+            say STDERR "lexeme_read('TALL_KID_PRECRAM GAP',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $MarpaX::YAHC::DEBUG;
+	    my $stringPos = $start+$length;
+            my $value_ref;
+            ( $value_ref, $resume_pos )
+	      = getCram( $input, $stringPos );
+            $result = $recce->lexeme_read(
+                'CRAM',
+                $stringPos,
+                ( length ${$value_ref} ),
+                [ ${$value_ref} ]
+            );
+            say STDERR "lexeme_read('CRAM',...) returned ",
+              Data::Dumper::Dumper( \$result )
+              if $MarpaX::YAHC::DEBUG;
+	}
+
+        if ( $eventName eq 'CRAM' ) {
             my $value_ref;
             ( $value_ref, $resume_pos )
 	      = getCram( $input, $this_pos );
             my $result = $recce->lexeme_read(
-                'CRAM STRING',
+                'CRAM',
                 $this_pos,
                 ( length ${$value_ref} ),
                 [ ${$value_ref} ]
             );
-            say STDERR "lexeme_read('CRAM STRING',...) returned ",
+            say STDERR "lexeme_read('CRAM',...) returned ",
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
 	}
@@ -1459,6 +1486,9 @@ tallTopSail ::= (GAR GAP) CRAM rank=>40
 tallTopSail ::= tunaMode (GAP) tall5d rank=>30
 # TODO: can tallTopSail (= tall-top ) also be empty?
 
+event '^CRAM' = predicted CRAM
+CRAM ~ unicorn # supplied by a combinator
+
 wideTopSail ::= wideQuote rank=>20
 wideTopSail ::= wideParenElems rank=>10
 wideTopSail ::= tagHead wideTail rank=>0
@@ -1494,10 +1524,12 @@ tallTail ::= (GAP) tallKids (GAP TIS TIS)
 
 tallKids ::= tallKid+ separator=>GAP proper=>1
 tallKid  ::= sailApex5d rank=>20
-tallKid  ::= CRAM rank=>0
+tallKid  ::= TALL_KID_CRAM_LOOKAHEAD # event, so rank does not matter
+tallKid  ::= TALL_KID_PRECRAM_GAP CRAM rank=>0
 
-event '^CRAM' = predicted CRAM
-CRAM ~ unicorn # supplied by a combinator
+:lexeme ~ TALL_KID_CRAM_LOOKAHEAD event=>TALL_KID_CRAM pause=>before
+TALL_KID_CRAM_LOOKAHEAD ~ optional_classic_whitespace [^;]
+TALL_KID_PRECRAM_GAP ~ unicorn # supplied by combinator
 
 wideTail ::= # empty
 wideTail ::= SEM
@@ -2029,6 +2061,11 @@ optClassicWhitespace ::= # empty
 optClassicWhitespace ::= classicWhitespace
 classicWhitespace ::= GAP
 classicWhitespace ::= ACE
+
+optional_classic_whitespace ~
+optional_classic_whitespace ~ classic_whitespace
+classic_whitespace ~ gap4k
+classic_whitespace ~ ace
 
 optHorizontalWhitespace ~ horizontalWhitespaceElement*
 horizontalWhitespaceElements ~ horizontalWhitespaceElement+
