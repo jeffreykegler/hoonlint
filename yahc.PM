@@ -127,7 +127,7 @@ sub getTripleDoubleQuote {
 # Errors are thrown.
 
 sub getCram {
-    $DB::single = 1;
+    # $DB::single = 1;
 
     my ( $input, $origOffset ) = @_;
     my $input_length = length ${$input};
@@ -139,9 +139,9 @@ sub getCram {
     my $indent = $semiPos - ($previousNlPos + 1);
     my $firstNlPos = index ${$input}, "\n", $origOffset;
     my $valueStartPos      = $firstNlPos + 1;
+    my $nextNlPos = $firstNlPos;
 
     if ($indent <= 0) {
-	my $nextNlPos = $firstNlPos;
         LINE: while ($nextNlPos >= 0) {
             pos ${$input} = $nextNlPos + 1;
             if ( ${$input} =~ m/\G [ ]* == [\n]/xms ) {
@@ -159,7 +159,30 @@ sub getCram {
 	return \$value, $inputLength;
     }
 
-    # Error if here
+    # If here, indent > 0
+    my $indentString = (' ' x $indent);
+
+    LINE: while ($nextNlPos >= 0) {
+	pos ${$input} = $nextNlPos + 1;
+	if ( ${$input} =~ m/\G $indentString [ ]* == [\n]/xms ) {
+	    my $terminatorStartPos = $LAST_MATCH_START[0];
+	    my $terminatorEndPos   = $LAST_MATCH_END[0];
+	    my $value              = substr( ${$input}, $valueStartPos,
+		$terminatorStartPos - $valueStartPos );
+	    # Continue parsing after TISTIS?  Or before?
+	    return \$value, $terminatorEndPos + 1;
+	}
+	if ( ${$input} =~ m/\G $indentString [\n]/xms ) {
+	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
+	    next LINE;
+	}
+	# If here, outdent
+	my $value              = substr ${$input}, $valueStartPos,
+	    ($nextNlPos + 1) - $valueStartPos;
+	    return \$value, $nextNlPos+1;
+    }
+
+    # Premature EOF if here
     return;
 }
 
@@ -1526,7 +1549,6 @@ optTallAttrs ::= tallAttributes
 tallAttributes ::= tallAttribute+
 tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
 
-# TODO: Finish tall-tail
 tallTailCommon ::= # empty
 tallTailCommon ::= SEM
 tallTailCommon ::= COL wrappedElems
@@ -1544,9 +1566,9 @@ tallTailOfElem ::= tallKidsOfElem (GAP TIS TIS)
 # <GAP_SEM>, if a semi-colon is the next non-whitespace character,
 # will beat <GAP> in LATM.
 #
-tallKidsOfTop ::= tallKidOfTop+
-tallKidOfTop  ::= (GAP_SEM) tallTopSail rank=>20
-tallKidOfTop  ::= (GAP) CRAM rank=>0
+tallKidsOfTop  ::= (GAP_SEM) tallTopKidSeq rank=>20
+tallKidsOfTop  ::= (GAP) CRAM rank=>0
+tallTopKidSeq  ::= tallTopSail+ separator=>GAP_SEM proper=>1
 GAP_SEM ~ gap4k sem4h
 
 tallKidsOfElem ::= tallKidOfElem+
