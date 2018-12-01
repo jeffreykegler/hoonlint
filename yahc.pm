@@ -99,6 +99,8 @@ sub getTripleDoubleQuote {
 # Errors are thrown.
 
 sub getCram {
+    $DB::single = 1;
+
     my ( $input, $origOffset ) = @_;
     my $input_length = length ${$input};
     my $resume_pos;
@@ -129,8 +131,8 @@ sub getCram {
 	return \$value, $inputLength;
     }
 
-    my $badStart = substr ${$input}, $origOffset, 50;
-    die join '', 'Called getCram: "', $badStart, '"'
+    # Error if here
+    return;
 }
 
 sub parse {
@@ -219,7 +221,12 @@ sub parse {
             my $value_ref;
             ( $value_ref, $resume_pos )
 	      = getCram( $input, $this_pos );
-	    return if not $value_ref;
+	    if (not $value_ref) {
+		# TODO: After development, add "if $debug"
+		say STDERR $recce->show_progress( 0, -1 );
+		my $badStart = substr ${$input}, $this_pos, 50;
+		die join '', 'Problem in getCram: "', $badStart, '"';
+	    }
             my $result = $recce->lexeme_read(
                 'CRAM',
                 $this_pos,
@@ -1457,7 +1464,7 @@ tallTopSail ::= ACES optWideQuoteInnards rank=>100
 tallTopSail ::= scriptOrStyle scriptStyleTail rank=>80
 tallTopSail ::= tallElem rank=>70
 tallTopSail ::= wideQuote rank=>60
-tallTopSail ::= (TIS) tallTail rank=>50
+tallTopSail ::= (TIS) tallTailOfTop rank=>50
 tallTopSail ::= (GAR GAP) CRAM rank=>40
 tallTopSail ::= tunaMode (GAP) tall5d rank=>30
 # TODO: can tallTopSail (= tall-top ) also be empty?
@@ -1469,7 +1476,7 @@ wideTopSail ::= wideQuote rank=>20
 wideTopSail ::= wideParenElems rank=>10
 wideTopSail ::= tagHead wideTail rank=>0
 
-tallElem ::= tagHead optTallAttrs tallTail
+tallElem ::= tagHead optTallAttrs tallTailOfElem
 
 tagHead ::= aMane optTagHeadInitial optTagHeadKernel optTagHeadFinal optWideAttrs
 optTagHeadInitial ::= # empty
@@ -1492,11 +1499,16 @@ tallAttributes ::= tallAttribute+
 tallAttribute ::= (GAP TIS) aMane (GAP) hopefullyQuote
 
 # TODO: Finish tall-tail
-tallTail ::= # empty
-tallTail ::= SEM
-tallTail ::= COL wrappedElems
-tallTail ::= COL ACE optWideQuoteInnards
-tallTail ::= tallKids (GAP TIS TIS)
+tallTailCommon ::= # empty
+tallTailCommon ::= SEM
+tallTailCommon ::= COL wrappedElems
+tallTailCommon ::= COL ACE optWideQuoteInnards
+
+tallTailOfTop ::= tallTailCommon
+tallTailOfTop ::= tallKidsOfTop (GAP TIS TIS)
+
+tallTailOfElem ::= tallTailCommon
+tallTailOfElem ::= tallKidsOfElem (GAP TIS TIS)
 
 # <tallKid> includes its preceding gap -kids to allow lookahead
 # to differentiate among the <tallKid> choices.
@@ -1504,11 +1516,13 @@ tallTail ::= tallKids (GAP TIS TIS)
 # <GAP_SEM>, if a semi-colon is the next non-whitespace character,
 # will beat <GAP> in LATM.
 #
-tallKids ::= tallKid+
-tallKid  ::= (GAP_SEM) tallTopSail rank=>20
-tallKid  ::= (GAP) CRAM rank=>0
-
+tallKidsOfTop ::= tallKidOfTop+
+tallKidOfTop  ::= (GAP_SEM) tallTopSail rank=>20
+tallKidOfTop  ::= (GAP) CRAM rank=>0
 GAP_SEM ~ gap4k sem4h
+
+tallKidsOfElem ::= tallKidOfElem+
+tallKidOfElem  ::= (GAP_SEM) tallTopSail
 
 wideTail ::= # empty
 wideTail ::= SEM
