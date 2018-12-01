@@ -137,11 +137,14 @@ sub getCram {
     my $semiPos = rindex ${$input}, ';', $origOffset;
     my $previousNlPos = rindex ${$input}, "\n", $semiPos;
     my $indent = $semiPos - ($previousNlPos + 1);
-    my $firstNlPos = index ${$input}, "\n", $origOffset;
-    my $valueStartPos      = $firstNlPos + 1;
+    my $firstNlPos = index ${$input}, "\n", $semiPos;
+    my $valueStartPos      = $semiPos + 2;
     my $nextNlPos = $firstNlPos;
+    # say STDERR qq{origOffset: }, substr(${$input}, $origOffset, 20);
+    # say STDERR qq{First NL pos: }, substr(${$input}, $firstNlPos, 20);
 
     if ($indent <= 0) {
+	# say STDERR "indent=$indent; nextNlPos=$nextNlPos";
         LINE: while ($nextNlPos >= 0) {
             pos ${$input} = $nextNlPos + 1;
             if ( ${$input} =~ m/\G [ ]* == [\n]/xms ) {
@@ -149,7 +152,7 @@ sub getCram {
                 my $terminatorEndPos   = $LAST_MATCH_END[0];
                 my $value              = substr( ${$input}, $valueStartPos,
                     $terminatorStartPos - $valueStartPos );
-                return \$value, $terminatorEndPos + 1;
+                return \$value, $nextNlPos;
             }
 	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
         }
@@ -163,23 +166,33 @@ sub getCram {
     my $indentString = (' ' x $indent);
 
     LINE: while ($nextNlPos >= 0) {
+	# say STDERR "LINE: indent=$indent; nextNlPos=$nextNlPos";
 	pos ${$input} = $nextNlPos + 1;
+	# say STDERR qq{Pos set to: }, substr(${$input}, $nextNlPos+1, 20);
 	if ( ${$input} =~ m/\G $indentString [ ]* == [\n]/xms ) {
 	    my $terminatorStartPos = $LAST_MATCH_START[0];
 	    my $terminatorEndPos   = $LAST_MATCH_END[0];
+	    # say STDERR qq{TISTIS found: }, substr(${$input}, $terminatorStartPos, 20);
 	    my $value              = substr( ${$input}, $valueStartPos,
 		$terminatorStartPos - $valueStartPos );
 	    # Continue parsing after TISTIS?  Or before?
-	    return \$value, $terminatorEndPos + 1;
+	    return \$value, $terminatorEndPos;
 	}
-	if ( ${$input} =~ m/\G $indentString [\n]/xms ) {
+	
+	# say STDERR qq{Pos before match set to: }, substr(${$input},
+	  # (pos ${$input}), 20) if $debug;
+
+	if ( (substr ${$input}, $nextNlPos+1, $indent) eq $indentString ) {
 	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
+	    # say STDERR qq{Continuing cram, nextNlPos=$nextNlPos};
+	    # say STDERR qq{Continuing cram: }, substr(${$input}, $nextNlPos, 20);
 	    next LINE;
 	}
 	# If here, outdent
+	# say STDERR qq{Outdent, returning at: }, substr(${$input}, $nextNlPos+1, 20);
 	my $value              = substr ${$input}, $valueStartPos,
-	    ($nextNlPos + 1) - $valueStartPos;
-	    return \$value, $nextNlPos+1;
+	  ($nextNlPos + 1) - $valueStartPos;
+	return \$value, $nextNlPos+1;
     }
 
     # Premature EOF if here
@@ -297,6 +310,8 @@ sub parse {
 	}
 
 	say STDERR "this_pos=$this_pos ; input_length=$input_length" if $debug;
+
+	# say STDERR qq{Resuming at "}, substr ${$input}, $resume_pos, 50;
 
         my $ok = eval { $this_pos = $recce->resume($resume_pos); 1; };
         if ( not $ok ) {
