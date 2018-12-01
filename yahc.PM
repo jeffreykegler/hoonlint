@@ -214,6 +214,7 @@ sub parse {
         if ( $eventName eq 'tripleQuote' ) {
             my $value_ref;
             ( $value_ref, $resume_pos ) = getTripleQuote( $input, $this_pos );
+	    return if not $value_ref;
             my $result = $recce->lexeme_read(
                 'TRIPLE QUOTE STRING',
                 $this_pos,
@@ -230,6 +231,7 @@ sub parse {
             my $value_ref;
             ( $value_ref, $resume_pos )
 	      = getTripleDoubleQuote( $input, $this_pos );
+	    return if not $value_ref;
             my $result = $recce->lexeme_read(
                 'TRIPLE DOUBLE QUOTE STRING',
                 $this_pos,
@@ -241,37 +243,11 @@ sub parse {
               if $MarpaX::YAHC::DEBUG;
 	}
 
-        if ( $eventName eq 'TALL_KID_CRAM' ) {
-	    my ( $start, $length ) = $recce->pause_span();
-	    my $pre_cram_string = substr ${$input}, $start, $length;
-            my $result = $recce->lexeme_read(
-                'TALL_KID_PRECRAM_GAP',
-                $start,
-                $length - 1,
-		[ $pre_cram_string ]
-            );
-            say STDERR "lexeme_read('TALL_KID_PRECRAM GAP',...) returned ",
-              Data::Dumper::Dumper( \$result )
-              if $MarpaX::YAHC::DEBUG;
-	    my $stringPos = $start+$length;
-            my $value_ref;
-            ( $value_ref, $resume_pos )
-	      = getCram( $input, $stringPos );
-            $result = $recce->lexeme_read(
-                'CRAM',
-                $stringPos,
-                ( length ${$value_ref} ),
-                [ ${$value_ref} ]
-            );
-            say STDERR "lexeme_read('CRAM',...) returned ",
-              Data::Dumper::Dumper( \$result )
-              if $MarpaX::YAHC::DEBUG;
-	}
-
-        if ( $eventName eq 'CRAM' ) {
+        if ( $eventName eq '^CRAM' ) {
             my $value_ref;
             ( $value_ref, $resume_pos )
 	      = getCram( $input, $this_pos );
+	    return if not $value_ref;
             my $result = $recce->lexeme_read(
                 'CRAM',
                 $this_pos,
@@ -1548,16 +1524,19 @@ tallTail ::= # empty
 tallTail ::= SEM
 tallTail ::= COL wrappedElems
 tallTail ::= COL ACE optWideQuoteInnards
-tallTail ::= (GAP) tallKids (GAP TIS TIS)
+tallTail ::= tallKids (GAP TIS TIS)
 
-tallKids ::= tallKid+ separator=>GAP proper=>1
-tallKid  ::= sailApex5d rank=>20
-tallKid  ::= TALL_KID_CRAM_LOOKAHEAD # event, so rank does not matter
-tallKid  ::= TALL_KID_PRECRAM_GAP CRAM rank=>0
+# <tallKid> includes its preceding gap -kids to allow lookahead
+# to differentiate among the <tallKid> choices.
+#
+# <GAP_SEM>, if a semi-colon is the next non-whitespace character,
+# will beat <GAP> in LATM.
+#
+tallKids ::= tallKid+
+tallKid  ::= (GAP_SEM) tallTopSail rank=>20
+tallKid  ::= (GAP) CRAM rank=>0
 
-:lexeme ~ TALL_KID_CRAM_LOOKAHEAD event=>TALL_KID_CRAM pause=>before
-TALL_KID_CRAM_LOOKAHEAD ~ optional_classic_whitespace [^;]
-TALL_KID_PRECRAM_GAP ~ unicorn # supplied by combinator
+GAP_SEM ~ gap4k sem4h
 
 wideTail ::= # empty
 wideTail ::= SEM
@@ -2089,11 +2068,6 @@ optClassicWhitespace ::= # empty
 optClassicWhitespace ::= classicWhitespace
 classicWhitespace ::= GAP
 classicWhitespace ::= ACE
-
-optional_classic_whitespace ~
-optional_classic_whitespace ~ classic_whitespace
-classic_whitespace ~ gap4k
-classic_whitespace ~ ace
 
 optHorizontalWhitespace ~ horizontalWhitespaceElement*
 horizontalWhitespaceElements ~ horizontalWhitespaceElement+
