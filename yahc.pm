@@ -1747,7 +1747,6 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 # '='
 # Differs from scat(5d)
 scad5d ::= moldPrefixTis
-# TODO: Is this right?
 moldPrefixTis ::= ('=') wyde5d (PER)
 
 # ['a' 'z']
@@ -1770,12 +1769,11 @@ moldInfixTis ::= SYM4K TIS wyde5d
 
 # ','
 # Differs from scad(5)
-# TODO: Finish
+# For rope(5d), see subcase ['a' 'z'] and rump(5d)
 wideBuccol ::= (COM '[') wyde5dSeq (']')
 
 # '!'
 # Not in scad(5)
-# TODO: Finish
 scat5d ::= prefixZap
 prefixZap ::= (ZAP) wide5d
 scat5d ::= wideZapzap
@@ -1817,7 +1815,6 @@ cenDirectories ::= CEN4H+
 
 # '&'
 # Not in scad(5)
-# TODO: Finish
 # For rope(5d), see subcase ['a' 'z'] and rump(5d)
 scat5d ::= prefixPam
 scat5d ::= pamPlusPrefix
@@ -1853,16 +1850,18 @@ prefixTar ::= TAR wyde5d
 soloTar ::= TAR
 
 # '@'
-# TODO: Finished?
 # Same as scad(5)
 scat5d ::= aura
 aura ::= '@' mota5d
 
 # '+'
 # Not in scad(5)
-# TODO: Finish
-scat5d ::= irrDotlus
-irrDotlus ::= (LUS PEL) wide5d (PER)
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
+scat5d ::= wideDotlus
+scat5d ::= lusSoilSeq
+wideDotlus ::= (LUS PEL) wide5d (PER)
+lusSoilSeq ::= lusSolSeqItem+ separator=>DOG4I proper=>1
+lusSolSeqItem ::= LUS soil5d
 
 # '-'
 # For rope(5d) see ['a' 'z'] subcase and rump(5d)
@@ -1900,7 +1899,6 @@ irrDottis ::= (TIS PEL) wide5d (PER)
 
 # '?'
 # Same as scad(5)
-# TODO: Finish
 scat5d ::= circumWutParen
 scat5d ::= soloWut
 circumWutParen ::= (WUT PEL) wyde5dSeq (PER)
@@ -1941,7 +1939,7 @@ scat5d ::= rump5d
 
 # '|'
 # Not in scad(5)
-# TODO: Finish
+# For rope(5d) see ['a' 'z'] subcase and rump(5d)
 scat5d ::= prefixBar rank=>1
 scat5d ::= circumBarParen rank=>1
 scat5d ::= soloBar
