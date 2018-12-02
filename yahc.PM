@@ -1575,6 +1575,16 @@ tallTailOfTop ::= tallKidsOfTop (GAP TIS TIS)
 tallTailOfElem ::= tallTailCommon
 tallTailOfElem ::= tallKidsOfElem (GAP TIS TIS)
 
+# hoon.hoon seems to allow "cram" items anywhere "tall-kids"
+# occurs -- not just after SEMTIS (;=).  And it defines them
+# as kids, so multiple "cram" items may occur after a SEMTIS.
+# This would be hard to implement here, and I wonder if it does
+# not cause problems in hoon.hoon.
+#
+# This implements what (I think) was the intent: "cram" items
+# only after SEMTIS or SEMGAR (;>), and only one -- not a
+# sequence of them.  This does pass the test.
+
 # <tallKid> includes its preceding gap -kids to allow lookahead
 # to differentiate among the <tallKid> choices.
 #
