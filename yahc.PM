@@ -646,8 +646,6 @@ gon4k ~ bas4h gay4i fas4h
 
 # === Hoon 4l library ===
 
-# TODO: crub(4l) is incomplete
-
 crub4l ::= date
 crub4l ::= timePeriod
 crub4l ::= fed4j
