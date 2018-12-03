@@ -1,5 +1,5 @@
 # !!! DO NOT EDIT !!!
-# This code automatically written by yahc.PM
+# This code automatically written by yahc.pm1
 
 
 use 5.010;
@@ -10,6 +10,10 @@ use Data::Dumper;
 use Marpa::R2 4.000;
 
 package MarpaX::YAHC;
+
+sub dwim {
+   die join q{-}, Marpa::R2::Context::location() ;
+}
 
 use English qw( -no_match_vars );
 
@@ -1755,7 +1759,7 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 # '='
 # Differs from scat(5d)
 scad5d ::= moldPrefixTis
-moldPrefixTis ::= ('=') wyde5d (PER)
+moldPrefixTis ::= ('=') wyde5d (PER) action=>MarpaX::YAHC::dwim
 
 # ['a' 'z']
 # Differs from scat(5d)
