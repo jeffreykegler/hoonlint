@@ -9,7 +9,7 @@ test: test_suite undoc_tests count_todo
 
 msg: count_todo
 
-test_suite:
+test_suite: yahc.pm
 	prove --verbose -I. t
 
 yahc.pm: yahc.pm1

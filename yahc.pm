@@ -11,8 +11,11 @@ use Marpa::R2 6.000;
 
 package MarpaX::YAHC;
 
-sub dwim {
-   die join q{-}, Marpa::R2::Context::location() ;
+sub deprecated {
+    my $slg      = $Marpa::R2::Context::slg;
+    my $rule_id  = $Marpa::R2::Context::rule;
+    my ($lhs_id) = $slg->rule_expand($rule_id);
+    return [ 'deprecated', $slg->symbol_display_form($lhs_id) ];
 }
 
 use English qw( -no_match_vars );
@@ -1759,7 +1762,7 @@ moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
 # '='
 # Differs from scat(5d)
 scad5d ::= moldPrefixTis
-moldPrefixTis ::= ('=') wyde5d (PER) action=>MarpaX::YAHC::dwim
+moldPrefixTis ::= ('=') wyde5d (PER) action=>MarpaX::YAHC::deprecated
 
 # ['a' 'z']
 # Differs from scat(5d)

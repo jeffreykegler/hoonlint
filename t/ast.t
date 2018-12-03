@@ -8,6 +8,7 @@ use Data::Dumper;
 use English qw( -no_match_vars );
 
 use Test::More tests => 4;
+use Test::Differences;
 
 require "yahc.pm";
 
@@ -39,13 +40,13 @@ for my $testData (@tests) {
     my $pruned = MarpaX::YAHC::prune($astRef);
     local $Data::Dumper::Deepcopy = 1;
     local $Data::Dumper::Terse    = 1;
-    my $dumped = Data::Dumper::Dumper($pruned);
+    my $dumped = Data::Dumper::Dumper($pruned) . "\n";
 
     if ( $dumped eq ${$pAstFile} ) {
         pass($hoonFileName);
     }
     else {
-        fail($hoonFileName);
+	eq_or_diff $dumped, ${$pAstFile}, $hoonFileName;
     }
 
 
