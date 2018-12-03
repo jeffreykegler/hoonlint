@@ -7,7 +7,7 @@ use strict;
 use warnings;
 
 use Data::Dumper;
-use Marpa::R2 4.000;
+use Marpa::R2 6.000;
 
 package MarpaX::YAHC;
 

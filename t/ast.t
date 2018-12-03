@@ -45,7 +45,7 @@ for my $testData (@tests) {
         pass($hoonFileName);
     }
     else {
-        pass($astFileName);
+        fail($hoonFileName);
     }
 
 
