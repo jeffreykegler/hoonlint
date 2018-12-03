@@ -12,35 +12,36 @@ use Test::More tests => 4;
 require "yahc.pm";
 
 sub slurp {
-   my $fileName;
-  local $RS = undef;
-  open my $fh, $filename, q{<},
-  my $file = <$fh>;
-  close $fh;
-  return \$file;
+    my ($fileName) = @_;
+    local $RS = undef;
+    my $fh;
+    open $fh, q{<}, $fileName or die "Cannot open $fileName";
+    my $file = <$fh>;
+    close $fh;
+    return \$file;
 }
 
 my @tests = (
-    ['ast.d/fizzbuzz.hoon', 'ast.d/fizzbuzz.ast'],
-    ['ast.d/sieve_b.hoon', 'ast.d/sieve_b.ast'],
-    ['ast.d/sieve_k.hoon', 'ast.d/sieve_k.ast'],
-    ['ast.d/toe.hoon', 'ast.d/toe.ast'],
+    ['t/ast.d/fizzbuzz.hoon', 't/ast.d/fizzbuzz.ast'],
+    ['t/ast.d/sieve_b.hoon', 't/ast.d/sieve_b.ast'],
+    ['t/ast.d/sieve_k.hoon', 't/ast.d/sieve_k.ast'],
+    ['t/ast.d/toe.hoon', 't/ast.d/toe.ast'],
 );
 
 for my $testData (@tests) {
 
-    my ( $hoonFileName, $astFileName ) = @_;
-    my $hoonFile = slurp($hoonFileName);
-    my $astFile  = slurp($astFileName);
+    my ( $hoonFileName, $astFileName ) = @{$testData};
+    my $pHoonFile = slurp($hoonFileName);
+    my $pAstFile  = slurp($astFileName);
 
-    my $astRef = MarpaX::YAHC::parse( \$hoonSource );
+    my $astRef = MarpaX::YAHC::parse( $pHoonFile );
     die "Parse failed" if not $astRef;
     my $pruned = MarpaX::YAHC::prune($astRef);
     local $Data::Dumper::Deepcopy = 1;
     local $Data::Dumper::Terse    = 1;
     my $dumped = Data::Dumper::Dumper($pruned);
 
-    if ( $dumped eq $astFile ) {
+    if ( $dumped eq ${$pAstFile} ) {
         pass($hoonFileName);
     }
     else {
