@@ -2,7 +2,7 @@
 
 .PHONY: all test test_suite undoc_tests \
   fizzbuzz sieve_b sieve_k toe \
-  recognize msg count_todo
+  msg count_todo
 
 all: test
 
@@ -10,7 +10,8 @@ test: test_suite undoc_tests count_todo
 
 msg: count_todo
 
-test_suite: fizzbuzz sieve_b sieve_k toe recognize
+test_suite: fizzbuzz sieve_b sieve_k toe
+	prove --verbose -I. t
 
 yahc.pm: yahc.pm1
 	perl yahc.pm1 > yahc.pm
@@ -30,9 +31,6 @@ sieve_k: yahc.pm sieve_k.hoon
 toe: yahc.pm toe.hoon
 	perl -I. yahcfilt.pl <toe.hoon >toe.ast.try 2>&1
 	diff toe.ast.try toe.ast || echo 'toe example !FAILED!'
-
-recognize:
-	prove --verbose -I. recognize.t 2>&1 | tee recognize.try
 
 undoc_tests:
 
