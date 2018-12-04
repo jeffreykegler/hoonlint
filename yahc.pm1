@@ -147,18 +147,20 @@ sub getCram {
     my $firstNlPos = index ${$input}, "\n", $semiPos;
     my $valueStartPos      = $semiPos + 2;
     my $nextNlPos = $firstNlPos;
-    # say STDERR qq{origOffset: }, substr(${$input}, $origOffset, 20);
-    # say STDERR qq{First NL pos: }, substr(${$input}, $firstNlPos, 20);
+    say STDERR qq{origOffset: }, substr(${$input}, $origOffset, 20);
+    say STDERR qq{First NL pos: }, substr(${$input}, $firstNlPos, 20);
 
+	say STDERR "Before indent <= 0 loop: indent=$indent; nextNlPos=$nextNlPos";
     if ($indent <= 0) {
-	# say STDERR "indent=$indent; nextNlPos=$nextNlPos";
+	say STDERR "Top of indent <= 0 loop: indent=$indent; nextNlPos=$nextNlPos";
         LINE: while ($nextNlPos >= 0) {
             pos ${$input} = $nextNlPos + 1;
-            if ( ${$input} =~ m/\G [ ]* == [\n]/xms ) {
+            if ( ${$input} =~ m/\G\x20*==[\n]/ ) {
                 my $terminatorStartPos = $LAST_MATCH_START[0];
                 my $terminatorEndPos   = $LAST_MATCH_END[0];
                 my $value              = substr( ${$input}, $valueStartPos,
                     $terminatorStartPos - $valueStartPos );
+	say STDERR join ' ', __FILE__, __LINE__, "Returning from getCram at $nextNlPos";
                 return \$value, $nextNlPos;
             }
 	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
@@ -166,32 +168,37 @@ sub getCram {
 	# If here, end of string is EOF
 	my $inputLength = length ${$input};
 	my $value = substr ${$input}, $valueStartPos, $inputLength - $valueStartPos;
+	say STDERR join ' ', __FILE__, __LINE__, "Returning from getCram at $inputLength";
 	return \$value, $inputLength;
     }
 
     # If here, indent > 0
     my $indentString = (' ' x $indent);
 
+	say STDERR "Before LINE loop: indent=$indent; nextNlPos=$nextNlPos";
     LINE: while ($nextNlPos >= 0) {
-	# say STDERR "LINE: indent=$indent; nextNlPos=$nextNlPos";
+	say STDERR "LINE: indent=$indent; nextNlPos=$nextNlPos";
 	pos ${$input} = $nextNlPos + 1;
-	# say STDERR qq{Pos set to: }, substr(${$input}, $nextNlPos+1, 20);
+	say STDERR join ' ', __FILE__, __LINE__, qq{Pos set to: }, substr(${$input}, $nextNlPos+1, 20);
 	if ( ${$input} =~ m/\G $indentString [ ]* == [\n]/xms ) {
 	    my $terminatorStartPos = $LAST_MATCH_START[0];
 	    my $terminatorEndPos   = $LAST_MATCH_END[0];
-	    # say STDERR qq{TISTIS found: }, substr(${$input}, $terminatorStartPos, 20);
+	    say STDERR qq{TISTIS found: }, substr(${$input}, $terminatorStartPos, $terminatorEndPos-$terminatorStartPos);
 	    my $value              = substr( ${$input}, $valueStartPos,
 		$terminatorStartPos - $valueStartPos );
 	    # Continue parsing after TISTIS?  Or before?
+	    say STDERR join ' ', __FILE__, __LINE__, "Returning from getCram at $terminatorEndPos";
 	    return \$value, $terminatorEndPos;
 	}
 	
-	# say STDERR qq{Pos before match set to: }, substr(${$input},
-	  # (pos ${$input}), 20) if $debug;
+	say STDERR qq{Pos before match set to: }, substr(${$input},
+	  (pos ${$input}), 20);
 
+	say STDERR qq{indentString="$indentString"};
+	say STDERR qq{this indent: "}, (substr ${$input}, $nextNlPos+1, $indent), qq{"};
 	if ( (substr ${$input}, $nextNlPos+1, $indent) eq $indentString ) {
 	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
-	    # say STDERR qq{Continuing cram, nextNlPos=$nextNlPos};
+	    say STDERR qq{Continuing cram, nextNlPos=$nextNlPos};
 	    # say STDERR qq{Continuing cram: }, substr(${$input}, $nextNlPos, 20);
 	    next LINE;
 	}
@@ -199,10 +206,12 @@ sub getCram {
 	# say STDERR qq{Outdent, returning at: }, substr(${$input}, $nextNlPos+1, 20);
 	my $value              = substr ${$input}, $valueStartPos,
 	  ($nextNlPos + 1) - $valueStartPos;
+	say STDERR join ' ', __FILE__, __LINE__, "Returning from getCram at $nextNlPos";
 	return \$value, $nextNlPos+1;
     }
 
     # Premature EOF if here
+	say STDERR join ' ', __FILE__, __LINE__, "Returning premature EOF from getCram";
     return;
 }
 
@@ -213,7 +222,7 @@ sub parse {
         {
             grammar         => $grammar,
             ranking_method  => 'high_rule_only',
-            trace_lexers    => ( $debug ? 1 : 0 ),
+            trace_lexers    => ( $debug ? 99 : 0 ),
             trace_terminals => ( $debug ? 1 : 0 ),
         }
     );
@@ -290,8 +299,10 @@ sub parse {
 
         if ( $eventName eq '^CRAM' ) {
             my $value_ref;
+	say STDERR join ' ', __FILE__, __LINE__, "About to call getCram(): this_pos=$this_pos ; input_length=$input_length";
             ( $value_ref, $resume_pos )
 	      = getCram( $input, $this_pos );
+	say STDERR join ' ', __FILE__, __LINE__, "About to call getCram(): resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
 	    if (not $value_ref) {
 		# TODO: After development, add "if $debug"
 		say STDERR $recce->show_progress( 0, -1 );
@@ -320,8 +331,18 @@ sub parse {
 
 	# say STDERR qq{Resuming at "}, substr ${$input}, $resume_pos, 50;
 
-        my $ok = eval { $this_pos = $recce->resume($resume_pos); 1; };
+	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
+        my $ok = eval {
+            say STDERR $recce->show_progress( -2, -1 );
+	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
+	$DB::single = 1;
+	$this_pos = $recce->resume($resume_pos);
+	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
+	1; };
+	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
         if ( not $ok ) {
+	    $DB::single = 1;
+	    say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
             say STDERR $recce->show_progress( 0, -1 ) if $debug;
             die $EVAL_ERROR;
         }
