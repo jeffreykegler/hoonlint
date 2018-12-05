@@ -30,16 +30,7 @@ if (not $self) {
 }
 
 my $recce = $self->raw_recce();
-my $metric = $recce->ambiguity_metric();
-my $astRef = $recce->value();
-my $value1 = ($astRef ? 'YES' : 'no');
-$astRef = $recce->value();
-my $value2 = ($astRef ? 'YES' : 'no');
-
-say "metric: $metric; value1: $value1; value2: $value2";
-
-# local $Data::Dumper::Deepcopy    = 1;
-# local $Data::Dumper::Terse    = 1;
-
-# say Data::Dumper::Dumper($astRef);
-
+if ( my $ambiguous_status = $recce->ambiguous() ) {
+    chomp $ambiguous_status;
+    die "Parse is ambiguous\n", $ambiguous_status;
+}
