@@ -2105,7 +2105,7 @@ optGay4i ::= GAY4I
 optHornSeq ::= # empty
 optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
-wideHornSeq ::= horn+ separator=>ACE proper=>1
+wideHornSeq ::= wideHorn+ separator=>ACE proper=>1
 
 fordHoopSeq ::= fordHoop+ separator=>GAP proper=>1
 
@@ -2243,7 +2243,6 @@ wide5dSeq ::= wide5d+ separator=>ACE proper=>1
 # === FORD RUNES ===
 
 horn ::= hornRune
-horn ::= wideHorn
 wideHorn ::= wideHornRune
 
 hornRune ::= wideHornRune
