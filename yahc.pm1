@@ -1,6 +1,7 @@
 use 5.010;
 use strict;
 use warnings;
+use Devel::Peek;
 use English qw( -no_match_vars );
 
 # This code uses as its grammar reference the code in
@@ -34,7 +35,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Data::Dumper;
+# use Data::Dumper;
 use Marpa::R2 6.000;
 
 package MarpaX::YAHC;
@@ -183,12 +184,13 @@ sub getCram {
 	if ( ${$input} =~ m/\G $indentString [ ]* == [\n]/xms ) {
 	    my $terminatorStartPos = $LAST_MATCH_START[0];
 	    my $terminatorEndPos   = $LAST_MATCH_END[0];
+	    my $terminatorLength = $terminatorEndPos - $terminatorStartPos;
 	    say STDERR qq{TISTIS found: }, substr(${$input}, $terminatorStartPos, $terminatorEndPos-$terminatorStartPos);
 	    my $value              = substr( ${$input}, $valueStartPos,
 		$terminatorStartPos - $valueStartPos );
 	    # Continue parsing after TISTIS?  Or before?
 	    say STDERR join ' ', __FILE__, __LINE__, "Returning from getCram at $terminatorEndPos";
-	    return \$value, $terminatorEndPos;
+	    return \$value, $nextNlPos;
 	}
 	
 	say STDERR qq{Pos before match set to: }, substr(${$input},
@@ -255,6 +257,7 @@ sub parse {
             last READ;
         }
         if ( $event_count != 1 ) {
+	    say STDERR $recce->show_progress( 0, -1 );
             divergence("One event expected, instead got $event_count");
         }
 
@@ -320,7 +323,7 @@ sub parse {
               if $MarpaX::YAHC::DEBUG;
 	}
 
-	if (not $resume_pos) {
+	if (not defined $resume_pos) {
 	  die "read() ended prematurely\n",
 	    "  input length = $input_length\n",
 	    "  length read = $this_pos\n",
@@ -333,9 +336,10 @@ sub parse {
 
 	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
         my $ok = eval {
-            say STDERR $recce->show_progress( -2, -1 );
 	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
-	$DB::single = 1;
+	use Devel::Peek;
+	$resume_pos = int($resume_pos) if defined $resume_pos;
+	if (defined $resume_pos) { Dump $resume_pos } else { say STDERR "resume pos not defined"; }
 	$this_pos = $recce->resume($resume_pos);
 	say STDERR join ' ', __FILE__, __LINE__, "resume_pos=$resume_pos; this_pos=$this_pos ; input_length=$input_length";
 	1; };
