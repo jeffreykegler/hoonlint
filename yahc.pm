@@ -1984,13 +1984,15 @@ soloBar ::= BAR4H
 # Differs from scad(5)
 # See also rupl(5d) in the '[' subcase
 scat5d ::= circumSigParen
-scat5d ::= circumSigBracket
 scat5d ::= (SIG) twid4l
 scat5d ::= (SIG) wede5d
 scat5d ::= soloSig
-circumSigBracket ::= (SIG SEL) wide5dSeq (SER)
 circumSigParen ::= (SIG PEL) rope5d (ACE) wide5d (ACE) wide5dSeq (PER)
 soloSig ::= SIG
+
+# This seems to be redundant with rupl(5d)
+# scat5d ::= circumSigBracket
+# circumSigBracket ::= (SIG SEL) wide5dSeq (SER)
 
 # '/'
 # Not in scad(5)
