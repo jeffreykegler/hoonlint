@@ -174,8 +174,8 @@ sub getCram {
     return;
 }
 
-sub parse {
-    my ($input) = @_;
+sub new {
+    my $self = {};
     my $debug = $MarpaX::YAHC::DEBUG;
     my $recce = Marpa::R2::Scanless::R->new(
         {
@@ -185,7 +185,19 @@ sub parse {
             trace_terminals => ( $debug ? 1 : 0 ),
         }
     );
+    $self->{recce} = $recce;
+    return bless $self, 'MarpaX::YAHC';
+}
 
+sub raw_recce {
+    my ($self) = @_;
+    return $self->{recce};
+}
+
+sub read {
+    my ($self, $input) = @_;
+    my $recce = $self->{recce};
+    my $debug = $MarpaX::YAHC::DEBUG;
     my $input_length = length ${$input};
     my $this_pos;
     my $ok = eval { $this_pos = $recce->read( $input ) ; 1; };
@@ -295,6 +307,15 @@ sub parse {
         }
 
     }
+    return;
+}
+
+sub parse {
+    my ($input) = @_;
+    my $debug = $MarpaX::YAHC::DEBUG;
+    my $self = MarpaX::YAHC::new();
+    $self->read($input);
+    my $recce = $self->{recce};
 
     if ( 0 ) {
     # if ( $recce->ambiguity_metric() > 1 ) {
@@ -308,6 +329,7 @@ sub parse {
           "Parse of BNF/Scanless source is ambiguous\n",
           Marpa::R2::Internal::ASF::ambiguities_show( $asf, \@ambiguities );
     } ## end if ( $recce->ambiguity_metric() > 1 )
+    # }
 
     my $valueRef = $recce->value();
     if ( !$valueRef ) {
