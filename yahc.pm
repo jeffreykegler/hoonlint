@@ -150,17 +150,13 @@ sub getCram {
 	# say STDERR qq{Pos set to: }, substr(${$input}, $nextNlPos+1, 20);
 	if ( ${$input} =~ m/\G $indentString [ ]* == [\n]/xms ) {
 	    my $terminatorStartPos = $LAST_MATCH_START[0];
-	    my $terminatorEndPos   = $LAST_MATCH_END[0];
 	    # say STDERR qq{TISTIS found: }, substr(${$input}, $terminatorStartPos, 20);
 	    my $value              = substr( ${$input}, $valueStartPos,
 		$terminatorStartPos - $valueStartPos );
 	    # Continue parsing after TISTIS?  Or before?
-	    return \$value, $terminatorEndPos;
+	    return \$value, $nextNlPos;
 	}
 	
-	# say STDERR qq{Pos before match set to: }, substr(${$input},
-	  # (pos ${$input}), 20) if $debug;
-
 	if ( (substr ${$input}, $nextNlPos+1, $indent) eq $indentString ) {
 	    $nextNlPos = index ${$input}, "\n", $nextNlPos+1;
 	    # say STDERR qq{Continuing cram, nextNlPos=$nextNlPos};

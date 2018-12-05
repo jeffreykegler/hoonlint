@@ -12,7 +12,7 @@ use Test::More tests => 311;
 require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
-todo hoons/arvo/web/unmark/test.hoon
+ok hoons/arvo/web/unmark/test.hoon
 ok hoons/arvo/app/hall.hoon
 ok hoons/arvo/web/unmark/all.hoon
 ok hoons/arvo/ren/tree/index.hoon

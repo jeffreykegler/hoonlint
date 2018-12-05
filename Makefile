@@ -18,7 +18,7 @@ yahc.pm: yahc.pm1
 undoc_tests:
 
 count_todo:
-	echo $$(egrep 'Failed .*TODO' recognize.try | wc -l) TODO
+	@echo $$(egrep 'Failed .*TODO' errs | wc -l) TODO
 
 ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
