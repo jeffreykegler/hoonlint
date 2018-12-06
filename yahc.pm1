@@ -1626,7 +1626,8 @@ wideTail ::= # empty
 wideTail ::= SEM
 wideTail ::= COL wrappedElems
 
-wrappedElems ::= wideParenElems
+# wideParenElems are produced by <wideTopSail>
+# wrappedElems ::= wideParenElems
 wrappedElems ::= qut4k
 wrappedElems ::= wideTopSail
 
@@ -2135,10 +2136,12 @@ optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
 wideHornSeq ::= wideHorn+ separator=>ACE proper=>1
 
-fordHoopSeq ::= fordHoop+ separator=>GAP proper=>1
+fordHoopSeq ::= fordHoop rank=>20
+fordHoopSeq ::= fordHoopSeq (GAP) fordHoop rank=>0
 
-fordHoop ::= FAS FAS GAP fordHave
-fordHoop ::= tall5d
+fordHoop ::= FAS FAS GAP fordHave rank=>60
+fordHoop ::= hornRune rank=>40
+fordHoop ::= tall5dSeq rank=>0
 
 fordHave ::= FAS fordHath
 fordHath ::= poor5d
@@ -2254,7 +2257,6 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 # === CELLS BY TYPE ==
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
-tall5d ::= hornRune rank=>40
 tall5d ::= norm5d rank=>30
 tall5d ::= wide5d rank=>20
 tall5d ::= lute5d rank=>20
