@@ -530,9 +530,10 @@ DIP4J ~ dip4j
 dip4j ~ [1-9] dip4jRest
 dip4jRest ~ [0-9]*
 
+# huf(4j) duplicates hof(4j)
 fed4j ::= huf4j
 fed4j ::= huf4j doh4i hyf4jSeq
-fed4j ::= hof4j
+# fed4j ::= hof4j
 fed4j ::= haf4j
 fed4j ::= TIQ4J
 
@@ -548,9 +549,10 @@ hex4j ~ qex4j dog4i qix4jSeq
 # In hoon.hoon, hef and hif differ in semantics.
 hif4j ::= TIP4J TIQ4J
 
-hof4j ::= hef4j HEP hif4j
-hof4j ::= hef4j HEP hif4j HEP hif4j
-hof4j ::= hef4j HEP hif4j HEP hif4j HEP hif4j
+# Was hof(4j) not actually needed?
+# hof4j ::= hef4j HEP hif4j
+# hof4j ::= hef4j HEP hif4j HEP hif4j
+# hof4j ::= hef4j HEP hif4j HEP hif4j HEP hif4j
 
 huf4j ::= hef4j
 huf4j ::= hef4j HEP hif4j

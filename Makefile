@@ -19,6 +19,7 @@ undoc_tests:
 
 count_todo:
 	@echo $$(egrep 'Failed .*TODO' errs | wc -l) TODO
+	@echo $$(egrep '^Parse is ' list2.errs | wc -l) Ambiguities
 
 ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
