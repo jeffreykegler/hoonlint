@@ -1668,35 +1668,30 @@ wideQuote ::= (DOQ) optWideQuoteInnards (DOQ)
 # TODO: Triple double quote form of wide-quote NYI
 
 optWideQuoteInnards ::=
-optWideQuoteInnards ::= wideQuoteInnardsChoices
-wideQuoteInnardsChoices ::= wideQuoteInnardsChoice+
-# Relies on ranking to work
-wideQuoteInnardsChoice ::= <TRICKY WIDE INNARD CHAR> rank=>50
-wideQuoteInnardsChoice ::= <ESCAPED WIDE INNARD CHAR> rank=>50
-wideQuoteInnardsChoice ::= <NORMAL WIDE INNARD CHARS> rank=>40
-wideQuoteInnardsChoice ::= inlineEmbed
+optWideQuoteInnards ::= optWideQuoteEmbedFreeStretch
+optWideQuoteInnards ::= wideQuoteEmbedTerminatedStretches optWideQuoteEmbedFreeStretch
+optWideQuoteEmbedFreeStretch ::=
+optWideQuoteEmbedFreeStretch ::= wideQuoteEmbedFreeStretch
+wideQuoteEmbedFreeStretch ::= wideQuoteEmbedFreeElement+
+wideQuoteEmbedFreeElement ::= <ESCAPED WIDE INNARD CHAR>
+wideQuoteEmbedFreeElement ::= <NORMAL WIDE INNARD CHARS>
 
 <ESCAPED WIDE INNARD CHAR> ~
   bas4h hep4h | bas4h lus4h | bas4h tar4h | bas4h cen4h |
   bas4h sem4h | bas4h kel4h |
   bas4h bas4h | bas4h doq4h | bas4h bix4j
+
 # All the printable (non-control) characters except
-# doq (x22), cen (x25), tar (x2a), lus (x2b), hep (x2d),
-# sem (x3b), bas (x5c) and kel (x7b)
+# doq (x22), sem (x3b), bas (x5c) and kel (x7b)
 # For efficiency we want to slurp in as many "normal"
 # characters at once as we can.
 <NORMAL WIDE INNARD CHARS> ~ unescapedWideInnardsChar+
-unescapedWideInnardsChar ~ [\x20-\x21\x23-\x24\x26-\x29\x2c\x2e-\x3a]
-unescapedWideInnardsChar ~ [\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
-# The "tricky characters are those which may lead off an
-# <inlineEmbed>.  These are characters with special meanings
-# which may also represent themselves, even when not escaped
-# This makes a *big* difference in efficiency.
-<TRICKY WIDE INNARD CHAR> ~ cen4h | tar4h | lus4h | hep4h | sem4h
+unescapedWideInnardsChar ~ [\x20-\x21\x23-\x3a\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 
-inlineEmbed ::= (SEM) wideBracketedElem
-inlineEmbed ::= tunaMode sump5d
-inlineEmbed ::= sump5d
+wideQuoteEmbedTerminatedStretches ::= wideQuoteEmbedTerminatedStretch+
+wideQuoteEmbedTerminatedStretch ::= optWideQuoteEmbedFreeStretch (SEM) wideBracketedElem rank=>30
+wideQuoteEmbedTerminatedStretch ::= optWideQuoteEmbedFreeStretch tunaMode sump5d rank=>20
+wideQuoteEmbedTerminatedStretch ::= optWideQuoteEmbedFreeStretch sump5d rank=>10
 
 wideBracketedElem ::= (KEL) tagHead wideElems (KER)
 
