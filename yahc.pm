@@ -355,6 +355,8 @@ sub prune {
 
     state $nonSemantic = {
         doubleStringElements => 1,
+	optEagerHoops => 1,
+	eagerHoops => 1,
         fordFile             => 1,
         fordHoop             => 1,
         fordHoopSeq          => 1,
@@ -2102,8 +2104,15 @@ optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
 wideHornSeq ::= wideHorn+ separator=>ACE proper=>1
 
-fordHoopSeq ::= fordHoop rank=>20
-fordHoopSeq ::= fordHoopSeq (GAP) fordHoop rank=>0
+fordHoopSeq ::= optEagerHoops
+fordHoopSeq ::= optEagerHoops greedyHoops
+
+greedyHoops ::= UNICORN
+
+optEagerHoops ::= # empty
+optEagerHoops ::= eagerHoops
+
+eagerHoops ::= fordHoop+ separator=>GAP proper=>1
 
 fordHoop ::= FAS FAS GAP fordHave rank=>60
 fordHoop ::= hornRune rank=>40
