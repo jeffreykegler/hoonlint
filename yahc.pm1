@@ -2137,8 +2137,7 @@ optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
 wideHornSeq ::= wideHorn+ separator=>ACE proper=>1
 
-fordHoopSeq ::= fordHoop rank=>20
-fordHoopSeq ::= fordHoopSeq (GAP) fordHoop rank=>0
+fordHoopSeq ::= fordHoop+ separator=>GAP
 
 fordHoop ::= FAS FAS GAP fordHave rank=>60
 fordHoop ::= hornRune rank=>40
@@ -2347,9 +2346,12 @@ wideHornRune ::= wideFordFassig
 wideFordFassig ::= (FAS SIG SEL) wide5dSeq (SER)
 
 hornRune ::= fordFastis
-fordFastis ::= (FAS TIS GAP) SYM4K (GAP) horn
+fordFastis ::= (FASTISGAP) SYM4K (GAP) horn
 wideHornRune ::= wideFordFastis
 wideFordFastis ::= (FAS TIS) SYM4K '=' wideHorn
+# Long lexeme to allow ford rune to take priority
+# over /= path
+FASTISGAP ~ fas4h tis4h gap4k
 
 optFordFaswut ::= # empty
 optFordFaswut ::= fordFaswut
