@@ -1463,10 +1463,17 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 #         ==
 norm5d ::= tallZapWut
 wideNorm5d ::= wideZapWut
-tallZapWut ::= (ZAP WUT GAP) dem4k (GAP) tall5d
-tallZapWut ::= (ZAP WUT GAP SEL) dem4k (ACE) dem4k (SER GAP) tall5d
-wideZapWut ::= (ZAP WUT ACE) dem4k (ACE) tall5d
-wideZapWut ::= (ZAP WUT ACE SEL) dem4k (ACE) dem4k (SER ACE) tall5d
+tallZapWut ::= (ZAPWUTGAP) dem4k (GAP) tall5d
+tallZapWut ::= (ZAPWUTGAP SEL) dem4k (ACE) dem4k (SER GAP) tall5d
+wideZapWut ::= (ZAPWUTPEL) dem4k (ACE) tall5d
+wideZapWut ::= (ZAPWUTPEL SEL) dem4k (ACE) dem4k (SER ACE) tall5d
+
+
+# Multi-character lexemes to allow zapwut rune to take
+# priority over irregular unary zap, especially
+# "!?", which is unary zap followed by wut
+ZAPWUTGAP ~ zap4h wut4h gap4k
+ZAPWUTPEL ~ zap4h wut4h gap4k
 
 # zapzap (= crash) is implemented in scat5d
 
