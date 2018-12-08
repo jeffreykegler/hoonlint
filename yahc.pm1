@@ -1036,7 +1036,12 @@ wideBuccen ::= (BUC CEN PEL) wyde5dSeq (PER)
 
 # ['-' (rune hep %bchp exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
-# FIXED: buchep till5d till5d
+# NOT FIXED: buchep till5d till5d
+# No multi-character lexemes, to allow unary $-(...)
+norm5d ::= tallBuchep
+wideNorm5d ::= wideBuchep
+tallBuchep ::= (BUC HEP GAP) tall5d (GAP) till5d
+wideBuchep ::= (BUC HEP PEL) till5d (ACE) till5d (PER)
 
 # ['^' (rune ket %bckt exqb)]
 # ++  exqb  |.(;~(gunk loan loan))                    ::  two roots
@@ -1450,7 +1455,12 @@ wideWutpam ::= (WUT PAM PEL) wide5dSeq (PER)
 
 # ['=' (rune tis %zpts expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
-# FIXED: zaptis tall5d
+# NOT FIXED: zaptis tall5d
+# Write this out to allow for parsing binary !=(a b), which is different
+norm5d ::= tallZaptis
+wideNorm5d ::= wideZaptis
+tallZaptis ::= (ZAP TIS GAP) tall5d
+wideZaptis ::= (ZAP TIS PEL) wide5d (PER)
 
 # ['?' (rune wut %zpwt hinh)]
 # ++  hinh  |.                                        ::  1/2 numbers, hoon
@@ -2433,10 +2443,12 @@ sub doFixedRune {
     my $glyphName2 = substr($runeName, 3, 3);
     my $glyph1 = $glyphs{$glyphName1} or die "no glyph for $glyphName1";
     my $glyph2 = $glyphs{$glyphName2};
-    my $glyphLexeme1 = (uc $glyphName1) . '4H';
-    my $glyphLexeme2 = (uc $glyphName2) . '4H';
+    my $glyphLexeme1 = ($glyphName1) . '4h';
+    my $glyphLexeme2 = ($glyphName2) . '4h';
     my $tallLHS = 'tall' . ucfirst $runeName;
     my $wideLHS = 'wide' . ucfirst $runeName;
+    my $tallRuneLexeme = (uc $runeName) . 'GAP';
+    my $wideRuneLexeme = (uc $runeName) . 'PEL';
 
     # norm5d ::= tallBarhep
     push @result, 'norm5d ::= ' . $tallLHS;
@@ -2446,9 +2458,8 @@ sub doFixedRune {
 
     # tallBarhep ::= (BAR4H HEP4H GAP) tall5d (GAP) tall5d
     push @result, $tallLHS . ' ::= ('
-      . $glyphLexeme1
-      . ' ' . $glyphLexeme2
-      . ' GAP)' . (join ' (GAP) ', @samples);
+      . $tallRuneLexeme
+      . ') ' . (join ' (GAP) ', @samples);
     state $wideEquiv = {
         bont5d => 'wideBont5d',
         bonz5d => 'wideBonz5d',
@@ -2461,11 +2472,16 @@ sub doFixedRune {
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
 
-    # wideBarhep ::= ([|] [-]) (ACE) wide5d (ACE) wide5d
+    # wideBarhep ::= (BARHEPPEL) wide5d (ACE) wide5d (PER)
     push @result, $wideLHS . ' ::= ('
-    . $glyphLexeme1
-    . ' ' . $glyphLexeme2
-    . ') [(] ' . (join ' (ACE) ', @wideSamples) . q{ [)]};
+    . $wideRuneLexeme
+    . ') ' . (join ' (ACE) ', @wideSamples) . q{ (PER)};
+
+    # BARHEPGAP ~ bar4h hep4h gap4k
+    # BARHEPPEL ~ bar4h hep4h pel4h
+    push @result, "$tallRuneLexeme ~ $glyphLexeme1 $glyphLexeme2 gap4k";
+    push @result, "$wideRuneLexeme ~ $glyphLexeme1 $glyphLexeme2 pel4h";
+
     return join "\n", @result, '';
 }
 
