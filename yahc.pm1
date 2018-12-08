@@ -1037,7 +1037,7 @@ wideBuccen ::= (BUC CEN PEL) wyde5dSeq (PER)
 # No multi-character lexemes, to allow unary $-(...)
 norm5d ::= tallBuchep
 wideNorm5d ::= wideBuchep
-tallBuchep ::= (BUC HEP GAP) tall5d (GAP) till5d
+tallBuchep ::= (BUC HEP GAP) till5d (GAP) till5d
 wideBuchep ::= (BUC HEP PEL) till5d (ACE) till5d (PER)
 
 # ['^' (rune ket %bckt exqb)]
