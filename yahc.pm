@@ -2123,7 +2123,7 @@ fordHoopSeq ::= fordHoop+ separator=>GAP
 
 fordHoop ::= FAS FAS GAP fordHave rank=>60
 fordHoop ::= hornRune rank=>40
-fordHoop ::= tall5dSeq rank=>0
+fordHoop ::= tall5d rank=>0
 
 fordHave ::= FAS fordHath
 fordHath ::= poor5d
