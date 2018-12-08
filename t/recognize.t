@@ -7,11 +7,12 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 311;
+use Test::More tests => 622;
 
 require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
+ok hoons/arvo/ren/tree/head.hoon
 ok hoons/arvo/web/unmark/test.hoon
 ok hoons/arvo/app/hall.hoon
 ok hoons/arvo/web/unmark/all.hoon
@@ -27,7 +28,6 @@ ok hoons/arvo/ren/tree/include.hoon
 ok hoons/arvo/ren/css.hoon
 ok hoons/arvo/ren/js.hoon
 ok hoons/arvo/ren/run.hoon
-ok hoons/arvo/ren/tree/head.hoon
 ok hoons/arvo/ren/urb.hoon
 ok hoons/arvo/ren/urb/tree.hoon
 ok hoons/arvo/ren/tree/comments.hoon
@@ -72,7 +72,7 @@ ok hoons/arvo/sys/vane/gall.hoon
 ok hoons/arvo/sys/vane/ford.hoon
 ok hoons/arvo/sys/vane/dill.hoon
 ok hoons/arvo/sys/vane/behn.hoon
-ok hoons/arvo/sys/vane/ames.hoon
+ambig hoons/arvo/sys/vane/ames.hoon
 ok hoons/arvo/sur/unicode-data.hoon
 ok hoons/arvo/sur/tree-include.hoon
 ok hoons/arvo/sur/static.hoon
@@ -328,20 +328,43 @@ END_OF_LIST
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
-my $errorCount = 0;
-
 sub doTest {
-   my ($testName, $hoonSource) = @_;
-    my $ok = eval { MarpaX::YAHC::parse( \$hoonSource ); 1; };
-    if ($ok) {
-        Test::More::pass($testName);
-	return;
+    my ($parser, $hoonSource) = @_;
+    my $ok = eval { $parser->read( \$hoonSource ); 1; };
+    if (not $ok) {
+	return 0;
     }
-    Test::More::fail($testName);
-    $errorCount++;
+    my $recce = $parser->raw_recce();
+    if ( $recce->value() ) {
+	return 1;
+    }
     my $evalErr = $EVAL_ERROR;
     Test::More::diag($evalErr);
-    return;
+    return 0;
+}
+
+# test for a 2nd value.  Note the inverted logic --
+# if there is a valid 2nd parse, then
+# the parse is ambiguous and the test *fails*
+sub doAmbigTest {
+    my ($parser) = @_;
+    my $recce = $parser->raw_recce();
+    # Initialize to Perl true, so that test fails by default
+    my $astRef = 'PERL TRUE';
+    my $ok = eval { $astRef = $recce->value(); 1; };
+    if (not $ok) {
+	my $evalErr = $EVAL_ERROR;
+	Test::More::diag("Second value call failed");
+	Test::More::diag($evalErr);
+	return 0;
+    }
+    if ($astRef) {
+	$recce->series_restart();
+	my $diagnostic = $recce->ambiguous();
+	Test::More::diag($diagnostic);
+        return 0;
+    }
+    return 1;
 }
 
 FILE: for my $fileLine (split "\n", $fileList) {
@@ -360,15 +383,42 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    if ($testStatus eq 'ok') {
-      doTest($testName, $hoonSource);
-      next FILE;
+    my $parser = MarpaX::YAHC::new();
+    my $testResult1;
+    FIRST_TEST: {
+      if ($testStatus ne 'todo') {
+	$testResult1 = doTest($parser, $hoonSource);
+	Test::More::ok($testResult1, $testName);
+	last FIRST_TEST;
+      }
+      TODO: {
+	  local $TODO = 'NYI';
+	  $testResult1 = doTest($parser, $hoonSource);
+	  Test::More::ok($testResult1, $testName);
+      }
     }
-    TODO: {
-        local $TODO = 'NYI';
-        doTest($testName, $hoonSource);
+  SECOND_TEST: {
+        my $ambiguityTestName = $testName . " ambiguity";
+        if ( $testStatus eq 'ok' ) {
+            if ( not $testResult1 ) {
+                Test::More::fail($ambiguityTestName);
+                last SECOND_TEST;
+            }
+            my $testResult2 = doAmbigTest($parser);
+            Test::More::ok( $testResult2, $ambiguityTestName );
+            last SECOND_TEST;
+        }
+      TODO: {
+            local $TODO = 'NYI';
+            if ( not $testResult1 ) {
+                Test::More::fail($ambiguityTestName);
+            }
+            else {
+                my $testResult2 = doAmbigTest($parser);
+                Test::More::ok( $testResult2, $ambiguityTestName );
+            }
+        }
     }
 }
 
 # my $fileCount = scalar @files;
-# say "$errorCount failed parses in $fileCount files";
