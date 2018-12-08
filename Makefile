@@ -22,10 +22,10 @@ count_todo:
 	@echo $$(egrep ' Parse is ambiguous' list3.errs | wc -l) Ambiguities
 
 ast_reset: yahc.pm
-	perl -I. yahcfilt.pl <fizzbuzz.hoon >fizzbuzz.ast
-	perl -I. yahcfilt.pl <sieve_b.hoon >sieve_b.ast
-	perl -I. yahcfilt.pl <sieve_k.hoon >sieve_k.ast
-	perl -I. yahcfilt.pl <toe.hoon >toe.ast
+	perl -I. yahcfilt.pl <t/ast.d/fizzbuzz.hoon >t/ast.d/fizzbuzz.ast
+	perl -I. yahcfilt.pl <t/ast.d/sieve_b.hoon >t/ast.d/sieve_b.ast
+	perl -I. yahcfilt.pl <t/ast.d/sieve_k.hoon >t/ast.d/sieve_k.ast
+	perl -I. yahcfilt.pl <t/ast.d/toe.hoon >t/ast.d/toe.ast
 
 dev:
 	echo empty dev target
