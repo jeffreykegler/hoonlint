@@ -1006,10 +1006,7 @@ tallBarket ::= (BAR KET GAP) tall5d (GAP) wisp5d
 
 # ['=' (runo tis %brts [~ ~] exqc)]
 # ++  exqc  |.(;~(gunk loan loaf))                    ::  root then hoon
-norm5d ::= tallBartis
-wideNorm5d ::= wideBartis
-tallBartis ::= (BAR4H TIS GAP) till5d (GAP) tall5d
-wideBartis ::= (BAR4H TIS) [(] wyde5d (ACE) wide5d [)]
+# FIXED: bartis till5d tall5d
 
 # ['?' (runo wut %brwt [~ ~] expa)]
 # ++  expa  |.(loaf)                                  ::  one hoon
