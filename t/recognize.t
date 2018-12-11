@@ -72,7 +72,7 @@ ok hoons/arvo/sys/vane/gall.hoon
 ok hoons/arvo/sys/vane/ford.hoon
 ok hoons/arvo/sys/vane/dill.hoon
 ok hoons/arvo/sys/vane/behn.hoon
-ambig hoons/arvo/sys/vane/ames.hoon
+ok hoons/arvo/sys/vane/ames.hoon
 ok hoons/arvo/sur/unicode-data.hoon
 ok hoons/arvo/sur/tree-include.hoon
 ok hoons/arvo/sur/static.hoon

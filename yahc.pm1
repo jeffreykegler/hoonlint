@@ -832,12 +832,12 @@ lute5d ::= (SEL GAP) tall5dSeq (GAP SER)
 
 # 5d library: long
 
+long5dWide ::= scat5d rank=>80
 long5dWide ::= infixTis rank=>60
 long5dWide ::= infixCol rank=>50
 long5dWide ::= infixKet rank=>40
 long5dWide ::= infixFas rank=>30
 long5dWide ::= circumScatParen rank=>20
-long5dWide ::= scat5d rank=>10
 
 toga ::= rope5d
 toga ::= togaSeq
