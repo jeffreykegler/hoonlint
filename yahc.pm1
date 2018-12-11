@@ -48,9 +48,13 @@ sub deprecated {
 
 use English qw( -no_match_vars );
 
-my $dsl = do { $RS = undef; <DATA> };
+my $baseDSL = do { $RS = undef; <DATA> };
 
-my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
+my $defaultSemantics = <<'EOS';
+# start and length will be needed for production
+# :default ::= action => [name,start,length,values]
+:default ::= action => [name,values]
+EOS
 
 sub divergence {
     die join '', 'Unrecoverable internal error: ', @_;
@@ -203,8 +207,23 @@ sub getCram {
 }
 
 sub new {
+    my @argHashes = @_;
     my $self = {};
+    for my $argHash (@argHashes) {
+         for my $argName (keys %{$argHash}) {
+	     ARG_NAME: if ($argName eq 'semantics') {
+	         $self->{semantics} = $argHash->{semantics};
+		 next ARG_NAME;
+	     }
+	     die "MarpaX::YAHC::new() called with unknown arg name: $argName";
+	 }
+    }
     my $debug = $MarpaX::YAHC::DEBUG;
+    my $semantics = $self->{semantics} // $defaultSemantics;
+    my $dsl = $semantics . $baseDSL;
+    my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
+    $self->{grammar} = $grammar;
+
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar         => $grammar,
@@ -465,9 +484,6 @@ sub prune {
 1;
 
 __DATA__
-# start and length will be needed for production
-# :default ::= action => [name,start,length,values]
-:default ::= action => [name,values]
 lexeme default = latm => 1
 
 # === CHARACTER SET ===
