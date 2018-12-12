@@ -14,10 +14,10 @@ ok hoons/arvo/ren/tree/head.hoon
 ok hoons/arvo/web/unmark/test.hoon
 ok hoons/arvo/app/hall.hoon
 ok hoons/arvo/web/unmark/all.hoon
-no hoons/arvo/ren/tree/index.hoon
-no hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
-no hoons/arvo/web/pack/js/tree-urb.hoon
-no hoons/arvo/ren/rss-xml.hoon
+ok hoons/arvo/ren/tree/index.hoon
+ok hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
+ok hoons/arvo/web/pack/js/tree-urb.hoon
+ok hoons/arvo/ren/rss-xml.hoon
 no hoons/arvo/ren/test-tree.hoon
 no hoons/arvo/ren/tree/body.hoon
 no hoons/arvo/ren/tree/combine.hoon

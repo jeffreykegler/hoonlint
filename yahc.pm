@@ -1910,7 +1910,7 @@ soloTar ::= TAR
 # '@'
 # Same as scad(5)
 scat5d ::= aura
-aura ::= '@' mota5d
+aura ::= PAT mota5d
 
 # '+'
 # Not in scad(5)
