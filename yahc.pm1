@@ -210,8 +210,8 @@ sub new {
     my @argHashes = @_;
     my $self = {};
     for my $argHash (@argHashes) {
-         for my $argName (keys %{$argHash}) {
-	     ARG_NAME: if ($argName eq 'semantics') {
+         ARG_NAME: for my $argName (keys %{$argHash}) {
+	     if ($argName eq 'semantics') {
 	         $self->{semantics} = $argHash->{semantics};
 		 next ARG_NAME;
 	     }

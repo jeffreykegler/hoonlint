@@ -7,12 +7,10 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 622;
-
 require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
-no hoons/arvo/ren/tree/head.hoon
+ok hoons/arvo/ren/tree/head.hoon
 no hoons/arvo/web/unmark/test.hoon
 no hoons/arvo/app/hall.hoon
 no hoons/arvo/web/unmark/all.hoon
@@ -334,7 +332,7 @@ sub doNode {
 }
 
 my $semantics = <<'EOS';
-:default ::= action => [name,values]
+:default ::= action => main::doNode
 EOS
 
 FILE: for my $fileLine (split "\n", $fileList) {
@@ -355,9 +353,11 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    my $parser = MarpaX::YAHC::new(semantics => $semantics);
-    my $valueRef = $parser->read(\$hoonSource);
-    say STDERR Data::Dumper::Dumper($valueRef);
+    my $parser = MarpaX::YAHC::new({semantics => $semantics});
+    $parser->read(\$hoonSource);
+    my $recce = $parser->raw_recce();
+    my $astRef = $recce->value();
+    say STDERR Data::Dumper::Dumper($astRef);
 }
 
 # vim: expandtab shiftwidth=4:
