@@ -421,4 +421,4 @@ FILE: for my $fileLine (split "\n", $fileList) {
     }
 }
 
-# my $fileCount = scalar @files;
+# vim: expandtab shiftwidth=4:

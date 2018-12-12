@@ -13,3 +13,5 @@ use English qw( -no_match_vars );
 require "./yahc.pm";
 
 exit 0;
+
+# vim: expandtab shiftwidth=4:

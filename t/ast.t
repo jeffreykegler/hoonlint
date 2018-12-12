@@ -51,3 +51,5 @@ for my $testData (@tests) {
 
 
 }
+
+# vim: expandtab shiftwidth=4:

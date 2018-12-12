@@ -26,6 +26,7 @@ my $defaultSemantics = <<'EOS';
 # start and length will be needed for production
 # :default ::= action => [name,start,length,values]
 :default ::= action => [name,values]
+lexeme default = latm => 1
 EOS
 
 sub divergence {
@@ -182,8 +183,8 @@ sub new {
     my @argHashes = @_;
     my $self = {};
     for my $argHash (@argHashes) {
-         for my $argName (keys %{$argHash}) {
-	     ARG_NAME: if ($argName eq 'semantics') {
+         ARG_NAME: for my $argName (keys %{$argHash}) {
+	     if ($argName eq 'semantics') {
 	         $self->{semantics} = $argHash->{semantics};
 		 next ARG_NAME;
 	     }
@@ -456,7 +457,6 @@ sub prune {
 1;
 
 __DATA__
-lexeme default = latm => 1
 
 # === CHARACTER SET ===
 
@@ -1771,12 +1771,12 @@ moldCircumBracket ::= ('[') wyde5dSeq (']')
 # '*'
 # Subset of scat(5d)
 scad5d ::= moldTar
-moldTar ::= '*'
+moldTar ::= TAR
 
 # '@'
 # Same as scat(5d)
 scad5d ::= moldAura
-moldAura ::= '@' mota5d
+moldAura ::= PAT mota5d
 
 # '?'
 # Same as scat(5d)
@@ -1784,7 +1784,7 @@ scad5d ::= moldPrefixWut
 moldPrefixWut ::= (WUT PEL) wyde5dSeq (PER)
 
 scad5d ::= moldWut
-moldWut ::= '?'
+moldWut ::= WUT
 
 # '~'
 # Differs from scat(5d)
