@@ -1791,11 +1791,10 @@ moldWut ::= WUT
 scad5d ::= moldSig
 moldSig ::= SIG
 
-# TODO: Standardize the semantics
 # '^'
 # Differs from scat(5d)
 scad5d ::= moldKet
-moldKet ~ '^'
+moldKet ::= KET
 
 # <moldInfixCol> can start with either KET (^) or lowercase char
 # This is scab(5d)
