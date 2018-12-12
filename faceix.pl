@@ -18,30 +18,30 @@ ok hoons/arvo/ren/tree/index.hoon
 ok hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
 ok hoons/arvo/web/pack/js/tree-urb.hoon
 ok hoons/arvo/ren/rss-xml.hoon
-no hoons/arvo/ren/test-tree.hoon
-no hoons/arvo/ren/tree/body.hoon
-no hoons/arvo/ren/tree/combine.hoon
-no hoons/arvo/ren/tree/elem.hoon
-no hoons/arvo/ren/tree/include.hoon
-no hoons/arvo/ren/css.hoon
-no hoons/arvo/ren/js.hoon
-no hoons/arvo/ren/run.hoon
-no hoons/arvo/ren/urb.hoon
-no hoons/arvo/ren/urb/tree.hoon
-no hoons/arvo/ren/tree/comments.hoon
-no hoons/arvo/gen/test.hoon
-no hoons/arvo/ren/tree/json.hoon
-no hoons/arvo/gen/capitalize.hoon
-no hoons/arvo/mar/urb.hoon
-no hoons/arvo/app/gmail.hoon
-no hoons/arvo/app/hood.hoon
-no hoons/arvo/lib/down-jet.hoon
-no hoons/arvo/mar/rss-xml.hoon
-no hoons/arvo/web/dojo.hoon
-no hoons/arvo/sys/vane/eyre.hoon
-no hoons/arvo/sys/hoon.hoon
-no hoons/arvo/sur/twitter.hoon
-no hoons/arvo/mar/css.hoon
+ok hoons/arvo/ren/test-tree.hoon
+ok hoons/arvo/ren/tree/body.hoon
+ok hoons/arvo/ren/tree/combine.hoon
+ok hoons/arvo/ren/tree/elem.hoon
+ok hoons/arvo/ren/tree/include.hoon
+ok hoons/arvo/ren/css.hoon
+ok hoons/arvo/ren/js.hoon
+ok hoons/arvo/ren/run.hoon
+ok hoons/arvo/ren/urb.hoon
+ok hoons/arvo/ren/urb/tree.hoon
+ok hoons/arvo/ren/tree/comments.hoon
+ok hoons/arvo/gen/test.hoon
+ok hoons/arvo/ren/tree/json.hoon
+ok hoons/arvo/gen/capitalize.hoon
+ok hoons/arvo/mar/urb.hoon
+ok hoons/arvo/app/gmail.hoon
+ok hoons/arvo/app/hood.hoon
+ok hoons/arvo/lib/down-jet.hoon
+ok hoons/arvo/mar/rss-xml.hoon
+ok hoons/arvo/web/dojo.hoon
+ok hoons/arvo/sys/vane/eyre.hoon
+ok hoons/arvo/sys/hoon.hoon
+ok hoons/arvo/sur/twitter.hoon
+ok hoons/arvo/mar/css.hoon
 no hoons/arvo/mar/elem.hoon
 no hoons/arvo/mar/js.hoon
 no hoons/arvo/mar/snip.hoon
@@ -331,7 +331,7 @@ sub doNode {
     for my $arrayRef (@stuff) {
         die Data::Dumper::Dumper(\@_) if ref $arrayRef ne 'ARRAY';
     }
-    say STDERR Data::Dumper::Dumper(\@stuff);
+    # say STDERR Data::Dumper::Dumper(\@stuff);
     my $rule_id         = $Marpa::R2::Context::rule;
     my $slg             = $Marpa::R2::Context::slg;
     my ( $lhs, @rhs ) =

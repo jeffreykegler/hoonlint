@@ -719,11 +719,14 @@ royl4l ::= UNICORN
 zust4l ::= bip4j
 zust4l ::= lip4j
 zust4l ::= royl4l
-zust4l ::= 'y'
-zust4l ::= 'n'
+zust4l ::= ASCII_y
+zust4l ::= ASCII_n
+ASCII_y ~ 'y'
+ASCII_n ~ 'n'
 
-twid4l ::= '0' VUM4J
+twid4l ::= ASCII_0 VUM4J
 twid4l ::= crub4l
+ASCII_0 ~ '0'
 
 nuck4l ::= bisk4l
 # bisk(4l) parses unsigned dimes of any base
