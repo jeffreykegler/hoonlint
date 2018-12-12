@@ -1789,8 +1789,9 @@ moldWut ::= WUT
 # '~'
 # Differs from scat(5d)
 scad5d ::= moldSig
-moldSig ::= '~'
+moldSig ::= SIG
 
+# TODO: Standardize the semantics
 # '^'
 # Differs from scat(5d)
 scad5d ::= moldKet
@@ -1799,13 +1800,13 @@ moldKet ~ '^'
 # <moldInfixCol> can start with either KET (^) or lowercase char
 # This is scab(5d)
 scad5d ::= moldInfixCol
-moldInfixCol ::= rope5d [:] moldInfixCol2
-moldInfixCol2 ::= rope5d+ separator=>[:] proper=>1
+moldInfixCol ::= rope5d (COL) moldInfixCol2
+moldInfixCol2 ::= rope5d+ separator=>COL proper=>1
 
 # '='
 # Differs from scat(5d)
 scad5d ::= moldPrefixTis
-moldPrefixTis ::= ('=') wyde5d (PER) action=>MarpaX::YAHC::deprecated
+moldPrefixTis ::= (TIS) wyde5d (PER) action=>MarpaX::YAHC::deprecated
 
 # ['a' 'z']
 # Differs from scat(5d)
