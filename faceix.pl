@@ -11,9 +11,9 @@ require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
 ok hoons/arvo/ren/tree/head.hoon
-no hoons/arvo/web/unmark/test.hoon
-no hoons/arvo/app/hall.hoon
-no hoons/arvo/web/unmark/all.hoon
+ok hoons/arvo/web/unmark/test.hoon
+ok hoons/arvo/app/hall.hoon
+ok hoons/arvo/web/unmark/all.hoon
 no hoons/arvo/ren/tree/index.hoon
 no hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon
 no hoons/arvo/web/pack/js/tree-urb.hoon

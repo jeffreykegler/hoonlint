@@ -733,7 +733,7 @@ nuck4l ::= DOT4H perd4l
 # Can be either '$~' or '%~'
 # -- both seem to have the same semantics
 nuck4l ::= moldNullSig
-moldNullSig ::= '~'
+moldNullSig ::= SIG
 
 # perd(4l) parses sig-prefixed coins after the sig prefix
 nuck4l ::= SIG twid4l
@@ -1521,15 +1521,15 @@ rood5d ::= FAS poor5d
 
 # the wing type is parsed by the rope(5d)
 rope5d ::= limb+ separator=>[.] proper=>1
-limb ::= ','
-limb ::= optKets '$'
+limb ::= COM
+limb ::= optKets BUC
 limb ::= optKets SYM4K
 optKets ::= KET*
 limb ::= BAR4H DIM4J
 limb ::= LUS DIM4J
 limb ::= PAM4H DIM4J
 limb ::= VEN4K
-limb ::= '.'
+limb ::= DOT
 
 # 5d library: rick
 
