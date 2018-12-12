@@ -25,3 +25,4 @@ local $Data::Dumper::Terse    = 1;
 
 say Data::Dumper::Dumper($pruned);
 
+# vim: expandtab shiftwidth=4:

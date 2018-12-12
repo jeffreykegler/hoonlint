@@ -34,3 +34,5 @@ if ( my $ambiguous_status = $recce->ambiguous() ) {
     chomp $ambiguous_status;
     die "Parse is ambiguous\n", $ambiguous_status;
 }
+
+# vim: expandtab shiftwidth=4:
