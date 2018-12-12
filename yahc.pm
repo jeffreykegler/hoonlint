@@ -498,7 +498,7 @@ bip4j ::= bip4j_Piece
   (DOG4I) bip4j_Piece
   (DOG4I) bip4j_Piece
   (DOG4I) bip4j_Piece
-bip4j_Piece ::= '0'
+bip4j_Piece ::= ASCII_0
 bip4j_Piece ::= QEX4J
 
 # Two hex numbers
@@ -551,7 +551,7 @@ lip4j ::= lib4j_Piece
   (DOG4I) lib4j_Piece
   (DOG4I) lib4j_Piece
   (DOG4I) lib4j_Piece
-lib4j_Piece ::= '0'
+lib4j_Piece ::= ASCII_0
 lib4j_Piece ::= ted4j
 
 sed4j ~ [1-9]
