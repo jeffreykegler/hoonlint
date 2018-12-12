@@ -328,11 +328,21 @@ local $Data::Dumper::Terse    = 1;
 
 sub doNode {
     my (undef, @stuff) = @_;
-    say STDERR "HI";
+    for my $arrayRef (@stuff) {
+        die Data::Dumper::Dumper(\@_) if ref $arrayRef ne 'ARRAY';
+    }
+    say STDERR Data::Dumper::Dumper(\@stuff);
+    my $rule_id         = $Marpa::R2::Context::rule;
+    my $slg             = $Marpa::R2::Context::slg;
+    my ( $lhs, @rhs ) =
+                    map { $slg->symbol_display_form($_) } $slg->rule_expand($rule_id);
+    say STDERR "HI $lhs";
+    return ['!rule']
 }
 
 my $semantics = <<'EOS';
 :default ::= action => main::doNode
+lexeme default = action => [name, value] latm => 1
 EOS
 
 FILE: for my $fileLine (split "\n", $fileList) {
