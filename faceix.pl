@@ -326,9 +326,13 @@ END_OF_LIST
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
+my $fileName = '!ERROR!';
+my $recce;
+
 sub doNode {
     my (undef, @stuff) = @_;
     for my $arrayRef (@stuff) {
+        # delete after development
         die Data::Dumper::Dumper(\@_) if ref $arrayRef ne 'ARRAY';
     }
     # say STDERR Data::Dumper::Dumper(\@stuff);
@@ -336,13 +340,34 @@ sub doNode {
     my $slg             = $Marpa::R2::Context::slg;
     my ( $lhs, @rhs ) =
                     map { $slg->symbol_display_form($_) } $slg->rule_expand($rule_id);
-    say STDERR "HI $lhs";
-    return ['!rule']
+    if ($lhs eq 'lusLusCell') {
+        my ($sym4k, $start, $symName) = @{$stuff[0]};
+        return [] if $sym4k eq 'BUC';
+        my ($line, $column) = $recce->line_column($start);
+        die "Unknown first RHS for lusLusCell: $sym4k" if $sym4k ne 'SYM4K';
+        say join q{ }, $symName, '++', join q{:}, $fileName, $line, $column;
+    }
+    if ($lhs eq 'lusHepCell') {
+        my ($sym4k, $start, $symName) = @{$stuff[0]};
+        return [] if $sym4k eq 'BUC';
+        my ($line, $column) = $recce->line_column($start);
+        die "Unknown first RHS for lusHepCell: $sym4k" if $sym4k ne 'SYM4K';
+        say join q{ }, $symName, '+-', join q{:}, $fileName, $line, $column;
+    }
+    if ($lhs eq 'lusTisCell') {
+        my ($sym4k, $start, $symName) = @{$stuff[0]};
+        return [] if $sym4k eq 'BUC';
+        my ($line, $column) = $recce->line_column($start);
+        die "Unknown first RHS for lusTisCell: $sym4k" if $sym4k ne 'SYM4K';
+        say join q{ }, $symName, '+=', join q{:}, $fileName, $line, $column;
+    }
+    # say STDERR "HI $lhs";
+    return [];
 }
 
 my $semantics = <<'EOS';
 :default ::= action => main::doNode
-lexeme default = action => [name, value] latm => 1
+lexeme default = action => [name, start, value] latm => 1
 EOS
 
 FILE: for my $fileLine (split "\n", $fileList) {
@@ -353,7 +378,8 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $fileLine =~ s/\s*$//xmsg; # Eliminate trailing space
     next FILE unless $fileLine;
 
-    my ($testStatus, $fileName) = split /\s+/, $fileLine;
+    my $testStatus;
+    ($testStatus, $fileName) = split /\s+/, $fileLine;
     $testStatus //= "Misformed line: $origLine";
 
     next FILE if $testStatus eq 'no';
@@ -365,9 +391,8 @@ FILE: for my $fileLine (split "\n", $fileList) {
     my $hoonSource = do { local $RS = undef; <$fh>; };
     my $parser = MarpaX::YAHC::new({semantics => $semantics});
     $parser->read(\$hoonSource);
-    my $recce = $parser->raw_recce();
+    $recce = $parser->raw_recce();
     my $astRef = $recce->value();
-    say STDERR Data::Dumper::Dumper($astRef);
 }
 
 # vim: expandtab shiftwidth=4:
