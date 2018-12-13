@@ -179,34 +179,60 @@ sub getCram {
     return;
 }
 
-sub new {
+sub new_grammar {
     my @argHashes = @_;
-    my $self = {};
+    my $self      = {};
     for my $argHash (@argHashes) {
-         ARG_NAME: for my $argName (keys %{$argHash}) {
-	     if ($argName eq 'semantics') {
-	         $self->{semantics} = $argHash->{semantics};
-		 next ARG_NAME;
-	     }
-	     die "MarpaX::YAHC::new() called with unknown arg name: $argName";
-	 }
+      ARG_NAME: for my $argName ( keys %{$argHash} ) {
+            if ( $argName eq 'semantics' ) {
+                $self->{semantics} = $argHash->{semantics};
+                next ARG_NAME;
+            }
+            die "MarpaX::YAHC::new() called with unknown arg name: $argName";
+        }
     }
-    my $debug = $MarpaX::YAHC::DEBUG;
     my $semantics = $self->{semantics} // $defaultSemantics;
-    my $dsl = $semantics . $baseDSL;
-    my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
+    my $dsl       = $semantics . $baseDSL;
+    my $grammar   = Marpa::R2::Scanless::G->new( { source => \$dsl } );
     $self->{grammar} = $grammar;
+    return bless $self, 'MarpaX::YAHC';
+}
 
+sub recceStart {
+    my ($self) = @_;
+    my $debug = $MarpaX::YAHC::DEBUG;
     my $recce = Marpa::R2::Scanless::R->new(
         {
-            grammar         => $grammar,
+            grammar         => $self->{grammar},
             ranking_method  => 'high_rule_only',
             trace_lexers    => ( $debug ? 1 : 0 ),
             trace_terminals => ( $debug ? 1 : 0 ),
         }
     );
     $self->{recce} = $recce;
-    return bless $self, 'MarpaX::YAHC';
+    return $self;
+}
+
+sub new {
+    my @argHashes = @_;
+    my $self = {};
+    my %grammarArgs = ();
+    for my $argHash (@argHashes) {
+         ARG_NAME: for my $argName (keys %{$argHash}) {
+	     if ($argName eq 'semantics') {
+	         $grammarArgs{semantics} = $argHash->{semantics};
+		 next ARG_NAME;
+	     }
+	     die "MarpaX::YAHC::new() called with unknown arg name: $argName";
+	 }
+    }
+    $self = MarpaX::YAHC::new_grammar(\%grammarArgs);
+    return $self->recceStart();
+}
+
+sub raw_grammar {
+    my ($self) = @_;
+    return $self->{grammar};
 }
 
 sub raw_recce {

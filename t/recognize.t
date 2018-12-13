@@ -367,6 +367,8 @@ sub doAmbigTest {
     return 1;
 }
 
+my $parser = MarpaX::YAHC::new_grammar();
+
 FILE: for my $fileLine (split "\n", $fileList) {
     my $origLine = $fileLine;
     chomp $fileLine;
@@ -383,7 +385,7 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    my $parser = MarpaX::YAHC::new();
+    $parser->MarpaX::YAHC::recceStart();
     my $testResult1;
     FIRST_TEST: {
       if ($testStatus ne 'todo') {
