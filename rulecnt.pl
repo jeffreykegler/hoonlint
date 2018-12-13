@@ -7,8 +7,6 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 622;
-
 require "./yahc.pm";
 
 my $fileList = <<'END_OF_LIST';
@@ -328,46 +326,29 @@ END_OF_LIST
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
-sub doTest {
-    my ($parser, $hoonSource) = @_;
-    my $ok = eval { $parser->read( \$hoonSource ); 1; };
-    if (not $ok) {
-	return 0;
+my @count = ();
+my $fileName = '!ERROR!';
+my $recce;
+
+sub doNode {
+    no warnings 'once';
+    my $ruleID         = $Marpa::R2::Context::rule;
+    use warnings;
+    if (not $count[$ruleID]) {
+        $count[$ruleID] = 1;
+        return [];
     }
-    my $recce = $parser->raw_recce();
-    if ( $recce->value() ) {
-	return 1;
-    }
-    my $evalErr = $EVAL_ERROR;
-    Test::More::diag($evalErr);
-    return 0;
+    $count[$ruleID]++;
+    return [];
 }
 
-# test for a 2nd value.  Note the inverted logic --
-# if there is a valid 2nd parse, then
-# the parse is ambiguous and the test *fails*
-sub doAmbigTest {
-    my ($parser) = @_;
-    my $recce = $parser->raw_recce();
-    # Initialize to Perl true, so that test fails by default
-    my $astRef = 'PERL TRUE';
-    my $ok = eval { $astRef = $recce->value(); 1; };
-    if (not $ok) {
-	my $evalErr = $EVAL_ERROR;
-	Test::More::diag("Second value call failed");
-	Test::More::diag($evalErr);
-	return 0;
-    }
-    if ($astRef) {
-	$recce->series_restart();
-	my $diagnostic = $recce->ambiguous();
-	Test::More::diag($diagnostic);
-        return 0;
-    }
-    return 1;
-}
+my $semantics = <<'EOS';
+:default ::= action => main::doNode
+lexeme default = latm => 1
+EOS
 
-my $parser = MarpaX::YAHC::new_grammar();
+my $parser = MarpaX::YAHC::new_grammar({semantics => $semantics});
+my $grammar = $parser->raw_grammar();
 
 FILE: for my $fileLine (split "\n", $fileList) {
     my $origLine = $fileLine;
@@ -377,50 +358,29 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $fileLine =~ s/\s*$//xmsg; # Eliminate trailing space
     next FILE unless $fileLine;
 
-    my ($testStatus, $fileName) = split /\s+/, $fileLine;
+    my $testStatus;
+    ($testStatus, $fileName) = split /\s+/, $fileLine;
     $testStatus //= "Misformed line: $origLine";
+
+    next FILE if $testStatus eq 'no';
 
     open my $fh, '<', $fileName or die "Cannot open $fileName";
     my $testName = $fileName;
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    $parser->MarpaX::YAHC::recceStart();
-    my $testResult1;
-    FIRST_TEST: {
-      if ($testStatus ne 'todo') {
-	$testResult1 = doTest($parser, $hoonSource);
-	Test::More::ok($testResult1, $testName);
-	last FIRST_TEST;
-      }
-      TODO: {
-	  local $TODO = 'NYI';
-	  $testResult1 = doTest($parser, $hoonSource);
-	  Test::More::ok($testResult1, $testName);
-      }
-    }
-  SECOND_TEST: {
-        my $ambiguityTestName = $testName . " ambiguity";
-        if ( $testStatus eq 'ok' ) {
-            if ( not $testResult1 ) {
-                Test::More::fail($ambiguityTestName);
-                last SECOND_TEST;
-            }
-            my $testResult2 = doAmbigTest($parser);
-            Test::More::ok( $testResult2, $ambiguityTestName );
-            last SECOND_TEST;
-        }
-      TODO: {
-            local $TODO = 'NYI';
-            if ( not $testResult1 ) {
-                Test::More::fail($ambiguityTestName);
-            }
-            else {
-                my $testResult2 = doAmbigTest($parser);
-                Test::More::ok( $testResult2, $ambiguityTestName );
-            }
-        }
-    }
+    $parser->recceStart();
+    $parser->read(\$hoonSource);
+    my $recce = $parser->raw_recce();
+    my $astRef = $recce->value();
+}
+
+RULE_ID: for my $ruleID ( 0 .. $#count ) {
+    my ( $lhs, @rhs ) =
+      map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
+    my $rule = join " ", $lhs, q{::=}, @rhs;
+    next RULE_ID unless $count[$ruleID];
+    say join q{ }, $count[$ruleID], $rule;
 }
 
 # vim: expandtab shiftwidth=4:
