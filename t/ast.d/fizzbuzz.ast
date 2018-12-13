@@ -103,9 +103,9 @@
                     [
                       'doubleQuoteString',
                       [
-                        'double quote cord',
+                        'doubleQuoteCord',
                         [
-                          'double quote element',
+                          'doubleQuoteElement',
                           'FizzBuzz'
                         ]
                       ]
@@ -143,9 +143,9 @@
                       [
                         'doubleQuoteString',
                         [
-                          'double quote cord',
+                          'doubleQuoteCord',
                           [
-                            'double quote element',
+                            'doubleQuoteElement',
                             'Fizz'
                           ]
                         ]
@@ -183,9 +183,9 @@
                         [
                           'doubleQuoteString',
                           [
-                            'double quote cord',
+                            'doubleQuoteCord',
                             [
-                              'double quote element',
+                              'doubleQuoteElement',
                               'Buzz'
                             ]
                           ]

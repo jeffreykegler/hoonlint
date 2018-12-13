@@ -261,12 +261,12 @@ sub read {
             ( $value_ref, $resume_pos ) = getTripleQuote( $input, $this_pos );
 	    return if not $value_ref;
             my $result = $recce->lexeme_read(
-                'TRIPLE QUOTE STRING',
+                'TRIPLE_QUOTE_STRING',
                 $this_pos,
                 ( length ${$value_ref} ),
                 [ ${$value_ref} ]
             );
-            say STDERR "lexeme_read('TRIPLE QUOTE STRING',...) returned ",
+            say STDERR "lexeme_read('TRIPLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
         }
@@ -278,12 +278,12 @@ sub read {
 	      = getTripleDoubleQuote( $input, $this_pos );
 	    return if not $value_ref;
             my $result = $recce->lexeme_read(
-                'TRIPLE DOUBLE QUOTE STRING',
+                'TRIPLE_DOUBLE_QUOTE_STRING',
                 $this_pos,
                 ( length ${$value_ref} ),
                 [ ${$value_ref} ]
             );
-            say STDERR "lexeme_read('TRIPLE DOUBLE QUOTE STRING',...) returned ",
+            say STDERR "lexeme_read('TRIPLE_DOUBLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
 	}
@@ -616,30 +616,29 @@ carCdrPairs ~ carCdrPair+
 carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
-qut4k ::= <single quote string>
-<single quote string> ::= ([']) <single quote cord> (['])
-<single quote cord> ::= qut4k_Piece* separator=>gon4k proper=>1
+qut4k ::= (SOQ) <singleQuoteCord> (SOQ)
+<singleQuoteCord> ::= qut4k_Piece* separator=>gon4k proper=>1
 qut4k_Piece ::= qit4k+
-qit4k ::= <SINGLE QUOTED CHARS>
-qit4k ::= <SINGLE QUOTED BAS>
-qit4k ::= <SINGLE QUOTED SOQ>
-qit4k ::= <SINGLE QUOTED HEX CHAR>
+qit4k ::= <SINGLE_QUOTED_CHARS>
+qit4k ::= <SINGLE_QUOTED_BAS>
+qit4k ::= <SINGLE_QUOTED_SOQ>
+qit4k ::= <SINGLE_QUOTED_HEX_CHAR>
 
-<SINGLE QUOTED CHARS> ~ unescapedSingleQuoteChar+
+<SINGLE_QUOTED_CHARS> ~ unescapedSingleQuoteChar+
 # All the printable (non-control) characters except
 # bas (x5c) and soq (x27)
 unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
-<SINGLE QUOTED BAS> ~ bas4h bas4h
-<SINGLE QUOTED SOQ> ~ bas4h soq4h
-<SINGLE QUOTED HEX CHAR> ~ bas4h mes4k
+<SINGLE_QUOTED_BAS> ~ bas4h bas4h
+<SINGLE_QUOTED_SOQ> ~ bas4h soq4h
+<SINGLE_QUOTED_HEX_CHAR> ~ bas4h mes4k
 
-# <TRIPLE QUOTE START> triggers an event -- the quoted
-# string is actually supplies as <TRIPLE QUOTE STRING>.
-qut4k ::= <TRIPLE QUOTE START>
-qut4k ::= <TRIPLE QUOTE STRING>
-:lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
-<TRIPLE QUOTE START> ~ ['] ['] [']
-<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
+# <TRIPLE_QUOTE_START> triggers an event -- the quoted
+# string is actually supplies as <TRIPLE_QUOTE_STRING>.
+qut4k ::= <TRIPLE_QUOTE_START>
+qut4k ::= <TRIPLE_QUOTE_STRING>
+:lexeme ~ <TRIPLE_QUOTE_START> event=>tripleQuote pause=>before
+<TRIPLE_QUOTE_START> ~ ['] ['] [']
+<TRIPLE_QUOTE_STRING> ~ unicorn # implemented with a combinator
 
 dem4k ::= DIT4K_SEQ+ separator=>gon4k proper=>1
 
@@ -1675,10 +1674,10 @@ optWideQuoteInnards ::= wideQuoteEmbedTerminatedStretches optWideQuoteEmbedFreeS
 optWideQuoteEmbedFreeStretch ::=
 optWideQuoteEmbedFreeStretch ::= wideQuoteEmbedFreeStretch
 wideQuoteEmbedFreeStretch ::= wideQuoteEmbedFreeElement+
-wideQuoteEmbedFreeElement ::= <ESCAPED WIDE INNARD CHAR>
-wideQuoteEmbedFreeElement ::= <NORMAL WIDE INNARD CHARS>
+wideQuoteEmbedFreeElement ::= <ESCAPED_WIDE_INNARD_CHAR>
+wideQuoteEmbedFreeElement ::= <NORMAL_WIDE_INNARD_CHARS>
 
-<ESCAPED WIDE INNARD CHAR> ~
+<ESCAPED_WIDE_INNARD_CHAR> ~
   bas4h hep4h | bas4h lus4h | bas4h tar4h | bas4h cen4h |
   bas4h sem4h | bas4h kel4h |
   bas4h bas4h | bas4h doq4h | bas4h bix4j
@@ -1687,7 +1686,7 @@ wideQuoteEmbedFreeElement ::= <NORMAL WIDE INNARD CHARS>
 # doq (x22), sem (x3b), bas (x5c) and kel (x7b)
 # For efficiency we want to slurp in as many "normal"
 # characters at once as we can.
-<NORMAL WIDE INNARD CHARS> ~ unescapedWideInnardsChar+
+<NORMAL_WIDE_INNARD_CHARS> ~ unescapedWideInnardsChar+
 unescapedWideInnardsChar ~ [\x20-\x21\x23-\x3a\x3c-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 
 wideQuoteEmbedTerminatedStretches ::= wideQuoteEmbedTerminatedStretch+
@@ -1698,9 +1697,9 @@ wideQuoteEmbedTerminatedStretch ::= optWideQuoteEmbedFreeStretch sump5d rank=>10
 wideBracketedElem ::= (KEL) tagHead wideElems (KER)
 
 wideElems ::=
-wideElems ::= <sail wide elements>
-<sail wide elements> ::= <sail wide element>+
-<sail wide element> ::= (ACE) wideInnerTop
+wideElems ::= <sailWideElements>
+<sailWideElements> ::= <sailWideElement>+
+<sailWideElement> ::= (ACE) wideInnerTop
 
 # 5d library: scad
 
@@ -1886,8 +1885,7 @@ soloPam ::= PAM4H
 
 # '\''
 # Not in scad(5)
-scat5d ::= singleQuoteString
-singleQuoteString ::= qut4k
+scat5d ::= qut4k
 
 # '('
 # Differs from scad(5)
@@ -2029,33 +2027,33 @@ scat5d ::= rood5d
 # '<'
 # Not in scad(5)
 scat5d ::= circumGalgar
-circumGalgar ::= ('<') wide5dSeq ('>')
+circumGalgar ::= (GAL) wide5dSeq (GAR)
 
 # '>'
 # Not in scad(5)
 scat5d ::= circumGargal
-circumGargal ::= ('>') wide5dSeq ('<')
+circumGargal ::= (GAR) wide5dSeq (GAL)
 
 # 5d library: soil
 
 soil5d ::= doubleQuoteString
-doubleQuoteString ::= (["]) <double quote cord> (["])
-<double quote cord> ::= <double quote element>*
-<double quote element> ::= <UNESCAPED DOUBLE QUOTE CHARS>
-<double quote element> ::= <ESCAPED DOUBLE QUOTE CHAR>
-<double quote element> ::= sump5d
+doubleQuoteString ::= (["]) <doubleQuoteCord> (["])
+<doubleQuoteCord> ::= <doubleQuoteElement>*
+<doubleQuoteElement> ::= <UNESCAPED_DOUBLE_QUOTE_CHARS>
+<doubleQuoteElement> ::= <ESCAPED_DOUBLE_QUOTE_CHAR>
+<doubleQuoteElement> ::= sump5d
 
 # All the printable (non-control) characters except
 # bas (x5c) kel (x7b) and doq (x22)
-<UNESCAPED DOUBLE QUOTE CHARS> ~ unescapedDoubleQuoteChar+
+<UNESCAPED_DOUBLE_QUOTE_CHARS> ~ unescapedDoubleQuoteChar+
 unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
-<ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
+<ESCAPED_DOUBLE_QUOTE_CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
 
-soil5d ::= <TRIPLE DOUBLE QUOTE STRING>
+soil5d ::= <TRIPLE_DOUBLE_QUOTE_STRING>
 soil5d ::= TRIPLE_DOUBLE_START
 :lexeme ~ TRIPLE_DOUBLE_START event=>tripleDoubleQuote pause=>before
 TRIPLE_DOUBLE_START ~ doq4h doq4h doq4h nl
-<TRIPLE DOUBLE QUOTE STRING> ~ unicorn
+<TRIPLE_DOUBLE_QUOTE_STRING> ~ unicorn
 
 sump5d ::= KEL wide5dSeq KER
 
