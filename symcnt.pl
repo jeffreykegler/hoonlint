@@ -9,7 +9,7 @@ use English qw( -no_match_vars );
 
 require "./yahc.pm";
 
-my @syms = <<'EOS';
+my @syms = qw(
 aMane
 aura
 bip4j
@@ -52,8 +52,8 @@ date_part2
 date_part3
 dem4k
 dollarTerm
-<double quote cord>
-<double quote element>
+doubleQuoteCord
+doubleQuoteElement
 doubleQuoteString
 faspamSym
 faspamSyms
@@ -204,8 +204,8 @@ ruck5dJog
 rump5d
 rupl5d
 sailApex5d
-<sail wide element>
-<sail wide elements>
+sailWideElement
+sailWideElements
 scad5d
 scat5d
 scriptOrStyle
@@ -214,9 +214,7 @@ scriptStyleTailElement
 scriptStyleTailElements
 sigCircumBracket
 sigCircumBracketSig
-<single quote cord>
-<single quote string>
-singleQuoteString
+singleQuoteCord
 soil5d
 soloBar
 soloKet
@@ -238,7 +236,15 @@ tallAttribute
 tallAttributes
 tallBarcab
 tallBarcen
+tallBarcol
+tallBardot
+tallBarhep
 tallBarket
+tallBarsig
+tallBartar
+tallBartis
+tallBarwut
+tallBuccab
 tallBuccabMold
 tallBuccen
 tallBuccenMold
@@ -246,43 +252,104 @@ tallBuccol
 tallBuccolMold
 tallBuchep
 tallBuchepMold
+tallBucket
 tallBucketMold
+tallBucpat
 tallBucpatMold
+tallBucsem
 tallBucsemMold
+tallBuctis
 tallBuctisMold
 tallBucwut
 tallBucwutMold
 tallCencab
 tallCencolMold
+tallCendot
+tallCenhep
 tallCenhepMold
+tallCenket
 tallCenketMold
+tallCenlus
 tallCenlusMold
+tallCensig
 tallCentar
 tallCentis
+tallColcab
+tallColhep
+tallColket
+tallCollus
 tallColsig
 tallColtar
 tallDotket
+tallDotlus
+tallDottar
 tallDottis
+tallDotwut
 tallElem
+tallKetbar
+tallKetcen
+tallKetdot
+tallKethep
+tallKetlus
+tallKetpam
+tallKetsig
+tallKettis
+tallKetwut
 tallKidOfElem 
 tallKidsOfElem
 tallKidsOfTop 
 tallSemcol
+tallSemfas
+tallSemsem
 tallSemsig
+tallSigbar
+tallSigbuc
+tallSigcab
+tallSigcen
+tallSigfas
+tallSiggal
+tallSiggar
 tallSiglus
 tallSigpam
+tallSigtis
 tallSigwut
+tallSigzap
 tallTailCommon
 tallTailOfElem
 tallTailOfTop
+tallTisbar
 tallTiscol
+tallTiscom
+tallTisdot
+tallTisfas
+tallTisgal
+tallTisgar
+tallTishep
+tallTisket
+tallTislus
+tallTissem
 tallTissig
+tallTistar
+tallTiswut
 tallTopKidSeq 
 tallTopSail
 tallWutbar
+tallWutcol
+tallWutdot
+tallWutgal
+tallWutgar
 tallWuthep
+tallWutket
 tallWutlus
 tallWutpam
+tallWutpat
+tallWutsig
+tallWuttis
+tallWutzap
+tallZapcol
+tallZapcom
+tallZapdot
+tallZapgar
 tallZaptis
 tallZapWut
 tash4l
@@ -322,10 +389,18 @@ wide5dSeq
 wideAttrBody
 wideAttribute
 wideAttrs
+wideBarcol
+wideBardot
+wideBarhep
+wideBarsig
+wideBartar
+wideBartis
+wideBarwut
 wideBont5d
 wideBonz5d
 wideBonzElement
 wideBracketedElem
+wideBuccab
 wideBuccabMold
 wideBuccen
 wideBuccenMold
@@ -333,24 +408,40 @@ wideBuccol
 wideBuccolMold
 wideBuchep
 wideBuchepMold
+wideBucket
 wideBucketMold
+wideBucpat
 wideBucpatMold
+wideBucsem
 wideBucsemMold
+wideBuctis
 wideBuctisMold
 wideBucwut
 wideBucwutMold
 wideCencab
 wideCencolMold
+wideCendot
+wideCenhep
 wideCenhepMold
+wideCenket
 wideCenketMold
+wideCenlus
 wideCenlusMold
+wideCensig
 wideCentar
 wideCentis
 wideCircumFas
+wideColcab
+wideColhep
+wideColket
+wideCollus
 wideColsig
 wideColtar
 wideDotket
 wideDotlus
+wideDottar
+wideDottis
+wideDotwut
 wideElems
 wideFaszap
 wideFordFasbar
@@ -369,6 +460,15 @@ wideHornRune
 wideHornSeq
 wideInnerTop 
 wideInnerTops
+wideKetbar
+wideKetcen
+wideKetdot
+wideKethep
+wideKetlus
+wideKetpam
+wideKetsig
+wideKettis
+wideKetwut
 wideNorm5d
 wideNorm5dMold
 wideParenElems
@@ -383,20 +483,56 @@ wideRuck5d
 wideRuck5dJog
 wideSailApex5d
 wideSemcol
+wideSemfas
+wideSemsem
 wideSemsig
+wideSigbar
+wideSigbuc
+wideSigcab
+wideSigcen
+wideSigfas
+wideSiggal
+wideSiggar
 wideSiglus
 wideSigpam
+wideSigtis
 wideSigwut
+wideSigzap
 wideTail
 wideTeak5d
 wideTeakChoice
+wideTisbar
 wideTiscol
+wideTiscom
+wideTisdot
+wideTisfas
+wideTisgal
+wideTisgar
+wideTishep
+wideTisket
+wideTislus
+wideTissem
 wideTissig
+wideTistar
+wideTiswut
 wideTopSail
 wideWutbar
+wideWutcol
+wideWutdot
+wideWutgal
+wideWutgar
 wideWuthep
+wideWutket
 wideWutlus
 wideWutpam
+wideWutpat
+wideWutsig
+wideWuttis
+wideWutzap
+wideZapcol
+wideZapcom
+wideZapdot
+wideZapgar
 wideZaptis
 wideZapWut
 wise5d
@@ -405,7 +541,8 @@ wrappedElems
 wyde5d
 wyde5dSeq
 zust4l
-EOS
+);
+# End of qw< syms >
 
 my %count = ();
 for my $sym (@syms) {
@@ -739,8 +876,8 @@ sub doNode {
     my $slg     = $Marpa::R2::Context::slg;
     my ($lhs) =
       map { $slg->symbol_display_form($_) } $slg->rule_expand($rule_id);
-    say STDERR "LHS: ", $lhs;
-    say STDERR "Lexemes: ", join " ", @lexemes;
+    # say STDERR "LHS: ", $lhs;
+    # say STDERR "Lexemes: ", join " ", @lexemes;
     for my $sym ( $lhs, @lexemes ) {
         $count{$sym} = 0 if not exists $count{$sym};
         $count{$sym}++;
@@ -781,4 +918,5 @@ FILE: for my $fileLine (split "\n", $fileList) {
 for my $sym (keys %count) {
     say "$sym ", $count{$sym};
 }
+
 # vim: expandtab shiftwidth=4:
