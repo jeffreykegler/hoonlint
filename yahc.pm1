@@ -644,8 +644,7 @@ carCdrPairs ~ carCdrPair+
 carCdrPair ~ [-+][<>]
 carCdr ~ [-+]
 
-qut4k ::= <single quote string>
-<single quote string> ::= ([']) <single quote cord> (['])
+qut4k ::= (SOQ) <single quote cord> (SOQ)
 <single quote cord> ::= qut4k_Piece* separator=>gon4k proper=>1
 qut4k_Piece ::= qit4k+
 qit4k ::= <SINGLE QUOTED CHARS>
@@ -1914,8 +1913,7 @@ soloPam ::= PAM4H
 
 # '\''
 # Not in scad(5)
-scat5d ::= singleQuoteString
-singleQuoteString ::= qut4k
+scat5d ::= qut4k
 
 # '('
 # Differs from scad(5)
