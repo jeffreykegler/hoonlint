@@ -261,12 +261,12 @@ sub read {
             ( $value_ref, $resume_pos ) = getTripleQuote( $input, $this_pos );
 	    return if not $value_ref;
             my $result = $recce->lexeme_read(
-                'TRIPLE QUOTE STRING',
+                'TRIPLE_QUOTE_STRING',
                 $this_pos,
                 ( length ${$value_ref} ),
                 [ ${$value_ref} ]
             );
-            say STDERR "lexeme_read('TRIPLE QUOTE STRING',...) returned ",
+            say STDERR "lexeme_read('TRIPLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
         }
@@ -278,12 +278,12 @@ sub read {
 	      = getTripleDoubleQuote( $input, $this_pos );
 	    return if not $value_ref;
             my $result = $recce->lexeme_read(
-                'TRIPLE DOUBLE QUOTE STRING',
+                'TRIPLE_DOUBLE_QUOTE_STRING',
                 $this_pos,
                 ( length ${$value_ref} ),
                 [ ${$value_ref} ]
             );
-            say STDERR "lexeme_read('TRIPLE DOUBLE QUOTE STRING',...) returned ",
+            say STDERR "lexeme_read('TRIPLE_DOUBLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
               if $MarpaX::YAHC::DEBUG;
 	}
@@ -633,12 +633,12 @@ unescapedSingleQuoteChar ~ [\x20-\x26\x28-\x5b\x5d-\x7e\x80-\xff]
 <SINGLE QUOTED HEX CHAR> ~ bas4h mes4k
 
 # <TRIPLE QUOTE START> triggers an event -- the quoted
-# string is actually supplies as <TRIPLE QUOTE STRING>.
+# string is actually supplies as <TRIPLE_QUOTE_STRING>.
 qut4k ::= <TRIPLE QUOTE START>
-qut4k ::= <TRIPLE QUOTE STRING>
+qut4k ::= <TRIPLE_QUOTE_STRING>
 :lexeme ~ <TRIPLE QUOTE START> event=>tripleQuote pause=>before
 <TRIPLE QUOTE START> ~ ['] ['] [']
-<TRIPLE QUOTE STRING> ~ unicorn # implemented with a combinator
+<TRIPLE_QUOTE_STRING> ~ unicorn # implemented with a combinator
 
 dem4k ::= DIT4K_SEQ+ separator=>gon4k proper=>1
 
@@ -2049,11 +2049,11 @@ doubleQuoteString ::= (["]) <double quote cord> (["])
 unescapedDoubleQuoteChar ~ [\x20-\x21\x23-\x5b\x5d-\x7a\x7c-\x7e\x80-\xff]
 <ESCAPED DOUBLE QUOTE CHAR> ~ bas4h bas4h | bas4h doq4h | bas4h kel4h | bas4h bix4j
 
-soil5d ::= <TRIPLE DOUBLE QUOTE STRING>
+soil5d ::= <TRIPLE_DOUBLE_QUOTE_STRING>
 soil5d ::= TRIPLE_DOUBLE_START
 :lexeme ~ TRIPLE_DOUBLE_START event=>tripleDoubleQuote pause=>before
 TRIPLE_DOUBLE_START ~ doq4h doq4h doq4h nl
-<TRIPLE DOUBLE QUOTE STRING> ~ unicorn
+<TRIPLE_DOUBLE_QUOTE_STRING> ~ unicorn
 
 sump5d ::= KEL wide5dSeq KER
 
