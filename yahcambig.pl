@@ -29,7 +29,7 @@ if (not $self) {
   die "Parse failed";
 }
 
-my $recce = $self->raw_recce();
+my $recce = $self->rawRecce();
 if ( my $ambiguous_status = $recce->ambiguous() ) {
     chomp $ambiguous_status;
     die "Parse is ambiguous\n", $ambiguous_status;

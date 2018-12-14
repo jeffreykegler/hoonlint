@@ -911,7 +911,7 @@ FILE: for my $fileLine (split "\n", $fileList) {
     my $hoonSource = do { local $RS = undef; <$fh>; };
     my $parser = MarpaX::YAHC::new({semantics => $semantics});
     $parser->read(\$hoonSource);
-    $recce = $parser->raw_recce();
+    $recce = $parser->rawRecce();
     my $astRef = $recce->value();
 }
 

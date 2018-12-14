@@ -29,7 +29,7 @@ if (not $self) {
   die "Parse failed";
 }
 
-my $recce = $self->raw_recce();
+my $recce = $self->rawRecce();
 
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
