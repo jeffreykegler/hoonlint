@@ -347,8 +347,8 @@ my $semantics = <<'EOS';
 lexeme default = latm => 1
 EOS
 
-my $parser = MarpaX::YAHC::new_grammar({semantics => $semantics});
-my $grammar = $parser->raw_grammar();
+my $parser = MarpaX::YAHC::new({semantics => $semantics});
+my $grammar = $parser->rawGrammar();
 
 FILE: for my $fileLine (split "\n", $fileList) {
     my $origLine = $fileLine;
@@ -369,9 +369,8 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    $parser->recceStart();
     $parser->read(\$hoonSource);
-    my $recce = $parser->raw_recce();
+    my $recce = $parser->rawRecce();
     my $astRef = $recce->value();
 }
 

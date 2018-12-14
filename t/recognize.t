@@ -334,7 +334,7 @@ sub doTest {
     if (not $ok) {
 	return 0;
     }
-    my $recce = $parser->raw_recce();
+    my $recce = $parser->rawRecce();
     if ( $recce->value() ) {
 	return 1;
     }
@@ -348,7 +348,7 @@ sub doTest {
 # the parse is ambiguous and the test *fails*
 sub doAmbigTest {
     my ($parser) = @_;
-    my $recce = $parser->raw_recce();
+    my $recce = $parser->rawRecce();
     # Initialize to Perl true, so that test fails by default
     my $astRef = 'PERL TRUE';
     my $ok = eval { $astRef = $recce->value(); 1; };
@@ -367,7 +367,7 @@ sub doAmbigTest {
     return 1;
 }
 
-my $parser = MarpaX::YAHC::new_grammar();
+my $parser = MarpaX::YAHC::new();
 
 FILE: for my $fileLine (split "\n", $fileList) {
     my $origLine = $fileLine;
@@ -385,7 +385,6 @@ FILE: for my $fileLine (split "\n", $fileList) {
     $testName =~ s/^hoons\///;
     $testName = "Test of " . $testName;
     my $hoonSource = do { local $RS = undef; <$fh>; };
-    $parser->MarpaX::YAHC::recceStart();
     my $testResult1;
     FIRST_TEST: {
       if ($testStatus ne 'todo') {

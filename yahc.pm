@@ -179,7 +179,7 @@ sub getCram {
     return;
 }
 
-sub new_grammar {
+sub new {
     my @argHashes = @_;
     my $self      = {};
     for my $argHash (@argHashes) {
@@ -213,35 +213,19 @@ sub recceStart {
     return $self;
 }
 
-sub new {
-    my @argHashes = @_;
-    my $self = {};
-    my %grammarArgs = ();
-    for my $argHash (@argHashes) {
-         ARG_NAME: for my $argName (keys %{$argHash}) {
-	     if ($argName eq 'semantics') {
-	         $grammarArgs{semantics} = $argHash->{semantics};
-		 next ARG_NAME;
-	     }
-	     die "MarpaX::YAHC::new() called with unknown arg name: $argName";
-	 }
-    }
-    $self = MarpaX::YAHC::new_grammar(\%grammarArgs);
-    return $self->recceStart();
-}
-
-sub raw_grammar {
+sub rawGrammar {
     my ($self) = @_;
     return $self->{grammar};
 }
 
-sub raw_recce {
+sub rawRecce {
     my ($self) = @_;
     return $self->{recce};
 }
 
 sub read {
     my ($self, $input) = @_;
+    $self->recceStart();
     my $recce = $self->{recce};
     my $debug = $MarpaX::YAHC::DEBUG;
     my $input_length = length ${$input};
