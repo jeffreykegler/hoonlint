@@ -1,4 +1,4 @@
-# Example for blog post on ambiguous languages
+# Test of hoon versus AST
 
 use 5.010;
 use strict;
@@ -7,7 +7,11 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 4;
+# use Test::More tests => 4;
+# This has been replaced by individual scripts, but
+# I am keeping this script because it is more efficient
+# for testing large number of hoon scripts
+use Test::More skip_all => 'Duplicates other tests';
 use Test::Differences;
 
 require "yahc.pm";
