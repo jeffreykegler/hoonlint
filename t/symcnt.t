@@ -1,4 +1,4 @@
-# Example for blog post on ambiguous languages
+# Test of symcnt utility
 
 use 5.010;
 use strict;

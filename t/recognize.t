@@ -1,4 +1,4 @@
-# Example for blog post on ambiguous languages
+# Test that all arvo/ files are parsed
 
 use 5.010;
 use strict;
