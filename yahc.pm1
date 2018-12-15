@@ -207,6 +207,14 @@ sub getCram {
     return;
 }
 
+# The 'semantics' named argument must be considered "internal"
+# for now -- any change in the grammar could break any or all of
+# apps.  When the grammar can be frozen, the 'semantics' argument
+# can become a "documented" feature.
+#
+# In the meantime, applications which want stability can simply
+# copy in this file lexically, losing the advantage of updates,
+# but guaranteeing stability.
 sub new {
     my @argHashes = @_;
     my $self      = {};
