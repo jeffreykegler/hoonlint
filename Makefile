@@ -12,9 +12,6 @@ msg: count_todo
 test_suite: yahc.pm
 	prove --verbose -I. t
 
-yahc.pm: yahc.pm1
-	perl yahc.pm1 > yahc.pm
-
 undoc_tests:
 
 count_todo:
