@@ -1,15 +1,18 @@
-# !!! DO NOT EDIT !!!
-# This code automatically written by yahc.pm1
-
-
 use 5.010;
 use strict;
 use warnings;
-
+use English qw( -no_match_vars );
 use Data::Dumper;
+
 use Marpa::R2 6.000;
 
+# This code uses as its grammar reference the code in
+# the arvo repo: https://github.com/urbit/arvo
+# File sys/hoon.hoon: https://github.com/urbit/arvo/blob/master/sys/hoon.hoon
+# as of commit 7dc3eb1cfacaaafd917697a544bdcf7f22e09eeb
+
 package MarpaX::YAHC;
+use English qw( -no_match_vars );
 
 sub deprecated {
     my $slg      = $Marpa::R2::Context::slg;
@@ -18,9 +21,81 @@ sub deprecated {
     return [ 'deprecated', $slg->symbol_display_form($lhs_id) ];
 }
 
-use English qw( -no_match_vars );
 
-my $baseDSL = do { $RS = undef; <DATA> };
+# === Automatically generated Marpa rules ===
+
+# Here is meta-programming to write piece 2
+
+# ace and gap are not really char names,
+# and are omitted
+my %glyphs = (
+    bar => '|',
+    bas => '\x5c', # '\'
+    buc => '$',
+    cab => '_',
+    cen => '%',
+    col => ':',
+    com => ',',
+    doq => '"',
+    dot => '.',
+    fas => '/',
+    gal => '<',
+    gar => '>',
+    hax => '#',
+    hep => '-',
+    kel => '{',
+    ker => '}',
+    ket => '\\^',
+    lus => '+',
+    pal => '(',
+    pam => '&',
+    par => ')',
+    pat => '@',
+    pel => '(',
+    per => ')',
+    sel => '\x5b', # '['
+    sem => ';',
+    ser => '\x5d', # ']'
+    sig => '~',
+    soq => '\'',
+    tar => '*',
+    tec => '`',
+    tis => '=',
+    wut => '?',
+    zap => '!',
+);
+
+my @glyphRules = ();
+for my $glyphName (sort keys %glyphs) {
+    my $glyph = $glyphs{$glyphName};
+    my $ucGlyphName = uc $glyphName;
+    my $uc4hGlyphName = $ucGlyphName . '4H';
+    my $lcGlyphName = $glyphName . '4h';
+    push @glyphRules, "$ucGlyphName ~ $lcGlyphName";
+    push @glyphRules, "$uc4hGlyphName ~ $lcGlyphName";
+    push @glyphRules, "$lcGlyphName ~ [" . $glyph . q{]};
+    push @glyphRules, "inaccessible_ok ::= $ucGlyphName";
+    push @glyphRules, "inaccessible_ok ::= $uc4hGlyphName";
+}
+my $glyphAutoRules = join "\n", @glyphRules;
+
+my $mainDSL = do { $RS = undef; <DATA> };
+
+my @dslAutoRules = ();
+DESC: for my $desc (split "\n", $mainDSL) {
+    my $originalDesc = $desc;
+    chomp $desc; # remove newline
+    next DESC if not $desc =~ s/^[#] FIXED: //;
+    $desc =~ s/^\s+//; # eliminate leading spaces
+    $desc =~ s/\s+$//; # eliminate trailing spaces
+    my ($rune, @samples) = split /\s+/, $desc;
+    die $originalDesc if not $rune;
+    push @dslAutoRules, doFixedRune( $rune, @samples );
+}
+my $dslAutoRules = join "\n", @dslAutoRules;
+
+# Assemble the base BSL
+my $baseDSL = join "\n", $mainDSL, $glyphAutoRules, $dslAutoRules;
 
 my $defaultSemantics = <<'EOS';
 # start and length will be needed for production
@@ -179,6 +254,14 @@ sub getCram {
     return;
 }
 
+# The 'semantics' named argument must be considered "internal"
+# for now -- any change in the grammar could break any or all of
+# apps.  When the grammar can be frozen, the 'semantics' argument
+# can become a "documented" feature.
+#
+# In the meantime, applications which want stability can simply
+# copy in this file lexically, losing the advantage of updates,
+# but guaranteeing stability.
 sub new {
     my @argHashes = @_;
     my $self      = {};
@@ -464,7 +547,71 @@ sub prune {
     return [\@result];
 }
 
+# takes LC alphanumeric rune name and samples
+# for N-fixed rune and returns the Marpa rules
+# for the tall and the 2 regular wide forms.
+sub doFixedRune {
+    my ($runeName, @samples) = @_;
+    my @result = (join ' ', '#', (uc $runeName), @samples);
+    my $glyphName1 = substr($runeName, 0, 3);
+    my $glyphName2 = substr($runeName, 3, 3);
+    my $glyph1 = $glyphs{$glyphName1} or die "no glyph for $glyphName1";
+    my $glyph2 = $glyphs{$glyphName2};
+    my $glyphLexeme1 = ($glyphName1) . '4h';
+    my $glyphLexeme2 = ($glyphName2) . '4h';
+    my $tallLHS = 'tall' . ucfirst $runeName;
+    my $wideLHS = 'wide' . ucfirst $runeName;
+    my $tallRuneLexeme = (uc $runeName) . 'GAP';
+    my $wideRuneLexeme = (uc $runeName) . 'PEL';
+
+    # norm5d ::= tallBarhep
+    push @result, 'norm5d ::= ' . $tallLHS;
+
+    # wideNorm5d ::= wideBarhep
+    push @result, 'wideNorm5d ::= ' . $wideLHS;
+
+    # tallBarhep ::= (BAR4H HEP4H GAP) tall5d (GAP) tall5d
+    push @result, $tallLHS . ' ::= ('
+      . $tallRuneLexeme
+      . ') ' . (join ' (GAP) ', @samples);
+    state $wideEquiv = {
+        bont5d => 'wideBont5d',
+        bonz5d => 'wideBonz5d',
+        mold   => 'wyde5d',
+        tall5d => 'wide5d',
+        rack5d => 'wideRack5d',
+        rick5d => 'wideRick5d',
+        ruck5d => 'wideRuck5d',
+        teak5d => 'wideTeak5d',
+    };
+    my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
+
+    # wideBarhep ::= (BARHEPPEL) wide5d (ACE) wide5d (PER)
+    push @result, $wideLHS . ' ::= ('
+    . $wideRuneLexeme
+    . ') ' . (join ' (ACE) ', @wideSamples) . q{ (PER)};
+
+    # BARHEPGAP ~ bar4h hep4h gap4k
+    # BARHEPPEL ~ bar4h hep4h pel4h
+    push @result, "$tallRuneLexeme ~ $glyphLexeme1 $glyphLexeme2 gap4k";
+    push @result, "$wideRuneLexeme ~ $glyphLexeme1 $glyphLexeme2 pel4h";
+
+    return join "\n", @result, '';
+}
+
 1;
+
+# The "FIXED:" comments lines are descriptons of the fixed length runes
+# (1-fixed, 2-fixed, 3-fixed and 4-fixed) for auto-generation
+# of Marpa rules for the various regular formats, both
+# tall and wide.
+#
+# The format is
+#
+#   rune type1 type2 ...
+
+# Organization is by hoon.hoon (and Hoon Library) sections: 4a, 5d, etc.;
+# and within that alphabetically by "face" name
 
 __DATA__
 
@@ -2385,735 +2532,4 @@ fordHoodShip ::= SIG fed4j
 
 wideHornRune ::= wideCircumFas
 wideCircumFas ::= (FAS) SYM4K (FAS)
-
-
-BAR ~ bar4h
-BAR4H ~ bar4h
-bar4h ~ [|]
-inaccessible_ok ::= BAR
-inaccessible_ok ::= BAR4H
-BAS ~ bas4h
-BAS4H ~ bas4h
-bas4h ~ [\x5c]
-inaccessible_ok ::= BAS
-inaccessible_ok ::= BAS4H
-BUC ~ buc4h
-BUC4H ~ buc4h
-buc4h ~ [$]
-inaccessible_ok ::= BUC
-inaccessible_ok ::= BUC4H
-CAB ~ cab4h
-CAB4H ~ cab4h
-cab4h ~ [_]
-inaccessible_ok ::= CAB
-inaccessible_ok ::= CAB4H
-CEN ~ cen4h
-CEN4H ~ cen4h
-cen4h ~ [%]
-inaccessible_ok ::= CEN
-inaccessible_ok ::= CEN4H
-COL ~ col4h
-COL4H ~ col4h
-col4h ~ [:]
-inaccessible_ok ::= COL
-inaccessible_ok ::= COL4H
-COM ~ com4h
-COM4H ~ com4h
-com4h ~ [,]
-inaccessible_ok ::= COM
-inaccessible_ok ::= COM4H
-DOQ ~ doq4h
-DOQ4H ~ doq4h
-doq4h ~ ["]
-inaccessible_ok ::= DOQ
-inaccessible_ok ::= DOQ4H
-DOT ~ dot4h
-DOT4H ~ dot4h
-dot4h ~ [.]
-inaccessible_ok ::= DOT
-inaccessible_ok ::= DOT4H
-FAS ~ fas4h
-FAS4H ~ fas4h
-fas4h ~ [/]
-inaccessible_ok ::= FAS
-inaccessible_ok ::= FAS4H
-GAL ~ gal4h
-GAL4H ~ gal4h
-gal4h ~ [<]
-inaccessible_ok ::= GAL
-inaccessible_ok ::= GAL4H
-GAR ~ gar4h
-GAR4H ~ gar4h
-gar4h ~ [>]
-inaccessible_ok ::= GAR
-inaccessible_ok ::= GAR4H
-HAX ~ hax4h
-HAX4H ~ hax4h
-hax4h ~ [#]
-inaccessible_ok ::= HAX
-inaccessible_ok ::= HAX4H
-HEP ~ hep4h
-HEP4H ~ hep4h
-hep4h ~ [-]
-inaccessible_ok ::= HEP
-inaccessible_ok ::= HEP4H
-KEL ~ kel4h
-KEL4H ~ kel4h
-kel4h ~ [{]
-inaccessible_ok ::= KEL
-inaccessible_ok ::= KEL4H
-KER ~ ker4h
-KER4H ~ ker4h
-ker4h ~ [}]
-inaccessible_ok ::= KER
-inaccessible_ok ::= KER4H
-KET ~ ket4h
-KET4H ~ ket4h
-ket4h ~ [\^]
-inaccessible_ok ::= KET
-inaccessible_ok ::= KET4H
-LUS ~ lus4h
-LUS4H ~ lus4h
-lus4h ~ [+]
-inaccessible_ok ::= LUS
-inaccessible_ok ::= LUS4H
-PAL ~ pal4h
-PAL4H ~ pal4h
-pal4h ~ [(]
-inaccessible_ok ::= PAL
-inaccessible_ok ::= PAL4H
-PAM ~ pam4h
-PAM4H ~ pam4h
-pam4h ~ [&]
-inaccessible_ok ::= PAM
-inaccessible_ok ::= PAM4H
-PAR ~ par4h
-PAR4H ~ par4h
-par4h ~ [)]
-inaccessible_ok ::= PAR
-inaccessible_ok ::= PAR4H
-PAT ~ pat4h
-PAT4H ~ pat4h
-pat4h ~ [@]
-inaccessible_ok ::= PAT
-inaccessible_ok ::= PAT4H
-PEL ~ pel4h
-PEL4H ~ pel4h
-pel4h ~ [(]
-inaccessible_ok ::= PEL
-inaccessible_ok ::= PEL4H
-PER ~ per4h
-PER4H ~ per4h
-per4h ~ [)]
-inaccessible_ok ::= PER
-inaccessible_ok ::= PER4H
-SEL ~ sel4h
-SEL4H ~ sel4h
-sel4h ~ [\x5b]
-inaccessible_ok ::= SEL
-inaccessible_ok ::= SEL4H
-SEM ~ sem4h
-SEM4H ~ sem4h
-sem4h ~ [;]
-inaccessible_ok ::= SEM
-inaccessible_ok ::= SEM4H
-SER ~ ser4h
-SER4H ~ ser4h
-ser4h ~ [\x5d]
-inaccessible_ok ::= SER
-inaccessible_ok ::= SER4H
-SIG ~ sig4h
-SIG4H ~ sig4h
-sig4h ~ [~]
-inaccessible_ok ::= SIG
-inaccessible_ok ::= SIG4H
-SOQ ~ soq4h
-SOQ4H ~ soq4h
-soq4h ~ [']
-inaccessible_ok ::= SOQ
-inaccessible_ok ::= SOQ4H
-TAR ~ tar4h
-TAR4H ~ tar4h
-tar4h ~ [*]
-inaccessible_ok ::= TAR
-inaccessible_ok ::= TAR4H
-TEC ~ tec4h
-TEC4H ~ tec4h
-tec4h ~ [`]
-inaccessible_ok ::= TEC
-inaccessible_ok ::= TEC4H
-TIS ~ tis4h
-TIS4H ~ tis4h
-tis4h ~ [=]
-inaccessible_ok ::= TIS
-inaccessible_ok ::= TIS4H
-WUT ~ wut4h
-WUT4H ~ wut4h
-wut4h ~ [?]
-inaccessible_ok ::= WUT
-inaccessible_ok ::= WUT4H
-ZAP ~ zap4h
-ZAP4H ~ zap4h
-zap4h ~ [!]
-inaccessible_ok ::= ZAP
-inaccessible_ok ::= ZAP4H
-# BARCOL tall5d tall5d
-norm5d ::= tallBarcol
-wideNorm5d ::= wideBarcol
-tallBarcol ::= (BARCOLGAP) tall5d (GAP) tall5d
-wideBarcol ::= (BARCOLPEL) wide5d (ACE) wide5d (PER)
-BARCOLGAP ~ bar4h col4h gap4k
-BARCOLPEL ~ bar4h col4h pel4h
-
-# BARDOT tall5d
-norm5d ::= tallBardot
-wideNorm5d ::= wideBardot
-tallBardot ::= (BARDOTGAP) tall5d
-wideBardot ::= (BARDOTPEL) wide5d (PER)
-BARDOTGAP ~ bar4h dot4h gap4k
-BARDOTPEL ~ bar4h dot4h pel4h
-
-# BARHEP tall5d
-norm5d ::= tallBarhep
-wideNorm5d ::= wideBarhep
-tallBarhep ::= (BARHEPGAP) tall5d
-wideBarhep ::= (BARHEPPEL) wide5d (PER)
-BARHEPGAP ~ bar4h hep4h gap4k
-BARHEPPEL ~ bar4h hep4h pel4h
-
-# BARSIG till5d tall5d
-norm5d ::= tallBarsig
-wideNorm5d ::= wideBarsig
-tallBarsig ::= (BARSIGGAP) till5d (GAP) tall5d
-wideBarsig ::= (BARSIGPEL) till5d (ACE) wide5d (PER)
-BARSIGGAP ~ bar4h sig4h gap4k
-BARSIGPEL ~ bar4h sig4h pel4h
-
-# BARTAR till5d tall5d
-norm5d ::= tallBartar
-wideNorm5d ::= wideBartar
-tallBartar ::= (BARTARGAP) till5d (GAP) tall5d
-wideBartar ::= (BARTARPEL) till5d (ACE) wide5d (PER)
-BARTARGAP ~ bar4h tar4h gap4k
-BARTARPEL ~ bar4h tar4h pel4h
-
-# BARTIS till5d tall5d
-norm5d ::= tallBartis
-wideNorm5d ::= wideBartis
-tallBartis ::= (BARTISGAP) till5d (GAP) tall5d
-wideBartis ::= (BARTISPEL) till5d (ACE) wide5d (PER)
-BARTISGAP ~ bar4h tis4h gap4k
-BARTISPEL ~ bar4h tis4h pel4h
-
-# BARWUT tall5d
-norm5d ::= tallBarwut
-wideNorm5d ::= wideBarwut
-tallBarwut ::= (BARWUTGAP) tall5d
-wideBarwut ::= (BARWUTPEL) wide5d (PER)
-BARWUTGAP ~ bar4h wut4h gap4k
-BARWUTPEL ~ bar4h wut4h pel4h
-
-# BUCCAB tall5d
-norm5d ::= tallBuccab
-wideNorm5d ::= wideBuccab
-tallBuccab ::= (BUCCABGAP) tall5d
-wideBuccab ::= (BUCCABPEL) wide5d (PER)
-BUCCABGAP ~ buc4h cab4h gap4k
-BUCCABPEL ~ buc4h cab4h pel4h
-
-# BUCKET till5d till5d
-norm5d ::= tallBucket
-wideNorm5d ::= wideBucket
-tallBucket ::= (BUCKETGAP) till5d (GAP) till5d
-wideBucket ::= (BUCKETPEL) till5d (ACE) till5d (PER)
-BUCKETGAP ~ buc4h ket4h gap4k
-BUCKETPEL ~ buc4h ket4h pel4h
-
-# BUCPAT till5d till5d
-norm5d ::= tallBucpat
-wideNorm5d ::= wideBucpat
-tallBucpat ::= (BUCPATGAP) till5d (GAP) till5d
-wideBucpat ::= (BUCPATPEL) till5d (ACE) till5d (PER)
-BUCPATGAP ~ buc4h pat4h gap4k
-BUCPATPEL ~ buc4h pat4h pel4h
-
-# BUCSEM till5d
-norm5d ::= tallBucsem
-wideNorm5d ::= wideBucsem
-tallBucsem ::= (BUCSEMGAP) till5d
-wideBucsem ::= (BUCSEMPEL) till5d (PER)
-BUCSEMGAP ~ buc4h sem4h gap4k
-BUCSEMPEL ~ buc4h sem4h pel4h
-
-# BUCTIS SYM4K till5d
-norm5d ::= tallBuctis
-wideNorm5d ::= wideBuctis
-tallBuctis ::= (BUCTISGAP) SYM4K (GAP) till5d
-wideBuctis ::= (BUCTISPEL) SYM4K (ACE) till5d (PER)
-BUCTISGAP ~ buc4h tis4h gap4k
-BUCTISPEL ~ buc4h tis4h pel4h
-
-# CENDOT tall5d tall5d
-norm5d ::= tallCendot
-wideNorm5d ::= wideCendot
-tallCendot ::= (CENDOTGAP) tall5d (GAP) tall5d
-wideCendot ::= (CENDOTPEL) wide5d (ACE) wide5d (PER)
-CENDOTGAP ~ cen4h dot4h gap4k
-CENDOTPEL ~ cen4h dot4h pel4h
-
-# CENHEP tall5d tall5d
-norm5d ::= tallCenhep
-wideNorm5d ::= wideCenhep
-tallCenhep ::= (CENHEPGAP) tall5d (GAP) tall5d
-wideCenhep ::= (CENHEPPEL) wide5d (ACE) wide5d (PER)
-CENHEPGAP ~ cen4h hep4h gap4k
-CENHEPPEL ~ cen4h hep4h pel4h
-
-# CENKET tall5d tall5d tall5d tall5d
-norm5d ::= tallCenket
-wideNorm5d ::= wideCenket
-tallCenket ::= (CENKETGAP) tall5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
-wideCenket ::= (CENKETPEL) wide5d (ACE) wide5d (ACE) wide5d (ACE) wide5d (PER)
-CENKETGAP ~ cen4h ket4h gap4k
-CENKETPEL ~ cen4h ket4h pel4h
-
-# CENLUS tall5d tall5d tall5d
-norm5d ::= tallCenlus
-wideNorm5d ::= wideCenlus
-tallCenlus ::= (CENLUSGAP) tall5d (GAP) tall5d (GAP) tall5d
-wideCenlus ::= (CENLUSPEL) wide5d (ACE) wide5d (ACE) wide5d (PER)
-CENLUSGAP ~ cen4h lus4h gap4k
-CENLUSPEL ~ cen4h lus4h pel4h
-
-# CENSIG rope5d tall5d tall5d
-norm5d ::= tallCensig
-wideNorm5d ::= wideCensig
-tallCensig ::= (CENSIGGAP) rope5d (GAP) tall5d (GAP) tall5d
-wideCensig ::= (CENSIGPEL) rope5d (ACE) wide5d (ACE) wide5d (PER)
-CENSIGGAP ~ cen4h sig4h gap4k
-CENSIGPEL ~ cen4h sig4h pel4h
-
-# COLCAB tall5d tall5d
-norm5d ::= tallColcab
-wideNorm5d ::= wideColcab
-tallColcab ::= (COLCABGAP) tall5d (GAP) tall5d
-wideColcab ::= (COLCABPEL) wide5d (ACE) wide5d (PER)
-COLCABGAP ~ col4h cab4h gap4k
-COLCABPEL ~ col4h cab4h pel4h
-
-# COLHEP tall5d tall5d
-norm5d ::= tallColhep
-wideNorm5d ::= wideColhep
-tallColhep ::= (COLHEPGAP) tall5d (GAP) tall5d
-wideColhep ::= (COLHEPPEL) wide5d (ACE) wide5d (PER)
-COLHEPGAP ~ col4h hep4h gap4k
-COLHEPPEL ~ col4h hep4h pel4h
-
-# COLLUS tall5d tall5d tall5d
-norm5d ::= tallCollus
-wideNorm5d ::= wideCollus
-tallCollus ::= (COLLUSGAP) tall5d (GAP) tall5d (GAP) tall5d
-wideCollus ::= (COLLUSPEL) wide5d (ACE) wide5d (ACE) wide5d (PER)
-COLLUSGAP ~ col4h lus4h gap4k
-COLLUSPEL ~ col4h lus4h pel4h
-
-# COLKET tall5d tall5d tall5d tall5d
-norm5d ::= tallColket
-wideNorm5d ::= wideColket
-tallColket ::= (COLKETGAP) tall5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
-wideColket ::= (COLKETPEL) wide5d (ACE) wide5d (ACE) wide5d (ACE) wide5d (PER)
-COLKETGAP ~ col4h ket4h gap4k
-COLKETPEL ~ col4h ket4h pel4h
-
-# DOTLUS tall5d
-norm5d ::= tallDotlus
-wideNorm5d ::= wideDotlus
-tallDotlus ::= (DOTLUSGAP) tall5d
-wideDotlus ::= (DOTLUSPEL) wide5d (PER)
-DOTLUSGAP ~ dot4h lus4h gap4k
-DOTLUSPEL ~ dot4h lus4h pel4h
-
-# DOTTAR tall5d tall5d
-norm5d ::= tallDottar
-wideNorm5d ::= wideDottar
-tallDottar ::= (DOTTARGAP) tall5d (GAP) tall5d
-wideDottar ::= (DOTTARPEL) wide5d (ACE) wide5d (PER)
-DOTTARGAP ~ dot4h tar4h gap4k
-DOTTARPEL ~ dot4h tar4h pel4h
-
-# DOTTIS tall5d tall5d
-norm5d ::= tallDottis
-wideNorm5d ::= wideDottis
-tallDottis ::= (DOTTISGAP) tall5d (GAP) tall5d
-wideDottis ::= (DOTTISPEL) wide5d (ACE) wide5d (PER)
-DOTTISGAP ~ dot4h tis4h gap4k
-DOTTISPEL ~ dot4h tis4h pel4h
-
-# DOTWUT tall5d
-norm5d ::= tallDotwut
-wideNorm5d ::= wideDotwut
-tallDotwut ::= (DOTWUTGAP) tall5d
-wideDotwut ::= (DOTWUTPEL) wide5d (PER)
-DOTWUTGAP ~ dot4h wut4h gap4k
-DOTWUTPEL ~ dot4h wut4h pel4h
-
-# KETBAR tall5d
-norm5d ::= tallKetbar
-wideNorm5d ::= wideKetbar
-tallKetbar ::= (KETBARGAP) tall5d
-wideKetbar ::= (KETBARPEL) wide5d (PER)
-KETBARGAP ~ ket4h bar4h gap4k
-KETBARPEL ~ ket4h bar4h pel4h
-
-# KETCEN tall5d
-norm5d ::= tallKetcen
-wideNorm5d ::= wideKetcen
-tallKetcen ::= (KETCENGAP) tall5d
-wideKetcen ::= (KETCENPEL) wide5d (PER)
-KETCENGAP ~ ket4h cen4h gap4k
-KETCENPEL ~ ket4h cen4h pel4h
-
-# KETDOT tall5d tall5d
-norm5d ::= tallKetdot
-wideNorm5d ::= wideKetdot
-tallKetdot ::= (KETDOTGAP) tall5d (GAP) tall5d
-wideKetdot ::= (KETDOTPEL) wide5d (ACE) wide5d (PER)
-KETDOTGAP ~ ket4h dot4h gap4k
-KETDOTPEL ~ ket4h dot4h pel4h
-
-# KETHEP till5d tall5d
-norm5d ::= tallKethep
-wideNorm5d ::= wideKethep
-tallKethep ::= (KETHEPGAP) till5d (GAP) tall5d
-wideKethep ::= (KETHEPPEL) till5d (ACE) wide5d (PER)
-KETHEPGAP ~ ket4h hep4h gap4k
-KETHEPPEL ~ ket4h hep4h pel4h
-
-# KETLUS tall5d tall5d
-norm5d ::= tallKetlus
-wideNorm5d ::= wideKetlus
-tallKetlus ::= (KETLUSGAP) tall5d (GAP) tall5d
-wideKetlus ::= (KETLUSPEL) wide5d (ACE) wide5d (PER)
-KETLUSGAP ~ ket4h lus4h gap4k
-KETLUSPEL ~ ket4h lus4h pel4h
-
-# KETPAM tall5d
-norm5d ::= tallKetpam
-wideNorm5d ::= wideKetpam
-tallKetpam ::= (KETPAMGAP) tall5d
-wideKetpam ::= (KETPAMPEL) wide5d (PER)
-KETPAMGAP ~ ket4h pam4h gap4k
-KETPAMPEL ~ ket4h pam4h pel4h
-
-# KETSIG tall5d
-norm5d ::= tallKetsig
-wideNorm5d ::= wideKetsig
-tallKetsig ::= (KETSIGGAP) tall5d
-wideKetsig ::= (KETSIGPEL) wide5d (PER)
-KETSIGGAP ~ ket4h sig4h gap4k
-KETSIGPEL ~ ket4h sig4h pel4h
-
-# KETTIS SYM4K tall5d
-norm5d ::= tallKettis
-wideNorm5d ::= wideKettis
-tallKettis ::= (KETTISGAP) SYM4K (GAP) tall5d
-wideKettis ::= (KETTISPEL) SYM4K (ACE) wide5d (PER)
-KETTISGAP ~ ket4h tis4h gap4k
-KETTISPEL ~ ket4h tis4h pel4h
-
-# KETWUT tall5d
-norm5d ::= tallKetwut
-wideNorm5d ::= wideKetwut
-tallKetwut ::= (KETWUTGAP) tall5d
-wideKetwut ::= (KETWUTPEL) wide5d (PER)
-KETWUTGAP ~ ket4h wut4h gap4k
-KETWUTPEL ~ ket4h wut4h pel4h
-
-# SEMFAS tall5d
-norm5d ::= tallSemfas
-wideNorm5d ::= wideSemfas
-tallSemfas ::= (SEMFASGAP) tall5d
-wideSemfas ::= (SEMFASPEL) wide5d (PER)
-SEMFASGAP ~ sem4h fas4h gap4k
-SEMFASPEL ~ sem4h fas4h pel4h
-
-# SEMSEM tall5d tall5d
-norm5d ::= tallSemsem
-wideNorm5d ::= wideSemsem
-tallSemsem ::= (SEMSEMGAP) tall5d (GAP) tall5d
-wideSemsem ::= (SEMSEMPEL) wide5d (ACE) wide5d (PER)
-SEMSEMGAP ~ sem4h sem4h gap4k
-SEMSEMPEL ~ sem4h sem4h pel4h
-
-# SIGBAR tall5d tall5d
-norm5d ::= tallSigbar
-wideNorm5d ::= wideSigbar
-tallSigbar ::= (SIGBARGAP) tall5d (GAP) tall5d
-wideSigbar ::= (SIGBARPEL) wide5d (ACE) wide5d (PER)
-SIGBARGAP ~ sig4h bar4h gap4k
-SIGBARPEL ~ sig4h bar4h pel4h
-
-# SIGBUC CEN_SYM4K tall5d
-norm5d ::= tallSigbuc
-wideNorm5d ::= wideSigbuc
-tallSigbuc ::= (SIGBUCGAP) CEN_SYM4K (GAP) tall5d
-wideSigbuc ::= (SIGBUCPEL) CEN_SYM4K (ACE) wide5d (PER)
-SIGBUCGAP ~ sig4h buc4h gap4k
-SIGBUCPEL ~ sig4h buc4h pel4h
-
-# SIGCAB tall5d tall5d
-norm5d ::= tallSigcab
-wideNorm5d ::= wideSigcab
-tallSigcab ::= (SIGCABGAP) tall5d (GAP) tall5d
-wideSigcab ::= (SIGCABPEL) wide5d (ACE) wide5d (PER)
-SIGCABGAP ~ sig4h cab4h gap4k
-SIGCABPEL ~ sig4h cab4h pel4h
-
-# SIGCEN bonk5d tall5d bonz5d tall5d
-norm5d ::= tallSigcen
-wideNorm5d ::= wideSigcen
-tallSigcen ::= (SIGCENGAP) bonk5d (GAP) tall5d (GAP) bonz5d (GAP) tall5d
-wideSigcen ::= (SIGCENPEL) bonk5d (ACE) wide5d (ACE) wideBonz5d (ACE) wide5d (PER)
-SIGCENGAP ~ sig4h cen4h gap4k
-SIGCENPEL ~ sig4h cen4h pel4h
-
-# SIGFAS bonk5d tall5d
-norm5d ::= tallSigfas
-wideNorm5d ::= wideSigfas
-tallSigfas ::= (SIGFASGAP) bonk5d (GAP) tall5d
-wideSigfas ::= (SIGFASPEL) bonk5d (ACE) wide5d (PER)
-SIGFASGAP ~ sig4h fas4h gap4k
-SIGFASPEL ~ sig4h fas4h pel4h
-
-# SIGGAL bont5d tall5d
-norm5d ::= tallSiggal
-wideNorm5d ::= wideSiggal
-tallSiggal ::= (SIGGALGAP) bont5d (GAP) tall5d
-wideSiggal ::= (SIGGALPEL) wideBont5d (ACE) wide5d (PER)
-SIGGALGAP ~ sig4h gal4h gap4k
-SIGGALPEL ~ sig4h gal4h pel4h
-
-# SIGGAR bont5d tall5d
-norm5d ::= tallSiggar
-wideNorm5d ::= wideSiggar
-tallSiggar ::= (SIGGARGAP) bont5d (GAP) tall5d
-wideSiggar ::= (SIGGARPEL) wideBont5d (ACE) wide5d (PER)
-SIGGARGAP ~ sig4h gar4h gap4k
-SIGGARPEL ~ sig4h gar4h pel4h
-
-# SIGTIS tall5d tall5d
-norm5d ::= tallSigtis
-wideNorm5d ::= wideSigtis
-tallSigtis ::= (SIGTISGAP) tall5d (GAP) tall5d
-wideSigtis ::= (SIGTISPEL) wide5d (ACE) wide5d (PER)
-SIGTISGAP ~ sig4h tis4h gap4k
-SIGTISPEL ~ sig4h tis4h pel4h
-
-# SIGZAP tall5d tall5d
-norm5d ::= tallSigzap
-wideNorm5d ::= wideSigzap
-tallSigzap ::= (SIGZAPGAP) tall5d (GAP) tall5d
-wideSigzap ::= (SIGZAPPEL) wide5d (ACE) wide5d (PER)
-SIGZAPGAP ~ sig4h zap4h gap4k
-SIGZAPPEL ~ sig4h zap4h pel4h
-
-# TISBAR till5d tall5d
-norm5d ::= tallTisbar
-wideNorm5d ::= wideTisbar
-tallTisbar ::= (TISBARGAP) till5d (GAP) tall5d
-wideTisbar ::= (TISBARPEL) till5d (ACE) wide5d (PER)
-TISBARGAP ~ tis4h bar4h gap4k
-TISBARPEL ~ tis4h bar4h pel4h
-
-# TISCOM tall5d tall5d
-norm5d ::= tallTiscom
-wideNorm5d ::= wideTiscom
-tallTiscom ::= (TISCOMGAP) tall5d (GAP) tall5d
-wideTiscom ::= (TISCOMPEL) wide5d (ACE) wide5d (PER)
-TISCOMGAP ~ tis4h com4h gap4k
-TISCOMPEL ~ tis4h com4h pel4h
-
-# TISDOT rope5d tall5d tall5d
-norm5d ::= tallTisdot
-wideNorm5d ::= wideTisdot
-tallTisdot ::= (TISDOTGAP) rope5d (GAP) tall5d (GAP) tall5d
-wideTisdot ::= (TISDOTPEL) rope5d (ACE) wide5d (ACE) wide5d (PER)
-TISDOTGAP ~ tis4h dot4h gap4k
-TISDOTPEL ~ tis4h dot4h pel4h
-
-# TISHEP tall5d tall5d
-norm5d ::= tallTishep
-wideNorm5d ::= wideTishep
-tallTishep ::= (TISHEPGAP) tall5d (GAP) tall5d
-wideTishep ::= (TISHEPPEL) wide5d (ACE) wide5d (PER)
-TISHEPGAP ~ tis4h hep4h gap4k
-TISHEPPEL ~ tis4h hep4h pel4h
-
-# TISFAS wise5d tall5d tall5d
-norm5d ::= tallTisfas
-wideNorm5d ::= wideTisfas
-tallTisfas ::= (TISFASGAP) wise5d (GAP) tall5d (GAP) tall5d
-wideTisfas ::= (TISFASPEL) wise5d (ACE) wide5d (ACE) wide5d (PER)
-TISFASGAP ~ tis4h fas4h gap4k
-TISFASPEL ~ tis4h fas4h pel4h
-
-# TISGAL tall5d tall5d
-norm5d ::= tallTisgal
-wideNorm5d ::= wideTisgal
-tallTisgal ::= (TISGALGAP) tall5d (GAP) tall5d
-wideTisgal ::= (TISGALPEL) wide5d (ACE) wide5d (PER)
-TISGALGAP ~ tis4h gal4h gap4k
-TISGALPEL ~ tis4h gal4h pel4h
-
-# TISGAR tall5d tall5d
-norm5d ::= tallTisgar
-wideNorm5d ::= wideTisgar
-tallTisgar ::= (TISGARGAP) tall5d (GAP) tall5d
-wideTisgar ::= (TISGARPEL) wide5d (ACE) wide5d (PER)
-TISGARGAP ~ tis4h gar4h gap4k
-TISGARPEL ~ tis4h gar4h pel4h
-
-# TISKET wise5d rope5d tall5d tall5d
-norm5d ::= tallTisket
-wideNorm5d ::= wideTisket
-tallTisket ::= (TISKETGAP) wise5d (GAP) rope5d (GAP) tall5d (GAP) tall5d
-wideTisket ::= (TISKETPEL) wise5d (ACE) rope5d (ACE) wide5d (ACE) wide5d (PER)
-TISKETGAP ~ tis4h ket4h gap4k
-TISKETPEL ~ tis4h ket4h pel4h
-
-# TISLUS tall5d tall5d
-norm5d ::= tallTislus
-wideNorm5d ::= wideTislus
-tallTislus ::= (TISLUSGAP) tall5d (GAP) tall5d
-wideTislus ::= (TISLUSPEL) wide5d (ACE) wide5d (PER)
-TISLUSGAP ~ tis4h lus4h gap4k
-TISLUSPEL ~ tis4h lus4h pel4h
-
-# TISSEM wise5d tall5d tall5d
-norm5d ::= tallTissem
-wideNorm5d ::= wideTissem
-tallTissem ::= (TISSEMGAP) wise5d (GAP) tall5d (GAP) tall5d
-wideTissem ::= (TISSEMPEL) wise5d (ACE) wide5d (ACE) wide5d (PER)
-TISSEMGAP ~ tis4h sem4h gap4k
-TISSEMPEL ~ tis4h sem4h pel4h
-
-# TISTAR SYM4K tall5d tall5d
-norm5d ::= tallTistar
-wideNorm5d ::= wideTistar
-tallTistar ::= (TISTARGAP) SYM4K (GAP) tall5d (GAP) tall5d
-wideTistar ::= (TISTARPEL) SYM4K (ACE) wide5d (ACE) wide5d (PER)
-TISTARGAP ~ tis4h tar4h gap4k
-TISTARPEL ~ tis4h tar4h pel4h
-
-# TISWUT rope5d tall5d tall5d tall5d
-norm5d ::= tallTiswut
-wideNorm5d ::= wideTiswut
-tallTiswut ::= (TISWUTGAP) rope5d (GAP) tall5d (GAP) tall5d (GAP) tall5d
-wideTiswut ::= (TISWUTPEL) rope5d (ACE) wide5d (ACE) wide5d (ACE) wide5d (PER)
-TISWUTGAP ~ tis4h wut4h gap4k
-TISWUTPEL ~ tis4h wut4h pel4h
-
-# WUTCOL tall5d tall5d tall5d
-norm5d ::= tallWutcol
-wideNorm5d ::= wideWutcol
-tallWutcol ::= (WUTCOLGAP) tall5d (GAP) tall5d (GAP) tall5d
-wideWutcol ::= (WUTCOLPEL) wide5d (ACE) wide5d (ACE) wide5d (PER)
-WUTCOLGAP ~ wut4h col4h gap4k
-WUTCOLPEL ~ wut4h col4h pel4h
-
-# WUTDOT tall5d tall5d tall5d
-norm5d ::= tallWutdot
-wideNorm5d ::= wideWutdot
-tallWutdot ::= (WUTDOTGAP) tall5d (GAP) tall5d (GAP) tall5d
-wideWutdot ::= (WUTDOTPEL) wide5d (ACE) wide5d (ACE) wide5d (PER)
-WUTDOTGAP ~ wut4h dot4h gap4k
-WUTDOTPEL ~ wut4h dot4h pel4h
-
-# WUTGAL tall5d tall5d
-norm5d ::= tallWutgal
-wideNorm5d ::= wideWutgal
-tallWutgal ::= (WUTGALGAP) tall5d (GAP) tall5d
-wideWutgal ::= (WUTGALPEL) wide5d (ACE) wide5d (PER)
-WUTGALGAP ~ wut4h gal4h gap4k
-WUTGALPEL ~ wut4h gal4h pel4h
-
-# WUTGAR tall5d tall5d
-norm5d ::= tallWutgar
-wideNorm5d ::= wideWutgar
-tallWutgar ::= (WUTGARGAP) tall5d (GAP) tall5d
-wideWutgar ::= (WUTGARPEL) wide5d (ACE) wide5d (PER)
-WUTGARGAP ~ wut4h gar4h gap4k
-WUTGARPEL ~ wut4h gar4h pel4h
-
-# WUTKET teak5d tall5d tall5d
-norm5d ::= tallWutket
-wideNorm5d ::= wideWutket
-tallWutket ::= (WUTKETGAP) teak5d (GAP) tall5d (GAP) tall5d
-wideWutket ::= (WUTKETPEL) wideTeak5d (ACE) wide5d (ACE) wide5d (PER)
-WUTKETGAP ~ wut4h ket4h gap4k
-WUTKETPEL ~ wut4h ket4h pel4h
-
-# WUTPAT teak5d tall5d tall5d
-norm5d ::= tallWutpat
-wideNorm5d ::= wideWutpat
-tallWutpat ::= (WUTPATGAP) teak5d (GAP) tall5d (GAP) tall5d
-wideWutpat ::= (WUTPATPEL) wideTeak5d (ACE) wide5d (ACE) wide5d (PER)
-WUTPATGAP ~ wut4h pat4h gap4k
-WUTPATPEL ~ wut4h pat4h pel4h
-
-# WUTSIG teak5d tall5d tall5d
-norm5d ::= tallWutsig
-wideNorm5d ::= wideWutsig
-tallWutsig ::= (WUTSIGGAP) teak5d (GAP) tall5d (GAP) tall5d
-wideWutsig ::= (WUTSIGPEL) wideTeak5d (ACE) wide5d (ACE) wide5d (PER)
-WUTSIGGAP ~ wut4h sig4h gap4k
-WUTSIGPEL ~ wut4h sig4h pel4h
-
-# WUTTIS till5d teak5d
-norm5d ::= tallWuttis
-wideNorm5d ::= wideWuttis
-tallWuttis ::= (WUTTISGAP) till5d (GAP) teak5d
-wideWuttis ::= (WUTTISPEL) till5d (ACE) wideTeak5d (PER)
-WUTTISGAP ~ wut4h tis4h gap4k
-WUTTISPEL ~ wut4h tis4h pel4h
-
-# WUTZAP tall5d
-norm5d ::= tallWutzap
-wideNorm5d ::= wideWutzap
-tallWutzap ::= (WUTZAPGAP) tall5d
-wideWutzap ::= (WUTZAPPEL) wide5d (PER)
-WUTZAPGAP ~ wut4h zap4h gap4k
-WUTZAPPEL ~ wut4h zap4h pel4h
-
-# ZAPCOL tall5d
-norm5d ::= tallZapcol
-wideNorm5d ::= wideZapcol
-tallZapcol ::= (ZAPCOLGAP) tall5d
-wideZapcol ::= (ZAPCOLPEL) wide5d (PER)
-ZAPCOLGAP ~ zap4h col4h gap4k
-ZAPCOLPEL ~ zap4h col4h pel4h
-
-# ZAPDOT tall5d
-norm5d ::= tallZapdot
-wideNorm5d ::= wideZapdot
-tallZapdot ::= (ZAPDOTGAP) tall5d
-wideZapdot ::= (ZAPDOTPEL) wide5d (PER)
-ZAPDOTGAP ~ zap4h dot4h gap4k
-ZAPDOTPEL ~ zap4h dot4h pel4h
-
-# ZAPCOM tall5d tall5d
-norm5d ::= tallZapcom
-wideNorm5d ::= wideZapcom
-tallZapcom ::= (ZAPCOMGAP) tall5d (GAP) tall5d
-wideZapcom ::= (ZAPCOMPEL) wide5d (ACE) wide5d (PER)
-ZAPCOMGAP ~ zap4h com4h gap4k
-ZAPCOMPEL ~ zap4h com4h pel4h
-
-# ZAPGAR tall5d
-norm5d ::= tallZapgar
-wideNorm5d ::= wideZapgar
-tallZapgar ::= (ZAPGARGAP) tall5d
-wideZapgar ::= (ZAPGARPEL) wide5d (PER)
-ZAPGARGAP ~ zap4h gar4h gap4k
-ZAPGARPEL ~ zap4h gar4h pel4h
 
