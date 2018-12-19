@@ -573,10 +573,10 @@ sub doFixedRune {
     # wideNorm5d ::= wideBarhep
     push @result, 'wideNorm5d ::= ' . $wideLHS;
 
-    # tallBarhep ::= (BAR4H HEP4H GAP) tall5d (GAP) tall5d
-    push @result, $tallLHS . ' ::= ('
+    # tallBarhep ::= (- BAR4H HEP4H GAP -) tall5d (- GAP -) tall5d
+    push @result, $tallLHS . ' ::= (- '
       . $tallRuneLexeme
-      . ') ' . (join ' (GAP) ', @samples);
+      . ' -) ' . (join ' (- GAP -) ', @samples);
     state $wideEquiv = {
         bont5d => 'wideBont5d',
         bonz5d => 'wideBonz5d',
@@ -589,10 +589,10 @@ sub doFixedRune {
     };
     my @wideSamples = map { $wideEquiv->{$_} // $_; } @samples;
 
-    # wideBarhep ::= (BARHEPPEL) wide5d (ACE) wide5d (PER)
-    push @result, $wideLHS . ' ::= ('
+    # wideBarhep ::= (- BARHEPPEL -) wide5d (- ACE -) wide5d (- PER -)
+    push @result, $wideLHS . ' ::= (- '
     . $wideRuneLexeme
-    . ') ' . (join ' (ACE) ', @wideSamples) . q{ (PER)};
+    . ' -) ' . (join ' (- ACE -) ', @wideSamples) . q{ (- PER -)};
 
     # BARHEPGAP ~ bar4h hep4h gap4k
     # BARHEPPEL ~ bar4h hep4h pel4h
@@ -908,10 +908,10 @@ bonk5d ::= CEN4H SYM4K
 
 # 5d library: bont
 
-bont5d ::= CEN4H SYM4K (- [.] GAP -) tall5d
+bont5d ::= CEN4H SYM4K (- DOT GAP -) tall5d
 bont5d ::= wideBont5d
-wideBont5d ::= CEN4H SYM4K (- [.] -) wide5d
-wideBont5d ::= CEN4H SYM4K (- [.] ACE -) wide5d
+wideBont5d ::= CEN4H SYM4K (- DOT -) wide5d
+wideBont5d ::= CEN4H SYM4K (- DOT ACE -) wide5d
 
 # 5d library: bony
 
@@ -945,11 +945,11 @@ wyde5dSeq ::= wyde5d+ separator=>ACE proper=>1
 boog5d ::= lusLusCell
 boog5d ::= lusHepCell
 boog5d ::= lusTisCell
-lusLusCell ::= (- '++' GAP -) BUC (- GAP -) tall5d
-lusLusCell ::= (- '++' GAP -) SYM4K (- GAP -) tall5d
-lusHepCell ::= (- '+-' GAP -) SYM4K (- GAP -) tall5d
-lusHepCell ::= (- '+-' GAP -) BUC (- GAP -) tall5d
-lusTisCell ::= (- '+=' GAP -) SYM4K (- GAP -) till5d
+lusLusCell ::= (- LUS LUS GAP -) BUC (- GAP -) tall5d
+lusLusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
+lusHepCell ::= (- LUS HEP GAP -) SYM4K (- GAP -) tall5d
+lusHepCell ::= (- LUS HEP GAP -) BUC (- GAP -) tall5d
+lusTisCell ::= (- LUS TIS GAP -) SYM4K (- GAP -) till5d
 
 # 5d library: gash
 
@@ -991,7 +991,7 @@ long5dWide ::= circumScatParen rank=>20
 
 toga ::= rope5d
 toga ::= togaSeq
-togaSeq ::= (- '[' -) togaElements (- ']' -)
+togaSeq ::= (- SEL -) togaElements (- SER -)
 togaElements ::= togaElement+ separator=>ACE proper=>1
 togaElement ::= toga
 togaElement ::= SIG
@@ -1698,14 +1698,14 @@ rupl5d ::= sigCircumBracketSig
 
 # Initial ACE of tall form is intended -- it
 # distinguishes this from lute(5d)
-circumBracket ::= (- '[' ACE -) tall5dSeq (- GAP ']' -)
-circumBracket ::= (- '[' -) wide5dSeq (- ']' -)
-sigCircumBracket ::= (- SIG '[' ACE -) tall5dSeq (- GAP ']' -)
-sigCircumBracket ::= (- SIG '[' -) wide5dSeq (- ']' -)
-circumBracketSig ::= (- '[' ACE -) tall5dSeq (- GAP ']' SIG -)
-circumBracketSig ::= (- '[' -) wide5dSeq (- ']' SIG -)
-sigCircumBracketSig ::= (- SIG '[' ACE -) tall5dSeq (- GAP ']' SIG -)
-sigCircumBracketSig ::= (- SIG '[' -) wide5dSeq (- ']' SIG -)
+circumBracket ::= (- SEL ACE -) tall5dSeq (- GAP SER -)
+circumBracket ::= (- SEL -) wide5dSeq (- SER -)
+sigCircumBracket ::= (- SIG SEL ACE -) tall5dSeq (- GAP SER -)
+sigCircumBracket ::= (- SIG SEL -) wide5dSeq (- SER -)
+circumBracketSig ::= (- SEL ACE -) tall5dSeq (- GAP SER SIG -)
+circumBracketSig ::= (- SEL -) wide5dSeq (- SER SIG -)
+sigCircumBracketSig ::= (- SIG SEL ACE -) tall5dSeq (- GAP SER SIG -)
+sigCircumBracketSig ::= (- SIG SEL -) wide5dSeq (- SER SIG -)
 
 # 5d library: sail
 
@@ -1923,12 +1923,12 @@ moldCircumParen ::= (- PEL -) wide5d (- PER -)
 # '{'
 # Same as scat(5d)
 scad5d ::= moldCircumBrace
-moldCircumBrace ::= (- '{' -) wyde5dSeq (- '}' -)
+moldCircumBrace ::= (- KEL -) wyde5dSeq (- KER -)
 
 # '['
 # Differs from scat(5d)
 scad5d ::= moldCircumBracket
-moldCircumBracket ::= (- '[' -) wyde5dSeq (- ']' -)
+moldCircumBracket ::= (- SEL -) wyde5dSeq (- SER -)
 
 # '*'
 # Subset of scat(5d)
@@ -1990,7 +1990,7 @@ moldInfixTis ::= SYM4K TIS wyde5d
 # ','
 # Differs from scad(5)
 # For rope(5d), see subcase ['a' 'z'] and rump(5d)
-wideBuccol ::= (- COM '[' -) wyde5dSeq (']')
+wideBuccol ::= (- COM SEL -) wyde5dSeq (SER)
 
 # '!'
 # Not in scad(5)
@@ -2059,7 +2059,7 @@ circumParen2 ::= (- PEL -) wide5d (- ACE -) wide5dSeq (- PER -)
 # '{'
 # Same as scad(5)
 scat5d ::= circumBraces
-circumBraces ::= (- '{' -) wyde5dSeq (- '}' -)
+circumBraces ::= (- KEL -) wyde5dSeq (- KER -)
 
 # '*'
 # Superset of scad(5)
@@ -2197,7 +2197,7 @@ circumGargal ::= (- GAR -) wide5dSeq (- GAL -)
 # 5d library: soil
 
 soil5d ::= doubleQuoteString
-doubleQuoteString ::= (- ["] -) <doubleQuoteCord> (- ["] -)
+doubleQuoteString ::= (- DOQ -) <doubleQuoteCord> (- DOQ -)
 <doubleQuoteCord> ::= <doubleQuoteElement>*
 <doubleQuoteElement> ::= <UNESCAPED_DOUBLE_QUOTE_CHARS>
 <doubleQuoteElement> ::= <ESCAPED_DOUBLE_QUOTE_CHAR>
@@ -2260,8 +2260,8 @@ wise5d ::= SYM4K (- FAS -) wyde5d
 
 # 5d library: wisp
 
-wisp5d ::= (- '--' -)
-wisp5d ::= whap5d GAP (- '--' -)
+wisp5d ::= (- HEP HEP -)
+wisp5d ::= whap5d GAP (- HEP HEP -)
 
 # 5d library: whap
 # Always tall
