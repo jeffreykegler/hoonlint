@@ -953,7 +953,7 @@ lusTisCell ::= (- LUS TIS GAP -) SYM4K (- GAP -) till5d
 
 # 5d library: gash
 
-gash5d ::= limp5d* separator=>[/] proper=>1
+gash5d ::= limp5d* separator=>FAS proper=>1
 limp5d ::= (- optFasSeq -) gasp5d
 optFasSeq ::= # empty
 optFasSeq ::= FAS_SEQ
@@ -1654,7 +1654,7 @@ rood5d ::= FAS poor5d
 # 5d library: rope
 
 # the wing type is parsed by the rope(5d)
-rope5d ::= limb+ separator=>[.] proper=>1
+rope5d ::= limb+ separator=>DOT proper=>1
 limb ::= COM
 limb ::= optKets BUC
 limb ::= optKets SYM4K
@@ -2293,7 +2293,7 @@ optHornSeq ::= hornSeq
 hornSeq ::= horn+ separator=>GAP proper=>1
 wideHornSeq ::= wideHorn+ separator=>ACE proper=>1
 
-fordHoopSeq ::= fordHoop+ separator=>GAP
+fordHoopSeq ::= fordHoop+ separator=>GAP proper=>1
 
 fordHoop ::= FAS FAS GAP fordHave rank=>60
 fordHoop ::= hornRune rank=>40
