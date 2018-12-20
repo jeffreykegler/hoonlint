@@ -96,8 +96,6 @@ my $dslAutoRules = join "\n", @dslAutoRules;
 
 # Assemble the base BSL
 my $baseDSL = join "\n", $mainDSL, $glyphAutoRules, $dslAutoRules;
-$baseDSL =~ s/[(][-] /(/g;
-$baseDSL =~ s/ [-][)]/)/g;
 
 my $defaultSemantics = <<'EOS';
 # start and length will be needed for production
@@ -269,6 +267,10 @@ sub new {
     my $self      = {};
     for my $argHash (@argHashes) {
       ARG_NAME: for my $argName ( keys %{$argHash} ) {
+            if ( $argName eq 'all_symbols' ) {
+                $self->{all_symbols} = $argHash->{all_symbols};
+                next ARG_NAME;
+            }
             if ( $argName eq 'semantics' ) {
                 $self->{semantics} = $argHash->{semantics};
                 next ARG_NAME;
@@ -277,9 +279,20 @@ sub new {
         }
     }
     my $semantics = $self->{semantics} // $defaultSemantics;
-    my $dsl       = $semantics . $baseDSL;
+    if ( $self->{all_symbols} ) {
+        ## show all symbols
+        $baseDSL =~ s/[(][-] //g;
+        $baseDSL =~ s/ [-][)]//g;
+    }
+    else {
+        ## hide selected symbols
+        $baseDSL =~ s/[(][-] /(/g;
+        $baseDSL =~ s/ [-][)]/)/g;
+    }
+    my $dsl = $semantics . $baseDSL;
+
     # say $dsl;
-    my $grammar   = Marpa::R2::Scanless::G->new( { source => \$dsl } );
+    my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
     $self->{grammar} = $grammar;
     return bless $self, 'MarpaX::YAHC';
 }
