@@ -267,8 +267,9 @@ sub new {
     my $self      = {};
     for my $argHash (@argHashes) {
       ARG_NAME: for my $argName ( keys %{$argHash} ) {
-            if ( $argName eq 'hide' ) {
+            if ( $argName eq 'all_symbols' ) {
                 $self->{all_symbols} = $argHash->{all_symbols};
+                next ARG_NAME;
             }
             if ( $argName eq 'semantics' ) {
                 $self->{semantics} = $argHash->{semantics};
