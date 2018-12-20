@@ -10,17 +10,40 @@ use English qw( -no_match_vars );
 require "yahc.pm";
 
 my @data = ();
+my $grammar;
 
 sub doNode {
     my (undef, @children) = @_;
-    CHILD: for my $child (@children) {
-        if (not ref $child) {
-            push @data, $child;
-            next CHILD;
+    my $ruleID         = $Marpa::R2::Context::rule;
+    my ( $lhs, @rhs ) =
+      map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
+    my @results = ();
+    if ((scalar @rhs) != (scalar @children)) {
+        my $childIX = 0;
+        CHILD: for (;;) {
+            my @childData = @{$children[$childIX]};
+            if ($childData[0] eq 'node') {
+               shift @childData;
+               push @results, [$rhs[0], Marpa::R2::Context::location(), @childData];
+               next CHILD;
+            }
+            push @results, [$rhs[0], Marpa::R2::Context::location()];
+            $childIX++;
+            last CHILD if $childIX >= scalar @children;
+            push @results, ['separator'];
         }
-        push @data, join q{ }, @{$child};
+    } else {
+        CHILD: for my $childIX (0 .. $#children) {
+            my @childData = @{$children[$childIX]};
+            if ($childData[0] eq 'node') {
+               shift @childData;
+               push @results, [$rhs[$childIX], Marpa::R2::Context::location(), @childData];
+               next CHILD;
+            }
+            push @data, [$rhs[$childIX], Marpa::R2::Context::location()];
+        }
     }
-    return "node";
+    return ["node", @results]
 }
 
 my $hoonSource = do {
@@ -35,6 +58,7 @@ EOS
 
 $DB::single = 1;
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
+$grammar = $parser->rawGrammar();
 $parser->read(\$hoonSource);
 my $recce = $parser->rawRecce();
 my $astRef = $recce->value();
