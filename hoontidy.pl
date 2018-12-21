@@ -77,9 +77,9 @@ sub doNode {
         last RESULT;
     }
     my ($first_g1, $last_g1) = Marpa::R2::Context::location();
-    my ($lhsStart) = $recce->g1_location_to_span($first_g1);
+    my ($lhsStart) = $recce->g1_location_to_span($first_g1+1);
     my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
-    my $lhsLength = $last_g1_start+$last_g1_length-1-$lhsStart;
+    my $lhsLength = $last_g1_start+$last_g1_length-$lhsStart;
     say STDERR "Returning node for $lhs ($lhsStart, $lhsLength):\n", 
        $recce->literal($lhsStart, $lhsLength);
     return [ "node", $lhs, $lhsStart, $lhsLength, @results ];
