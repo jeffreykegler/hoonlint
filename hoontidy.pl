@@ -11,59 +11,78 @@ require "yahc.pm";
 
 my @data = ();
 my $grammar;
+my $recce;
 
 sub doNode {
     my ( undef, @children ) = @_;
+    my @results = ();
     my $childCount = scalar @children;
     my $ruleID     = $Marpa::R2::Context::rule;
     my ( $lhs, @rhs ) =
       map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
-    my @results = ();
+    if ($childCount <= 0) {
+        return [ 'null', $lhs ];
+    }
   RESULT: {
-        if ( $childCount <= 0 ) {
-            # This is a nulled rule
-            push @results, [ 'null' ];
-            say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
-            last RESULT;
-        }
         if ( ( scalar @rhs ) != $childCount ) {
             # This is a non-trivial (that is, longer than one item) sequence rule.
             my $childIX = 0;
           CHILD: for ( ; ; ) {
                 say STDERR "childIX=$childIX; last children ix = $#children";
                 my @childData = @{ $children[$childIX] };
+                my $firstChildElement = shift @childData;
                 $childIX++;
-                if ( $childData[0] eq 'node' ) {
-                    shift @childData;
-                    push @results,
-                      [ $rhs[0], Marpa::R2::Context::location(), @childData ];
-                    say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
+              ITEM: {
+                    if ( $firstChildElement eq 'node' ) {
+                        push @results, [@childData];
+                        say STDERR join "!", __FILE__, __LINE__,
+                          @{ $results[$#results] };
+                        last ITEM;
+                    }
+                    if ( $firstChildElement eq 'null' ) {
+                        push @results, [@childData];
+                        say STDERR join "!", __FILE__, __LINE__,
+                          @{ $results[$#results] };
+                        last ITEM;
+                    }
+                    my ($lexemeLength, $lexemeName) = @childData;
+                    push @results, [$lexemeName, $firstChildElement, $lexemeLength];
                 }
-                push @results, [ $rhs[0], @childData ];
-                say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
                 last RESULT if $childIX >= $#children;
-                push @results, ['separator'];
-                say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
+                push @results, ['separator', 'NYI'];
+                say STDERR join "!", __FILE__, __LINE__,
+                  @{ $results[$#results] };
             }
             last RESULT;
         }
       # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
-            my @childData = @{ $children[$childIX] };
-            if ( $childData[0] eq 'node' ) {
-                shift @childData;
-                push @results,
-                  [ $rhs[$childIX], Marpa::R2::Context::location(),
-                    @childData ];
-                say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
+            my @childData         = @{ $children[$childIX] };
+            my $firstChildElement = shift @childData;
+            if ( $firstChildElement eq 'node' ) {
+                push @results, [@childData];
+                say STDERR join "!", __FILE__, __LINE__,
+                  @{ $results[$#results] };
                 next CHILD;
             }
-            push @results, [ $rhs[$childIX], Marpa::R2::Context::location() ];
-            say STDERR join "!", __FILE__, __LINE__, @{$results[$#results]};
+            if ( $firstChildElement eq 'null' ) {
+                push @results, [@childData];
+                say STDERR join "!", __FILE__, __LINE__,
+                  @{ $results[$#results] };
+                next CHILD;
+            }
+            my ( $lexemeLength, $lexemeName ) = @childData;
+            push @results, [ $lexemeName, $firstChildElement, $lexemeLength ];
         }
         last RESULT;
     }
-    return [ "node", @results ];
+    my ($first_g1, $last_g1) = Marpa::R2::Context::location();
+    my ($lhsStart) = $recce->g1_location_to_span($first_g1);
+    my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
+    my $lhsLength = $last_g1_start+$last_g1_length-1-$lhsStart;
+    say STDERR "Returning node for $lhs ($lhsStart, $lhsLength):\n", 
+       $recce->literal($lhsStart, $lhsLength);
+    return [ "node", $lhs, $lhsStart, $lhsLength, @results ];
 }
 
 my $hoonSource = do {
@@ -80,7 +99,7 @@ $DB::single = 1;
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 $grammar = $parser->rawGrammar();
 $parser->read(\$hoonSource);
-my $recce = $parser->rawRecce();
+$recce = $parser->rawRecce();
 my $astRef = $recce->value();
 
 die "Parse failed" if not $astRef;
