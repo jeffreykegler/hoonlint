@@ -24,6 +24,7 @@ branches:
 before_install:
     - cpanm IPC::Cmd
     - cpanm Test::Differences
+    - cpanm Getopt::Long
     - cpanm Marpa::R2
 
 # install prerequisites

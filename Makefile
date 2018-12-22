@@ -5,7 +5,7 @@
 
 all: test
 
-test: test_suite undoc_tests count_todo
+test: test_suite undoc_tests
 
 msg: count_todo
 
