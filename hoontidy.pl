@@ -6,8 +6,19 @@ use warnings;
 
 use Data::Dumper;
 use English qw( -no_match_vars );
+use Getopt::Long;
 
 require "yahc.pm";
+
+my $roundTripFlag;
+
+GetOptions ( "round-trip"  => \$roundTripFlag)   # flag
+  or die("Error in command line arguments\n");
+
+if (not $roundTripFlag) {
+  say "usage: $PROGRAM_NAME --round-trip";
+  die "A mode option must not set";
+}
 
 my @data = ();
 my $grammar;
@@ -165,7 +176,9 @@ local $Data::Dumper::Terse    = 1;
 my $astValue = ${$astRef};
 my ($nodeString, @topNodeData) = @{$astValue};
 
-roundTrip([@topNodeData]);
+if ($roundTripFlag) {
+    roundTrip([@topNodeData]);
+}
 
 sub roundTrip {
    no warnings 'recursion';
