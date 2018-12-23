@@ -164,6 +164,7 @@ my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 $grammar = $parser->rawGrammar();
 $parser->read(\$hoonSource);
 $recce = $parser->rawRecce();
+$parser = undef; # free up memory
 my $astRef = $recce->value();
 
 die "Parse failed" if not $astRef;
@@ -197,5 +198,9 @@ sub roundTrip {
        }
    }
 }
+
+# free up memory
+$grammar = undef;
+$recce = undef;
 
 # vim: expandtab shiftwidth=4:
