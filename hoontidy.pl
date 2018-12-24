@@ -10,14 +10,20 @@ use Getopt::Long;
 
 require "yahc.pm";
 
-my $roundTripFlag;
+my $style;
 
-GetOptions ( "round-trip"  => \$roundTripFlag)   # flag
+GetOptions ( "style=s"  => \$style)   # flag
   or die("Error in command line arguments\n");
 
-if (not $roundTripFlag) {
-  say "usage: $PROGRAM_NAME --round-trip";
-  die "A mode option must not set";
+CHECK_STYLE: {
+    if (not $style) {
+      say "usage: $PROGRAM_NAME --style=roundtrip";
+      die "A style option must be set";
+    }
+    if ($style eq 'roundtrip') {
+      last CHECK_STYLE;
+    }
+    die qq{Unknown style option: "$style"};
 }
 
 my @data = ();
@@ -88,38 +94,38 @@ sub doNode {
           CHILD: for ( ; ; ) {
                 # say STDERR "childIX=$childIX; last children ix = $#children";
                 my @childData = @{ $children[$childIX] };
-                my $firstChildElement = shift @childData;
+                my $childType = $childData[0];
                 $childIX++;
               ITEM: {
-                    if ( $firstChildElement eq 'node' ) {
+                    if ( $childType eq 'node' ) {
                         push @results, [@childData];
                         if (defined $lastSeparator) {
-                           push @{$lastSeparator}, $childData[1]-$lastSeparator->[1];
+                           $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
-                        $lastLocation = $childData[1] + $childData[2];
+                        $lastLocation = $childData[2] + $childData[3];
                         # say STDERR join "!", __FILE__, __LINE__,
                           # @{ $results[$#results] };
                         last ITEM;
                     }
-                    if ( $firstChildElement eq 'null' ) {
-                        push @results, [@childData, $lastLocation, 0];
+                    if ( $childType eq 'null' ) {
+                        push @results, ['null', $childData[1], $lastLocation, 0];
                         if (defined $lastSeparator) {
-                           push @{$lastSeparator}, $childData[1]-$lastSeparator->[1];
+                           $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
                         say STDERR join "NULL !", __FILE__, __LINE__,
                           @{ $results[$#results] };
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
-                       push @{$lastSeparator}, $firstChildElement-$lastSeparator->[1];
+                       $lastSeparator->[3] = $childData[0]-($lastSeparator->[2]);
                     }
-                    my ($lexemeLength, $lexemeName) = @childData;
-                    push @results, [$lexemeName, $firstChildElement, $lexemeLength];
+                    my ($lexemeStart, $lexemeLength, $lexemeName) = @childData;
+                    push @results, ['lexeme', $lexemeName, $lexemeStart, $lexemeLength];
                 }
                 last RESULT if $childIX > $#children;
                 my $separator = $separator{$lhs};
                 next CHILD unless $separator;
-                $lastSeparator = [$separator, $lastLocation];
+                $lastSeparator = ['separator', $separator, $lastLocation, 0];
                 push @results, $lastSeparator;
                 # say STDERR join "!", __FILE__, __LINE__,
                   # @{ $results[$#results] };
@@ -129,21 +135,21 @@ sub doNode {
       # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
             my @childData         = @{ $children[$childIX] };
-            my $firstChildElement = shift @childData;
-            if ( $firstChildElement eq 'node' ) {
+            my $dataType = $childData[0];
+            if ( $dataType eq 'node' ) {
                 push @results, [@childData];
                 # say STDERR join "!", __FILE__, __LINE__,
                   # @{ $results[$#results] };
                 next CHILD;
             }
-            if ( $firstChildElement eq 'null' ) {
+            if ( $dataType eq 'null' ) {
                 push @results, [@childData, $lastLocation, 0];
                 # say STDERR join "!", __FILE__, __LINE__,
                   # @{ $results[$#results] };
                 next CHILD;
             }
-            my ( $lexemeLength, $lexemeName ) = @childData;
-            push @results, [ $lexemeName, $firstChildElement, $lexemeLength ];
+            my ( $lexemeStart, $lexemeLength, $lexemeName ) = @childData;
+            push @results, [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ];
         }
         last RESULT;
     }
@@ -175,17 +181,15 @@ local $Data::Dumper::Terse    = 1;
 # say Data::Dumper::Dumper($astRef);
 
 my $astValue = ${$astRef};
-my ($nodeString, @topNodeData) = @{$astValue};
 
-if ($roundTripFlag) {
-    roundTrip([@topNodeData]);
+if ($style eq 'roundtrip') {
+    roundTrip($astValue);
 }
 
 sub roundTrip {
    no warnings 'recursion';
-   my ($arg) = @_;
    NODE: for my $node (@_) {
-       my ($lhs, $start, $length, @children) = @{$node};
+       my ($type, $lhs, $start, $length, @children) = @{$node};
        if (not defined $start) {
            die join "Problem node: ", @{$node};
        }
