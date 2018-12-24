@@ -185,11 +185,9 @@ if ($style eq 'roundtrip') {
     roundTrip($astValue);
 }
 
-if ($style eq 'test') {
-    applyTestStyle($astValue);
-}
-
 sub roundTrip {
+   # free up memory
+   $grammar = undef;
    no warnings 'recursion';
    NODE: for my $node (@_) {
        my ($type, $lhs, $start, $length, @children) = @{$node};
@@ -206,25 +204,44 @@ sub roundTrip {
    }
 }
 
-sub applyTestStyle {
-   no warnings 'recursion';
-   NODE: for my $node (@_) {
-       my ($type, $lhs, $start, $length, @children) = @{$node};
-       if (not defined $start) {
-           die join "Problem node: ", @{$node};
-       }
-       if (not @children) {
-           print $recce->literal($start, $length);
-           next NODE;
-       }
-       for my $child (@children) {
-           roundTrip($child);
-       }
-   }
-}
+if ( $style eq 'test' ) {
+    $grammar = undef;    # free up memory
 
-# free up memory
-$grammar = undef;
-$recce = undef;
+    sub applyTestStyle {
+        no warnings 'recursion';
+        my ($depth, @nodes) = @_;
+      NODE: for my $node (@nodes) {
+            my ( $type, $symbol, $start, $length, @children ) = @{$node};
+            # say STDERR "= $type $symbol\n";
+            if ( not defined $start ) {
+                die join "Problem node: ", @{$node};
+            }
+            if ($type eq 'lexeme') {
+                if ($symbol eq 'GAP') {
+                  printf "\nGAP(%02d):  ", $depth;
+                    next NODE;
+                }
+                if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
+                  my $literal = $recce->literal( $start, $length );
+                  printf substr($literal, 0, 2);
+                  printf "\nGAP(%02d):  ", $depth;
+                    next NODE;
+                }
+                print $recce->literal( $start, $length );
+                next NODE;
+            }
+            my $childCount = scalar @children;
+            next NODE if $childCount <= 0;
+            if ($childCount == 1) {
+                applyTestStyle($depth, $children[0]);
+                next NODE;
+            }
+            for my $child (@children) {
+                applyTestStyle($depth+1, $child);
+            }
+        }
+    }
+    applyTestStyle(0, $astValue);
+}
 
 # vim: expandtab shiftwidth=4:
