@@ -16,13 +16,12 @@ GetOptions ( "style=s"  => \$style)   # flag
   or die("Error in command line arguments\n");
 
 CHECK_STYLE: {
-    if (not $style) {
-      say "usage: $PROGRAM_NAME --style=roundtrip";
-      die "A style option must be set";
+    if ( not $style ) {
+        say "usage: $PROGRAM_NAME --style=roundtrip";
+        die "A style option must be set";
     }
-    if ($style eq 'roundtrip') {
-      last CHECK_STYLE;
-    }
+    last CHECK_STYLE if $style eq 'test';
+    last CHECK_STYLE if $style eq 'roundtrip';
     die qq{Unknown style option: "$style"};
 }
 
@@ -186,7 +185,28 @@ if ($style eq 'roundtrip') {
     roundTrip($astValue);
 }
 
+if ($style eq 'test') {
+    applyTestStyle($astValue);
+}
+
 sub roundTrip {
+   no warnings 'recursion';
+   NODE: for my $node (@_) {
+       my ($type, $lhs, $start, $length, @children) = @{$node};
+       if (not defined $start) {
+           die join "Problem node: ", @{$node};
+       }
+       if (not @children) {
+           print $recce->literal($start, $length);
+           next NODE;
+       }
+       for my $child (@children) {
+           roundTrip($child);
+       }
+   }
+}
+
+sub applyTestStyle {
    no warnings 'recursion';
    NODE: for my $node (@_) {
        my ($type, $lhs, $start, $length, @children) = @{$node};
