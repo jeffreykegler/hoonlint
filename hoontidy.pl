@@ -10,14 +10,20 @@ use Getopt::Long;
 
 require "yahc.pm";
 
-my $roundTripFlag;
+my $style;
 
-GetOptions ( "round-trip"  => \$roundTripFlag)   # flag
+GetOptions ( "style=s"  => \$style)   # flag
   or die("Error in command line arguments\n");
 
-if (not $roundTripFlag) {
-  say "usage: $PROGRAM_NAME --round-trip";
-  die "A mode option must not set";
+CHECK_STYLE: {
+    if (not $style) {
+      say "usage: $PROGRAM_NAME --style=roundtrip";
+      die "A style option must be set";
+    }
+    if ($style eq 'roundtrip') {
+      last CHECK_STYLE;
+    }
+    die qq{Unknown style option: "$style"};
 }
 
 my @data = ();
@@ -176,7 +182,7 @@ local $Data::Dumper::Terse    = 1;
 
 my $astValue = ${$astRef};
 
-if ($roundTripFlag) {
+if ($style eq 'roundtrip') {
     roundTrip($astValue);
 }
 

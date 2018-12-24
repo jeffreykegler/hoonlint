@@ -1,4 +1,4 @@
-# Test of hoontidy utility round-trip option
+# Test of hoontidy utility "round trip" option
 
 use 5.010;
 use strict;
@@ -34,7 +34,7 @@ my @fileList = qw(
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
-my $cmd = [ 'perl', 'hoontidy.pl', '--round-trip' ];
+my $cmd = [ 'perl', 'hoontidy.pl', '--style=roundtrip' ];
 
 for my $fileName (@fileList) {
 
