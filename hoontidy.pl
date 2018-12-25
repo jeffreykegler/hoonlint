@@ -215,8 +215,8 @@ if ( $style eq 'test' ) {
             my $name = $grammar->symbol_name($symbolID);
             my $data = {};
             $data->{name}   = $name;
-            $data->{id}   = $symbolID;
-            $data->{lexeme} = 1;       # default to lexeme
+            $data->{id}     = $symbolID;
+            $data->{lexeme} = 1;           # default to lexeme
           INITIAL_TALLS: {
                 if ( $name eq 'GAP' ) {
                     $data->{tall} = 1;
@@ -262,25 +262,34 @@ if ( $style eq 'test' ) {
         }
 
         my $ruleListIsDirty = 1;
-        my @ruleIsTall = ();
+        my @ruleIsTall      = ();
         while ($ruleListIsDirty) {
             my @ruleList = grep { not $ruleIsTall[$_] } $grammar->rule_ids();
             $ruleListIsDirty = 0;
-            RULE: for my $ruleID (@ruleList) {
+          RULE: for my $ruleID (@ruleList) {
                 next RULE if $ruleIsTall[$ruleID];
                 my $data = $ruleDB[$ruleID];
-                my ($lhs, @rhs) = @{$data->{symbols}};
-                my $separator = $data->{separator};
-                if ($separator and $symbolDB[$separator]->{tall}) {
-                    $ruleIsTall[$ruleID] = 1;
-                    $symbolDB[$lhs]->{tall} = 1;
-                    $ruleListIsDirty = 1;
+                my ( $lhs, @rhs ) = @{ $data->{symbols} };
+                my $symbolID;
+              CHECK_FOR_TALLNESS: {
+                    my $separator = $data->{separator};
+                    if ( $separator and $symbolDB[$separator]->{tall} ) {
+                        last CHECK_FOR_TALLNESS;
+                    }
+                    for my $rhsID (@rhs) {
+                        last CHECK_FOR_TALLNESS if $symbolDB[$rhsID]->{tall};
+                    }
                     next RULE;
                 }
+                $ruleIsTall[$ruleID]         = 1;
+                $symbolDB[$lhs]->{tall} = 1;
+                $ruleListIsDirty             = 1;
             }
         }
+      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) { 
+          say Data::Dumper::Dumper($symbolDB[$symbolID]);
+      }
     }
-
 
     sub applyTestStyle {
         no warnings 'recursion';
@@ -294,14 +303,14 @@ if ( $style eq 'test' ) {
             if ($type eq 'lexeme') {
                 if ($symbol eq 'GAP') {
                   # printf "\nGAP(%02d):  ", $depth;
-                  printf "\n" . (q{ } x $depth);
+                  printf "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
                 if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
                   my $literal = $recce->literal( $start, $length );
                   printf substr($literal, 0, 2);
                   # printf "\nGAP(%02d):  ", $depth;
-                  printf "\n" . (q{ } x $depth);
+                  printf "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
                 print $recce->literal( $start, $length );
