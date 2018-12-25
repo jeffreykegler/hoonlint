@@ -215,6 +215,7 @@ if ( $style eq 'test' ) {
             my $name = $grammar->symbol_name($symbolID);
             my $data = {};
             $data->{name}   = $name;
+            $data->{id}   = $symbolID;
             $data->{lexeme} = 1;       # default to lexeme
           INITIAL_TALLS: {
                 if ( $name eq 'GAP' ) {
@@ -239,13 +240,13 @@ if ( $style eq 'test' ) {
         }
       RULE:
         for my $ruleID ( $grammar->rule_ids() ) {
-            my $data = {};
+            my $data = { id => $ruleID };
             my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
             $data->{symbols} = [ $lhs, @rhs ];
             my $lhsName       = $grammar->symbol_name($lhs);
             my $separatorName = $separator{$lhsName};
             if ($separatorName) {
-                $data->{separator} = $symbolReverseDB{$separatorName};
+                $data->{separator} = $symbolReverseDB{$separatorName}->{id};
             }
             $ruleDB[$ruleID] = $data;
             $symbolReverseDB{$lhs}->{lexeme} = 0;
@@ -292,13 +293,15 @@ if ( $style eq 'test' ) {
             }
             if ($type eq 'lexeme') {
                 if ($symbol eq 'GAP') {
-                  printf "\nGAP(%02d):  ", $depth;
+                  # printf "\nGAP(%02d):  ", $depth;
+                  printf "\n" . (q{ } x $depth);
                     next NODE;
                 }
                 if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
                   my $literal = $recce->literal( $start, $length );
                   printf substr($literal, 0, 2);
-                  printf "\nGAP(%02d):  ", $depth;
+                  # printf "\nGAP(%02d):  ", $depth;
+                  printf "\n" . (q{ } x $depth);
                     next NODE;
                 }
                 print $recce->literal( $start, $length );
