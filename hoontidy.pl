@@ -207,21 +207,48 @@ sub roundTrip {
 if ( $style eq 'test' ) {
 
     sub testStyleCensus {
-        my @ruleDB   = ();
-        my @symbolDB = ();
+        my @ruleDB          = ();
+        my @symbolDB        = ();
         my %symbolReverseDB = ();
       SYMBOL:
         for my $symbolID ( $grammar->symbol_ids() ) {
             my $name = $grammar->symbol_name($symbolID);
             my $data = {};
-            $data->{name} = $name;
+            $data->{name}   = $name;
+            $data->{lexeme} = 1;       # default to lexeme
+          INITIAL_TALLS: {
+                if ( $name eq 'GAP' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name eq 'GAY4I' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+            }
             $symbolDB[$symbolID] = $data;
             $symbolReverseDB{$name} = $data;
         }
       RULE:
         for my $ruleID ( $grammar->rule_ids() ) {
-            $ruleDB[$ruleID]->{symbols} =
-              [$grammar->rule_expand($ruleID)];
+            my $data = {};
+            my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+            $data->{symbols} = [ $lhs, @rhs ];
+            $ruleDB[$ruleID]->{symbols} = $data;
+            $symbolReverseDB{$lhs}->{lexeme} = 0;
+        }
+
+        # Now determine which symbols are "tall" -- that is, contain
+        # vertical space.
+      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) {
+            my $data = $symbolDB[$symbolID];    # Symbol is wide if ...
+            next SYMBOL unless $data->{lexeme}; # it is a lexeme and ...
+            next SYMBOL if $data->{tall};       # was not initialized to tall.
+            $data->{tall} = 0;
         }
     }
 
