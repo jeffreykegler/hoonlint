@@ -205,12 +205,11 @@ sub roundTrip {
 }
 
 if ( $style eq 'test' ) {
-    $grammar = undef;    # free up memory
 
     sub testStyleCensus {
-        %ruleDB   = ();
-        %symbolDB = ();
-        %symbolReverseDB = {};
+        my @ruleDB   = ();
+        my @symbolDB = ();
+        my %symbolReverseDB = ();
       SYMBOL:
         for my $symbolID ( $grammar->symbol_ids() ) {
             my $name = $grammar->symbol_name($symbolID);
@@ -222,9 +221,10 @@ if ( $style eq 'test' ) {
       RULE:
         for my $ruleID ( $grammar->rule_ids() ) {
             $ruleDB[$ruleID]->{symbols} =
-              $grammar->rule_expand($ruleID);
+              [$grammar->rule_expand($ruleID)];
         }
     }
+
 
     sub applyTestStyle {
         no warnings 'recursion';
@@ -262,6 +262,7 @@ if ( $style eq 'test' ) {
     }
 
     testStyleCensus();
+    $grammar = undef;    # free up memory
     applyTestStyle(0, $astValue);
 }
 
