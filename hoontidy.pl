@@ -249,6 +249,10 @@ if ( $style eq 'test' ) {
                 print $recce->literal( $start, $length );
                 next NODE;
             }
+            if ($type eq 'separator') {
+                print $recce->literal( $start, $length );
+                next NODE;
+            }
             my $childCount = scalar @children;
             next NODE if $childCount <= 0;
             if ($childCount == 1) {
