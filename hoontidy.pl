@@ -221,11 +221,15 @@ if ( $style eq 'test' ) {
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
                 }
+                if ( $name eq 'GAPSEM' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
                 if ( $name eq 'GAY4I' ) {
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
                 }
-                if ( $symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+                if ( $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
                 }
@@ -238,17 +242,41 @@ if ( $style eq 'test' ) {
             my $data = {};
             my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
             $data->{symbols} = [ $lhs, @rhs ];
-            $ruleDB[$ruleID]->{symbols} = $data;
+            my $lhsName       = $grammar->symbol_name($lhs);
+            my $separatorName = $separator{$lhsName};
+            if ($separatorName) {
+                $data->{separator} = $symbolReverseDB{$separatorName};
+            }
+            $ruleDB[$ruleID] = $data;
             $symbolReverseDB{$lhs}->{lexeme} = 0;
         }
 
         # Now determine which symbols are "tall" -- that is, contain
-        # vertical space.
+        # vertical space.  First, determine it for all lexemes.
       SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) {
             my $data = $symbolDB[$symbolID];    # Symbol is wide if ...
             next SYMBOL unless $data->{lexeme}; # it is a lexeme and ...
             next SYMBOL if $data->{tall};       # was not initialized to tall.
             $data->{tall} = 0;
+        }
+
+        my $ruleListIsDirty = 1;
+        my @ruleIsTall = ();
+        while ($ruleListIsDirty) {
+            my @ruleList = grep { not $ruleIsTall[$_] } $grammar->rule_ids();
+            $ruleListIsDirty = 0;
+            RULE: for my $ruleID (@ruleList) {
+                next RULE if $ruleIsTall[$ruleID];
+                my $data = $ruleDB[$ruleID];
+                my ($lhs, @rhs) = @{$data->{symbols}};
+                my $separator = $data->{separator};
+                if ($separator and $symbolDB[$separator]->{tall}) {
+                    $ruleIsTall[$ruleID] = 1;
+                    $symbolDB[$lhs]->{tall} = 1;
+                    $ruleListIsDirty = 1;
+                    next RULE;
+                }
+            }
         }
     }
 
