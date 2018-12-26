@@ -16,13 +16,12 @@ GetOptions ( "style=s"  => \$style)   # flag
   or die("Error in command line arguments\n");
 
 CHECK_STYLE: {
-    if (not $style) {
-      say "usage: $PROGRAM_NAME --style=roundtrip";
-      die "A style option must be set";
+    if ( not $style ) {
+        say "usage: $PROGRAM_NAME --style=roundtrip";
+        die "A style option must be set";
     }
-    if ($style eq 'roundtrip') {
-      last CHECK_STYLE;
-    }
+    last CHECK_STYLE if $style eq 'test';
+    last CHECK_STYLE if $style eq 'roundtrip';
     die qq{Unknown style option: "$style"};
 }
 
@@ -187,6 +186,8 @@ if ($style eq 'roundtrip') {
 }
 
 sub roundTrip {
+   # free up memory
+   $grammar = undef;
    no warnings 'recursion';
    NODE: for my $node (@_) {
        my ($type, $lhs, $start, $length, @children) = @{$node};
@@ -203,8 +204,137 @@ sub roundTrip {
    }
 }
 
-# free up memory
-$grammar = undef;
-$recce = undef;
+if ( $style eq 'test' ) {
+
+    sub testStyleCensus {
+        my @ruleDB          = ();
+        my @symbolDB        = ();
+        my %symbolReverseDB = ();
+      SYMBOL:
+        for my $symbolID ( $grammar->symbol_ids() ) {
+            my $name = $grammar->symbol_name($symbolID);
+            my $data = {};
+            $data->{name}   = $name;
+            $data->{id}     = $symbolID;
+            $data->{lexeme} = 1;           # default to lexeme
+          INITIAL_TALLS: {
+                if ( $name eq 'GAP' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name eq 'GAPSEM' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name eq 'GAY4I' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+            }
+            $symbolDB[$symbolID] = $data;
+            $symbolReverseDB{$name} = $data;
+        }
+      RULE:
+        for my $ruleID ( $grammar->rule_ids() ) {
+            my $data = { id => $ruleID };
+            my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+            $data->{symbols} = [ $lhs, @rhs ];
+            my $lhsName       = $grammar->symbol_name($lhs);
+            my $separatorName = $separator{$lhsName};
+            if ($separatorName) {
+                $data->{separator} = $symbolReverseDB{$separatorName}->{id};
+            }
+            $ruleDB[$ruleID] = $data;
+            $symbolReverseDB{$lhs}->{lexeme} = 0;
+        }
+
+        # Now determine which symbols are "tall" -- that is, contain
+        # vertical space.  First, determine it for all lexemes.
+      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) {
+            my $data = $symbolDB[$symbolID];    # Symbol is wide if ...
+            next SYMBOL unless $data->{lexeme}; # it is a lexeme and ...
+            next SYMBOL if $data->{tall};       # was not initialized to tall.
+            $data->{tall} = 0;
+        }
+
+        my $ruleListIsDirty = 1;
+        my @ruleIsTall      = ();
+        while ($ruleListIsDirty) {
+            my @ruleList = grep { not $ruleIsTall[$_] } $grammar->rule_ids();
+            $ruleListIsDirty = 0;
+          RULE: for my $ruleID (@ruleList) {
+                next RULE if $ruleIsTall[$ruleID];
+                my $data = $ruleDB[$ruleID];
+                my ( $lhs, @rhs ) = @{ $data->{symbols} };
+                my $symbolID;
+              CHECK_FOR_TALLNESS: {
+                    my $separator = $data->{separator};
+                    if ( $separator and $symbolDB[$separator]->{tall} ) {
+                        last CHECK_FOR_TALLNESS;
+                    }
+                    for my $rhsID (@rhs) {
+                        last CHECK_FOR_TALLNESS if $symbolDB[$rhsID]->{tall};
+                    }
+                    next RULE;
+                }
+                $ruleIsTall[$ruleID]         = 1;
+                $symbolDB[$lhs]->{tall} = 1;
+                $ruleListIsDirty             = 1;
+            }
+        }
+      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) { 
+          say Data::Dumper::Dumper($symbolDB[$symbolID]);
+      }
+    }
+
+    sub applyTestStyle {
+        no warnings 'recursion';
+        my ($depth, @nodes) = @_;
+      NODE: for my $node (@nodes) {
+            my ( $type, $symbol, $start, $length, @children ) = @{$node};
+            # say STDERR "= $type $symbol\n";
+            if ( not defined $start ) {
+                die join "Problem node: ", @{$node};
+            }
+            if ($type eq 'lexeme') {
+                if ($symbol eq 'GAP') {
+                  # printf "\nGAP(%02d):  ", $depth;
+                  printf "\n" . (q{ } x ($depth*2));
+                    next NODE;
+                }
+                if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
+                  my $literal = $recce->literal( $start, $length );
+                  printf substr($literal, 0, 2);
+                  # printf "\nGAP(%02d):  ", $depth;
+                  printf "\n" . (q{ } x ($depth*2));
+                    next NODE;
+                }
+                print $recce->literal( $start, $length );
+                next NODE;
+            }
+            if ($type eq 'separator') {
+                print $recce->literal( $start, $length );
+                next NODE;
+            }
+            my $childCount = scalar @children;
+            next NODE if $childCount <= 0;
+            if ($childCount == 1) {
+                applyTestStyle($depth, $children[0]);
+                next NODE;
+            }
+            for my $child (@children) {
+                applyTestStyle($depth+1, $child);
+            }
+        }
+    }
+
+    testStyleCensus();
+    $grammar = undef;    # free up memory
+    applyTestStyle(0, $astValue);
+}
 
 # vim: expandtab shiftwidth=4:
