@@ -1,15 +1,15 @@
-265 wide5d ::= wide5dChoices
-253 wide5dChoices ::= long5dWide
-241 long5dWide ::= scat5d
+241 wideLong5d ::= scat5d
 217 optKets ::= KET
 211 limb ::= optKets SYM4K
 202 rope5d ::= limb
+201 wide5d ::= wide5dChoices
+198 wide5dChoices ::= wideLong5d
 171 rump5d ::= rope5d
 147 scat5d ::= rump5d
 95 wyde5d ::= scad5d
 64 tall5d ::= norm5d
-64 tall5d ::= wide5d
 57 wide5dSeq ::= wide5d
+55 tall5d ::= wideLong5d
 39 circumParen2 ::= PEL wide5d ACE wide5dSeq PER
 39 scat5d ::= circumParen2
 33 till5d ::= wyde5d
@@ -25,7 +25,6 @@
 13 moldAura ::= PAT mota5d
 13 scad5d ::= moldAura
 12 nuck4l ::= SYM4K
-12 wide5dChoices ::= wideNorm5d
 11 circumSigParen ::= SIG PEL rope5d ACE wide5d ACE wide5dSeq PER
 11 scat5d ::= circumSigParen
 11 wide5dJog ::= rope5d ACE wide5d
@@ -37,6 +36,7 @@
 10 scad5d ::= moldCircumBrace
 10 scad5d ::= moldCircumParen
 9 norm5d ::= tallWutcol
+9 tall5d ::= wideNorm5d
 9 tallWutcol ::= WUTCOLGAP tall5d GAP tall5d GAP tall5d
 7 circumBracket ::= SEL wide5dSeq SER
 7 norm5d ::= tallBartis
@@ -49,13 +49,13 @@
 6 irrDottis ::= TIS PEL wide5d ACE wide5d PER
 6 limb ::= optKets BUC
 6 lobo5d ::= wide5dJogs
-6 long5dWide ::= circumScatParen
 6 norm5d ::= tallBarhep
 6 norm5d ::= tallKethep
 6 scat5d ::= irrDottis
 6 tallBarhep ::= BARHEPGAP tall5d
 6 tallKethep ::= KETHEPGAP till5d GAP tall5d
 6 wide5dJogs ::= wide5dJog
+6 wideLong5d ::= circumScatParen
 5 norm5d ::= tallTisfas
 5 scat5d ::= soloSig
 5 soloSig ::= SIG
@@ -68,7 +68,6 @@
 4 fordHoop ::= tall5d
 4 fordHoopSeq ::= fordHoop
 4 infixTis ::= toga TIS wide5d
-4 long5dWide ::= infixTis
 4 moldInfixTis ::= SYM4K TIS wyde5d
 4 norm5d ::= tallBarcen
 4 norm5d ::= tallKetlus
@@ -85,6 +84,7 @@
 4 tallKetlus ::= KETLUSGAP tall5d GAP tall5d
 4 tallTislus ::= TISLUSGAP tall5d GAP tall5d
 4 toga ::= rope5d
+4 wideLong5d ::= infixTis
 3 doubleQuoteCord ::= doubleQuoteElement
 3 doubleQuoteElement ::= UNESCAPED_DOUBLE_QUOTE_CHARS
 3 doubleQuoteString ::= DOQ doubleQuoteCord DOQ
@@ -100,10 +100,10 @@
 3 tallTisgal ::= TISGALGAP tall5d GAP tall5d
 3 till5dSeq ::= till5d
 3 wasp5d ::=
+3 wide5dChoices ::= wideNorm5d
 3 wise5d ::= SYM4K FAS wyde5d
 3 wise5d ::= SYM4K TIS wyde5d
 2 infixCol ::= scat5d COL wide5d
-2 long5dWide ::= infixCol
 2 moldNullSig ::= SIG
 2 norm5d ::= tallBuccen
 2 nuck4l ::= moldNullSig
@@ -112,6 +112,7 @@
 2 teak5d ::= teakChoice
 2 teakChoice ::= tall5d
 2 wideDotlus ::= LUS PEL wide5d PER
+2 wideLong5d ::= infixCol
 2 wideNorm5d ::= wideDotlus
 1 aura ::= PAT mota5d
 1 circumBraces ::= KEL wyde5dSeq KER
@@ -377,8 +378,6 @@
 0 limb ::= VEN4K
 0 limp5d ::= optFasSeq gasp5d
 0 lip4j ::= lib4j_Piece DOG4I lib4j_Piece DOG4I lib4j_Piece DOG4I lib4j_Piece
-0 long5dWide ::= infixFas
-0 long5dWide ::= infixKet
 0 lusHepCell ::= LUS HEP GAP BUC GAP tall5d
 0 lusHepCell ::= LUS HEP GAP SYM4K GAP tall5d
 0 lusLusCell ::= LUS LUS GAP BUC GAP tall5d
@@ -650,6 +649,7 @@
 0 tagHeadKernelElements ::= tagHeadKernelElement
 0 tall5d ::= lute5d
 0 tall5d ::= sailApex5d
+0 tall5d ::= wideSailApex5d
 0 tallAttribute ::= GAP TIS aMane GAP hopefullyQuote
 0 tallAttributes ::= tallAttribute
 0 tallBarcol ::= BARCOLGAP tall5d GAP tall5d
@@ -914,6 +914,8 @@
 0 wideKetsig ::= KETSIGPEL wide5d PER
 0 wideKettis ::= KETTISPEL SYM4K ACE wide5d PER
 0 wideKetwut ::= KETWUTPEL wide5d PER
+0 wideLong5d ::= infixFas
+0 wideLong5d ::= infixKet
 0 wideNorm5d ::= wideBarcol
 0 wideNorm5d ::= wideBardot
 0 wideNorm5d ::= wideBarhep

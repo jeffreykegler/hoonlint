@@ -2428,11 +2428,14 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
 tall5d ::= norm5d rank=>30
 tall5d ::= sailApex5d rank=>25
-tall5d ::= wide5d rank=>20
-tall5d ::= lute5d rank=>20
-wide5d ::= wide5dChoices
+tall5d ::= wideNorm5d rank=>20
+tall5d ::= wideLong5d rank=>18
+tall5d ::= wideSailApex5d rank=>15
+tall5d ::= lute5d rank=>10
 
 # TODO: Precedence needs to be tested
+
+wide5d ::= wide5dChoices
 wide5dChoices ::= wideNorm5d rank=>10
 wide5dChoices ::= wideLong5d rank=>8
 wide5dChoices ::= wideSailApex5d
