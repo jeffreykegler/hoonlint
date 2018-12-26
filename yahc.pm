@@ -488,7 +488,7 @@ sub prune {
         fordHoop             => 1,
         fordHoopSeq          => 1,
         hoonExpression       => 1,
-        long5dWide           => 1,
+        wideLong5d           => 1,
         norm5d               => 1,
         norm5dMold           => 1,
         rope5d               => 1,
@@ -995,12 +995,12 @@ lute5d ::= (- SEL GAP -) tall5dSeq (- GAP SER -)
 
 # 5d library: long
 
-long5dWide ::= scat5d rank=>80
-long5dWide ::= infixTis rank=>60
-long5dWide ::= infixCol rank=>50
-long5dWide ::= infixKet rank=>40
-long5dWide ::= infixFas rank=>30
-long5dWide ::= circumScatParen rank=>20
+wideLong5d ::= scat5d rank=>80
+wideLong5d ::= infixTis rank=>60
+wideLong5d ::= infixCol rank=>50
+wideLong5d ::= infixKet rank=>40
+wideLong5d ::= infixFas rank=>30
+wideLong5d ::= circumScatParen rank=>20
 
 toga ::= rope5d
 toga ::= togaSeq
@@ -2427,14 +2427,14 @@ hexGroup ~ [.] wsChars hexDigit hexDigit hexDigit hexDigit
 
 tall5dSeq ::= tall5d+ separator=>GAP proper=>1
 tall5d ::= norm5d rank=>30
+tall5d ::= sailApex5d rank=>25
 tall5d ::= wide5d rank=>20
 tall5d ::= lute5d rank=>20
-tall5d ::= sailApex5d
 wide5d ::= wide5dChoices
 
 # TODO: Precedence needs to be tested
 wide5dChoices ::= wideNorm5d rank=>10
-wide5dChoices ::= long5dWide rank=>8
+wide5dChoices ::= wideLong5d rank=>8
 wide5dChoices ::= wideSailApex5d
 
 wide5dSeq ::= wide5d+ separator=>ACE proper=>1
