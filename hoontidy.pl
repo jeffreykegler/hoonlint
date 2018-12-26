@@ -223,6 +223,7 @@ if ( $style eq 'test' ) {
                     last INITIAL_TALLS;
                 }
                 if ( $name eq 'GAPSEM' ) {
+                    # USED?
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
                 }
