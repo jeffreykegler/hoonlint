@@ -230,6 +230,18 @@ if ( $style eq 'test' ) {
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
                 }
+                if ( $name eq 'TRIPLE_DOUBLE_START' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
+                if ( $name eq 'TRIPLE_QUOTE_STRING' ) {
+                    $data->{tall} = 1;
+                    last INITIAL_TALLS;
+                }
                 if ( $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
                     $data->{tall} = 1;
                     last INITIAL_TALLS;
@@ -274,9 +286,13 @@ if ( $style eq 'test' ) {
               CHECK_FOR_TALLNESS: {
                     my $separator = $data->{separator};
                     if ( $separator and $symbolDB[$separator]->{tall} ) {
+                        say STDERR join " ", $grammar->symbol_name($separator),
+                          "makes", $grammar->symbol_name($lhs), "tall";
                         last CHECK_FOR_TALLNESS;
                     }
                     for my $rhsID (@rhs) {
+                        say STDERR join " ", $grammar->symbol_name($rhsID),
+                          "makes", $grammar->symbol_name($lhs), "tall" if $symbolDB[$rhsID]->{tall};
                         last CHECK_FOR_TALLNESS if $symbolDB[$rhsID]->{tall};
                     }
                     next RULE;
