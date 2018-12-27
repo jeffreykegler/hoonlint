@@ -217,40 +217,12 @@ if ( $style eq 'test' ) {
             $data->{name}   = $name;
             $data->{id}     = $symbolID;
             $data->{lexeme} = 1;           # default to lexeme
-          INITIAL_TALLS: {
-                if ( $name eq 'GAP' ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name eq 'GAPSEM' ) {
-                    # USED?
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name eq 'GAY4I' ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name eq 'TRIPLE_DOUBLE_START' ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name eq 'TRIPLE_QUOTE_STRING' ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-                if ( $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
-                    $data->{tall} = 1;
-                    last INITIAL_TALLS;
-                }
-            }
+            $data->{gap} = 1 if $name eq 'GAP';
+            $data->{gap} = 1 if $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/;
             $symbolDB[$symbolID] = $data;
             $symbolReverseDB{$name} = $data;
         }
+        my $gapID = $symbolReverseDB{'GAP'}->{id};
       RULE:
         for my $ruleID ( $grammar->rule_ids() ) {
             my $data = { id => $ruleID };
@@ -259,52 +231,26 @@ if ( $style eq 'test' ) {
             my $lhsName       = $grammar->symbol_name($lhs);
             my $separatorName = $separator{$lhsName};
             if ($separatorName) {
-                $data->{separator} = $symbolReverseDB{$separatorName}->{id};
+                my $separatorID = $symbolReverseDB{$separatorName}->{id};
+                $data->{separator} = $separatorID;
+                if ($separatorID == $gapID) {
+                    $data->{gapiness} = -1;
+                }
+            }
+            if (not defined $data->{gapiness}) {
+                for my $rhsID (@rhs) {
+                    $data->{gapiness}++ if $symbolDB[$rhsID]->{gap};
+                }
             }
             $ruleDB[$ruleID] = $data;
             $symbolReverseDB{$lhs}->{lexeme} = 0;
         }
 
-        # Now determine which symbols are "tall" -- that is, contain
-        # vertical space.  First, determine it for all lexemes.
-      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) {
-            my $data = $symbolDB[$symbolID];    # Symbol is wide if ...
-            next SYMBOL unless $data->{lexeme}; # it is a lexeme and ...
-            next SYMBOL if $data->{tall};       # was not initialized to tall.
-            $data->{tall} = 0;
-        }
-
-        my $ruleListIsDirty = 1;
-        my @ruleIsTall      = ();
-        while ($ruleListIsDirty) {
-            my @ruleList = grep { not $ruleIsTall[$_] } $grammar->rule_ids();
-            $ruleListIsDirty = 0;
-          RULE: for my $ruleID (@ruleList) {
-                next RULE if $ruleIsTall[$ruleID];
-                my $data = $ruleDB[$ruleID];
-                my ( $lhs, @rhs ) = @{ $data->{symbols} };
-                my $symbolID;
-              CHECK_FOR_TALLNESS: {
-                    my $separator = $data->{separator};
-                    if ( $separator and $symbolDB[$separator]->{tall} ) {
-                        say STDERR join " ", $grammar->symbol_name($separator),
-                          "makes", $grammar->symbol_name($lhs), "tall";
-                        last CHECK_FOR_TALLNESS;
-                    }
-                    for my $rhsID (@rhs) {
-                        say STDERR join " ", $grammar->symbol_name($rhsID),
-                          "makes", $grammar->symbol_name($lhs), "tall" if $symbolDB[$rhsID]->{tall};
-                        last CHECK_FOR_TALLNESS if $symbolDB[$rhsID]->{tall};
-                    }
-                    next RULE;
-                }
-                $ruleIsTall[$ruleID]         = 1;
-                $symbolDB[$lhs]->{tall} = 1;
-                $ruleListIsDirty             = 1;
-            }
-        }
       SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) { 
-          say Data::Dumper::Dumper($symbolDB[$symbolID]);
+          say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
+      }
+      SYMBOL: for my $ruleID ( $grammar->rule_ids() ) { 
+          say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
       }
     }
 
@@ -343,6 +289,7 @@ if ( $style eq 'test' ) {
                 applyTestStyle($depth, $children[0]);
                 next NODE;
             }
+            my $baseDepth = $depth;
             for my $child (@children) {
                 applyTestStyle($depth+1, $child);
             }
