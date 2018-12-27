@@ -102,8 +102,6 @@ sub doNode {
                            $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
                         $lastLocation = $childData[2] + $childData[3];
-                        # say STDERR join "!", __FILE__, __LINE__,
-                          # @{ $results[$#results] };
                         last ITEM;
                     }
                     if ( $childType eq 'null' ) {
@@ -111,8 +109,8 @@ sub doNode {
                         if (defined $lastSeparator) {
                            $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
-                        say STDERR join "NULL !", __FILE__, __LINE__,
-                          @{ $results[$#results] };
+                        # say STDERR join "NULL !", __FILE__, __LINE__,
+                          # @{ $results[$#results] };
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
@@ -126,8 +124,6 @@ sub doNode {
                 next CHILD unless $separator;
                 $lastSeparator = ['separator', $separator, $lastLocation, 0];
                 push @results, $lastSeparator;
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
             }
             last RESULT;
         }
@@ -137,14 +133,10 @@ sub doNode {
             my $dataType = $childData[0];
             if ( $dataType eq 'node' ) {
                 push @results, [@childData];
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
                 next CHILD;
             }
             if ( $dataType eq 'null' ) {
                 push @results, [@childData, $lastLocation, 0];
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
                 next CHILD;
             }
             my ( $lexemeStart, $lexemeLength, $lexemeName ) = @childData;
@@ -247,12 +239,12 @@ if ( $style eq 'test' ) {
             $symbolReverseDB{$lhs}->{lexeme} = 0;
         }
 
-      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) { 
-          say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
-      }
-      SYMBOL: for my $ruleID ( $grammar->rule_ids() ) { 
-          say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
-      }
+      # for my $symbolID ( $grammar->symbol_ids() ) { 
+          # say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
+      # }
+      # for my $ruleID ( $grammar->rule_ids() ) { 
+          # say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
+      # }
     }
 
     testStyleCensus();
@@ -260,16 +252,13 @@ if ( $style eq 'test' ) {
     sub applyTestStyle {
         no warnings 'recursion';
         my ($depth, @nodes) = @_;
-                    # say STDERR join " ", __FILE__, __LINE__, $depth;
       NODE: for my $node (@nodes) {
-                    # say STDERR join " ", __FILE__, __LINE__;
             my ( $type, $key, $start, $length, @children ) = @{$node};
             # say STDERR "= $type $key\n";
             if ( not defined $start ) {
                 die join "Problem node: ", @{$node};
             }
             if ($type eq 'lexeme') {
-                    # say STDERR join " ", __FILE__, __LINE__, $depth;
                 if ($key eq 'GAP') {
                   my $literal = $recce->literal( $start, $length );
                   my $lastNL = rindex $literal, "\n";
@@ -293,7 +282,6 @@ if ( $style eq 'test' ) {
                     next NODE;
                 }
                 print $recce->literal( $start, $length );
-                    # say STDERR join " ", __FILE__, __LINE__;
                 next NODE;
             }
             if ($type eq 'separator') {
@@ -315,7 +303,7 @@ if ( $style eq 'test' ) {
             }
             if ($gapiness == 0) { # wide node
                 for my $child (@children) {
-                    applyTestStyle($depth+1, $child);
+                    applyTestStyle($depth, $child);
                 }
                 next NODE;
             }
@@ -324,16 +312,13 @@ if ( $style eq 'test' ) {
             CHILD: for my $child (@children) {
                 # say STDERR join " ", @{$child};
                 if ($child->[0] eq 'lexeme' and $symbolReverseDB{$child->[1]}->{gap}) {
-                    # say STDERR join " ", __FILE__, __LINE__, $currentDepth;
                     applyTestStyle($currentDepth, $child);
-                    # say STDERR join " ", __FILE__, __LINE__, $currentDepth;
                     $currentDepth--;
                     next CHILD;
                 }
                 applyTestStyle($currentDepth, $child);
             }
         }
-                    # say STDERR join " ", __FILE__, __LINE__;
     }
 
     $grammar = undef;    # free up memory
