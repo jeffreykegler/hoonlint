@@ -369,6 +369,7 @@ if ( $style eq 'test' ) {
                    my $spaces = $indent - $currentColumn;
                    $spaces = 1 if $spaces < 1;
                    @lineSoFar = ($line, (q{ } x $spaces));
+                   next PIECE;
                }
                die qq{Command "$command" not implemented};
             }
