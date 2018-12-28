@@ -249,6 +249,39 @@ if ( $style eq 'test' ) {
 
     testStyleCensus();
 
+    my @currentLine = ();
+        my $printLine = sub {
+            my @lineSoFar = ();
+            PIECE: for my $piece (@currentLine) {
+               if (not ref $piece) {
+                   say STDERR "processing piece, piece=$piece";
+                   push @lineSoFar, $piece;
+                   next PIECE;
+               }
+               my ($command, $indent) = @{$piece};
+               if ($command eq 'nl') { # indent is depth
+                   say STDERR "processing nl, indent=$indent";
+                   push @lineSoFar, "\n";
+                   push @lineSoFar, (q{ } x ($indent*2));
+                   next PIECE;
+               }
+               if ($command eq 'tab') { # indent is desired tab location
+                   say STDERR "processing tab, indent=$indent";
+                   my $line = join q{}, @lineSoFar;
+                   my $lastNlPos = rindex $line, "\n";
+                   my $currentColumn = ((length $line) - $lastNlPos);
+                   say STDERR "currentColumn=$currentColumn; line=$line";
+                   my $spaces = $indent - $currentColumn;
+                   $spaces = 1 if $spaces < 1;
+                   @lineSoFar = ($line, (q{ } x $spaces));
+                   next PIECE;
+               }
+               die qq{Command "$command" not implemented};
+            }
+            say STDERR "printing line: ", join q{}, @lineSoFar;
+            print join q{}, @lineSoFar;
+        };
+
     sub applyTestStyle {
         no warnings 'recursion';
         my ($depth, @nodes) = @_;
@@ -348,35 +381,6 @@ if ( $style eq 'test' ) {
                 applyTestStyle($currentDepth, $child);
             }
         }
-        my @currentLine = ();
-        my $printLine = sub {
-            my @lineSoFar = ();
-            PIECE: for my $piece (@currentLine) {
-               if (not ref $piece) {
-                   push @lineSoFar, $piece;
-                   next PIECE;
-               }
-               my ($command, $indent) = @{$piece};
-               if ($command eq 'nl') { # indent is depth
-                   push @lineSoFar, "\n";
-                   push @lineSoFar, (q{ } x ($indent*2));
-                   next PIECE;
-               }
-               if ($command eq 'tab') { # indent is desired tab location
-                   say STDERR "processing tab, indent=$indent";
-                   my $line = join q{}, @lineSoFar;
-                   my $lastNlPos = rindex $line, "\n";
-                   my $currentColumn = ((length $line) - $lastNlPos);
-                   say STDERR "currentColumn=$currentColumn; line=$line";
-                   my $spaces = $indent - $currentColumn;
-                   $spaces = 1 if $spaces < 1;
-                   @lineSoFar = ($line, (q{ } x $spaces));
-                   next PIECE;
-               }
-               die qq{Command "$command" not implemented};
-            }
-            print join q{}, @lineSoFar;
-        };
         PIECE: for my $piece (@pieces) {
            if (not ref $piece) {
                push @currentLine, $piece;
@@ -385,17 +389,17 @@ if ( $style eq 'test' ) {
                $DB::single = 1;
            my ($command, $indent) = @{$piece};
            if ($command eq 'nl') {
-               $printLine->();
-               @currentLine = ($piece);
-               next PIECE;
-           }
-           push @currentLine, $piece;
-        };
-        $printLine->() if @currentLine;
-    }
+                   $printLine->();
+                   @currentLine = ($piece);
+                   next PIECE;
+               }
+               push @currentLine, $piece;
+            };
+        }
 
     $grammar = undef;    # free up memory
     applyTestStyle(0, $astValue);
+    $printLine->() if @currentLine;
 }
 
 # vim: expandtab shiftwidth=4:
