@@ -279,7 +279,7 @@ if ( $style eq 'test' ) {
                       next NODE;
                   }
                   push @pieces, substr($literal, 0, $lastNL);
-                  push @pieces, "\n" . (q{ } x ($depth*2));
+                  push @pieces, ['nl', $depth];
                     next NODE;
                 }
                 push @pieces, $recce->literal( $start, $length );
