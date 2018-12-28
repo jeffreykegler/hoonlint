@@ -252,6 +252,7 @@ if ( $style eq 'test' ) {
     sub applyTestStyle {
         no warnings 'recursion';
         my ($depth, @nodes) = @_;
+        my @pieces = ();
       NODE: for my $node (@nodes) {
             my ( $type, $key, $start, $length, @children ) = @{$node};
             # say STDERR "= $type $key\n";
@@ -263,29 +264,29 @@ if ( $style eq 'test' ) {
                   my $literal = $recce->literal( $start, $length );
                   my $lastNL = rindex $literal, "\n";
                   if ($lastNL < 0) {
-                      print $literal;
+                      push @pieces, $literal;
                       next NODE;
                   }
-                  print substr($literal, 0, $lastNL);
-                  print "\n" . (q{ } x ($depth*2));
+                  push @pieces, substr($literal, 0, $lastNL);
+                  push @pieces, "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
                 if ($key =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
                   my $literal = $recce->literal( $start, $length );
                   my $lastNL = rindex $literal, "\n";
                   if ($lastNL < 0) {
-                      print $literal;
+                      push @pieces, $literal;
                       next NODE;
                   }
-                  print substr($literal, 0, $lastNL);
-                  print "\n" . (q{ } x ($depth*2));
+                  push @pieces, substr($literal, 0, $lastNL);
+                  push @pieces, "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
-                print $recce->literal( $start, $length );
+                push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
             if ($type eq 'separator') {
-                print $recce->literal( $start, $length );
+                push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
             my $childCount = scalar @children;
@@ -329,6 +330,37 @@ if ( $style eq 'test' ) {
                 applyTestStyle($currentDepth, $child);
             }
         }
+        my @currentLine = ();
+        my $printLine = sub {
+            my @lineSoFar = ();
+            PIECE: for my $piece (@currentLine) {
+               if (not ref $piece) {
+                   push @lineSoFar, $piece;
+                   next PIECE;
+               }
+               my ($command, $indent) = @{$piece};
+               if ($command eq 'nl') {
+                   push @lineSoFar, (q{ } x ($indent*2));
+                   next PIECE;
+               }
+               die qq{Command "$command" not implemented};
+            }
+            print join q{}, @lineSoFar;
+        };
+        PIECE: for my $piece (@pieces) {
+           if (not ref $piece) {
+               push @currentLine, $piece;
+               next PIECE;
+           }
+           my ($command, $indent) = @{$piece};
+           if ($command eq 'nl') {
+               $printLine->();
+               @currentLine = ($command);
+               next PIECE;
+           }
+           push @currentLine, $piece;
+        };
+        $printLine->() if @currentLine;
     }
 
     $grammar = undef;    # free up memory
