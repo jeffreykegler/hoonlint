@@ -257,13 +257,28 @@ if ( $style eq 'test' ) {
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
             my $literal = $recce->literal( $start, $length );
-            my $firstNL = index $literal, "\n";
-            if ($firstNL < 0) {
+            my $currentNL = index $literal, "\n";
+            if ($currentNL < 0) {
                 push @pieces, $literal;
                 return;
             }
-            my $lastNL = rindex $literal, "\n";
-            push @pieces, substr( $literal, 0, $lastNL );
+            my $lastNL = -1;
+            my $initialColumn = $recce->line_column($start);
+            LEADING_LINES: {
+                 pos $literal = $lastNL+1;
+                 my ($spaces) = ($literal =~ m/\G([ ]*)[^ \n]/);
+                 if (defined $spaces) {
+                     my $spaceCount = length $spaces;
+                     my $firstCommentPos = $lastNL+$spaceCount;
+                     push @pieces, ['tab', $initialColumn+$spaceCount];
+                     push @pieces, substr($literal, $firstCommentPos, $currentNL-$firstCommentPos);
+                 }
+                 my $nextNL = index $literal, "\n", $currentNL+1;
+                 last LEADING_LINES if $nextNL < 0;
+                 push @pieces, ['nl', 0];
+                 $lastNL = $currentNL;
+                 $currentNL = $nextNL;
+            }
             push @pieces, [ 'nl', $depth ];
             return;
         };
