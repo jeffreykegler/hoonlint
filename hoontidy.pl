@@ -253,6 +253,20 @@ if ( $style eq 'test' ) {
         no warnings 'recursion';
         my ($depth, @nodes) = @_;
         my @pieces = ();
+
+        my $gapToPieces = sub {
+            my ( $start, $length ) = @_;
+            my $literal = $recce->literal( $start, $length );
+            my $lastNL = rindex $literal, "\n";
+            if ( $lastNL < 0 ) {
+                push @pieces, $literal;
+                return;
+            }
+            push @pieces, substr( $literal, 0, $lastNL );
+            push @pieces, [ 'nl', $depth ];
+            return;
+        };
+
       NODE: for my $node (@nodes) {
             my ( $type, $key, $start, $length, @children ) = @{$node};
             # say STDERR "= $type $key\n";
@@ -261,26 +275,13 @@ if ( $style eq 'test' ) {
             }
             if ($type eq 'lexeme') {
                 if ($key eq 'GAP') {
-                  my $literal = $recce->literal( $start, $length );
-                  my $lastNL = rindex $literal, "\n";
-                  if ($lastNL < 0) {
-                      push @pieces, $literal;
-                      next NODE;
-                  }
-                  push @pieces, substr($literal, 0, $lastNL);
-                  push @pieces, ['nl', $depth];
-                    next NODE;
+                     $gapToPieces->($start, $length);
+                     next NODE;
                 }
                 if ($key =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
-                  my $literal = $recce->literal( $start, $length );
-                  my $lastNL = rindex $literal, "\n";
-                  if ($lastNL < 0) {
-                      push @pieces, $literal;
-                      next NODE;
-                  }
-                  push @pieces, substr($literal, 0, $lastNL);
-                  push @pieces, ['nl', $depth];
-                    next NODE;
+                  push @pieces, $recce->literal( $start, 2 );
+                  $gapToPieces->($start+2, $length-2);
+                  next NODE;
                 }
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
