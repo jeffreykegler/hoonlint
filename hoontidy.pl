@@ -341,10 +341,18 @@ if ( $style eq 'test' ) {
                }
                $DB::single = 1;
                my ($command, $indent) = @{$piece};
-               if ($command eq 'nl') {
+               if ($command eq 'nl') { # indent is depth
                    push @lineSoFar, "\n";
                    push @lineSoFar, (q{ } x ($indent*2));
                    next PIECE;
+               }
+               if ($command eq 'tab') { # indent is desired tab location
+                   my $line = join q{}, @lineSoFar;
+                   my $lastNlPos = rindex $line, "\n";
+                   my $currentColumn = ((length $line) - $lastNlPos);
+                   my $spaces = $indent - $currentColumn;
+                   $spaces = 1 if $spaces < 1;
+                   @lineSoFar = ($line, (q{ } x $spaces));
                }
                die qq{Command "$command" not implemented};
             }
