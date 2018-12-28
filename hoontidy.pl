@@ -251,10 +251,11 @@ if ( $style eq 'test' ) {
 
     my @currentLine = ();
         my $printLine = sub {
+            say STDERR "=== called printLine";
             my @lineSoFar = ();
             PIECE: for my $piece (@currentLine) {
                if (not ref $piece) {
-                   say STDERR "processing piece, piece=$piece";
+                   say STDERR qq{processing piece, piece="$piece"};
                    push @lineSoFar, $piece;
                    next PIECE;
                }
@@ -269,16 +270,22 @@ if ( $style eq 'test' ) {
                    say STDERR "processing tab, indent=$indent";
                    my $line = join q{}, @lineSoFar;
                    my $lastNlPos = rindex $line, "\n";
-                   my $currentColumn = ((length $line) - $lastNlPos);
-                   say STDERR "currentColumn=$currentColumn; line=$line";
+                   my $currentColumn;
+                   if ($lastNlPos < 0) {
+                       $currentColumn = length $line;
+                   } else {
+                       $currentColumn = (length $line) - ($lastNlPos - 1);
+                   }
+                   say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
                    $spaces = 1 if $spaces < 1;
+                   say STDERR qq{spaces=$spaces};
                    @lineSoFar = ($line, (q{ } x $spaces));
                    next PIECE;
                }
                die qq{Command "$command" not implemented};
             }
-            say STDERR "printing line: ", join q{}, @lineSoFar;
+            say STDERR "=== printing line: ", join q{}, @lineSoFar;
             print join q{}, @lineSoFar;
         };
 
@@ -297,15 +304,15 @@ if ( $style eq 'test' ) {
             }
             my $lastNL = -1;
             my $initialColumn = $recce->line_column($start);
-            LEADING_LINES: {
+            LEADING_LINES: for (;;) {
                  pos $literal = $lastNL+1;
                  my ($spaces) = ($literal =~ m/\G([ ]*)[^ \n]/);
                  if (defined $spaces) {
                      my $spaceCount = length $spaces;
-                     my $firstCommentPos = $lastNL+$spaceCount;
+                     my $firstCommentPos = $lastNL+$spaceCount+1;
                        say STDERR "pushing tab, indent=", $initialColumn+$spaceCount;
                      push @pieces, ['tab', $initialColumn+$spaceCount];
-                     push @pieces, substr($literal, $firstCommentPos, $currentNL-$firstCommentPos);
+                     push @pieces, substr($literal, $firstCommentPos, ($currentNL-$firstCommentPos));
                  }
                  my $nextNL = index $literal, "\n", $currentNL+1;
                  last LEADING_LINES if $nextNL < 0;
