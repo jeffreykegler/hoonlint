@@ -270,6 +270,7 @@ if ( $style eq 'test' ) {
                  if (defined $spaces) {
                      my $spaceCount = length $spaces;
                      my $firstCommentPos = $lastNL+$spaceCount;
+                       say STDERR "pushing tab, indent=", $initialColumn+$spaceCount;
                      push @pieces, ['tab', $initialColumn+$spaceCount];
                      push @pieces, substr($literal, $firstCommentPos, $currentNL-$firstCommentPos);
                  }
@@ -355,7 +356,6 @@ if ( $style eq 'test' ) {
                    push @lineSoFar, $piece;
                    next PIECE;
                }
-               $DB::single = 1;
                my ($command, $indent) = @{$piece};
                if ($command eq 'nl') { # indent is depth
                    push @lineSoFar, "\n";
@@ -363,9 +363,11 @@ if ( $style eq 'test' ) {
                    next PIECE;
                }
                if ($command eq 'tab') { # indent is desired tab location
+                   say STDERR "processing tab, indent=$indent";
                    my $line = join q{}, @lineSoFar;
                    my $lastNlPos = rindex $line, "\n";
                    my $currentColumn = ((length $line) - $lastNlPos);
+                   say STDERR "currentColumn=$currentColumn; line=$line";
                    my $spaces = $indent - $currentColumn;
                    $spaces = 1 if $spaces < 1;
                    @lineSoFar = ($line, (q{ } x $spaces));
