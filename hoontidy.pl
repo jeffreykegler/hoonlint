@@ -308,12 +308,22 @@ if ( $style eq 'test' ) {
                 next NODE;
             }
             # tall node
-            my $currentDepth = $depth + $gapiness;
-            CHILD: for my $child (@children) {
-                # say STDERR join " ", @{$child};
-                if ($child->[0] eq 'lexeme' and $symbolReverseDB{$child->[1]}->{gap}) {
-                    applyTestStyle($currentDepth, $child);
+            my $vertical_gaps = 0;
+            my @isVerticalChild;
+            CHILD: for my $childIX (0 .. $#children) {
+                my ($type, $name, $start, $length) = @{$children[$childIX]};
+                next CHILD if $type ne 'lexeme';
+                next CHILD if not $symbolReverseDB{$name}->{gap};
+                next CHILD unless $recce->literal($start, $length) =~ /\n/;
+                $vertical_gaps++;
+                $isVerticalChild[$childIX]++;
+            }
+            my $currentDepth = $depth + $vertical_gaps;
+            CHILD: for my $childIX (0 .. $#children) {
+                my $child = $children[$childIX];
+                if ($isVerticalChild[$childIX]) {
                     $currentDepth--;
+                    applyTestStyle($currentDepth, $child);
                     next CHILD;
                 }
                 applyTestStyle($currentDepth, $child);
