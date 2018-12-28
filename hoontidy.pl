@@ -102,8 +102,6 @@ sub doNode {
                            $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
                         $lastLocation = $childData[2] + $childData[3];
-                        # say STDERR join "!", __FILE__, __LINE__,
-                          # @{ $results[$#results] };
                         last ITEM;
                     }
                     if ( $childType eq 'null' ) {
@@ -111,8 +109,8 @@ sub doNode {
                         if (defined $lastSeparator) {
                            $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
                         }
-                        say STDERR join "NULL !", __FILE__, __LINE__,
-                          @{ $results[$#results] };
+                        # say STDERR join "NULL !", __FILE__, __LINE__,
+                          # @{ $results[$#results] };
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
@@ -126,8 +124,6 @@ sub doNode {
                 next CHILD unless $separator;
                 $lastSeparator = ['separator', $separator, $lastLocation, 0];
                 push @results, $lastSeparator;
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
             }
             last RESULT;
         }
@@ -137,14 +133,10 @@ sub doNode {
             my $dataType = $childData[0];
             if ( $dataType eq 'node' ) {
                 push @results, [@childData];
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
                 next CHILD;
             }
             if ( $dataType eq 'null' ) {
                 push @results, [@childData, $lastLocation, 0];
-                # say STDERR join "!", __FILE__, __LINE__,
-                  # @{ $results[$#results] };
                 next CHILD;
             }
             my ( $lexemeStart, $lexemeLength, $lexemeName ) = @childData;
@@ -152,7 +144,7 @@ sub doNode {
         }
         last RESULT;
     }
-    return [ "node", $lhs, $lhsStart, $lhsLength, @results ];
+    return [ 'node', $ruleID, $lhsStart, $lhsLength, @results ];
 }
 
 my $hoonSource = do {
@@ -206,10 +198,11 @@ sub roundTrip {
 
 if ( $style eq 'test' ) {
 
+    my @ruleDB          = ();
+    my @symbolDB        = ();
+    my %symbolReverseDB = ();
+
     sub testStyleCensus {
-        my @ruleDB          = ();
-        my @symbolDB        = ();
-        my %symbolReverseDB = ();
       SYMBOL:
         for my $symbolID ( $grammar->symbol_ids() ) {
             my $name = $grammar->symbol_name($symbolID);
@@ -246,34 +239,46 @@ if ( $style eq 'test' ) {
             $symbolReverseDB{$lhs}->{lexeme} = 0;
         }
 
-      SYMBOL: for my $symbolID ( $grammar->symbol_ids() ) { 
-          say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
-      }
-      SYMBOL: for my $ruleID ( $grammar->rule_ids() ) { 
-          say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
-      }
+      # for my $symbolID ( $grammar->symbol_ids() ) { 
+          # say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
+      # }
+      # for my $ruleID ( $grammar->rule_ids() ) { 
+          # say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
+      # }
     }
+
+    testStyleCensus();
 
     sub applyTestStyle {
         no warnings 'recursion';
         my ($depth, @nodes) = @_;
       NODE: for my $node (@nodes) {
-            my ( $type, $symbol, $start, $length, @children ) = @{$node};
-            # say STDERR "= $type $symbol\n";
+            my ( $type, $key, $start, $length, @children ) = @{$node};
+            # say STDERR "= $type $key\n";
             if ( not defined $start ) {
                 die join "Problem node: ", @{$node};
             }
             if ($type eq 'lexeme') {
-                if ($symbol eq 'GAP') {
-                  # printf "\nGAP(%02d):  ", $depth;
-                  printf "\n" . (q{ } x ($depth*2));
+                if ($key eq 'GAP') {
+                  my $literal = $recce->literal( $start, $length );
+                  my $lastNL = rindex $literal, "\n";
+                  if ($lastNL < 0) {
+                      print $literal;
+                      next NODE;
+                  }
+                  print substr($literal, 0, $lastNL);
+                  print "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
-                if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
+                if ($key =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
                   my $literal = $recce->literal( $start, $length );
-                  printf substr($literal, 0, 2);
-                  # printf "\nGAP(%02d):  ", $depth;
-                  printf "\n" . (q{ } x ($depth*2));
+                  my $lastNL = rindex $literal, "\n";
+                  if ($lastNL < 0) {
+                      print $literal;
+                      next NODE;
+                  }
+                  print substr($literal, 0, $lastNL);
+                  print "\n" . (q{ } x ($depth*2));
                     next NODE;
                 }
                 print $recce->literal( $start, $length );
@@ -289,14 +294,43 @@ if ( $style eq 'test' ) {
                 applyTestStyle($depth, $children[0]);
                 next NODE;
             }
-            my $baseDepth = $depth;
-            for my $child (@children) {
-                applyTestStyle($depth+1, $child);
+            my $gapiness = $ruleDB[$key]->{gapiness} // 0;
+            if ($gapiness < 0) { # sequence
+                for my $child (@children) {
+                    applyTestStyle($depth+1, $child);
+                }
+                next NODE;
+            }
+            if ($gapiness == 0) { # wide node
+                for my $child (@children) {
+                    applyTestStyle($depth, $child);
+                }
+                next NODE;
+            }
+            # tall node
+            my $vertical_gaps = 0;
+            my @isVerticalChild;
+            CHILD: for my $childIX (0 .. $#children) {
+                my ($type, $name, $start, $length) = @{$children[$childIX]};
+                next CHILD if $type ne 'lexeme';
+                next CHILD if not $symbolReverseDB{$name}->{gap};
+                next CHILD unless $recce->literal($start, $length) =~ /\n/;
+                $vertical_gaps++;
+                $isVerticalChild[$childIX]++;
+            }
+            my $currentDepth = $depth + $vertical_gaps;
+            CHILD: for my $childIX (0 .. $#children) {
+                my $child = $children[$childIX];
+                if ($isVerticalChild[$childIX]) {
+                    $currentDepth--;
+                    applyTestStyle($currentDepth, $child);
+                    next CHILD;
+                }
+                applyTestStyle($currentDepth, $child);
             }
         }
     }
 
-    testStyleCensus();
     $grammar = undef;    # free up memory
     applyTestStyle(0, $astValue);
 }
