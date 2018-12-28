@@ -257,11 +257,12 @@ if ( $style eq 'test' ) {
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
             my $literal = $recce->literal( $start, $length );
-            my $lastNL = rindex $literal, "\n";
-            if ( $lastNL < 0 ) {
+            my $firstNL = index $literal, "\n";
+            if ($firstNL < 0) {
                 push @pieces, $literal;
                 return;
             }
+            my $lastNL = rindex $literal, "\n";
             push @pieces, substr( $literal, 0, $lastNL );
             push @pieces, [ 'nl', $depth ];
             return;
