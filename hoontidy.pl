@@ -268,7 +268,7 @@ if ( $style eq 'test' ) {
                       next NODE;
                   }
                   push @pieces, substr($literal, 0, $lastNL);
-                  push @pieces, "\n" . (q{ } x ($depth*2));
+                  push @pieces, ['nl', $depth];
                     next NODE;
                 }
                 if ($key =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
@@ -338,8 +338,10 @@ if ( $style eq 'test' ) {
                    push @lineSoFar, $piece;
                    next PIECE;
                }
+               $DB::single = 1;
                my ($command, $indent) = @{$piece};
                if ($command eq 'nl') {
+                   push @lineSoFar, "\n";
                    push @lineSoFar, (q{ } x ($indent*2));
                    next PIECE;
                }
@@ -352,10 +354,11 @@ if ( $style eq 'test' ) {
                push @currentLine, $piece;
                next PIECE;
            }
+               $DB::single = 1;
            my ($command, $indent) = @{$piece};
            if ($command eq 'nl') {
                $printLine->();
-               @currentLine = ($command);
+               @currentLine = ($piece);
                next PIECE;
            }
            push @currentLine, $piece;
