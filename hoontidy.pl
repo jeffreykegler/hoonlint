@@ -278,9 +278,13 @@ if ( $style eq 'test' ) {
                    }
                    say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
-                   $spaces = 1 if $spaces < 1;
+                   if ($spaces < 1 and $currentColumn > 0) {
+                       # Always leave at least one space between a comment and preceeding text.
+                       $spaces = 1;
+                   }
                    say STDERR qq{spaces=$spaces};
-                   @lineSoFar = ($line, (q{ } x $spaces));
+                   @lineSoFar = ($line);
+                   push @lineSoFar, (q{ } x $spaces) if $spaces > 1;
                    next PIECE;
                }
                die qq{Command "$command" not implemented};
@@ -414,7 +418,6 @@ if ( $style eq 'test' ) {
                push @currentLine, $piece;
                next PIECE;
            }
-               $DB::single = 1;
            my ($command, $indent) = @{$piece};
            if ($command eq 'nl') {
                    $printLine->();
