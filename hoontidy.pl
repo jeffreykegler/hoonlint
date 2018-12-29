@@ -251,23 +251,23 @@ if ( $style eq 'test' ) {
 
     my @currentLine = ();
         my $printLine = sub {
-            say STDERR "=== called printLine";
+            # say STDERR "=== called printLine";
             my @lineSoFar = ();
             PIECE: for my $piece (@currentLine) {
                if (not ref $piece) {
-                   say STDERR qq{processing piece, piece="$piece"};
+                   # say STDERR qq{processing piece, piece="$piece"};
                    push @lineSoFar, $piece;
                    next PIECE;
                }
                my ($command, $indent) = @{$piece};
                if ($command eq 'nl') { # indent is depth
-                   say STDERR "processing nl, indent=$indent";
+                   # say STDERR "processing nl, indent=$indent";
                    push @lineSoFar, "\n";
                    push @lineSoFar, (q{ } x ($indent*2));
                    next PIECE;
                }
                if ($command eq 'tab') { # indent is desired 0-based tab location
-                   say STDERR "processing tab, indent=$indent";
+                   # say STDERR "processing tab, indent=$indent";
                    my $line = join q{}, @lineSoFar;
                    my $lastNlPos = rindex $line, "\n";
                    my $currentColumn; # 0-based
@@ -276,20 +276,20 @@ if ( $style eq 'test' ) {
                    } else {
                        $currentColumn = (length $line) - ($lastNlPos + 1);
                    }
-                   say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
+                   # say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
                    if ($spaces < 1 and $currentColumn > 0) {
                        # Always leave at least one space between a comment and preceeding text.
                        $spaces = 1;
                    }
-                   say STDERR qq{spaces=$spaces};
+                   # say STDERR qq{spaces=$spaces};
                    @lineSoFar = ($line);
                    push @lineSoFar, (q{ } x $spaces) if $spaces > 1;
                    next PIECE;
                }
                die qq{Command "$command" not implemented};
             }
-            say STDERR "=== printing line: ", join q{}, @lineSoFar;
+            # say STDERR "=== printing line: ", join q{}, @lineSoFar;
             print join q{}, @lineSoFar;
         };
 
@@ -303,7 +303,7 @@ if ( $style eq 'test' ) {
             my $literal = $recce->literal( $start, $length );
             my $currentNL = index $literal, "\n";
             if ($currentNL < 0) {
-                   say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
+                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
                 push @pieces, $literal;
                 return;
             }
@@ -314,18 +314,18 @@ if ( $style eq 'test' ) {
                 pos $literal = $lastNL + 1;
                 my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
                 die if not defined $spaces;
-                say STDERR qq{spaces="$spaces"};
+                # say STDERR qq{spaces="$spaces"};
                 my $spaceCount      = length $spaces;
                 my $firstCommentPos = $lastNL + $spaceCount + 1;
                 if ( substr( $literal, $firstCommentPos, 1 ) ne "\n" ) {
-                    say STDERR "pushing tab, indent=",
-                      $initialColumn + $spaceCount;
+                    # say STDERR "pushing tab, indent=",
+                      # $initialColumn + $spaceCount;
                     push @pieces, [ 'tab', $initialColumn + $spaceCount ];
-                    say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                      qq{pushing piece: "},
-                      substr( $literal, $firstCommentPos,
-                        ( $currentNL - $firstCommentPos ) ),
-                      q{"};
+                    # say STDERR +( join " ", __FILE__, __LINE__, '' ),
+                      # qq{pushing piece: "},
+                      # substr( $literal, $firstCommentPos,
+                        # ( $currentNL - $firstCommentPos ) ),
+                      # q{"};
                     push @pieces,
                       substr( $literal, $firstCommentPos,
                         ( $currentNL - $firstCommentPos ) );
@@ -357,21 +357,42 @@ if ( $style eq 'test' ) {
                   $gapToPieces->($start+2, $length-2);
                   next NODE;
                 }
-                   say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, $recce->literal( $start, $length ), q{"};
+                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, $recce->literal( $start, $length ), q{"};
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
             if ( $type eq 'separator' ) {
                 if ( $key eq 'GAP' ) {
-                    say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                      qq{pushing piece: "}, $recce->literal( $start, $length ),
-                      q{"};
+                    # say STDERR +( join " ", __FILE__, __LINE__, '' ),
+                      # qq{pushing piece: "}, $recce->literal( $start, $length ),
+                      # q{"};
                     $gapToPieces->( $start, $length );
                     next NODE;
                 }
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
+            my ( $lhs, @rhs ) = $grammar->rule_expand($key);
+            say STDERR join " ", "depth=$depth;", (map { $grammar->symbol_name($_); } ( $lhs, @rhs ));
+            my $lhsName = $grammar->symbol_name($lhs);
+            say STDERR join " ", "lhsName=$lhsName";
+
+            if ($lhsName eq 'wisp5d') {
+                # special case for battery
+                for my $child (@children) {
+                    applyTestStyle($depth, $child);
+                }
+                next NODE;
+            }
+
+            if ($lhsName eq 'lusLusCell') {
+                # special case for battery
+                for my $child (@children) {
+                    applyTestStyle($depth+1, $child);
+                }
+                next NODE;
+            }
+
             my $childCount = scalar @children;
             next NODE if $childCount <= 0;
             if ($childCount == 1) {
@@ -381,7 +402,7 @@ if ( $style eq 'test' ) {
             my $gapiness = $ruleDB[$key]->{gapiness} // 0;
             if ($gapiness < 0) { # sequence
                 for my $child (@children) {
-                    applyTestStyle($depth+1, $child);
+                    applyTestStyle($depth, $child);
                 }
                 next NODE;
             }
@@ -428,7 +449,7 @@ if ( $style eq 'test' ) {
             };
         }
 
-    $grammar = undef;    # free up memory
+    # $grammar = undef;    # free up memory
     applyTestStyle(0, $astValue);
     $printLine->() if @currentLine;
 }
