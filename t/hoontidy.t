@@ -7,7 +7,7 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 6;
+use Test::More tests => 12;
 
 use Test::Differences;
 use IPC::Cmd qw[run_forked];
@@ -24,9 +24,11 @@ sub slurp {
     return \$file;
 }
 
-my @fileList = qw(
-  t/ast.d/sieve_b.hoon
-  t/ast.d/sieve_k.hoon
+my @tests = (
+    ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.tidied.hoon'],
+    ['t/ast.d/sieve_b.hoon', 't/ast.d/sieve_b.hoon'],
+    ['t/ast.d/sieve_k.hoon', 't/ast.d/sieve_k.hoon'],
+    ['t/ast.d/toe.hoon', 't/util.d/toe.tidied.hoon'],
 );
 
 local $Data::Dumper::Deepcopy    = 1;
@@ -34,7 +36,9 @@ local $Data::Dumper::Terse    = 1;
 
 my $cmd = [ 'perl', 'hoontidy.pl', '--style=test' ];
 
-for my $fileName (@fileList) {
+for my $testData (@tests) {
+
+    my ($stdinName, $stdoutName) = @{$testData};
 
     my @stdout       = ();
     my $gatherStdout = sub {
@@ -46,8 +50,8 @@ for my $fileName (@fileList) {
         push @stderr, @_;
     };
 
-    my $pExpectedStdout = slurp($fileName);
-    my $pChildStdin      = slurp($fileName);
+    my $pExpectedStdout = slurp($stdoutName);
+    my $pChildStdin      = slurp($stdinName);
 
     my $result = run_forked(
         $cmd,
