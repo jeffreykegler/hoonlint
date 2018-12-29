@@ -266,15 +266,15 @@ if ( $style eq 'test' ) {
                    push @lineSoFar, (q{ } x ($indent*2));
                    next PIECE;
                }
-               if ($command eq 'tab') { # indent is desired tab location
+               if ($command eq 'tab') { # indent is desired 0-based tab location
                    say STDERR "processing tab, indent=$indent";
                    my $line = join q{}, @lineSoFar;
                    my $lastNlPos = rindex $line, "\n";
-                   my $currentColumn;
+                   my $currentColumn; # 0-based
                    if ($lastNlPos < 0) {
                        $currentColumn = length $line;
                    } else {
-                       $currentColumn = (length $line) - ($lastNlPos - 1);
+                       $currentColumn = (length $line) - ($lastNlPos + 1);
                    }
                    say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
@@ -299,26 +299,39 @@ if ( $style eq 'test' ) {
             my $literal = $recce->literal( $start, $length );
             my $currentNL = index $literal, "\n";
             if ($currentNL < 0) {
+                   say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
                 push @pieces, $literal;
                 return;
             }
             my $lastNL = -1;
-            my $initialColumn = $recce->line_column($start);
-            LEADING_LINES: for (;;) {
-                 pos $literal = $lastNL+1;
-                 my ($spaces) = ($literal =~ m/\G([ ]*)[^ \n]/);
-                 if (defined $spaces) {
-                     my $spaceCount = length $spaces;
-                     my $firstCommentPos = $lastNL+$spaceCount+1;
-                       say STDERR "pushing tab, indent=", $initialColumn+$spaceCount;
-                     push @pieces, ['tab', $initialColumn+$spaceCount];
-                     push @pieces, substr($literal, $firstCommentPos, ($currentNL-$firstCommentPos));
-                 }
-                 my $nextNL = index $literal, "\n", $currentNL+1;
-                 last LEADING_LINES if $nextNL < 0;
-                 push @pieces, ['nl', 0];
-                 $lastNL = $currentNL;
-                 $currentNL = $nextNL;
+            # Convert initialColumn to 0-based
+            my $initialColumn = $recce->line_column($start)-1;
+          LEADING_LINES: for ( ; ; ) {
+                pos $literal = $lastNL + 1;
+                my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
+                die if not defined $spaces;
+                say STDERR qq{spaces="$spaces"};
+                my $spaceCount      = length $spaces;
+                my $firstCommentPos = $lastNL + $spaceCount + 1;
+                if ( substr( $literal, $firstCommentPos, 1 ) ne "\n" ) {
+                    say STDERR "pushing tab, indent=",
+                      $initialColumn + $spaceCount;
+                    push @pieces, [ 'tab', $initialColumn + $spaceCount ];
+                    say STDERR +( join " ", __FILE__, __LINE__, '' ),
+                      qq{pushing piece: "},
+                      substr( $literal, $firstCommentPos,
+                        ( $currentNL - $firstCommentPos ) ),
+                      q{"};
+                    push @pieces,
+                      substr( $literal, $firstCommentPos,
+                        ( $currentNL - $firstCommentPos ) );
+                }
+                my $nextNL = index $literal, "\n", $currentNL + 1;
+                last LEADING_LINES if $nextNL < 0;
+                push @pieces, [ 'nl', 0 ];
+                $lastNL        = $currentNL;
+                $currentNL     = $nextNL;
+                $initialColumn = 0;
             }
             push @pieces, [ 'nl', $depth ];
             return;
@@ -340,10 +353,18 @@ if ( $style eq 'test' ) {
                   $gapToPieces->($start+2, $length-2);
                   next NODE;
                 }
+                   say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, $recce->literal( $start, $length ), q{"};
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
-            if ($type eq 'separator') {
+            if ( $type eq 'separator' ) {
+                if ( $key eq 'GAP' ) {
+                    say STDERR +( join " ", __FILE__, __LINE__, '' ),
+                      qq{pushing piece: "}, $recce->literal( $start, $length ),
+                      q{"};
+                    $gapToPieces->( $start, $length );
+                    next NODE;
+                }
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
