@@ -347,6 +347,9 @@ if ( $style eq 'test' ) {
             if ( not defined $start ) {
                 die join "Problem node: ", @{$node};
             }
+            if ( $type eq 'null' ) {
+                next NODE;
+            }
             if ($type eq 'lexeme') {
                 if ($key eq 'GAP') {
                      $gapToPieces->($start, $length);
@@ -373,9 +376,10 @@ if ( $style eq 'test' ) {
                 next NODE;
             }
             my ( $lhs, @rhs ) = $grammar->rule_expand($key);
-            say STDERR join " ", "depth=$depth;", (map { $grammar->symbol_name($_); } ( $lhs, @rhs ));
+            # say STDERR join " ", "depth=$depth;", (map { $grammar->symbol_name($_); } ( $lhs, @rhs ));
+            # $DB::symbol = 1;
             my $lhsName = $grammar->symbol_name($lhs);
-            say STDERR join " ", "lhsName=$lhsName";
+            # say STDERR join " ", "lhsName=$lhsName";
 
             if ($lhsName eq 'wisp5d') {
                 # special case for battery
