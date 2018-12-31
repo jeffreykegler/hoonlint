@@ -64,17 +64,17 @@ for my $testData (@tests) {
     );
 
     my $exitCode = $result->{'exit_code'};
-    Test::More::ok( $exitCode eq 0, "exit code of hoontidy.pl is $exitCode" );
+    Test::More::ok( $exitCode eq 0, "exit code for $stdinName.pl is $exitCode" );
 
     my $errMsg = $result->{'err_msg'};
     Test::More::diag($errMsg) if $errMsg;
 
     my $stderr = join q{}, @stderr;
     Test::More::diag($stderr) if $stderr;
-    Test::More::ok( $stderr eq q{}, "STDERR of hoontidy.pl" );
+    Test::More::ok( $stderr eq q{}, "STDERR for $stdinName" );
 
     my $stdout = join q{}, @stdout;
-    eq_or_diff( $stdout, ${$pExpectedStdout}, "STDOUT of hoontidy.pl" );
+    eq_or_diff( $stdout, ${$pExpectedStdout}, "STDOUT for $stdinName" );
   }
 
 # vim: expandtab shiftwidth=4:

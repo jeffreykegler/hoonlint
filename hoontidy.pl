@@ -76,7 +76,7 @@ sub doNode {
     my ( $lhs, @rhs ) =
       map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
     if ($childCount <= 0) {
-        return [ 'null', $lhs ];
+        return { old => [ 'null', $lhs ] };
     }
     my ($first_g1, $last_g1) = Marpa::R2::Context::location();
     my ($lhsStart) = $recce->g1_location_to_span($first_g1+1);
@@ -92,14 +92,15 @@ sub doNode {
             my $lastSeparator;
           CHILD: for ( ; ; ) {
                 # say STDERR "childIX=$childIX; last children ix = $#children";
-                my @childData = @{ $children[$childIX] };
+                my @childData = @{ $children[$childIX]->{old} };
                 my $childType = $childData[0];
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
                         push @results, [@childData];
                         if (defined $lastSeparator) {
-                           $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
+                           my $lastSeparatorData = $lastSeparator->{old};
+                           $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
                         }
                         $lastLocation = $childData[2] + $childData[3];
                         last ITEM;
@@ -107,44 +108,52 @@ sub doNode {
                     if ( $childType eq 'null' ) {
                         push @results, ['null', $childData[1], $lastLocation, 0];
                         if (defined $lastSeparator) {
-                           $lastSeparator->[3] = $childData[2]-($lastSeparator->[2]);
+                           my $lastSeparatorData = $lastSeparator->{old};
+                           $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
                         }
                         # say STDERR join "NULL !", __FILE__, __LINE__,
                           # @{ $results[$#results] };
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
-                       $lastSeparator->[3] = $childData[0]-($lastSeparator->[2]);
+                       my $lastSeparatorData = $lastSeparator->{old};
+                       $lastSeparatorData->[3] = $childData[0]-($lastSeparatorData->[2]);
                     }
                     my ($lexemeStart, $lexemeLength, $lexemeName) = @childData;
-                    push @results, ['lexeme', $lexemeName, $lexemeStart, $lexemeLength];
+                    push @results, { type=>'lexeme', old=>['lexeme', $lexemeName, $lexemeStart, $lexemeLength]};
                 }
                 last RESULT if $childIX > $#children;
                 my $separator = $separator{$lhs};
                 next CHILD unless $separator;
-                $lastSeparator = ['separator', $separator, $lastLocation, 0];
+                $lastSeparator = { type=>'separator', old => ['separator', $separator, $lastLocation, 0]};
                 push @results, $lastSeparator;
             }
             last RESULT;
         }
       # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
-            my @childData         = @{ $children[$childIX] };
+            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
+            my $childRef = $children[$childIX];
+            my $refType = ref $childRef;
+            if ($refType eq 'ARRAY') {
+                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$childRef};
+                push @results, { old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
+                next CHILD;
+            }
+            my @childData         = @{ $children[$childIX]->{old} };
             my $dataType = $childData[0];
             if ( $dataType eq 'node' ) {
-                push @results, [@childData];
+                push @results, { old=> [@childData] };
                 next CHILD;
             }
             if ( $dataType eq 'null' ) {
-                push @results, [@childData, $lastLocation, 0];
+                push @results, { old=> [@childData, $lastLocation, 0] };
                 next CHILD;
             }
-            my ( $lexemeStart, $lexemeLength, $lexemeName ) = @childData;
-            push @results, [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ];
         }
         last RESULT;
     }
-    return [ 'node', $ruleID, $lhsStart, $lhsLength, @results ];
+    return { old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
 }
 
 my $hoonSource = do {
@@ -178,22 +187,32 @@ if ($style eq 'roundtrip') {
 }
 
 sub roundTrip {
-   # free up memory
-   $grammar = undef;
-   no warnings 'recursion';
-   NODE: for my $node (@_) {
-       my ($type, $lhs, $start, $length, @children) = @{$node};
-       if (not defined $start) {
-           die join "Problem node: ", @{$node};
-       }
-       if (not @children) {
-           print $recce->literal($start, $length);
-           next NODE;
-       }
-       for my $child (@children) {
-           roundTrip($child);
-       }
-   }
+
+    # free up memory
+    $grammar = undef;
+    no warnings 'recursion';
+  NODE: for my $node (@_) {
+        my $nodeRef = ref $node;
+        my ( $type, $lhs, $start, $length, @children );
+      UNPACK: {
+            if ( $nodeRef eq 'ARRAY' ) {
+                ( $type, $lhs, $start, $length, @children ) = @{$node};
+                last UNPACK;
+            }
+            if ( $nodeRef eq 'HASH' ) {
+                ( $type, $lhs, $start, $length, @children ) = @{ $node->{old} };
+                last UNPACK;
+            }
+            die join "Problem node: ", Data::Dumper::Dumper($node);
+        }
+        if ( not @children ) {
+            print $recce->literal( $start, $length );
+            next NODE;
+        }
+        for my $child (@children) {
+            roundTrip($child);
+        }
+    }
 }
 
 if ( $style eq 'test' ) {
@@ -342,7 +361,11 @@ if ( $style eq 'test' ) {
         };
 
       NODE: for my $node (@nodes) {
-            my ( $type, $key, $start, $length, @children ) = @{$node};
+            if (ref $node ne 'HASH') {
+                # say STDERR Data::Dumper::Dumper($node);
+                $node = { 'old' => $node };
+            }
+            my ( $type, $key, $start, $length, @children ) = @{$node->{old}};
             # say STDERR "= $type $key\n";
             if ( not defined $start ) {
                 die join "Problem node: ", @{$node};
@@ -412,7 +435,9 @@ if ( $style eq 'test' ) {
             }
             if ($gapiness == 0) { # wide node
                 for my $child (@children) {
-                    applyTestStyle($depth, $child);
+                    my $wrappedChild = ((ref $child) eq 'HASH') ? $child :
+                        { 'old' => $child };
+                    applyTestStyle($depth, $wrappedChild);
                 }
                 next NODE;
             }
@@ -420,7 +445,7 @@ if ( $style eq 'test' ) {
             my $vertical_gaps = 0;
             my @isVerticalChild;
             CHILD: for my $childIX (0 .. $#children) {
-                my ($type, $name, $start, $length) = @{$children[$childIX]};
+                my ($type, $name, $start, $length) = @{$children[$childIX]->{old}};
                 next CHILD if $type ne 'lexeme';
                 next CHILD if not $symbolReverseDB{$name}->{gap};
                 next CHILD unless $recce->literal($start, $length) =~ /\n/;
