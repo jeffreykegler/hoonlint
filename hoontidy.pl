@@ -97,7 +97,7 @@ sub doNode {
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
-                        push @results, [@childData];
+                        push @results, { type=>'node', old=>[@childData]};
                         if (defined $lastSeparator) {
                            my $lastSeparatorData = $lastSeparator->{old};
                            $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
@@ -361,9 +361,7 @@ if ( $style eq 'test' ) {
         };
 
       NODE: for my $node (@nodes) {
-            if (ref $node ne 'HASH') {
-                $node = { 'old' => $node };
-            }
+            die Data::Dumper::Dumper($node) if ref $node ne 'HASH'; # TODO: delete after development
             my ( $type, $key, $start, $length, @children ) = @{$node->{old}};
             # say STDERR "= $type $key\n";
             if ( not defined $start ) {
@@ -428,6 +426,11 @@ if ( $style eq 'test' ) {
             my $gapiness = $ruleDB[$key]->{gapiness} // 0;
             if ($gapiness < 0) { # sequence
                 for my $child (@children) {
+            if (ref $child ne 'HASH') {
+                my $ruleID = $child->[1];
+                die join " ", map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
+                $node = { 'old' => $child };
+            }
                     applyTestStyle($depth, $child);
                 }
                 next NODE;
