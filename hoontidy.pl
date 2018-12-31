@@ -76,7 +76,7 @@ sub doNode {
     my ( $lhs, @rhs ) =
       map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
     if ($childCount <= 0) {
-        return { old => [ 'null', $lhs ] };
+        return { type=>'null', old => [ 'null', $lhs ] };
     }
     my ($first_g1, $last_g1) = Marpa::R2::Context::location();
     my ($lhsStart) = $recce->g1_location_to_span($first_g1+1);
@@ -137,7 +137,7 @@ sub doNode {
             my $refType = ref $childRef;
             if ($refType eq 'ARRAY') {
                 my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$childRef};
-                push @results, { old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
+                push @results, { type=>'lexeme', old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
                 next CHILD;
             }
             my @childData         = @{ $children[$childIX]->{old} };
