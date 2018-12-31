@@ -106,7 +106,7 @@ sub doNode {
                         last ITEM;
                     }
                     if ( $childType eq 'null' ) {
-                        push @results, ['null', $childData[1], $lastLocation, 0];
+                        push @results, { type=>'null', old=> ['null', $childData[1], $lastLocation, 0]};
                         if (defined $lastSeparator) {
                            my $lastSeparatorData = $lastSeparator->{old};
                            $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
@@ -143,17 +143,17 @@ sub doNode {
             my @childData         = @{ $children[$childIX]->{old} };
             my $dataType = $childData[0];
             if ( $dataType eq 'node' ) {
-                push @results, { old=> [@childData] };
+                push @results, { type=>'node', old=> [@childData] };
                 next CHILD;
             }
             if ( $dataType eq 'null' ) {
-                push @results, { old=> [@childData, $lastLocation, 0] };
+                push @results, { type=>'null', old=> [@childData, $lastLocation, 0] };
                 next CHILD;
             }
         }
         last RESULT;
     }
-    return { old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
+    return { type=>'node', old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
 }
 
 my $hoonSource = do {
@@ -362,7 +362,6 @@ if ( $style eq 'test' ) {
 
       NODE: for my $node (@nodes) {
             if (ref $node ne 'HASH') {
-                # say STDERR Data::Dumper::Dumper($node);
                 $node = { 'old' => $node };
             }
             my ( $type, $key, $start, $length, @children ) = @{$node->{old}};
