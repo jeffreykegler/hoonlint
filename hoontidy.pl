@@ -137,7 +137,11 @@ sub doNode {
             my $refType = ref $childRef;
             if ($refType eq 'ARRAY') {
                 my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$childRef};
-                push @results, { type=>'lexeme', old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
+                push @results, { type=>'lexeme',
+                    start => $lexemeStart,
+                    length => $lexemeLength,
+                    name => $lexemeName,
+                    old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
                 next CHILD;
             }
             my @childData         = @{ $children[$childIX]->{old} };
