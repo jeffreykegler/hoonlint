@@ -314,7 +314,8 @@ if ( $style eq 'test' ) {
 
     sub applyTestStyle {
         no warnings 'recursion';
-        my ($depth, @nodes) = @_;
+        # TODO: When done, rename depth to indent, deepness to depth
+        my ($depth, $deepness, @nodes) = @_;
         my @pieces = ();
 
         my $gapToPieces = sub {
@@ -332,7 +333,7 @@ if ( $style eq 'test' ) {
           LEADING_LINES: for ( ; ; ) {
                 pos $literal = $lastNL + 1;
                 my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
-                die if not defined $spaces;
+                die if not defined $spaces; # TODO: is this necessary?
                 # say STDERR qq{spaces="$spaces"};
                 my $spaceCount      = length $spaces;
                 my $firstCommentPos = $lastNL + $spaceCount + 1;
@@ -404,7 +405,7 @@ if ( $style eq 'test' ) {
             if ($lhsName eq 'wisp5d') {
                 # special case for battery
                 for my $child (@children) {
-                    applyTestStyle($depth, $child);
+                    applyTestStyle($depth, $deepness+1, $child);
                 }
                 next NODE;
             }
@@ -412,7 +413,7 @@ if ( $style eq 'test' ) {
             if ($lhsName eq 'lusLusCell') {
                 # special case for battery
                 for my $child (@children) {
-                    applyTestStyle($depth+1, $child);
+                    applyTestStyle($depth+1, $deepness+1, $child);
                 }
                 next NODE;
             }
@@ -420,7 +421,7 @@ if ( $style eq 'test' ) {
             my $childCount = scalar @children;
             next NODE if $childCount <= 0;
             if ($childCount == 1) {
-                applyTestStyle($depth, $children[0]);
+                applyTestStyle($depth, $deepness+1, $children[0]);
                 next NODE;
             }
             my $gapiness = $ruleDB[$key]->{gapiness} // 0;
@@ -431,7 +432,7 @@ if ( $style eq 'test' ) {
                 die join " ", map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
                 $node = { 'old' => $child };
             }
-                    applyTestStyle($depth, $child);
+                    applyTestStyle($depth, $deepness+1, $child);
                 }
                 next NODE;
             }
@@ -439,7 +440,7 @@ if ( $style eq 'test' ) {
                 for my $child (@children) {
                     my $wrappedChild = ((ref $child) eq 'HASH') ? $child :
                         { 'old' => $child };
-                    applyTestStyle($depth, $wrappedChild);
+                    applyTestStyle($depth, $deepness+1, $wrappedChild);
                 }
                 next NODE;
             }
@@ -459,10 +460,10 @@ if ( $style eq 'test' ) {
                 my $child = $children[$childIX];
                 if ($isVerticalChild[$childIX]) {
                     $currentDepth--;
-                    applyTestStyle($currentDepth, $child);
+                    applyTestStyle($currentDepth, $deepness+1, $child);
                     next CHILD;
                 }
-                applyTestStyle($currentDepth, $child);
+                applyTestStyle($currentDepth, $deepness+1, $child);
             }
         }
         PIECE: for my $piece (@pieces) {
@@ -481,7 +482,7 @@ if ( $style eq 'test' ) {
         }
 
     # $grammar = undef;    # free up memory
-    applyTestStyle(0, $astValue);
+    applyTestStyle(0, 0, $astValue);
     $printLine->() if @currentLine;
 }
 
