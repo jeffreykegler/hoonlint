@@ -279,10 +279,10 @@ if ( $style eq 'test' ) {
                    next PIECE;
                }
                my ($command, $indent) = @{$piece};
-               if ($command eq 'nl') { # indent is depth
+               if ($command eq 'nl') {
                    # say STDERR "processing nl, indent=$indent";
                    push @lineSoFar, "\n";
-                   push @lineSoFar, (q{ } x ($indent*2));
+                   push @lineSoFar, (q{ } x ($indent));
                    next PIECE;
                }
                if ($command eq 'tab') { # indent is desired 0-based tab location
@@ -314,8 +314,7 @@ if ( $style eq 'test' ) {
 
     sub applyTestStyle {
         no warnings 'recursion';
-        # TODO: When done, rename depth to indent, deepness to depth
-        my ($depth, $deepness, @nodes) = @_;
+        my ($indent, $depth, @nodes) = @_;
         my @pieces = ();
 
         my $gapToPieces = sub {
@@ -357,7 +356,7 @@ if ( $style eq 'test' ) {
                 $currentNL     = $nextNL;
                 $initialColumn = 0;
             }
-            push @pieces, [ 'nl', $depth ];
+            push @pieces, [ 'nl', $indent ];
             return;
         };
 
@@ -397,15 +396,13 @@ if ( $style eq 'test' ) {
                 next NODE;
             }
             my ( $lhs, @rhs ) = $grammar->rule_expand($key);
-            # say STDERR join " ", "depth=$depth;", (map { $grammar->symbol_name($_); } ( $lhs, @rhs ));
-            # $DB::symbol = 1;
             my $lhsName = $grammar->symbol_name($lhs);
             # say STDERR join " ", "lhsName=$lhsName";
 
             if ($lhsName eq 'wisp5d') {
                 # special case for battery
                 for my $child (@children) {
-                    applyTestStyle($depth, $deepness+1, $child);
+                    applyTestStyle($indent, $depth+1, $child);
                 }
                 next NODE;
             }
@@ -413,7 +410,7 @@ if ( $style eq 'test' ) {
             if ($lhsName eq 'lusLusCell') {
                 # special case for battery
                 for my $child (@children) {
-                    applyTestStyle($depth+1, $deepness+1, $child);
+                    applyTestStyle($indent+2, $depth+1, $child);
                 }
                 next NODE;
             }
@@ -421,7 +418,7 @@ if ( $style eq 'test' ) {
             my $childCount = scalar @children;
             next NODE if $childCount <= 0;
             if ($childCount == 1) {
-                applyTestStyle($depth, $deepness+1, $children[0]);
+                applyTestStyle($indent, $depth+1, $children[0]);
                 next NODE;
             }
             my $gapiness = $ruleDB[$key]->{gapiness} // 0;
@@ -432,7 +429,7 @@ if ( $style eq 'test' ) {
                 die join " ", map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
                 $node = { 'old' => $child };
             }
-                    applyTestStyle($depth, $deepness+1, $child);
+                    applyTestStyle($indent, $depth+1, $child);
                 }
                 next NODE;
             }
@@ -440,7 +437,7 @@ if ( $style eq 'test' ) {
                 for my $child (@children) {
                     my $wrappedChild = ((ref $child) eq 'HASH') ? $child :
                         { 'old' => $child };
-                    applyTestStyle($depth, $deepness+1, $wrappedChild);
+                    applyTestStyle($indent, $depth+1, $wrappedChild);
                 }
                 next NODE;
             }
@@ -455,15 +452,15 @@ if ( $style eq 'test' ) {
                 $vertical_gaps++;
                 $isVerticalChild[$childIX]++;
             }
-            my $currentDepth = $depth + $vertical_gaps;
+            my $currentIndent = $indent + $vertical_gaps*2;
             CHILD: for my $childIX (0 .. $#children) {
                 my $child = $children[$childIX];
                 if ($isVerticalChild[$childIX]) {
-                    $currentDepth--;
-                    applyTestStyle($currentDepth, $deepness+1, $child);
+                    $currentIndent -= 2;
+                    applyTestStyle($currentIndent, $depth+1, $child);
                     next CHILD;
                 }
-                applyTestStyle($currentDepth, $deepness+1, $child);
+                applyTestStyle($currentIndent, $depth+1, $child);
             }
         }
         PIECE: for my $piece (@pieces) {
