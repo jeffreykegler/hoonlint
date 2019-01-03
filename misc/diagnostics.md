@@ -73,6 +73,7 @@ at a minimum, difficult.
 If we were dealing with a parsing algorithm, in fact, it would
 be impossible.
 But RD is an extensible technique, not a specific algorithm.
+
 In theory, RD can be hacked up to do anything that is Turing-computable.
 An RD implementation could, for example, incorporate a Earley parser
 with the latest improvements
@@ -83,7 +84,7 @@ Such an extension,
 of course, would be pointless -- if you rely on the Earley parser,
 why not use it directly?
 
-But extensions
+Extensions
 to a parser which is already overburdened by
 its core language are likely to be awkward.
 Existing RD implementations for
