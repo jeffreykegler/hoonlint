@@ -277,13 +277,9 @@ if ( $style eq 'test' ) {
                if ($command eq 'tab') { # indent is desired 0-based tab location
                    # say STDERR "processing tab, indent=$indent";
                    my $line = join q{}, @lineSoFar;
+                   # say STDERR qq{line so far: "$line"};
                    my $lastNlPos = rindex $line, "\n";
-                   my $currentColumn; # 0-based
-                   if ($lastNlPos < 0) {
-                       $currentColumn = length $line;
-                   } else {
-                       $currentColumn = (length $line) - ($lastNlPos + 1);
-                   }
+                   my $currentColumn = (length $line) - ($lastNlPos + 1); # 0-based
                    # say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
                    if ($spaces < 1 and $currentColumn > 0) {
@@ -403,6 +399,19 @@ if ( $style eq 'test' ) {
             # say STDERR join " ", "lhsName=$lhsName";
 
             my $children = $node->{children};
+            my $childCount = scalar @{$children};
+            last NODE if $childCount <= 0;
+            if ( $childCount == 1 ) {
+                applyTestStyle( $baseIndent, $depth + 1, $children->[0] );
+                last NODE;
+            }
+
+            my $firstChildIndent = column($children->[0]->{start}) - 1;
+
+            # say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
+            $baseIndent = $firstChildIndent if $firstChildIndent > $baseIndent;
+            # say STDERR join " ", "$lhsName: baseIndent=$baseIndent";
+
             if ( $lhsName eq 'wisp5d' ) {
 
                 # special case for battery
@@ -421,12 +430,6 @@ if ( $style eq 'test' ) {
                 last NODE;
             }
 
-            my $childCount = scalar @{$children};
-            last NODE if $childCount <= 0;
-            if ( $childCount == 1 ) {
-                applyTestStyle( $baseIndent, $depth + 1, $children->[0] );
-                last NODE;
-            }
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
             if ( $gapiness < 0 ) {    # sequence
                 for my $child (@$children) {
