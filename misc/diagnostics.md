@@ -172,7 +172,9 @@ mismatched delimiters, that is, correcting strings like "`((([))`".
 There is no perfect solution to these problems short of mind-reading.
 But, given Marpa's power, workable solutions are possible.
 I designed and implemented one of these and
-[blogged it](http://jeffreykegler.github.io/Ocean-of-Awareness-blog/individual/2014/11/delimiter.html).
+[blogged about it](
+http://jeffreykegler.github.io/Ocean-of-Awareness-blog/individual/2014/11/delimiter.html
+).
 
 ## Combinators
 
