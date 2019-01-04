@@ -75,11 +75,17 @@ sub doNode {
     use warnings;
     my ( $lhs, @rhs ) =
       map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
-    if ($childCount <= 0) {
-        return { type=>'null', old => [ 'null', $lhs ] };
-    }
     my ($first_g1, $last_g1) = Marpa::R2::Context::location();
     my ($lhsStart) = $recce->g1_location_to_span($first_g1+1);
+    if ($childCount <= 0) {
+        return {
+            type   => 'null',
+            lhs    => $lhs,
+            start => $lhsStart,
+            length => 0,
+            old    => [ 'null', $lhs ]
+        };
+    }
     my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
     my $lhsLength = $last_g1_start+$last_g1_length-$lhsStart;
     # say STDERR "Returning node for $lhs ($lhsStart, $lhsLength):\n", 
@@ -97,7 +103,10 @@ sub doNode {
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
-                        push @results, { type=>'node', old=>[@childData]};
+                        push @results, { type=>'node',
+                            start => $childData[2],
+                            length => $childData[3],
+                            old=>[@childData]};
                         if (defined $lastSeparator) {
                            my $lastSeparatorData = $lastSeparator->{old};
                            $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
@@ -106,13 +115,22 @@ sub doNode {
                         last ITEM;
                     }
                     if ( $childType eq 'null' ) {
-                        push @results, { type=>'null', old=> ['null', $childData[1], $lastLocation, 0]};
-                        if (defined $lastSeparator) {
-                           my $lastSeparatorData = $lastSeparator->{old};
-                           $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
+                        push @results,
+                          {
+                            type   => 'null',
+                            symbol => $childData[1],
+                            start  => $lastLocation,
+                            length => 0,
+                            old => [ 'null', $childData[1], $lastLocation, 0 ]
+                          };
+                        if ( defined $lastSeparator ) {
+                            my $lastSeparatorData = $lastSeparator->{old};
+                            $lastSeparatorData->[3] =
+                              $childData[2] - ( $lastSeparatorData->[2] );
                         }
+
                         # say STDERR join "NULL !", __FILE__, __LINE__,
-                          # @{ $results[$#results] };
+                        # @{ $results[$#results] };
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
@@ -120,12 +138,21 @@ sub doNode {
                        $lastSeparatorData->[3] = $childData[0]-($lastSeparatorData->[2]);
                     }
                     my ($lexemeStart, $lexemeLength, $lexemeName) = @childData;
-                    push @results, { type=>'lexeme', old=>['lexeme', $lexemeName, $lexemeStart, $lexemeLength]};
+                    push @results, { type=>'lexeme',
+                        symbol => $lexemeName,
+                        start => $lexemeStart,
+                        length => $lexemeLength,
+                        old=>['lexeme', $lexemeName, $lexemeStart, $lexemeLength]
+                    };
                 }
                 last RESULT if $childIX > $#children;
                 my $separator = $separator{$lhs};
                 next CHILD unless $separator;
-                $lastSeparator = { type=>'separator', old => ['separator', $separator, $lastLocation, 0]};
+                $lastSeparator = { type=>'separator',
+                    symbol => $separator,
+                    start => $lastLocation,
+                    length => 0, # TODO: delete after development
+                    old => ['separator', $separator, $lastLocation, 0]};
                 push @results, $lastSeparator;
             }
             last RESULT;
@@ -147,17 +174,28 @@ sub doNode {
             my @childData         = @{ $children[$childIX]->{old} };
             my $dataType = $childData[0];
             if ( $dataType eq 'node' ) {
-                push @results, { type=>'node', old=> [@childData] };
+                push @results, { type=>'node',
+                    start => $childData[2],
+                    length => $childData[3],
+                    old=> [@childData] };
                 next CHILD;
             }
             if ( $dataType eq 'null' ) {
-                push @results, { type=>'null', old=> [@childData, $lastLocation, 0] };
+                push @results, { type=>'null',
+                    start => $lastLocation,
+                    length => 0,
+                    old=> [@childData, $lastLocation, 0] };
                 next CHILD;
             }
         }
         last RESULT;
     }
-    return { type=>'node', old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
+    return { type=>'node',
+        ruleID => $ruleID,
+        start => $lhsStart,
+        length => $lhsLength,
+        children => \@results,
+    old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
 }
 
 my $hoonSource = do {
@@ -197,23 +235,17 @@ sub roundTrip {
     no warnings 'recursion';
   NODE: for my $node (@_) {
         my $nodeRef = ref $node;
-        my ( $type, $lhs, $start, $length, @children );
-      UNPACK: {
-            if ( $nodeRef eq 'ARRAY' ) {
-                ( $type, $lhs, $start, $length, @children ) = @{$node};
-                last UNPACK;
-            }
-            if ( $nodeRef eq 'HASH' ) {
-                ( $type, $lhs, $start, $length, @children ) = @{ $node->{old} };
-                last UNPACK;
-            }
-            die join "Problem node: ", Data::Dumper::Dumper($node);
-        }
-        if ( not @children ) {
+        die join "Problem node: ", Data::Dumper::Dumper($node) if $nodeRef ne 'HASH' ;
+        my $children = $node->{children};
+        if ( not $children ) {
+            my $start = $node->{start};
+            die join "No start: ", Data::Dumper::Dumper($node) if not defined $start;
+            my $length = $node->{length};
+            die join "No length: ", Data::Dumper::Dumper($node) if not defined $length;
             print $recce->literal( $start, $length );
             next NODE;
         }
-        for my $child (@children) {
+        for my $child (@{$children}) {
             roundTrip($child);
         }
     }
