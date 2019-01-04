@@ -80,7 +80,7 @@ sub doNode {
     if ($childCount <= 0) {
         return {
             type   => 'null',
-            lhs    => $lhs,
+            symbol  => $lhs,
             start => $lhsStart,
             length => 0,
             old    => [ 'null', $lhs ]
@@ -98,8 +98,9 @@ sub doNode {
             my $lastSeparator;
           CHILD: for ( ; ; ) {
                 # say STDERR "childIX=$childIX; last children ix = $#children";
-                my @childData = @{ $children[$childIX]->{old} };
-                my $childType = $childData[0];
+                my $child = $children[$childIX];
+                my @childData = @{ $child->{old} };
+                my $childType = $child->{type};
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
@@ -109,7 +110,10 @@ sub doNode {
                             old=>[@childData]};
                         if (defined $lastSeparator) {
                            my $lastSeparatorData = $lastSeparator->{old};
-                           $lastSeparatorData->[3] = $childData[2]-($lastSeparatorData->[2]);
+                            my $length =
+                              $child->{start} - $lastSeparator->{start};
+                           $lastSeparatorData->[3] = $length;
+                           $lastSeparator->{length} = $length;
                         }
                         $lastLocation = $childData[2] + $childData[3];
                         last ITEM;
@@ -125,8 +129,10 @@ sub doNode {
                           };
                         if ( defined $lastSeparator ) {
                             my $lastSeparatorData = $lastSeparator->{old};
-                            $lastSeparatorData->[3] =
-                              $childData[2] - ( $lastSeparatorData->[2] );
+                            my $length =
+                              $child->{start} - $lastSeparator->{start};
+                           $lastSeparatorData->[3] = $length;
+                           $lastSeparator->{length} = $length;
                         }
 
                         # say STDERR join "NULL !", __FILE__, __LINE__,
@@ -135,7 +141,9 @@ sub doNode {
                     }
                     if (defined $lastSeparator) {
                        my $lastSeparatorData = $lastSeparator->{old};
-                       $lastSeparatorData->[3] = $childData[0]-($lastSeparatorData->[2]);
+                       my $length = $childData[0]-$lastSeparator->{start};
+                       $lastSeparatorData->[3] = $length;
+                       $lastSeparator->{length} = $length;
                     }
                     my ($lexemeStart, $lexemeLength, $lexemeName) = @childData;
                     push @results, { type=>'lexeme',
@@ -151,7 +159,7 @@ sub doNode {
                 $lastSeparator = { type=>'separator',
                     symbol => $separator,
                     start => $lastLocation,
-                    length => 0, # TODO: delete after development
+                    # length supplied later
                     old => ['separator', $separator, $lastLocation, 0]};
                 push @results, $lastSeparator;
             }
@@ -167,7 +175,7 @@ sub doNode {
                 push @results, { type=>'lexeme',
                     start => $lexemeStart,
                     length => $lexemeLength,
-                    name => $lexemeName,
+                    symbol => $lexemeName,
                     old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
                 next CHILD;
             }
@@ -235,13 +243,10 @@ sub roundTrip {
     no warnings 'recursion';
   NODE: for my $node (@_) {
         my $nodeRef = ref $node;
-        die join "Problem node: ", Data::Dumper::Dumper($node) if $nodeRef ne 'HASH' ;
         my $children = $node->{children};
         if ( not $children ) {
             my $start = $node->{start};
-            die join "No start: ", Data::Dumper::Dumper($node) if not defined $start;
             my $length = $node->{length};
-            die join "No length: ", Data::Dumper::Dumper($node) if not defined $length;
             print $recce->literal( $start, $length );
             next NODE;
         }
@@ -398,7 +403,8 @@ if ( $style eq 'test' ) {
 
       NODE: for my $node (@nodes) {
             die Data::Dumper::Dumper($node) if ref $node ne 'HASH'; # TODO: delete after development
-            my ( $type, $key, $start, $length, @children ) = @{$node->{old}};
+            my ( undef, $key, $start, $length, @children ) = @{$node->{old}};
+            my $type = $node->{type};
             # say STDERR "= $type $key\n";
             if ( not defined $start ) {
                 die join "Problem node: ", @{$node};
@@ -407,11 +413,13 @@ if ( $style eq 'test' ) {
                 next NODE;
             }
             if ($type eq 'lexeme') {
-                if ($key eq 'GAP') {
+                my $symbol = $node->{symbol};
+                die Data::Dumper::Dumper($node) if not defined $symbol;
+                if ($symbol eq 'GAP') {
                      $gapToPieces->($start, $length);
                      next NODE;
                 }
-                if ($key =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
+                if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
                   push @pieces, $recce->literal( $start, 2 );
                   $gapToPieces->($start+2, $length-2);
                   next NODE;
@@ -481,9 +489,12 @@ if ( $style eq 'test' ) {
             my $vertical_gaps = 0;
             my @isVerticalChild;
             CHILD: for my $childIX (0 .. $#children) {
-                my ($type, $name, $start, $length) = @{$children[$childIX]->{old}};
-                next CHILD if $type ne 'lexeme';
+                my $child = $children[$childIX];
+                next CHILD if $child->{type} ne 'lexeme';
+                my $name = $child->{symbol};
                 next CHILD if not $symbolReverseDB{$name}->{gap};
+                my $start = $child->{start};
+                my $length = $child->{length};
                 next CHILD unless $recce->literal($start, $length) =~ /\n/;
                 $vertical_gaps++;
                 $isVerticalChild[$childIX]++;
