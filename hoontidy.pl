@@ -87,8 +87,6 @@ sub doNode {
     }
     my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
     my $lhsLength = $last_g1_start+$last_g1_length-$lhsStart;
-    # say STDERR "Returning node for $lhs ($lhsStart, $lhsLength):\n", 
-       # $recce->literal($lhsStart, $lhsLength);
   RESULT: {
         my $lastLocation = $lhsStart;
         if ( ( scalar @rhs ) != $childCount ) {
@@ -163,6 +161,16 @@ $recce = $parser->rawRecce();
 $parser = undef; # free up memory
 my $astRef = $recce->value();
 
+sub literal {
+    my ($start, $length) = @_;
+    return substr $hoonSource, $start, $length;
+}
+
+sub column {
+    my ($pos) = @_;
+    return $pos - (rindex $hoonSource, "\n", $pos-1);
+}
+
 die "Parse failed" if not $astRef;
 
 local $Data::Dumper::Deepcopy    = 1;
@@ -187,7 +195,7 @@ sub roundTrip {
         if ( not $children ) {
             my $start = $node->{start};
             my $length = $node->{length};
-            print $recce->literal( $start, $length );
+            print literal( $start, $length );
             next NODE;
         }
         for my $child (@{$children}) {
@@ -300,7 +308,7 @@ if ( $style eq 'test' ) {
 
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
-            my $literal = $recce->literal( $start, $length );
+            my $literal = literal( $start, $length );
             my $currentNL = index $literal, "\n";
             if ($currentNL < 0) {
                    # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
@@ -309,7 +317,7 @@ if ( $style eq 'test' ) {
             }
             my $lastNL = -1;
             # Convert initialColumn to 0-based
-            my $initialColumn = $recce->line_column($start)-1;
+            my $initialColumn = column($start)-1;
           LEADING_LINES: for ( ; ; ) {
                 pos $literal = $lastNL + 1;
                 my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
@@ -357,12 +365,12 @@ if ( $style eq 'test' ) {
                      next NODE;
                 }
                 if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
-                  push @pieces, $recce->literal( $start, 2 );
+                  push @pieces, literal( $start, 2 );
                   $gapToPieces->($start+2, $length-2);
                   next NODE;
                 }
-                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, $recce->literal( $start, $length ), q{"};
-                push @pieces, $recce->literal( $start, $length );
+                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $start, $length ), q{"};
+                push @pieces, literal( $start, $length );
                 next NODE;
             }
             if ( $type eq 'separator' ) {
@@ -371,12 +379,12 @@ if ( $style eq 'test' ) {
                 my $length = $node->{length};
                 if ( $symbol eq 'GAP' ) {
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                      # qq{pushing piece: "}, $recce->literal( $start, $length ),
+                      # qq{pushing piece: "}, literal( $start, $length ),
                       # q{"};
                     $gapToPieces->( $start, $length );
                     next NODE;
                 }
-                push @pieces, $recce->literal( $start, $length );
+                push @pieces, literal( $start, $length );
                 next NODE;
             }
             my $ruleID = $node->{ruleID};
@@ -434,7 +442,7 @@ if ( $style eq 'test' ) {
                 next CHILD if not $symbolReverseDB{$name}->{gap};
                 my $start = $child->{start};
                 my $length = $child->{length};
-                next CHILD unless $recce->literal($start, $length) =~ /\n/;
+                next CHILD unless literal($start, $length) =~ /\n/;
                 $vertical_gaps++;
                 $isVerticalChild[$childIX]++;
             }
