@@ -104,10 +104,7 @@ sub doNode {
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
-                        push @results, { type=>'node',
-                            start => $childData[2],
-                            length => $childData[3],
-                            old=>[@childData]};
+                        push @results, $child;
                         if (defined $lastSeparator) {
                            my $lastSeparatorData = $lastSeparator->{old};
                             my $length =
@@ -168,10 +165,10 @@ sub doNode {
       # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
             # say STDERR Data::Dumper::Dumper( $children[$childIX] );
-            my $childRef = $children[$childIX];
-            my $refType = ref $childRef;
+            my $child = $children[$childIX];
+            my $refType = ref $child;
             if ($refType eq 'ARRAY') {
-                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$childRef};
+                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
                 push @results, { type=>'lexeme',
                     start => $lexemeStart,
                     length => $lexemeLength,
@@ -179,22 +176,7 @@ sub doNode {
                     old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
                 next CHILD;
             }
-            my @childData         = @{ $children[$childIX]->{old} };
-            my $dataType = $childData[0];
-            if ( $dataType eq 'node' ) {
-                push @results, { type=>'node',
-                    start => $childData[2],
-                    length => $childData[3],
-                    old=> [@childData] };
-                next CHILD;
-            }
-            if ( $dataType eq 'null' ) {
-                push @results, { type=>'null',
-                    start => $lastLocation,
-                    length => 0,
-                    old=> [@childData, $lastLocation, 0] };
-                next CHILD;
-            }
+            push @results, $child;
         }
         last RESULT;
     }
@@ -403,18 +385,15 @@ if ( $style eq 'test' ) {
 
       NODE: for my $node (@nodes) {
             die Data::Dumper::Dumper($node) if ref $node ne 'HASH'; # TODO: delete after development
-            my ( undef, $key, $start, $length, @children ) = @{$node->{old}};
             my $type = $node->{type};
             # say STDERR "= $type $key\n";
-            if ( not defined $start ) {
-                die join "Problem node: ", @{$node};
-            }
             if ( $type eq 'null' ) {
                 next NODE;
             }
             if ($type eq 'lexeme') {
                 my $symbol = $node->{symbol};
-                die Data::Dumper::Dumper($node) if not defined $symbol;
+                my $start = $node->{start};
+                my $length = $node->{length};
                 if ($symbol eq 'GAP') {
                      $gapToPieces->($start, $length);
                      next NODE;
@@ -429,7 +408,10 @@ if ( $style eq 'test' ) {
                 next NODE;
             }
             if ( $type eq 'separator' ) {
-                if ( $key eq 'GAP' ) {
+                my $symbol = $node->{symbol};
+                my $start = $node->{start};
+                my $length = $node->{length};
+                if ( $symbol eq 'GAP' ) {
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
                       # qq{pushing piece: "}, $recce->literal( $start, $length ),
                       # q{"};
@@ -439,13 +421,16 @@ if ( $style eq 'test' ) {
                 push @pieces, $recce->literal( $start, $length );
                 next NODE;
             }
-            my ( $lhs, @rhs ) = $grammar->rule_expand($key);
+            my $ruleID = $node->{ruleID};
+            die Data::Dumper::Dumper($node) if not defined $ruleID;
+            my ( $lhs, @rhs ) = $grammar->rule_expand($node->{ruleID});
             my $lhsName = $grammar->symbol_name($lhs);
             # say STDERR join " ", "lhsName=$lhsName";
 
+            my $children = $node->{children};
             if ($lhsName eq 'wisp5d') {
                 # special case for battery
-                for my $child (@children) {
+                for my $child (@{$children}) {
                     applyTestStyle($indent, $depth+1, $child);
                 }
                 next NODE;
@@ -453,32 +438,30 @@ if ( $style eq 'test' ) {
 
             if ($lhsName eq 'lusLusCell') {
                 # special case for battery
-                for my $child (@children) {
+                for my $child (@{$children}) {
                     applyTestStyle($indent+2, $depth+1, $child);
                 }
                 next NODE;
             }
 
-            my $childCount = scalar @children;
+            my $childCount = scalar @{$children};
             next NODE if $childCount <= 0;
             if ($childCount == 1) {
-                applyTestStyle($indent, $depth+1, $children[0]);
+                applyTestStyle($indent, $depth+1, $children->[0]);
                 next NODE;
             }
-            my $gapiness = $ruleDB[$key]->{gapiness} // 0;
+            my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
             if ($gapiness < 0) { # sequence
-                for my $child (@children) {
-            if (ref $child ne 'HASH') {
-                my $ruleID = $child->[1];
-                die join " ", map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
-                $node = { 'old' => $child };
-            }
+                for my $child (@$children) {
+                    if (ref $child ne 'HASH') {
+                        die Data::Dumper::Dumper($child);
+                    }
                     applyTestStyle($indent, $depth+1, $child);
                 }
                 next NODE;
             }
             if ($gapiness == 0) { # wide node
-                for my $child (@children) {
+                for my $child (@$children) {
                     my $wrappedChild = ((ref $child) eq 'HASH') ? $child :
                         { 'old' => $child };
                     applyTestStyle($indent, $depth+1, $wrappedChild);
@@ -488,8 +471,8 @@ if ( $style eq 'test' ) {
             # tall node
             my $vertical_gaps = 0;
             my @isVerticalChild;
-            CHILD: for my $childIX (0 .. $#children) {
-                my $child = $children[$childIX];
+            CHILD: for my $childIX (0 .. $#$children) {
+                my $child = $children->[$childIX];
                 next CHILD if $child->{type} ne 'lexeme';
                 my $name = $child->{symbol};
                 next CHILD if not $symbolReverseDB{$name}->{gap};
@@ -500,8 +483,8 @@ if ( $style eq 'test' ) {
                 $isVerticalChild[$childIX]++;
             }
             my $currentIndent = $indent + $vertical_gaps*2;
-            CHILD: for my $childIX (0 .. $#children) {
-                my $child = $children[$childIX];
+            CHILD: for my $childIX (0 .. $#$children) {
+                my $child = $children->[$childIX];
                 if ($isVerticalChild[$childIX]) {
                     $currentIndent -= 2;
                     applyTestStyle($currentIndent, $depth+1, $child);
