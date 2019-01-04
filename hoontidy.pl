@@ -303,37 +303,41 @@ if ( $style eq 'test' ) {
 
     sub applyTestStyle {
         no warnings 'recursion';
-        my ($indent, $depth, @nodes) = @_;
+        my ( $indent, $depth, $node ) = @_;
         my @pieces = ();
 
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
             my $literal = literal( $start, $length );
             my $currentNL = index $literal, "\n";
-            if ($currentNL < 0) {
-                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
+            if ( $currentNL < 0 ) {
+
+# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
                 push @pieces, $literal;
                 return;
             }
             my $lastNL = -1;
+
             # Convert initialColumn to 0-based
-            my $initialColumn = column($start)-1;
+            my $initialColumn = column($start) - 1;
           LEADING_LINES: for ( ; ; ) {
                 pos $literal = $lastNL + 1;
                 my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
-                die if not defined $spaces; # TODO: is this necessary?
-                # say STDERR qq{spaces="$spaces"};
+                die if not defined $spaces;   # TODO: is this necessary?
+                                              # say STDERR qq{spaces="$spaces"};
                 my $spaceCount      = length $spaces;
                 my $firstCommentPos = $lastNL + $spaceCount + 1;
                 if ( substr( $literal, $firstCommentPos, 1 ) ne "\n" ) {
+
                     # say STDERR "pushing tab, indent=",
-                      # $initialColumn + $spaceCount;
+                    # $initialColumn + $spaceCount;
                     push @pieces, [ 'tab', $initialColumn + $spaceCount ];
+
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                      # qq{pushing piece: "},
-                      # substr( $literal, $firstCommentPos,
-                        # ( $currentNL - $firstCommentPos ) ),
-                      # q{"};
+                    # qq{pushing piece: "},
+                    # substr( $literal, $firstCommentPos,
+                    # ( $currentNL - $firstCommentPos ) ),
+                    # q{"};
                     push @pieces,
                       substr( $literal, $firstCommentPos,
                         ( $currentNL - $firstCommentPos ) );
@@ -349,128 +353,138 @@ if ( $style eq 'test' ) {
             return;
         };
 
-      NODE: for my $node (@nodes) {
-            die Data::Dumper::Dumper($node) if ref $node ne 'HASH'; # TODO: delete after development
+      NODE: {
+            die Data::Dumper::Dumper($node)
+              if ref $node ne 'HASH';    # TODO: delete after development
             my $type = $node->{type};
+
             # say STDERR "= $type $key\n";
             if ( $type eq 'null' ) {
-                next NODE;
+                last NODE;
             }
-            if ($type eq 'lexeme') {
+            if ( $type eq 'lexeme' ) {
                 my $symbol = $node->{symbol};
-                my $start = $node->{start};
+                my $start  = $node->{start};
                 my $length = $node->{length};
-                if ($symbol eq 'GAP') {
-                     $gapToPieces->($start, $length);
-                     next NODE;
+                if ( $symbol eq 'GAP' ) {
+                    $gapToPieces->( $start, $length );
+                    last NODE;
                 }
-                if ($symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
-                  push @pieces, literal( $start, 2 );
-                  $gapToPieces->($start+2, $length-2);
-                  next NODE;
+                if ( $symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+                    push @pieces, literal( $start, 2 );
+                    $gapToPieces->( $start + 2, $length - 2 );
+                    last NODE;
                 }
-                   # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $start, $length ), q{"};
+
+# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $start, $length ), q{"};
                 push @pieces, literal( $start, $length );
-                next NODE;
+                last NODE;
             }
             if ( $type eq 'separator' ) {
                 my $symbol = $node->{symbol};
-                my $start = $node->{start};
+                my $start  = $node->{start};
                 my $length = $node->{length};
                 if ( $symbol eq 'GAP' ) {
+
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                      # qq{pushing piece: "}, literal( $start, $length ),
-                      # q{"};
+                    # qq{pushing piece: "}, literal( $start, $length ),
+                    # q{"};
                     $gapToPieces->( $start, $length );
-                    next NODE;
+                    last NODE;
                 }
                 push @pieces, literal( $start, $length );
-                next NODE;
+                last NODE;
             }
             my $ruleID = $node->{ruleID};
             die Data::Dumper::Dumper($node) if not defined $ruleID;
-            my ( $lhs, @rhs ) = $grammar->rule_expand($node->{ruleID});
+            my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
+
             # say STDERR join " ", "lhsName=$lhsName";
 
             my $children = $node->{children};
-            if ($lhsName eq 'wisp5d') {
+            if ( $lhsName eq 'wisp5d' ) {
+
                 # special case for battery
-                for my $child (@{$children}) {
-                    applyTestStyle($indent, $depth+1, $child);
+                for my $child ( @{$children} ) {
+                    applyTestStyle( $indent, $depth + 1, $child );
                 }
-                next NODE;
+                last NODE;
             }
 
-            if ($lhsName eq 'lusLusCell') {
+            if ( $lhsName eq 'lusLusCell' ) {
+
                 # special case for battery
-                for my $child (@{$children}) {
-                    applyTestStyle($indent+2, $depth+1, $child);
+                for my $child ( @{$children} ) {
+                    applyTestStyle( $indent + 2, $depth + 1, $child );
                 }
-                next NODE;
+                last NODE;
             }
 
             my $childCount = scalar @{$children};
-            next NODE if $childCount <= 0;
-            if ($childCount == 1) {
-                applyTestStyle($indent, $depth+1, $children->[0]);
-                next NODE;
+            last NODE if $childCount <= 0;
+            if ( $childCount == 1 ) {
+                applyTestStyle( $indent, $depth + 1, $children->[0] );
+                last NODE;
             }
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
-            if ($gapiness < 0) { # sequence
+            if ( $gapiness < 0 ) {    # sequence
                 for my $child (@$children) {
-                    if (ref $child ne 'HASH') {
+                    if ( ref $child ne 'HASH' ) {
                         die Data::Dumper::Dumper($child);
                     }
-                    applyTestStyle($indent, $depth+1, $child);
+                    applyTestStyle( $indent, $depth + 1, $child );
                 }
-                next NODE;
+                last NODE;
             }
-            if ($gapiness == 0) { # wide node
+            if ( $gapiness == 0 ) {    # wide node
                 for my $child (@$children) {
-                    applyTestStyle($indent, $depth+1, $child);
+                    applyTestStyle( $indent, $depth + 1, $child );
                 }
-                next NODE;
+                last NODE;
             }
+
             # tall node
             my $vertical_gaps = 0;
             my @isVerticalChild;
-            CHILD: for my $childIX (0 .. $#$children) {
+          CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child = $children->[$childIX];
                 next CHILD if $child->{type} ne 'lexeme';
                 my $name = $child->{symbol};
                 next CHILD if not $symbolReverseDB{$name}->{gap};
-                my $start = $child->{start};
+                my $start  = $child->{start};
                 my $length = $child->{length};
-                next CHILD unless literal($start, $length) =~ /\n/;
+                next CHILD unless literal( $start, $length ) =~ /\n/;
                 $vertical_gaps++;
                 $isVerticalChild[$childIX]++;
             }
-            my $currentIndent = $indent + $vertical_gaps*2;
-            CHILD: for my $childIX (0 .. $#$children) {
+            my $currentIndent = $indent + $vertical_gaps * 2;
+          CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child = $children->[$childIX];
-                if ($isVerticalChild[$childIX]) {
+                if ( $isVerticalChild[$childIX] ) {
                     $currentIndent -= 2;
-                    applyTestStyle($currentIndent, $depth+1, $child);
+                    applyTestStyle( $currentIndent, $depth + 1, $child );
                     next CHILD;
                 }
-                applyTestStyle($currentIndent, $depth+1, $child);
+                $currentIndent = applyTestStyle( $currentIndent, $depth + 1, $child );
             }
         }
-        PIECE: for my $piece (@pieces) {
-           if (not ref $piece) {
-               push @currentLine, $piece;
-               next PIECE;
-           }
-           my ($command, $indent) = @{$piece};
-           if ($command eq 'nl') {
-                   $printLine->();
-                   @currentLine = ($piece);
-                   next PIECE;
-               }
-               push @currentLine, $piece;
-            };
+      PIECE: for my $piece (@pieces) {
+            if ( not ref $piece ) {
+                push @currentLine, $piece;
+                next PIECE;
+            }
+            my ($command) = @{$piece};
+            if ( $command eq 'nl' ) {
+                $printLine->();
+                @currentLine = ($piece);
+                next PIECE;
+            }
+            push @currentLine, $piece;
         }
+
+        return $indent;
+    }
 
     # $grammar = undef;    # free up memory
     applyTestStyle(0, 0, $astValue);
