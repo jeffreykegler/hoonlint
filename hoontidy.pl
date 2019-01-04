@@ -101,37 +101,12 @@ sub doNode {
                 my $childType = $child->{type};
                 $childIX++;
               ITEM: {
-                    if ( $childType eq 'node' ) {
-                        push @results, $child;
-                        if (defined $lastSeparator) {
-                            my $length =
-                              $child->{start} - $lastSeparator->{start};
-                           $lastSeparator->{length} = $length;
-                        }
-                        $lastLocation = $child->{start} + $child->{length};
-                        last ITEM;
-                    }
-                    if ( $childType eq 'null' ) {
-                        push @results, $child;
-                        if ( defined $lastSeparator ) {
-                            my $length =
-                              $child->{start} - $lastSeparator->{start};
-                           $lastSeparator->{length} = $length;
-                        }
-
-                        # say STDERR join "NULL !", __FILE__, __LINE__,
-                        # @{ $results[$#results] };
-                        last ITEM;
-                    }
                     if (defined $lastSeparator) {
                        my $length = $child->{start}-$lastSeparator->{start};
                        $lastSeparator->{length} = $length;
                     }
-                    push @results, { type=>'lexeme',
-                        symbol => $child->{symbol},
-                        start => $child->{start},
-                        length => $child->{length},
-                    };
+                    push @results, $child;
+                    $lastLocation = $child->{start} + $child->{length};
                 }
                 last RESULT if $childIX > $#children;
                 my $separator = $separator{$lhs};
