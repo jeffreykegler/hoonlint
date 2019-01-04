@@ -397,6 +397,12 @@ if ( $style eq 'test' ) {
             my $lhsName = $grammar->symbol_name($lhs);
 
             # say STDERR join " ", "lhsName=$lhsName";
+            if ( $lhsName eq 'optGay4i' ) {
+                my $start  = $node->{start};
+                my $length = $node->{length};
+                $gapToPieces->( $start, $length );
+                last NODE;
+            }
 
             my $children = $node->{children};
             my $childCount = scalar @{$children};
