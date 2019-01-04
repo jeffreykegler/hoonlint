@@ -303,7 +303,7 @@ if ( $style eq 'test' ) {
 
     sub applyTestStyle {
         no warnings 'recursion';
-        my ( $indent, $depth, $node ) = @_;
+        my ( $baseIndent, $depth, $node ) = @_;
         my @pieces = ();
 
         my $gapToPieces = sub {
@@ -349,7 +349,7 @@ if ( $style eq 'test' ) {
                 $currentNL     = $nextNL;
                 $initialColumn = 0;
             }
-            push @pieces, [ 'nl', $indent ];
+            push @pieces, [ 'nl', $baseIndent ];
             return;
         };
 
@@ -407,7 +407,7 @@ if ( $style eq 'test' ) {
 
                 # special case for battery
                 for my $child ( @{$children} ) {
-                    applyTestStyle( $indent, $depth + 1, $child );
+                    applyTestStyle( $baseIndent, $depth + 1, $child );
                 }
                 last NODE;
             }
@@ -416,7 +416,7 @@ if ( $style eq 'test' ) {
 
                 # special case for battery
                 for my $child ( @{$children} ) {
-                    applyTestStyle( $indent + 2, $depth + 1, $child );
+                    applyTestStyle( $baseIndent + 2, $depth + 1, $child );
                 }
                 last NODE;
             }
@@ -424,7 +424,7 @@ if ( $style eq 'test' ) {
             my $childCount = scalar @{$children};
             last NODE if $childCount <= 0;
             if ( $childCount == 1 ) {
-                applyTestStyle( $indent, $depth + 1, $children->[0] );
+                applyTestStyle( $baseIndent, $depth + 1, $children->[0] );
                 last NODE;
             }
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
@@ -433,13 +433,13 @@ if ( $style eq 'test' ) {
                     if ( ref $child ne 'HASH' ) {
                         die Data::Dumper::Dumper($child);
                     }
-                    applyTestStyle( $indent, $depth + 1, $child );
+                    applyTestStyle( $baseIndent, $depth + 1, $child );
                 }
                 last NODE;
             }
             if ( $gapiness == 0 ) {    # wide node
                 for my $child (@$children) {
-                    applyTestStyle( $indent, $depth + 1, $child );
+                    applyTestStyle( $baseIndent, $depth + 1, $child );
                 }
                 last NODE;
             }
@@ -458,7 +458,7 @@ if ( $style eq 'test' ) {
                 $vertical_gaps++;
                 $isVerticalChild[$childIX]++;
             }
-            my $currentIndent = $indent + $vertical_gaps * 2;
+            my $currentIndent = $baseIndent + $vertical_gaps * 2;
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child = $children->[$childIX];
                 if ( $isVerticalChild[$childIX] ) {
@@ -483,7 +483,7 @@ if ( $style eq 'test' ) {
             push @currentLine, $piece;
         }
 
-        return $indent;
+        return $baseIndent;
     }
 
     # $grammar = undef;    # free up memory
