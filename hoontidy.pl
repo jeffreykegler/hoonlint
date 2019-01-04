@@ -83,7 +83,6 @@ sub doNode {
             symbol  => $lhs,
             start => $lhsStart,
             length => 0,
-            old    => [ 'null', $lhs ]
         };
     }
     my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
@@ -99,36 +98,24 @@ sub doNode {
           CHILD: for ( ; ; ) {
                 # say STDERR "childIX=$childIX; last children ix = $#children";
                 my $child = $children[$childIX];
-                my @childData = @{ $child->{old} };
                 my $childType = $child->{type};
                 $childIX++;
               ITEM: {
                     if ( $childType eq 'node' ) {
                         push @results, $child;
                         if (defined $lastSeparator) {
-                           my $lastSeparatorData = $lastSeparator->{old};
                             my $length =
                               $child->{start} - $lastSeparator->{start};
-                           $lastSeparatorData->[3] = $length;
                            $lastSeparator->{length} = $length;
                         }
-                        $lastLocation = $childData[2] + $childData[3];
+                        $lastLocation = $child->{start} + $child->{length};
                         last ITEM;
                     }
                     if ( $childType eq 'null' ) {
-                        push @results,
-                          {
-                            type   => 'null',
-                            symbol => $childData[1],
-                            start  => $lastLocation,
-                            length => 0,
-                            old => [ 'null', $childData[1], $lastLocation, 0 ]
-                          };
+                        push @results, $child;
                         if ( defined $lastSeparator ) {
-                            my $lastSeparatorData = $lastSeparator->{old};
                             my $length =
                               $child->{start} - $lastSeparator->{start};
-                           $lastSeparatorData->[3] = $length;
                            $lastSeparator->{length} = $length;
                         }
 
@@ -137,17 +124,13 @@ sub doNode {
                         last ITEM;
                     }
                     if (defined $lastSeparator) {
-                       my $lastSeparatorData = $lastSeparator->{old};
-                       my $length = $childData[0]-$lastSeparator->{start};
-                       $lastSeparatorData->[3] = $length;
+                       my $length = $child->{start}-$lastSeparator->{start};
                        $lastSeparator->{length} = $length;
                     }
-                    my ($lexemeStart, $lexemeLength, $lexemeName) = @childData;
                     push @results, { type=>'lexeme',
-                        symbol => $lexemeName,
-                        start => $lexemeStart,
-                        length => $lexemeLength,
-                        old=>['lexeme', $lexemeName, $lexemeStart, $lexemeLength]
+                        symbol => $child->{symbol},
+                        start => $child->{start},
+                        length => $child->{length},
                     };
                 }
                 last RESULT if $childIX > $#children;
@@ -157,7 +140,7 @@ sub doNode {
                     symbol => $separator,
                     start => $lastLocation,
                     # length supplied later
-                    old => ['separator', $separator, $lastLocation, 0]};
+                    };
                 push @results, $lastSeparator;
             }
             last RESULT;
@@ -173,7 +156,7 @@ sub doNode {
                     start => $lexemeStart,
                     length => $lexemeLength,
                     symbol => $lexemeName,
-                    old => [ 'lexeme', $lexemeName, $lexemeStart, $lexemeLength ] };
+                    };
                 next CHILD;
             }
             push @results, $child;
@@ -185,7 +168,7 @@ sub doNode {
         start => $lhsStart,
         length => $lhsLength,
         children => \@results,
-    old => [ 'node', $ruleID, $lhsStart, $lhsLength, @results ] };
+    };
 }
 
 my $hoonSource = do {
@@ -462,9 +445,7 @@ if ( $style eq 'test' ) {
             }
             if ($gapiness == 0) { # wide node
                 for my $child (@$children) {
-                    my $wrappedChild = ((ref $child) eq 'HASH') ? $child :
-                        { 'old' => $child };
-                    applyTestStyle($indent, $depth+1, $wrappedChild);
+                    applyTestStyle($indent, $depth+1, $child);
                 }
                 next NODE;
             }
