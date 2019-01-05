@@ -405,7 +405,7 @@ if ( $style eq 'test' ) {
                 last NODE;
             }
 
-            my $children = $node->{children};
+            my $children   = $node->{children};
             my $childCount = scalar @{$children};
             last NODE if $childCount <= 0;
             if ( $childCount == 1 ) {
@@ -413,10 +413,11 @@ if ( $style eq 'test' ) {
                 last NODE;
             }
 
-            my $firstChildIndent = column($children->[0]->{start}) - 1;
+            my $firstChildIndent = column( $children->[0]->{start} ) - 1;
 
-            # say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
+# say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
             $baseIndent = $firstChildIndent if $firstChildIndent > $baseIndent;
+
             # say STDERR join " ", "$lhsName: baseIndent=$baseIndent";
 
             if ( $lhsName eq 'wisp5d' ) {
@@ -453,35 +454,67 @@ if ( $style eq 'test' ) {
 
             # tall node
             my $vertical_gaps = 0;
-            my @isVerticalChild;
-            my $hasNonVerticalGap = 0;
+            my @isVerticalGap;
+            my @isGap;
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child = $children->[$childIX];
                 next CHILD if $child->{type} ne 'lexeme';
-                my $name = $child->{symbol};
-                next CHILD if not $symbolReverseDB{$name}->{gap};
+                my $name  = $child->{symbol};
+                my $isGap = $symbolReverseDB{$name}->{gap};
+                $isGap[$childIX] = $isGap;
+                next CHILD if not $isGap;
                 my $start  = $child->{start};
                 my $length = $child->{length};
-                if (literal( $start, $length ) =~ /\n/) {
+
+                if ( literal( $start, $length ) =~ /\n/ ) {
                     $vertical_gaps++;
-                    $isVerticalChild[$childIX]++;
-                } else {
-                    $hasNonVerticalGap = 1;
+                    $isVerticalGap[$childIX]++;
                 }
-                next CHILD unless literal( $start, $length ) =~ /\n/;
             }
+
+            # Do we use alignment, or just backdenting?
+            my $useAlignment = 1;
+            SET_ALIGNMENT: {
+                # Use alignment if first gap is non-vertical and
+                # the rest are vertical
+                my $gapCount = 0;
+              CHILD: for my $childIX ( 0 .. $#$children ) {
+                    next CHILD if not $isGap[$childIX];
+                    $gapCount++;
+                    if ( $isVerticalGap[$childIX] ) {
+                        if ( $gapCount == 1 ) {
+                            $useAlignment = 0;
+                            last SET_ALIGNMENT;
+                        }
+                        next CHILD;
+                    }
+                    if ( $gapCount > 1 ) {
+                        $useAlignment = 0;
+                        last SET_ALIGNMENT;
+                    }
+                }
+            }
+            # if ($useAlignment) {
+            if (0) {
+                # say STDERR "Using alignment!!!";
+                my $alignedIndent = $baseIndent;
+              CHILD: for my $childIX ( 0 .. $#$children ) {
+                    my $child = $children->[$childIX];
+                    if ( $isGap[$childIX] and not $isVerticalGap[$childIX] ) {
+                        $alignedIndent =
+                          applyTestStyle( $alignedIndent, $depth + 1, $child );
+                        next CHILD;
+                    }
+                    applyTestStyle( $alignedIndent, $depth + 1, $child );
+                }
+                last NODE;
+            }
+            # If here, use backdenting
             my $currentIndent = $baseIndent + $vertical_gaps * 2;
           CHILD: for my $childIX ( 0 .. $#$children ) {
-                # say STDERR join " ", "$lhsName $childIX, depth=$depth: currentIndent=$currentIndent baseIndent=$baseIndent",
-                   # ("isVertical=" . ($isVerticalChild[$childIX]//'no'));
+                $currentIndent -= 2 if $isVerticalGap[$childIX];
                 my $child = $children->[$childIX];
-                if ( $isVerticalChild[$childIX] ) {
-                    $currentIndent -= 2;
-                    applyTestStyle( $currentIndent, $depth + 1, $child );
-                    next CHILD;
-                }
-                my $newIndent = applyTestStyle( $currentIndent, $depth + 1, $child );
-                $currentIndent = $newIndent unless $hasNonVerticalGap;
+                applyTestStyle( $currentIndent, $depth + 1, $child );
             }
         }
       PIECE: for my $piece (@pieces) {

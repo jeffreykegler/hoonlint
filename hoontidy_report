@@ -1,0 +1,64 @@
+=== fizzbuzz ===
+6c6
+<    ~
+---
+>   ~
+=== sieve_b ===
+12,14c12,14
+<   ?:  (gth (mul factor factor) thru)                    ::  12
+<     ..main                                              ::  13
+<   $(factor +(factor), ..main (reap factor))             ::  14
+---
+>       ?:  (gth (mul factor factor) thru)                ::  12
+>         ..main                                          ::  13
+>       $(factor +(factor), ..main (reap factor))         ::  14
+20,25c20,25
+<   ?:  (gth count thru)                                  ::  20
+<     ..reap                                              ::  21
+<   %=  $                                                 ::  22
+<     count  (add count factor)                           ::  23
+<     field  (~(del in field) count)                      ::  24
+<   ==                                                    ::  25
+---
+>       ?:  (gth count thru)                              ::  20
+>         ..reap                                          ::  21
+>       %=  $                                             ::  22
+>         count  (add count factor)                       ::  23
+>         field  (~(del in field) count)                  ::  24
+>       ==                                                ::  25
+=== sieve_k ===
+10,12c10,12
+<   ?:  (gth (mul fac fac) top)
+<     ..main
+<   $(fac +(fac), ..main (reap fac))
+---
+>       ?:  (gth (mul fac fac) top)
+>         ..main
+>       $(fac +(fac), ..main (reap fac))
+18,20c18,20
+<   ?:  (gth cot top)
+<     ..reap
+<   $(cot (add cot fac), fed (~(del in fed) cot))
+---
+>       ?:  (gth cot top)
+>         ..reap
+>       $(cot (add cot fac), fed (~(del in fed) cot))
+=== toe ===
+4,9c4,9
+<     ?~  feed  ~                                         ::  4
+<     =^    this/(unit fact)                              ::  5
+<         game                                            ::  6
+<       (~(do go game) i.feed)                            ::  7
+<     =/  rest/(list fact)  $(feed t.feed)                ::  8
+<     ?~(this rest [u.this rest])                         ::  9
+---
+>         ?~  feed  ~                                     ::  4
+>         =^  this/(unit fact)                            ::  5
+>             game                                        ::  6
+>           (~(do go game) i.feed)                        ::  7
+>         =/  rest/(list fact)  $(feed t.feed)            ::  8
+>         ?~(this rest [u.this rest])                     ::  9
+58c58
+<                [[~ %win ?:(w.game %x %o)] nu]           ::  58
+---
+>               [[~ %win ?:(w.game %x %o)] nu]            ::  58
