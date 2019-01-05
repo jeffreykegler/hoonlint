@@ -19,9 +19,9 @@ These diffs are between:
 * for `fizzbuzz`, the
 [an official version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/fizzbuzz.hoon
-}
+)
 and
-[the current "tidied" version]{
+[the current "tidied" version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/util.d/fizzbuzz.tidied.hoon
 ).
 
@@ -30,25 +30,25 @@ https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf78
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/sieve_b.hoon
 }
 and
-[the current "tidied" version]{
+[the current "tidied" version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/util.d/sieve_b.tidied.hoon
 ).
 
 * for `sieve_k`, the
 [the official version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/sieve_k.hoon
-}
+)
 and
-[the current "tidied" version]{
+[the current "tidied" version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/util.d/sieve_k.tidied.hoon
 ).
 
 * for `toe`, the
 [the official version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/toe.hoon
-}
+)
 and
-[the current "tidied" version]{
+[the current "tidied" version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/util.d/toe.tidied.hoon
 ).
 
