@@ -28,7 +28,7 @@ https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf78
 * for `sieve_b`, the
 [the official version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/sieve_b.hoon
-}
+)
 and
 [the current "tidied" version](
 https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/util.d/sieve_b.tidied.hoon
