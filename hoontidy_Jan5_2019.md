@@ -65,6 +65,19 @@ this causes the two sieve examples,
 which `hoontidy` "round-tripped" without changes last week,
 to undergo alignment changes in this week's version.
 
+## Inline backdenting
+
+I tried adding a feature to "normalize" non-vertical gaps to two spaces,
+and discovered one of the backdenting corner cases.
+When the twigs of a hoon are backdented, and one of them is on the same line
+as the hoon's rune, following it,
+it also follows the backdenting, adding extra spaces as necessary.
+This case shows up on
+[line 5 of the toe example](
+https://github.com/jeffreykegler/yahc/blob/5115e5cbe0b49cabf9dfa2b22b4014283cf781d0/t/ast.d/toe.hoon#L5
+).
+
+
 ## Appendix
 
 In these diff outputs the first, gal-prefixed, lines
