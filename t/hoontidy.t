@@ -26,8 +26,8 @@ sub slurp {
 
 my @tests = (
     ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.tidied.hoon'],
-    ['t/ast.d/sieve_b.hoon', 't/ast.d/sieve_b.hoon'],
-    ['t/ast.d/sieve_k.hoon', 't/ast.d/sieve_k.hoon'],
+    ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.tidied.hoon'],
+    ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.tidied.hoon'],
     ['t/ast.d/toe.hoon', 't/util.d/toe.tidied.hoon'],
 );
 

@@ -300,6 +300,7 @@ if ( $style eq 'test' ) {
     sub applyTestStyle {
         no warnings 'recursion';
         my ( $baseIndent, $depth, $node ) = @_;
+        # say STDERR "applyTestStyle($baseIndent, $depth, ...)";
         my @pieces = ();
 
         my $gapToPieces = sub {
@@ -308,8 +309,8 @@ if ( $style eq 'test' ) {
             my $currentNL = index $literal, "\n";
             if ( $currentNL < 0 ) {
 
-# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "$literal"};
-                push @pieces, $literal;
+                # Normalize gap to 2 spaces
+                push @pieces, q{  };
                 return;
             }
             my $lastNL = -1;
@@ -396,7 +397,7 @@ if ( $style eq 'test' ) {
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
 
-            # say STDERR join " ", "lhsName=$lhsName";
+            # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
             if ( $lhsName eq 'optGay4i' ) {
                 my $start  = $node->{start};
                 my $length = $node->{length};
@@ -439,9 +440,6 @@ if ( $style eq 'test' ) {
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
             if ( $gapiness < 0 ) {    # sequence
                 for my $child (@$children) {
-                    if ( ref $child ne 'HASH' ) {
-                        die Data::Dumper::Dumper($child);
-                    }
                     applyTestStyle( $baseIndent, $depth + 1, $child );
                 }
                 last NODE;
@@ -456,6 +454,7 @@ if ( $style eq 'test' ) {
             # tall node
             my $vertical_gaps = 0;
             my @isVerticalChild;
+            my $hasNonVerticalGap = 0;
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child = $children->[$childIX];
                 next CHILD if $child->{type} ne 'lexeme';
@@ -463,19 +462,26 @@ if ( $style eq 'test' ) {
                 next CHILD if not $symbolReverseDB{$name}->{gap};
                 my $start  = $child->{start};
                 my $length = $child->{length};
+                if (literal( $start, $length ) =~ /\n/) {
+                    $vertical_gaps++;
+                    $isVerticalChild[$childIX]++;
+                } else {
+                    $hasNonVerticalGap = 1;
+                }
                 next CHILD unless literal( $start, $length ) =~ /\n/;
-                $vertical_gaps++;
-                $isVerticalChild[$childIX]++;
             }
             my $currentIndent = $baseIndent + $vertical_gaps * 2;
           CHILD: for my $childIX ( 0 .. $#$children ) {
+                # say STDERR join " ", "$lhsName $childIX, depth=$depth: currentIndent=$currentIndent baseIndent=$baseIndent",
+                   # ("isVertical=" . ($isVerticalChild[$childIX]//'no'));
                 my $child = $children->[$childIX];
                 if ( $isVerticalChild[$childIX] ) {
                     $currentIndent -= 2;
                     applyTestStyle( $currentIndent, $depth + 1, $child );
                     next CHILD;
                 }
-                $currentIndent = applyTestStyle( $currentIndent, $depth + 1, $child );
+                my $newIndent = applyTestStyle( $currentIndent, $depth + 1, $child );
+                $currentIndent = $newIndent unless $hasNonVerticalGap;
             }
         }
       PIECE: for my $piece (@pieces) {
