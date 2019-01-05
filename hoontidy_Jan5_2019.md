@@ -1,8 +1,29 @@
-=== fizzbuzz ===
+## Appendix
+
+### Extra spaces
+
+#### fizzbuzz
+
+```
 6c6
 <    ~
 ---
 >   ~
+```
+
+#### toe
+
+```
+58c58
+<                [[~ %win ?:(w.game %x %o)] nu]           ::  58
+---
+>               [[~ %win ?:(w.game %x %o)] nu]            ::  58
+```
+
+### Parent versus conserving alignment
+
+```
+58c58
 === sieve_b ===
 12,14c12,14
 <   ?:  (gth (mul factor factor) thru)                    ::  12
@@ -58,7 +79,4 @@
 >           (~(do go game) i.feed)                        ::  7
 >         =/  rest/(list fact)  $(feed t.feed)            ::  8
 >         ?~(this rest [u.this rest])                     ::  9
-58c58
-<                [[~ %win ?:(w.game %x %o)] nu]           ::  58
----
->               [[~ %win ?:(w.game %x %o)] nu]            ::  58
+```
