@@ -218,7 +218,7 @@ Only one of them has this issue.
 
 ### Inline backdenting
 
-Note spacing line in 5.
+Note spacing in line 5.
 
 #### toe
 
