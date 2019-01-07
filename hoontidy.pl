@@ -269,16 +269,13 @@ if ( $style eq 'test' ) {
 
     testStyleCensus();
 
-    my $currentColumn = 0;
-    my @currentLine   = ();
-    my @output        = ();
+    my @pieces = ();
 
     sub applyTestStyle {
         no warnings 'recursion';
         my ( $baseIndent, $depth, $node ) = @_;
 
         # say STDERR "applyTestStyle($baseIndent, $depth, ...)";
-        my @pieces = ();
 
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
@@ -305,7 +302,7 @@ if ( $style eq 'test' ) {
 
                     # say STDERR "pushing tab, indent=",
                     # $initialColumn + $spaceCount;
-                    push @pieces, [ 'tab', $initialColumn + $spaceCount ];
+                    push @pieces, { type=>'tab', indent => $initialColumn + $spaceCount };
 
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
                     # qq{pushing piece: "},
@@ -473,8 +470,8 @@ if ( $style eq 'test' ) {
                 }
             }
 
-            # if ($useAlignment) {
             if (0) {
+                # TODO: Delete this?
 
                 # say STDERR "Using alignment!!!";
                 my $alignedIndent = $baseIndent;
@@ -498,9 +495,6 @@ if ( $style eq 'test' ) {
                 applyTestStyle( $currentIndent, $depth + 1, $child );
             }
         }
-      PIECE: for my $piece (@pieces) {
-            push @currentLine, $piece;
-        }
 
         return $baseIndent;
     }
@@ -508,29 +502,26 @@ if ( $style eq 'test' ) {
     applyTestStyle( 0, 0, $astValue );
     $grammar = undef;    # free up memory
     $recce   = undef;    # free up memory
-    {
-        # say STDERR "=== called printLine";
-      PIECE: for my $piece (@currentLine) {
-            if ( not ref $piece ) {
 
-                # say STDERR qq{processing piece, piece="$piece"};
-                push @output, $piece;
-                $currentColumn += length $piece;
-                next PIECE;
-            }
-            my ( $command, $indent ) = @{$piece};
-            if ( $command eq 'nl' ) {
+    my @output        = ();
+    my $currentColumn = 0;
 
-                # say STDERR "processing nl, indent=$indent";
-                push @output, "\n";
-                push @output, ( q{ } x ($indent) );
-                $currentColumn = $indent;
-                next PIECE;
-            }
-            if ( $command eq 'tab' ) {  # indent is desired 0-based tab location
-                    # say STDERR "processing tab, indent=$indent";
-                    # say STDERR qq{line so far: "$line"};
-                my $spaces = $indent - $currentColumn;
+  PIECE: for my $piece (@pieces) {
+        my $refType = ref $piece;
+        if ( not ref $piece ) {
+
+            # say STDERR qq{processing piece, piece="$piece"};
+            push @output, $piece;
+            $currentColumn += length $piece;
+            next PIECE;
+        }
+        if ( $refType eq 'HASH' ) {
+            my $type = $piece->{type};
+            if ( $type eq 'tab' ) {
+
+                # say STDERR "processing tab, indent=$indent";
+                # say STDERR qq{line so far: "$line"};
+                my $spaces = $piece->{indent} - $currentColumn;
                 if ( $spaces < 1 and $currentColumn > 0 ) {
 
         # Always leave at least one space between a comment and preceeding text.
@@ -542,8 +533,18 @@ if ( $style eq 'test' ) {
                 push @output, ( q{ } x $spaces ) if $spaces > 1;
                 next PIECE;
             }
-            die qq{Command "$command" not implemented};
+            die qq{Unimplemented hash piece: }, Data::Dumper::Dumper($piece);
         }
+        my ( $command, $indent ) = @{$piece};
+        if ( $command eq 'nl' ) {
+
+            # say STDERR "processing nl, indent=$indent";
+            push @output, "\n";
+            push @output, ( q{ } x ($indent) );
+            $currentColumn = $indent;
+            next PIECE;
+        }
+        die qq{Command "$command" not implemented};
     }
     print join q{}, @output;
 }
