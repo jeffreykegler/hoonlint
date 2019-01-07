@@ -2,7 +2,7 @@
     =|  game/game                                       ::  2
     |-  ^-  (list fact)                                 ::  3
         ?~  feed  ~                                     ::  4
-        =^  this/(unit fact)                            ::  5
+        =^    this/(unit fact)                          ::  5
             game                                        ::  6
           (~(do go game) i.feed)                        ::  7
         =/  rest/(list fact)  $(feed t.feed)            ::  8

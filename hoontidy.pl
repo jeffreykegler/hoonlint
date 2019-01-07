@@ -229,9 +229,13 @@ sub roundTrip {
 # equal to the `spacesNeeded` argument.
 sub spacesNeeded {
   my ($strings, $spacesNeeded) = @_;
-  for my $arrayIX ($#$strings .. 0) {
+  for (my $arrayIX = $#$strings; $arrayIX >= 0; $arrayIX--) {
+                # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$spacesNeeded";
     my $string = $strings->[$arrayIX];
-    for my $stringIX ((length $string - 1) .. 0) {
+                # say STDERR join " ", __FILE__, __LINE__, "tab command: string=$string";
+                # say STDERR +(join " ", __FILE__, __LINE__, ''), (length $string);
+    for (my $stringIX = (length $string) - 1; $stringIX >= 0; $stringIX--) {
+                # say STDERR join " ", __FILE__, __LINE__, "tab command: stringIX=$stringIX; needed=$spacesNeeded";
       my $char = substr $string, $stringIX, 1;
       return 0 if $char eq "\n";
       return $spacesNeeded if $char ne q{ };
@@ -310,9 +314,8 @@ if ( $style eq 'test' ) {
             my $literal = literal( $start, $length );
             my $currentNL = index $literal, "\n";
             if ( $currentNL < 0 ) {
-
-                # Normalize gap to 2 spaces
-                push @pieces, { type=>'text', text => q{  }};
+                # gap must be at least 2 spaces
+                push @pieces, { type=>'tab', indent=>$baseIndent, needed=>2 };
                 return;
             }
             my $lastNL = -1;
@@ -541,8 +544,11 @@ if ( $style eq 'test' ) {
         if ( $type eq 'tab' ) {
             my $spaces = $piece->{indent} - $currentColumn;
             my $needed = $piece->{needed} // 0;
+            # say STDERR "tab command: spaces=$spaces; needed=$needed";
             if ($spaces < 0) {
+                # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$needed";
                 $needed = spacesNeeded(\@output, $needed);
+                # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$needed";
                 $currentColumn += $needed;
                 push @output, ( q{ } x $needed ) if $needed > 0;
                 next PIECE;
