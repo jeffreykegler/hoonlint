@@ -284,7 +284,7 @@ if ( $style eq 'test' ) {
             if ( $currentNL < 0 ) {
 
                 # Normalize gap to 2 spaces
-                push @pieces, q{  };
+                push @pieces, { type=>'text', text => q{  }};
                 return;
             }
             my $lastNL = -1;
@@ -309,18 +309,18 @@ if ( $style eq 'test' ) {
                     # substr( $literal, $firstCommentPos,
                     # ( $currentNL - $firstCommentPos ) ),
                     # q{"};
-                    push @pieces,
-                      substr( $literal, $firstCommentPos,
-                        ( $currentNL - $firstCommentPos ) );
+                    push @pieces, { type => 'text',
+                      text => substr( $literal, $firstCommentPos,
+                        ( $currentNL - $firstCommentPos ) )};
                 }
                 my $nextNL = index $literal, "\n", $currentNL + 1;
                 last LEADING_LINES if $nextNL < 0;
-                push @pieces, [ 'nl', 0 ];
+                push @pieces, { type => 'nl', indent => 0 };
                 $lastNL        = $currentNL;
                 $currentNL     = $nextNL;
                 $initialColumn = 0;
             }
-            push @pieces, [ 'nl', $baseIndent ];
+            push @pieces, { type => 'nl', indent => $baseIndent };
             return;
         };
 
@@ -342,13 +342,13 @@ if ( $style eq 'test' ) {
                     last NODE;
                 }
                 if ( $symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
-                    push @pieces, literal( $start, 2 );
+                    push @pieces, { type=>'text', text=>literal( $start, 2 )};
                     $gapToPieces->( $start + 2, $length - 2 );
                     last NODE;
                 }
 
 # say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $start, $length ), q{"};
-                push @pieces, literal( $start, $length );
+                push @pieces, {type=>'text', text=>literal( $start, $length )};
                 last NODE;
             }
             if ( $type eq 'separator' ) {
@@ -357,13 +357,10 @@ if ( $style eq 'test' ) {
                 my $length = $node->{length};
                 if ( $symbol eq 'GAP' ) {
 
-                    # say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                    # qq{pushing piece: "}, literal( $start, $length ),
-                    # q{"};
                     $gapToPieces->( $start, $length );
                     last NODE;
                 }
-                push @pieces, literal( $start, $length );
+                push @pieces, {type=>'text', text=>literal( $start, $length )};
                 last NODE;
             }
             my $ruleID = $node->{ruleID};
@@ -507,44 +504,40 @@ if ( $style eq 'test' ) {
     my $currentColumn = 0;
 
   PIECE: for my $piece (@pieces) {
-        my $refType = ref $piece;
-        if ( not ref $piece ) {
+        die if ref $piece ne 'HASH';    # TODO: Delete
+        my $type = $piece->{type};
+        if ( $type eq 'tab' ) {
 
-            # say STDERR qq{processing piece, piece="$piece"};
-            push @output, $piece;
-            $currentColumn += length $piece;
-            next PIECE;
-        }
-        if ( $refType eq 'HASH' ) {
-            my $type = $piece->{type};
-            if ( $type eq 'tab' ) {
-
-                # say STDERR "processing tab, indent=$indent";
-                # say STDERR qq{line so far: "$line"};
-                my $spaces = $piece->{indent} - $currentColumn;
-                if ( $spaces < 1 and $currentColumn > 0 ) {
+            # say STDERR "processing tab, indent=$indent";
+            # say STDERR qq{line so far: "$line"};
+            my $spaces = $piece->{indent} - $currentColumn;
+            if ( $spaces < 1 and $currentColumn > 0 ) {
 
         # Always leave at least one space between a comment and preceeding text.
-                    $spaces = 1;
-                }
-
-                # say STDERR qq{spaces=$spaces};
-                $currentColumn += $spaces;
-                push @output, ( q{ } x $spaces ) if $spaces > 1;
-                next PIECE;
+                $spaces = 1;
             }
-            die qq{Unimplemented hash piece: }, Data::Dumper::Dumper($piece);
+
+            # say STDERR qq{spaces=$spaces};
+            $currentColumn += $spaces;
+            push @output, ( q{ } x $spaces ) if $spaces > 1;
+            next PIECE;
         }
-        my ( $command, $indent ) = @{$piece};
-        if ( $command eq 'nl' ) {
+        if ( $type eq 'nl' ) {
 
             # say STDERR "processing nl, indent=$indent";
+            my $indent = $piece->{indent};
             push @output, "\n";
             push @output, ( q{ } x ($indent) );
             $currentColumn = $indent;
             next PIECE;
         }
-        die qq{Command "$command" not implemented};
+        if ( $type eq 'text' ) {
+            my $text = $piece->{text};
+            push @output, $text;
+            $currentColumn += length $text;
+            next PIECE;
+        }
+        die qq{Unimplemented piece type: }, Data::Dumper::Dumper($piece);
     }
     print join q{}, @output;
 }
