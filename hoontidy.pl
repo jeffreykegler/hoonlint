@@ -12,7 +12,7 @@ require "yahc.pm";
 
 my $style;
 
-GetOptions ( "style=s"  => \$style)   # flag
+GetOptions( "style=s" => \$style )    # flag
   or die("Error in command line arguments\n");
 
 CHECK_STYLE: {
@@ -68,40 +68,44 @@ my %separator = qw(
 
 sub doNode {
     my ( undef, @children ) = @_;
-    my @results = ();
+    my @results    = ();
     my $childCount = scalar @children;
     no warnings 'once';
-    my $ruleID     = $Marpa::R2::Context::rule;
+    my $ruleID = $Marpa::R2::Context::rule;
     use warnings;
     my ( $lhs, @rhs ) =
       map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
-    my ($first_g1, $last_g1) = Marpa::R2::Context::location();
-    my ($lhsStart) = $recce->g1_location_to_span($first_g1+1);
-    if ($childCount <= 0) {
+    my ( $first_g1, $last_g1 ) = Marpa::R2::Context::location();
+    my ($lhsStart) = $recce->g1_location_to_span( $first_g1 + 1 );
+
+    if ( $childCount <= 0 ) {
         return {
             type   => 'null',
-            symbol  => $lhs,
-            start => $lhsStart,
+            symbol => $lhs,
+            start  => $lhsStart,
             length => 0,
         };
     }
-    my ($last_g1_start, $last_g1_length) = $recce->g1_location_to_span($last_g1);
-    my $lhsLength = $last_g1_start+$last_g1_length-$lhsStart;
+    my ( $last_g1_start, $last_g1_length ) =
+      $recce->g1_location_to_span($last_g1);
+    my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
   RESULT: {
         my $lastLocation = $lhsStart;
         if ( ( scalar @rhs ) != $childCount ) {
-            # This is a non-trivial (that is, longer than one item) sequence rule.
+
+          # This is a non-trivial (that is, longer than one item) sequence rule.
             my $childIX = 0;
             my $lastSeparator;
           CHILD: for ( ; ; ) {
+
                 # say STDERR "childIX=$childIX; last children ix = $#children";
-                my $child = $children[$childIX];
+                my $child     = $children[$childIX];
                 my $childType = $child->{type};
                 $childIX++;
               ITEM: {
-                    if (defined $lastSeparator) {
-                       my $length = $child->{start}-$lastSeparator->{start};
-                       $lastSeparator->{length} = $length;
+                    if ( defined $lastSeparator ) {
+                        my $length = $child->{start} - $lastSeparator->{start};
+                        $lastSeparator->{length} = $length;
                     }
                     push @results, $child;
                     $lastLocation = $child->{start} + $child->{length};
@@ -109,44 +113,51 @@ sub doNode {
                 last RESULT if $childIX > $#children;
                 my $separator = $separator{$lhs};
                 next CHILD unless $separator;
-                $lastSeparator = { type=>'separator',
+                $lastSeparator = {
+                    type   => 'separator',
                     symbol => $separator,
-                    start => $lastLocation,
+                    start  => $lastLocation,
+
                     # length supplied later
-                    };
+                };
                 push @results, $lastSeparator;
             }
             last RESULT;
         }
-      # All other rules
+
+        # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
+
             # say STDERR Data::Dumper::Dumper( $children[$childIX] );
-            my $child = $children[$childIX];
+            my $child   = $children[$childIX];
             my $refType = ref $child;
-            if ($refType eq 'ARRAY') {
+            if ( $refType eq 'ARRAY' ) {
                 my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
-                push @results, { type=>'lexeme',
-                    start => $lexemeStart,
+                push @results,
+                  {
+                    type   => 'lexeme',
+                    start  => $lexemeStart,
                     length => $lexemeLength,
                     symbol => $lexemeName,
-                    };
+                  };
                 next CHILD;
             }
             push @results, $child;
         }
         last RESULT;
     }
-    return { type=>'node',
-        ruleID => $ruleID,
-        start => $lhsStart,
-        length => $lhsLength,
+    return {
+        type     => 'node',
+        ruleID   => $ruleID,
+        start    => $lhsStart,
+        length   => $lhsLength,
         children => \@results,
     };
 }
 
 my $hoonSource = do {
-  local $RS = undef;
-  <>;
+    local $RS = undef;
+    <>;
 };
 
 my $semantics = <<'EOS';
@@ -156,31 +167,31 @@ EOS
 
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 $grammar = $parser->rawGrammar();
-$parser->read(\$hoonSource);
-$recce = $parser->rawRecce();
-$parser = undef; # free up memory
+$parser->read( \$hoonSource );
+$recce  = $parser->rawRecce();
+$parser = undef;                 # free up memory
 my $astRef = $recce->value();
 
 sub literal {
-    my ($start, $length) = @_;
+    my ( $start, $length ) = @_;
     return substr $hoonSource, $start, $length;
 }
 
 sub column {
     my ($pos) = @_;
-    return $pos - (rindex $hoonSource, "\n", $pos-1);
+    return $pos - ( rindex $hoonSource, "\n", $pos - 1 );
 }
 
 die "Parse failed" if not $astRef;
 
-local $Data::Dumper::Deepcopy    = 1;
+local $Data::Dumper::Deepcopy = 1;
 local $Data::Dumper::Terse    = 1;
 
 # say Data::Dumper::Dumper($astRef);
 
 my $astValue = ${$astRef};
 
-if ($style eq 'roundtrip') {
+if ( $style eq 'roundtrip' ) {
     roundTrip($astValue);
 }
 
@@ -190,15 +201,15 @@ sub roundTrip {
     $grammar = undef;
     no warnings 'recursion';
   NODE: for my $node (@_) {
-        my $nodeRef = ref $node;
+        my $nodeRef  = ref $node;
         my $children = $node->{children};
         if ( not $children ) {
-            my $start = $node->{start};
+            my $start  = $node->{start};
             my $length = $node->{length};
             print literal( $start, $length );
             next NODE;
         }
-        for my $child (@{$children}) {
+        for my $child ( @{$children} ) {
             roundTrip($child);
         }
     }
@@ -217,9 +228,10 @@ if ( $style eq 'test' ) {
             my $data = {};
             $data->{name}   = $name;
             $data->{id}     = $symbolID;
-            $data->{lexeme} = 1;           # default to lexeme
-            $data->{gap} = 1 if $name eq 'GAP';
-            $data->{gap} = 1 if $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/;
+            $data->{lexeme} = 1;                     # default to lexeme
+            $data->{gap}    = 1 if $name eq 'GAP';
+            $data->{gap}    = 1
+              if $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/;
             $symbolDB[$symbolID] = $data;
             $symbolReverseDB{$name} = $data;
         }
@@ -234,11 +246,11 @@ if ( $style eq 'test' ) {
             if ($separatorName) {
                 my $separatorID = $symbolReverseDB{$separatorName}->{id};
                 $data->{separator} = $separatorID;
-                if ($separatorID == $gapID) {
+                if ( $separatorID == $gapID ) {
                     $data->{gapiness} = -1;
                 }
             }
-            if (not defined $data->{gapiness}) {
+            if ( not defined $data->{gapiness} ) {
                 for my $rhsID (@rhs) {
                     $data->{gapiness}++ if $symbolDB[$rhsID]->{gap};
                 }
@@ -247,56 +259,24 @@ if ( $style eq 'test' ) {
             $symbolReverseDB{$lhs}->{lexeme} = 0;
         }
 
-      # for my $symbolID ( $grammar->symbol_ids() ) { 
-          # say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
-      # }
-      # for my $ruleID ( $grammar->rule_ids() ) { 
-          # say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
-      # }
+        # for my $symbolID ( $grammar->symbol_ids() ) {
+        # say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
+        # }
+        # for my $ruleID ( $grammar->rule_ids() ) {
+        # say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
+        # }
     }
 
     testStyleCensus();
 
     my $currentColumn = 0;
-    my @currentLine = ();
-    my @output = ();
-        my $printLine = sub {
-            # say STDERR "=== called printLine";
-            PIECE: for my $piece (@currentLine) {
-               if (not ref $piece) {
-                   # say STDERR qq{processing piece, piece="$piece"};
-                   push @output, $piece;
-                   $currentColumn += length $piece;
-                   next PIECE;
-               }
-               my ($command, $indent) = @{$piece};
-               if ($command eq 'nl') {
-                   # say STDERR "processing nl, indent=$indent";
-                   push @output, "\n";
-                   push @output, (q{ } x ($indent));
-                   $currentColumn = $indent;
-                   next PIECE;
-               }
-               if ($command eq 'tab') { # indent is desired 0-based tab location
-                   # say STDERR "processing tab, indent=$indent";
-                   # say STDERR qq{line so far: "$line"};
-                   my $spaces = $indent - $currentColumn;
-                   if ($spaces < 1 and $currentColumn > 0) {
-                       # Always leave at least one space between a comment and preceeding text.
-                       $spaces = 1;
-                   }
-                   # say STDERR qq{spaces=$spaces};
-                   $currentColumn += $spaces;
-                   push @output, (q{ } x $spaces) if $spaces > 1;
-                   next PIECE;
-               }
-               die qq{Command "$command" not implemented};
-            }
-        };
+    my @currentLine   = ();
+    my @output        = ();
 
     sub applyTestStyle {
         no warnings 'recursion';
         my ( $baseIndent, $depth, $node ) = @_;
+
         # say STDERR "applyTestStyle($baseIndent, $depth, ...)";
         my @pieces = ();
 
@@ -471,7 +451,8 @@ if ( $style eq 'test' ) {
 
             # Do we use alignment, or just backdenting?
             my $useAlignment = 1;
-            SET_ALIGNMENT: {
+          SET_ALIGNMENT: {
+
                 # Use alignment if first gap is non-vertical and
                 # the rest are vertical
                 my $gapCount = 0;
@@ -491,8 +472,10 @@ if ( $style eq 'test' ) {
                     }
                 }
             }
+
             # if ($useAlignment) {
             if (0) {
+
                 # say STDERR "Using alignment!!!";
                 my $alignedIndent = $baseIndent;
               CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -506,6 +489,7 @@ if ( $style eq 'test' ) {
                 }
                 last NODE;
             }
+
             # If here, use backdenting
             my $currentIndent = $baseIndent + $vertical_gaps * 2;
           CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -521,10 +505,46 @@ if ( $style eq 'test' ) {
         return $baseIndent;
     }
 
-    applyTestStyle(0, 0, $astValue);
+    applyTestStyle( 0, 0, $astValue );
     $grammar = undef;    # free up memory
-    $recce = undef;    # free up memory
-    $printLine->();
+    $recce   = undef;    # free up memory
+    {
+        # say STDERR "=== called printLine";
+      PIECE: for my $piece (@currentLine) {
+            if ( not ref $piece ) {
+
+                # say STDERR qq{processing piece, piece="$piece"};
+                push @output, $piece;
+                $currentColumn += length $piece;
+                next PIECE;
+            }
+            my ( $command, $indent ) = @{$piece};
+            if ( $command eq 'nl' ) {
+
+                # say STDERR "processing nl, indent=$indent";
+                push @output, "\n";
+                push @output, ( q{ } x ($indent) );
+                $currentColumn = $indent;
+                next PIECE;
+            }
+            if ( $command eq 'tab' ) {  # indent is desired 0-based tab location
+                    # say STDERR "processing tab, indent=$indent";
+                    # say STDERR qq{line so far: "$line"};
+                my $spaces = $indent - $currentColumn;
+                if ( $spaces < 1 and $currentColumn > 0 ) {
+
+        # Always leave at least one space between a comment and preceeding text.
+                    $spaces = 1;
+                }
+
+                # say STDERR qq{spaces=$spaces};
+                $currentColumn += $spaces;
+                push @output, ( q{ } x $spaces ) if $spaces > 1;
+                next PIECE;
+            }
+            die qq{Command "$command" not implemented};
+        }
+    }
     print join q{}, @output;
 }
 
