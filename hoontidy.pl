@@ -215,6 +215,34 @@ sub roundTrip {
     }
 }
 
+# Determine how many spaces we need.
+# Arguments are an array of strings (intended
+# to be concatenated) and an integer, representing
+# the number of spaces needed by the app.
+# (For hoon this will always between 0 and 2.)
+# Hoon's notation of spacing, in which a newline is equivalent
+# a gap and therefore two spaces, is used.
+#
+# Return value is the number of spaces needed after
+# the trailing part of the argument string array is
+# taken into account.  It is always less than or
+# equal to the `spacesNeeded` argument.
+sub spacesNeeded {
+  my ($strings, $spacesNeeded) = @_;
+  for my $arrayIX ($#$strings .. 0) {
+    my $string = $strings->[$arrayIX];
+    for my $stringIX ((length $string - 1) .. 0) {
+      my $char = substr $string, $stringIX, 1;
+      return 0 if $char eq "\n";
+      return $spacesNeeded if $char ne q{ };
+      $spacesNeeded--;
+      return 0 if $spacesNeeded <= 0;
+    }
+  }
+  # No spaces needed at beginning of string;
+  return 0;
+}
+
 if ( $style eq 'test' ) {
 
     my @ruleDB          = ();
@@ -302,7 +330,12 @@ if ( $style eq 'test' ) {
 
                     # say STDERR "pushing tab, indent=",
                     # $initialColumn + $spaceCount;
-                    push @pieces, { type=>'tab', indent => $initialColumn + $spaceCount };
+                    push @pieces,
+                      {
+                        type   => 'tab',
+                        indent => ( $initialColumn + $spaceCount ),
+                        needed => 1
+                      };
 
                     # say STDERR +( join " ", __FILE__, __LINE__, '' ),
                     # qq{pushing piece: "},
@@ -315,12 +348,12 @@ if ( $style eq 'test' ) {
                 }
                 my $nextNL = index $literal, "\n", $currentNL + 1;
                 last LEADING_LINES if $nextNL < 0;
-                push @pieces, { type => 'nl', indent => 0 };
+                push @pieces, { type => 'nl'};
                 $lastNL        = $currentNL;
                 $currentNL     = $nextNL;
                 $initialColumn = 0;
             }
-            push @pieces, { type => 'nl', indent => $baseIndent };
+            push @pieces, { type => 'nl'}, { type=>'tab', indent => $baseIndent };
             return;
         };
 
@@ -504,22 +537,20 @@ if ( $style eq 'test' ) {
     my $currentColumn = 0;
 
   PIECE: for my $piece (@pieces) {
-        die if ref $piece ne 'HASH';    # TODO: Delete
         my $type = $piece->{type};
         if ( $type eq 'tab' ) {
-
-            # say STDERR "processing tab, indent=$indent";
-            # say STDERR qq{line so far: "$line"};
             my $spaces = $piece->{indent} - $currentColumn;
-            if ( $spaces < 1 and $currentColumn > 0 ) {
-
-        # Always leave at least one space between a comment and preceeding text.
-                $spaces = 1;
+            my $needed = $piece->{needed} // 0;
+            if ($spaces < 0) {
+                $needed = spacesNeeded(\@output, $needed);
+                $currentColumn += $needed;
+                push @output, ( q{ } x $needed ) if $needed > 0;
+                next PIECE;
             }
-
-            # say STDERR qq{spaces=$spaces};
+            $spaces += spacesNeeded(\@output, $needed-$spaces)
+                if $needed > $spaces;
             $currentColumn += $spaces;
-            push @output, ( q{ } x $spaces ) if $spaces > 1;
+            push @output, ( q{ } x $spaces ) if $spaces > 0;
             next PIECE;
         }
         if ( $type eq 'nl' ) {
@@ -527,8 +558,7 @@ if ( $style eq 'test' ) {
             # say STDERR "processing nl, indent=$indent";
             my $indent = $piece->{indent};
             push @output, "\n";
-            push @output, ( q{ } x ($indent) );
-            $currentColumn = $indent;
+            $currentColumn = 0;
             next PIECE;
         }
         if ( $type eq 'text' ) {
