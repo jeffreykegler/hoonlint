@@ -257,44 +257,41 @@ if ( $style eq 'test' ) {
 
     testStyleCensus();
 
+    my $currentColumn = 0;
     my @currentLine = ();
+    my @output = ();
         my $printLine = sub {
             # say STDERR "=== called printLine";
-            my @lineSoFar = ();
             PIECE: for my $piece (@currentLine) {
                if (not ref $piece) {
                    # say STDERR qq{processing piece, piece="$piece"};
-                   push @lineSoFar, $piece;
+                   push @output, $piece;
+                   $currentColumn += length $piece;
                    next PIECE;
                }
                my ($command, $indent) = @{$piece};
                if ($command eq 'nl') {
                    # say STDERR "processing nl, indent=$indent";
-                   push @lineSoFar, "\n";
-                   push @lineSoFar, (q{ } x ($indent));
+                   push @output, "\n";
+                   push @output, (q{ } x ($indent));
+                   $currentColumn = $indent;
                    next PIECE;
                }
                if ($command eq 'tab') { # indent is desired 0-based tab location
                    # say STDERR "processing tab, indent=$indent";
-                   my $line = join q{}, @lineSoFar;
                    # say STDERR qq{line so far: "$line"};
-                   my $lastNlPos = rindex $line, "\n";
-                   my $currentColumn = (length $line) - ($lastNlPos + 1); # 0-based
-                   # say STDERR qq{lastNlPos=$lastNlPos; currentColumn=$currentColumn; line="$line"};
                    my $spaces = $indent - $currentColumn;
                    if ($spaces < 1 and $currentColumn > 0) {
                        # Always leave at least one space between a comment and preceeding text.
                        $spaces = 1;
                    }
                    # say STDERR qq{spaces=$spaces};
-                   @lineSoFar = ($line);
-                   push @lineSoFar, (q{ } x $spaces) if $spaces > 1;
+                   $currentColumn += $spaces;
+                   push @output, (q{ } x $spaces) if $spaces > 1;
                    next PIECE;
                }
                die qq{Command "$command" not implemented};
             }
-            # say STDERR "=== printing line: ", join q{}, @lineSoFar;
-            print join q{}, @lineSoFar;
         };
 
     sub applyTestStyle {
@@ -518,25 +515,17 @@ if ( $style eq 'test' ) {
             }
         }
       PIECE: for my $piece (@pieces) {
-            if ( not ref $piece ) {
-                push @currentLine, $piece;
-                next PIECE;
-            }
-            my ($command) = @{$piece};
-            if ( $command eq 'nl' ) {
-                $printLine->();
-                @currentLine = ($piece);
-                next PIECE;
-            }
             push @currentLine, $piece;
         }
 
         return $baseIndent;
     }
 
-    # $grammar = undef;    # free up memory
     applyTestStyle(0, 0, $astValue);
-    $printLine->() if @currentLine;
+    $grammar = undef;    # free up memory
+    $recce = undef;    # free up memory
+    $printLine->();
+    print join q{}, @output;
 }
 
 # vim: expandtab shiftwidth=4:
