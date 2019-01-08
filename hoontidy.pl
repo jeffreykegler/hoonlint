@@ -110,6 +110,13 @@ sub doNode {
                 $lexemeLength =
                   $terminatorPos + ( length $terminator ) - $lexemeStart;
             }
+            if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
+                my $terminator = q{'''};
+                my $terminatorPos = index $hoonSource, $terminator,
+                  $lexemeStart + $lexemeLength;
+                $lexemeLength =
+                  $terminatorPos + ( length $terminator ) - $lexemeStart;
+            }
             $children[$childIX] = {
                 type   => 'lexeme',
                 start  => $lexemeStart,
