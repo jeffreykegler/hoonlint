@@ -102,14 +102,20 @@ sub doNode {
 
             # say STDERR Data::Dumper::Dumper( $children[$childIX] );
             my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
+
+            if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
+                my $terminator = q{"""};
+                my $terminatorPos = index $hoonSource, $terminator,
+                  $lexemeStart + $lexemeLength;
+                $lexemeLength =
+                  $terminatorPos + ( length $terminator ) - $lexemeStart;
+            }
             $children[$childIX] = {
-                    type   => 'lexeme',
-                    start  => $lexemeStart,
-                    length => $lexemeLength,
-                    symbol => $lexemeName,
-                  };
-            my $terminatorPos = index $hoonSource, q{"""},
-              $lexemeStart + $lexemeLength;
+                type   => 'lexeme',
+                start  => $lexemeStart,
+                length => $lexemeLength,
+                symbol => $lexemeName,
+            };
         }
 
         my $lastLocation = $lhsStart;
