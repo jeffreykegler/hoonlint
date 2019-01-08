@@ -133,7 +133,7 @@ sub getTripleQuote {
     my $terminator = $indent . "'''";
 
     my $terminatorPos = index ${$input}, $terminator, $nextNL;
-    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
+    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL);
 
     say STDERR "Left main READ loop" if $MarpaX::YAHC::DEBUG;
 
@@ -170,7 +170,7 @@ sub getTripleDoubleQuote {
     my $terminator = $indent . q{"""};
 
     my $terminatorPos = index ${$input}, $terminator, $nextNL;
-    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL - 1);
+    my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL);
 
     say STDERR "Left main READ loop" if $MarpaX::YAHC::DEBUG;
 
@@ -2003,7 +2003,7 @@ moldInfixTis ::= SYM4K TIS wyde5d
 # ','
 # Differs from scad(5)
 # For rope(5d), see subcase ['a' 'z'] and rump(5d)
-wideBuccol ::= (- COM SEL -) wyde5dSeq (SER)
+wideBuccol ::= (- COM SEL -) wyde5dSeq (- SER -)
 
 # '!'
 # Not in scad(5)

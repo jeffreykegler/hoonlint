@@ -82,8 +82,19 @@ sub doNode {
             my $lastSeparator;
           CHILD: for ( ; ; ) {
 
-                # say STDERR "childIX=$childIX; last children ix = $#children";
                 my $child     = $children[$childIX];
+
+                if ( ref $child eq 'ARRAY' ) {
+                    my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
+                    $child =
+                      {
+                        type   => 'lexeme',
+                        start  => $lexemeStart,
+                        length => $lexemeLength,
+                        symbol => $lexemeName,
+                      };
+                }
+
                 my $childType = $child->{type};
                 $childIX++;
               ITEM: {
@@ -385,33 +396,8 @@ sub spacesNeeded {
 # say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
             $baseIndent = $firstChildIndent if $firstChildIndent > $baseIndent;
 
-            # say STDERR join " ", "$lhsName: baseIndent=$baseIndent";
-
-            if ( $lhsName eq 'wisp5d' ) {
-
-                # special case for battery
-                for my $child ( @{$children} ) {
-                    applyTestStyle( $baseIndent, $depth + 1, $child );
-                }
-                last NODE;
-            }
-
-            if ( $lhsName eq 'lusLusCell' ) {
-
-                # special case for battery
-                for my $child ( @{$children} ) {
-                    applyTestStyle( $baseIndent + 2, $depth + 1, $child );
-                }
-                last NODE;
-            }
 
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
-            if ( $gapiness < 0 ) {    # sequence
-                for my $child (@$children) {
-                    applyTestStyle( $baseIndent, $depth + 1, $child );
-                }
-                last NODE;
-            }
             if ( $gapiness == 0 ) {    # wide node
                 for my $child (@$children) {
                     applyTestStyle( $baseIndent, $depth + 1, $child );
@@ -439,6 +425,18 @@ sub spacesNeeded {
                 }
             }
 
+            if ( $gapiness < 0 ) {    # sequence
+                my @indents = ();
+                CHILD: for my $childIX (0 .. $#$children) {
+                    my $child = $children->[$childIX];
+                    applyTestStyle( $baseIndent, $depth + 1, $child );
+                    my $start  = $child->{start};
+                    next CHILD if $isGap[$childIX];
+                    push @indents, column( $child->{start} );
+                }
+                say STDERR "SEQUENCE $lhsName ", (join " ", @indents);
+                last NODE;
+            }
             # Do we use alignment, or just backdenting?
             my $useAlignment = 1;
           SET_ALIGNMENT: {

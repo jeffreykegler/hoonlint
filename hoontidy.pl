@@ -25,6 +25,11 @@ CHECK_STYLE: {
     die qq{Unknown style option: "$style"};
 }
 
+my $hoonSource = do {
+    local $RS = undef;
+    <>;
+};
+
 my @data = ();
 my $grammar;
 my $recce;
@@ -90,6 +95,23 @@ sub doNode {
       $recce->g1_location_to_span($last_g1);
     my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
   RESULT: {
+      CHILD: for my $childIX ( 0 .. $#children ) {
+            my $child   = $children[$childIX];
+            my $refType = ref $child;
+            next CHILD unless $refType eq 'ARRAY';
+
+            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
+            my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
+            $children[$childIX] = {
+                    type   => 'lexeme',
+                    start  => $lexemeStart,
+                    length => $lexemeLength,
+                    symbol => $lexemeName,
+                  };
+            my $terminatorPos = index $hoonSource, q{"""},
+              $lexemeStart + $lexemeLength;
+        }
+
         my $lastLocation = $lhsStart;
         if ( ( scalar @rhs ) != $childCount ) {
 
@@ -127,24 +149,9 @@ sub doNode {
 
         # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
-
-            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
             my $child   = $children[$childIX];
-            my $refType = ref $child;
-            if ( $refType eq 'ARRAY' ) {
-                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
-                push @results,
-                  {
-                    type   => 'lexeme',
-                    start  => $lexemeStart,
-                    length => $lexemeLength,
-                    symbol => $lexemeName,
-                  };
-                next CHILD;
-            }
             push @results, $child;
         }
-        last RESULT;
     }
     return {
         type     => 'node',
@@ -154,11 +161,6 @@ sub doNode {
         children => \@results,
     };
 }
-
-my $hoonSource = do {
-    local $RS = undef;
-    <>;
-};
 
 my $semantics = <<'EOS';
 :default ::= action=>main::doNode
