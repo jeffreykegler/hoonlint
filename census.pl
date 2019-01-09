@@ -6,8 +6,19 @@ use warnings;
 
 use Data::Dumper;
 use English qw( -no_match_vars );
+use Getopt::Long;
 
 require "yahc.pm";
+
+my $style;
+
+GetOptions()    # flag
+  or die("Error in command line arguments\n");
+
+my $hoonSource = do {
+    local $RS = undef;
+    <>;
+};
 
 my @data = ();
 my $grammar;
@@ -74,6 +85,36 @@ sub doNode {
       $recce->g1_location_to_span($last_g1);
     my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
   RESULT: {
+      CHILD: for my $childIX ( 0 .. $#children ) {
+            my $child   = $children[$childIX];
+            my $refType = ref $child;
+            next CHILD unless $refType eq 'ARRAY';
+
+            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
+            my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
+
+            if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
+                my $terminator = q{"""};
+                my $terminatorPos = index $hoonSource, $terminator,
+                  $lexemeStart + $lexemeLength;
+                $lexemeLength =
+                  $terminatorPos + ( length $terminator ) - $lexemeStart;
+            }
+            if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
+                my $terminator = q{'''};
+                my $terminatorPos = index $hoonSource, $terminator,
+                  $lexemeStart + $lexemeLength;
+                $lexemeLength =
+                  $terminatorPos + ( length $terminator ) - $lexemeStart;
+            }
+            $children[$childIX] = {
+                type   => 'lexeme',
+                start  => $lexemeStart,
+                length => $lexemeLength,
+                symbol => $lexemeName,
+            };
+        }
+
         my $lastLocation = $lhsStart;
         if ( ( scalar @rhs ) != $childCount ) {
 
@@ -83,18 +124,6 @@ sub doNode {
           CHILD: for ( ; ; ) {
 
                 my $child     = $children[$childIX];
-
-                if ( ref $child eq 'ARRAY' ) {
-                    my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
-                    $child =
-                      {
-                        type   => 'lexeme',
-                        start  => $lexemeStart,
-                        length => $lexemeLength,
-                        symbol => $lexemeName,
-                      };
-                }
-
                 my $childType = $child->{type};
                 $childIX++;
               ITEM: {
@@ -122,24 +151,9 @@ sub doNode {
 
         # All other rules
       CHILD: for my $childIX ( 0 .. $#children ) {
-
-            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
             my $child   = $children[$childIX];
-            my $refType = ref $child;
-            if ( $refType eq 'ARRAY' ) {
-                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
-                push @results,
-                  {
-                    type   => 'lexeme',
-                    start  => $lexemeStart,
-                    length => $lexemeLength,
-                    symbol => $lexemeName,
-                  };
-                next CHILD;
-            }
             push @results, $child;
         }
-        last RESULT;
     }
     return {
         type     => 'node',
@@ -149,11 +163,6 @@ sub doNode {
         children => \@results,
     };
 }
-
-my $hoonSource = do {
-    local $RS = undef;
-    <>;
-};
 
 my $semantics = <<'EOS';
 :default ::= action=>main::doNode
