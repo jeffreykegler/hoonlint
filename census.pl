@@ -12,13 +12,32 @@ require "yahc.pm";
 
 my $style;
 
-GetOptions()    # flag
-  or die("Error in command line arguments\n");
+my $roundtrip;
+my $verbose;
 
-my $hoonSource = do {
+GetOptions(
+    "roundtrip"  => \$roundtrip,
+    "verbose"  => \$verbose
+) or die("Error in command line arguments\n");
+
+sub usage {
+    die "usage: $PROGRAM_NAME [-v] fileName\n";
+}
+
+usage() if scalar @ARGV != 1;
+my $fileName = $ARGV[0];
+
+sub slurp {
+    my ($fileName) = @_;
     local $RS = undef;
-    <>;
-};
+    my $fh;
+    open $fh, q{<}, $fileName or die "Cannot open $fileName";
+    my $file = <$fh>;
+    close $fh;
+    return \$file;
+}
+
+my $pHoonSource = slurp($fileName);
 
 my @data = ();
 my $grammar;
@@ -95,14 +114,14 @@ sub doNode {
 
             if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
                 my $terminator = q{"""};
-                my $terminatorPos = index $hoonSource, $terminator,
+                my $terminatorPos = index ${$pHoonSource}, $terminator,
                   $lexemeStart + $lexemeLength;
                 $lexemeLength =
                   $terminatorPos + ( length $terminator ) - $lexemeStart;
             }
             if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
                 my $terminator = q{'''};
-                my $terminatorPos = index $hoonSource, $terminator,
+                my $terminatorPos = index ${$pHoonSource}, $terminator,
                   $lexemeStart + $lexemeLength;
                 $lexemeLength =
                   $terminatorPos + ( length $terminator ) - $lexemeStart;
@@ -171,19 +190,46 @@ EOS
 
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 $grammar = $parser->rawGrammar();
-$parser->read( \$hoonSource );
+$parser->read( $pHoonSource );
 $recce  = $parser->rawRecce();
 $parser = undef;                 # free up memory
 my $astRef = $recce->value();
 
 sub literal {
     my ( $start, $length ) = @_;
-    return substr $hoonSource, $start, $length;
+    return substr ${$pHoonSource}, $start, $length;
 }
 
 sub column {
     my ($pos) = @_;
-    return $pos - ( rindex $hoonSource, "\n", $pos - 1 );
+    return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
+}
+
+# The "name" of a node
+sub name {
+    my ($node) = @_;
+    my $name = $node->{symbol};
+    return $name if defined $name;
+    my $type = $node->{type};
+    if ($type eq 'node') {
+        my $ruleID = $node->{ruleID};
+        my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+        return $grammar->symbol_name($lhs) . '#' . (scalar @rhs);
+    }
+    return "[$type]";
+}
+
+sub showAncestors {
+    my ($context, $length) = @_;
+    my $ancestors = $context->{ancestors};
+    my $count = scalar @{$ancestors};
+    return join " ", @{$ancestors} if not $length or $length >= $count;
+    # say STDERR "$count $length";
+    my @result = ();
+    for (my $ix = $count-1; $ix >= $count-$length; $ix--) {
+       push @result, $ancestors->[$ix];
+    }
+    return join " ", @result;
 }
 
 die "Parse failed" if not $astRef;
@@ -283,11 +329,11 @@ sub spacesNeeded {
 
     my @pieces = ();
 
-    sub applyTestStyle {
+    sub doCensus {
         no warnings 'recursion';
-        my ( $baseIndent, $depth, $node ) = @_;
+        my ( $baseIndent, $depth, $node, $parentContext ) = @_;
 
-        # say STDERR "applyTestStyle($baseIndent, $depth, ...)";
+        # say STDERR "doCensus($baseIndent, $depth, ...)";
 
         my $gapToPieces = sub {
             my ( $start, $length ) = @_;
@@ -383,6 +429,9 @@ sub spacesNeeded {
             die Data::Dumper::Dumper($node) if not defined $ruleID;
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
+            my @ancestors = @{$parentContext->{ancestors}};
+            push @ancestors, name($node);
+            my $childContext = { ancestors => \@ancestors };
 
             # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
             if ( $lhsName eq 'optGay4i' ) {
@@ -396,7 +445,7 @@ sub spacesNeeded {
             my $childCount = scalar @{$children};
             last NODE if $childCount <= 0;
             if ( $childCount == 1 ) {
-                applyTestStyle( $baseIndent, $depth + 1, $children->[0] );
+                doCensus( $baseIndent, $depth + 1, $children->[0], $childContext );
                 last NODE;
             }
 
@@ -409,7 +458,7 @@ sub spacesNeeded {
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
             if ( $gapiness == 0 ) {    # wide node
                 for my $child (@$children) {
-                    applyTestStyle( $baseIndent, $depth + 1, $child );
+                    doCensus( $baseIndent, $depth + 1, $child, $childContext );
                 }
                 last NODE;
             }
@@ -435,15 +484,26 @@ sub spacesNeeded {
             }
 
             if ( $gapiness < 0 ) {    # sequence
+                my $start  = $node->{start};
+                my ($line, $column) = $recce->line_column($start);
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
-                    applyTestStyle( $baseIndent, $depth + 1, $child );
-                    my $start  = $child->{start};
-                    next CHILD if $isGap[$childIX];
-                    push @indents, column( $child->{start} );
+                    doCensus( $baseIndent, $depth + 1, $child, $childContext );
+                    my $childStart  = $child->{start};
+                    my $symbol  = $child->{symbol};
+                    next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
+                    my $childColumn = column( $childStart );
+                    if ($childColumn != $column) {
+                        say "SEQUENCE anomaly: lhs=$lhsName";
+                        say "  context: ", showAncestors($childContext, 5);
+                        say "  parent at $fileName L", ( join ':', $line, $column );
+                        say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
+                    }
+                    push @indents, $childColumn;
                 }
-                say STDERR "SEQUENCE $lhsName ", (join " ", @indents);
+                say "SEQUENCE $lhsName", '@', "$column ", ( join " ", @indents ),
+                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
                 last NODE;
             }
             # Do we use alignment, or just backdenting?
@@ -470,36 +530,19 @@ sub spacesNeeded {
                 }
             }
 
-            if (0) {
-                # TODO: Delete this?
-
-                # say STDERR "Using alignment!!!";
-                my $alignedIndent = $baseIndent;
-              CHILD: for my $childIX ( 0 .. $#$children ) {
-                    my $child = $children->[$childIX];
-                    if ( $isGap[$childIX] and not $isVerticalGap[$childIX] ) {
-                        $alignedIndent =
-                          applyTestStyle( $alignedIndent, $depth + 1, $child );
-                        next CHILD;
-                    }
-                    applyTestStyle( $alignedIndent, $depth + 1, $child );
-                }
-                last NODE;
-            }
-
             # If here, use backdenting
             my $currentIndent = $baseIndent + $vertical_gaps * 2;
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 $currentIndent -= 2 if $isVerticalGap[$childIX];
                 my $child = $children->[$childIX];
-                applyTestStyle( $currentIndent, $depth + 1, $child );
+                doCensus( $currentIndent, $depth + 1, $child, $childContext );
             }
         }
 
         return $baseIndent;
     }
 
-    applyTestStyle( 0, 0, $astValue );
+    doCensus( 0, 0, $astValue, { ancestors => [] } );
     $grammar = undef;    # free up memory
     $recce   = undef;    # free up memory
 
@@ -542,7 +585,9 @@ sub spacesNeeded {
         }
         die qq{Unimplemented piece type: }, Data::Dumper::Dumper($piece);
     }
-    print join q{}, @output;
+    if ($roundtrip) {
+        print join q{}, @output;
+    }
 }
 
 # vim: expandtab shiftwidth=4:
