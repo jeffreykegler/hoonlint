@@ -325,7 +325,7 @@ sub spacesNeeded {
 
     sub doCensus {
         no warnings 'recursion';
-        my ( $baseIndent, $depth, $node, $parentContext ) = @_;
+        my ( $baseIndent, $depth, $node, $argContext ) = @_;
 
         # say STDERR "doCensus($baseIndent, $depth, ...)";
 
@@ -380,6 +380,31 @@ sub spacesNeeded {
             return;
         };
 
+                my $parentSymbol = $node->{symbol};
+                my $parentStart  = $node->{start};
+                my $parentLength = $node->{length};
+                my ($parentLine, $parentColumn) = $recce->line_column($parentStart);
+                my @parentIndents = @{$argContext->{ indents }};
+            my @ancestors = @{$argContext->{ancestors}};
+            shift @ancestors if scalar @ancestors >= 5; # no more than 5
+            push @ancestors, name($node);
+
+            my $argLine = $argContext->{ line };
+            if ($argLine != $parentLine) {
+                @parentIndents = ($parentColumn-1);
+                # say "line $parentLine: new indents: ", (join " ", @parentIndents);
+            } elsif ($parentColumn != $parentIndents[$#parentIndents]) {
+                push @parentIndents, $parentColumn-1 if $parentColumn-1 != $parentIndents[$#parentIndents];
+                # say "line $parentLine: indents: ", (join " ", @parentIndents);
+            }
+
+            my $parentContext = {
+                ancestors => \@ancestors,
+                line      => $parentLine,
+                indents   => [@parentIndents],
+            };
+            # say "context $parentLine: indents: ", (join " ", @{$parentContext->{indents}});
+
       NODE: {
             die Data::Dumper::Dumper($node)
               if ref $node ne 'HASH';    # TODO: delete after development
@@ -390,49 +415,38 @@ sub spacesNeeded {
                 last NODE;
             }
             if ( $type eq 'lexeme' ) {
-                my $symbol = $node->{symbol};
-                my $start  = $node->{start};
-                my $length = $node->{length};
-                if ( $symbol eq 'GAP' ) {
-                    $gapToPieces->( $start, $length );
+                if ( $parentSymbol eq 'GAP' ) {
+                    $gapToPieces->( $parentStart, $parentLength );
                     last NODE;
                 }
-                if ( $symbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
-                    push @pieces, { type=>'text', text=>literal( $start, 2 )};
-                    $gapToPieces->( $start + 2, $length - 2 );
+                if ( $parentSymbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+                    push @pieces, { type=>'text', text=>literal( $parentStart, 2 )};
+                    $gapToPieces->( $parentStart + 2, $parentLength - 2 );
                     last NODE;
                 }
 
-# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $start, $length ), q{"};
-                push @pieces, {type=>'text', text=>literal( $start, $length )};
+# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $parentStart, $parentLength ), q{"};
+                push @pieces, {type=>'text', text=>literal( $parentStart, $parentLength )};
                 last NODE;
             }
             if ( $type eq 'separator' ) {
-                my $symbol = $node->{symbol};
-                my $start  = $node->{start};
-                my $length = $node->{length};
-                if ( $symbol eq 'GAP' ) {
+                if ( $parentSymbol eq 'GAP' ) {
 
-                    $gapToPieces->( $start, $length );
+                    $gapToPieces->( $parentStart, $parentLength );
                     last NODE;
                 }
-                push @pieces, {type=>'text', text=>literal( $start, $length )};
+                push @pieces, {type=>'text', text=>literal( $parentStart, $parentLength )};
                 last NODE;
             }
             my $ruleID = $node->{ruleID};
             die Data::Dumper::Dumper($node) if not defined $ruleID;
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
-            my @ancestors = @{$parentContext->{ancestors}};
-            shift @ancestors if scalar @ancestors >= 5; # no more than 5
-            push @ancestors, name($node);
-            my $childContext = { ancestors => \@ancestors };
+
 
             # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
             if ( $lhsName eq 'optGay4i' ) {
-                my $start  = $node->{start};
-                my $length = $node->{length};
-                $gapToPieces->( $start, $length );
+                $gapToPieces->( $parentStart, $parentLength );
                 last NODE;
             }
 
@@ -440,7 +454,7 @@ sub spacesNeeded {
             my $childCount = scalar @{$children};
             last NODE if $childCount <= 0;
             if ( $childCount == 1 ) {
-                doCensus( $baseIndent, $depth + 1, $children->[0], $childContext );
+                doCensus( $baseIndent, $depth + 1, $children->[0], $parentContext );
                 last NODE;
             }
 
@@ -453,7 +467,7 @@ sub spacesNeeded {
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
             if ( $gapiness == 0 ) {    # wide node
                 for my $child (@$children) {
-                    doCensus( $baseIndent, $depth + 1, $child, $childContext );
+                    doCensus( $baseIndent, $depth + 1, $child, $parentContext );
                 }
                 last NODE;
             }
@@ -484,14 +498,14 @@ sub spacesNeeded {
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
-                    doCensus( $baseIndent, $depth + 1, $child, $childContext );
+                    doCensus( $baseIndent, $depth + 1, $child, $parentContext );
                     my $childStart  = $child->{start};
                     my $symbol  = $child->{symbol};
                     next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
                     my $childColumn = column( $childStart );
                     if ($childColumn != $column) {
                         say "SEQUENCE anomaly: lhs=$lhsName";
-                        say "  context: ", showAncestors($childContext);
+                        say "  context: ", showAncestors($parentContext);
                         say "  parent at $fileName L", ( join ':', $line, $column );
                         say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
                     }
@@ -518,6 +532,7 @@ sub spacesNeeded {
 
             sub isbackdented {
                 my ( $baseLine, $baseColumn, $verticalGaps, $indents ) = @_;
+      # say "L$baseLine isbackdented for column $baseColumn";
 
                 my $currentIndent = $baseColumn + $verticalGaps * 2;
                 my $lastLine      = $baseLine;
@@ -535,6 +550,7 @@ sub spacesNeeded {
                 return 1;
             }
 
+                       # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
             # if here, gapiness > 0
             {
                 my $start  = $node->{start};
@@ -552,9 +568,14 @@ sub spacesNeeded {
                 my $indentDesc = '???';
                 TYPE_INDENT: {
                     # is it a backdent?
-                    if (isbackdented($line, $column, $vertical_gaps, \@indents)) {
-                       $indentDesc = 'BACKDENTED';
-                       last TYPE_INDENT;
+                       # say "parentIndents: ", (join " ", @parentIndents);
+                    for (my $indentIX = $#parentIndents; $indentIX >= 0; $indentIX--) {
+                        my $indent = $parentIndents[$indentIX];
+                       # say "L$parentLine: L$line trying backdent ; $indent";
+                        if (isbackdented($parentLine, $indent, $vertical_gaps, \@indents)) {
+                           $indentDesc = 'BACKDENTED-' . ($#parentIndents-$indentIX);
+                           last TYPE_INDENT;
+                        }
                     }
                     my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
                     my $lineLiteral = substr ${$pHoonSource}, $startOfLine, $start-$startOfLine;
@@ -571,7 +592,7 @@ sub spacesNeeded {
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
                 }
                 say "FIXED-$gapiness $lhsName", '@', "$column $indentDesc # ",
-                    showAncestors($parentContext),
+                    showAncestors($argContext),
                   " ## $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
             }
 
@@ -604,14 +625,14 @@ sub spacesNeeded {
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 $currentIndent -= 2 if $isVerticalGap[$childIX];
                 my $child = $children->[$childIX];
-                doCensus( $currentIndent, $depth + 1, $child, $childContext );
+                doCensus( $currentIndent, $depth + 1, $child, $parentContext );
             }
         }
 
         return $baseIndent;
     }
 
-    doCensus( 0, 0, $astValue, { ancestors => [] } );
+    doCensus( 0, 0, $astValue, { line => -1, indents => [], ancestors => [] } );
     $grammar = undef;    # free up memory
     $recce   = undef;    # free up memory
 
