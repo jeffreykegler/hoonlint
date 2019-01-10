@@ -513,10 +513,33 @@ sub spacesNeeded {
                     my $symbol  = $child->{symbol};
                     next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
                     my ($childLine, $childColumn) = $recce->line_column( $childStart );
-                    push @indents, "$childLine:$childColumn";
+                    push @indents, [ $childLine, $childColumn-1 ];
                 }
-                say "FIXED-$gapiness $lhsName", '@', "$column ", ( join " ", @indents ),
-                  " # ", showAncestors($parentContext),
+                my $indentDesc = '???';
+                TYPE_INDENT: {
+                    # is it a backdent?
+                    my $lastLine = $line;
+                    my $currentIndent = $baseIndent + $vertical_gaps * 2;
+                    my $isBackdented = 1;
+                    INDENT: for my $indent (@indents) {
+                      my ($thisLine, $thisColumn) = @{$indent};
+                      next INDENT if $thisLine == $lastLine;
+                      $currentIndent -= 2;
+                      $lastLine = $thisLine;
+                      if ($currentIndent != $thisColumn) {
+                         say STDERR "L$lastLine $thisColumn vs. $currentIndent";
+                         $isBackdented = 0;
+                         last INDENT;
+                      }
+                    }
+                    if ($isBackdented) {
+                       $indentDesc = 'BACKDENTED';
+                       last TYPE_INDENT;
+                    }
+                    $indentDesc = join " ", map { join ':', @{$_} } @indents;
+                }
+                say "FIXED-$gapiness $lhsName", '@', "$column $indentDesc # ",
+                    showAncestors($parentContext),
                   " ## $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
             }
 
