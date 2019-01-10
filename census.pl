@@ -502,10 +502,44 @@ sub spacesNeeded {
                 last NODE;
             }
 
+            sub isluslusstyle {
+                my ( $baseLine, $baseColumn, $indents ) = @_;
+# say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
+                  INDENT: for my $indentIX ( 0 .. ($#$indents-1)) {
+                        my ( $thisLine, $thisColumn ) = @{$indents->[$indentIX]};
+# say join " ", __FILE__, __LINE__, "L$thisLine vs. $baseLine";
+                      return 0 if $thisLine != $baseLine;
+                  }
+                        my ( $thisLine, $thisColumn ) = @{$indents->[$#$indents]};
+# say join " ", __FILE__, __LINE__, "L$thisColumn vs. $baseColumn";
+                  return 0 if $thisColumn != $baseColumn+2;
+                  return 1;
+            }
+
+            sub isbackdented {
+                my ( $baseLine, $baseColumn, $verticalGaps, $indents ) = @_;
+
+                my $currentIndent = $baseColumn + $verticalGaps * 2;
+                my $lastLine      = $baseLine;
+              INDENT: for my $indent ( @{$indents} ) {
+                    my ( $thisLine, $thisColumn ) = @{$indent};
+                    next INDENT if $thisLine == $lastLine;
+                    $currentIndent -= 2;
+                    $lastLine = $thisLine;
+
+      # say "L$lastLine $thisColumn vs. $currentIndent";
+                    if ( $currentIndent != $thisColumn ) {
+                        return;
+                    }
+                }
+                return 1;
+            }
+
             # if here, gapiness > 0
             {
                 my $start  = $node->{start};
                 my ($line, $column) = $recce->line_column($start);
+                $column -= 1;
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
@@ -518,22 +552,20 @@ sub spacesNeeded {
                 my $indentDesc = '???';
                 TYPE_INDENT: {
                     # is it a backdent?
-                    my $lastLine = $line;
-                    my $currentIndent = $baseIndent + $vertical_gaps * 2;
-                    my $isBackdented = 1;
-                    INDENT: for my $indent (@indents) {
-                      my ($thisLine, $thisColumn) = @{$indent};
-                      next INDENT if $thisLine == $lastLine;
-                      $currentIndent -= 2;
-                      $lastLine = $thisLine;
-                      if ($currentIndent != $thisColumn) {
-                         say STDERR "L$lastLine $thisColumn vs. $currentIndent";
-                         $isBackdented = 0;
-                         last INDENT;
-                      }
-                    }
-                    if ($isBackdented) {
+                    if (isbackdented($line, $column, $vertical_gaps, \@indents)) {
                        $indentDesc = 'BACKDENTED';
+                       last TYPE_INDENT;
+                    }
+                    my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
+                    my $lineLiteral = substr ${$pHoonSource}, $startOfLine, $start-$startOfLine;
+                    # say qq{lineLiteral: "$lineLiteral"};
+                    my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
+                    if (isbackdented($line, (length $spaces), $vertical_gaps, \@indents)) {
+                       $indentDesc = 'LINE-BACKDENTED';
+                       last TYPE_INDENT;
+                    }
+                    if (isluslusstyle($line, $column, \@indents)) {
+                       $indentDesc = 'LUSLUS-STYLE';
                        last TYPE_INDENT;
                     }
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
