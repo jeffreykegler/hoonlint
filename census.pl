@@ -220,16 +220,10 @@ sub name {
 }
 
 sub showAncestors {
-    my ($context, $length) = @_;
+    my ($context) = @_;
     my $ancestors = $context->{ancestors};
     my $count = scalar @{$ancestors};
-    return join " ", @{$ancestors} if not $length or $length >= $count;
-    # say STDERR "$count $length";
-    my @result = ();
-    for (my $ix = $count-1; $ix >= $count-$length; $ix--) {
-       push @result, $ancestors->[$ix];
-    }
-    return join " ", @result;
+    return join " ", (reverse @{$ancestors});
 }
 
 die "Parse failed" if not $astRef;
@@ -430,6 +424,7 @@ sub spacesNeeded {
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
             my @ancestors = @{$parentContext->{ancestors}};
+            shift @ancestors if scalar @ancestors >= 5; # no more than 5
             push @ancestors, name($node);
             my $childContext = { ancestors => \@ancestors };
 
@@ -496,7 +491,7 @@ sub spacesNeeded {
                     my $childColumn = column( $childStart );
                     if ($childColumn != $column) {
                         say "SEQUENCE anomaly: lhs=$lhsName";
-                        say "  context: ", showAncestors($childContext, 5);
+                        say "  context: ", showAncestors($childContext);
                         say "  parent at $fileName L", ( join ':', $line, $column );
                         say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
                     }
@@ -506,6 +501,25 @@ sub spacesNeeded {
                   " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
                 last NODE;
             }
+
+            # if here, gapiness > 0
+            {
+                my $start  = $node->{start};
+                my ($line, $column) = $recce->line_column($start);
+                my @indents = ();
+                CHILD: for my $childIX (0 .. $#$children) {
+                    my $child = $children->[$childIX];
+                    my $childStart  = $child->{start};
+                    my $symbol  = $child->{symbol};
+                    next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
+                    my ($childLine, $childColumn) = $recce->line_column( $childStart );
+                    push @indents, "$childLine:$childColumn";
+                }
+                say "FIXED-$gapiness $lhsName", '@', "$column ", ( join " ", @indents ),
+                  " # ", showAncestors($parentContext),
+                  " ## $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
+            }
+
             # Do we use alignment, or just backdenting?
             my $useAlignment = 1;
           SET_ALIGNMENT: {
