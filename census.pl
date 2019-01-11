@@ -43,6 +43,121 @@ my @data = ();
 my $grammar;
 my $recce;
 
+# Preferred runes for alignment.  At this point all the tall ones
+# except KETHEP (^-);
+my @alignables = qw(
+tallBarcab
+tallBarcen
+tallBarcol
+tallBardot
+tallBarhep
+tallBarket
+tallBarsig
+tallBartar
+tallBartis
+tallBarwut
+tallBuccab
+tallBuccabMold
+tallBuccen
+tallBuccenMold
+tallBuccol
+tallBuccolMold
+tallBuchep
+tallBuchepMold
+tallBucket
+tallBucketMold
+tallBucpat
+tallBucpatMold
+tallBucsem
+tallBucsemMold
+tallBuctis
+tallBuctisMold
+tallBucwut
+tallBucwutMold
+tallCencab
+tallCencolMold
+tallCendot
+tallCenhep
+tallCenhepMold
+tallCenket
+tallCenketMold
+tallCenlus
+tallCenlusMold
+tallCensig
+tallCentar
+tallCentis
+tallColcab
+tallColhep
+tallColket
+tallCollus
+tallColsig
+tallColtar
+tallDotket
+tallDotlus
+tallDottar
+tallDottis
+tallDotwut
+tallKetbar
+tallKetcen
+tallKetdot
+tallKetlus
+tallKetpam
+tallKetsig
+tallKettis
+tallKetwut
+tallSemcol
+tallSemfas
+tallSemsem
+tallSemsig
+tallSigbar
+tallSigbuc
+tallSigcab
+tallSigcen
+tallSigfas
+tallSiggal
+tallSiggar
+tallSiglus
+tallSigpam
+tallSigtis
+tallSigwut
+tallSigzap
+tallTisbar
+tallTiscol
+tallTiscom
+tallTisdot
+tallTisfas
+tallTisgal
+tallTisgar
+tallTishep
+tallTisket
+tallTislus
+tallTissem
+tallTissig
+tallTistar
+tallTiswut
+tallWutbar
+tallWutcol
+tallWutdot
+tallWutgal
+tallWutgar
+tallWuthep
+tallWutket
+tallWutlus
+tallWutpam
+tallWutpat
+tallWutsig
+tallWuttis
+tallWutzap
+tallZapcol
+tallZapcom
+tallZapdot
+tallZapgar
+tallZaptis
+tallZapWut
+);
+my %alignable = ();
+$alignable{$_} = 1 for @alignables;
+
 my %separator = qw(
   hyf4jSeq DOT
   singleQuoteCord gon4k
@@ -385,6 +500,7 @@ sub spacesNeeded {
                 my $parentLength = $node->{length};
                 my ($parentLine, $parentColumn) = $recce->line_column($parentStart);
                 my @parentIndents = @{$argContext->{ indents }};
+                $parentColumn--; # 0-based
             my @ancestors = @{$argContext->{ancestors}};
             shift @ancestors if scalar @ancestors >= 5; # no more than 5
             push @ancestors, name($node);
@@ -398,12 +514,16 @@ sub spacesNeeded {
                 # say "line $parentLine: indents: ", (join " ", @parentIndents);
             }
 
+            my $argPreferredIndent = $argContext->{ preferredIndent };
+            my $parentPreferredIndent = $argPreferredIndent if $argLine == $parentLine;
             my $parentContext = {
                 ancestors => \@ancestors,
                 line      => $parentLine,
                 indents   => [@parentIndents],
             };
-            # say "context $parentLine: indents: ", (join " ", @{$parentContext->{indents}});
+            if (defined $parentPreferredIndent) {
+                $parentContext->{preferredIndent} = $parentPreferredIndent;
+            }
 
       NODE: {
             die Data::Dumper::Dumper($node)
@@ -443,6 +563,9 @@ sub spacesNeeded {
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
 
+            if ($alignable{$lhsName}) {
+                $parentContext->{ preferredIndent } = $parentColumn;
+            }
 
             # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
             if ( $lhsName eq 'optGay4i' ) {
@@ -566,28 +689,66 @@ sub spacesNeeded {
                     push @indents, [ $childLine, $childColumn-1 ];
                 }
                 my $indentDesc = '???';
-                TYPE_INDENT: {
+              TYPE_INDENT: {
+
                     # is it a backdent?
-                       # say "parentIndents: ", (join " ", @parentIndents);
-                    for (my $indentIX = $#parentIndents; $indentIX >= 0; $indentIX--) {
+                    if ( $lhsName eq 'tallKethep' ) {
+
+                   # align with preferred indent from ancestor, if there is one,
+                   # with parent otherwise
+                        my $indent = $parentPreferredIndent // $parentColumn;
+                        if (
+                            isbackdented(
+                                $parentLine,    $indent,
+                                $vertical_gaps, \@indents
+                            )
+                          )
+                        {
+                            $indentDesc = 'KETHEP-STYLE';
+                            last TYPE_INDENT;
+                        }
+
+                    }
+                    for (
+                        my $indentIX = $#parentIndents ;
+                        $indentIX >= 0 ;
+                        $indentIX--
+                      )
+                    {
                         my $indent = $parentIndents[$indentIX];
-                       # say "L$parentLine: L$line trying backdent ; $indent";
-                        if (isbackdented($parentLine, $indent, $vertical_gaps, \@indents)) {
-                           $indentDesc = 'BACKDENTED-' . ($#parentIndents-$indentIX);
-                           last TYPE_INDENT;
+
+                        # say "L$parentLine: L$line trying backdent ; $indent";
+                        if (
+                            isbackdented(
+                                $parentLine,    $indent,
+                                $vertical_gaps, \@indents
+                            )
+                          )
+                        {
+                            $indentDesc =
+                              'BACKDENTED-' . ( $#parentIndents - $indentIX );
+                            last TYPE_INDENT;
                         }
                     }
                     my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
-                    my $lineLiteral = substr ${$pHoonSource}, $startOfLine, $start-$startOfLine;
+                    my $lineLiteral = substr ${$pHoonSource},
+                      $startOfLine, $start - $startOfLine;
+
                     # say qq{lineLiteral: "$lineLiteral"};
                     my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
-                    if (isbackdented($line, (length $spaces), $vertical_gaps, \@indents)) {
-                       $indentDesc = 'LINE-BACKDENTED';
-                       last TYPE_INDENT;
+                    if (
+                        isbackdented(
+                            $line, ( length $spaces ),
+                            $vertical_gaps, \@indents
+                        )
+                      )
+                    {
+                        $indentDesc = 'LINE-BACKDENTED';
+                        last TYPE_INDENT;
                     }
-                    if (isluslusstyle($line, $column, \@indents)) {
-                       $indentDesc = 'LUSLUS-STYLE';
-                       last TYPE_INDENT;
+                    if ( isluslusstyle( $line, $column, \@indents ) ) {
+                        $indentDesc = 'LUSLUS-STYLE';
+                        last TYPE_INDENT;
                     }
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
                 }
