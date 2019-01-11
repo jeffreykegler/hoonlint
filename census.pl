@@ -100,7 +100,6 @@ tallDotwut
 tallKetbar
 tallKetcen
 tallKetdot
-tallKetlus
 tallKetpam
 tallKetsig
 tallKettis
@@ -618,6 +617,7 @@ sub spacesNeeded {
             if ( $gapiness < 0 ) {    # sequence
                 my $start  = $node->{start};
                 my @indents = ();
+                my $isAnomalous = 0;
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
                     doCensus( $baseIndent, $depth + 1, $child, $parentContext );
@@ -626,29 +626,39 @@ sub spacesNeeded {
                     next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
                     my $childColumn = column( $childStart ) - 1; # 0-based
                     if ($childColumn != $parentColumn) {
-                        say "SEQUENCE anomaly: lhs=$lhsName";
-                        say "  context: ", showAncestors($parentContext);
-                        say "  parent at $fileName L", ( join ':', $parentLine, $parentColumn );
-                        say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
+                        $isAnomalous = 1;
+                        # say "SEQUENCE anomaly: lhs=$lhsName";
+                        # say "  context: ", showAncestors($parentContext);
+                        # say "  parent at $fileName L", ( join ':', $parentLine, $parentColumn );
+                        # say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
                     }
                     push @indents, $childColumn;
                 }
-                say "SEQUENCE $lhsName", '@', "$parentColumn ", ( join " ", @indents ),
-                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
+                my $alignmentDesc = $isAnomalous ?  ( join " ", @indents ) : 'REGULAR';
+                say "SEQUENCE $lhsName", '@',
+                  "$parentColumn $alignmentDesc # $fileName L",
+                  ( join ':', $recce->line_column($start) )
+                  if $verbose;
                 last NODE;
             }
 
             sub isluslusstyle {
                 my ( $baseLine, $baseColumn, $indents ) = @_;
 # say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
-                  INDENT: for my $indentIX ( 0 .. ($#$indents-1)) {
+                  my $indentCount = scalar @{$indents};
+                  my $indentIX = 0;
+                  INDENT: while ($indentIX < $indentCount) {
                         my ( $thisLine, $thisColumn ) = @{$indents->[$indentIX]};
 # say join " ", __FILE__, __LINE__, "L$thisLine vs. $baseLine";
-                      return 0 if $thisLine != $baseLine;
+                      last INDENT if $thisLine != $baseLine;
+                      $indentIX++;
                   }
-                        my ( $thisLine, $thisColumn ) = @{$indents->[$#$indents]};
+                  INDENT: while ($indentIX < $indentCount) {
+                      my ( $thisLine, $thisColumn ) = @{$indents->[$indentIX]};
 # say join " ", __FILE__, __LINE__, "L$thisColumn vs. $baseColumn";
-                  return 0 if $thisColumn != $baseColumn+2;
+                      return 0 if $thisColumn != $baseColumn+2;
+                      $indentIX++;
+                  }
                   return 1;
             }
 
@@ -689,7 +699,7 @@ sub spacesNeeded {
               TYPE_INDENT: {
 
                     # is it a backdent?
-                    if ( $lhsName eq 'tallKethep' ) {
+                    if ( $lhsName eq 'tallKethep' or $lhsName eq 'tallKetlus' ) {
 
                    # align with preferred indent from ancestor, if there is one,
                    # with parent otherwise
@@ -706,7 +716,7 @@ sub spacesNeeded {
                         }
 
                     }
-                    if ( $lhsName eq 'luslusCell' ) {
+                    if ( $lhsName eq 'lusLusCell' ) {
                         if ( isluslusstyle( $parentLine, $parentColumn, \@indents ) ) {
                             $indentDesc = 'LUSLUS-STYLE';
                             last TYPE_INDENT;
@@ -720,7 +730,7 @@ sub spacesNeeded {
                     {
                         my $indent = $parentIndents[$indentIX];
 
-                        # say "L$parentLine: L$parentLine trying backdent ; $indent";
+                   # say "L$parentLine: L$parentLine trying backdent ; $indent";
                         if (
                             isbackdented(
                                 $parentLine,    $indent,
@@ -728,8 +738,9 @@ sub spacesNeeded {
                             )
                           )
                         {
+                            my $depth = $#parentIndents - $indentIX;
                             $indentDesc =
-                              'BACKDENTED-' . ( $#parentIndents - $indentIX );
+                              $depth ? "BACKDENTED-$depth" : 'BACKDENTED';
                             last TYPE_INDENT;
                         }
                     }
@@ -756,9 +767,9 @@ sub spacesNeeded {
                     }
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
                 }
-                say "FIXED-$gapiness $lhsName", '@', "$parentColumn $indentDesc # ",
-                    showAncestors($argContext),
-                  " ## $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
+                say "FIXED-$gapiness $lhsName", '@', "$parentColumn $indentDesc",
+                  #  ' ## ', showAncestors($argContext),
+                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
             }
 
             # Do we use alignment, or just backdenting?
