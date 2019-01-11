@@ -507,10 +507,10 @@ sub spacesNeeded {
 
             my $argLine = $argContext->{ line };
             if ($argLine != $parentLine) {
-                @parentIndents = ($parentColumn-1);
+                @parentIndents = ($parentColumn);
                 # say "line $parentLine: new indents: ", (join " ", @parentIndents);
             } elsif ($parentColumn != $parentIndents[$#parentIndents]) {
-                push @parentIndents, $parentColumn-1 if $parentColumn-1 != $parentIndents[$#parentIndents];
+                push @parentIndents, $parentColumn;
                 # say "line $parentLine: indents: ", (join " ", @parentIndents);
             }
 
@@ -617,7 +617,6 @@ sub spacesNeeded {
 
             if ( $gapiness < 0 ) {    # sequence
                 my $start  = $node->{start};
-                my ($line, $column) = $recce->line_column($start);
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
@@ -625,16 +624,16 @@ sub spacesNeeded {
                     my $childStart  = $child->{start};
                     my $symbol  = $child->{symbol};
                     next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
-                    my $childColumn = column( $childStart );
-                    if ($childColumn != $column) {
+                    my $childColumn = column( $childStart ) - 1; # 0-based
+                    if ($childColumn != $parentColumn) {
                         say "SEQUENCE anomaly: lhs=$lhsName";
                         say "  context: ", showAncestors($parentContext);
-                        say "  parent at $fileName L", ( join ':', $line, $column );
+                        say "  parent at $fileName L", ( join ':', $parentLine, $parentColumn );
                         say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
                     }
                     push @indents, $childColumn;
                 }
-                say "SEQUENCE $lhsName", '@', "$column ", ( join " ", @indents ),
+                say "SEQUENCE $lhsName", '@', "$parentColumn ", ( join " ", @indents ),
                   " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
                 last NODE;
             }
@@ -677,8 +676,6 @@ sub spacesNeeded {
             # if here, gapiness > 0
             {
                 my $start  = $node->{start};
-                my ($line, $column) = $recce->line_column($start);
-                $column -= 1;
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
@@ -709,6 +706,12 @@ sub spacesNeeded {
                         }
 
                     }
+                    if ( $lhsName eq 'luslusCell' ) {
+                        if ( isluslusstyle( $parentLine, $parentColumn, \@indents ) ) {
+                            $indentDesc = 'LUSLUS-STYLE';
+                            last TYPE_INDENT;
+                        }
+                    }
                     for (
                         my $indentIX = $#parentIndents ;
                         $indentIX >= 0 ;
@@ -717,7 +720,7 @@ sub spacesNeeded {
                     {
                         my $indent = $parentIndents[$indentIX];
 
-                        # say "L$parentLine: L$line trying backdent ; $indent";
+                        # say "L$parentLine: L$parentLine trying backdent ; $indent";
                         if (
                             isbackdented(
                                 $parentLine,    $indent,
@@ -738,7 +741,7 @@ sub spacesNeeded {
                     my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
                     if (
                         isbackdented(
-                            $line, ( length $spaces ),
+                            $parentLine, ( length $spaces ),
                             $vertical_gaps, \@indents
                         )
                       )
@@ -746,13 +749,14 @@ sub spacesNeeded {
                         $indentDesc = 'LINE-BACKDENTED';
                         last TYPE_INDENT;
                     }
-                    if ( isluslusstyle( $line, $column, \@indents ) ) {
+                    if ( isluslusstyle( $parentLine, $parentColumn, \@indents ) ) {
+                        # luslus style for non-luslus rules
                         $indentDesc = 'LUSLUS-STYLE';
                         last TYPE_INDENT;
                     }
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
                 }
-                say "FIXED-$gapiness $lhsName", '@', "$column $indentDesc # ",
+                say "FIXED-$gapiness $lhsName", '@', "$parentColumn $indentDesc # ",
                     showAncestors($argContext),
                   " ## $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
             }
