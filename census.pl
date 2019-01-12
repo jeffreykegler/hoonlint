@@ -635,8 +635,7 @@ sub spacesNeeded {
                     push @indents, $childColumn;
                 }
                 my $alignmentDesc = $isAnomalous ?  ( join " ", @indents ) : 'REGULAR';
-                say "SEQUENCE $lhsName", '@',
-                  "$parentColumn $alignmentDesc # $fileName L",
+                say "SEQUENCE $lhsName $alignmentDesc # $fileName L",
                   ( join ':', $recce->line_column($start) )
                   if $verbose;
                 last NODE;
@@ -711,7 +710,7 @@ sub spacesNeeded {
                             )
                           )
                         {
-                            $indentDesc = 'KETHEP-STYLE';
+                            $indentDesc = 'CAST-STYLE';
                             last TYPE_INDENT;
                         }
 
@@ -767,7 +766,7 @@ sub spacesNeeded {
                     }
                     $indentDesc = join " ", map { join ':', @{$_} } @indents;
                 }
-                say "FIXED-$gapiness $lhsName", '@', "$parentColumn $indentDesc",
+                say "FIXED-$gapiness $lhsName $indentDesc",
                   #  ' ## ', showAncestors($argContext),
                   " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
             }
