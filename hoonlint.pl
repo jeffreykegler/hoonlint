@@ -63,8 +63,10 @@ SUPPRESSION: for my $suppression (split "\n", ${$pSuppressions}) {
     $suppression =~ s/^\s*//; # remove leading whitespace
     $suppression =~ s/\s*$//; # remove trailing whitespace
     next SUPPRESSION unless $suppression;
-    my ($thisFileName, $lc, $message) = split /\s+/, $suppression, 3;
-    suppressionError("Problem in suppression line", $rawSuppression) if not $fileName;
+    my ($thisFileName, $lc, $type, $message) = split /\s+/, $suppression, 4;
+    suppressionError("Problem in suppression line", $rawSuppression) if not $thisFileName;
+    # "all" is only suppression type currently allowed
+    suppressionError(qq{Bad suppression type "$type"}, $rawSuppression) if $type ne 'indent';
     suppressionError( qq{Malformed line:column in suppression line: "$lc"}, $rawSuppression)
        unless $lc =~ /^[0-9]+[:][0-9]+$/;
     my ($line, $column) = split ':', $lc, 2;
@@ -76,8 +78,8 @@ SUPPRESSION: for my $suppression (split "\n", ${$pSuppressions}) {
    # We reassemble line:column to "normalize" it -- be indifferent to
    # leading zeros, etc.
    my $tag = join ':', $line, $column;
-   $suppression{$tag} = $message;
-   $unusedSuppression{$tag} = 1;
+   $suppression{$type}{$tag} = $message;
+   $unusedSuppression{$type}{$tag} = 1;
 }
 
 my $pHoonSource = slurp($fileName);
@@ -741,10 +743,10 @@ sub spacesNeeded {
                 my $indentDesc = '???';
               TYPE_INDENT: {
 
-                    my $suppression = $suppression{$parentLC};
+                    my $suppression = $suppression{'indent'}{$parentLC};
                     if (defined $suppression) {
                         $indentDesc = "SUPPRESSION $suppression";
-                        $unusedSuppression{$parentLC} = undef;
+                        $unusedSuppression{'indent'}{$parentLC} = undef;
                         last TYPE_INDENT;
                     }
 
@@ -906,7 +908,9 @@ sub spacesNeeded {
     }
 }
 
-for my $tag (grep { $unusedSuppression{$_}; } keys %unusedSuppression) {
-    say "Unused suppresion: $tag";
+for my $type (keys %unusedSuppression) {
+    for my $tag (grep { $unusedSuppression{$type}{$_} } keys %{$unusedSuppression{$type}}) {
+        say "Unused suppresion: $type $tag";
+    }
 }
 # vim: expandtab shiftwidth=4:
