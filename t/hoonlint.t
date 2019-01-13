@@ -7,7 +7,7 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 12;
+use Test::More tests => 24;
 
 use Test::Differences;
 use IPC::Cmd qw[run_forked];
@@ -25,10 +25,14 @@ sub slurp {
 }
 
 my @tests = (
-    ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.census', '--census'],
-    ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.census', '--census'],
-    ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.census', '--census'],
-    ['t/ast.d/toe.hoon', 't/util.d/toe.census', '--census'],
+    ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/toe.hoon', 't/util.d/toe.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/fizzbuzz.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_b.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_k.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/toe.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
 );
 
 local $Data::Dumper::Deepcopy    = 1;
@@ -51,7 +55,7 @@ for my $testData (@tests) {
         push @stderr, @_;
     };
 
-    my $pExpectedStdout = slurp($stdoutName);
+    my $pExpectedStdout = $stdoutName ? slurp($stdoutName) : \q{};
 
     my $result = run_forked(
         $cmd,

@@ -661,9 +661,9 @@ sub spacesNeeded {
             }
 
             if ( $gapiness < 0 ) {    # sequence
+                my $isProblem = 0;
                 my $start  = $node->{start};
                 my @indents = ();
-                my $isAnomalous = 0;
                 CHILD: for my $childIX (0 .. $#$children) {
                     my $child = $children->[$childIX];
                     doCensus( $baseIndent, $depth + 1, $child, $parentContext );
@@ -672,7 +672,7 @@ sub spacesNeeded {
                     next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
                     my $childColumn = column( $childStart ) - 1; # 0-based
                     if ($childColumn != $parentColumn) {
-                        $isAnomalous = 1;
+                        $isProblem = 1;
                         # say "SEQUENCE anomaly: lhs=$lhsName";
                         # say "  context: ", showAncestors($parentContext);
                         # say "  parent at $fileName L", ( join ':', $parentLine, $parentColumn );
@@ -680,10 +680,10 @@ sub spacesNeeded {
                     }
                     push @indents, $childColumn;
                 }
-                my $alignmentDesc = $isAnomalous ?  ( join " ", @indents ) : 'REGULAR';
+                my $alignmentDesc = $isProblem ?  ( join " ", @indents ) : 'REGULAR';
                 say "SEQUENCE $lhsName $alignmentDesc # $fileName L",
                   ( join ':', $recce->line_column($start) )
-                  if $censusWhitespace;
+                  if $censusWhitespace or $isProblem;
                 last NODE;
             }
 
@@ -730,6 +730,7 @@ sub spacesNeeded {
                        # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
             # if here, gapiness > 0
             {
+                my $isProblem = 0;
                 my $start  = $node->{start};
                 my @indents = ();
                 CHILD: for my $childIX (0 .. $#$children) {
@@ -766,6 +767,7 @@ sub spacesNeeded {
                             $indentDesc = 'CAST-STYLE';
                             last TYPE_INDENT;
                         }
+                        $isProblem = 1;
 
                     }
                     if ( $lhsName eq 'lusLusCell' ) {
@@ -773,6 +775,7 @@ sub spacesNeeded {
                             $indentDesc = 'LUSLUS-STYLE';
                             last TYPE_INDENT;
                         }
+                        $isProblem = 1;
                     }
                     for (
                         my $indentIX = $#parentIndents ;
@@ -791,11 +794,16 @@ sub spacesNeeded {
                           )
                         {
                             my $depth = $#parentIndents - $indentIX;
-                            $indentDesc =
-                              $depth ? "BACKDENTED-$depth" : 'BACKDENTED';
+                            if ($depth) {
+                                $indentDesc = "BACKDENTED-$depth";
+                                $isProblem = 1;
+                                last TYPE_INDENT;
+                            }
+                            $indentDesc = 'BACKDENTED';
                             last TYPE_INDENT;
                         }
                     }
+                    $isProblem = 1;
                     my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
                     my $lineLiteral = substr ${$pHoonSource},
                       $startOfLine, $start - $startOfLine;
@@ -821,7 +829,8 @@ sub spacesNeeded {
                 }
                 say "FIXED-$gapiness $lhsName $indentDesc",
                   #  ' ## ', showAncestors($argContext),
-                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $censusWhitespace;
+                  " # $fileName L", ( join ':', $recce->line_column($start) )
+                  if $censusWhitespace or $isProblem;
             }
 
             # Do we use alignment, or just backdenting?
