@@ -22,11 +22,11 @@ GetOptions(
     "roundtrip"  => \$roundtrip,
     "verbose"  => \$verbose,
     "census-whitespace"  => \$censusWhitespace,
-    "supressions_file=s"  => \$suppressionFileName,
+    "suppressions_file=s"  => \$suppressionFileName,
 ) or die("Error in command line arguments\n");
 
 sub usage {
-    die "usage: $PROGRAM_NAME [-v] fileName\n";
+    die "usage: $PROGRAM_NAME [options ...] fileName\n";
 }
 
 usage() if scalar @ARGV != 1;
