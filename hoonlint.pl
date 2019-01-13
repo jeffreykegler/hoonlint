@@ -6,6 +6,7 @@ use warnings;
 
 use Data::Dumper;
 use English qw( -no_match_vars );
+use Scalar::Util qw(looks_like_number);
 use Getopt::Long;
 
 require "yahc.pm";
@@ -14,10 +15,14 @@ my $style;
 
 my $roundtrip;
 my $verbose;
+my $censusWhitespace;
+my $suppressionFileName;
 
 GetOptions(
     "roundtrip"  => \$roundtrip,
-    "verbose"  => \$verbose
+    "verbose"  => \$verbose,
+    "census-whitespace"  => \$censusWhitespace,
+    "supressions_file=s"  => \$suppressionFileName,
 ) or die("Error in command line arguments\n");
 
 sub usage {
@@ -35,6 +40,44 @@ sub slurp {
     my $file = <$fh>;
     close $fh;
     return \$file;
+}
+
+my $defaultSuppressionFile = 'hoonlint.suppressions';
+if (not defined $suppressionFileName and
+   -f $defaultSuppressionFile) {
+    $suppressionFileName = $defaultSuppressionFile;
+}
+
+sub suppressionError {
+    my ($error, $line) = @_;
+    say STDERR qq{Error in suppression file "$suppressionFileName": $error};
+    say STDERR qq{Error in suppression file "$suppressionFileName"};
+}
+
+my $pSuppressions = $suppressionFileName ? slurp($suppressionFileName) : \"# empty file\n";
+my %suppression = ();
+my %unusedSuppression = ();
+SUPPRESSION: for my $suppression (split "\n", ${$pSuppressions}) {
+    my $rawSuppression = $suppression;
+    $suppression =~ s/\s*[#].*$//; # remove comments and preceding whitespace
+    $suppression =~ s/^\s*//; # remove leading whitespace
+    $suppression =~ s/\s*$//; # remove trailing whitespace
+    next SUPPRESSION unless $suppression;
+    my ($thisFileName, $lc, $message) = split /\s+/, $suppression, 3;
+    suppressionError("Problem in suppression line", $rawSuppression) if not $fileName;
+    suppressionError( qq{Malformed line:column in suppression line: "$lc"}, $rawSuppression)
+       unless $lc =~ /^[0-9]+[:][0-9]+$/;
+    my ($line, $column) = split ':', $lc, 2;
+    suppressionError( qq{Malformed line:column in suppression line: "$lc"},
+        $rawSuppression )
+      unless Scalar::Util::looks_like_number($line)
+      and Scalar::Util::looks_like_number($column);
+   next SUPPRESSION unless $thisFileName eq $fileName;
+   # We reassemble line:column to "normalize" it -- be indifferent to
+   # leading zeros, etc.
+   my $tag = join ':', $line, $column;
+   $suppression{$tag} = $message;
+   $unusedSuppression{$tag} = 1;
 }
 
 my $pHoonSource = slurp($fileName);
@@ -498,6 +541,7 @@ sub spacesNeeded {
                 my $parentStart  = $node->{start};
                 my $parentLength = $node->{length};
                 my ($parentLine, $parentColumn) = $recce->line_column($parentStart);
+                my $parentLC = join ':', $parentLine, $parentColumn;
                 my @parentIndents = @{$argContext->{ indents }};
                 $parentColumn--; # 0-based
             my @ancestors = @{$argContext->{ancestors}};
@@ -637,7 +681,7 @@ sub spacesNeeded {
                 my $alignmentDesc = $isAnomalous ?  ( join " ", @indents ) : 'REGULAR';
                 say "SEQUENCE $lhsName $alignmentDesc # $fileName L",
                   ( join ':', $recce->line_column($start) )
-                  if $verbose;
+                  if $censusWhitespace;
                 last NODE;
             }
 
@@ -696,6 +740,13 @@ sub spacesNeeded {
                 }
                 my $indentDesc = '???';
               TYPE_INDENT: {
+
+                    my $suppression = $suppression{$parentLC};
+                    if (defined $suppression) {
+                        $indentDesc = "SUPPRESSION $suppression";
+                        $unusedSuppression{$parentLC} = undef;
+                        last TYPE_INDENT;
+                    }
 
                     # is it a backdent?
                     if ( $lhsName eq 'tallKethep' or $lhsName eq 'tallKetlus' ) {
@@ -768,7 +819,7 @@ sub spacesNeeded {
                 }
                 say "FIXED-$gapiness $lhsName $indentDesc",
                   #  ' ## ', showAncestors($argContext),
-                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $verbose;
+                  " # $fileName L", ( join ':', $recce->line_column($start) ) if $censusWhitespace;
             }
 
             # Do we use alignment, or just backdenting?
@@ -855,4 +906,7 @@ sub spacesNeeded {
     }
 }
 
+for my $tag (grep { $unusedSuppression{$_}; } keys %unusedSuppression) {
+    say "Unused suppresion: $tag";
+}
 # vim: expandtab shiftwidth=4:
