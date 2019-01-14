@@ -667,6 +667,7 @@ sub spacesNeeded {
                   $recce->line_column($parentStart);
                 my $parentLC = join ':', $parentLine, $parentColumn;
                 $parentColumn--;      # 0-based
+                my $previousLine = $parentLine;
               TYPE_INDENT: {
 
                   CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -695,7 +696,9 @@ sub spacesNeeded {
                                 last SET_INDENT_DESC;
                             }
 
-                            if ( $childColumn != $parentColumn ) {
+                            if (    $childLine != $previousLine
+                                and $childColumn != $parentColumn )
+                            {
                                 $isProblem = 1;
                                 $indentDesc = join " ", $parentLC, $childLC;
                             }
@@ -703,6 +706,7 @@ sub spacesNeeded {
                         say
                           "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC"
                           if $censusWhitespace or $isProblem;
+                      $previousLine = $childLine;
                     }
                 }
                 last NODE;
@@ -810,7 +814,7 @@ sub spacesNeeded {
                         $isProblem = 1;
 
                     }
-                    if ( $lhsName eq 'lusLusCell' ) {
+                    if ( $lhsName eq 'lusLusCell' or $lhsName eq 'lusHepCell' ) {
                         if ( isluslusstyle( $parentLine, $parentColumn, \@indents ) ) {
                             $indentDesc = 'LUSLUS-STYLE';
                             last TYPE_INDENT;
