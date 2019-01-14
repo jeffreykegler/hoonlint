@@ -5,11 +5,13 @@ FIXED-2 tallTisgal BACKDENTED # t/ast.d/sieve_k.hoon L4:1
 FIXED-1 tallBarcen BACKDENTED # t/ast.d/sieve_k.hoon L5:1
 FIXED-1 wisp5d BACKDENTED # t/ast.d/sieve_k.hoon L6:1
 FIXED-2 lusLusCell LUSLUS-STYLE # t/ast.d/sieve_k.hoon L6:1
+SEQUENCE whap5d REGULAR # t/ast.d/sieve_k.hoon L6:1
 FIXED-2 lusLusCell LUSLUS-STYLE # t/ast.d/sieve_k.hoon L7:1
 FIXED-2 tallTislus BACKDENTED # t/ast.d/sieve_k.hoon L8:3
 FIXED-1 tallBarhep BACKDENTED # t/ast.d/sieve_k.hoon L9:3
 FIXED-2 tallKetlus CAST-STYLE # t/ast.d/sieve_k.hoon L9:7
 FIXED-3 tallWutcol BACKDENTED # t/ast.d/sieve_k.hoon L10:3
+SEQUENCE whap5d REGULAR # t/ast.d/sieve_k.hoon L6:1
 FIXED-2 lusLusCell LUSLUS-STYLE # t/ast.d/sieve_k.hoon L14:1
 FIXED-2 tallBartis BACKDENTED # t/ast.d/sieve_k.hoon L15:3
 FIXED-2 tallTislus BACKDENTED # t/ast.d/sieve_k.hoon L16:3

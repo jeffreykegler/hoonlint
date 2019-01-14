@@ -55,6 +55,7 @@ sub suppressionError {
 }
 
 my $pSuppressions = $suppressionFileName ? slurp($suppressionFileName) : \"# empty file\n";
+my %suppressionType = map { +($_, 1) } qw(indent sequence);
 my %suppression = ();
 my %unusedSuppression = ();
 SUPPRESSION: for my $suppression (split "\n", ${$pSuppressions}) {
@@ -66,7 +67,8 @@ SUPPRESSION: for my $suppression (split "\n", ${$pSuppressions}) {
     my ($thisFileName, $lc, $type, $message) = split /\s+/, $suppression, 4;
     suppressionError("Problem in suppression line", $rawSuppression) if not $thisFileName;
     # "all" is only suppression type currently allowed
-    suppressionError(qq{Bad suppression type "$type"}, $rawSuppression) if $type ne 'indent';
+    suppressionError( qq{Bad suppression type "$type"}, $rawSuppression )
+      if not exists $suppressionType{$type};
     suppressionError( qq{Malformed line:column in suppression line: "$lc"}, $rawSuppression)
        unless $lc =~ /^[0-9]+[:][0-9]+$/;
     my ($line, $column) = split ':', $lc, 2;
@@ -661,29 +663,48 @@ sub spacesNeeded {
             }
 
             if ( $gapiness < 0 ) {    # sequence
-                my $isProblem = 0;
-                my $start  = $node->{start};
-                my @indents = ();
-                CHILD: for my $childIX (0 .. $#$children) {
-                    my $child = $children->[$childIX];
-                    doCensus( $baseIndent, $depth + 1, $child, $parentContext );
-                    my $childStart  = $child->{start};
-                    my $symbol  = $child->{symbol};
-                    next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
-                    my $childColumn = column( $childStart ) - 1; # 0-based
-                    if ($childColumn != $parentColumn) {
-                        $isProblem = 1;
-                        # say "SEQUENCE anomaly: lhs=$lhsName";
-                        # say "  context: ", showAncestors($parentContext);
-                        # say "  parent at $fileName L", ( join ':', $parentLine, $parentColumn );
-                        # say "  child at $fileName L", ( join ':', $recce->line_column($childStart) );
+                my ( $parentLine, $parentColumn ) =
+                  $recce->line_column($parentStart);
+                my $parentLC = join ':', $parentLine, $parentColumn;
+                $parentColumn--;      # 0-based
+              TYPE_INDENT: {
+
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $isProblem = 0;
+                        my $child     = $children->[$childIX];
+                        doCensus( $baseIndent, $depth + 1, $child,
+                            $parentContext );
+                        my $childStart = $child->{start};
+                        my $symbol     = $child->{symbol};
+                        next CHILD
+                          if defined $symbol
+                          and $symbolReverseDB{$symbol}->{gap};
+                        my ( $childLine, $childColumn ) =
+                          $recce->line_column($childStart);
+                        my $childLC = join ':', $childLine, $childColumn;
+                        $childColumn--;    # 0-based
+
+                        my $indentDesc = 'REGULAR';
+                      SET_INDENT_DESC: {
+                            my $suppression =
+                              $suppression{'sequence'}{$childLC};
+                            if ( defined $suppression ) {
+                                $indentDesc = "SUPPRESSION $suppression";
+                                $unusedSuppression{'sequence'}{$childLC} =
+                                  undef;
+                                last SET_INDENT_DESC;
+                            }
+
+                            if ( $childColumn != $parentColumn ) {
+                                $isProblem = 1;
+                                $indentDesc = join " ", $parentLC, $childLC;
+                            }
+                        }
+                        say
+                          "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC"
+                          if $censusWhitespace or $isProblem;
                     }
-                    push @indents, $childColumn;
                 }
-                my $alignmentDesc = $isProblem ?  ( join " ", @indents ) : 'REGULAR';
-                say "SEQUENCE $lhsName $alignmentDesc # $fileName L",
-                  ( join ':', $recce->line_column($start) )
-                  if $censusWhitespace or $isProblem;
                 last NODE;
             }
 
@@ -705,6 +726,18 @@ sub spacesNeeded {
                       $indentIX++;
                   }
                   return 1;
+            }
+
+            sub isjog {
+                my ( $baseLine, $baseColumn, $indents ) = @_;
+                my ( $line1, $column1 ) = @{$indents->[0]};
+                my ( $line2, $column2 ) = @{$indents->[1]};
+                # TODO: enforce alignment for "flat jogs"
+                return 1 if $line1 == $line2;
+                # say "lc1: ( $line1, $column1, baseColumn: $baseColumn )";
+                # say "lc2: ( $line2, $column2 )";
+                return 1 if $column2+2 == $column1;
+                return 0;
             }
 
             sub isbackdented {
@@ -751,7 +784,14 @@ sub spacesNeeded {
                         last TYPE_INDENT;
                     }
 
-                    # is it a backdent?
+                    if ( $lhsName eq 'rick5dJog' or $lhsName eq 'ruck5dJog' ) {
+                      if (isjog($parentLine, $parentColumn, \@indents)) {
+                            $indentDesc = 'JOG-STYLE';
+                            last TYPE_INDENT;
+                      }
+                      $isProblem = 1;
+                    }
+
                     if ( $lhsName eq 'tallKethep' or $lhsName eq 'tallKetlus' ) {
 
                    # align with preferred indent from ancestor, if there is one,
