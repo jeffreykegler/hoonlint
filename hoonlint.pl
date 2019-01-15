@@ -703,14 +703,22 @@ sub doCensus {
                     # say Data::Dumper::Dumper($argAncestors);
                     my $ancestorCount   = scalar @{$argAncestors};
                     my $grandParentName = "";
+                    my $grandParentLC;
+                    my ( $grandParentLine, $grandParentColumn );
                     if ( scalar @{$argAncestors} >= 1 ) {
-                        my $grandParent       = $argAncestors->[0];
+                        my $grandParent       = $argAncestors->[-1];
                         my $grandParentRuleID = $grandParent->{ruleID};
+                        my $grandParentStart = $grandParent->{start};
+                        ( $grandParentLine, $grandParentColumn ) =
+                          $recce->line_column($grandParentStart);
+                        $grandParentLC = join ':', $grandParentLine, $grandParentColumn;
+                        $grandParentColumn--; # 0-based
                         my ($lhs) = $grammar->rule_expand($grandParentRuleID);
                         $grandParentName = $grammar->symbol_display_form($lhs);
                     }
                     if ( $grandParentName eq 'tallSemsig' ) {
 
+                      $previousLine = $grandParentLine;
                       CHILD: for my $childIX ( 0 .. $#$children ) {
                             my $isProblem = 0;
                             my $child     = $children->[$childIX];
@@ -740,14 +748,14 @@ sub doCensus {
                                 }
 
                                 if (    $childLine != $previousLine
-                                    and $childColumn != $parentColumn + 2 )
+                                    and $childColumn != $grandParentColumn + 2 )
                                 {
                                     $isProblem = 1;
-                                    $indentDesc = join " ", $parentLC, $childLC;
+                                    $indentDesc = join " ", $grandParentLC, $childLC;
                                 }
                             }
                             say
-"SEQUENCE $lhsName $indentDesc # $fileName L$parentLC"
+"SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC"
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
                         }
