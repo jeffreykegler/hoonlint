@@ -97,7 +97,7 @@ my $grammar;
 my $recce;
 
 # Preferred runes for alignment.  At this point all the tall ones
-# except KETHEP (^-);
+# except CENDOT (%.); KETHEP (^-); KETLUS (^+); SIGBAR (~|).
 my @alignables = qw(
   tallBarcab
   tallBarcen
@@ -129,7 +129,6 @@ my @alignables = qw(
   tallBucwutMold
   tallCencab
   tallCencolMold
-  tallCendot
   tallCenhep
   tallCenhepMold
   tallCenket
@@ -917,7 +916,11 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if ( $lhsName eq 'tallKethep' or $lhsName eq 'tallKetlus' ) {
+                if (   $lhsName eq 'tallCendot'
+                    or $lhsName eq 'tallKethep'
+                    or $lhsName eq 'tallKetlus'
+                    or $lhsName eq 'tallSigbar' )
+                {
 
                    # align with preferred indent from ancestor, if there is one,
                    # with parent otherwise
@@ -1090,7 +1093,7 @@ for my $type ( keys %unusedSuppression ) {
         keys %{ $unusedSuppression{$type} }
       )
     {
-        say "Unused suppresion: $type $tag";
+        say "Unused suppression: $type $tag";
     }
 }
 

@@ -24,3 +24,26 @@ hoons/arvo/sys/hoon.hoon 2149:30 sequence two jogs on one line
 
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l14
 hoons/arvo/sys/hoon.hoon 11964:13 sequence misaligned
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l9
+hoons/arvo/sys/hoon.hoon 2095:7 indent irregular KETHEP alignment
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l18
+hoons/arvo/sys/hoon.hoon 7122:58 indent line should be broken up to be good style
+hoons/arvo/sys/hoon.hoon 7166:58 indent line should be broken up to be good style
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l37
+hoons/arvo/sys/hoon.hoon 8742:15 indent third child over-indented
+hoons/arvo/sys/hoon.hoon 10028:9 indent third child over-indented
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l39
+hoons/arvo/sys/hoon.hoon 2302:11 indent third child over-indented
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l40
+hoons/arvo/sys/hoon.hoon 11132:9 indent 1st child should be indented
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l41
+hoons/arvo/sys/hoon.hoon 9768:7 indent child block is over-indented
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l43
+hoons/arvo/sys/hoon.hoon 5299:28 indent line should be broken up
