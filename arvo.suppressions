@@ -1,4 +1,7 @@
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l9
 hoons/arvo/sys/hoon.hoon 944:3 sequence "++ mum" mistaken indentation
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l10
 hoons/arvo/sys/hoon.hoon 4801:14 sequence aligned with 1st child, should be 2-indented
 hoons/arvo/sys/hoon.hoon 4802:14 sequence aligned with 1st child, should be 2-indented
 hoons/arvo/sys/hoon.hoon 4803:14 sequence aligned with 1st child, should be 2-indented
@@ -6,6 +9,18 @@ hoons/arvo/sys/hoon.hoon 4844:14 sequence aligned with 1st child, should be 2-in
 hoons/arvo/sys/hoon.hoon 4845:14 sequence aligned with 1st child, should be 2-indented
 hoons/arvo/sys/hoon.hoon 4848:14 sequence aligned with 1st child, should be 2-indented
 hoons/arvo/sys/hoon.hoon 4849:14 sequence aligned with 1st child, should be 2-indented
+
 hoons/arvo/sys/hoon.hoon 12272:22 sequence indentation off by one
 hoons/arvo/sys/hoon.hoon 12278:22 sequence indentation off by one
 hoons/arvo/sys/hoon.hoon 12279:22 sequence indentation off by one
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l13
+hoons/arvo/sys/hoon.hoon 2114:28 sequence two jogs on one line
+hoons/arvo/sys/hoon.hoon 2115:28 sequence two jogs on one line
+hoons/arvo/sys/hoon.hoon 2131:30 sequence two jogs on one line
+hoons/arvo/sys/hoon.hoon 2132:30 sequence two jogs on one line
+hoons/arvo/sys/hoon.hoon 2148:30 sequence two jogs on one line
+hoons/arvo/sys/hoon.hoon 2149:30 sequence two jogs on one line
+
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l14
+hoons/arvo/sys/hoon.hoon 11964:13 sequence misaligned
