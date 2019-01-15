@@ -825,6 +825,17 @@ sub doCensus {
             return 1;
         }
 
+        # Semsig must have first child properly aligned on same line as
+        # rune; tistis (==) must be on its own line, aligned with the rune.
+        sub issemsig {
+            my ( $baseLine, $baseColumn, $indents ) = @_;
+            my ( $firstChildLine, $firstChildColumn ) = @{ $indents->[2] };
+            return 0 if $firstChildLine != $baseLine or $firstChildColumn != $baseColumn + 4;
+            my ( $tistisLine, $tistisColumn ) = @{ $indents->[4] };
+            return 0 if $tistisLine == $baseLine or $tistisColumn != $baseColumn;
+            return 1;
+        }
+
         sub isjog {
             my ( $baseLine, $baseColumn, $indents ) = @_;
             my ( $line1, $column1 ) = @{ $indents->[0] };
@@ -892,6 +903,18 @@ sub doCensus {
                         last TYPE_INDENT;
                     }
                     $isProblem = 1;
+                }
+
+                if ( $lhsName eq 'tallSemsig' ) {
+                    if (
+                        issemsig($parentLine, $parentColumn, \@indents))
+                    {
+                        $indentDesc = 'SEMSIG-STYLE';
+                        last TYPE_INDENT;
+                    }
+                    $isProblem = 1;
+                    $indentDesc = join " ", map { join ':', @{$_} } @indents;
+                    last TYPE_INDENT;
                 }
 
                 if ( $lhsName eq 'tallKethep' or $lhsName eq 'tallKetlus' ) {

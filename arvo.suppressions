@@ -1,1 +1,11 @@
 hoons/arvo/sys/hoon.hoon 944:3 sequence "++ mum" mistaken indentation
+hoons/arvo/sys/hoon.hoon 4801:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4802:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4803:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4844:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4845:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4848:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 4849:14 sequence aligned with 1st child, should be 2-indented
+hoons/arvo/sys/hoon.hoon 12272:22 sequence indentation off by one
+hoons/arvo/sys/hoon.hoon 12278:22 sequence indentation off by one
+hoons/arvo/sys/hoon.hoon 12279:22 sequence indentation off by one
