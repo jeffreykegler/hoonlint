@@ -47,3 +47,72 @@ hoons/arvo/sys/hoon.hoon 9768:7 indent child block is over-indented
 
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l43
 hoons/arvo/sys/hoon.hoon 5299:28 indent line should be broken up
+
+# In hoon.hoon, a lot of COLHEP's are luslus-style, but this is rarely
+# the case in the rest of arvo
+# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-16#l14
+hoons/arvo/sys/hoon.hoon 11684:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11686:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11688:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11701:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11713:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11718:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11720:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11722:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11724:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11726:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11731:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11733:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11738:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11744:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11756:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11761:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11766:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11768:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11781:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11793:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11800:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11802:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11804:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11806:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11811:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11813:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11825:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11836:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11841:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11846:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11853:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11855:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11860:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11862:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11867:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11881:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11886:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11888:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11895:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11914:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11916:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11918:7 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11949:15 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11964:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11977:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 11993:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12008:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12023:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12035:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12046:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12061:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12079:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12089:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12109:13 indent luslus-style, but should be backdented
+hoons/arvo/sys/hoon.hoon 12128:13 indent luslus-style, but should be backdented
+
+# Various irregular COLHEP indentations
+hoons/arvo/sys/hoon.hoon 2243:17 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 2504:42 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 2519:42 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 2553:26 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 7361:9 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 7812:18 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 8435:11 indent irregular COLHEP indentation
+hoons/arvo/sys/hoon.hoon 8452:9 indent irregular COLHEP indentation
