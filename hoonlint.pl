@@ -971,6 +971,12 @@ sub doCensus {
                         last TYPE_INDENT;
                     }
                 }
+
+                if ($vertical_gaps <= 0) {
+                    $indentDesc = 'FLAT';
+                    last TYPE_INDENT;
+                }
+
                 $isProblem = 1;
                 my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
                 my $lineLiteral = substr ${$pHoonSource},
