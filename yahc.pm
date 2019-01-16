@@ -291,8 +291,8 @@ sub new {
     }
     my $dsl = $semantics . $baseDSL;
 
-    # say $dsl;
     my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
+    $self->{dsl} = $dsl;
     $self->{grammar} = $grammar;
     return bless $self, 'MarpaX::YAHC';
 }
@@ -310,6 +310,11 @@ sub recceStart {
     );
     $self->{recce} = $recce;
     return $self;
+}
+
+sub dsl {
+    my ($self) = @_;
+    return $self->{dsl};
 }
 
 sub rawGrammar {

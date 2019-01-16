@@ -93,121 +93,29 @@ SUPPRESSION: for my $suppression ( split "\n", ${$pSuppressions} ) {
 my $pHoonSource = slurp($fileName);
 
 my @data = ();
-my $grammar;
 my $recce;
+
+my $semantics = <<'EOS';
+:default ::= action=>main::doNode
+lexeme default = latm => 1 action=>[start,length,name]
+EOS
+
+my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
+my $dsl = $parser->dsl();
+my $grammar = $parser->rawGrammar();
 
 # Preferred runes for alignment.  At this point all the tall ones
 # except CENDOT (%.); KETHEP (^-); KETLUS (^+); SIGBAR (~|).
-my @alignables = qw(
-  tallBarcab
-  tallBarcen
-  tallBarcol
-  tallBardot
-  tallBarhep
-  tallBarket
-  tallBarsig
-  tallBartar
-  tallBartis
-  tallBarwut
-  tallBuccab
-  tallBuccabMold
-  tallBuccen
-  tallBuccenMold
-  tallBuccol
-  tallBuccolMold
-  tallBuchep
-  tallBuchepMold
-  tallBucket
-  tallBucketMold
-  tallBucpat
-  tallBucpatMold
-  tallBucsem
-  tallBucsemMold
-  tallBuctis
-  tallBuctisMold
-  tallBucwut
-  tallBucwutMold
-  tallCencab
-  tallCencolMold
-  tallCenhep
-  tallCenhepMold
-  tallCenket
-  tallCenketMold
-  tallCenlus
-  tallCenlusMold
-  tallCensig
-  tallCentar
-  tallCentis
-  tallColcab
-  tallColhep
-  tallColket
-  tallCollus
-  tallColsig
-  tallColtar
-  tallDotket
-  tallDotlus
-  tallDottar
-  tallDottis
-  tallDotwut
-  tallKetbar
-  tallKetcen
-  tallKetdot
-  tallKetpam
-  tallKetsig
-  tallKettis
-  tallKetwut
-  tallSemcol
-  tallSemfas
-  tallSemsem
-  tallSemsig
-  tallSigbar
-  tallSigbuc
-  tallSigcab
-  tallSigcen
-  tallSigfas
-  tallSiggal
-  tallSiggar
-  tallSiglus
-  tallSigpam
-  tallSigtis
-  tallSigwut
-  tallSigzap
-  tallTisbar
-  tallTiscol
-  tallTiscom
-  tallTisdot
-  tallTisfas
-  tallTisgal
-  tallTisgar
-  tallTishep
-  tallTisket
-  tallTislus
-  tallTissem
-  tallTissig
-  tallTistar
-  tallTiswut
-  tallWutbar
-  tallWutcol
-  tallWutdot
-  tallWutgal
-  tallWutgar
-  tallWuthep
-  tallWutket
-  tallWutlus
-  tallWutpam
-  tallWutpat
-  tallWutsig
-  tallWuttis
-  tallWutzap
-  tallZapcol
-  tallZapcom
-  tallZapdot
-  tallZapgar
-  tallZaptis
-  tallZapWut
-);
-my %alignable = ();
-$alignable{$_} = 1 for @alignables;
+my %tallRuneRule = map { +( $_, 1 ) } grep {
+         /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
+      or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
+} map { $grammar->symbol_name($_); } $grammar->symbol_ids();
+my %tallAnnotationRule = map { +( $_, 1 ) }
+  qw(tallCendot tallKethep tallKetdot tallKetlus tallSigbar tallSiglus);
+my %tallMainRule =
+  map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
+
+# say Data::Dumper::Dumper(\%tallMainRule);
 
 my %separator = qw(
   hyf4jSeq DOT
@@ -349,13 +257,6 @@ sub doNode {
     };
 }
 
-my $semantics = <<'EOS';
-:default ::= action=>main::doNode
-lexeme default = latm => 1 action=>[start,length,name]
-EOS
-
-my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
-$grammar = $parser->rawGrammar();
 $parser->read($pHoonSource);
 $recce  = $parser->rawRecce();
 $parser = undef;                 # free up memory
@@ -635,7 +536,7 @@ sub doCensus {
         my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
         my $lhsName = $grammar->symbol_name($lhs);
 
-        if ( $alignable{$lhsName} ) {
+        if ( $tallMainRule{$lhsName} ) {
             $parentContext->{preferredIndent} = $parentColumn;
         }
 
@@ -896,6 +797,11 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
+                if ($vertical_gaps <= 0) {
+                    $indentDesc = 'FLAT';
+                    last TYPE_INDENT;
+                }
+
                 if ( $lhsName eq 'rick5dJog' or $lhsName eq 'ruck5dJog' ) {
                     if ( isjog( $parentLine, $parentColumn, \@indents ) ) {
                         $indentDesc = 'JOG-STYLE';
@@ -916,11 +822,7 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if (   $lhsName eq 'tallCendot'
-                    or $lhsName eq 'tallKethep'
-                    or $lhsName eq 'tallKetlus'
-                    or $lhsName eq 'tallSigbar' )
-                {
+                if ( $tallAnnotationRule{$lhsName} ) {
 
                    # align with preferred indent from ancestor, if there is one,
                    # with parent otherwise
@@ -970,11 +872,6 @@ sub doCensus {
                         $indentDesc = 'BACKDENTED';
                         last TYPE_INDENT;
                     }
-                }
-
-                if ($vertical_gaps <= 0) {
-                    $indentDesc = 'FLAT';
-                    last TYPE_INDENT;
                 }
 
                 $isProblem = 1;
