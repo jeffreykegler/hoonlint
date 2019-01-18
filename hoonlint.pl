@@ -110,10 +110,14 @@ my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
       or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
 } map { $grammar->symbol_name($_); } $grammar->symbol_ids();
+
 my %tallAnnotationRule = map { +( $_, 1 ) }
   qw(tallCendot tallKethep tallKetdot tallKetlus tallSigbar tallSiglus);
 my %tallMainRule =
   map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
+my %tallSemsigRule = map { +( $_, 1 ) } qw(tallSemsig);
+my %tallLuslusRule = map { +( $_, 1 ) } qw(lusLusCell lusHepCell);
+my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
 
 # say Data::Dumper::Dumper(\%tallMainRule);
 
@@ -459,9 +463,10 @@ sub doCensus {
     my $parentRuleID = $node->{ruleID};
     my ( $parentLine, $parentColumn ) = $recce->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn;
+    $parentColumn--;    # 0-based
+
     my @parentIndents = @{ $argContext->{indents} };
 
-    $parentColumn--;    # 0-based
     my @ancestors = @{ $argContext->{ancestors} };
     shift @ancestors if scalar @ancestors >= 5;    # no more than 5
     push @ancestors, { ruleID => $parentRuleID, start => $parentStart };
@@ -479,15 +484,18 @@ sub doCensus {
     }
 
     my $argPreferredIndent    = $argContext->{preferredIndent};
-    my $parentPreferredIndent = $argPreferredIndent if $argLine == $parentLine;
+    my $argTallRuneIndent    = $argContext->{tallRuneIndent};
+    my $parentPreferredIndent;
+    $parentPreferredIndent = $argPreferredIndent if $argLine == $parentLine;
+    my $parentTallRuneIndent;
+    $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
     my $parentContext         = {
         ancestors => \@ancestors,
         line      => $parentLine,
         indents   => [@parentIndents],
     };
-    if ( defined $parentPreferredIndent ) {
-        $parentContext->{preferredIndent} = $parentPreferredIndent;
-    }
+    $parentContext->{preferredIndent} = $parentPreferredIndent if defined $parentPreferredIndent;
+    $parentContext->{tallRuneIndent} = $parentTallRuneIndent if defined $parentTallRuneIndent;
 
   NODE: {
         die Data::Dumper::Dumper($node)
@@ -536,9 +544,8 @@ sub doCensus {
         my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
         my $lhsName = $grammar->symbol_name($lhs);
 
-        if ( $tallMainRule{$lhsName} ) {
-            $parentContext->{preferredIndent} = $parentColumn;
-        }
+        $parentContext->{preferredIndent} = $parentColumn if $tallMainRule{$lhsName};
+        $parentContext->{tallRuneIndent} = $parentColumn if $tallRuneRule{$lhsName};
 
         # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
         if ( $lhsName eq 'optGay4i' ) {
@@ -802,7 +809,7 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if ( $lhsName eq 'rick5dJog' or $lhsName eq 'ruck5dJog' ) {
+                if ($tallJogRule{$lhsName}) {
                     if ( isjog( $parentLine, $parentColumn, \@indents ) ) {
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
@@ -810,7 +817,7 @@ sub doCensus {
                     $isProblem = 1;
                 }
 
-                if ( $lhsName eq 'tallSemsig' ) {
+                if ($tallSemsigRule{$lhsName}) {
                     if (
                         issemsig($parentLine, $parentColumn, \@indents))
                     {
@@ -822,11 +829,11 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if ( $tallAnnotationRule{$lhsName} ) {
+                if ($tallAnnotationRule{$lhsName}) {
 
                    # align with preferred indent from ancestor, if there is one,
                    # with parent otherwise
-                    my $indent = $parentPreferredIndent // $parentColumn;
+                    my $indent = ($parentPreferredIndent // $parentTallRuneIndent) // $parentColumn;
                     if (
                         isbackdented(
                             $parentLine, $indent, $vertical_gaps, \@indents
@@ -839,7 +846,7 @@ sub doCensus {
                     $isProblem = 1;
 
                 }
-                if ( $lhsName eq 'lusLusCell' or $lhsName eq 'lusHepCell' ) {
+                if ($tallLuslusRule{$lhsName}) {
                     if (
                         isluslusstyle( $parentLine, $parentColumn, \@indents ) )
                     {
