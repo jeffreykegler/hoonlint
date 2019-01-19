@@ -111,13 +111,94 @@ my %tallRuneRule = map { +( $_, 1 ) } grep {
       or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
 } map { $grammar->symbol_name($_); } $grammar->symbol_ids();
 
+# TODO: wisp5d needs study -- may depend on parent
 my %tallAnnotationRule = map { +( $_, 1 ) }
-  qw(tallCendot tallKethep tallKetdot tallKetlus tallSigbar tallSiglus);
+  qw(
+    tallBarhep tallBardot
+    tallCendot tallColcab tallColsig
+    tallKethep tallKetlus tallKetwut
+    tallSigbar tallSigcab tallSiglus
+    tallTisbar tallTiscom tallTisgal
+    tallWutgal tallWutgar tallZapgar wisp5d
+    tallTailOfElem tallTailOfTop
+  );
+
 my %tallMainRule =
   map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
-my %tallSemsigRule = map { +( $_, 1 ) } qw(tallSemsig);
-my %tallLuslusRule = map { +( $_, 1 ) } qw(lusLusCell lusHepCell);
+my %tallSemsigRule = map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
+my %tallLuslusRule = map { +( $_, 1 ) } qw(lusLusCell lusHepCell lusTisCell
+    optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
+my %tallBackdentRule = map { +( $_, 1 ) } qw(
+bonz5d
+fordFasbar
+fordFascom
+fordFasdot
+fordFasket
+fordFassem
+tallBarcab
+tallBarcen
+tallBarcol
+tallBarket
+tallBarsig
+tallBartar
+tallBartis
+tallBuccen
+tallBuccenMold
+tallBuccol
+tallBuccolMold
+tallBuchep
+tallBucket
+tallBucketMold
+tallBucpat
+tallBuctisMold
+tallBucwut
+tallBucwutMold
+tallCenhep
+tallCenhepMold
+tallCenket
+tallCenlus
+tallCenlusMold
+tallCensig
+tallCentar
+tallColhep
+tallColket
+tallCollus
+tallColtar
+tallDottar
+tallDottis
+tallKetcen
+tallKettis
+tallSigbuc
+tallSigcen
+tallSigfas
+tallSiggar
+tallSigpam
+tallSigwut
+tallSigzap
+tallTiscol
+tallTisdot
+tallTisfas
+tallTisgar
+tallTishep
+tallTisket
+tallTislus
+tallTissem
+tallTistar
+tallTiswut
+tallWutbar
+tallWutcol
+tallWutdot
+tallWuthep
+tallWutket
+tallWutlus
+tallWutpam
+tallWutpat
+tallWutsig
+tallZapcol
+tallZapdot
+tallZapwut
+);
 
 # say Data::Dumper::Dumper(\%tallMainRule);
 
@@ -497,6 +578,11 @@ sub doCensus {
     $parentContext->{preferredIndent} = $parentPreferredIndent if defined $parentPreferredIndent;
     $parentContext->{tallRuneIndent} = $parentTallRuneIndent if defined $parentTallRuneIndent;
 
+    # annotations align with preferred indent from ancestor, if there is one;
+    # otherwise, with the parent tall rune (if one exists);
+    # otherwise with the parent.
+    my $annotationIndent = ($parentPreferredIndent // $parentTallRuneIndent) // $parentColumn;
+
   NODE: {
         die Data::Dumper::Dumper($node)
           if ref $node ne 'HASH';    # TODO: delete after development
@@ -736,6 +822,7 @@ sub doCensus {
         # rune; tistis (==) must be on its own line, aligned with the rune.
         sub issemsig {
             my ( $baseLine, $baseColumn, $indents ) = @_;
+            return 0 if $#$indents < 4;
             my ( $firstChildLine, $firstChildColumn ) = @{ $indents->[2] };
             return 0 if $firstChildLine != $baseLine or $firstChildColumn != $baseColumn + 4;
             my ( $tistisLine, $tistisColumn ) = @{ $indents->[4] };
@@ -745,6 +832,7 @@ sub doCensus {
 
         sub isjog {
             my ( $baseLine, $baseColumn, $indents ) = @_;
+            return 0 if $#$indents != 1;
             my ( $line1, $column1 ) = @{ $indents->[0] };
             my ( $line2, $column2 ) = @{ $indents->[1] };
 
@@ -830,13 +918,9 @@ sub doCensus {
                 }
 
                 if ($tallAnnotationRule{$lhsName}) {
-
-                   # align with preferred indent from ancestor, if there is one,
-                   # with parent otherwise
-                    my $indent = ($parentPreferredIndent // $parentTallRuneIndent) // $parentColumn;
                     if (
                         isbackdented(
-                            $parentLine, $indent, $vertical_gaps, \@indents
+                            $parentLine, $annotationIndent, $vertical_gaps, \@indents
                         )
                       )
                     {
@@ -855,6 +939,52 @@ sub doCensus {
                     }
                     $isProblem = 1;
                 }
+                if ($tallBackdentRule{$lhsName}) {
+                    if (
+                        isbackdented(
+                            $parentLine, $parentColumn, $vertical_gaps, \@indents
+                        )
+                      )
+                      {
+                    $indentDesc = 'BACKDENTED';
+                    last TYPE_INDENT;
+                    }
+                    $isProblem = 1;
+                }
+
+                $isProblem = 1;
+
+                # If here, indenting did not match the LHS --
+                # we try the standard patterns to see if any
+                # match.  More than one may match.
+                {
+                    my @patterns = ();
+                    push @patterns,
+                      'BACKDENTED'
+                      if isbackdented(
+                        $parentLine,    $parentColumn,
+                        $vertical_gaps, \@indents
+                      );
+                    push @patterns,
+                      'CAST-STYLE'
+                      if isbackdented(
+                        $parentLine,    $annotationIndent,
+                        $vertical_gaps, \@indents
+                      );
+                    push @patterns, 'LUSLUS-STYLE'
+                      if isluslusstyle( $parentLine, $parentColumn, \@indents );
+                    push @patterns, 'JOG-STYLE'
+                      if isjog( $parentLine, $parentColumn, \@indents );
+                    push @patterns, 'SEMSIG-STYLE'
+                      if issemsig( $parentLine, $parentColumn, \@indents );
+                    if (@patterns) {
+                        $indentDesc = join " ", @patterns;
+                        last TYPE_INDENT;
+                    }
+                }
+
+                # If here, indenting does not match any pattern --
+                # we proceed to a rough characterization
                 for (
                     my $indentIX = $#parentIndents ;
                     $indentIX >= 0 ;
@@ -871,13 +1001,9 @@ sub doCensus {
                       )
                     {
                         my $depth = $#parentIndents - $indentIX;
-                        if ($depth) {
                             $indentDesc = "BACKDENTED-$depth";
                             $isProblem  = 1;
                             last TYPE_INDENT;
-                        }
-                        $indentDesc = 'BACKDENTED';
-                        last TYPE_INDENT;
                     }
                 }
 

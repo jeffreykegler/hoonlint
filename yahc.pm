@@ -1636,12 +1636,12 @@ wideZaptis ::= (- ZAP TIS PEL -) wide5d (- PER -)
 #           ==
 #           loaf
 #         ==
-norm5d ::= tallZapWut
-wideNorm5d ::= wideZapWut
-tallZapWut ::= (- ZAPWUTGAP -) dem4k (- GAP -) tall5d
-tallZapWut ::= (- ZAPWUTGAP SEL -) dem4k (- ACE -) dem4k (- SER GAP -) tall5d
-wideZapWut ::= (- ZAPWUTPEL -) dem4k (- ACE -) wide5d
-wideZapWut ::= (- ZAPWUTPEL SEL -) dem4k (- ACE -) dem4k (- SER ACE -) wide5d
+norm5d ::= tallZapwut
+wideNorm5d ::= wideZapwut
+tallZapwut ::= (- ZAPWUTGAP -) dem4k (- GAP -) tall5d
+tallZapwut ::= (- ZAPWUTGAP SEL -) dem4k (- ACE -) dem4k (- SER GAP -) tall5d
+wideZapwut ::= (- ZAPWUTPEL -) dem4k (- ACE -) wide5d
+wideZapwut ::= (- ZAPWUTPEL SEL -) dem4k (- ACE -) dem4k (- SER ACE -) wide5d
 
 
 # Multi-character lexemes to allow zapwut rune to take
