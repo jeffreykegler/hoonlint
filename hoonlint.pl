@@ -17,10 +17,12 @@ my $roundtrip;
 my $verbose;
 my $censusWhitespace;
 my $suppressionFileName;
+my $sayContext = 0;
 
 GetOptions(
     "roundtrip"           => \$roundtrip,
     "verbose"             => \$verbose,
+    "context=i"             => \$sayContext,
     "census-whitespace"   => \$censusWhitespace,
     "suppressions_file=s" => \$suppressionFileName,
 ) or die("Error in command line arguments\n");
@@ -52,7 +54,6 @@ if ( not defined $suppressionFileName
 sub suppressionError {
     my ( $error, $line ) = @_;
     say STDERR qq{Error in suppression file "$suppressionFileName": $error};
-    say STDERR qq{Error in suppression file "$suppressionFileName"};
 }
 
 my $pSuppressions =
@@ -268,7 +269,6 @@ sub doNode {
             my $refType = ref $child;
             next CHILD unless $refType eq 'ARRAY';
 
-            # say STDERR Data::Dumper::Dumper( $children[$childIX] );
             my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
 
             if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
@@ -355,6 +355,42 @@ sub literal {
 sub column {
     my ($pos) = @_;
     return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
+}
+
+sub context {
+    my ($pos, $length, $lines) = @_;
+    return '' if $lines <= 0;
+    my $contextStart = $pos;
+    my $contextEnd = $pos + $length - 1;
+    IX: for my $ix (1 .. $lines) {
+        $contextStart = rindex ${$pHoonSource}, "\n", $contextStart - 1;
+        if ($contextStart < 0) {
+            $contextStart = -1;
+            last IX;
+        }
+    }
+    $contextStart++;
+    IX: for my $ix (1 .. $lines) {
+        $contextEnd = index ${$pHoonSource}, "\n", $contextEnd+1;
+        if ($contextEnd < 0) {
+            $contextEnd = length ${$pHoonSource};
+            last IX;
+        }
+    }
+    my @lines = split "\n", (substr ${$pHoonSource}, $contextStart, $contextEnd-$contextStart);
+    # say Data::Dumper::Dumper(\@lines);
+    my @pieces = ();
+    my $ix = 0;
+    for ( ; $ix < $lines - 1; $ix++) {
+        push @pieces, ' ', $lines[$ix], "\n";
+    }
+    for ( ; $ix < $#lines - ($lines - 2); $ix++) {
+        push @pieces, '+', $lines[$ix], "\n";
+    }
+    for ( ; $ix <= $#lines; $ix++) {
+        push @pieces, ' ', $lines[$ix], "\n";
+    }
+    return join '', @pieces;
 }
 
 # The "name" of a node
@@ -747,8 +783,8 @@ sub doCensus {
                                     $indentDesc = join " ", $grandParentLC, $childLC;
                                 }
                             }
-                            say
-"SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC"
+                            print "SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC",
+                          "\n", context($parentStart, $parentLength, $sayContext)
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
                         }
@@ -787,7 +823,8 @@ sub doCensus {
                             $indentDesc = join " ", $parentLC, $childLC;
                         }
                     }
-                    say "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC"
+                    print "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC",
+                          "\n", context($parentStart, $parentLength, $sayContext)
                       if $censusWhitespace or $isProblem;
                     $previousLine = $childLine;
                 }
@@ -866,12 +903,29 @@ sub doCensus {
             return 1;
         }
 
+        sub indentDesc {
+            my ($indents) = @_;
+            # say Data::Dumper::Dumper($indents);
+            my ( $line, $column, $baseColumn );
+            return 'NO-GAPS' if $#$indents < 0;
+            ( $line, $baseColumn ) = @{ $indents->[0] };
+            my @pieces = ();
+            for my $ix ( 1 .. $#$indents ) {
+                ( $line, $column ) = @{ $indents->[$ix] };
+                push @pieces, "L$line:" . ( $column - $baseColumn );
+            }
+            return join " ", @pieces;
+        }
+
         # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
         # if here, gapiness > 0
         {
             my $isProblem = 0;
             my $start     = $node->{start};
+            # TODO: Can indents be totally replaced by gapIndents?
             my @indents   = ();
+            my $indentDesc = '???';
+
           CHILD: for my $childIX ( 0 .. $#$children ) {
                 my $child      = $children->[$childIX];
                 my $childStart = $child->{start};
@@ -882,7 +936,31 @@ sub doCensus {
                   $recce->line_column($childStart);
                 push @indents, [ $childLine, $childColumn - 1 ];
             }
-            my $indentDesc = '???';
+
+            my @gapIndents = ();
+            {
+                my $childIX    = 0;
+                my $child      = $children->[0];
+                my $childStart = $child->{start};
+                my ( $childLine, $childColumn ) =
+                  $recce->line_column($childStart);
+                push @gapIndents, [ $childLine, $childColumn - 1 ];
+              CHILD: for my $childIX ( 1 .. $#$children ) {
+                    my $child      = $children->[$childIX];
+                    my $symbol     = $child->{symbol};
+
+                # code relies on next symbol starting immediate after end of gap
+                    if ( defined $symbol and $symbolReverseDB{$symbol}->{gap} )
+                    {
+                        my $childStart = $child->{start};
+                        my $childLength = $child->{length};
+                        ( $childLine, $childColumn ) =
+                          $recce->line_column( $childStart + $childLength );
+                        push @gapIndents, [ $childLine, $childColumn - 1 ];
+                    }
+                }
+            }
+
           TYPE_INDENT: {
 
                 my $suppression = $suppression{'indent'}{$parentLC};
@@ -913,7 +991,7 @@ sub doCensus {
                         last TYPE_INDENT;
                     }
                     $isProblem = 1;
-                    $indentDesc = join " ", map { join ':', @{$_} } @indents;
+                    $indentDesc = indentDesc(\@gapIndents);
                     last TYPE_INDENT;
                 }
 
@@ -1030,10 +1108,11 @@ sub doCensus {
                     $indentDesc = 'LUSLUS-STYLE';
                     last TYPE_INDENT;
                 }
-                $indentDesc = join " ", map { join ':', @{$_} } @indents;
+                $indentDesc = indentDesc(\@gapIndents);
             }
-            say "FIXED-$gapiness $lhsName $indentDesc",
-              " # $fileName L", ( join ':', $recce->line_column($start) )
+            print "FIXED-$gapiness $lhsName $indentDesc",
+              " # $fileName L", ( join ':', $recce->line_column($start) ),
+              "\n", context($parentStart, $parentLength, $sayContext)
               if $censusWhitespace or $isProblem;
         }
 
