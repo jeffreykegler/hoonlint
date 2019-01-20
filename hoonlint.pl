@@ -13,14 +13,12 @@ require "yahc.pm";
 
 my $style;
 
-my $roundtrip;
 my $verbose;
 my $censusWhitespace;
 my $suppressionFileName;
 my $sayContext = 0;
 
 GetOptions(
-    "roundtrip"           => \$roundtrip,
     "verbose"             => \$verbose,
     "context=i"             => \$sayContext,
     "census-whitespace"   => \$censusWhitespace,
@@ -686,6 +684,7 @@ sub doCensus {
         my $firstChildIndent = column( $children->[0]->{start} ) - 1;
 
 # say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
+
         $baseIndent = $firstChildIndent if $firstChildIndent > $baseIndent;
 
         my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
@@ -919,6 +918,13 @@ sub doCensus {
             return 1;
         }
 
+        sub isFlat {
+            my ($indents)   = @_;
+            my ($firstLine) = @{ $indents->[0] };
+            my ($lastLine)  = @{ $indents->[$#$indents] };
+            return $firstLine == $lastLine;
+        }
+
         sub indentDesc {
             my ($indents) = @_;
             # say Data::Dumper::Dumper($indents);
@@ -960,12 +966,7 @@ sub doCensus {
                 my ( $childLine, $childColumn ) =
                   $recce->line_column($childStart);
                 push @gapIndents, [ $childLine, $childColumn - 1 ];
-                for (
-                    my $childIX = 1 ;
-                    $childIX <= $#$children + 1 ;
-                    $childIX++
-                  )
-                {
+                for my $childIX ( 0 .. ($#$children-1)) {
                     my $child  = $children->[$childIX];
                     my $symbol = $child->{symbol};
                     if ( defined $symbol and $symbolReverseDB{$symbol}->{gap} )
@@ -988,7 +989,7 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if ($vertical_gaps <= 0) {
+                if (isFlat(\@gapIndents)) {
                     $indentDesc = 'FLAT';
                     last TYPE_INDENT;
                 }
@@ -1215,9 +1216,6 @@ PIECE: for my $piece (@pieces) {
         next PIECE;
     }
     die qq{Unimplemented piece type: }, Data::Dumper::Dumper($piece);
-}
-if ($roundtrip) {
-    print join q{}, @output;
 }
 
 for my $type ( keys %unusedSuppression ) {
