@@ -20,7 +20,7 @@ my $sayContext = 0;
 
 GetOptions(
     "verbose"             => \$verbose,
-    "context=i"             => \$sayContext,
+    "context=i"           => \$sayContext,
     "census-whitespace"   => \$censusWhitespace,
     "suppressions_file=s" => \$suppressionFileName,
 ) or die("Error in command line arguments\n");
@@ -111,92 +111,92 @@ my %tallRuneRule = map { +( $_, 1 ) } grep {
 } map { $grammar->symbol_name($_); } $grammar->symbol_ids();
 
 # TODO: wisp5d needs study -- may depend on parent
-my %tallAnnotationRule = map { +( $_, 1 ) }
-  qw(
-    tallBarhep tallBardot
-    tallCendot tallColcab tallColsig
-    tallKethep tallKetlus tallKetwut
-    tallSigbar tallSigcab tallSiglus
-    tallTisbar tallTiscom tallTisgal
-    tallWutgal tallWutgar tallZapgar wisp5d
-    tallTailOfElem tallTailOfTop
-  );
+my %tallAnnotationRule = map { +( $_, 1 ) } qw(
+  tallBarhep tallBardot
+  tallCendot tallColcab tallColsig
+  tallKethep tallKetlus tallKetwut
+  tallSigbar tallSigcab tallSiglus
+  tallTisbar tallTiscom tallTisgal
+  tallWutgal tallWutgar tallZapgar wisp5d
+  tallTailOfElem tallTailOfTop
+);
 
 my %tallMainRule =
   map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
-my %tallSemsigRule = map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
+my %tallSemsigRule =
+  map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(lusLusCell lusHepCell lusTisCell
-    optFordFashep optFordFaslus fordFaswut fordFastis);
-my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
+  optFordFashep optFordFaslus fordFaswut fordFastis);
+my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
 my %tallBackdentRule = map { +( $_, 1 ) } qw(
-bonz5d
-fordFasbar
-fordFascom
-fordFasdot
-fordFasket
-fordFassem
-tallBarcab
-tallBarcen
-tallBarcol
-tallBarket
-tallBarsig
-tallBartar
-tallBartis
-tallBuccen
-tallBuccenMold
-tallBuccol
-tallBuccolMold
-tallBuchep
-tallBucket
-tallBucketMold
-tallBucpat
-tallBuctisMold
-tallBucwut
-tallBucwutMold
-tallCenhep
-tallCenhepMold
-tallCenket
-tallCenlus
-tallCenlusMold
-tallCensig
-tallCentar
-tallColhep
-tallColket
-tallCollus
-tallColtar
-tallDottar
-tallDottis
-tallKetcen
-tallKettis
-tallSigbuc
-tallSigcen
-tallSigfas
-tallSiggar
-tallSigpam
-tallSigwut
-tallSigzap
-tallTiscol
-tallTisdot
-tallTisfas
-tallTisgar
-tallTishep
-tallTisket
-tallTislus
-tallTissem
-tallTistar
-tallTiswut
-tallWutbar
-tallWutcol
-tallWutdot
-tallWuthep
-tallWutket
-tallWutlus
-tallWutpam
-tallWutpat
-tallWutsig
-tallZapcol
-tallZapdot
-tallZapwut
+  bonz5d
+  fordFasbar
+  fordFascom
+  fordFasdot
+  fordFasket
+  fordFassem
+  tallBarcab
+  tallBarcen
+  tallBarcol
+  tallBarket
+  tallBarsig
+  tallBartar
+  tallBartis
+  tallBuccen
+  tallBuccenMold
+  tallBuccol
+  tallBuccolMold
+  tallBuchep
+  tallBucket
+  tallBucketMold
+  tallBucpat
+  tallBuctisMold
+  tallBucwut
+  tallBucwutMold
+  tallCenhep
+  tallCenhepMold
+  tallCenket
+  tallCenlus
+  tallCenlusMold
+  tallCensig
+  tallCentar
+  tallColhep
+  tallColket
+  tallCollus
+  tallColtar
+  tallDottar
+  tallDottis
+  tallKetcen
+  tallKettis
+  tallSigbuc
+  tallSigcen
+  tallSigfas
+  tallSiggar
+  tallSigpam
+  tallSigwut
+  tallSigzap
+  tallTiscol
+  tallTisdot
+  tallTisfas
+  tallTisgar
+  tallTishep
+  tallTisket
+  tallTislus
+  tallTissem
+  tallTistar
+  tallTiswut
+  tallWutbar
+  tallWutcol
+  tallWutdot
+  tallWuthep
+  tallWutket
+  tallWutlus
+  tallWutpam
+  tallWutpat
+  tallWutsig
+  tallZapcol
+  tallZapdot
+  tallZapwut
 );
 
 # say Data::Dumper::Dumper(\%tallMainRule);
@@ -356,36 +356,38 @@ sub column {
 }
 
 sub context {
-    my ($pos, $length, $lines) = @_;
+    my ( $pos, $length, $lines ) = @_;
     return '' if $lines <= 0;
     my $contextStart = $pos;
-    my $contextEnd = $pos + $length - 1;
-    IX: for my $ix (1 .. $lines) {
+    my $contextEnd   = $pos + $length - 1;
+  IX: for my $ix ( 1 .. $lines ) {
         $contextStart = rindex ${$pHoonSource}, "\n", $contextStart - 1;
-        if ($contextStart < 0) {
+        if ( $contextStart < 0 ) {
             $contextStart = -1;
             last IX;
         }
     }
     $contextStart++;
-    IX: for my $ix (1 .. $lines) {
-        $contextEnd = index ${$pHoonSource}, "\n", $contextEnd+1;
-        if ($contextEnd < 0) {
+  IX: for my $ix ( 1 .. $lines ) {
+        $contextEnd = index ${$pHoonSource}, "\n", $contextEnd + 1;
+        if ( $contextEnd < 0 ) {
             $contextEnd = length ${$pHoonSource};
             last IX;
         }
     }
-    my @lines = split "\n", (substr ${$pHoonSource}, $contextStart, $contextEnd-$contextStart);
+    my @lines = split "\n",
+      ( substr ${$pHoonSource}, $contextStart, $contextEnd - $contextStart );
+
     # say Data::Dumper::Dumper(\@lines);
     my @pieces = ();
-    my $ix = 0;
-    for ( ; $ix < $lines - 1; $ix++) {
+    my $ix     = 0;
+    for ( ; $ix < $lines - 1 ; $ix++ ) {
         push @pieces, ' ', $lines[$ix], "\n";
     }
-    for ( ; $ix < $#lines - ($lines - 2); $ix++) {
+    for ( ; $ix < $#lines - ( $lines - 2 ) ; $ix++ ) {
         push @pieces, '+', $lines[$ix], "\n";
     }
-    for ( ; $ix <= $#lines; $ix++) {
+    for ( ; $ix <= $#lines ; $ix++ ) {
         push @pieces, ' ', $lines[$ix], "\n";
     }
     return join '', @pieces;
@@ -506,71 +508,9 @@ sub testStyleCensus {
 
 testStyleCensus();
 
-my @pieces = ();
-
-sub doCensus {
+sub doLint {
     no warnings 'recursion';
-    my ( $baseIndent, $depth, $node, $argContext ) = @_;
-
-    # say STDERR "doCensus($baseIndent, $depth, ...)";
-
-    my $gapToPieces = sub {
-        my ( $start, $length ) = @_;
-        my $literal = literal( $start, $length );
-        my $currentNL = index $literal, "\n";
-        if ( $currentNL < 0 ) {
-
-            # gap must be at least 2 spaces
-            push @pieces, { type => 'tab', indent => $baseIndent, needed => 2 };
-            return;
-        }
-        my $lastNL = -1;
-
-        # Convert initialColumn to 0-based
-        my $initialColumn = column($start) - 1;
-      LEADING_LINES: for ( ; ; ) {
-            pos $literal = $lastNL + 1;
-            my ($spaces) = ( $literal =~ m/\G([ ]*)/ );
-            die if not defined $spaces;    # TODO: is this necessary?
-                                           # say STDERR qq{spaces="$spaces"};
-            my $spaceCount      = length $spaces;
-            my $firstCommentPos = $lastNL + $spaceCount + 1;
-            if ( substr( $literal, $firstCommentPos, 1 ) ne "\n" ) {
-
-                # say STDERR "pushing tab, indent=",
-                # $initialColumn + $spaceCount;
-                push @pieces,
-                  {
-                    type   => 'tab',
-                    indent => ( $initialColumn + $spaceCount ),
-                    needed => 1
-                  };
-
-                # say STDERR +( join " ", __FILE__, __LINE__, '' ),
-                # qq{pushing piece: "},
-                # substr( $literal, $firstCommentPos,
-                # ( $currentNL - $firstCommentPos ) ),
-                # q{"};
-                push @pieces,
-                  {
-                    type => 'text',
-                    text => substr(
-                        $literal, $firstCommentPos,
-                        ( $currentNL - $firstCommentPos )
-                    )
-                  };
-            }
-            my $nextNL = index $literal, "\n", $currentNL + 1;
-            last LEADING_LINES if $nextNL < 0;
-            push @pieces, { type => 'nl' };
-            $lastNL        = $currentNL;
-            $currentNL     = $nextNL;
-            $initialColumn = 0;
-        }
-        push @pieces, { type => 'nl' },
-          { type => 'tab', indent => $baseIndent };
-        return;
-    };
+    my ( $node, $argContext ) = @_;
 
     my $parentSymbol = $node->{symbol};
     my $parentStart  = $node->{start};
@@ -598,24 +538,27 @@ sub doCensus {
         # say "line $parentLine: indents: ", (join " ", @parentIndents);
     }
 
-    my $argPreferredIndent    = $argContext->{preferredIndent};
-    my $argTallRuneIndent    = $argContext->{tallRuneIndent};
+    my $argPreferredIndent = $argContext->{preferredIndent};
+    my $argTallRuneIndent  = $argContext->{tallRuneIndent};
     my $parentPreferredIndent;
     $parentPreferredIndent = $argPreferredIndent if $argLine == $parentLine;
     my $parentTallRuneIndent;
     $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
-    my $parentContext         = {
+    my $parentContext = {
         ancestors => \@ancestors,
         line      => $parentLine,
         indents   => [@parentIndents],
     };
-    $parentContext->{preferredIndent} = $parentPreferredIndent if defined $parentPreferredIndent;
-    $parentContext->{tallRuneIndent} = $parentTallRuneIndent if defined $parentTallRuneIndent;
+    $parentContext->{preferredIndent} = $parentPreferredIndent
+      if defined $parentPreferredIndent;
+    $parentContext->{tallRuneIndent} = $parentTallRuneIndent
+      if defined $parentTallRuneIndent;
 
     # annotations align with preferred indent from ancestor, if there is one;
     # otherwise, with the parent tall rune (if one exists);
     # otherwise with the parent.
-    my $annotationIndent = ($parentPreferredIndent // $parentTallRuneIndent) // $parentColumn;
+    my $annotationIndent = ( $parentPreferredIndent // $parentTallRuneIndent )
+      // $parentColumn;
 
   NODE: {
         die Data::Dumper::Dumper($node)
@@ -628,35 +571,17 @@ sub doCensus {
         }
         if ( $type eq 'lexeme' ) {
             if ( $parentSymbol eq 'GAP' ) {
-                $gapToPieces->( $parentStart, $parentLength );
                 last NODE;
             }
             if ( $parentSymbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
-                push @pieces,
-                  { type => 'text', text => literal( $parentStart, 2 ) };
-                $gapToPieces->( $parentStart + 2, $parentLength - 2 );
                 last NODE;
             }
-
-# say STDERR +(join " ", __FILE__, __LINE__, ''), qq{pushing piece: "}, literal( $parentStart, $parentLength ), q{"};
-            push @pieces,
-              {
-                type => 'text',
-                text => literal( $parentStart, $parentLength )
-              };
             last NODE;
         }
         if ( $type eq 'separator' ) {
             if ( $parentSymbol eq 'GAP' ) {
-
-                $gapToPieces->( $parentStart, $parentLength );
                 last NODE;
             }
-            push @pieces,
-              {
-                type => 'text',
-                text => literal( $parentStart, $parentLength )
-              };
             last NODE;
         }
         my $ruleID = $node->{ruleID};
@@ -664,12 +589,13 @@ sub doCensus {
         my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
         my $lhsName = $grammar->symbol_name($lhs);
 
-        $parentContext->{preferredIndent} = $parentColumn if $tallMainRule{$lhsName};
-        $parentContext->{tallRuneIndent} = $parentColumn if $tallRuneRule{$lhsName};
+        $parentContext->{preferredIndent} = $parentColumn
+          if $tallMainRule{$lhsName};
+        $parentContext->{tallRuneIndent} = $parentColumn
+          if $tallRuneRule{$lhsName};
 
         # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
         if ( $lhsName eq 'optGay4i' ) {
-            $gapToPieces->( $parentStart, $parentLength );
             last NODE;
         }
 
@@ -677,22 +603,18 @@ sub doCensus {
         my $childCount = scalar @{$children};
         last NODE if $childCount <= 0;
         if ( $childCount == 1 ) {
-            doCensus( $baseIndent, $depth + 1, $children->[0], $parentContext );
+            doLint( $children->[0], $parentContext );
             last NODE;
         }
 
         my $firstChildIndent = column( $children->[0]->{start} ) - 1;
-
-# say STDERR join " ", "$lhsName: column=$firstChildIndent", "baseIndent=$baseIndent";
-
-        $baseIndent = $firstChildIndent if $firstChildIndent > $baseIndent;
 
         my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
 
         # TODO: Add warning for tall children of wide nodes
         if ( $gapiness == 0 ) {    # wide node
             for my $child (@$children) {
-                doCensus( $baseIndent, $depth + 1, $child, $parentContext );
+                doLint( $child, $parentContext );
             }
             last NODE;
         }
@@ -736,24 +658,22 @@ sub doCensus {
                     if ( scalar @{$argAncestors} >= 1 ) {
                         my $grandParent       = $argAncestors->[-1];
                         my $grandParentRuleID = $grandParent->{ruleID};
-                        my $grandParentStart = $grandParent->{start};
+                        my $grandParentStart  = $grandParent->{start};
                         ( $grandParentLine, $grandParentColumn ) =
                           $recce->line_column($grandParentStart);
-                        $grandParentLC = join ':', $grandParentLine, $grandParentColumn;
-                        $grandParentColumn--; # 0-based
+                        $grandParentLC = join ':', $grandParentLine,
+                          $grandParentColumn;
+                        $grandParentColumn--;    # 0-based
                         my ($lhs) = $grammar->rule_expand($grandParentRuleID);
                         $grandParentName = $grammar->symbol_display_form($lhs);
                     }
                     if ( $grandParentName eq 'tallSemsig' ) {
 
-                      $previousLine = $grandParentLine;
+                        $previousLine = $grandParentLine;
                       CHILD: for my $childIX ( 0 .. $#$children ) {
                             my $isProblem = 0;
                             my $child     = $children->[$childIX];
-                            doCensus(
-                                $baseIndent, $depth + 1,
-                                $child,      $parentContext
-                            );
+                            doLint( $child, $parentContext );
                             my $childStart = $child->{start};
                             my $symbol     = $child->{symbol};
                             next CHILD
@@ -779,11 +699,15 @@ sub doCensus {
                                     and $childColumn != $grandParentColumn + 2 )
                                 {
                                     $isProblem = 1;
-                                    $indentDesc = join " ", $grandParentLC, $childLC;
+                                    $indentDesc = join " ", $grandParentLC,
+                                      $childLC;
                                 }
                             }
-                            print "SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC",
-                          "\n", context($parentStart, $parentLength, $sayContext)
+                            print
+"SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC",
+                              "\n",
+                              context( $parentStart, $parentLength,
+                                $sayContext )
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
                         }
@@ -795,7 +719,7 @@ sub doCensus {
               CHILD: for my $childIX ( 0 .. $#$children ) {
                     my $isProblem = 0;
                     my $child     = $children->[$childIX];
-                    doCensus( $baseIndent, $depth + 1, $child, $parentContext );
+                    doLint( $child, $parentContext );
                     my $childStart = $child->{start};
                     my $symbol     = $child->{symbol};
                     next CHILD
@@ -822,8 +746,9 @@ sub doCensus {
                             $indentDesc = join " ", $parentLC, $childLC;
                         }
                     }
-                    print "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC",
-                          "\n", context($parentStart, $parentLength, $sayContext)
+                    print
+                      "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC",
+                      "\n", context( $parentStart, $parentLength, $sayContext )
                       if $censusWhitespace or $isProblem;
                     $previousLine = $childLine;
                 }
@@ -871,7 +796,8 @@ sub doCensus {
             # Second child must be on rune line, or
             # at ruleColumn+2
             my ( $secondChildLine, $secondChildColumn ) = @{ $gapIndents->[2] };
-            # say "issemsig: $runeLine:$runeColumn; (secondChildLine, secondChildColumn ) = ( $secondChildLine, $secondChildColumn )";
+
+# say "issemsig: $runeLine:$runeColumn; (secondChildLine, secondChildColumn ) = ( $secondChildLine, $secondChildColumn )";
             return 0
               if $secondChildLine != $runeLine
               and $secondChildColumn != $runeColumn + 2;
@@ -927,6 +853,7 @@ sub doCensus {
 
         sub indentDesc {
             my ($indents) = @_;
+
             # say Data::Dumper::Dumper($indents);
             my ( $line, $column, $baseColumn );
             return 'NO-GAPS' if $#$indents < 0;
@@ -944,8 +871,9 @@ sub doCensus {
         {
             my $isProblem = 0;
             my $start     = $node->{start};
+
             # TODO: Can indents be totally replaced by gapIndents?
-            my @indents   = ();
+            my @indents    = ();
             my $indentDesc = '???';
 
           CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -966,7 +894,7 @@ sub doCensus {
                 my ( $childLine, $childColumn ) =
                   $recce->line_column($childStart);
                 push @gapIndents, [ $childLine, $childColumn - 1 ];
-                for my $childIX ( 0 .. ($#$children-1)) {
+                for my $childIX ( 0 .. ( $#$children - 1 ) ) {
                     my $child  = $children->[$childIX];
                     my $symbol = $child->{symbol};
                     if ( defined $symbol and $symbolReverseDB{$symbol}->{gap} )
@@ -989,12 +917,12 @@ sub doCensus {
                     last TYPE_INDENT;
                 }
 
-                if (isFlat(\@gapIndents)) {
+                if ( isFlat( \@gapIndents ) ) {
                     $indentDesc = 'FLAT';
                     last TYPE_INDENT;
                 }
 
-                if ($tallJogRule{$lhsName}) {
+                if ( $tallJogRule{$lhsName} ) {
                     if ( isjog( $parentLine, $parentColumn, \@indents ) ) {
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
@@ -1002,22 +930,22 @@ sub doCensus {
                     $isProblem = 1;
                 }
 
-                if ($tallSemsigRule{$lhsName}) {
-                    if (
-                        issemsig($parentLine, $parentColumn, \@gapIndents))
+                if ( $tallSemsigRule{$lhsName} ) {
+                    if ( issemsig( $parentLine, $parentColumn, \@gapIndents ) )
                     {
                         $indentDesc = 'SEMSIG-STYLE';
                         last TYPE_INDENT;
                     }
-                    $isProblem = 1;
-                    $indentDesc = indentDesc(\@gapIndents);
+                    $isProblem  = 1;
+                    $indentDesc = indentDesc( \@gapIndents );
                     last TYPE_INDENT;
                 }
 
-                if ($tallAnnotationRule{$lhsName}) {
+                if ( $tallAnnotationRule{$lhsName} ) {
                     if (
                         isbackdented(
-                            $parentLine, $annotationIndent, $vertical_gaps, \@indents
+                            $parentLine,    $annotationIndent,
+                            $vertical_gaps, \@indents
                         )
                       )
                     {
@@ -1027,7 +955,7 @@ sub doCensus {
                     $isProblem = 1;
 
                 }
-                if ($tallLuslusRule{$lhsName}) {
+                if ( $tallLuslusRule{$lhsName} ) {
                     if (
                         isluslusstyle( $parentLine, $parentColumn, \@indents ) )
                     {
@@ -1036,15 +964,16 @@ sub doCensus {
                     }
                     $isProblem = 1;
                 }
-                if ($tallBackdentRule{$lhsName}) {
+                if ( $tallBackdentRule{$lhsName} ) {
                     if (
                         isbackdented(
-                            $parentLine, $parentColumn, $vertical_gaps, \@indents
+                            $parentLine,    $parentColumn,
+                            $vertical_gaps, \@indents
                         )
                       )
-                      {
-                    $indentDesc = 'BACKDENTED';
-                    last TYPE_INDENT;
+                    {
+                        $indentDesc = 'BACKDENTED';
+                        last TYPE_INDENT;
                     }
                     $isProblem = 1;
                 }
@@ -1098,9 +1027,9 @@ sub doCensus {
                       )
                     {
                         my $depth = $#parentIndents - $indentIX;
-                            $indentDesc = "BACKDENTED-$depth";
-                            $isProblem  = 1;
-                            last TYPE_INDENT;
+                        $indentDesc = "BACKDENTED-$depth";
+                        $isProblem  = 1;
+                        last TYPE_INDENT;
                     }
                 }
 
@@ -1127,11 +1056,11 @@ sub doCensus {
                     $indentDesc = 'LUSLUS-STYLE';
                     last TYPE_INDENT;
                 }
-                $indentDesc = indentDesc(\@gapIndents);
+                $indentDesc = indentDesc( \@gapIndents );
             }
             print "FIXED-$gapiness $lhsName $indentDesc",
               " # $fileName L", ( join ':', $recce->line_column($start) ),
-              "\n", context($parentStart, $parentLength, $sayContext)
+              "\n", context( $parentStart, $parentLength, $sayContext )
               if $censusWhitespace or $isProblem;
         }
 
@@ -1160,63 +1089,14 @@ sub doCensus {
         }
 
         # If here, use backdenting
-        my $currentIndent = $baseIndent + $vertical_gaps * 2;
       CHILD: for my $childIX ( 0 .. $#$children ) {
-            $currentIndent -= 2 if $isVerticalGap[$childIX];
             my $child = $children->[$childIX];
-            doCensus( $currentIndent, $depth + 1, $child, $parentContext );
+            doLint( $child, $parentContext );
         }
     }
-
-    return $baseIndent;
 }
 
-doCensus( 0, 0, $astValue, { line => -1, indents => [], ancestors => [] } );
-$grammar = undef;    # free up memory
-$recce   = undef;    # free up memory
-
-my @output        = ();
-my $currentColumn = 0;
-
-PIECE: for my $piece (@pieces) {
-    my $type = $piece->{type};
-    if ( $type eq 'tab' ) {
-        my $spaces = $piece->{indent} - $currentColumn;
-        my $needed = $piece->{needed} // 0;
-
-        # say STDERR "tab command: spaces=$spaces; needed=$needed";
-        if ( $spaces < 0 ) {
-
-       # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$needed";
-            $needed = spacesNeeded( \@output, $needed );
-
-       # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$needed";
-            $currentColumn += $needed;
-            push @output, ( q{ } x $needed ) if $needed > 0;
-            next PIECE;
-        }
-        $spaces += spacesNeeded( \@output, $needed - $spaces )
-          if $needed > $spaces;
-        $currentColumn += $spaces;
-        push @output, ( q{ } x $spaces ) if $spaces > 0;
-        next PIECE;
-    }
-    if ( $type eq 'nl' ) {
-
-        # say STDERR "processing nl, indent=$indent";
-        my $indent = $piece->{indent};
-        push @output, "\n";
-        $currentColumn = 0;
-        next PIECE;
-    }
-    if ( $type eq 'text' ) {
-        my $text = $piece->{text};
-        push @output, $text;
-        $currentColumn += length $text;
-        next PIECE;
-    }
-    die qq{Unimplemented piece type: }, Data::Dumper::Dumper($piece);
-}
+doLint( $astValue, { line => -1, indents => [], ancestors => [] } );
 
 for my $type ( keys %unusedSuppression ) {
     for my $tag (
