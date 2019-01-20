@@ -620,24 +620,6 @@ sub doLint {
         }
 
         # tall node
-        my $vertical_gaps = 0;
-        my @isVerticalGap;
-        my @isGap;
-      CHILD: for my $childIX ( 0 .. $#$children ) {
-            my $child = $children->[$childIX];
-            next CHILD if $child->{type} ne 'lexeme';
-            my $name  = $child->{symbol};
-            my $isGap = $symbolReverseDB{$name}->{gap};
-            $isGap[$childIX] = $isGap;
-            next CHILD if not $isGap;
-            my $start  = $child->{start};
-            my $length = $child->{length};
-
-            if ( literal( $start, $length ) =~ /\n/ ) {
-                $vertical_gaps++;
-                $isVerticalGap[$childIX]++;
-            }
-        }
 
         if ( $gapiness < 0 ) {    # sequence
             my ( $parentLine, $parentColumn ) =
@@ -823,23 +805,21 @@ sub doLint {
             return 0;
         }
 
-        sub isbackdented {
-            my ( $baseLine, $baseColumn, $verticalGaps, $indents ) = @_;
-
-            # say "L$baseLine isbackdented for column $baseColumn";
-
-            my $currentIndent = $baseColumn + $verticalGaps * 2;
+        sub isBackdented {
+            my ( $indents, $baseIndent ) = @_;
+            # say Data::Dumper::Dumper($indents);
+            my ( $baseLine, $baseColumn ) = @{$indents->[0]};
+            $baseIndent //= $baseColumn;
+            my $currentIndent = $baseIndent + $#$indents * 2;
             my $lastLine      = $baseLine;
-          INDENT: for my $indent ( @{$indents} ) {
+          INDENT: for my $ix (1 .. $#$indents) {
+                my $indent = $indents->[$ix];
                 my ( $thisLine, $thisColumn ) = @{$indent};
-                next INDENT if $thisLine == $lastLine;
                 $currentIndent -= 2;
+                # say "$currentIndent vs. $thisColumn";
+                next INDENT if $thisLine == $lastLine;
+                return if $currentIndent != $thisColumn;
                 $lastLine = $thisLine;
-
-                # say "L$lastLine $thisColumn vs. $currentIndent";
-                if ( $currentIndent != $thisColumn ) {
-                    return;
-                }
             }
             return 1;
         }
@@ -942,13 +922,7 @@ sub doLint {
                 }
 
                 if ( $tallAnnotationRule{$lhsName} ) {
-                    if (
-                        isbackdented(
-                            $parentLine,    $annotationIndent,
-                            $vertical_gaps, \@indents
-                        )
-                      )
-                    {
+                    if ( isBackdented( \@gapIndents, $annotationIndent )) {
                         $indentDesc = 'CAST-STYLE';
                         last TYPE_INDENT;
                     }
@@ -965,13 +939,7 @@ sub doLint {
                     $isProblem = 1;
                 }
                 if ( $tallBackdentRule{$lhsName} ) {
-                    if (
-                        isbackdented(
-                            $parentLine,    $parentColumn,
-                            $vertical_gaps, \@indents
-                        )
-                      )
-                    {
+                    if ( isBackdented( \@gapIndents)) {
                         $indentDesc = 'BACKDENTED';
                         last TYPE_INDENT;
                     }
@@ -985,18 +953,8 @@ sub doLint {
                 # match.  More than one may match.
                 {
                     my @patterns = ();
-                    push @patterns,
-                      'BACKDENTED'
-                      if isbackdented(
-                        $parentLine,    $parentColumn,
-                        $vertical_gaps, \@indents
-                      );
-                    push @patterns,
-                      'CAST-STYLE'
-                      if isbackdented(
-                        $parentLine,    $annotationIndent,
-                        $vertical_gaps, \@indents
-                      );
+                    push @patterns, 'BACKDENTED' if isBackdented( \@gapIndents);
+                    push @patterns, 'CAST-STYLE' if isBackdented( \@gapIndents, $annotationIndent);
                     push @patterns, 'LUSLUS-STYLE'
                       if isluslusstyle( $parentLine, $parentColumn, \@indents );
                     push @patterns, 'JOG-STYLE'
@@ -1018,14 +976,7 @@ sub doLint {
                   )
                 {
                     my $indent = $parentIndents[$indentIX];
-
-                   # say "L$parentLine: L$parentLine trying backdent ; $indent";
-                    if (
-                        isbackdented(
-                            $parentLine, $indent, $vertical_gaps, \@indents
-                        )
-                      )
-                    {
+                    if ( isBackdented( \@gapIndents, $indent)) {
                         my $depth = $#parentIndents - $indentIX;
                         $indentDesc = "BACKDENTED-$depth";
                         $isProblem  = 1;
@@ -1040,17 +991,11 @@ sub doLint {
 
                 # say qq{lineLiteral: "$lineLiteral"};
                 my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
-                if (
-                    isbackdented(
-                        $parentLine, ( length $spaces ),
-                        $vertical_gaps, \@indents
-                    )
-                  )
-                {
+                if ( isBackdented( \@gapIndents, ( length $spaces ))) {
                     $indentDesc = 'LINE-BACKDENTED';
                     last TYPE_INDENT;
                 }
-                if ( isluslusstyle( $parentLine, $parentColumn, \@indents ) ) {
+                if ( isluslusstyle( $parentLine, $parentColumn, \@gapIndents ) ) {
 
                     # luslus style for non-luslus rules
                     $indentDesc = 'LUSLUS-STYLE';
@@ -1062,30 +1007,6 @@ sub doLint {
               " # $fileName L", ( join ':', $recce->line_column($start) ),
               "\n", context( $parentStart, $parentLength, $sayContext )
               if $censusWhitespace or $isProblem;
-        }
-
-        # Do we use alignment, or just backdenting?
-        my $useAlignment = 1;
-      SET_ALIGNMENT: {
-
-            # Use alignment if first gap is non-vertical and
-            # the rest are vertical
-            my $gapCount = 0;
-          CHILD: for my $childIX ( 0 .. $#$children ) {
-                next CHILD if not $isGap[$childIX];
-                $gapCount++;
-                if ( $isVerticalGap[$childIX] ) {
-                    if ( $gapCount == 1 ) {
-                        $useAlignment = 0;
-                        last SET_ALIGNMENT;
-                    }
-                    next CHILD;
-                }
-                if ( $gapCount > 1 ) {
-                    $useAlignment = 0;
-                    last SET_ALIGNMENT;
-                }
-            }
         }
 
         # If here, use backdenting
