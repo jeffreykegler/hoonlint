@@ -857,13 +857,29 @@ sub doCensus {
 
         # Semsig must have first child properly aligned on same line as
         # rune; tistis (==) must be on its own line, aligned with the rune.
+        #
+        # This is backdenting, with further restrictions:  The first
+        # child must be on the rune line, and the last child must NOT
+        # be on the rune line.
         sub issemsig {
-            my ( $baseLine, $baseColumn, $indents ) = @_;
-            return 0 if $#$indents < 4;
-            my ( $firstChildLine, $firstChildColumn ) = @{ $indents->[2] };
-            return 0 if $firstChildLine != $baseLine or $firstChildColumn != $baseColumn + 4;
-            my ( $tistisLine, $tistisColumn ) = @{ $indents->[4] };
-            return 0 if $tistisLine == $baseLine or $tistisColumn != $baseColumn;
+            my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+            return 0 if $#$gapIndents < 3;
+            my ( $firstChildLine, $firstChildColumn ) = @{ $gapIndents->[1] };
+            return 0
+              if $firstChildLine != $runeLine
+              or $firstChildColumn != $runeColumn + 4;
+
+            # Second child must be on rune line, or
+            # at ruleColumn+2
+            my ( $secondChildLine, $secondChildColumn ) = @{ $gapIndents->[2] };
+            # say "issemsig: $runeLine:$runeColumn; (secondChildLine, secondChildColumn ) = ( $secondChildLine, $secondChildColumn )";
+            return 0
+              if $secondChildLine != $runeLine
+              and $secondChildColumn != $runeColumn + 2;
+
+            my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
+            return 0
+              if $tistisLine == $runeLine or $tistisColumn != $runeColumn;
             return 1;
         }
 
@@ -939,24 +955,26 @@ sub doCensus {
 
             my @gapIndents = ();
             {
-                my $childIX    = 0;
                 my $child      = $children->[0];
                 my $childStart = $child->{start};
                 my ( $childLine, $childColumn ) =
                   $recce->line_column($childStart);
                 push @gapIndents, [ $childLine, $childColumn - 1 ];
-              CHILD: for my $childIX ( 1 .. $#$children ) {
-                    my $child      = $children->[$childIX];
-                    my $symbol     = $child->{symbol};
-
-                # code relies on next symbol starting immediate after end of gap
+                for (
+                    my $childIX = 1 ;
+                    $childIX <= $#$children + 1 ;
+                    $childIX++
+                  )
+                {
+                    my $child  = $children->[$childIX];
+                    my $symbol = $child->{symbol};
                     if ( defined $symbol and $symbolReverseDB{$symbol}->{gap} )
                     {
-                        my $childStart = $child->{start};
-                        my $childLength = $child->{length};
-                        ( $childLine, $childColumn ) =
-                          $recce->line_column( $childStart + $childLength );
-                        push @gapIndents, [ $childLine, $childColumn - 1 ];
+                        my $nextChild = $children->[ $childIX + 1 ];
+                        my $nextStart = $nextChild->{start};
+                        my ( $nextLine, $nextColumn ) =
+                          $recce->line_column($nextStart);
+                        push @gapIndents, [ $nextLine, $nextColumn - 1 ];
                     }
                 }
             }
@@ -985,7 +1003,7 @@ sub doCensus {
 
                 if ($tallSemsigRule{$lhsName}) {
                     if (
-                        issemsig($parentLine, $parentColumn, \@indents))
+                        issemsig($parentLine, $parentColumn, \@gapIndents))
                     {
                         $indentDesc = 'SEMSIG-STYLE';
                         last TYPE_INDENT;
@@ -1054,7 +1072,7 @@ sub doCensus {
                     push @patterns, 'JOG-STYLE'
                       if isjog( $parentLine, $parentColumn, \@indents );
                     push @patterns, 'SEMSIG-STYLE'
-                      if issemsig( $parentLine, $parentColumn, \@indents );
+                      if issemsig( $parentLine, $parentColumn, \@gapIndents );
                     if (@patterns) {
                         $indentDesc = join " ", @patterns;
                         last TYPE_INDENT;
