@@ -1,0 +1,1745 @@
+=== hoons/arvo/sur/gmail-message.hoon ===
+=== hoons/arvo/sur/kyev.hoon ===
+=== hoons/arvo/sur/plan/diff.hoon ===
+=== hoons/arvo/sur/plan/acct.hoon ===
+=== hoons/arvo/sur/static.hoon ===
+=== hoons/arvo/sur/down.hoon ===
+=== hoons/arvo/sur/sole.hoon ===
+FIXED-2 tallBuccen L7:4 L10:0 # hoons/arvo/sur/sole.hoon L6:3
+=== hoons/arvo/sur/gh.hoon ===
+=== hoons/arvo/sur/tree-include.hoon ===
+=== hoons/arvo/sur/recoverable-error.hoon ===
+=== hoons/arvo/sur/twitter.hoon ===
+FIXED-1 tallBarcen LUSLUS-STYLE # hoons/arvo/sur/twitter.hoon L36:5
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/sur/twitter.hoon L37:7
+=== hoons/arvo/sur/rfc.hoon ===
+=== hoons/arvo/sur/markdown.hoon ===
+=== hoons/arvo/sur/unicode-data.hoon ===
+FIXED-2 tallBuccen L127:4 L134:0 # hoons/arvo/sur/unicode-data.hoon L126:3
+=== hoons/arvo/sur/hall.hoon ===
+FIXED-2 tallBucwut L107:4 L109:4 # hoons/arvo/sur/hall.hoon L107:3
+SEQUENCE till5dSeq 107:7 108:3 # hoons/arvo/sur/hall.hoon L107:7
+FIXED-2 tallBuccen L140:4 L159:0 # hoons/arvo/sur/hall.hoon L139:3
+=== hoons/arvo/sur/gmail-label.hoon ===
+=== hoons/arvo/sur/lens.hoon ===
+=== hoons/arvo/tests/new-hoon/mp.hoon ===
+FIXED-4 tallCenket L102:4 L102:20 L102:23 L103:-5 # hoons/arvo/tests/new-hoon/mp.hoon L102:10
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/tests/new-hoon/mp.hoon L273:3
+=== hoons/arvo/tests/new-hoon/ls.hoon ===
+=== hoons/arvo/tests/new-hoon/thr.hoon ===
+=== hoons/arvo/tests/new-hoon/myb.hoon ===
+=== hoons/arvo/tests/zuse/crypto/keccak.hoon ===
+FIXED-2 tallColhep LUSLUS-STYLE # hoons/arvo/tests/zuse/crypto/keccak.hoon L56:5
+FIXED-2 tallColhep L198:4 L199:1 # hoons/arvo/tests/zuse/crypto/keccak.hoon L198:7
+FIXED-2 tallColhep LUSLUS-STYLE # hoons/arvo/tests/zuse/crypto/keccak.hoon L264:3
+=== hoons/arvo/sys/zuse.hoon ===
+FIXED-2 tallTisgar L37:0 L1253:0 # hoons/arvo/sys/zuse.hoon L33:1
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/zuse.hoon L79:7
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/zuse.hoon L87:9
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/zuse.hoon L100:11
+FIXED-1 tallKetwut L113:-8 # hoons/arvo/sys/zuse.hoon L112:11
+FIXED-1 tallKetwut L118:-8 # hoons/arvo/sys/zuse.hoon L117:13
+FIXED-2 tallBucwut L120:4 L132:8 # hoons/arvo/sys/zuse.hoon L120:7
+SEQUENCE till5dSeq 120:15 121:7 # hoons/arvo/sys/zuse.hoon L120:15
+SEQUENCE till5dSeq 123:15 124:7 # hoons/arvo/sys/zuse.hoon L123:15
+SEQUENCE till5dSeq 126:15 127:7 # hoons/arvo/sys/zuse.hoon L126:15
+SEQUENCE till5dSeq 129:15 130:7 # hoons/arvo/sys/zuse.hoon L129:15
+FIXED-2 tallBucwut L142:4 L151:8 # hoons/arvo/sys/zuse.hoon L142:7
+SEQUENCE till5dSeq 142:15 143:7 # hoons/arvo/sys/zuse.hoon L142:15
+SEQUENCE till5dSeq 147:15 148:7 # hoons/arvo/sys/zuse.hoon L147:15
+FIXED-1 tallKetwut L174:-12 # hoons/arvo/sys/zuse.hoon L173:17
+FIXED-1 tallKetwut L176:-6 # hoons/arvo/sys/zuse.hoon L175:13
+FIXED-1 tallKetwut L186:-6 # hoons/arvo/sys/zuse.hoon L185:13
+FIXED-1 tallKetwut L192:-6 # hoons/arvo/sys/zuse.hoon L191:13
+FIXED-1 tallKetwut L355:-8 # hoons/arvo/sys/zuse.hoon L354:11
+FIXED-1 tallKetwut L360:-8 # hoons/arvo/sys/zuse.hoon L359:13
+FIXED-1 tallKetwut L377:-8 # hoons/arvo/sys/zuse.hoon L376:11
+FIXED-1 tallKetwut L382:-8 # hoons/arvo/sys/zuse.hoon L381:13
+FIXED-1 tallKetwut L548:-8 # hoons/arvo/sys/zuse.hoon L547:11
+FIXED-1 tallKetwut L553:-8 # hoons/arvo/sys/zuse.hoon L552:13
+FIXED-1 tallKetwut L662:-8 # hoons/arvo/sys/zuse.hoon L661:11
+FIXED-1 tallKetwut L667:-8 # hoons/arvo/sys/zuse.hoon L666:13
+FIXED-1 tallKetwut L792:-8 # hoons/arvo/sys/zuse.hoon L791:11
+FIXED-1 tallKetwut L797:-8 # hoons/arvo/sys/zuse.hoon L796:13
+FIXED-1 tallKetwut L879:-8 # hoons/arvo/sys/zuse.hoon L878:11
+FIXED-1 tallKetwut L884:-8 # hoons/arvo/sys/zuse.hoon L883:13
+FIXED-2 LuslusCell L905:4 L906:8 # hoons/arvo/sys/zuse.hoon L905:3
+FIXED-2 tallBuccol L906:4 L918:4 # hoons/arvo/sys/zuse.hoon L906:11
+FIXED-2 tallBuccolMold L913:4 L918:-4 # hoons/arvo/sys/zuse.hoon L913:15
+FIXED-1 tallKetwut L957:-8 # hoons/arvo/sys/zuse.hoon L956:11
+FIXED-1 tallKetwut L962:-8 # hoons/arvo/sys/zuse.hoon L961:13
+FIXED-2 tallBuccen L995:4 L1005:4 # hoons/arvo/sys/zuse.hoon L995:7
+FIXED-2 tallBuccolMold L1001:4 L1005:-4 # hoons/arvo/sys/zuse.hoon L1001:11
+FIXED-2 tallBuccol L1008:4 L1013:1 # hoons/arvo/sys/zuse.hoon L1008:7
+FIXED-1 tallKetwut L1060:-8 # hoons/arvo/sys/zuse.hoon L1058:13
+FIXED-1 tallKetwut L1094:-7 # hoons/arvo/sys/zuse.hoon L1093:12
+FIXED-1 tallKetwut L1141:-10 # hoons/arvo/sys/zuse.hoon L1140:15
+FIXED-1 tallKetwut L1204:-8 # hoons/arvo/sys/zuse.hoon L1200:11
+FIXED-1 tallKetwut L1206:-8 # hoons/arvo/sys/zuse.hoon L1205:13
+FIXED-2 tallBuccol L1222:4 L1225:4 # hoons/arvo/sys/zuse.hoon L1222:7
+FIXED-2 tallBuccenMold L1223:4 L1225:-4 # hoons/arvo/sys/zuse.hoon L1223:11
+FIXED-2 tallBuccen L1227:4 L1236:8 # hoons/arvo/sys/zuse.hoon L1227:7
+FIXED-2 tallBuccenMold L1231:4 L1236:-8 # hoons/arvo/sys/zuse.hoon L1231:15
+FIXED-1 tallKetwut L1258:-10 # hoons/arvo/sys/zuse.hoon L1257:13
+FIXED-3 tallCentis L1344:6 L1345:4 L1396:0 # hoons/arvo/sys/zuse.hoon L1344:9
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/sys/zuse.hoon L1369:28
+SEQUENCE tall5dSeq 1368:26 1369:19 # hoons/arvo/sys/zuse.hoon L1368:26
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/sys/zuse.hoon L1376:28
+SEQUENCE tall5dSeq 1375:26 1376:19 # hoons/arvo/sys/zuse.hoon L1375:26
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/sys/zuse.hoon L1387:28
+SEQUENCE tall5dSeq 1391:26 1392:19 # hoons/arvo/sys/zuse.hoon L1391:26
+FIXED-3 tallWutcol L1406:4 L1407:3 L1408:0 # hoons/arvo/sys/zuse.hoon L1406:5
+FIXED-1 tallKetwut L1506:-10 # hoons/arvo/sys/zuse.hoon L1505:13
+FIXED-1 tallZapdot L1513:-9 # hoons/arvo/sys/zuse.hoon L1512:14
+FIXED-1 tallKetwut L1523:-12 # hoons/arvo/sys/zuse.hoon L1522:27
+FIXED-3 tallCentis L1636:6 L1637:4 L1670:0 # hoons/arvo/sys/zuse.hoon L1636:13
+FIXED-3 tallCentis L1712:6 L1713:4 L1720:0 # hoons/arvo/sys/zuse.hoon L1712:9
+FIXED-3 tallTiscol L1732:2 L1734:0 L1735:0 # hoons/arvo/sys/zuse.hoon L1731:9
+FIXED-3 tallTiscol L1743:2 L1745:0 L1746:0 # hoons/arvo/sys/zuse.hoon L1742:9
+FIXED-3 tallTiscol L1759:2 L1761:0 L1762:0 # hoons/arvo/sys/zuse.hoon L1758:9
+FIXED-3 tallTiscol L1770:2 L1772:0 L1773:0 # hoons/arvo/sys/zuse.hoon L1769:9
+FIXED-3 tallTiscol L1786:2 L1788:0 L1789:0 # hoons/arvo/sys/zuse.hoon L1785:9
+FIXED-3 tallTiscol L1797:2 L1799:0 L1800:0 # hoons/arvo/sys/zuse.hoon L1796:9
+FIXED-2 tallColhep L1946:4 L1947:4 # hoons/arvo/sys/zuse.hoon L1946:9
+FIXED-2 tallColhep L1970:4 L1971:4 # hoons/arvo/sys/zuse.hoon L1970:9
+FIXED-2 tallColhep L1994:4 L1995:4 # hoons/arvo/sys/zuse.hoon L1994:9
+FIXED-2 tallBartis L2004:4 L2008:0 # hoons/arvo/sys/zuse.hoon L2002:7
+FIXED-2 tallKettis L2056:4 L2057:-2 # hoons/arvo/sys/zuse.hoon L2056:11
+FIXED-2 tallKettis L2060:4 L2061:-2 # hoons/arvo/sys/zuse.hoon L2060:11
+FIXED-2 tallKettis L2076:4 L2077:-2 # hoons/arvo/sys/zuse.hoon L2076:11
+FIXED-2 tallKettis L2080:4 L2081:-2 # hoons/arvo/sys/zuse.hoon L2080:11
+FIXED-2 tallKettis L2096:4 L2097:-2 # hoons/arvo/sys/zuse.hoon L2096:11
+FIXED-2 tallKettis L2100:4 L2101:-2 # hoons/arvo/sys/zuse.hoon L2100:11
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2121:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2125:14
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2141:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2145:14
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2161:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L2165:14
+FIXED-3 tallCollus L2184:2 L2185:2 L2186:0 # hoons/arvo/sys/zuse.hoon L2183:9
+FIXED-2 tallKettis L2194:4 L2195:-2 # hoons/arvo/sys/zuse.hoon L2194:13
+FIXED-2 tallKettis L2223:4 L2224:-2 # hoons/arvo/sys/zuse.hoon L2223:13
+FIXED-3 tallCollus L2243:2 L2244:2 L2245:0 # hoons/arvo/sys/zuse.hoon L2242:9
+FIXED-2 tallKettis L2253:4 L2254:-2 # hoons/arvo/sys/zuse.hoon L2253:13
+FIXED-2 tallKettis L2267:4 L2268:1 # hoons/arvo/sys/zuse.hoon L2267:15
+FIXED-3 tallCenlus L2283:4 L2283:9 L2284:9 # hoons/arvo/sys/zuse.hoon L2283:13
+FIXED-2 tallDottis L2323:4 L2324:4 # hoons/arvo/sys/zuse.hoon L2323:9
+FIXED-2 tallKettis L2443:4 L2444:-2 # hoons/arvo/sys/zuse.hoon L2443:11
+FIXED-2 tallKettis L2446:4 L2447:-2 # hoons/arvo/sys/zuse.hoon L2446:11
+FIXED-2 tallColsig L2466:-12 L2469:16 # hoons/arvo/sys/zuse.hoon L2465:27
+FIXED-2 tallColsig L2478:-12 L2481:16 # hoons/arvo/sys/zuse.hoon L2477:27
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/zuse.hoon L2490:23
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L2494:23
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L2550:22
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/zuse.hoon L2551:28
+FIXED-3 tallCenlus L2564:4 L2564:10 L2565:-10 # hoons/arvo/sys/zuse.hoon L2564:18
+FIXED-3 tallWutsig L2587:4 L2588:-7 L2589:-9 # hoons/arvo/sys/zuse.hoon L2587:18
+FIXED-2 tallKethep L2592:4 L2593:-9 # hoons/arvo/sys/zuse.hoon L2592:18
+FIXED-3 tallTisdot CAST-STYLE # hoons/arvo/sys/zuse.hoon L2595:18
+FIXED-2 tallKethep L2595:4 L2596:-18 # hoons/arvo/sys/zuse.hoon L2595:29
+FIXED-3 tallCenlus L2618:4 L2619:4 L2620:2 # hoons/arvo/sys/zuse.hoon L2618:15
+FIXED-2 tallTislus L2624:4 L2625:-9 # hoons/arvo/sys/zuse.hoon L2624:18
+FIXED-2 tallKettis L2628:4 L2629:-2 # hoons/arvo/sys/zuse.hoon L2628:11
+FIXED-3 tallWutsig BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L2629:17
+FIXED-1 tallZapcol L2644:-8 # hoons/arvo/sys/zuse.hoon L2643:13
+FIXED-1 tallZapcol L2758:-8 # hoons/arvo/sys/zuse.hoon L2757:13
+FIXED-1 tallKetwut L2946:-8 # hoons/arvo/sys/zuse.hoon L2945:13
+FIXED-2 tallCenhep L2960:4 L2961:-12 # hoons/arvo/sys/zuse.hoon L2960:23
+FIXED-2 tallKethep L3082:4 L3085:-2 # hoons/arvo/sys/zuse.hoon L3082:11
+SEQUENCE tall5dSeq 3275:14 3276:13 # hoons/arvo/sys/zuse.hoon L3275:14
+SEQUENCE tall5dSeq 3275:14 3278:13 # hoons/arvo/sys/zuse.hoon L3275:14
+SEQUENCE tall5dSeq 3275:14 3279:13 # hoons/arvo/sys/zuse.hoon L3275:14
+FIXED-1 tallKetwut L3288:-9 # hoons/arvo/sys/zuse.hoon L3287:12
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L3292:13
+FIXED-1 tallKetwut L3317:-10 # hoons/arvo/sys/zuse.hoon L3316:13
+FIXED-2 tallKettis L3324:4 L3325:-2 # hoons/arvo/sys/zuse.hoon L3324:9
+FIXED-1 tallKetwut L3373:-8 # hoons/arvo/sys/zuse.hoon L3372:13
+FIXED-3 tallWuthep L3438:6 L3440:4 L3444:0 # hoons/arvo/sys/zuse.hoon L3438:7
+FIXED-3 tallWuthep L3492:6 L3494:4 L3500:0 # hoons/arvo/sys/zuse.hoon L3492:7
+FIXED-3 tallWuthep L3511:6 L3513:4 L3517:0 # hoons/arvo/sys/zuse.hoon L3511:7
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L3562:15
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/zuse.hoon L3737:15
+FIXED-1 tallKetwut L3763:-10 # hoons/arvo/sys/zuse.hoon L3762:13
+FIXED-3 tallCencab L3816:6 L3817:4 L3823:0 # hoons/arvo/sys/zuse.hoon L3816:7
+FIXED-3 tallWuthep L3852:6 L3853:4 L3869:0 # hoons/arvo/sys/zuse.hoon L3852:5
+FIXED-3 tallCentis L3854:5 L3855:2 L3858:0 # hoons/arvo/sys/zuse.hoon L3854:7
+FIXED-3 tallWuthep L3888:4 L3889:1 L3891:-1 # hoons/arvo/sys/zuse.hoon L3888:14
+FIXED-3 tallWuthep L3892:4 L3893:1 L3895:-1 # hoons/arvo/sys/zuse.hoon L3892:14
+FIXED-1 tallKetwut L3921:-8 # hoons/arvo/sys/zuse.hoon L3920:11
+FIXED-1 tallKetwut L3927:-9 # hoons/arvo/sys/zuse.hoon L3926:14
+FIXED-2 tallKettis CAST-STYLE # hoons/arvo/sys/zuse.hoon L3950:11
+FIXED-3 tallSemsig L3965:4 L3966:3 L3971:1 # hoons/arvo/sys/zuse.hoon L3965:7
+SEQUENCE tall5dSeq 3965:7 3966:10 # hoons/arvo/sys/zuse.hoon L3965:7
+SEQUENCE tall5dSeq 3965:7 3967:10 # hoons/arvo/sys/zuse.hoon L3965:7
+SEQUENCE tall5dSeq 3965:7 3968:10 # hoons/arvo/sys/zuse.hoon L3965:7
+SEQUENCE tall5dSeq 3965:7 3969:10 # hoons/arvo/sys/zuse.hoon L3965:7
+SEQUENCE tall5dSeq 3965:7 3970:10 # hoons/arvo/sys/zuse.hoon L3965:7
+FIXED-3 tallWuthep L3981:6 L3982:4 L4015:0 # hoons/arvo/sys/zuse.hoon L3981:7
+FIXED-3 tallCentis L4166:6 L4167:2 L4176:0 # hoons/arvo/sys/zuse.hoon L4166:7
+FIXED-1 tallSiglus L4190:-8 # hoons/arvo/sys/zuse.hoon L4189:15
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/zuse.hoon L4206:9
+FIXED-3 tallSemsig L4263:4 L4264:4 L4266:0 # hoons/arvo/sys/zuse.hoon L4263:11
+SEQUENCE tall5dSeq 4263:11 4264:15 # hoons/arvo/sys/zuse.hoon L4263:11
+SEQUENCE tall5dSeq 4263:11 4265:15 # hoons/arvo/sys/zuse.hoon L4263:11
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/zuse.hoon L4374:11
+FIXED-2 LuslusCell L4538:4 L4539:4 # hoons/arvo/sys/zuse.hoon L4538:3
+FIXED-1 tallKetwut L4548:-9 # hoons/arvo/sys/zuse.hoon L4547:12
+FIXED-1 tallKetwut L4625:-9 # hoons/arvo/sys/zuse.hoon L4624:12
+FIXED-3 tallWuthep L4661:6 L4662:4 L4684:0 # hoons/arvo/sys/zuse.hoon L4661:5
+FIXED-3 tallWuthep L4670:6 L4671:4 L4683:0 # hoons/arvo/sys/zuse.hoon L4670:7
+FIXED-1 tallKetwut L4713:-9 # hoons/arvo/sys/zuse.hoon L4712:12
+FIXED-1 tallKetwut L4746:-11 # hoons/arvo/sys/zuse.hoon L4745:14
+FIXED-1 tallKetwut L4751:-10 # hoons/arvo/sys/zuse.hoon L4750:15
+FIXED-2 tallColsig L4819:4 L4823:0 # hoons/arvo/sys/zuse.hoon L4818:11
+FIXED-1 tallKetwut L4921:-9 # hoons/arvo/sys/zuse.hoon L4920:14
+FIXED-1 tallKetwut L4962:-8 # hoons/arvo/sys/zuse.hoon L4961:13
+FIXED-1 tallKetwut L5043:-10 # hoons/arvo/sys/zuse.hoon L5042:15
+FIXED-2 tallKethep BACKDENTED-2 # hoons/arvo/sys/zuse.hoon L5051:31
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/zuse.hoon L5052:19
+FIXED-2 tallBucwut L5080:4 L5088:4 # hoons/arvo/sys/zuse.hoon L5080:3
+SEQUENCE till5dSeq 5080:7 5081:3 # hoons/arvo/sys/zuse.hoon L5080:7
+=== hoons/arvo/sys/hoon.hoon ===
+FIXED-2 tallTisgar L9:-10 L12:-6 # hoons/arvo/sys/hoon.hoon L5:11
+FIXED-2 tallTisgar L13:-4 L360:0 # hoons/arvo/sys/hoon.hoon L12:5
+FIXED-2 tallWutpam L120:4 L125:8 # hoons/arvo/sys/hoon.hoon L120:3
+FIXED-2 tallWutpam L123:4 L125:-8 # hoons/arvo/sys/hoon.hoon L123:11
+FIXED-2 tallTisgar L382:-4 L1947:0 # hoons/arvo/sys/hoon.hoon L360:5
+FIXED-3 tallWutcol L486:4 L487:3 L488:0 # hoons/arvo/sys/hoon.hoon L486:3
+FIXED-2 tallTisgal L511:4 L512:-2 # hoons/arvo/sys/hoon.hoon L511:7
+FIXED-2 tallTisgal L543:4 L544:-2 # hoons/arvo/sys/hoon.hoon L543:7
+FIXED-1 tallZapdot L636:-9 # hoons/arvo/sys/hoon.hoon L635:12
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L840:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L857:9
+FIXED-2 tallBartis L878:4 L879:-7 # hoons/arvo/sys/hoon.hoon L878:10
+FIXED-1 tallBarhep L899:-18 # hoons/arvo/sys/hoon.hoon L898:23
+FIXED-2 LuslusCell BACKDENTED CAST-STYLE # hoons/arvo/sys/hoon.hoon L944:3
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L1062:7
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/hoon.hoon L1244:9
+FIXED-2 tallTisgal L1740:4 L1741:-2 # hoons/arvo/sys/hoon.hoon L1740:9
+FIXED-2 LuslusCell L1937:4 L1938:10 # hoons/arvo/sys/hoon.hoon L1937:1
+FIXED-2 tallTisgar L1959:-4 L3664:0 # hoons/arvo/sys/hoon.hoon L1947:5
+FIXED-3 tallWutcol L2056:4 L2057:2 L2062:-1 # hoons/arvo/sys/hoon.hoon L2056:12
+FIXED-2 LuslusCell L2072:4 L2075:8 # hoons/arvo/sys/hoon.hoon L2072:1
+FIXED-2 LuslusCell L2080:4 L2082:8 # hoons/arvo/sys/hoon.hoon L2080:1
+FIXED-2 LuslusCell L2087:4 L2089:8 # hoons/arvo/sys/hoon.hoon L2087:1
+FIXED-3 tallWutdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L2122:11
+FIXED-2 tallCenhep L2126:4 L2127:-26 # hoons/arvo/sys/hoon.hoon L2126:35
+FIXED-3 tallWutdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L2140:11
+FIXED-2 tallCenhep L2143:4 L2144:-26 # hoons/arvo/sys/hoon.hoon L2143:35
+FIXED-3 tallWutdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L2153:11
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2167:14
+FIXED-3 tallWutcol L2177:4 L2177:39 L2178:-2 # hoons/arvo/sys/hoon.hoon L2177:13
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2187:23
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2208:11
+FIXED-2 tallKettis L2217:4 L2218:-2 # hoons/arvo/sys/hoon.hoon L2217:15
+FIXED-3 tallCenlus L2239:4 L2240:-7 L2241:-9 # hoons/arvo/sys/hoon.hoon L2239:18
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2241:21
+FIXED-3 tallWutdot L2286:4 L2286:27 L2287:-5 # hoons/arvo/sys/hoon.hoon L2286:14
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2313:11
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2320:11
+FIXED-3 tallCentis L2325:4 L2326:0 L2331:-2 # hoons/arvo/sys/hoon.hoon L2325:11
+FIXED-2 tallKettis L2333:4 L2334:-2 # hoons/arvo/sys/hoon.hoon L2333:11
+FIXED-3 tallWutcol CAST-STYLE # hoons/arvo/sys/hoon.hoon L2506:29
+FIXED-2 tallSigfas L2689:4 L2690:-7 # hoons/arvo/sys/hoon.hoon L2689:12
+FIXED-2 tallSigfas L2694:4 L2695:-7 # hoons/arvo/sys/hoon.hoon L2694:12
+FIXED-2 tallSigfas L2699:4 L2700:-7 # hoons/arvo/sys/hoon.hoon L2699:12
+FIXED-2 tallSigfas L2704:4 L2705:-7 # hoons/arvo/sys/hoon.hoon L2704:12
+FIXED-2 tallSigfas L2709:4 L2710:-7 # hoons/arvo/sys/hoon.hoon L2709:12
+FIXED-2 tallSigfas L2714:4 L2715:-7 # hoons/arvo/sys/hoon.hoon L2714:12
+FIXED-2 tallSigfas L2718:4 L2719:-7 # hoons/arvo/sys/hoon.hoon L2718:12
+FIXED-2 tallSigfas L2723:4 L2724:-7 # hoons/arvo/sys/hoon.hoon L2723:12
+FIXED-2 tallSigfas L2728:4 L2729:-7 # hoons/arvo/sys/hoon.hoon L2728:12
+FIXED-2 tallSigfas L2733:4 L2734:-7 # hoons/arvo/sys/hoon.hoon L2733:12
+FIXED-2 tallSigfas L2738:4 L2739:-7 # hoons/arvo/sys/hoon.hoon L2738:12
+FIXED-2 tallSigfas L2767:4 L2768:-7 # hoons/arvo/sys/hoon.hoon L2767:12
+FIXED-2 tallSigfas L2772:4 L2773:-7 # hoons/arvo/sys/hoon.hoon L2772:12
+FIXED-2 tallSigfas L2777:4 L2778:-7 # hoons/arvo/sys/hoon.hoon L2777:12
+FIXED-2 tallSigfas L2782:4 L2783:-7 # hoons/arvo/sys/hoon.hoon L2782:12
+FIXED-2 tallSigfas L2787:4 L2788:-7 # hoons/arvo/sys/hoon.hoon L2787:12
+FIXED-2 tallSigfas L2792:4 L2793:-7 # hoons/arvo/sys/hoon.hoon L2792:12
+FIXED-2 tallSigfas L2797:4 L2798:-7 # hoons/arvo/sys/hoon.hoon L2797:12
+FIXED-2 tallSigfas L2802:4 L2803:-7 # hoons/arvo/sys/hoon.hoon L2802:12
+FIXED-2 tallSigfas L2807:4 L2808:-7 # hoons/arvo/sys/hoon.hoon L2807:12
+FIXED-2 tallSigfas L2812:4 L2813:-7 # hoons/arvo/sys/hoon.hoon L2812:12
+FIXED-2 tallSigfas L2817:4 L2818:-7 # hoons/arvo/sys/hoon.hoon L2817:12
+FIXED-2 tallSigfas L2846:4 L2847:-7 # hoons/arvo/sys/hoon.hoon L2846:12
+FIXED-2 tallSigfas L2851:4 L2852:-7 # hoons/arvo/sys/hoon.hoon L2851:12
+FIXED-2 tallSigfas L2856:4 L2857:-7 # hoons/arvo/sys/hoon.hoon L2856:12
+FIXED-2 tallSigfas L2861:4 L2862:-7 # hoons/arvo/sys/hoon.hoon L2861:12
+FIXED-2 tallSigfas L2866:4 L2867:-7 # hoons/arvo/sys/hoon.hoon L2866:12
+FIXED-2 tallSigfas L2871:4 L2872:-7 # hoons/arvo/sys/hoon.hoon L2871:12
+FIXED-2 tallSigfas L2876:4 L2877:-7 # hoons/arvo/sys/hoon.hoon L2876:12
+FIXED-2 tallSigfas L2881:4 L2882:-7 # hoons/arvo/sys/hoon.hoon L2881:12
+FIXED-2 tallSigfas L2886:4 L2887:-7 # hoons/arvo/sys/hoon.hoon L2886:12
+FIXED-2 tallSigfas L2891:4 L2892:-7 # hoons/arvo/sys/hoon.hoon L2891:12
+FIXED-2 tallSigfas L2896:4 L2897:-7 # hoons/arvo/sys/hoon.hoon L2896:12
+FIXED-2 tallSigfas L2925:4 L2926:-7 # hoons/arvo/sys/hoon.hoon L2925:12
+FIXED-2 tallSigfas L2930:4 L2931:-7 # hoons/arvo/sys/hoon.hoon L2930:12
+FIXED-2 tallSigfas L2935:4 L2936:-7 # hoons/arvo/sys/hoon.hoon L2935:12
+FIXED-2 tallSigfas L2940:4 L2941:-7 # hoons/arvo/sys/hoon.hoon L2940:12
+FIXED-2 tallSigfas L2945:4 L2946:-7 # hoons/arvo/sys/hoon.hoon L2945:12
+FIXED-2 tallSigfas L2950:4 L2951:-7 # hoons/arvo/sys/hoon.hoon L2950:12
+FIXED-2 tallSigfas L2955:4 L2956:-7 # hoons/arvo/sys/hoon.hoon L2955:12
+FIXED-2 tallSigfas L2960:4 L2961:-7 # hoons/arvo/sys/hoon.hoon L2960:12
+FIXED-2 tallSigfas L2965:4 L2966:-7 # hoons/arvo/sys/hoon.hoon L2965:12
+FIXED-2 tallSigfas L2970:4 L2971:-7 # hoons/arvo/sys/hoon.hoon L2970:12
+FIXED-2 tallSigfas L2975:4 L2976:-7 # hoons/arvo/sys/hoon.hoon L2975:12
+FIXED-2 tallKetlus BACKDENTED # hoons/arvo/sys/hoon.hoon L3059:7
+FIXED-2 tallKetlus BACKDENTED # hoons/arvo/sys/hoon.hoon L3082:7
+FIXED-3 tallCentis L3083:6 L3084:4 L3090:0 # hoons/arvo/sys/hoon.hoon L3083:7
+FIXED-2 tallColsig L3396:4 L3401:0 # hoons/arvo/sys/hoon.hoon L3395:12
+FIXED-2 tallKettis CAST-STYLE # hoons/arvo/sys/hoon.hoon L3590:9
+FIXED-2 tallKettis CAST-STYLE # hoons/arvo/sys/hoon.hoon L3601:9
+FIXED-2 tallTisgar L3684:-4 L6246:-4 # hoons/arvo/sys/hoon.hoon L3664:5
+FIXED-2 tallKettis CAST-STYLE # hoons/arvo/sys/hoon.hoon L3696:11
+FIXED-1 tallSiglus BACKDENTED-1 # hoons/arvo/sys/hoon.hoon L3749:20
+FIXED-3 tallCentis L4056:6 L4057:3 L4063:0 # hoons/arvo/sys/hoon.hoon L4056:10
+FIXED-4 tallWutlus L4083:4 L4084:2 L4093:2 L4096:0 # hoons/arvo/sys/hoon.hoon L4083:3
+FIXED-3 tallWuthep L4108:6 L4109:4 L4119:0 # hoons/arvo/sys/hoon.hoon L4108:5
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/hoon.hoon L4158:13
+FIXED-3 tallWuthep L4159:6 L4160:4 L4192:0 # hoons/arvo/sys/hoon.hoon L4159:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/hoon.hoon L4231:7
+FIXED-3 tallWuthep L4234:6 L4235:4 L4284:0 # hoons/arvo/sys/hoon.hoon L4234:7
+FIXED-3 tallCentis L4255:6 L4256:4 L4259:0 # hoons/arvo/sys/hoon.hoon L4255:9
+FIXED-4 tallWutlus L4322:4 L4322:11 L4323:4 L4332:0 # hoons/arvo/sys/hoon.hoon L4322:5
+FIXED-2 tallBartar L4501:4 L4502:-8 # hoons/arvo/sys/hoon.hoon L4501:11
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/hoon.hoon L4516:7
+FIXED-3 tallSemsig L4800:4 L4801:4 L4804:0 # hoons/arvo/sys/hoon.hoon L4800:10
+FIXED-3 tallWutsig CAST-STYLE # hoons/arvo/sys/hoon.hoon L4832:7
+FIXED-3 tallSemsig L4843:4 L4844:4 L4846:0 # hoons/arvo/sys/hoon.hoon L4843:10
+FIXED-3 tallSemsig L4847:4 L4848:4 L4850:0 # hoons/arvo/sys/hoon.hoon L4847:10
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/sys/hoon.hoon L4857:23
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L4973:14
+FIXED-1 tallZapdot L5015:-6 # hoons/arvo/sys/hoon.hoon L5014:9
+FIXED-4 tallWutlus L5031:6 L5031:11 L5032:4 L5134:0 # hoons/arvo/sys/hoon.hoon L5031:9
+FIXED-4 tallWutlus L5034:6 L5034:11 L5035:4 L5063:0 # hoons/arvo/sys/hoon.hoon L5034:11
+FIXED-2 tallKetlus BACKDENTED # hoons/arvo/sys/hoon.hoon L5038:17
+FIXED-3 tallCentis L5039:6 L5040:4 L5046:0 # hoons/arvo/sys/hoon.hoon L5039:17
+FIXED-1 rick5dJog LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L5091:13
+FIXED-3 tallSemcol L5093:4 L5094:2 L5098:-1 # hoons/arvo/sys/hoon.hoon L5093:15
+FIXED-3 tallCenlus L5145:4 L5145:11 L5146:-9 # hoons/arvo/sys/hoon.hoon L5145:20
+FIXED-2 tallKettis L5149:4 L5150:-2 # hoons/arvo/sys/hoon.hoon L5149:13
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L5302:15
+FIXED-2 tallKettis L5320:4 L5321:-2 # hoons/arvo/sys/hoon.hoon L5320:9
+FIXED-2 tallKettis L5324:4 L5325:-2 # hoons/arvo/sys/hoon.hoon L5324:9
+FIXED-2 tallKettis L5367:4 L5368:-2 # hoons/arvo/sys/hoon.hoon L5367:9
+FIXED-4 tallWutlus L5460:6 L5461:2 L5463:4 L5517:0 # hoons/arvo/sys/hoon.hoon L5460:3
+FIXED-2 tallBuccen L5545:4 L5549:0 # hoons/arvo/sys/hoon.hoon L5543:9
+FIXED-2 tallBuccolMold L5565:4 L5566:0 # hoons/arvo/sys/hoon.hoon L5563:9
+FIXED-2 tallBuccolMold L5589:4 L5591:0 # hoons/arvo/sys/hoon.hoon L5586:9
+FIXED-4 tallWutlus L5619:6 L5622:4 L5625:4 L5745:0 # hoons/arvo/sys/hoon.hoon L5619:5
+FIXED-2 tallBartis L5651:4 L5654:0 # hoons/arvo/sys/hoon.hoon L5649:7
+FIXED-2 tallBartis L5669:4 L5672:0 # hoons/arvo/sys/hoon.hoon L5667:7
+FIXED-2 tallBartis L5681:4 L5684:0 # hoons/arvo/sys/hoon.hoon L5679:7
+FIXED-2 tallBartis L5693:4 L5696:0 # hoons/arvo/sys/hoon.hoon L5691:7
+FIXED-2 tallBuccolMold L5753:4 L5755:0 # hoons/arvo/sys/hoon.hoon L5750:9
+FIXED-2 tallBuccolMold L5779:4 L5781:0 # hoons/arvo/sys/hoon.hoon L5776:9
+FIXED-3 tallWuthep L5790:4 L5793:2 L5811:6 # hoons/arvo/sys/hoon.hoon L5790:5
+FIXED-1 ruck5dJog L5795:4 # hoons/arvo/sys/hoon.hoon L5793:7
+FIXED-1 ruck5dJog L5806:4 # hoons/arvo/sys/hoon.hoon L5804:7
+FIXED-3 tallCentis L5806:4 L5807:2 L5811:-6 # hoons/arvo/sys/hoon.hoon L5806:11
+FIXED-4 tallWutlus L5861:6 L5861:17 L5862:4 L5875:11 # hoons/arvo/sys/hoon.hoon L5861:3
+FIXED-2 tallColsig L5872:4 L5875:-11 # hoons/arvo/sys/hoon.hoon L5872:14
+FIXED-2 LuslusCell L5958:4 L5959:10 # hoons/arvo/sys/hoon.hoon L5958:1
+FIXED-2 LuslusCell L5967:4 L5968:10 # hoons/arvo/sys/hoon.hoon L5967:1
+FIXED-2 LuslusCell L5971:4 L5972:10 # hoons/arvo/sys/hoon.hoon L5971:1
+FIXED-2 LuslusCell L5988:4 L5989:10 # hoons/arvo/sys/hoon.hoon L5988:1
+FIXED-2 LuslusCell L6000:4 L6001:10 # hoons/arvo/sys/hoon.hoon L6000:1
+FIXED-2 LuslusCell L6018:4 L6019:4 # hoons/arvo/sys/hoon.hoon L6018:7
+FIXED-2 LuslusCell L6191:4 L6192:10 # hoons/arvo/sys/hoon.hoon L6191:1
+FIXED-2 LuslusCell L6196:4 L6197:10 # hoons/arvo/sys/hoon.hoon L6196:1
+FIXED-2 LuslusCell L6202:4 L6203:10 # hoons/arvo/sys/hoon.hoon L6202:1
+FIXED-2 LuslusCell L6213:4 L6214:10 # hoons/arvo/sys/hoon.hoon L6213:1
+FIXED-2 LuslusCell L6226:4 L6227:10 # hoons/arvo/sys/hoon.hoon L6226:1
+FIXED-3 tallCentis L6295:6 L6296:4 L6301:0 # hoons/arvo/sys/hoon.hoon L6295:3
+FIXED-3 tallWuthep L6305:6 L6306:4 L6309:0 # hoons/arvo/sys/hoon.hoon L6305:3
+FIXED-3 tallWuthep L6377:6 L6378:4 L6386:0 # hoons/arvo/sys/hoon.hoon L6377:3
+FIXED-3 tallWuthep L6381:6 L6382:4 L6385:0 # hoons/arvo/sys/hoon.hoon L6381:5
+FIXED-3 tallWuthep L6397:4 L6398:4 L6406:0 # hoons/arvo/sys/hoon.hoon L6397:3
+FIXED-3 tallWuthep L6401:4 L6402:4 L6405:0 # hoons/arvo/sys/hoon.hoon L6401:5
+FIXED-3 tallWuthep L6432:6 L6433:4 L6443:0 # hoons/arvo/sys/hoon.hoon L6432:3
+FIXED-3 tallWuthep L6450:4 L6451:4 L6476:0 # hoons/arvo/sys/hoon.hoon L6450:3
+FIXED-3 tallWuthep L6483:4 L6484:4 L6509:0 # hoons/arvo/sys/hoon.hoon L6483:3
+FIXED-3 tallWuthep L6578:6 L6579:4 L6617:0 # hoons/arvo/sys/hoon.hoon L6578:5
+FIXED-3 tallWuthep L6629:6 L6631:4 L6658:0 # hoons/arvo/sys/hoon.hoon L6629:5
+FIXED-3 tallWuthep L6674:6 L6675:4 L6698:0 # hoons/arvo/sys/hoon.hoon L6674:5
+FIXED-2 tallBuccolMold L6718:4 L6720:0 # hoons/arvo/sys/hoon.hoon L6715:9
+FIXED-3 tallWuthep L6726:6 L6727:4 L6762:0 # hoons/arvo/sys/hoon.hoon L6726:7
+FIXED-2 tallBuccolMold L6781:4 L6783:0 # hoons/arvo/sys/hoon.hoon L6778:11
+FIXED-2 tallBuccolMold L6819:4 L6821:0 # hoons/arvo/sys/hoon.hoon L6816:11
+FIXED-3 tallWuthep L6898:6 L6902:4 L6990:0 # hoons/arvo/sys/hoon.hoon L6898:7
+FIXED-3 tallWuthep L7017:6 L7018:4 L7091:0 # hoons/arvo/sys/hoon.hoon L7017:5
+FIXED-2 tallKethep L7063:4 L7064:-6 # hoons/arvo/sys/hoon.hoon L7063:13
+FIXED-3 tallWutsig LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L7064:7
+FIXED-3 tallCentis L7067:6 L7068:4 L7071:0 # hoons/arvo/sys/hoon.hoon L7067:7
+FIXED-3 tallWuthep L7118:6 L7119:4 L7235:0 # hoons/arvo/sys/hoon.hoon L7118:5
+FIXED-3 tallWuthep L7129:6 L7130:4 L7158:0 # hoons/arvo/sys/hoon.hoon L7129:7
+FIXED-2 tallTisgar BACKDENTED-2 # hoons/arvo/sys/hoon.hoon L7206:32
+FIXED-4 tallWutlus L7489:4 L7489:15 L7490:4 L7525:0 # hoons/arvo/sys/hoon.hoon L7489:5
+FIXED-3 tallWuthep L7529:6 L7530:4 L7884:0 # hoons/arvo/sys/hoon.hoon L7529:5
+FIXED-3 tallCollus L7607:4 L7608:3 L7612:0 # hoons/arvo/sys/hoon.hoon L7607:20
+FIXED-3 tallWuthep L7736:6 L7737:4 L7749:0 # hoons/arvo/sys/hoon.hoon L7736:7
+FIXED-3 tallWuthep L7754:4 L7755:4 L7775:0 # hoons/arvo/sys/hoon.hoon L7754:7
+FIXED-3 tallCollus L7785:4 L7786:0 L7787:0 # hoons/arvo/sys/hoon.hoon L7785:9
+FIXED-3 tallCollus L7815:4 L7816:3 L7818:0 # hoons/arvo/sys/hoon.hoon L7815:22
+FIXED-2 tallBuchepMold BACKDENTED CAST-STYLE # hoons/arvo/sys/hoon.hoon L7907:13
+FIXED-3 tallWuthep L8238:6 L8239:4 L8251:0 # hoons/arvo/sys/hoon.hoon L8238:5
+FIXED-3 tallCenlus L8240:4 L8240:10 L8241:-2 # hoons/arvo/sys/hoon.hoon L8240:21
+FIXED-3 tallWuthep L8312:6 L8313:4 L8336:0 # hoons/arvo/sys/hoon.hoon L8312:7
+FIXED-1 wisp5d L8570:14 # hoons/arvo/sys/hoon.hoon L8462:5
+FIXED-1 wisp5d BACKDENTED # hoons/arvo/sys/hoon.hoon L8483:11
+FIXED-2 LushepCell CAST-STYLE # hoons/arvo/sys/hoon.hoon L8483:11
+FIXED-1 wisp5d L8536:8 # hoons/arvo/sys/hoon.hoon L8496:7
+FIXED-1 wisp5d L8509:4 # hoons/arvo/sys/hoon.hoon L8499:9
+FIXED-1 wisp5d L8509:-6 # hoons/arvo/sys/hoon.hoon L8506:15
+FIXED-1 wisp5d LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L8514:9
+FIXED-1 wisp5d L8536:-8 # hoons/arvo/sys/hoon.hoon L8527:15
+FIXED-1 wisp5d L8570:4 # hoons/arvo/sys/hoon.hoon L8540:11
+FIXED-2 LushepCell CAST-STYLE # hoons/arvo/sys/hoon.hoon L8540:11
+FIXED-1 wisp5d L8570:4 # hoons/arvo/sys/hoon.hoon L8543:7
+FIXED-1 tallBarcen L8545:-6 # hoons/arvo/sys/hoon.hoon L8544:19
+FIXED-1 wisp5d L8548:-4 # hoons/arvo/sys/hoon.hoon L8545:13
+FIXED-1 tallBarcen L8551:-6 # hoons/arvo/sys/hoon.hoon L8550:19
+FIXED-1 wisp5d L8554:-4 # hoons/arvo/sys/hoon.hoon L8551:13
+FIXED-1 wisp5d L8570:-6 # hoons/arvo/sys/hoon.hoon L8559:13
+FIXED-2 LushepCell CAST-STYLE # hoons/arvo/sys/hoon.hoon L8559:13
+FIXED-1 wisp5d BACKDENTED # hoons/arvo/sys/hoon.hoon L8574:9
+FIXED-2 LushepCell CAST-STYLE # hoons/arvo/sys/hoon.hoon L8574:9
+FIXED-2 LuslusCell L8661:4 L8662:10 # hoons/arvo/sys/hoon.hoon L8661:9
+FIXED-3 tallWuthep L8673:6 L8674:4 L8810:0 # hoons/arvo/sys/hoon.hoon L8673:5
+FIXED-3 tallWuthep L8675:6 L8676:4 L8680:0 # hoons/arvo/sys/hoon.hoon L8675:7
+FIXED-2 tallColcab BACKDENTED # hoons/arvo/sys/hoon.hoon L8684:11
+FIXED-3 tallWuthep L8728:6 L8729:4 L8808:0 # hoons/arvo/sys/hoon.hoon L8728:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/hoon.hoon L8789:21
+FIXED-3 tallWuthep L8818:6 L8819:2 L8823:6 # hoons/arvo/sys/hoon.hoon L8818:9
+FIXED-3 tallWuthep L8820:4 L8821:2 L8823:-6 # hoons/arvo/sys/hoon.hoon L8820:15
+FIXED-3 tallWuthep L8839:4 L8840:2 L8845:6 # hoons/arvo/sys/hoon.hoon L8839:5
+FIXED-3 tallWuthep L8842:4 L8843:2 L8845:-6 # hoons/arvo/sys/hoon.hoon L8842:11
+FIXED-3 tallWuthep L8880:4 L8881:4 L8902:0 # hoons/arvo/sys/hoon.hoon L8880:5
+FIXED-3 tallWuthep L8911:6 L8912:4 L8942:0 # hoons/arvo/sys/hoon.hoon L8911:5
+FIXED-3 tallWuthep L8913:6 L8914:4 L8924:0 # hoons/arvo/sys/hoon.hoon L8913:7
+FIXED-3 tallWuthep L9006:6 L9008:4 L9141:0 # hoons/arvo/sys/hoon.hoon L9006:5
+FIXED-3 tallWuthep L9064:6 L9065:4 L9067:0 # hoons/arvo/sys/hoon.hoon L9064:9
+FIXED-3 tallCentis L9127:6 L9128:4 L9131:0 # hoons/arvo/sys/hoon.hoon L9127:7
+FIXED-3 tallWuthep L9180:6 L9182:4 L9298:0 # hoons/arvo/sys/hoon.hoon L9180:5
+FIXED-2 tallBuccolMold L9358:4 L9359:0 # hoons/arvo/sys/hoon.hoon L9356:9
+FIXED-3 tallWuthep L9371:4 L9372:2 L9387:13 # hoons/arvo/sys/hoon.hoon L9371:7
+FIXED-3 tallWutcol L9382:4 L9383:3 L9384:0 # hoons/arvo/sys/hoon.hoon L9382:20
+FIXED-3 tallCentis L9384:4 L9385:2 L9387:-13 # hoons/arvo/sys/hoon.hoon L9384:20
+FIXED-4 tallWutlus L9389:4 L9389:13 L9390:2 L9398:13 # hoons/arvo/sys/hoon.hoon L9389:7
+FIXED-2 tallWutbar L9396:4 L9398:-13 # hoons/arvo/sys/hoon.hoon L9396:20
+FIXED-2 tallWutpam L9426:4 L9443:20 # hoons/arvo/sys/hoon.hoon L9426:7
+FIXED-2 tallWutpam L9434:4 L9443:12 # hoons/arvo/sys/hoon.hoon L9434:11
+FIXED-2 tallWutpam L9439:4 L9443:-12 # hoons/arvo/sys/hoon.hoon L9439:23
+FIXED-3 tallCentis L9440:4 L9441:2 L9443:-20 # hoons/arvo/sys/hoon.hoon L9440:27
+FIXED-3 tallWuthep L9453:4 L9454:2 L9487:13 # hoons/arvo/sys/hoon.hoon L9453:7
+FIXED-2 tallWutbar L9469:4 L9475:4 # hoons/arvo/sys/hoon.hoon L9469:24
+FIXED-3 tallCentis L9471:4 L9472:2 L9475:-4 # hoons/arvo/sys/hoon.hoon L9471:28
+FIXED-3 tallCentis L9483:4 L9484:2 L9487:-13 # hoons/arvo/sys/hoon.hoon L9483:20
+FIXED-3 tallWuthep L9492:4 L9493:2 L9507:14 # hoons/arvo/sys/hoon.hoon L9492:7
+FIXED-3 tallCentis L9503:4 L9504:2 L9507:-14 # hoons/arvo/sys/hoon.hoon L9503:21
+FIXED-3 tallWuthep L9519:6 L9520:4 L9543:0 # hoons/arvo/sys/hoon.hoon L9519:5
+FIXED-3 tallCentis L9525:6 L9526:4 L9532:0 # hoons/arvo/sys/hoon.hoon L9525:7
+FIXED-2 tallTislus L9592:4 L9593:-2 # hoons/arvo/sys/hoon.hoon L9592:20
+FIXED-3 tallCentis L9600:6 L9601:4 L9603:0 # hoons/arvo/sys/hoon.hoon L9600:18
+FIXED-2 tallBuccolMold L9618:4 L9619:0 # hoons/arvo/sys/hoon.hoon L9616:9
+FIXED-2 tallTisgal L9632:4 L9636:0 # hoons/arvo/sys/hoon.hoon L9630:5
+FIXED-3 tallWuthep L9700:6 L9701:4 L9760:0 # hoons/arvo/sys/hoon.hoon L9700:7
+FIXED-3 tallCentis L9713:6 L9714:4 L9725:0 # hoons/arvo/sys/hoon.hoon L9713:9
+FIXED-2 tallBuccolMold L9785:4 L9786:0 # hoons/arvo/sys/hoon.hoon L9783:11
+FIXED-4 tallWutlus L9794:6 L9794:11 L9795:4 L9828:0 # hoons/arvo/sys/hoon.hoon L9794:7
+FIXED-2 tallTishep L9810:4 L9811:0 # hoons/arvo/sys/hoon.hoon L9807:9
+FIXED-3 tallWutcol L9877:4 L9878:2 L9879:1 # hoons/arvo/sys/hoon.hoon L9877:18
+FIXED-2 LuslusCell L9933:4 L9934:10 # hoons/arvo/sys/hoon.hoon L9933:7
+FIXED-3 tallWuthep L9987:6 L9988:4 L10042:0 # hoons/arvo/sys/hoon.hoon L9987:7
+FIXED-3 tallWuthep L10053:6 L10054:4 L10229:0 # hoons/arvo/sys/hoon.hoon L10053:5
+FIXED-3 tallCentis L10055:6 L10056:4 L10062:0 # hoons/arvo/sys/hoon.hoon L10055:7
+FIXED-2 tallWuttis LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L10242:15
+FIXED-2 tallWuttis L10266:4 L10271:4 # hoons/arvo/sys/hoon.hoon L10266:13
+FIXED-3 tallWuthep L10297:6 L10298:4 L10361:0 # hoons/arvo/sys/hoon.hoon L10297:5
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/hoon.hoon L10403:11
+FIXED-4 tallWutlus L10422:4 L10422:9 L10423:4 L10431:0 # hoons/arvo/sys/hoon.hoon L10422:3
+FIXED-4 tallWutlus L10436:6 L10436:11 L10437:4 L10445:0 # hoons/arvo/sys/hoon.hoon L10436:3
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L10440:5
+FIXED-2 tallBartis L10441:4 L10442:-2 # hoons/arvo/sys/hoon.hoon L10441:7
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/hoon.hoon L10442:5
+FIXED-2 tallBartis L10443:4 L10444:-2 # hoons/arvo/sys/hoon.hoon L10443:7
+FIXED-2 tallBuccolMold L10993:4 L10997:4 # hoons/arvo/sys/hoon.hoon L10993:15
+FIXED-2 tallBucwutMold L10994:4 L10997:4 # hoons/arvo/sys/hoon.hoon L10994:11
+SEQUENCE till5dSeq 10994:15 10995:19 # hoons/arvo/sys/hoon.hoon L10994:15
+SEQUENCE till5dSeq 10994:15 10996:19 # hoons/arvo/sys/hoon.hoon L10994:15
+SEQUENCE till5dSeq 10993:19 10994:11 # hoons/arvo/sys/hoon.hoon L10993:19
+FIXED-2 tallBuccolMold L10998:4 L11002:4 # hoons/arvo/sys/hoon.hoon L10998:15
+SEQUENCE till5dSeq 10998:19 10999:15 # hoons/arvo/sys/hoon.hoon L10998:19
+FIXED-2 tallKetlus L11108:4 L11109:-14 # hoons/arvo/sys/hoon.hoon L11108:23
+FIXED-2 tallKethep L11135:4 L11136:-2 # hoons/arvo/sys/hoon.hoon L11135:13
+FIXED-2 tallKetlus L11203:4 L11206:-8 # hoons/arvo/sys/hoon.hoon L11203:17
+FIXED-2 tallWutbar L11230:4 L11233:4 # hoons/arvo/sys/hoon.hoon L11230:13
+FIXED-2 tallWutpam L11231:4 L11233:-4 # hoons/arvo/sys/hoon.hoon L11231:17
+FIXED-3 tallWuthep L11259:6 L11260:4 L11263:0 # hoons/arvo/sys/hoon.hoon L11259:11
+FIXED-3 tallWuthep L11270:4 L11273:2 L11283:-2 # hoons/arvo/sys/hoon.hoon L11270:13
+FIXED-2 tallKetlus L11318:4 L11319:-8 # hoons/arvo/sys/hoon.hoon L11318:19
+FIXED-2 tallBuccolMold L11392:4 L11394:0 # hoons/arvo/sys/hoon.hoon L11389:13
+FIXED-1 ruck5dJog L11570:7 # hoons/arvo/sys/hoon.hoon L11568:13
+FIXED-3 tallCentis L11570:6 L11571:4 L11575:0 # hoons/arvo/sys/hoon.hoon L11570:20
+FIXED-3 tallWuthep L11646:6 L11647:4 L11651:0 # hoons/arvo/sys/hoon.hoon L11646:11
+FIXED-2 LuslusCell L11664:4 L11665:4 # hoons/arvo/sys/hoon.hoon L11664:3
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11682:15
+FIXED-1 tallZapcol L11752:-8 # hoons/arvo/sys/hoon.hoon L11751:13
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11754:15
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/sys/hoon.hoon L11933:16
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11948:21
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11952:29
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11967:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11976:19
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11980:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L11996:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12011:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12026:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12038:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12049:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12064:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12082:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12092:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12112:27
+FIXED-2 tallKetdot CAST-STYLE # hoons/arvo/sys/hoon.hoon L12131:27
+FIXED-3 tallCenlus L12162:4 L12163:4 L12164:0 # hoons/arvo/sys/hoon.hoon L12162:11
+FIXED-3 tallCenlus L12171:4 L12172:4 L12173:0 # hoons/arvo/sys/hoon.hoon L12171:11
+FIXED-3 tallSemsig L12271:4 L12272:3 L12280:0 # hoons/arvo/sys/hoon.hoon L12271:19
+FIXED-3 tallWutcol L12330:4 L12331:3 L12332:0 # hoons/arvo/sys/hoon.hoon L12330:23
+FIXED-1 tallBardot L12380:-8 # hoons/arvo/sys/hoon.hoon L12379:15
+FIXED-1 tallBardot L12385:-8 # hoons/arvo/sys/hoon.hoon L12384:15
+FIXED-1 tallBardot L12399:-6 # hoons/arvo/sys/hoon.hoon L12398:15
+FIXED-1 tallZapcol L12589:-6 # hoons/arvo/sys/hoon.hoon L12588:9
+FIXED-3 tallWuthep L12619:4 L12620:3 L12622:0 # hoons/arvo/sys/hoon.hoon L12619:7
+FIXED-2 tallKethep L12685:4 L12686:-11 # hoons/arvo/sys/hoon.hoon L12685:18
+FIXED-2 LuslusCell L12712:4 L12713:9 # hoons/arvo/sys/hoon.hoon L12712:1
+FIXED-2 LuslusCell L12720:4 L12721:10 # hoons/arvo/sys/hoon.hoon L12720:1
+FIXED-2 LuslusCell L12777:4 L12778:10 # hoons/arvo/sys/hoon.hoon L12777:1
+FIXED-2 LuslusCell L12783:4 L12784:10 # hoons/arvo/sys/hoon.hoon L12783:1
+FIXED-2 LuslusCell L12814:4 L12815:4 # hoons/arvo/sys/hoon.hoon L12814:1
+FIXED-3 tallCentis L12825:6 L12826:4 L12840:0 # hoons/arvo/sys/hoon.hoon L12825:3
+=== hoons/arvo/sys/arvo.hoon ===
+FIXED-2 tallTisgar L10:0 L452:0 # hoons/arvo/sys/arvo.hoon L9:1
+FIXED-2 LuslusCell L17:4 L18:10 # hoons/arvo/sys/arvo.hoon L17:1
+FIXED-2 LuslusCell L25:4 L26:10 # hoons/arvo/sys/arvo.hoon L25:1
+FIXED-2 LuslusCell L69:4 L70:10 # hoons/arvo/sys/arvo.hoon L69:1
+FIXED-2 LuslusCell L75:4 L76:10 # hoons/arvo/sys/arvo.hoon L75:1
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/arvo.hoon L117:24
+FIXED-2 tallKettis L154:4 L155:-2 # hoons/arvo/sys/arvo.hoon L154:11
+FIXED-4 tallWutlus L218:6 L218:14 L220:4 L248:0 # hoons/arvo/sys/arvo.hoon L218:9
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/arvo.hoon L327:22
+FIXED-3 tallWuthep L420:6 L421:4 L441:0 # hoons/arvo/sys/arvo.hoon L420:5
+FIXED-3 tallCentis L495:6 L496:4 L505:0 # hoons/arvo/sys/arvo.hoon L495:17
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/arvo.hoon L557:22
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/arvo.hoon L576:22
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/arvo.hoon L594:22
+FIXED-3 tallCencab L600:6 L601:4 L615:0 # hoons/arvo/sys/arvo.hoon L600:3
+FIXED-3 tallWutdot LUSLUS-STYLE # hoons/arvo/sys/arvo.hoon L609:5
+FIXED-2 tallSigpam L611:4 L612:-2 # hoons/arvo/sys/arvo.hoon L611:7
+FIXED-2 LuslusCell L617:4 L618:1 # hoons/arvo/sys/arvo.hoon L617:1
+FIXED-2 tallBartis L618:4 L619:1 # hoons/arvo/sys/arvo.hoon L618:2
+=== hoons/arvo/sys/vane/behn.hoon ===
+FIXED-3 tallTissig L7:-4 L25:-4 L145:-1 # hoons/arvo/sys/vane/behn.hoon L6:5
+FIXED-2 tallWutgar LUSLUS-STYLE # hoons/arvo/sys/vane/behn.hoon L45:9
+FIXED-3 tallCentis L157:6 L158:4 L166:0 # hoons/arvo/sys/vane/behn.hoon L157:7
+FIXED-3 tallWuthep L168:6 L169:4 L197:0 # hoons/arvo/sys/vane/behn.hoon L168:5
+=== hoons/arvo/sys/vane/dill.hoon ===
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/dill.hoon L6:5
+FIXED-2 tallTisgar L9:4 L32:4 # hoons/arvo/sys/vane/dill.hoon L9:1
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/dill.hoon L9:5
+FIXED-2 tallTisgar L33:-4 L95:-4 # hoons/arvo/sys/vane/dill.hoon L32:5
+FIXED-2 tallBucwut L62:4 L67:4 # hoons/arvo/sys/vane/dill.hoon L62:3
+SEQUENCE till5dSeq 62:7 63:3 # hoons/arvo/sys/vane/dill.hoon L62:7
+FIXED-2 tallBucwut L87:4 L92:4 # hoons/arvo/sys/vane/dill.hoon L87:3
+SEQUENCE till5dSeq 87:7 88:3 # hoons/arvo/sys/vane/dill.hoon L87:7
+FIXED-1 ruck5dJog L116:7 # hoons/arvo/sys/vane/dill.hoon L115:11
+FIXED-3 tallCentis L133:6 L134:4 L136:0 # hoons/arvo/sys/vane/dill.hoon L133:18
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/sys/vane/dill.hoon L198:21
+FIXED-3 tallSemcol L201:4 L202:4 L210:0 # hoons/arvo/sys/vane/dill.hoon L201:11
+FIXED-3 tallCencab L254:6 L255:4 L264:0 # hoons/arvo/sys/vane/dill.hoon L254:9
+FIXED-3 tallCencab L289:6 L290:4 L299:0 # hoons/arvo/sys/vane/dill.hoon L289:9
+FIXED-3 tallCencab L305:6 L306:4 L309:0 # hoons/arvo/sys/vane/dill.hoon L305:9
+FIXED-3 tallCencab L311:6 L312:4 L314:0 # hoons/arvo/sys/vane/dill.hoon L311:9
+FIXED-3 tallCencab L318:6 L319:4 L324:0 # hoons/arvo/sys/vane/dill.hoon L318:9
+FIXED-3 tallCencab L328:6 L329:4 L334:0 # hoons/arvo/sys/vane/dill.hoon L328:9
+FIXED-3 tallCencab L338:6 L339:4 L344:0 # hoons/arvo/sys/vane/dill.hoon L338:9
+FIXED-3 tallCencab L347:6 L348:4 L353:0 # hoons/arvo/sys/vane/dill.hoon L347:9
+FIXED-3 tallCencab L356:6 L357:4 L359:0 # hoons/arvo/sys/vane/dill.hoon L356:9
+FIXED-3 tallWuthep L364:6 L365:4 L413:0 # hoons/arvo/sys/vane/dill.hoon L364:9
+FIXED-3 tallCentis L472:6 L473:4 L481:0 # hoons/arvo/sys/vane/dill.hoon L472:7
+=== hoons/arvo/sys/vane/ford.hoon ===
+FIXED-3 tallTissig L10:-4 L34:-4 L1882:-1 # hoons/arvo/sys/vane/ford.hoon L8:5
+FIXED-2 LuslusCell L13:4 L14:10 # hoons/arvo/sys/vane/ford.hoon L13:1
+FIXED-2 tallBuccen L14:4 L22:8 # hoons/arvo/sys/vane/ford.hoon L14:11
+SEQUENCE till5dSeq 14:19 15:11 # hoons/arvo/sys/vane/ford.hoon L14:19
+SEQUENCE till5dSeq 17:19 18:11 # hoons/arvo/sys/vane/ford.hoon L17:19
+SEQUENCE till5dSeq 20:19 21:11 # hoons/arvo/sys/vane/ford.hoon L20:19
+FIXED-2 LuslusCell L23:4 L24:10 # hoons/arvo/sys/vane/ford.hoon L23:1
+FIXED-2 tallBuccen L24:4 L32:8 # hoons/arvo/sys/vane/ford.hoon L24:11
+SEQUENCE till5dSeq 24:19 25:11 # hoons/arvo/sys/vane/ford.hoon L24:19
+SEQUENCE till5dSeq 27:19 28:11 # hoons/arvo/sys/vane/ford.hoon L27:19
+SEQUENCE till5dSeq 30:19 31:11 # hoons/arvo/sys/vane/ford.hoon L30:19
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/sys/vane/ford.hoon L54:5
+SEQUENCE till5dSeq 53:7 54:5 # hoons/arvo/sys/vane/ford.hoon L53:7
+FIXED-3 tallCencab L200:6 L201:4 L207:0 # hoons/arvo/sys/vane/ford.hoon L200:5
+FIXED-3 tallCencab L336:6 L337:4 L356:0 # hoons/arvo/sys/vane/ford.hoon L336:7
+FIXED-4 tallWutlus L341:6 L341:11 L342:4 L355:0 # hoons/arvo/sys/vane/ford.hoon L341:9
+FIXED-3 tallTisfas L343:4 L344:4 L349:0 # hoons/arvo/sys/vane/ford.hoon L343:11
+FIXED-3 tallWuthep L361:6 L362:4 L370:0 # hoons/arvo/sys/vane/ford.hoon L361:7
+FIXED-3 tallWuthep L424:6 L425:4 L444:0 # hoons/arvo/sys/vane/ford.hoon L424:7
+FIXED-3 tallWuthep L432:6 L433:4 L443:0 # hoons/arvo/sys/vane/ford.hoon L432:9
+FIXED-1 tallZapdot L447:-8 # hoons/arvo/sys/vane/ford.hoon L446:15
+FIXED-3 tallWuthep L475:4 L476:2 L485:6 # hoons/arvo/sys/vane/ford.hoon L475:7
+FIXED-3 tallWuthep L481:4 L482:2 L485:-6 # hoons/arvo/sys/vane/ford.hoon L481:13
+FIXED-3 tallWuthep L489:4 L490:2 L500:6 # hoons/arvo/sys/vane/ford.hoon L489:7
+FIXED-3 tallWuthep L495:4 L496:2 L500:-6 # hoons/arvo/sys/vane/ford.hoon L495:13
+FIXED-1 ruck5dJog L511:4 # hoons/arvo/sys/vane/ford.hoon L510:9
+FIXED-3 tallWuthep L663:4 L664:2 L673:6 # hoons/arvo/sys/vane/ford.hoon L663:7
+FIXED-3 tallCentis L670:4 L671:2 L673:-6 # hoons/arvo/sys/vane/ford.hoon L670:13
+FIXED-2 tallColcab L931:4 L932:-17 # hoons/arvo/sys/vane/ford.hoon L931:30
+FIXED-2 tallColcab L974:4 L975:-17 # hoons/arvo/sys/vane/ford.hoon L974:30
+FIXED-2 tallTislus L1210:4 L1215:0 # hoons/arvo/sys/vane/ford.hoon L1209:7
+FIXED-4 tallSigcen LUSLUS-STYLE # hoons/arvo/sys/vane/ford.hoon L1245:9
+FIXED-2 tallBartis L1246:4 L1247:-2 # hoons/arvo/sys/vane/ford.hoon L1246:11
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/sys/vane/ford.hoon L1247:9
+FIXED-3 tallWuthep L1326:6 L1327:4 L1488:0 # hoons/arvo/sys/vane/ford.hoon L1326:7
+FIXED-3 tallWuthep L1598:6 L1599:4 L1707:0 # hoons/arvo/sys/vane/ford.hoon L1598:9
+FIXED-1 ruck5dJog BACKDENTED CAST-STYLE # hoons/arvo/sys/vane/ford.hoon L1704:13
+FIXED-3 tallTisdot L1728:4 L1729:4 L1736:0 # hoons/arvo/sys/vane/ford.hoon L1728:9
+FIXED-3 tallCenlus L1732:4 L1733:3 L1734:0 # hoons/arvo/sys/vane/ford.hoon L1732:20
+FIXED-3 tallTisdot L1764:4 L1765:4 L1771:0 # hoons/arvo/sys/vane/ford.hoon L1764:9
+FIXED-3 tallWuthep L1776:6 L1777:4 L1811:0 # hoons/arvo/sys/vane/ford.hoon L1776:9
+FIXED-3 tallCentis L1797:6 L1798:4 L1801:0 # hoons/arvo/sys/vane/ford.hoon L1797:15
+FIXED-2 tallBartis CAST-STYLE # hoons/arvo/sys/vane/ford.hoon L1864:21
+FIXED-2 tallCenhep L1910:4 L1911:-2 # hoons/arvo/sys/vane/ford.hoon L1910:11
+FIXED-3 tallWuthep L1928:6 L1929:4 L1936:0 # hoons/arvo/sys/vane/ford.hoon L1928:5
+FIXED-3 tallWutsig L1957:4 L1958:1 L1960:0 # hoons/arvo/sys/vane/ford.hoon L1957:3
+=== hoons/arvo/sys/vane/ames.hoon ===
+FIXED-3 tallTissig L6:-6 L14:-4 L1512:-1 # hoons/arvo/sys/vane/ames.hoon L4:7
+FIXED-1 tallZapcol L72:-8 # hoons/arvo/sys/vane/ames.hoon L71:13
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/sys/vane/ames.hoon L85:17
+FIXED-3 tallCentis L488:6 L489:4 L492:0 # hoons/arvo/sys/vane/ames.hoon L488:13
+FIXED-3 tallCentis L509:6 L510:4 L521:0 # hoons/arvo/sys/vane/ames.hoon L509:11
+FIXED-2 tallColhep LUSLUS-STYLE # hoons/arvo/sys/vane/ames.hoon L625:13
+FIXED-1 tallZapcol L689:-6 # hoons/arvo/sys/vane/ames.hoon L688:13
+FIXED-3 tallCencab L696:6 L697:4 L710:0 # hoons/arvo/sys/vane/ames.hoon L696:7
+FIXED-3 tallCencab L738:6 L739:4 L751:0 # hoons/arvo/sys/vane/ames.hoon L738:7
+FIXED-4 tallTisket L819:4 L819:9 L820:4 L823:0 # hoons/arvo/sys/vane/ames.hoon L819:7
+FIXED-3 tallCencab L865:6 L866:2 L872:0 # hoons/arvo/sys/vane/ames.hoon L865:9
+FIXED-3 tallCentis L945:6 L946:4 L956:0 # hoons/arvo/sys/vane/ames.hoon L945:7
+FIXED-3 tallCentis L952:6 L953:4 L955:0 # hoons/arvo/sys/vane/ames.hoon L952:9
+FIXED-3 tallCencab L965:6 L966:4 L973:0 # hoons/arvo/sys/vane/ames.hoon L965:7
+FIXED-1 tallZapcol L976:-8 # hoons/arvo/sys/vane/ames.hoon L975:15
+FIXED-3 tallCencab L1085:6 L1086:4 L1090:0 # hoons/arvo/sys/vane/ames.hoon L1085:11
+FIXED-3 tallCentis L1121:6 L1122:4 L1128:0 # hoons/arvo/sys/vane/ames.hoon L1121:13
+FIXED-3 tallCentis L1133:6 L1134:4 L1141:0 # hoons/arvo/sys/vane/ames.hoon L1133:11
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/ames.hoon L1153:15
+FIXED-3 tallCencab L1172:6 L1173:4 L1175:0 # hoons/arvo/sys/vane/ames.hoon L1172:11
+FIXED-3 tallWuthep L1202:6 L1203:4 L1240:0 # hoons/arvo/sys/vane/ames.hoon L1202:15
+FIXED-3 tallCentis L1271:6 L1272:4 L1295:0 # hoons/arvo/sys/vane/ames.hoon L1271:13
+FIXED-2 tallKethep L1278:4 L1279:-7 # hoons/arvo/sys/vane/ames.hoon L1278:26
+FIXED-3 tallWuthep L1300:6 L1301:4 L1346:0 # hoons/arvo/sys/vane/ames.hoon L1300:13
+FIXED-4 tallTisket L1313:4 L1313:9 L1314:4 L1318:0 # hoons/arvo/sys/vane/ames.hoon L1313:15
+FIXED-3 tallCentis L1323:4 L1324:-6 L1326:-8 # hoons/arvo/sys/vane/ames.hoon L1323:27
+FIXED-3 tallTisdot L1386:4 L1387:4 L1389:0 # hoons/arvo/sys/vane/ames.hoon L1386:11
+FIXED-3 tallCentis L1401:6 L1402:4 L1405:0 # hoons/arvo/sys/vane/ames.hoon L1401:13
+FIXED-3 tallTisdot L1424:4 L1425:4 L1427:0 # hoons/arvo/sys/vane/ames.hoon L1424:11
+FIXED-2 tallColsig BACKDENTED # hoons/arvo/sys/vane/ames.hoon L1432:15
+FIXED-3 tallCentis L1526:6 L1527:4 L1534:0 # hoons/arvo/sys/vane/ames.hoon L1526:11
+FIXED-4 tallWutlus L1568:6 L1568:11 L1569:4 L1575:0 # hoons/arvo/sys/vane/ames.hoon L1568:7
+FIXED-3 tallWuthep L1590:6 L1591:4 L1633:0 # hoons/arvo/sys/vane/ames.hoon L1590:5
+FIXED-3 tallWuthep L1638:4 L1639:4 L1662:0 # hoons/arvo/sys/vane/ames.hoon L1638:5
+FIXED-3 tallWuthep L1689:6 L1690:4 L1730:0 # hoons/arvo/sys/vane/ames.hoon L1689:9
+=== hoons/arvo/sys/vane/gall.hoon ===
+FIXED-3 tallTissig L7:-4 L22:-4 L97:-1 # hoons/arvo/sys/vane/gall.hoon L6:5
+FIXED-2 LuslusCell L53:4 L54:4 # hoons/arvo/sys/vane/gall.hoon L53:1
+FIXED-3 tallCencab L117:6 L118:2 L121:0 # hoons/arvo/sys/vane/gall.hoon L117:5
+FIXED-3 tallWuthep L154:6 L155:4 L173:0 # hoons/arvo/sys/vane/gall.hoon L154:5
+FIXED-3 tallCencab L178:6 L179:4 L189:0 # hoons/arvo/sys/vane/gall.hoon L178:5
+FIXED-3 tallCencab L281:6 L282:4 L289:0 # hoons/arvo/sys/vane/gall.hoon L281:5
+FIXED-4 tallWutlus L317:6 L317:13 L318:4 L419:0 # hoons/arvo/sys/vane/gall.hoon L317:5
+FIXED-3 tallTisdot L342:4 L342:16 L343:-1 # hoons/arvo/sys/vane/gall.hoon L342:16
+FIXED-3 tallWuthep L510:6 L511:4 L518:0 # hoons/arvo/sys/vane/gall.hoon L510:5
+FIXED-3 tallWuthep L581:6 L582:4 L601:0 # hoons/arvo/sys/vane/gall.hoon L581:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/gall.hoon L635:9
+FIXED-3 tallCencab L740:6 L741:4 L756:0 # hoons/arvo/sys/vane/gall.hoon L740:7
+FIXED-2 tallColtar L743:4 L755:4 # hoons/arvo/sys/vane/gall.hoon L743:9
+FIXED-2 tallColtar L750:4 L755:-4 # hoons/arvo/sys/vane/gall.hoon L750:13
+FIXED-4 tallWutlus L773:4 L774:9 L775:2 L783:0 # hoons/arvo/sys/vane/gall.hoon L773:7
+FIXED-4 tallTisket L979:4 L979:9 L980:4 L982:0 # hoons/arvo/sys/vane/gall.hoon L979:7
+FIXED-4 tallTisket L992:4 L992:9 L993:4 L996:0 # hoons/arvo/sys/vane/gall.hoon L992:7
+FIXED-4 tallTisket L1031:4 L1031:9 L1032:4 L1036:0 # hoons/arvo/sys/vane/gall.hoon L1031:7
+FIXED-3 tallCentis L1069:6 L1070:4 L1076:0 # hoons/arvo/sys/vane/gall.hoon L1069:7
+FIXED-4 tallTisket L1088:4 L1088:9 L1089:4 L1091:0 # hoons/arvo/sys/vane/gall.hoon L1088:7
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/sys/vane/gall.hoon L1179:30
+FIXED-3 tallWuthep L1239:6 L1240:4 L1287:0 # hoons/arvo/sys/vane/gall.hoon L1239:3
+FIXED-3 tallWuthep L1297:4 L1298:4 L1299:0 # hoons/arvo/sys/vane/gall.hoon L1297:3
+=== hoons/arvo/sys/vane/eyre.hoon ===
+FIXED-3 tallTissig L13:-4 L86:-4 L1983:0 # hoons/arvo/sys/vane/eyre.hoon L12:5
+FIXED-2 LuslusCell L15:4 L16:10 # hoons/arvo/sys/vane/eyre.hoon L15:1
+FIXED-2 tallBuccen L16:4 L37:8 # hoons/arvo/sys/vane/eyre.hoon L16:11
+SEQUENCE till5dSeq 16:19 17:11 # hoons/arvo/sys/vane/eyre.hoon L16:19
+SEQUENCE till5dSeq 19:19 20:11 # hoons/arvo/sys/vane/eyre.hoon L19:19
+SEQUENCE till5dSeq 23:19 24:11 # hoons/arvo/sys/vane/eyre.hoon L23:19
+SEQUENCE till5dSeq 26:19 27:11 # hoons/arvo/sys/vane/eyre.hoon L26:19
+SEQUENCE till5dSeq 31:19 32:11 # hoons/arvo/sys/vane/eyre.hoon L31:19
+SEQUENCE till5dSeq 35:19 36:11 # hoons/arvo/sys/vane/eyre.hoon L35:19
+FIXED-2 LuslusCell L38:4 L39:10 # hoons/arvo/sys/vane/eyre.hoon L38:1
+FIXED-2 tallBucwut L39:4 L58:8 # hoons/arvo/sys/vane/eyre.hoon L39:11
+SEQUENCE till5dSeq 39:19 40:11 # hoons/arvo/sys/vane/eyre.hoon L39:19
+SEQUENCE till5dSeq 43:19 44:11 # hoons/arvo/sys/vane/eyre.hoon L43:19
+SEQUENCE till5dSeq 46:19 47:11 # hoons/arvo/sys/vane/eyre.hoon L46:19
+SEQUENCE till5dSeq 49:19 50:11 # hoons/arvo/sys/vane/eyre.hoon L49:19
+SEQUENCE till5dSeq 52:19 53:11 # hoons/arvo/sys/vane/eyre.hoon L52:19
+SEQUENCE till5dSeq 56:19 57:11 # hoons/arvo/sys/vane/eyre.hoon L56:19
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/sys/vane/eyre.hoon L212:15
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/sys/vane/eyre.hoon L268:8
+FIXED-1 tallTailOfElem L272:-5 # hoons/arvo/sys/vane/eyre.hoon L269:10
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/sys/vane/eyre.hoon L500:10
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/sys/vane/eyre.hoon L507:10
+FIXED-1 tallTailOfElem L512:-5 # hoons/arvo/sys/vane/eyre.hoon L509:12
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/sys/vane/eyre.hoon L517:7
+FIXED-1 tallTailOfElem L532:-18 # hoons/arvo/sys/vane/eyre.hoon L517:27
+FIXED-1 tallTailOfElem L531:-8 # hoons/arvo/sys/vane/eyre.hoon L518:19
+FIXED-1 tallTailOfElem L521:-13 # hoons/arvo/sys/vane/eyre.hoon L519:26
+FIXED-1 tallTailOfElem L530:-13 # hoons/arvo/sys/vane/eyre.hoon L522:26
+FIXED-1 tallTailOfElem L526:-7 # hoons/arvo/sys/vane/eyre.hoon L523:22
+FIXED-1 tallTailOfElem L576:-18 # hoons/arvo/sys/vane/eyre.hoon L567:27
+FIXED-1 tallTailOfElem L575:-8 # hoons/arvo/sys/vane/eyre.hoon L568:19
+FIXED-1 tallTailOfElem L574:-14 # hoons/arvo/sys/vane/eyre.hoon L569:27
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/sys/vane/eyre.hoon L581:7
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/sys/vane/eyre.hoon L594:10
+FIXED-1 tallTailOfElem L605:-5 # hoons/arvo/sys/vane/eyre.hoon L595:12
+FIXED-1 wisp5d LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L625:3
+FIXED-3 tallWuthep L637:6 L638:4 L768:0 # hoons/arvo/sys/vane/eyre.hoon L637:5
+FIXED-3 tallWuthep L715:4 L716:4 L733:0 # hoons/arvo/sys/vane/eyre.hoon L715:7
+FIXED-3 tallWutdot L720:4 L721:1 L722:0 # hoons/arvo/sys/vane/eyre.hoon L720:9
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L750:9
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L759:9
+SEQUENCE ruck5d 638:9 767:7 # hoons/arvo/sys/vane/eyre.hoon L638:9
+FIXED-3 tallWuthep L783:6 L784:4 L921:0 # hoons/arvo/sys/vane/eyre.hoon L783:5
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L790:9
+FIXED-3 tallWuthep L806:6 L807:4 L818:0 # hoons/arvo/sys/vane/eyre.hoon L806:7
+FIXED-3 tallWuthep L846:6 L847:4 L920:0 # hoons/arvo/sys/vane/eyre.hoon L846:7
+FIXED-3 tallCencab L874:4 L875:2 L880:7 # hoons/arvo/sys/vane/eyre.hoon L874:9
+FIXED-4 tallWutlus L877:4 L877:9 L878:2 L880:-7 # hoons/arvo/sys/vane/eyre.hoon L877:16
+FIXED-3 tallWuthep L1094:4 L1095:4 L1115:0 # hoons/arvo/sys/vane/eyre.hoon L1094:7
+FIXED-4 tallWutlus L1107:6 L1107:13 L1108:4 L1114:0 # hoons/arvo/sys/vane/eyre.hoon L1107:9
+FIXED-4 tallWutlus L1166:6 L1166:31 L1167:4 L1179:0 # hoons/arvo/sys/vane/eyre.hoon L1166:9
+FIXED-2 tallTisgal BACKDENTED # hoons/arvo/sys/vane/eyre.hoon L1184:13
+FIXED-4 tallWutlus L1210:6 L1210:11 L1211:4 L1308:0 # hoons/arvo/sys/vane/eyre.hoon L1210:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/eyre.hoon L1251:15
+FIXED-4 tallWutlus L1285:6 L1285:13 L1286:4 L1307:2 # hoons/arvo/sys/vane/eyre.hoon L1285:11
+FIXED-4 tallWutlus L1289:6 L1289:11 L1290:4 L1307:-4 # hoons/arvo/sys/vane/eyre.hoon L1289:13
+FIXED-3 tallWuthep L1330:6 L1331:4 L1392:0 # hoons/arvo/sys/vane/eyre.hoon L1330:7
+FIXED-1 tallBarhep LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L1378:9
+FIXED-3 tallWuthep L1397:6 L1398:4 L1450:0 # hoons/arvo/sys/vane/eyre.hoon L1397:7
+FIXED-4 tallWutlus L1408:6 L1408:15 L1409:4 L1417:0 # hoons/arvo/sys/vane/eyre.hoon L1408:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/eyre.hoon L1506:11
+FIXED-1 rick5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L1562:9
+FIXED-1 wisp5d L1981:-4 # hoons/arvo/sys/vane/eyre.hoon L1785:5
+FIXED-2 tallKethep L1820:4 L1821:-12 # hoons/arvo/sys/vane/eyre.hoon L1820:19
+FIXED-3 tallCencab L1824:6 L1825:4 L1836:0 # hoons/arvo/sys/vane/eyre.hoon L1824:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L1869:9
+FIXED-1 bont5d JOG-STYLE # hoons/arvo/sys/vane/eyre.hoon L1944:11
+FIXED-3 tallCentis L1993:6 L1994:4 L2001:0 # hoons/arvo/sys/vane/eyre.hoon L1993:7
+FIXED-4 tallWutlus L2045:6 L2045:11 L2046:4 L2062:0 # hoons/arvo/sys/vane/eyre.hoon L2045:3
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/eyre.hoon L2059:7
+=== hoons/arvo/sys/vane/xmas.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/sys/vane/xmas.hoon L3:3
+FIXED-3 tallTissig L6:-4 L104:-4 L1162:1 # hoons/arvo/sys/vane/xmas.hoon L5:5
+FIXED-2 LuslusCell L15:4 L16:10 # hoons/arvo/sys/vane/xmas.hoon L15:1
+FIXED-2 LuslusCell L25:4 L26:10 # hoons/arvo/sys/vane/xmas.hoon L25:1
+FIXED-2 LuslusCell L31:4 L32:10 # hoons/arvo/sys/vane/xmas.hoon L31:1
+FIXED-2 LuslusCell L36:4 L37:10 # hoons/arvo/sys/vane/xmas.hoon L36:1
+FIXED-2 LuslusCell L42:4 L43:10 # hoons/arvo/sys/vane/xmas.hoon L42:1
+FIXED-2 LuslusCell L54:4 L55:10 # hoons/arvo/sys/vane/xmas.hoon L54:1
+FIXED-2 LuslusCell L60:4 L61:10 # hoons/arvo/sys/vane/xmas.hoon L60:1
+FIXED-2 LuslusCell L66:4 L67:10 # hoons/arvo/sys/vane/xmas.hoon L66:1
+FIXED-2 LuslusCell L71:4 L72:10 # hoons/arvo/sys/vane/xmas.hoon L71:1
+FIXED-2 LuslusCell L76:4 L77:10 # hoons/arvo/sys/vane/xmas.hoon L76:1
+FIXED-2 LuslusCell L82:4 L83:10 # hoons/arvo/sys/vane/xmas.hoon L82:1
+FIXED-2 LuslusCell L89:4 L90:10 # hoons/arvo/sys/vane/xmas.hoon L89:1
+FIXED-3 tallWuthep L147:6 L148:4 L186:0 # hoons/arvo/sys/vane/xmas.hoon L147:5
+FIXED-3 tallWuthep L321:6 L322:4 L333:0 # hoons/arvo/sys/vane/xmas.hoon L321:7
+FIXED-1 tallZapcol L435:-8 # hoons/arvo/sys/vane/xmas.hoon L434:11
+FIXED-3 tallWuthep L447:6 L448:4 L470:0 # hoons/arvo/sys/vane/xmas.hoon L447:7
+FIXED-2 tallColsig BACKDENTED # hoons/arvo/sys/vane/xmas.hoon L460:13
+FIXED-3 tallWuthep L519:6 L520:4 L551:0 # hoons/arvo/sys/vane/xmas.hoon L519:5
+FIXED-3 tallWuthep L531:6 L532:4 L550:0 # hoons/arvo/sys/vane/xmas.hoon L531:7
+FIXED-2 tallWutbar L719:4 L722:4 # hoons/arvo/sys/vane/xmas.hoon L719:23
+FIXED-2 tallWutpam L720:4 L722:-4 # hoons/arvo/sys/vane/xmas.hoon L720:27
+FIXED-2 tallWutbar L723:4 L726:4 # hoons/arvo/sys/vane/xmas.hoon L723:23
+FIXED-2 tallWutpam L724:4 L726:-4 # hoons/arvo/sys/vane/xmas.hoon L724:27
+FIXED-2 tallWutbar L732:4 L735:4 # hoons/arvo/sys/vane/xmas.hoon L732:23
+FIXED-2 tallWutpam L733:4 L735:-4 # hoons/arvo/sys/vane/xmas.hoon L733:27
+FIXED-2 tallWutbar L736:4 L739:4 # hoons/arvo/sys/vane/xmas.hoon L736:23
+FIXED-2 tallWutpam L737:4 L739:-4 # hoons/arvo/sys/vane/xmas.hoon L737:27
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/xmas.hoon L764:11
+FIXED-3 tallCencab L787:6 L788:4 L797:0 # hoons/arvo/sys/vane/xmas.hoon L787:7
+FIXED-2 tallWutbar L791:4 L794:4 # hoons/arvo/sys/vane/xmas.hoon L791:13
+FIXED-2 tallWutpam L792:4 L794:-4 # hoons/arvo/sys/vane/xmas.hoon L792:17
+FIXED-3 tallCencab L801:6 L802:4 L815:0 # hoons/arvo/sys/vane/xmas.hoon L801:7
+FIXED-3 tallCentis L863:6 L864:2 L867:0 # hoons/arvo/sys/vane/xmas.hoon L863:7
+FIXED-3 tallWuthep L1030:6 L1031:4 L1038:0 # hoons/arvo/sys/vane/xmas.hoon L1030:7
+FIXED-3 tallCencab L1100:6 L1101:4 L1115:0 # hoons/arvo/sys/vane/xmas.hoon L1100:7
+FIXED-2 tallColtar L1144:4 L1159:4 # hoons/arvo/sys/vane/xmas.hoon L1144:5
+FIXED-2 tallColtar L1148:4 L1159:-4 # hoons/arvo/sys/vane/xmas.hoon L1148:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/xmas.hoon L1148:13
+FIXED-2 tallColtar L1149:4 L1156:4 # hoons/arvo/sys/vane/xmas.hoon L1149:13
+FIXED-2 tallColtar L1153:4 L1156:-4 # hoons/arvo/sys/vane/xmas.hoon L1153:17
+SEQUENCE tall5dSeq 1148:13 1157:11 # hoons/arvo/sys/vane/xmas.hoon L1148:13
+SEQUENCE tall5dSeq 1148:13 1158:11 # hoons/arvo/sys/vane/xmas.hoon L1148:13
+SEQUENCE tall5dSeq 104:1 1162:3 # hoons/arvo/sys/vane/xmas.hoon L104:1
+FIXED-3 tallWuthep L1174:6 L1175:4 L1188:0 # hoons/arvo/sys/vane/xmas.hoon L1174:7
+FIXED-2 tallKethep L1227:4 L1228:-5 # hoons/arvo/sys/vane/xmas.hoon L1227:18
+FIXED-2 tallKethep L1238:4 L1239:-7 # hoons/arvo/sys/vane/xmas.hoon L1238:18
+FIXED-4 tallWutlus L1239:6 L1239:13 L1240:4 L1249:0 # hoons/arvo/sys/vane/xmas.hoon L1239:11
+FIXED-3 tallWuthep L1243:4 L1244:4 L1248:0 # hoons/arvo/sys/vane/xmas.hoon L1243:13
+FIXED-4 tallWutlus L1288:6 L1288:13 L1289:4 L1303:0 # hoons/arvo/sys/vane/xmas.hoon L1288:3
+=== hoons/arvo/sys/vane/clay.hoon ===
+FIXED-2 tallTisgar L14:4 L321:4 # hoons/arvo/sys/vane/clay.hoon L14:1
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/clay.hoon L14:5
+FIXED-2 LuslusCell L211:4 L212:10 # hoons/arvo/sys/vane/clay.hoon L211:1
+FIXED-2 LuslusCell L237:4 L238:10 # hoons/arvo/sys/vane/clay.hoon L237:1
+FIXED-2 LuslusCell L256:4 L257:10 # hoons/arvo/sys/vane/clay.hoon L256:1
+FIXED-2 LuslusCell L268:4 L269:10 # hoons/arvo/sys/vane/clay.hoon L268:1
+FIXED-2 LuslusCell L280:4 L281:10 # hoons/arvo/sys/vane/clay.hoon L280:1
+FIXED-2 LuslusCell L310:4 L311:10 # hoons/arvo/sys/vane/clay.hoon L310:1
+FIXED-2 tallTisgar L322:-4 L364:0 # hoons/arvo/sys/vane/clay.hoon L321:5
+FIXED-2 tallBuccen L325:4 L343:8 # hoons/arvo/sys/vane/clay.hoon L325:3
+SEQUENCE till5dSeq 325:11 326:3 # hoons/arvo/sys/vane/clay.hoon L325:11
+SEQUENCE till5dSeq 328:11 329:3 # hoons/arvo/sys/vane/clay.hoon L328:11
+SEQUENCE till5dSeq 334:11 335:3 # hoons/arvo/sys/vane/clay.hoon L334:11
+SEQUENCE till5dSeq 337:11 338:3 # hoons/arvo/sys/vane/clay.hoon L337:11
+SEQUENCE till5dSeq 340:11 341:3 # hoons/arvo/sys/vane/clay.hoon L340:11
+FIXED-2 LuslusCell L345:4 L346:10 # hoons/arvo/sys/vane/clay.hoon L345:1
+FIXED-2 tallBucwut L346:4 L363:8 # hoons/arvo/sys/vane/clay.hoon L346:11
+SEQUENCE till5dSeq 346:19 347:11 # hoons/arvo/sys/vane/clay.hoon L346:19
+SEQUENCE till5dSeq 350:19 351:11 # hoons/arvo/sys/vane/clay.hoon L350:19
+SEQUENCE till5dSeq 355:19 356:11 # hoons/arvo/sys/vane/clay.hoon L355:19
+SEQUENCE till5dSeq 358:19 359:11 # hoons/arvo/sys/vane/clay.hoon L358:19
+SEQUENCE till5dSeq 361:19 362:11 # hoons/arvo/sys/vane/clay.hoon L361:19
+FIXED-2 tallTisgar L414:-4 L3522:-4 # hoons/arvo/sys/vane/clay.hoon L364:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L419:7
+FIXED-3 tallWuthep L525:4 L526:2 L533:9 # hoons/arvo/sys/vane/clay.hoon L525:5
+FIXED-3 tallWuthep L528:4 L529:-5 L533:-9 # hoons/arvo/sys/vane/clay.hoon L528:14
+FIXED-2 tallKethep L673:4 L674:-11 # hoons/arvo/sys/vane/clay.hoon L673:18
+FIXED-3 tallWuthep L698:6 L699:4 L758:0 # hoons/arvo/sys/vane/clay.hoon L698:5
+FIXED-3 tallWuthep L889:6 L890:4 L994:0 # hoons/arvo/sys/vane/clay.hoon L889:5
+FIXED-2 tallBarket L904:0 L940:0 # hoons/arvo/sys/vane/clay.hoon L903:7
+FIXED-3 tallWutsig L932:4 L933:1 L935:0 # hoons/arvo/sys/vane/clay.hoon L932:7
+FIXED-3 tallCencab L1141:6 L1142:4 L1196:0 # hoons/arvo/sys/vane/clay.hoon L1141:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1272:9
+FIXED-3 tallTisdot L1278:4 L1279:6 L1283:0 # hoons/arvo/sys/vane/clay.hoon L1278:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1345:9
+FIXED-4 tallColket LINE-BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1383:21
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1410:9
+FIXED-3 tallCentis L1436:6 L1437:4 L1440:0 # hoons/arvo/sys/vane/clay.hoon L1436:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1442:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1459:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1499:9
+FIXED-3 tallCencab L1551:6 L1552:4 L1558:0 # hoons/arvo/sys/vane/clay.hoon L1551:7
+FIXED-3 tallWuthep L1559:6 L1560:4 L1625:0 # hoons/arvo/sys/vane/clay.hoon L1559:5
+FIXED-3 tallCencab L1615:6 L1616:4 L1620:0 # hoons/arvo/sys/vane/clay.hoon L1615:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1686:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1691:9
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/sys/vane/clay.hoon L1751:11
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L1764:9
+FIXED-3 tallWuthep L1788:6 L1789:4 L1803:0 # hoons/arvo/sys/vane/clay.hoon L1788:9
+FIXED-3 tallWuthep L1829:6 L1830:4 L1984:0 # hoons/arvo/sys/vane/clay.hoon L1829:5
+FIXED-3 tallCentis L1833:6 L1834:4 L1837:0 # hoons/arvo/sys/vane/clay.hoon L1833:9
+FIXED-2 tallBarket L1860:0 L1922:0 # hoons/arvo/sys/vane/clay.hoon L1859:7
+FIXED-3 tallTissem L1875:4 L1876:4 L1879:0 # hoons/arvo/sys/vane/clay.hoon L1875:7
+FIXED-3 tallWutsig L1914:4 L1915:1 L1917:0 # hoons/arvo/sys/vane/clay.hoon L1914:7
+FIXED-2 tallColtar CAST-STYLE # hoons/arvo/sys/vane/clay.hoon L1989:32
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2049:11
+FIXED-3 tallWuthep L2116:6 L2117:4 L2132:0 # hoons/arvo/sys/vane/clay.hoon L2116:7
+FIXED-1 ruck5dJog L2162:3 # hoons/arvo/sys/vane/clay.hoon L2161:9
+FIXED-3 tallTiscol L2168:4 L2171:0 L2172:0 # hoons/arvo/sys/vane/clay.hoon L2168:12
+FIXED-1 ruck5dJog L2175:3 # hoons/arvo/sys/vane/clay.hoon L2174:9
+FIXED-3 tallWuthep L2219:6 L2220:4 L2251:0 # hoons/arvo/sys/vane/clay.hoon L2219:7
+FIXED-2 tallWutbar L2284:4 L2288:4 # hoons/arvo/sys/vane/clay.hoon L2284:7
+FIXED-2 tallWutpam L2285:4 L2288:-4 # hoons/arvo/sys/vane/clay.hoon L2285:11
+FIXED-2 tallWutgar BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2295:11
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2316:11
+FIXED-4 tallWutlus L2391:4 L2392:2 L2394:4 L2409:0 # hoons/arvo/sys/vane/clay.hoon L2391:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2560:11
+FIXED-3 tallWuthep L2594:4 L2595:4 L2610:0 # hoons/arvo/sys/vane/clay.hoon L2594:7
+SEQUENCE ruck5d 2595:11 2603:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2604:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2605:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2606:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2607:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2608:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+SEQUENCE ruck5d 2595:11 2609:9 # hoons/arvo/sys/vane/clay.hoon L2595:11
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2653:11
+FIXED-2 tallSigbar L2719:4 L2726:1 # hoons/arvo/sys/vane/clay.hoon L2719:11
+FIXED-3 tallWuthep L2792:6 L2797:4 L2988:0 # hoons/arvo/sys/vane/clay.hoon L2792:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2967:15
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L2978:15
+FIXED-4 tallWutlus L3125:6 L3125:15 L3126:4 L3143:0 # hoons/arvo/sys/vane/clay.hoon L3125:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3207:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3211:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3242:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3247:13
+FIXED-2 tallKethep L3278:4 L3279:-2 # hoons/arvo/sys/vane/clay.hoon L3278:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3287:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3309:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3359:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3366:13
+FIXED-2 tallTisbar BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3394:13
+FIXED-2 tallTisbar L3523:4 L3526:0 # hoons/arvo/sys/vane/clay.hoon L3522:1
+FIXED-3 tallCentis L3534:6 L3535:4 L3546:0 # hoons/arvo/sys/vane/clay.hoon L3534:7
+FIXED-2 tallTislus L3539:0 L3540:0 # hoons/arvo/sys/vane/clay.hoon L3538:11
+FIXED-3 tallWuthep L3548:6 L3549:4 L3774:0 # hoons/arvo/sys/vane/clay.hoon L3548:3
+FIXED-3 tallCencab L3609:6 L3610:4 L3613:0 # hoons/arvo/sys/vane/clay.hoon L3609:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3628:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3640:11
+FIXED-2 tallColhep L3689:4 L3690:4 # hoons/arvo/sys/vane/clay.hoon L3689:5
+FIXED-3 tallCencab L3703:6 L3704:4 L3708:0 # hoons/arvo/sys/vane/clay.hoon L3703:9
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/sys/vane/clay.hoon L3769:28
+FIXED-3 tallWuthep L3813:4 L3814:4 L3857:0 # hoons/arvo/sys/vane/clay.hoon L3813:3
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L3900:9
+FIXED-3 tallWuthep L3924:6 L3926:4 L4062:0 # hoons/arvo/sys/vane/clay.hoon L3924:3
+FIXED-4 tallWutlus L3931:6 L3931:13 L3932:4 L4016:0 # hoons/arvo/sys/vane/clay.hoon L3931:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L4007:11
+FIXED-1 bont5d BACKDENTED # hoons/arvo/sys/vane/clay.hoon L4022:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/sys/vane/clay.hoon L4078:9
+=== hoons/arvo/sys/vane/jael.hoon ===
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/jael.hoon L42:5
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L50:7
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L55:7
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L61:7
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L64:7
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/jael.hoon L88:5
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/jael.hoon L365:5
+FIXED-3 tallWuthep L389:6 L390:4 L405:0 # hoons/arvo/sys/vane/jael.hoon L389:5
+FIXED-3 tallWuthep L401:6 L402:4 L404:0 # hoons/arvo/sys/vane/jael.hoon L401:7
+FIXED-2 tallBuccolMold L512:4 L514:0 # hoons/arvo/sys/vane/jael.hoon L509:7
+FIXED-2 tallColhep L551:4 L552:4 # hoons/arvo/sys/vane/jael.hoon L551:7
+FIXED-2 tallColhep L575:4 L576:4 # hoons/arvo/sys/vane/jael.hoon L575:7
+FIXED-2 tallColhep L598:4 L599:4 # hoons/arvo/sys/vane/jael.hoon L598:7
+FIXED-2 tallColhep L605:4 L606:4 # hoons/arvo/sys/vane/jael.hoon L605:7
+FIXED-2 tallColhep L612:4 L613:4 # hoons/arvo/sys/vane/jael.hoon L612:7
+FIXED-4 tallWutlus L781:6 L781:13 L782:4 L807:0 # hoons/arvo/sys/vane/jael.hoon L781:5
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/sys/vane/jael.hoon L858:5
+FIXED-2 tallBuccolMold L881:4 L891:0 # hoons/arvo/sys/vane/jael.hoon L879:7
+FIXED-2 tallBuccolMold L885:4 L887:0 # hoons/arvo/sys/vane/jael.hoon L882:11
+FIXED-2 tallBuccolMold L909:4 L911:0 # hoons/arvo/sys/vane/jael.hoon L906:9
+FIXED-3 tallWuthep L913:6 L918:4 L1017:0 # hoons/arvo/sys/vane/jael.hoon L913:5
+FIXED-3 tallWuthep L1003:6 L1008:4 L1016:0 # hoons/arvo/sys/vane/jael.hoon L1003:7
+FIXED-3 tallCentis L1065:6 L1066:4 L1072:0 # hoons/arvo/sys/vane/jael.hoon L1065:5
+FIXED-2 tallBarcab L1084:4 L1086:0 # hoons/arvo/sys/vane/jael.hoon L1082:5
+FIXED-3 tallWutsig L1095:4 L1096:3 L1097:1 # hoons/arvo/sys/vane/jael.hoon L1095:9
+FIXED-3 tallCencab L1153:6 L1154:4 L1156:0 # hoons/arvo/sys/vane/jael.hoon L1153:7
+FIXED-2 tallColcab L1154:4 L1155:-7 # hoons/arvo/sys/vane/jael.hoon L1154:16
+FIXED-3 tallCencab L1163:6 L1164:4 L1167:0 # hoons/arvo/sys/vane/jael.hoon L1163:7
+FIXED-3 tallTistar L1262:4 L1263:4 L1269:0 # hoons/arvo/sys/vane/jael.hoon L1262:7
+FIXED-2 tallColhep L1283:4 L1291:0 # hoons/arvo/sys/vane/jael.hoon L1278:7
+FIXED-2 tallKethep L1319:4 L1320:-7 # hoons/arvo/sys/vane/jael.hoon L1319:14
+FIXED-2 tallBuccolMold L1334:4 L1337:0 # hoons/arvo/sys/vane/jael.hoon L1329:9
+FIXED-2 tallBuccolMold L1377:4 L1381:0 # hoons/arvo/sys/vane/jael.hoon L1372:9
+FIXED-2 tallKethep L1384:4 L1385:-7 # hoons/arvo/sys/vane/jael.hoon L1384:14
+FIXED-3 tallWuthep L1389:6 L1394:4 L1403:0 # hoons/arvo/sys/vane/jael.hoon L1389:7
+FIXED-1 wisp5d LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L1476:3
+FIXED-2 tallBuccolMold L1514:4 L1518:0 # hoons/arvo/sys/vane/jael.hoon L1509:9
+FIXED-4 tallWutlus L1538:6 L1538:11 L1539:4 L1550:0 # hoons/arvo/sys/vane/jael.hoon L1538:7
+FIXED-2 tallBuccolMold L1579:4 L1581:0 # hoons/arvo/sys/vane/jael.hoon L1576:9
+FIXED-2 tallTisbar L1600:4 L1601:0 # hoons/arvo/sys/vane/jael.hoon L1598:5
+FIXED-1 wisp5d LUSLUS-STYLE # hoons/arvo/sys/vane/jael.hoon L1603:5
+FIXED-2 tallKethep L1629:4 L1630:-7 # hoons/arvo/sys/vane/jael.hoon L1629:16
+FIXED-2 tallBuccolMold L1686:4 L1689:0 # hoons/arvo/sys/vane/jael.hoon L1682:11
+FIXED-2 tallKetlus BACKDENTED # hoons/arvo/sys/vane/jael.hoon L1691:11
+FIXED-1 wisp5d L1889:-4 # hoons/arvo/sys/vane/jael.hoon L1720:7
+FIXED-2 tallBuccolMold L1760:4 L1763:0 # hoons/arvo/sys/vane/jael.hoon L1755:13
+FIXED-2 tallWutbar L1851:4 L1870:0 # hoons/arvo/sys/vane/jael.hoon L1848:13
+FIXED-2 tallBuccolMold L1950:4 L1953:0 # hoons/arvo/sys/vane/jael.hoon L1945:5
+FIXED-2 tallBuccolMold L1960:4 L1962:0 # hoons/arvo/sys/vane/jael.hoon L1957:7
+FIXED-2 tallBuccolMold L1972:4 L1974:0 # hoons/arvo/sys/vane/jael.hoon L1969:7
+FIXED-2 tallBuccolMold L1981:4 L1982:0 # hoons/arvo/sys/vane/jael.hoon L1979:7
+FIXED-2 tallBuccolMold L1994:4 L2000:0 # hoons/arvo/sys/vane/jael.hoon L1987:7
+FIXED-2 tallBuccolMold L2012:4 L2015:0 # hoons/arvo/sys/vane/jael.hoon L2008:7
+=== hoons/arvo/app/gmail.hoon ===
+FIXED-2 tallColtar CAST-STYLE # hoons/arvo/app/gmail.hoon L89:23
+FIXED-4 tallWutlus L142:4 L142:11 L143:4 L232:0 # hoons/arvo/app/gmail.hoon L142:3
+FIXED-3 tallWutdot L150:4 L151:2 L156:-2 # hoons/arvo/app/gmail.hoon L150:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/gmail.hoon L176:9
+FIXED-2 tallSigpam LUSLUS-STYLE # hoons/arvo/app/gmail.hoon L211:5
+FIXED-3 tallWutdot LUSLUS-STYLE # hoons/arvo/app/gmail.hoon L217:3
+SEQUENCE ruck5d 143:7 209:5 # hoons/arvo/app/gmail.hoon L143:7
+=== hoons/arvo/app/test.hoon ===
+FIXED-3 tallWuthep L30:6 L31:4 L42:0 # hoons/arvo/app/test.hoon L30:3
+SEQUENCE tall5dSeq 61:7 62:5 # hoons/arvo/app/test.hoon L61:7
+SEQUENCE tall5dSeq 86:7 87:5 # hoons/arvo/app/test.hoon L86:7
+FIXED-3 tallWuthep L93:6 L94:4 L100:0 # hoons/arvo/app/test.hoon L93:3
+=== hoons/arvo/app/gmail/split.hoon ===
+=== hoons/arvo/app/twit.hoon ===
+FIXED-2 tallBucwut L41:4 L45:4 # hoons/arvo/app/twit.hoon L41:3
+SEQUENCE till5dSeq 41:7 42:3 # hoons/arvo/app/twit.hoon L41:7
+FIXED-3 tallWuthep L109:6 L110:4 L115:0 # hoons/arvo/app/twit.hoon L109:3
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/twit.hoon L174:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/app/twit.hoon L180:5
+FIXED-3 tallWuthep L252:6 L253:4 L268:0 # hoons/arvo/app/twit.hoon L252:3
+FIXED-3 tallWuthep L272:6 L273:4 L286:0 # hoons/arvo/app/twit.hoon L272:3
+=== hoons/arvo/app/fora.hoon ===
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/fora.hoon L84:7
+=== hoons/arvo/app/static.hoon ===
+FIXED-3 tallCenlus L43:4 L45:0 L51:0 # hoons/arvo/app/static.hoon L43:3
+FIXED-3 tallCenlus L65:4 L66:0 L70:0 # hoons/arvo/app/static.hoon L65:3
+FIXED-3 tallCenlus L77:4 L78:0 L80:0 # hoons/arvo/app/static.hoon L77:7
+FIXED-3 tallCenlus L85:4 L86:0 L90:0 # hoons/arvo/app/static.hoon L85:5
+FIXED-3 tallWuthep L107:6 L108:4 L119:0 # hoons/arvo/app/static.hoon L107:3
+FIXED-2 tallColhep LUSLUS-STYLE # hoons/arvo/app/static.hoon L152:3
+FIXED-3 tallTisfas L174:4 L175:0 L193:0 # hoons/arvo/app/static.hoon L174:3
+FIXED-3 tallTisfas L258:4 L259:0 L273:0 # hoons/arvo/app/static.hoon L258:3
+=== hoons/arvo/app/hood.hoon ===
+=== hoons/arvo/app/dojo.hoon ===
+FIXED-4 tallTisket L371:4 L371:9 L372:4 L377:0 # hoons/arvo/app/dojo.hoon L371:14
+FIXED-3 tallWuthep L472:6 L473:4 L541:0 # hoons/arvo/app/dojo.hoon L472:7
+FIXED-4 tallWutlus L477:4 L477:13 L478:4 L496:0 # hoons/arvo/app/dojo.hoon L477:9
+FIXED-2 tallColtar CAST-STYLE # hoons/arvo/app/dojo.hoon L512:29
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L550:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/dojo.hoon L563:11
+FIXED-2 tallBuccen L580:4 L583:0 # hoons/arvo/app/dojo.hoon L579:9
+FIXED-2 tallBuccen L588:4 L618:0 # hoons/arvo/app/dojo.hoon L587:9
+FIXED-3 tallWuthep L635:4 L636:4 L705:0 # hoons/arvo/app/dojo.hoon L635:9
+FIXED-3 tallWuthep L711:4 L713:4 L745:0 # hoons/arvo/app/dojo.hoon L711:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L716:11
+FIXED-3 tallWuthep L761:4 L763:4 L782:0 # hoons/arvo/app/dojo.hoon L761:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L788:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L843:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L935:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L939:11
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L962:9
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L975:11
+FIXED-3 tallCenlus LUSLUS-STYLE # hoons/arvo/app/dojo.hoon L980:9
+FIXED-3 tallWuthep L1000:4 L1002:4 L1023:0 # hoons/arvo/app/dojo.hoon L1000:11
+FIXED-3 tallSemcol L1004:4 L1005:-6 L1013:-8 # hoons/arvo/app/dojo.hoon L1004:23
+FIXED-3 tallSemcol L1066:4 L1067:-10 L1070:-12 # hoons/arvo/app/dojo.hoon L1066:21
+FIXED-3 tallWutdot L1161:4 L1161:25 L1162:4 # hoons/arvo/app/dojo.hoon L1161:14
+FIXED-4 tallWutlus L1261:6 L1261:15 L1262:4 L1273:0 # hoons/arvo/app/dojo.hoon L1261:7
+FIXED-4 tallWutlus L1284:6 L1284:15 L1285:4 L1297:0 # hoons/arvo/app/dojo.hoon L1284:7
+FIXED-4 tallWutlus L1353:6 L1353:26 L1354:4 L1364:0 # hoons/arvo/app/dojo.hoon L1353:7
+FIXED-4 tallWutlus L1412:4 L1412:26 L1413:2 L1415:9 # hoons/arvo/app/dojo.hoon L1412:5
+FIXED-4 tallWutlus L1413:4 L1413:9 L1414:3 L1415:-9 # hoons/arvo/app/dojo.hoon L1413:14
+FIXED-3 tallWuthep L1566:6 L1567:4 L1578:0 # hoons/arvo/app/dojo.hoon L1566:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/dojo.hoon L1594:9
+FIXED-3 tallWuthep L1610:6 L1611:4 L1662:0 # hoons/arvo/app/dojo.hoon L1610:9
+FIXED-2 tallColtar L1618:4 L1624:1 # hoons/arvo/app/dojo.hoon L1618:11
+FIXED-2 tallKethep BACKDENTED-1 # hoons/arvo/app/dojo.hoon L1663:13
+=== hoons/arvo/app/time.hoon ===
+=== hoons/arvo/app/gh.hoon ===
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/gh.hoon L83:7
+FIXED-2 tallColsig BACKDENTED-3 # hoons/arvo/app/gh.hoon L284:64
+FIXED-3 tallCencab L304:6 L305:4 L308:0 # hoons/arvo/app/gh.hoon L304:5
+=== hoons/arvo/app/ask.hoon ===
+FIXED-1 tallBarcen LUSLUS-STYLE # hoons/arvo/app/ask.hoon L7:1
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/app/ask.hoon L8:3
+FIXED-3 tallWuthep L86:6 L87:4 L125:0 # hoons/arvo/app/ask.hoon L86:3
+=== hoons/arvo/app/pipe.hoon ===
+=== hoons/arvo/app/talk.hoon ===
+FIXED-2 tallTisgar L29:4 L116:0 # hoons/arvo/app/talk.hoon L24:1
+FIXED-2 tallBuccol L32:4 L45:0 # hoons/arvo/app/talk.hoon L31:7
+FIXED-2 tallBuccen L71:4 L107:0 # hoons/arvo/app/talk.hoon L70:7
+FIXED-3 tallWuthep L151:4 L152:4 L192:0 # hoons/arvo/app/talk.hoon L151:3
+FIXED-3 tallCentis L164:4 L165:4 L168:0 # hoons/arvo/app/talk.hoon L164:7
+FIXED-2 tallBarcab L311:4 L316:0 # hoons/arvo/app/talk.hoon L309:3
+FIXED-4 tallWutlus L384:4 L384:11 L385:4 L399:0 # hoons/arvo/app/talk.hoon L384:5
+FIXED-4 tallWutlus L406:4 L406:11 L407:4 L418:0 # hoons/arvo/app/talk.hoon L406:5
+FIXED-3 tallWuthep L408:4 L409:4 L414:0 # hoons/arvo/app/talk.hoon L408:7
+FIXED-4 tallWutlus L425:4 L426:4 L428:4 L489:0 # hoons/arvo/app/talk.hoon L425:5
+FIXED-3 tallCentis L460:4 L461:4 L473:0 # hoons/arvo/app/talk.hoon L460:7
+FIXED-3 tallCentis L482:4 L483:4 L488:0 # hoons/arvo/app/talk.hoon L482:7
+FIXED-3 tallTiscol L544:4 L547:0 L548:0 # hoons/arvo/app/talk.hoon L544:5
+FIXED-3 tallCenlus L558:4 L559:0 L560:0 # hoons/arvo/app/talk.hoon L558:7
+FIXED-2 tallBuccolMold L597:4 L598:0 # hoons/arvo/app/talk.hoon L595:9
+FIXED-3 tallCentis L627:4 L628:4 L636:0 # hoons/arvo/app/talk.hoon L627:7
+FIXED-3 tallWutcol L948:4 L949:0 L949:4 # hoons/arvo/app/talk.hoon L948:15
+FIXED-4 tallWutlus L989:4 L990:2 L992:4 L994:0 # hoons/arvo/app/talk.hoon L989:7
+FIXED-4 tallTisket L1002:4 L1002:9 L1003:4 L1004:0 # hoons/arvo/app/talk.hoon L1002:7
+FIXED-3 tallTiscol L1122:4 L1124:0 L1125:0 # hoons/arvo/app/talk.hoon L1122:9
+FIXED-3 tallCentis L1514:4 L1515:4 L1521:0 # hoons/arvo/app/talk.hoon L1514:9
+FIXED-2 tallColhep L1769:4 L1770:4 # hoons/arvo/app/talk.hoon L1769:7
+FIXED-3 tallTisfas L1810:4 L1811:4 L1812:0 # hoons/arvo/app/talk.hoon L1810:7
+FIXED-3 tallWuthep L1868:4 L1869:4 L1888:0 # hoons/arvo/app/talk.hoon L1868:7
+FIXED-3 tallWuthep L1907:4 L1908:4 L1937:0 # hoons/arvo/app/talk.hoon L1907:7
+FIXED-2 tallBarcab L1980:4 L1982:0 # hoons/arvo/app/talk.hoon L1978:3
+FIXED-2 tallBarcab L2091:4 L2093:0 # hoons/arvo/app/talk.hoon L2089:3
+FIXED-2 tallBuccolMold L2197:4 L2203:0 # hoons/arvo/app/talk.hoon L2190:7
+FIXED-3 tallWuthep L2284:4 L2285:4 L2321:0 # hoons/arvo/app/talk.hoon L2284:5
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/app/talk.hoon L2299:17
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/app/talk.hoon L2300:16
+FIXED-3 tallWuthep L2368:4 L2369:4 L2438:0 # hoons/arvo/app/talk.hoon L2368:5
+FIXED-2 tallCenhep L2498:4 L2499:-2 # hoons/arvo/app/talk.hoon L2498:9
+FIXED-3 tallCenlus L2506:4 L2506:10 L2507:-2 # hoons/arvo/app/talk.hoon L2506:9
+=== hoons/arvo/app/curl.hoon ===
+=== hoons/arvo/app/github.hoon ===
+FIXED-4 tallWutlus L26:6 L26:16 L27:4 L31:0 # hoons/arvo/app/github.hoon L26:9
+=== hoons/arvo/app/hall.hoon ===
+FIXED-2 fordFastis L14:6 L15:6 # hoons/arvo/app/hall.hoon L14:1
+FIXED-2 tallTisgar L28:4 L120:0 # hoons/arvo/app/hall.hoon L23:1
+FIXED-2 tallBuccen L59:4 L80:0 # hoons/arvo/app/hall.hoon L58:7
+FIXED-2 tallBucwut L82:4 L88:4 # hoons/arvo/app/hall.hoon L82:7
+SEQUENCE till5dSeq 82:11 83:7 # hoons/arvo/app/hall.hoon L82:11
+FIXED-3 tallWuthep L172:4 L173:4 L231:0 # hoons/arvo/app/hall.hoon L172:3
+FIXED-3 tallCentis L193:4 L194:4 L197:0 # hoons/arvo/app/hall.hoon L193:7
+FIXED-2 tallBarcab L242:4 L246:0 # hoons/arvo/app/hall.hoon L240:3
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L671:37
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L680:37
+FIXED-4 tallWutlus L693:4 L693:11 L694:4 L721:0 # hoons/arvo/app/hall.hoon L693:5
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L719:43
+FIXED-4 tallWutlus L733:4 L734:2 L736:4 L763:0 # hoons/arvo/app/hall.hoon L733:5
+FIXED-4 tallWutlus L737:4 L738:2 L741:4 L756:0 # hoons/arvo/app/hall.hoon L737:7
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L738:45
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L761:43
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L788:37
+FIXED-2 tallTisgal BACKDENTED-2 # hoons/arvo/app/hall.hoon L844:37
+FIXED-2 tallBarcab L867:4 L874:0 # hoons/arvo/app/hall.hoon L863:5
+FIXED-1 ruck5dJog L990:10 # hoons/arvo/app/hall.hoon L989:9
+SEQUENCE ruck5d 986:9 992:11 # hoons/arvo/app/hall.hoon L986:9
+SEQUENCE ruck5d 986:9 997:11 # hoons/arvo/app/hall.hoon L986:9
+SEQUENCE ruck5d 986:9 1016:11 # hoons/arvo/app/hall.hoon L986:9
+FIXED-3 tallCencab L1102:4 L1103:4 L1122:0 # hoons/arvo/app/hall.hoon L1102:9
+FIXED-4 tallWutlus L1414:4 L1414:11 L1415:4 L1439:0 # hoons/arvo/app/hall.hoon L1414:7
+FIXED-2 tallBarcab L1576:4 L1580:0 # hoons/arvo/app/hall.hoon L1574:3
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/app/hall.hoon L1580:3
+FIXED-3 tallCencab L1713:4 L1714:4 L1722:0 # hoons/arvo/app/hall.hoon L1713:5
+FIXED-3 tallCenlus L1720:4 L1721:0 L1721:5 # hoons/arvo/app/hall.hoon L1720:7
+FIXED-4 tallWutlus L1772:4 L1773:2 L1778:2 L1781:0 # hoons/arvo/app/hall.hoon L1772:5
+FIXED-2 tallBarcab L1814:4 L1820:0 # hoons/arvo/app/hall.hoon L1811:5
+FIXED-4 tallWutlus L1903:4 L1904:2 L1906:4 L1948:0 # hoons/arvo/app/hall.hoon L1903:7
+FIXED-3 tallCencab L1939:4 L1940:4 L1947:0 # hoons/arvo/app/hall.hoon L1939:9
+FIXED-3 tallCenlus L1985:4 L1986:0 L1987:0 # hoons/arvo/app/hall.hoon L1985:18
+FIXED-4 tallWutlus L1997:4 L1998:2 L2000:4 L2018:0 # hoons/arvo/app/hall.hoon L1997:7
+FIXED-3 tallCenlus L2004:4 L2005:0 L2006:0 # hoons/arvo/app/hall.hoon L2004:11
+FIXED-3 tallCencab L2010:4 L2011:4 L2017:0 # hoons/arvo/app/hall.hoon L2010:9
+FIXED-4 tallWutlus L2164:4 L2164:9 L2165:4 L2176:0 # hoons/arvo/app/hall.hoon L2164:3
+FIXED-4 tallWutlus L2187:6 L2187:11 L2188:4 L2199:0 # hoons/arvo/app/hall.hoon L2187:3
+FIXED-2 tallBuchepMold L2209:4 L2210:4 # hoons/arvo/app/hall.hoon L2209:11
+FIXED-2 tallBuchepMold L2220:4 L2221:4 # hoons/arvo/app/hall.hoon L2220:11
+FIXED-3 tallWuthep L2306:4 L2307:4 L2371:0 # hoons/arvo/app/hall.hoon L2306:3
+FIXED-3 tallCencab L2357:4 L2358:4 L2363:0 # hoons/arvo/app/hall.hoon L2357:11
+FIXED-3 tallCencab L2395:4 L2396:4 L2401:0 # hoons/arvo/app/hall.hoon L2395:5
+SEQUENCE ruck5d 2384:5 2389:7 # hoons/arvo/app/hall.hoon L2384:5
+SEQUENCE ruck5d 2384:5 2403:7 # hoons/arvo/app/hall.hoon L2384:5
+SEQUENCE ruck5d 2384:5 2408:7 # hoons/arvo/app/hall.hoon L2384:5
+FIXED-3 tallWutcol L2449:4 L2450:0 L2450:11 # hoons/arvo/app/hall.hoon L2449:17
+FIXED-3 tallWutcol L2451:4 L2452:0 L2452:10 # hoons/arvo/app/hall.hoon L2451:17
+FIXED-3 tallWuthep L2464:4 L2465:4 L2556:0 # hoons/arvo/app/hall.hoon L2464:3
+FIXED-3 tallWutdot L2539:4 L2540:50 L2541:0 # hoons/arvo/app/hall.hoon L2539:5
+FIXED-4 tallWutlus L2551:4 L2551:13 L2552:4 L2555:0 # hoons/arvo/app/hall.hoon L2551:5
+FIXED-2 tallKethep L2602:4 L2603:-2 # hoons/arvo/app/hall.hoon L2602:7
+FIXED-4 tallWutlus L2612:4 L2613:2 L2615:2 L2628:0 # hoons/arvo/app/hall.hoon L2612:3
+SEQUENCE rick5d 2615:26 2616:21 # hoons/arvo/app/hall.hoon L2615:26
+SEQUENCE rick5d 2618:26 2619:21 # hoons/arvo/app/hall.hoon L2618:26
+SEQUENCE rick5d 2623:26 2624:21 # hoons/arvo/app/hall.hoon L2623:26
+FIXED-2 tallColsig L2649:-4 L2654:-8 # hoons/arvo/app/hall.hoon L2648:15
+SEQUENCE ruck5d 2669:5 2678:7 # hoons/arvo/app/hall.hoon L2669:5
+FIXED-3 tallDotket L2899:4 L2900:4 L2902:0 # hoons/arvo/app/hall.hoon L2899:5
+FIXED-3 tallDotket L2919:4 L2920:4 L2922:0 # hoons/arvo/app/hall.hoon L2919:5
+FIXED-3 tallCentis L2934:4 L2935:4 L2938:0 # hoons/arvo/app/hall.hoon L2934:3
+FIXED-3 tallCencab L2955:4 L2956:4 L2960:0 # hoons/arvo/app/hall.hoon L2955:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/hall.hoon L2973:7
+FIXED-2 tallCenhep L2995:4 L2996:-2 # hoons/arvo/app/hall.hoon L2995:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/app/hall.hoon L3012:9
+FIXED-3 tallCenlus L3024:4 L3024:10 L3025:-2 # hoons/arvo/app/hall.hoon L3024:9
+=== hoons/arvo/sec/com/digitalocean.hoon ===
+=== hoons/arvo/sec/com/asana.hoon ===
+=== hoons/arvo/sec/com/dropboxapi.hoon ===
+=== hoons/arvo/sec/com/googleapis.hoon ===
+=== hoons/arvo/sec/com/instagram.hoon ===
+=== hoons/arvo/sec/com/twitter.hoon ===
+=== hoons/arvo/sec/com/slack.hoon ===
+=== hoons/arvo/sec/com/github.hoon ===
+=== hoons/arvo/sec/com/facebook.hoon ===
+=== hoons/arvo/lib/elem-to-react-json.hoon ===
+=== hoons/arvo/lib/hep-to-cab.hoon ===
+=== hoons/arvo/lib/old-phon.hoon ===
+FIXED-2 tallKettis CAST-STYLE # hoons/arvo/lib/old-phon.hoon L12:11
+FIXED-2 LuslusCell L47:4 L48:9 # hoons/arvo/lib/old-phon.hoon L47:3
+FIXED-2 LuslusCell L52:4 L53:9 # hoons/arvo/lib/old-phon.hoon L52:3
+FIXED-2 LuslusCell L57:4 L58:9 # hoons/arvo/lib/old-phon.hoon L57:3
+FIXED-2 LuslusCell L59:4 L60:9 # hoons/arvo/lib/old-phon.hoon L59:3
+=== hoons/arvo/lib/interpolate.hoon ===
+=== hoons/arvo/lib/http.hoon ===
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/http.hoon L26:7
+=== hoons/arvo/lib/urb-split.hoon ===
+=== hoons/arvo/lib/connector.hoon ===
+=== hoons/arvo/lib/frontmatter.hoon ===
+=== hoons/arvo/lib/old-zuse.hoon ===
+=== hoons/arvo/lib/tester.hoon ===
+=== hoons/arvo/lib/hall-json.hoon ===
+FIXED-3 tallWuthep L76:4 L77:4 L96:0 # hoons/arvo/lib/hall-json.hoon L76:5
+=== hoons/arvo/lib/prey.hoon ===
+=== hoons/arvo/lib/down-jet/rend.hoon ===
+FIXED-4 tallWutlus L21:6 L21:15 L22:4 L29:0 # hoons/arvo/lib/down-jet/rend.hoon L21:5
+FIXED-2 tallBartis CAST-STYLE # hoons/arvo/lib/down-jet/rend.hoon L24:27
+FIXED-2 LuslusCell L32:4 L33:1 # hoons/arvo/lib/down-jet/rend.hoon L32:1
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/down-jet/rend.hoon L62:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/lib/down-jet/rend.hoon L132:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/down-jet/rend.hoon L160:7
+=== hoons/arvo/lib/down-jet/parse.hoon ===
+FIXED-2 tallTislus LUSLUS-STYLE # hoons/arvo/lib/down-jet/parse.hoon L8:1
+FIXED-3 tallTissig L9:-4 L13:-4 L96:0 # hoons/arvo/lib/down-jet/parse.hoon L8:5
+FIXED-2 tallKethep L27:4 L29:-16 # hoons/arvo/lib/down-jet/parse.hoon L27:19
+FIXED-3 tallTissig L98:-2 L448:-2 L1008:0 # hoons/arvo/lib/down-jet/parse.hoon L97:3
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/down-jet/parse.hoon L190:13
+FIXED-3 tallSemsig L290:4 L291:0 L293:0 # hoons/arvo/lib/down-jet/parse.hoon L290:7
+SEQUENCE tall5dSeq 290:7 291:7 # hoons/arvo/lib/down-jet/parse.hoon L290:7
+FIXED-4 tallWutlus L299:6 L299:13 L300:4 L305:0 # hoons/arvo/lib/down-jet/parse.hoon L299:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/down-jet/parse.hoon L360:9
+SEQUENCE tall5dSeq 413:11 414:9 # hoons/arvo/lib/down-jet/parse.hoon L413:11
+FIXED-1 wisp5d L1007:4 # hoons/arvo/lib/down-jet/parse.hoon L449:1
+FIXED-2 LuslusCell L465:4 L466:1 # hoons/arvo/lib/down-jet/parse.hoon L465:1
+FIXED-2 LuslusCell L475:4 L476:3 # hoons/arvo/lib/down-jet/parse.hoon L475:1
+FIXED-3 tallSemsig L504:4 L505:1 L508:0 # hoons/arvo/lib/down-jet/parse.hoon L504:19
+SEQUENCE tall5dSeq 504:19 505:20 # hoons/arvo/lib/down-jet/parse.hoon L504:19
+SEQUENCE tall5dSeq 504:19 506:20 # hoons/arvo/lib/down-jet/parse.hoon L504:19
+SEQUENCE tall5dSeq 504:19 507:20 # hoons/arvo/lib/down-jet/parse.hoon L504:19
+FIXED-2 tallBartis CAST-STYLE # hoons/arvo/lib/down-jet/parse.hoon L565:16
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/down-jet/parse.hoon L602:7
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/lib/down-jet/parse.hoon L611:3
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/lib/down-jet/parse.hoon L622:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/lib/down-jet/parse.hoon L625:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/lib/down-jet/parse.hoon L628:7
+FIXED-4 tallWutlus L656:6 L656:15 L657:4 L662:0 # hoons/arvo/lib/down-jet/parse.hoon L656:5
+FIXED-3 tallCencab L658:6 L659:4 L661:0 # hoons/arvo/lib/down-jet/parse.hoon L658:7
+FIXED-4 tallWutlus L701:6 L701:13 L702:4 L727:0 # hoons/arvo/lib/down-jet/parse.hoon L701:5
+FIXED-2 tallKetlus L790:4 L791:-9 # hoons/arvo/lib/down-jet/parse.hoon L790:14
+FIXED-3 tallTissig BACKDENTED CAST-STYLE SEMSIG-STYLE # hoons/arvo/lib/down-jet/parse.hoon L829:5
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/lib/down-jet/parse.hoon L840:5
+FIXED-3 tallWuthep L874:6 L875:4 L901:0 # hoons/arvo/lib/down-jet/parse.hoon L874:7
+=== hoons/arvo/lib/time-to-id.hoon ===
+=== hoons/arvo/lib/httr-to-json.hoon ===
+=== hoons/arvo/lib/sole.hoon ===
+FIXED-3 tallWuthep L54:6 L55:4 L69:0 # hoons/arvo/lib/sole.hoon L54:3
+=== hoons/arvo/lib/cram.hoon ===
+FIXED-4 tallWutlus L23:6 L23:13 L24:4 L38:0 # hoons/arvo/lib/cram.hoon L23:3
+=== hoons/arvo/lib/map-to-json.hoon ===
+=== hoons/arvo/lib/tree.hoon ===
+=== hoons/arvo/lib/gh-parse.hoon ===
+FIXED-2 tallColsig L14:-4 L81:-8 # hoons/arvo/lib/gh-parse.hoon L13:11
+FIXED-2 tallColsig L86:-4 L94:-8 # hoons/arvo/lib/gh-parse.hoon L85:11
+FIXED-2 tallColsig L99:-4 L116:-8 # hoons/arvo/lib/gh-parse.hoon L98:11
+FIXED-2 tallColsig L124:-4 L143:-8 # hoons/arvo/lib/gh-parse.hoon L123:11
+FIXED-2 tallColsig L148:-4 L151:-8 # hoons/arvo/lib/gh-parse.hoon L147:11
+FIXED-2 tallColsig L156:-4 L158:-8 # hoons/arvo/lib/gh-parse.hoon L155:11
+FIXED-2 tallColsig L163:-4 L167:-8 # hoons/arvo/lib/gh-parse.hoon L162:11
+FIXED-2 tallColsig L172:-4 L175:-8 # hoons/arvo/lib/gh-parse.hoon L171:11
+FIXED-2 tallColsig L180:-4 L188:-8 # hoons/arvo/lib/gh-parse.hoon L179:11
+=== hoons/arvo/lib/oauth1.hoon ===
+FIXED-1 tallZapdot L62:-13 # hoons/arvo/lib/oauth1.hoon L61:16
+FIXED-2 tallSigbar BACKDENTED # hoons/arvo/lib/oauth1.hoon L70:7
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/lib/oauth1.hoon L109:17
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/oauth1.hoon L166:9
+FIXED-3 tallCencab L207:6 L208:4 L210:0 # hoons/arvo/lib/oauth1.hoon L207:3
+FIXED-3 tallWuthep L225:6 L226:4 L234:0 # hoons/arvo/lib/oauth1.hoon L225:5
+=== hoons/arvo/lib/pretty-file.hoon ===
+=== hoons/arvo/lib/twitter.hoon ===
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/lib/twitter.hoon L34:5
+FIXED-1 tallKetwut L73:-9 # hoons/arvo/lib/twitter.hoon L72:12
+=== hoons/arvo/lib/down-jet.hoon ===
+=== hoons/arvo/lib/oauth2.hoon ===
+FIXED-4 tallCenket LUSLUS-STYLE # hoons/arvo/lib/oauth2.hoon L22:3
+FIXED-1 tallZapdot L32:-13 # hoons/arvo/lib/oauth2.hoon L31:16
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/lib/oauth2.hoon L50:15
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/lib/oauth2.hoon L101:15
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/lib/oauth2.hoon L106:17
+=== hoons/arvo/lib/basic-auth.hoon ===
+=== hoons/arvo/lib/hall-legacy.hoon ===
+FIXED-2 tallTisgar L7:0 L56:0 # hoons/arvo/lib/hall-legacy.hoon L6:1
+FIXED-4 tallWutlus L70:4 L70:7 L71:4 L79:0 # hoons/arvo/lib/hall-legacy.hoon L70:5
+=== hoons/arvo/lib/new-hoon.hoon ===
+FIXED-2 tallBartis L287:4 L288:0 # hoons/arvo/lib/new-hoon.hoon L284:7
+FIXED-2 tallKetlus BACKDENTED # hoons/arvo/lib/new-hoon.hoon L739:9
+FIXED-2 tallTisgal L769:4 L770:-2 # hoons/arvo/lib/new-hoon.hoon L769:9
+FIXED-4 tallCenket SEMSIG-STYLE # hoons/arvo/lib/new-hoon.hoon L1237:5
+FIXED-4 tallCenket SEMSIG-STYLE # hoons/arvo/lib/new-hoon.hoon L1344:5
+FIXED-4 tallCenket SEMSIG-STYLE # hoons/arvo/lib/new-hoon.hoon L1352:5
+FIXED-1 tallBarcen CAST-STYLE # hoons/arvo/lib/new-hoon.hoon L1541:7
+=== hoons/arvo/lib/show-dir.hoon ===
+=== hoons/arvo/lib/hood/helm.hoon ===
+FIXED-2 tallBartis LUSLUS-STYLE # hoons/arvo/lib/hood/helm.hoon L152:3
+FIXED-3 tallTisdot L153:4 L154:0 L160:-2 # hoons/arvo/lib/hood/helm.hoon L153:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/helm.hoon L156:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/helm.hoon L250:7
+=== hoons/arvo/lib/hood/drum.hoon ===
+FIXED-2 tallBuctisMold LUSLUS-STYLE # hoons/arvo/lib/hood/drum.hoon L62:7
+FIXED-4 tallWutlus L541:6 L541:13 L542:4 L583:0 # hoons/arvo/lib/hood/drum.hoon L541:5
+FIXED-3 tallCencab L623:6 L624:4 L637:0 # hoons/arvo/lib/hood/drum.hoon L623:5
+FIXED-3 tallCentis L666:4 L667:4 L685:0 # hoons/arvo/lib/hood/drum.hoon L666:5
+FIXED-2 tallWutpam L668:4 L672:4 # hoons/arvo/lib/hood/drum.hoon L668:11
+FIXED-2 tallWutbar L670:4 L672:-4 # hoons/arvo/lib/hood/drum.hoon L670:15
+FIXED-3 tallCentis L678:4 L679:2 L684:7 # hoons/arvo/lib/hood/drum.hoon L678:7
+FIXED-3 tallWuthep L681:4 L682:2 L684:-7 # hoons/arvo/lib/hood/drum.hoon L681:14
+FIXED-1 ruck5dJog L742:6 # hoons/arvo/lib/hood/drum.hoon L741:7
+FIXED-2 tallWutpam L752:4 L756:4 # hoons/arvo/lib/hood/drum.hoon L752:17
+FIXED-2 tallWutbar L754:4 L756:-4 # hoons/arvo/lib/hood/drum.hoon L754:21
+FIXED-3 tallCencab L802:6 L803:4 L816:0 # hoons/arvo/lib/hood/drum.hoon L802:5
+FIXED-3 tallCencab L804:6 L805:4 L815:0 # hoons/arvo/lib/hood/drum.hoon L804:7
+FIXED-3 tallTisfas L829:4 L830:4 L835:0 # hoons/arvo/lib/hood/drum.hoon L829:5
+FIXED-3 tallCenlus L937:4 L938:0 L944:0 # hoons/arvo/lib/hood/drum.hoon L937:5
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/lib/hood/drum.hoon L939:15
+FIXED-3 tallCollus L951:4 L954:1 L955:1 # hoons/arvo/lib/hood/drum.hoon L951:5
+FIXED-3 tallSemcol L969:4 L970:4 L974:0 # hoons/arvo/lib/hood/drum.hoon L969:5
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/lib/hood/drum.hoon L1002:12
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/lib/hood/drum.hoon L1016:12
+=== hoons/arvo/lib/hood/kiln.hoon ===
+FIXED-2 LuslusCell L13:4 L14:4 # hoons/arvo/lib/hood/kiln.hoon L13:1
+FIXED-2 LuslusCell L22:4 L23:4 # hoons/arvo/lib/hood/kiln.hoon L22:1
+FIXED-2 LuslusCell L33:4 L34:4 # hoons/arvo/lib/hood/kiln.hoon L33:1
+FIXED-2 LuslusCell L38:4 L39:4 # hoons/arvo/lib/hood/kiln.hoon L38:1
+FIXED-2 LuslusCell L43:4 L44:4 # hoons/arvo/lib/hood/kiln.hoon L43:1
+FIXED-2 LuslusCell L48:4 L49:4 # hoons/arvo/lib/hood/kiln.hoon L48:1
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/lib/hood/kiln.hoon L135:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L317:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L327:7
+FIXED-2 tallColsig L347:-14 L353:-16 # hoons/arvo/lib/hood/kiln.hoon L346:23
+FIXED-2 tallColsig L394:4 L397:4 # hoons/arvo/lib/hood/kiln.hoon L394:5
+FIXED-2 tallColtar CAST-STYLE # hoons/arvo/lib/hood/kiln.hoon L394:9
+FIXED-2 tallColsig L403:4 L406:4 # hoons/arvo/lib/hood/kiln.hoon L403:5
+FIXED-2 tallColtar CAST-STYLE # hoons/arvo/lib/hood/kiln.hoon L403:9
+FIXED-4 tallWutlus L432:4 L433:2 L441:4 L445:0 # hoons/arvo/lib/hood/kiln.hoon L432:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L458:7
+FIXED-3 tallWuthep L498:6 L499:4 L508:0 # hoons/arvo/lib/hood/kiln.hoon L498:5
+FIXED-2 LuslusCell L520:4 L521:10 # hoons/arvo/lib/hood/kiln.hoon L520:3
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L569:17
+FIXED-4 tallWutlus L582:6 L583:2 L585:4 L614:0 # hoons/arvo/lib/hood/kiln.hoon L582:5
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L631:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/lib/hood/kiln.hoon L644:9
+FIXED-4 tallCenket L653:4 L654:2 L654:29 L655:0 # hoons/arvo/lib/hood/kiln.hoon L653:13
+FIXED-4 tallCenket L656:4 L657:2 L657:31 L658:0 # hoons/arvo/lib/hood/kiln.hoon L656:13
+=== hoons/arvo/lib/hood/write.hoon ===
+=== hoons/arvo/lib/hood/womb.hoon ===
+FIXED-4 tallWutlus L570:8 L570:20 L571:6 L585:0 # hoons/arvo/lib/hood/womb.hoon L570:3
+FIXED-1 ruck5dJog L572:-4 # hoons/arvo/lib/hood/womb.hoon L571:9
+FIXED-1 ruck5dJog L577:-4 # hoons/arvo/lib/hood/womb.hoon L576:9
+FIXED-1 ruck5dJog L582:-4 # hoons/arvo/lib/hood/womb.hoon L581:9
+FIXED-3 tallCencab L605:6 L606:4 L618:0 # hoons/arvo/lib/hood/womb.hoon L605:3
+FIXED-3 tallCencab L626:6 L627:4 L631:0 # hoons/arvo/lib/hood/womb.hoon L626:3
+FIXED-3 tallWuthep L731:6 L732:4 L738:0 # hoons/arvo/lib/hood/womb.hoon L731:3
+FIXED-4 tallWutlus L768:6 L768:18 L769:4 L782:0 # hoons/arvo/lib/hood/womb.hoon L768:3
+FIXED-3 tallTisdot L848:4 L849:4 L851:0 # hoons/arvo/lib/hood/womb.hoon L848:3
+=== hoons/arvo/lib/hall.hoon ===
+FIXED-2 tallKethep L52:4 L53:-2 # hoons/arvo/lib/hall.hoon L52:7
+FIXED-3 tallCentis L145:4 L146:4 L151:0 # hoons/arvo/lib/hall.hoon L145:5
+SEQUENCE ruck5d 139:5 144:7 # hoons/arvo/lib/hall.hoon L139:5
+FIXED-3 tallCentis L154:4 L155:4 L160:0 # hoons/arvo/lib/hall.hoon L154:5
+SEQUENCE ruck5d 139:5 153:7 # hoons/arvo/lib/hall.hoon L139:5
+FIXED-3 tallCentis L163:4 L164:4 L169:0 # hoons/arvo/lib/hall.hoon L163:5
+SEQUENCE ruck5d 139:5 162:7 # hoons/arvo/lib/hall.hoon L139:5
+FIXED-3 tallCentis L172:4 L173:4 L181:0 # hoons/arvo/lib/hall.hoon L172:5
+FIXED-2 tallDottis L177:4 L178:4 # hoons/arvo/lib/hall.hoon L177:11
+SEQUENCE ruck5d 139:5 171:7 # hoons/arvo/lib/hall.hoon L139:5
+FIXED-3 tallCentis L195:4 L196:4 L202:0 # hoons/arvo/lib/hall.hoon L195:5
+SEQUENCE ruck5d 190:5 194:7 # hoons/arvo/lib/hall.hoon L190:5
+=== hoons/arvo/mar/coffee.hoon ===
+=== hoons/arvo/mar/urb.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/urb.hoon L17:10
+FIXED-1 tallTailOfElem L21:-5 # hoons/arvo/mar/urb.hoon L18:12
+FIXED-1 tallTailOfElem L37:-5 # hoons/arvo/mar/urb.hoon L22:12
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/urb.hoon L26:41
+=== hoons/arvo/mar/mime.hoon ===
+=== hoons/arvo/mar/quri.hoon ===
+=== hoons/arvo/mar/plan-diff.hoon ===
+FIXED-1 wisp5d L11:10 # hoons/arvo/mar/plan-diff.hoon L10:1
+FIXED-1 wisp5d BACKDENTED-2 # hoons/arvo/mar/plan-diff.hoon L10:15
+=== hoons/arvo/mar/noun.hoon ===
+=== hoons/arvo/mar/gmail/req.hoon ===
+=== hoons/arvo/mar/rss-xml.hoon ===
+=== hoons/arvo/mar/tree/json.hoon ===
+=== hoons/arvo/mar/tree/index.hoon ===
+FIXED-1 wisp5d L23:10 # hoons/arvo/mar/tree/index.hoon L12:1
+FIXED-1 wisp5d L23:-10 # hoons/arvo/mar/tree/index.hoon L21:11
+=== hoons/arvo/mar/tree/include.hoon ===
+FIXED-1 wisp5d L8:10 # hoons/arvo/mar/tree/include.hoon L7:1
+FIXED-1 wisp5d BACKDENTED-2 # hoons/arvo/mar/tree/include.hoon L7:15
+=== hoons/arvo/mar/tree/hymn.hoon ===
+FIXED-1 wisp5d L17:10 # hoons/arvo/mar/tree/hymn.hoon L10:1
+FIXED-1 wisp5d L17:-10 # hoons/arvo/mar/tree/hymn.hoon L16:11
+=== hoons/arvo/mar/tree/elem.hoon ===
+FIXED-1 wisp5d L8:10 # hoons/arvo/mar/tree/elem.hoon L7:1
+FIXED-1 wisp5d BACKDENTED-2 # hoons/arvo/mar/tree/elem.hoon L7:15
+=== hoons/arvo/mar/tree/comments.hoon ===
+FIXED-1 wisp5d L26:10 # hoons/arvo/mar/tree/comments.hoon L12:1
+FIXED-1 wisp5d L26:-10 # hoons/arvo/mar/tree/comments.hoon L24:11
+=== hoons/arvo/mar/ships.hoon ===
+=== hoons/arvo/mar/purl.hoon ===
+=== hoons/arvo/mar/hoon.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/hoon.hoon L26:10
+FIXED-1 tallTailOfElem L34:-5 # hoons/arvo/mar/hoon.hoon L27:12
+FIXED-1 tallTailOfElem L38:-5 # hoons/arvo/mar/hoon.hoon L35:12
+=== hoons/arvo/mar/lens/command.hoon ===
+FIXED-3 tallSemsig L36:4 L37:4 L39:0 # hoons/arvo/mar/lens/command.hoon L36:9
+SEQUENCE tall5dSeq 36:9 37:13 # hoons/arvo/mar/lens/command.hoon L36:9
+SEQUENCE tall5dSeq 36:9 38:13 # hoons/arvo/mar/lens/command.hoon L36:9
+FIXED-3 tallSemsig L54:4 L55:4 L57:0 # hoons/arvo/mar/lens/command.hoon L54:9
+SEQUENCE tall5dSeq 54:9 55:13 # hoons/arvo/mar/lens/command.hoon L54:9
+SEQUENCE tall5dSeq 54:9 56:13 # hoons/arvo/mar/lens/command.hoon L54:9
+=== hoons/arvo/mar/lens/json.hoon ===
+FIXED-1 wisp5d L12:10 # hoons/arvo/mar/lens/json.hoon L9:1
+FIXED-1 wisp5d BACKDENTED-2 # hoons/arvo/mar/lens/json.hoon L11:15
+=== hoons/arvo/mar/helm-hi.hoon ===
+=== hoons/arvo/mar/write/wipe.hoon ===
+=== hoons/arvo/mar/write/plan-info.hoon ===
+=== hoons/arvo/mar/write/paste.hoon ===
+=== hoons/arvo/mar/write/tree.hoon ===
+=== hoons/arvo/mar/plan.hoon ===
+=== hoons/arvo/mar/gh/list-issues.hoon ===
+=== hoons/arvo/mar/gh/commit.hoon ===
+=== hoons/arvo/mar/gh/issue-comment.hoon ===
+FIXED-3 tallSemcol L12:4 L13:4 L17:0 # hoons/arvo/mar/gh/issue-comment.hoon L12:9
+=== hoons/arvo/mar/gh/issues.hoon ===
+FIXED-3 tallWuthep L12:6 L13:4 L80:0 # hoons/arvo/mar/gh/issues.hoon L12:9
+FIXED-3 tallSemcol L14:4 L15:4 L22:0 # hoons/arvo/mar/gh/issues.hoon L14:11
+FIXED-3 tallSemcol L25:4 L26:4 L33:0 # hoons/arvo/mar/gh/issues.hoon L25:11
+FIXED-3 tallSemcol L36:4 L37:4 L44:0 # hoons/arvo/mar/gh/issues.hoon L36:11
+FIXED-3 tallSemcol L47:4 L48:4 L55:0 # hoons/arvo/mar/gh/issues.hoon L47:11
+FIXED-3 tallSemcol L58:4 L59:4 L63:0 # hoons/arvo/mar/gh/issues.hoon L58:11
+FIXED-3 tallSemcol L66:4 L67:4 L71:0 # hoons/arvo/mar/gh/issues.hoon L66:11
+FIXED-3 tallSemcol L74:4 L75:4 L79:0 # hoons/arvo/mar/gh/issues.hoon L74:11
+FIXED-3 tallWuthep L94:6 L95:4 L116:0 # hoons/arvo/mar/gh/issues.hoon L94:9
+=== hoons/arvo/mar/gh/poke.hoon ===
+=== hoons/arvo/mar/gh/issue.hoon ===
+=== hoons/arvo/mar/gh/repository.hoon ===
+=== hoons/arvo/mar/json.hoon ===
+=== hoons/arvo/mar/email.hoon ===
+=== hoons/arvo/mar/womb/part.hoon ===
+FIXED-1 wisp5d L12:10 # hoons/arvo/mar/womb/part.hoon L7:1
+FIXED-1 wisp5d BACKDENTED-2 # hoons/arvo/mar/womb/part.hoon L10:15
+=== hoons/arvo/mar/womb/invite.hoon ===
+=== hoons/arvo/mar/womb/claim.hoon ===
+=== hoons/arvo/mar/womb/bonus.hoon ===
+=== hoons/arvo/mar/womb/do-claim.hoon ===
+=== hoons/arvo/mar/womb/ticket-info.hoon ===
+=== hoons/arvo/mar/womb/balance.hoon ===
+=== hoons/arvo/mar/womb/replay-log.hoon ===
+=== hoons/arvo/mar/womb/stat-all.hoon ===
+=== hoons/arvo/mar/womb/do-ticket.hoon ===
+=== hoons/arvo/mar/womb/recycle.hoon ===
+=== hoons/arvo/mar/dill/belt.hoon ===
+=== hoons/arvo/mar/dill/blit.hoon ===
+=== hoons/arvo/mar/down.hoon ===
+FIXED-2 LuslusCell L25:4 L26:4 # hoons/arvo/mar/down.hoon L25:3
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/down.hoon L26:12
+FIXED-1 tallTailOfElem L30:-5 # hoons/arvo/mar/down.hoon L28:14
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/down.hoon L33:9
+=== hoons/arvo/mar/httr.hoon ===
+=== hoons/arvo/mar/tang.hoon ===
+FIXED-2 tallKethep BACKDENTED-2 # hoons/arvo/mar/tang.hoon L13:25
+=== hoons/arvo/mar/atom.hoon ===
+=== hoons/arvo/mar/path.hoon ===
+=== hoons/arvo/mar/snip.hoon ===
+FIXED-1 tallBarcen LUSLUS-STYLE # hoons/arvo/mar/snip.hoon L6:1
+FIXED-1 wisp5d JOG-STYLE # hoons/arvo/mar/snip.hoon L7:3
+FIXED-2 tallKethep L26:4 L27:-2 # hoons/arvo/mar/snip.hoon L26:9
+FIXED-1 wisp5d L61:10 # hoons/arvo/mar/snip.hoon L47:1
+FIXED-1 wisp5d L61:-10 # hoons/arvo/mar/snip.hoon L59:11
+=== hoons/arvo/mar/urbit.hoon ===
+=== hoons/arvo/mar/md.hoon ===
+=== hoons/arvo/mar/twit/cred.hoon ===
+=== hoons/arvo/mar/twit/feed.hoon ===
+=== hoons/arvo/mar/twit/post.hoon ===
+=== hoons/arvo/mar/twit/usel.hoon ===
+=== hoons/arvo/mar/twit/req.hoon ===
+=== hoons/arvo/mar/css.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/css.hoon L10:23
+=== hoons/arvo/mar/hymn.hoon ===
+FIXED-1 wisp5d L16:10 # hoons/arvo/mar/hymn.hoon L9:1
+FIXED-1 wisp5d L16:-10 # hoons/arvo/mar/hymn.hoon L15:11
+=== hoons/arvo/mar/ask-mail.hoon ===
+=== hoons/arvo/mar/xml.hoon ===
+FIXED-1 wisp5d L20:10 # hoons/arvo/mar/xml.hoon L12:1
+FIXED-1 wisp5d L20:-10 # hoons/arvo/mar/xml.hoon L18:11
+=== hoons/arvo/mar/recoverable-error.hoon ===
+=== hoons/arvo/mar/jam.hoon ===
+=== hoons/arvo/mar/txt-diff.hoon ===
+=== hoons/arvo/mar/umd.hoon ===
+=== hoons/arvo/mar/elem.hoon ===
+FIXED-1 wisp5d L18:10 # hoons/arvo/mar/elem.hoon L9:1
+FIXED-1 wisp5d L18:-10 # hoons/arvo/mar/elem.hoon L17:11
+=== hoons/arvo/mar/sole/action.hoon ===
+=== hoons/arvo/mar/sole/effect.hoon ===
+FIXED-2 LuslusCell L18:4 L19:-2 # hoons/arvo/mar/sole/effect.hoon L18:9
+FIXED-3 tallCenlus CAST-STYLE # hoons/arvo/mar/sole/effect.hoon L40:13
+FIXED-4 tallWutlus L56:6 L56:13 L57:4 L68:0 # hoons/arvo/mar/sole/effect.hoon L56:5
+FIXED-4 tallWutlus L72:6 L73:10 L74:4 L86:0 # hoons/arvo/mar/sole/effect.hoon L72:5
+=== hoons/arvo/mar/js.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/mar/js.hoon L11:20
+=== hoons/arvo/mar/markdown.hoon ===
+=== hoons/arvo/mar/front.hoon ===
+FIXED-1 wisp5d L20:10 # hoons/arvo/mar/front.hoon L10:1
+FIXED-1 wisp5d L20:-10 # hoons/arvo/mar/front.hoon L18:11
+=== hoons/arvo/mar/fora/post.hoon ===
+=== hoons/arvo/mar/fora/comment.hoon ===
+=== hoons/arvo/mar/will.hoon ===
+=== hoons/arvo/mar/jam-crub.hoon ===
+=== hoons/arvo/mar/html.hoon ===
+=== hoons/arvo/mar/txt.hoon ===
+FIXED-2 tallBarket L42:0 L83:0 # hoons/arvo/mar/txt.hoon L41:5
+FIXED-3 tallWuthep L47:6 L48:4 L82:0 # hoons/arvo/mar/txt.hoon L47:5
+FIXED-3 tallWuthep L49:6 L50:4 L68:0 # hoons/arvo/mar/txt.hoon L49:7
+FIXED-3 tallWuthep L71:4 L72:4 L81:0 # hoons/arvo/mar/txt.hoon L71:7
+FIXED-2 tallBarket L103:0 L147:0 # hoons/arvo/mar/txt.hoon L102:5
+FIXED-3 tallWuthep L108:6 L109:4 L145:0 # hoons/arvo/mar/txt.hoon L108:5
+FIXED-3 tallWuthep L110:6 L111:4 L127:0 # hoons/arvo/mar/txt.hoon L110:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/mar/txt.hoon L123:13
+FIXED-3 tallWuthep L130:4 L131:4 L144:0 # hoons/arvo/mar/txt.hoon L130:7
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/mar/txt.hoon L132:13
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/mar/txt.hoon L141:13
+FIXED-2 tallColcab BACKDENTED # hoons/arvo/mar/txt.hoon L157:11
+FIXED-2 tallColcab BACKDENTED # hoons/arvo/mar/txt.hoon L169:11
+FIXED-3 tallWuthep L203:6 L204:4 L268:0 # hoons/arvo/mar/txt.hoon L203:7
+FIXED-3 tallWuthep L205:6 L206:4 L226:0 # hoons/arvo/mar/txt.hoon L205:9
+FIXED-3 tallWuthep L229:6 L230:4 L267:0 # hoons/arvo/mar/txt.hoon L229:9
+=== hoons/arvo/mar/hall/action.hoon ===
+=== hoons/arvo/mar/hall/rumor.hoon ===
+=== hoons/arvo/mar/hall/telegrams.hoon ===
+=== hoons/arvo/mar/hall/speeches.hoon ===
+=== hoons/arvo/mar/hall/command.hoon ===
+=== hoons/arvo/mar/hall/prize.hoon ===
+=== hoons/arvo/mar/unicode-data.hoon ===
+=== hoons/arvo/mar/drum-put.hoon ===
+=== hoons/arvo/mar/static/action.hoon ===
+=== hoons/arvo/web/unmark/test.hoon ===
+FIXED-1 tallTopSail BACKDENTED-1 # hoons/arvo/web/unmark/test.hoon L2:6
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/web/unmark/test.hoon L6:7
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/web/unmark/test.hoon L8:3
+=== hoons/arvo/web/unmark/all.hoon ===
+FIXED-2 fordFascol BACKDENTED CAST-STYLE # hoons/arvo/web/unmark/all.hoon L9:3
+FIXED-3 tallWuthep L30:4 L31:2 L35:6 # hoons/arvo/web/unmark/all.hoon L30:3
+FIXED-1 tallTailOfElem L35:-10 # hoons/arvo/web/unmark/all.hoon L32:13
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/web/unmark/all.hoon L49:5
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/web/unmark/all.hoon L56:4
+FIXED-1 tallTailOfElem L64:-3 # hoons/arvo/web/unmark/all.hoon L57:6
+FIXED-1 tallTailOfElem L63:-3 # hoons/arvo/web/unmark/all.hoon L58:8
+=== hoons/arvo/web/listen.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/web/listen.hoon L5:17
+=== hoons/arvo/web/404.hoon ===
+=== hoons/arvo/web/pack/js/tree-urb.hoon ===
+FIXED-2 fordFasket LUSLUS-STYLE # hoons/arvo/web/pack/js/tree-urb.hoon L5:1
+=== hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon ===
+FIXED-2 fordFasket LUSLUS-STYLE # hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon L5:1
+=== hoons/arvo/web/dojo.hoon ===
+FIXED-2 tallAttribute L14:-3 L14:10 # hoons/arvo/web/dojo.hoon L13:8
+FIXED-2 tallAttribute L15:-19 L15:-5 # hoons/arvo/web/dojo.hoon L14:24
+FIXED-2 tallAttribute L16:-16 L16:-2 # hoons/arvo/web/dojo.hoon L15:21
+FIXED-1 tallTailOfElem L27:-20 # hoons/arvo/web/dojo.hoon L16:21
+=== hoons/arvo/web/talk.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/web/talk.hoon L5:85
+=== hoons/arvo/web/womb.hoon ===
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/web/womb.hoon L5:59
+=== hoons/arvo/ren/urb.hoon ===
+FIXED-1 fordFascomElement L8:-4 # hoons/arvo/ren/urb.hoon L7:15
+FIXED-1 fordFascomElement L13:-4 # hoons/arvo/ren/urb.hoon L9:15
+FIXED-2 tallColhep L17:4 L18:4 # hoons/arvo/ren/urb.hoon L17:17
+FIXED-2 tallColhep L19:4 L20:4 # hoons/arvo/ren/urb.hoon L19:15
+FIXED-1 fordFascomElement L24:-4 # hoons/arvo/ren/urb.hoon L23:15
+=== hoons/arvo/ren/rss-xml.hoon ===
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/ren/rss-xml.hoon L22:11
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/ren/rss-xml.hoon L23:20
+FIXED-1 tallTailOfElem L35:-8 # hoons/arvo/ren/rss-xml.hoon L24:11
+FIXED-1 tallTailOfElem BACKDENTED-2 # hoons/arvo/ren/rss-xml.hoon L30:14
+=== hoons/arvo/ren/tree/body.hoon ===
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/ren/tree/body.hoon L23:3
+=== hoons/arvo/ren/tree/json.hoon ===
+=== hoons/arvo/ren/tree/index.hoon ===
+FIXED-2 fordFascom L6:10 L14:4 # hoons/arvo/ren/tree/index.hoon L6:1
+FIXED-1 fordFascomElement L7:-6 # hoons/arvo/ren/tree/index.hoon L6:11
+FIXED-1 fordFascomElement L10:-6 # hoons/arvo/ren/tree/index.hoon L9:11
+FIXED-2 fordFasdot L12:6 L14:-4 # hoons/arvo/ren/tree/index.hoon L12:5
+=== hoons/arvo/ren/tree/include.hoon ===
+=== hoons/arvo/ren/tree/elem.hoon ===
+FIXED-2 fordFascom L6:-2 L8:0 # hoons/arvo/ren/tree/elem.hoon L5:7
+=== hoons/arvo/ren/tree/head.hoon ===
+FIXED-2 fordFascol BACKDENTED CAST-STYLE # hoons/arvo/ren/tree/head.hoon L19:17
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/ren/tree/head.hoon L32:3
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/ren/tree/head.hoon L38:11
+FIXED-1 tallTailOfTop JOG-STYLE # hoons/arvo/ren/tree/head.hoon L59:11
+=== hoons/arvo/ren/tree/combine.hoon ===
+=== hoons/arvo/ren/tree/comments.hoon ===
+FIXED-2 fordFascol LUSLUS-STYLE # hoons/arvo/ren/tree/comments.hoon L5:1
+FIXED-1 fordFascab BACKDENTED CAST-STYLE # hoons/arvo/ren/tree/comments.hoon L10:3
+=== hoons/arvo/ren/urb/tree.hoon ===
+=== hoons/arvo/ren/css.hoon ===
+=== hoons/arvo/ren/test-tree.hoon ===
+=== hoons/arvo/ren/run.hoon ===
+=== hoons/arvo/ren/js.hoon ===
+=== hoons/arvo/gen/pipe/cancel.hoon ===
+=== hoons/arvo/gen/pipe/connect.hoon ===
+=== hoons/arvo/gen/pipe/list.hoon ===
+=== hoons/arvo/gen/glass.hoon ===
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/gen/glass.hoon L27:5
+FIXED-2 tallBartis L100:4 L101:0 # hoons/arvo/gen/glass.hoon L98:3
+FIXED-4 tallTiswut L120:4 L120:9 L124:4 L127:0 # hoons/arvo/gen/glass.hoon L120:3
+=== hoons/arvo/gen/test.hoon ===
+FIXED-2 fordFascol BACKDENTED CAST-STYLE # hoons/arvo/gen/test.hoon L4:3
+FIXED-3 tallWuthep L25:4 L26:4 L31:0 # hoons/arvo/gen/test.hoon L25:3
+FIXED-1 ruck5dJog L41:4 # hoons/arvo/gen/test.hoon L40:5
+=== hoons/arvo/gen/gmail/list.hoon ===
+=== hoons/arvo/gen/gmail/send.hoon ===
+=== hoons/arvo/gen/hello.hoon ===
+=== hoons/arvo/gen/al.hoon ===
+FIXED-3 tallWuthep L28:6 L29:4 L76:0 # hoons/arvo/gen/al.hoon L28:5
+FIXED-3 tallWuthep L88:6 L90:4 L117:0 # hoons/arvo/gen/al.hoon L88:5
+FIXED-3 tallWuthep L132:6 L133:4 L177:0 # hoons/arvo/gen/al.hoon L132:5
+FIXED-2 tallBuccolMold L193:4 L195:0 # hoons/arvo/gen/al.hoon L190:9
+FIXED-3 tallWuthep L201:6 L202:4 L237:0 # hoons/arvo/gen/al.hoon L201:7
+FIXED-2 tallBuccolMold L256:4 L258:0 # hoons/arvo/gen/al.hoon L253:11
+FIXED-2 tallBuccolMold L294:4 L296:0 # hoons/arvo/gen/al.hoon L291:11
+FIXED-3 tallWuthep L366:6 L370:4 L455:0 # hoons/arvo/gen/al.hoon L366:7
+=== hoons/arvo/gen/solid.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/solid.hoon L11:3
+FIXED-1 tallBardot BACKDENTED-2 # hoons/arvo/gen/solid.hoon L26:24
+=== hoons/arvo/gen/ticket.hoon ===
+FIXED-1 tallZapdot JOG-STYLE # hoons/arvo/gen/ticket.hoon L8:3
+=== hoons/arvo/gen/ivory.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/ivory.hoon L7:3
+=== hoons/arvo/gen/moon.hoon ===
+=== hoons/arvo/gen/womb/balances.hoon ===
+=== hoons/arvo/gen/womb/balance.hoon ===
+=== hoons/arvo/gen/womb/stats.hoon ===
+=== hoons/arvo/gen/womb/shop.hoon ===
+=== hoons/arvo/gen/metal.hoon ===
+FIXED-2 tallTiscom LUSLUS-STYLE # hoons/arvo/gen/metal.hoon L6:1
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/metal.hoon L9:3
+FIXED-1 tallZaptis L68:4 # hoons/arvo/gen/metal.hoon L62:5
+FIXED-2 tallColtar L90:4 L103:0 # hoons/arvo/gen/metal.hoon L88:9
+FIXED-2 tallColcab BACKDENTED # hoons/arvo/gen/metal.hoon L104:9
+FIXED-2 tallKethep BACKDENTED # hoons/arvo/gen/metal.hoon L181:9
+FIXED-2 tallColsig L185:4 L239:0 # hoons/arvo/gen/metal.hoon L182:9
+FIXED-2 tallBartis L244:4 L245:0 # hoons/arvo/gen/metal.hoon L242:7
+FIXED-4 tallTiswut L266:4 L266:9 L267:4 L282:0 # hoons/arvo/gen/metal.hoon L266:7
+FIXED-3 tallWuthep L277:6 L278:4 L281:0 # hoons/arvo/gen/metal.hoon L277:11
+=== hoons/arvo/gen/musk.hoon ===
+FIXED-2 tallBuccen L43:4 L47:0 # hoons/arvo/gen/musk.hoon L41:9
+FIXED-2 tallBuccolMold L83:4 L84:0 # hoons/arvo/gen/musk.hoon L81:9
+FIXED-2 tallBuccolMold L107:4 L109:0 # hoons/arvo/gen/musk.hoon L104:9
+FIXED-4 tallWutlus L143:6 L146:4 L149:4 L269:0 # hoons/arvo/gen/musk.hoon L143:5
+FIXED-2 tallBartis L175:4 L178:0 # hoons/arvo/gen/musk.hoon L173:7
+FIXED-2 tallBartis L193:4 L196:0 # hoons/arvo/gen/musk.hoon L191:7
+FIXED-2 tallBartis L205:4 L208:0 # hoons/arvo/gen/musk.hoon L203:7
+FIXED-2 tallBartis L217:4 L220:0 # hoons/arvo/gen/musk.hoon L215:7
+FIXED-2 tallBuccolMold L277:4 L279:0 # hoons/arvo/gen/musk.hoon L274:9
+FIXED-2 tallBuccolMold L303:4 L305:0 # hoons/arvo/gen/musk.hoon L300:9
+FIXED-3 tallWuthep L314:4 L317:2 L335:6 # hoons/arvo/gen/musk.hoon L314:5
+FIXED-1 ruck5dJog L319:4 # hoons/arvo/gen/musk.hoon L317:7
+FIXED-1 ruck5dJog L330:4 # hoons/arvo/gen/musk.hoon L328:7
+FIXED-3 tallCentis L330:4 L331:2 L335:-6 # hoons/arvo/gen/musk.hoon L330:11
+=== hoons/arvo/gen/serving.hoon ===
+=== hoons/arvo/gen/ls.hoon ===
+=== hoons/arvo/gen/twit/as.hoon ===
+=== hoons/arvo/gen/twit/feed.hoon ===
+=== hoons/arvo/gen/help.hoon ===
+FIXED-2 tallKethep BACKDENTED-2 # hoons/arvo/gen/help.hoon L48:22
+FIXED-2 tallTisgal BACKDENTED # hoons/arvo/gen/help.hoon L55:5
+=== hoons/arvo/gen/ask/admins.hoon ===
+=== hoons/arvo/gen/brass.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/brass.hoon L7:3
+FIXED-1 tallZaptis L66:4 # hoons/arvo/gen/brass.hoon L60:5
+FIXED-2 tallColtar L88:4 L101:0 # hoons/arvo/gen/brass.hoon L86:9
+FIXED-2 tallColcab BACKDENTED # hoons/arvo/gen/brass.hoon L102:9
+FIXED-2 tallColsig L192:4 L225:0 # hoons/arvo/gen/brass.hoon L189:9
+FIXED-2 tallBartis L251:4 L252:0 # hoons/arvo/gen/brass.hoon L249:5
+FIXED-4 tallTiswut L273:4 L273:9 L274:4 L289:0 # hoons/arvo/gen/brass.hoon L273:5
+FIXED-3 tallWuthep L284:6 L285:4 L288:0 # hoons/arvo/gen/brass.hoon L284:9
+=== hoons/arvo/gen/tree.hoon ===
+FIXED-2 tallCenhep CAST-STYLE # hoons/arvo/gen/tree.hoon L13:12
+=== hoons/arvo/gen/capitalize.hoon ===
+FIXED-1 rick5dJog LUSLUS-STYLE # hoons/arvo/gen/capitalize.hoon L40:11
+FIXED-4 tallTiswut L72:4 L72:15 L73:3 L74:0 # hoons/arvo/gen/capitalize.hoon L72:9
+FIXED-2 tallBuccol L159:4 L164:0 # hoons/arvo/gen/capitalize.hoon L158:9
+SEQUENCE ruck5d 263:5 267:7 # hoons/arvo/gen/capitalize.hoon L263:5
+=== hoons/arvo/gen/bug.hoon ===
+=== hoons/arvo/gen/code.hoon ===
+=== hoons/arvo/gen/curl-hiss.hoon ===
+FIXED-2 tallBartis CAST-STYLE # hoons/arvo/gen/curl-hiss.hoon L10:11
+=== hoons/arvo/gen/cat.hoon ===
+FIXED-3 tallWuthep L21:7 L22:4 L33:0 # hoons/arvo/gen/cat.hoon L21:1
+=== hoons/arvo/gen/curl/url.hoon ===
+=== hoons/arvo/gen/curl.hoon ===
+FIXED-2 tallBartis CAST-STYLE # hoons/arvo/gen/curl.hoon L10:11
+=== hoons/arvo/gen/hood/sync.hoon ===
+=== hoons/arvo/gen/hood/replay-womb-log.hoon ===
+=== hoons/arvo/gen/hood/mv.hoon ===
+FIXED-2 tallColhep CAST-STYLE # hoons/arvo/gen/hood/mv.hoon L17:14
+=== hoons/arvo/gen/hood/unlink.hoon ===
+=== hoons/arvo/gen/hood/rekey.hoon ===
+=== hoons/arvo/gen/hood/commit.hoon ===
+=== hoons/arvo/gen/hood/reset.hoon ===
+=== hoons/arvo/gen/hood/cp.hoon ===
+=== hoons/arvo/gen/hood/obey.hoon ===
+=== hoons/arvo/gen/hood/label.hoon ===
+=== hoons/arvo/gen/hood/cancel.hoon ===
+=== hoons/arvo/gen/hood/begin.hoon ===
+=== hoons/arvo/gen/hood/manage-old-key.hoon ===
+=== hoons/arvo/gen/hood/invite.hoon ===
+FIXED-1 tallKetsig CAST-STYLE # hoons/arvo/gen/hood/invite.hoon L19:16
+=== hoons/arvo/gen/hood/tlon/init-stream.hoon ===
+=== hoons/arvo/gen/hood/tlon/add-fora.hoon ===
+=== hoons/arvo/gen/hood/tlon/add-stream.hoon ===
+=== hoons/arvo/gen/hood/ping.hoon ===
+=== hoons/arvo/gen/hood/claim.hoon ===
+=== hoons/arvo/gen/hood/hi.hoon ===
+=== hoons/arvo/gen/hood/serve.hoon ===
+=== hoons/arvo/gen/hood/deset.hoon ===
+=== hoons/arvo/gen/hood/reload.hoon ===
+=== hoons/arvo/gen/hood/init-oauth2.hoon ===
+=== hoons/arvo/gen/hood/rm.hoon ===
+=== hoons/arvo/gen/hood/manage.hoon ===
+=== hoons/arvo/gen/hood/autoload.hoon ===
+=== hoons/arvo/gen/hood/schedule.hoon ===
+=== hoons/arvo/gen/hood/reload-desk.hoon ===
+=== hoons/arvo/gen/hood/bonus.hoon ===
+=== hoons/arvo/gen/hood/unmount.hoon ===
+=== hoons/arvo/gen/hood/release-ships.hoon ===
+=== hoons/arvo/gen/hood/exit.hoon ===
+=== hoons/arvo/gen/hood/merge.hoon ===
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/gen/hood/merge.hoon L24:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/gen/hood/merge.hoon L27:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/gen/hood/merge.hoon L31:7
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/gen/hood/merge.hoon L35:7
+=== hoons/arvo/gen/hood/rf.hoon ===
+=== hoons/arvo/gen/hood/report.hoon ===
+=== hoons/arvo/gen/hood/verb.hoon ===
+=== hoons/arvo/gen/hood/mount.hoon ===
+=== hoons/arvo/gen/hood/breload.hoon ===
+=== hoons/arvo/gen/hood/syncs.hoon ===
+=== hoons/arvo/gen/hood/public.hoon ===
+=== hoons/arvo/gen/hood/private.hoon ===
+=== hoons/arvo/gen/hood/nuke.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/hood/nuke.hoon L8:3
+=== hoons/arvo/gen/hood/mass.hoon ===
+=== hoons/arvo/gen/hood/overload.hoon ===
+=== hoons/arvo/gen/hood/reinvite.hoon ===
+=== hoons/arvo/gen/hood/ask.hoon ===
+=== hoons/arvo/gen/hood/start.hoon ===
+=== hoons/arvo/gen/hood/transfer.hoon ===
+=== hoons/arvo/gen/hood/load.hoon ===
+FIXED-1 ruck5dJog LUSLUS-STYLE # hoons/arvo/gen/hood/load.hoon L17:3
+=== hoons/arvo/gen/hood/track.hoon ===
+=== hoons/arvo/gen/hood/save.hoon ===
+=== hoons/arvo/gen/hood/rc.hoon ===
+=== hoons/arvo/gen/hood/init-oauth2/google.hoon ===
+FIXED-2 tallSigbar BACKDENTED # hoons/arvo/gen/hood/init-oauth2/google.hoon L29:5
+=== hoons/arvo/gen/hood/wipe-ford.hoon ===
+FIXED-1 tallZapcol JOG-STYLE # hoons/arvo/gen/hood/wipe-ford.hoon L8:3
+=== hoons/arvo/gen/hood/init-oauth1.hoon ===
+=== hoons/arvo/gen/hood/init-auth-basic.hoon ===
+=== hoons/arvo/gen/hood/unsync.hoon ===
+=== hoons/arvo/gen/hood/reboot.hoon ===
+=== hoons/arvo/gen/hood/release.hoon ===
+=== hoons/arvo/gen/hood/link.hoon ===
+=== hoons/arvo/gen/pope.hoon ===
+=== hoons/arvo/gen/deco.hoon ===
+FIXED-2 tallTisgar L95:4 L143:0 # hoons/arvo/gen/deco.hoon L81:1
+FIXED-2 tallBartis L149:4 L150:0 # hoons/arvo/gen/deco.hoon L147:3
+FIXED-2 tallBartis L166:4 L169:0 # hoons/arvo/gen/deco.hoon L164:3
+=== hoons/arvo/gen/hall/log.hoon ===
+=== hoons/arvo/gen/hall/load-legacy.hoon ===
+=== hoons/arvo/gen/hall/load.hoon ===
+=== hoons/arvo/gen/hall/save.hoon ===
+=== hoons/arvo/gen/hall/unlog.hoon ===
+=== hoons/arvo/gen/static/build.hoon ===

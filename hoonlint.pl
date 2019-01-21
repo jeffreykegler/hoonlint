@@ -103,27 +103,25 @@ my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 my $dsl = $parser->dsl();
 my $grammar = $parser->rawGrammar();
 
-# Preferred runes for alignment.  At this point all the tall ones
-# except CENDOT (%.); KETHEP (^-); KETLUS (^+); SIGBAR (~|).
 my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
       or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
 } map { $grammar->symbol_name($_); } $grammar->symbol_ids();
 
 # TODO: wisp5d needs study -- may depend on parent
-my %tallAnnotationRule = map { +( $_, 1 ) } qw(
+my %tallNoteRule = map { +( $_, 1 ) } qw(
   tallBarhep tallBardot
   tallCendot tallColcab tallColsig
   tallKethep tallKetlus tallKetwut
-  tallSigbar tallSigcab tallSiglus
+  tallSigbar tallSigcab tallSigfas tallSiglus
   tallTisbar tallTiscom tallTisgal
   tallWutgal tallWutgar tallWuttis
   tallZapgar wisp5d
   tallTailOfElem tallTailOfTop
 );
 
-my %tallMainRule =
-  map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
+my %tallBodyRule =
+  map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
 my %tallSemsigRule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
@@ -171,7 +169,6 @@ my %tallBackdentRule = map { +( $_, 1 ) } qw(
   tallKettis
   tallSigbuc
   tallSigcen
-  tallSigfas
   tallSiggar
   tallSigpam
   tallSigwut
@@ -200,7 +197,7 @@ my %tallBackdentRule = map { +( $_, 1 ) } qw(
   tallZapwut
 );
 
-# say Data::Dumper::Dumper(\%tallMainRule);
+# say Data::Dumper::Dumper(\%tallBodyRule);
 
 my %separator = qw(
   hyf4jSeq DOT
@@ -539,10 +536,10 @@ sub doLint {
         # say "line $parentLine: indents: ", (join " ", @parentIndents);
     }
 
-    my $argPreferredIndent = $argContext->{preferredIndent};
+    my $argBodyIndent = $argContext->{bodyIndent};
     my $argTallRuneIndent  = $argContext->{tallRuneIndent};
-    my $parentPreferredIndent;
-    $parentPreferredIndent = $argPreferredIndent if $argLine == $parentLine;
+    my $parentBodyIndent;
+    $parentBodyIndent = $argBodyIndent if $argLine == $parentLine;
     my $parentTallRuneIndent;
     $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
     my $parentContext = {
@@ -550,15 +547,15 @@ sub doLint {
         line      => $parentLine,
         indents   => [@parentIndents],
     };
-    $parentContext->{preferredIndent} = $parentPreferredIndent
-      if defined $parentPreferredIndent;
+    $parentContext->{bodyIndent} = $parentBodyIndent
+      if defined $parentBodyIndent;
     $parentContext->{tallRuneIndent} = $parentTallRuneIndent
       if defined $parentTallRuneIndent;
 
-    # annotations align with preferred indent from ancestor, if there is one;
+    # notes align with body indent from ancestor, if there is one;
     # otherwise, with the parent tall rune (if one exists);
     # otherwise with the parent.
-    my $annotationIndent = ( $parentPreferredIndent // $parentTallRuneIndent )
+    my $noteIndent = ( $parentBodyIndent // $parentTallRuneIndent )
       // $parentColumn;
 
   NODE: {
@@ -590,8 +587,13 @@ sub doLint {
         my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
         my $lhsName = $grammar->symbol_name($lhs);
 
-        $parentContext->{preferredIndent} = $parentColumn
-          if $tallMainRule{$lhsName};
+        $parentContext->{bodyIndent} = $parentColumn
+          if $tallBodyRule{$lhsName};
+
+        # TODO: Is this right?  It means another suppression in toe.hoon.
+        # $parentContext->{bodyIndent} = $parentColumn+2
+          # if $tallLuslusRule{$lhsName};
+
         $parentContext->{tallRuneIndent} = $parentColumn
           if $tallRuneRule{$lhsName};
 
@@ -911,8 +913,8 @@ sub doLint {
                     last TYPE_INDENT;
                 }
 
-                if ( $tallAnnotationRule{$lhsName} ) {
-                    if ( isBackdented( \@gapIndents, $annotationIndent )) {
+                if ( $tallNoteRule{$lhsName} ) {
+                    if ( isBackdented( \@gapIndents, $noteIndent )) {
                         $indentDesc = 'CAST-STYLE';
                         last TYPE_INDENT;
                     }
@@ -944,7 +946,7 @@ sub doLint {
                 {
                     my @patterns = ();
                     push @patterns, 'BACKDENTED' if isBackdented( \@gapIndents);
-                    push @patterns, 'CAST-STYLE' if isBackdented( \@gapIndents, $annotationIndent);
+                    push @patterns, 'CAST-STYLE' if isBackdented( \@gapIndents, $noteIndent);
                     push @patterns, 'LUSLUS-STYLE'
                       if isLuslusStyle( \@gapIndents );
                     push @patterns, 'JOG-STYLE'

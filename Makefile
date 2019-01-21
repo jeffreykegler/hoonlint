@@ -1,7 +1,7 @@
 
 
 .PHONY: all test test_suite undoc_tests \
-  msg count_todo
+  msg count_todo arvo_lint
 
 all: test
 
@@ -22,6 +22,13 @@ ast_reset: yahc.pm
 	perl -I. yahcfilt.pl <t/ast.d/sieve_b.hoon >t/ast.d/sieve_b.ast
 	perl -I. yahcfilt.pl <t/ast.d/sieve_k.hoon >t/ast.d/sieve_k.ast
 	perl -I. yahcfilt.pl <t/ast.d/toe.hoon >t/ast.d/toe.ast
+
+arvo_lint: 
+	find hoons -name '*.hoon' | \
+	while read f; do \
+	  echo === $$f ===; \
+	  perl hoonlint.pl --sup=arvo.suppressions $$f; \
+	done > arvo.lint.out
 
 dev:
 	echo empty dev target
