@@ -14,8 +14,8 @@
 39 scat5d ::= circumParen2
 33 till5d ::= wyde5d
 24 scad5d ::= rump5d
-23 boog5d ::= lusLusCell
-23 lusLusCell ::= LUS LUS GAP SYM4K GAP tall5d
+23 LuslusCell ::= LUS LUS GAP SYM4K GAP tall5d
+23 boog5d ::= LuslusCell
 22 bisk4l ::= NUMBER
 22 scat5d ::= bisk4l
 21 wyde5dSeq ::= wyde5d
@@ -163,6 +163,10 @@
 1 wideWutgal ::= WUTGALPEL wide5d ACE wide5d PER
 1 wideWutgar ::= WUTGARPEL wide5d ACE wide5d PER
 1 wideWutsig ::= WUTSIGPEL wideTeak5d ACE wide5d ACE wide5d PER
+0 LushepCell ::= LUS HEP GAP BUC GAP tall5d
+0 LushepCell ::= LUS HEP GAP SYM4K GAP tall5d
+0 LuslusCell ::= LUS LUS GAP BUC GAP tall5d
+0 LustisCell ::= LUS TIS GAP SYM4K GAP till5d
 0 aMane ::= SYM4K
 0 aMane ::= SYM4K CAB SYM4K
 0 bip4j ::= bip4j_Piece DOG4I bip4j_Piece DOG4I bip4j_Piece DOG4I bip4j_Piece DOG4I bip4j_Piece DOG4I bip4j_Piece DOG4I bip4j_Piece
@@ -178,8 +182,8 @@
 0 bonz5d ::= TIS TIS GAP optBonzElements GAP TIS TIS
 0 bonz5d ::= wideBonz5d
 0 bonzElement ::= CEN SYM4K GAP tall5d
-0 boog5d ::= lusHepCell
-0 boog5d ::= lusTisCell
+0 boog5d ::= LushepCell
+0 boog5d ::= LustisCell
 0 bucBar ::= BUC4H BAR4H
 0 bucBuc ::= BUC4H BUC4H
 0 bucPam ::= BUC4H PAM4H
@@ -378,12 +382,8 @@
 0 limb ::= VEN4K
 0 limp5d ::= optFasSeq gasp5d
 0 lip4j ::= lib4j_Piece DOG4I lib4j_Piece DOG4I lib4j_Piece DOG4I lib4j_Piece
-0 lusHepCell ::= LUS HEP GAP BUC GAP tall5d
-0 lusHepCell ::= LUS HEP GAP SYM4K GAP tall5d
-0 lusLusCell ::= LUS LUS GAP BUC GAP tall5d
 0 lusSoilSeq ::= lusSolSeqItem
 0 lusSolSeqItem ::= LUS soil5d
-0 lusTisCell ::= LUS TIS GAP SYM4K GAP till5d
 0 lute5d ::= SEL GAP tall5dSeq GAP SER
 0 moldBucSingleString ::= BUC qut4k
 0 moldBucbar ::= BUC BAR

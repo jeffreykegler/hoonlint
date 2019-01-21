@@ -126,7 +126,7 @@ my %tallMainRule =
   map { +( $_, 1 ) } grep { not $tallAnnotationRule{$_} } keys %tallRuneRule;
 my %tallSemsigRule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
-my %tallLuslusRule = map { +( $_, 1 ) } qw(lusLusCell lusHepCell lusTisCell
+my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
 my %tallBackdentRule = map { +( $_, 1 ) } qw(

@@ -451,7 +451,7 @@ if ( $style eq 'test' ) {
                 last NODE;
             }
 
-            if ( $lhsName eq 'lusLusCell' ) {
+            if ( $lhsName eq 'LuslusCell' ) {
 
                 # special case for battery
                 for my $child ( @{$children} ) {

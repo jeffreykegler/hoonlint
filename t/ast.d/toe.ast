@@ -206,7 +206,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'side',
                 [
                   'aura',
@@ -220,7 +220,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'spot',
                 [
                   'circumBraces',
@@ -254,7 +254,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'fact',
                 [
                   'tallBuccen',
@@ -303,7 +303,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'move',
                 [
                   'tallBuccen',
@@ -371,7 +371,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'game',
                 [
                   'tallBuccol',
@@ -419,7 +419,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'bo',
                 [
                   'tallBarcab',
@@ -442,7 +442,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'bit',
                           [
                             'wideBartis',
@@ -500,7 +500,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'off',
                           [
                             'wideBartis',
@@ -553,7 +553,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'get',
                           [
                             'wideBartis',
@@ -590,7 +590,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'set',
                           [
                             'wideBartis',
@@ -638,7 +638,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'win',
                           [
                             'tallCenlus',
@@ -711,7 +711,7 @@
             [
               'boog5d',
               [
-                'lusLusCell',
+                'LuslusCell',
                 'go',
                 [
                   'tallBarcab',
@@ -734,7 +734,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'do',
                           [
                             'tallBartis',
@@ -916,7 +916,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'nu',
                           [
                             'wideKetlus',
@@ -948,7 +948,7 @@
                       [
                         'boog5d',
                         [
-                          'lusLusCell',
+                          'LuslusCell',
                           'on',
                           [
                             'tallBarcab',
@@ -971,7 +971,7 @@
                                 [
                                   'boog5d',
                                   [
-                                    'lusLusCell',
+                                    'LuslusCell',
                                     'is',
                                     [
                                       'tallWutbar',
@@ -1033,7 +1033,7 @@
                                 [
                                   'boog5d',
                                   [
-                                    'lusLusCell',
+                                    'LuslusCell',
                                     'mo',
                                     [
                                       'tallKethep',

@@ -27,25 +27,25 @@ sub doNode {
     use warnings;
     my ( $lhs, @rhs ) =
                     map { $slg->symbol_display_form($_) } $slg->rule_expand($rule_id);
-    if ($lhs eq 'lusLusCell') {
+    if ($lhs eq 'LuslusCell') {
         my ($sym4k, $start, $symName) = @{$stuff[0]};
         return [] if $sym4k eq 'BUC';
         my ($line, $column) = $recce->line_column($start);
-        die "Unknown first RHS for lusLusCell: $sym4k" if $sym4k ne 'SYM4K';
+        die "Unknown first RHS for LuslusCell: $sym4k" if $sym4k ne 'SYM4K';
         say join q{ }, $symName, '++', join q{:}, $globalFileName, $line, $column;
     }
-    if ($lhs eq 'lusHepCell') {
+    if ($lhs eq 'LushepCell') {
         my ($sym4k, $start, $symName) = @{$stuff[0]};
         return [] if $sym4k eq 'BUC';
         my ($line, $column) = $recce->line_column($start);
-        die "Unknown first RHS for lusHepCell: $sym4k" if $sym4k ne 'SYM4K';
+        die "Unknown first RHS for LushepCell: $sym4k" if $sym4k ne 'SYM4K';
         say join q{ }, $symName, '+-', join q{:}, $globalFileName, $line, $column;
     }
-    if ($lhs eq 'lusTisCell') {
+    if ($lhs eq 'LustisCell') {
         my ($sym4k, $start, $symName) = @{$stuff[0]};
         return [] if $sym4k eq 'BUC';
         my ($line, $column) = $recce->line_column($start);
-        die "Unknown first RHS for lusTisCell: $sym4k" if $sym4k ne 'SYM4K';
+        die "Unknown first RHS for LustisCell: $sym4k" if $sym4k ne 'SYM4K';
         say join q{ }, $symName, '+=', join q{:}, $globalFileName, $line, $column;
     }
     return [];

@@ -960,14 +960,14 @@ wyde5dSeq ::= wyde5d+ separator=>ACE proper=>1
 # TODO: Needs elaboration from hoon.hoon
 # TODO: Need to add apse:docs
 # TODO: What is the meaning of these various types of battery element?
-boog5d ::= lusLusCell
-boog5d ::= lusHepCell
-boog5d ::= lusTisCell
-lusLusCell ::= (- LUS LUS GAP -) BUC (- GAP -) tall5d
-lusLusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
-lusHepCell ::= (- LUS HEP GAP -) SYM4K (- GAP -) tall5d
-lusHepCell ::= (- LUS HEP GAP -) BUC (- GAP -) tall5d
-lusTisCell ::= (- LUS TIS GAP -) SYM4K (- GAP -) till5d
+boog5d ::= LuslusCell
+boog5d ::= LushepCell
+boog5d ::= LustisCell
+LuslusCell ::= (- LUS LUS GAP -) BUC (- GAP -) tall5d
+LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
+LushepCell ::= (- LUS HEP GAP -) SYM4K (- GAP -) tall5d
+LushepCell ::= (- LUS HEP GAP -) BUC (- GAP -) tall5d
+LustisCell ::= (- LUS TIS GAP -) SYM4K (- GAP -) till5d
 
 # 5d library: gash
 
