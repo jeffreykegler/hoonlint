@@ -117,7 +117,8 @@ my %tallAnnotationRule = map { +( $_, 1 ) } qw(
   tallKethep tallKetlus tallKetwut
   tallSigbar tallSigcab tallSiglus
   tallTisbar tallTiscom tallTisgal
-  tallWutgal tallWutgar tallZapgar wisp5d
+  tallWutgal tallWutgar tallWuttis
+  tallZapgar wisp5d
   tallTailOfElem tallTailOfTop
 );
 
@@ -738,12 +739,13 @@ sub doLint {
             last NODE;
         }
 
-        sub isluslusstyle {
-            my ( $baseLine, $baseColumn, $indents ) = @_;
+        sub isLuslusStyle {
+            my ( $indents ) = @_;
+            my ( $baseLine, $baseColumn) = @{$indents->[0]};
 
             # say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
             my $indentCount = scalar @{$indents};
-            my $indentIX    = 0;
+            my $indentIX    = 1;
           INDENT: while ( $indentIX < $indentCount ) {
                 my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
 
@@ -790,8 +792,8 @@ sub doLint {
             return 1;
         }
 
-        sub isjog {
-            my ( $baseLine, $baseColumn, $indents ) = @_;
+        sub isJog {
+            my ( $indents ) = @_;
             return 0 if $#$indents != 1;
             my ( $line1, $column1 ) = @{ $indents->[0] };
             my ( $line2, $column2 ) = @{ $indents->[1] };
@@ -853,19 +855,7 @@ sub doLint {
             my $start     = $node->{start};
 
             # TODO: Can indents be totally replaced by gapIndents?
-            my @indents    = ();
             my $indentDesc = '???';
-
-          CHILD: for my $childIX ( 0 .. $#$children ) {
-                my $child      = $children->[$childIX];
-                my $childStart = $child->{start};
-                my $symbol     = $child->{symbol};
-                next CHILD
-                  if defined $symbol and $symbolReverseDB{$symbol}->{gap};
-                my ( $childLine, $childColumn ) =
-                  $recce->line_column($childStart);
-                push @indents, [ $childLine, $childColumn - 1 ];
-            }
 
             my @gapIndents = ();
             {
@@ -903,7 +893,7 @@ sub doLint {
                 }
 
                 if ( $tallJogRule{$lhsName} ) {
-                    if ( isjog( $parentLine, $parentColumn, \@indents ) ) {
+                    if ( isJog( \@gapIndents ) ) {
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
                     }
@@ -931,7 +921,7 @@ sub doLint {
                 }
                 if ( $tallLuslusRule{$lhsName} ) {
                     if (
-                        isluslusstyle( $parentLine, $parentColumn, \@indents ) )
+                        isLuslusStyle( \@gapIndents ) )
                     {
                         $indentDesc = 'LUSLUS-STYLE';
                         last TYPE_INDENT;
@@ -956,9 +946,9 @@ sub doLint {
                     push @patterns, 'BACKDENTED' if isBackdented( \@gapIndents);
                     push @patterns, 'CAST-STYLE' if isBackdented( \@gapIndents, $annotationIndent);
                     push @patterns, 'LUSLUS-STYLE'
-                      if isluslusstyle( $parentLine, $parentColumn, \@indents );
+                      if isLuslusStyle( \@gapIndents );
                     push @patterns, 'JOG-STYLE'
-                      if isjog( $parentLine, $parentColumn, \@indents );
+                      if isJog( \@gapIndents );
                     push @patterns, 'SEMSIG-STYLE'
                       if issemsig( $parentLine, $parentColumn, \@gapIndents );
                     if (@patterns) {
@@ -995,7 +985,7 @@ sub doLint {
                     $indentDesc = 'LINE-BACKDENTED';
                     last TYPE_INDENT;
                 }
-                if ( isluslusstyle( $parentLine, $parentColumn, \@gapIndents ) ) {
+                if ( isLuslusStyle( \@gapIndents ) ) {
 
                     # luslus style for non-luslus rules
                     $indentDesc = 'LUSLUS-STYLE';
