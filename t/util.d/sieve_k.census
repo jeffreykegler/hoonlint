@@ -1,21 +1,21 @@
-FIXED-2 tallBartis BACKDENTED # t/ast.d/sieve_k.hoon L1:1
-FIXED-2 tallKethep CAST-STYLE # t/ast.d/sieve_k.hoon L2:1
-FIXED-2 tallTislus BACKDENTED # t/ast.d/sieve_k.hoon L3:1
-FIXED-2 tallTisgal CAST-STYLE # t/ast.d/sieve_k.hoon L4:1
-FIXED-1 tallBarcen BACKDENTED # t/ast.d/sieve_k.hoon L5:1
-FIXED-1 wisp5d CAST-STYLE # t/ast.d/sieve_k.hoon L6:1
-FIXED-2 LuslusCell FLAT # t/ast.d/sieve_k.hoon L6:1
+t/ast.d/sieve_k.hoon 1:1 indent tallBartis BACKDENTED
+t/ast.d/sieve_k.hoon 2:1 indent tallKethep CAST-STYLE
+t/ast.d/sieve_k.hoon 3:1 indent tallTislus BACKDENTED
+t/ast.d/sieve_k.hoon 4:1 indent tallTisgal CAST-STYLE
+t/ast.d/sieve_k.hoon 5:1 indent tallBarcen BACKDENTED
+t/ast.d/sieve_k.hoon 6:1 indent wisp5d CAST-STYLE
+t/ast.d/sieve_k.hoon 6:1 indent LuslusCell FLAT
 SEQUENCE whap5d REGULAR # t/ast.d/sieve_k.hoon L6:1
-FIXED-2 LuslusCell LUSLUS-STYLE # t/ast.d/sieve_k.hoon L7:1
-FIXED-2 tallTislus BACKDENTED # t/ast.d/sieve_k.hoon L8:3
-FIXED-1 tallBarhep FLAT # t/ast.d/sieve_k.hoon L9:3
-FIXED-2 tallKetlus CAST-STYLE # t/ast.d/sieve_k.hoon L9:7
-FIXED-3 tallWutcol BACKDENTED # t/ast.d/sieve_k.hoon L10:3
+t/ast.d/sieve_k.hoon 7:1 indent LuslusCell LUSLUS-STYLE
+t/ast.d/sieve_k.hoon 8:3 indent tallTislus BACKDENTED
+t/ast.d/sieve_k.hoon 9:3 indent tallBarhep FLAT
+t/ast.d/sieve_k.hoon 9:7 indent tallKetlus CAST-STYLE
+t/ast.d/sieve_k.hoon 10:3 indent tallWutcol BACKDENTED
 SEQUENCE whap5d REGULAR # t/ast.d/sieve_k.hoon L6:1
-FIXED-2 LuslusCell LUSLUS-STYLE # t/ast.d/sieve_k.hoon L14:1
-FIXED-2 tallBartis BACKDENTED # t/ast.d/sieve_k.hoon L15:3
-FIXED-2 tallTislus BACKDENTED # t/ast.d/sieve_k.hoon L16:3
-FIXED-1 tallBarhep FLAT # t/ast.d/sieve_k.hoon L17:3
-FIXED-2 tallKetlus CAST-STYLE # t/ast.d/sieve_k.hoon L17:7
-FIXED-3 tallWutcol BACKDENTED # t/ast.d/sieve_k.hoon L18:3
+t/ast.d/sieve_k.hoon 14:1 indent LuslusCell LUSLUS-STYLE
+t/ast.d/sieve_k.hoon 15:3 indent tallBartis BACKDENTED
+t/ast.d/sieve_k.hoon 16:3 indent tallTislus BACKDENTED
+t/ast.d/sieve_k.hoon 17:3 indent tallBarhep FLAT
+t/ast.d/sieve_k.hoon 17:7 indent tallKetlus CAST-STYLE
+t/ast.d/sieve_k.hoon 18:3 indent tallWutcol BACKDENTED
 SEQUENCE whap5d REGULAR # t/ast.d/sieve_k.hoon L6:1

@@ -16,11 +16,13 @@ my $style;
 my $verbose;
 my $censusWhitespace;
 my $suppressionFileName;
+my $relativeIndents;
 my $sayContext = 0;
 
 GetOptions(
     "verbose"             => \$verbose,
     "context=i"           => \$sayContext,
+    "relative-indents"    => \$relativeIndents,
     "census-whitespace"   => \$censusWhitespace,
     "suppressions_file=s" => \$suppressionFileName,
 ) or die("Error in command line arguments\n");
@@ -348,6 +350,9 @@ sub literal {
     return substr ${$pHoonSource}, $start, $length;
 }
 
+my @lineToPos = (-1, 0);
+while (${$pHoonSource} =~ m/\n/g) { push @lineToPos, pos ${$pHoonSource} };
+
 sub column {
     my ($pos) = @_;
     return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
@@ -559,8 +564,6 @@ sub doLint {
       // $parentColumn;
 
   NODE: {
-        die Data::Dumper::Dumper($node)
-          if ref $node ne 'HASH';    # TODO: delete after development
         my $type = $node->{type};
 
         # say STDERR "= $type $key\n";
@@ -590,7 +593,9 @@ sub doLint {
         $parentContext->{bodyIndent} = $parentColumn
           if $tallBodyRule{$lhsName};
 
-        # TODO: Is this right?  It means another suppression in toe.hoon.
+        # TODO: This corresponds to some arvo/ file indentations,
+        # but would cause many other discrepancies, including one
+        # in toe.hoon
         # $parentContext->{bodyIndent} = $parentColumn+2
           # if $tallLuslusRule{$lhsName};
 
@@ -614,7 +619,7 @@ sub doLint {
 
         my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
 
-        # TODO: Add warning for tall children of wide nodes
+        # TODO: In another policy, warn on tall children of wide nodes
         if ( $gapiness == 0 ) {    # wide node
             for my $child (@$children) {
                 doLint( $child, $parentContext );
@@ -688,9 +693,7 @@ sub doLint {
                                       $childLC;
                                 }
                             }
-                            print
-"SEQUENCE $lhsName $indentDesc # $fileName L$grandParentLC",
-                              "\n",
+                            print "$fileName $grandParentLC sequence $lhsName $indentDesc\n",
                               context( $parentStart, $parentLength,
                                 $sayContext )
                               if $censusWhitespace or $isProblem;
@@ -811,6 +814,7 @@ sub doLint {
 
         sub isBackdented {
             my ( $indents, $baseIndent ) = @_;
+            my @mistakes = ();
             # say Data::Dumper::Dumper($indents);
             my ( $baseLine, $baseColumn ) = @{$indents->[0]};
             $baseIndent //= $baseColumn;
@@ -822,10 +826,14 @@ sub doLint {
                 $currentIndent -= 2;
                 # say "$currentIndent vs. $thisColumn";
                 next INDENT if $thisLine == $lastLine;
-                return if $currentIndent != $thisColumn;
+                if ($currentIndent != $thisColumn) {
+                    my $msg = "Backdent is $thisColumn; should be $currentIndent";
+                    push @mistakes, {desc => $msg,
+                    line => $thisLine, column => $thisColumn};
+                }
                 $lastLine = $thisLine;
             }
-            return 1;
+            return \@mistakes;
         }
 
         sub isFlat {
@@ -835,28 +843,61 @@ sub doLint {
             return $firstLine == $lastLine;
         }
 
+        sub relativeIndentDesc {
+            my ($indents) = @_;
+            my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
+            my @pieces = ();
+            for my $ix ( 1 .. $#$indents ) {
+                my ( $line, $column ) = @{ $indents->[$ix] };
+                push @pieces,
+                   join ':', ( $line - $baseLine ), ( $column - $baseColumn );
+            }
+            return join " ", @pieces;
+        }
+
         sub indentDesc {
             my ($indents) = @_;
 
             # say Data::Dumper::Dumper($indents);
             my ( $line, $column, $baseColumn );
             return 'NO-GAPS' if $#$indents < 0;
+            return relativeIndentDesc($indents) if $relativeIndents;
             ( $line, $baseColumn ) = @{ $indents->[0] };
             my @pieces = ();
             for my $ix ( 1 .. $#$indents ) {
                 ( $line, $column ) = @{ $indents->[$ix] };
-                push @pieces, "L$line:" . ( $column - $baseColumn );
+                push @pieces, "$line:$column";
             }
             return join " ", @pieces;
         }
+
+        my $displayMistakes = sub {
+            my ($mistakes) = @_;
+            my @pieces = ();
+          MISTAKE: for my $mistake ( @{$mistakes} ) {
+                my $desc = $mistake->{desc};
+                my $type = $mistake->{type};
+                my $mistakeLine = $mistake->{line};
+                push @pieces,
+                  " # $fileName L", ( join ':', $parentLine, $parentColumn ),
+                  " $type $lhsName $desc\n",
+                next MISTAKE
+                  if not $sayContext;
+                push @pieces,
+                  context( $parentStart, $parentLength, $sayContext ),
+                  '---\n',
+                  context( $lineToPos[$mistakeLine], 1, $sayContext );
+            }
+            return join "", @pieces;
+          };
 
         # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
         # if here, gapiness > 0
         {
             my $isProblem = 0;
+            my $mistakes = [];
             my $start     = $node->{start};
 
-            # TODO: Can indents be totally replaced by gapIndents?
             my $indentDesc = '???';
 
             my @gapIndents = ();
@@ -914,7 +955,8 @@ sub doLint {
                 }
 
                 if ( $tallNoteRule{$lhsName} ) {
-                    if ( isBackdented( \@gapIndents, $noteIndent )) {
+                    $mistakes = isBackdented( \@gapIndents, $noteIndent );
+                    if ( not @{$mistakes} ) {
                         $indentDesc = 'CAST-STYLE';
                         last TYPE_INDENT;
                     }
@@ -931,7 +973,8 @@ sub doLint {
                     $isProblem = 1;
                 }
                 if ( $tallBackdentRule{$lhsName} ) {
-                    if ( isBackdented( \@gapIndents)) {
+                    $mistakes = isBackdented( \@gapIndents);
+                    if ( not @{$mistakes} ) {
                         $indentDesc = 'BACKDENTED';
                         last TYPE_INDENT;
                     }
@@ -945,8 +988,8 @@ sub doLint {
                 # match.  More than one may match.
                 {
                     my @patterns = ();
-                    push @patterns, 'BACKDENTED' if isBackdented( \@gapIndents);
-                    push @patterns, 'CAST-STYLE' if isBackdented( \@gapIndents, $noteIndent);
+                    push @patterns, 'BACKDENTED' if not @{isBackdented( \@gapIndents)};
+                    push @patterns, 'CAST-STYLE' if not @{isBackdented( \@gapIndents, $noteIndent)};
                     push @patterns, 'LUSLUS-STYLE'
                       if isLuslusStyle( \@gapIndents );
                     push @patterns, 'JOG-STYLE'
@@ -968,7 +1011,8 @@ sub doLint {
                   )
                 {
                     my $indent = $parentIndents[$indentIX];
-                    if ( isBackdented( \@gapIndents, $indent)) {
+                    $mistakes = isBackdented( \@gapIndents, $indent);
+                    if ( not @{$mistakes} ) {
                         my $depth = $#parentIndents - $indentIX;
                         $indentDesc = "BACKDENTED-$depth";
                         $isProblem  = 1;
@@ -983,7 +1027,8 @@ sub doLint {
 
                 # say qq{lineLiteral: "$lineLiteral"};
                 my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
-                if ( isBackdented( \@gapIndents, ( length $spaces ))) {
+                my $mistakes = isBackdented( \@gapIndents, ( length $spaces ));
+                if ( not @{$mistakes} ) {
                     $indentDesc = 'LINE-BACKDENTED';
                     last TYPE_INDENT;
                 }
@@ -995,10 +1040,14 @@ sub doLint {
                 }
                 $indentDesc = indentDesc( \@gapIndents );
             }
-            print "FIXED-$gapiness $lhsName $indentDesc",
-              " # $fileName L", ( join ':', $recce->line_column($start) ),
-              "\n", context( $parentStart, $parentLength, $sayContext )
-              if $censusWhitespace or $isProblem;
+            if (@{$mistakes}) {
+                $_->{type} = 'indent' for @{$mistakes};
+                print $displayMistakes->($mistakes);
+            } elsif ($censusWhitespace or $isProblem) {
+                print 
+                  "$fileName ", ( join ':', $recce->line_column($start) ),
+                  " indent $lhsName $indentDesc\n", context( $parentStart, $parentLength, $sayContext );
+            }
         }
 
         # If here, use backdenting
