@@ -583,8 +583,8 @@ sub doLint {
         # say "line $parentLine: indents: ", (join " ", @parentIndents);
     }
 
-    my $argBodyIndent = $argContext->{bodyIndent};
-    my $argTallRuneIndent  = $argContext->{tallRuneIndent};
+    my $argBodyIndent     = $argContext->{bodyIndent};
+    my $argTallRuneIndent = $argContext->{tallRuneIndent};
     my $parentBodyIndent;
     $parentBodyIndent = $argBodyIndent if $argLine == $parentLine;
     my $parentTallRuneIndent;
@@ -606,527 +606,483 @@ sub doLint {
       // $parentColumn;
 
   NODE: {
-        my $type = $node->{type};
 
-        # say STDERR "= $type $key\n";
-        if ( $type eq 'null' ) {
-            last NODE;
-        }
-        if ( $type eq 'lexeme' ) {
-            if ( $parentSymbol eq 'GAP' ) {
-                last NODE;
+        # "Policies" will go here
+        # As of this writing, these is only one policy -- the "whitespace"
+        # policy.
+            my $children   = $node->{children};
+
+      WHITESPACE_POLICY: {
+            my $type = $node->{type};
+
+            # say STDERR "= $type $key\n";
+            last WHITESPACE_POLICY if $type eq 'null';
+            last WHITESPACE_POLICY if $type eq 'lexeme';
+            last WHITESPACE_POLICY if $type eq 'separator';
+
+            my $ruleID = $node->{ruleID};
+            die Data::Dumper::Dumper($node) if not defined $ruleID;
+            my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
+            my $lhsName = $grammar->symbol_name($lhs);
+
+            $parentContext->{bodyIndent} = $parentColumn
+              if $tallBodyRule{$lhsName};
+
+            # TODO: This corresponds to some arvo/ file indentations,
+            # but would cause many other discrepancies, including one
+            # in toe.hoon
+            # $parentContext->{bodyIndent} = $parentColumn+2
+            # if $tallLuslusRule{$lhsName};
+
+            $parentContext->{tallRuneIndent} = $parentColumn
+              if $tallRuneRule{$lhsName};
+
+            # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
+            if ( $lhsName eq 'optGay4i' ) {
+                last WHITESPACE_POLICY;
             }
-            if ( $parentSymbol =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
-                last NODE;
+
+            my $childCount = scalar @{$children};
+            last WHITESPACE_POLICY if $childCount <= 0;
+            if ( $childCount == 1 ) {
+                last WHITESPACE_POLICY;
             }
-            last NODE;
-        }
-        if ( $type eq 'separator' ) {
-            if ( $parentSymbol eq 'GAP' ) {
-                last NODE;
+
+            my $firstChildIndent = column( $children->[0]->{start} ) - 1;
+
+            my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
+
+            # TODO: In another policy, warn on tall children of wide nodes
+            if ( $gapiness == 0 ) {    # wide node
+                last WHITESPACE_POLICY;
             }
-            last NODE;
-        }
-        my $ruleID = $node->{ruleID};
-        die Data::Dumper::Dumper($node) if not defined $ruleID;
-        my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
-        my $lhsName = $grammar->symbol_name($lhs);
 
-        $parentContext->{bodyIndent} = $parentColumn
-          if $tallBodyRule{$lhsName};
+            # tall node
 
-        # TODO: This corresponds to some arvo/ file indentations,
-        # but would cause many other discrepancies, including one
-        # in toe.hoon
-        # $parentContext->{bodyIndent} = $parentColumn+2
-          # if $tallLuslusRule{$lhsName};
+            if ( $gapiness < 0 ) {     # sequence
+                my ( $parentLine, $parentColumn ) =
+                  $recce->line_column($parentStart);
+                my $parentLC = join ':', $parentLine, $parentColumn;
+                $parentColumn--;       # 0-based
+                my $previousLine = $parentLine;
+              TYPE_INDENT: {
 
-        $parentContext->{tallRuneIndent} = $parentColumn
-          if $tallRuneRule{$lhsName};
+                    if ( $lhsName eq 'tall5dSeq' ) {
+                        my $argAncestors = $argContext->{ancestors};
 
-        # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
-        if ( $lhsName eq 'optGay4i' ) {
-            last NODE;
-        }
+                        # say Data::Dumper::Dumper($argAncestors);
+                        my $ancestorCount   = scalar @{$argAncestors};
+                        my $grandParentName = "";
+                        my $grandParentLC;
+                        my ( $grandParentLine, $grandParentColumn );
+                        if ( scalar @{$argAncestors} >= 1 ) {
+                            my $grandParent       = $argAncestors->[-1];
+                            my $grandParentRuleID = $grandParent->{ruleID};
+                            my $grandParentStart  = $grandParent->{start};
+                            ( $grandParentLine, $grandParentColumn ) =
+                              $recce->line_column($grandParentStart);
+                            $grandParentLC = join ':', $grandParentLine,
+                              $grandParentColumn;
+                            $grandParentColumn--;    # 0-based
+                            my ($lhs) =
+                              $grammar->rule_expand($grandParentRuleID);
+                            $grandParentName =
+                              $grammar->symbol_display_form($lhs);
+                        }
+                        if ( $grandParentName eq 'tallSemsig' ) {
 
-        my $children   = $node->{children};
-        my $childCount = scalar @{$children};
-        last NODE if $childCount <= 0;
-        if ( $childCount == 1 ) {
-            doLint( $children->[0], $parentContext );
-            last NODE;
-        }
+                            $previousLine = $grandParentLine;
+                          CHILD: for my $childIX ( 0 .. $#$children ) {
+                                my $isProblem = 0;
+                                my $child     = $children->[$childIX];
+                                my $childStart = $child->{start};
+                                my $symbol     = $child->{symbol};
+                                next CHILD
+                                  if defined $symbol
+                                  and $symbolReverseDB{$symbol}->{gap};
+                                my ( $childLine, $childColumn ) =
+                                  $recce->line_column($childStart);
+                                my $childLC = join ':', $childLine,
+                                  $childColumn;
+                                $childColumn--;    # 0-based
 
-        my $firstChildIndent = column( $children->[0]->{start} ) - 1;
+                                my $indentDesc = 'RUN';
+                              SET_INDENT_DESC: {
+                                    my $suppression =
+                                      $suppression{'sequence'}{$childLC};
+                                    if ( defined $suppression ) {
+                                        $indentDesc =
+                                          "SUPPRESSION $suppression";
+                                        $unusedSuppression{'sequence'}{$childLC}
+                                          = undef;
+                                        last SET_INDENT_DESC;
+                                    }
 
-        my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
-
-        # TODO: In another policy, warn on tall children of wide nodes
-        if ( $gapiness == 0 ) {    # wide node
-            for my $child (@$children) {
-                doLint( $child, $parentContext );
-            }
-            last NODE;
-        }
-
-        # tall node
-
-        if ( $gapiness < 0 ) {    # sequence
-            my ( $parentLine, $parentColumn ) =
-              $recce->line_column($parentStart);
-            my $parentLC = join ':', $parentLine, $parentColumn;
-            $parentColumn--;      # 0-based
-            my $previousLine = $parentLine;
-          TYPE_INDENT: {
-
-                if ( $lhsName eq 'tall5dSeq' ) {
-                    my $argAncestors = $argContext->{ancestors};
-
-                    # say Data::Dumper::Dumper($argAncestors);
-                    my $ancestorCount   = scalar @{$argAncestors};
-                    my $grandParentName = "";
-                    my $grandParentLC;
-                    my ( $grandParentLine, $grandParentColumn );
-                    if ( scalar @{$argAncestors} >= 1 ) {
-                        my $grandParent       = $argAncestors->[-1];
-                        my $grandParentRuleID = $grandParent->{ruleID};
-                        my $grandParentStart  = $grandParent->{start};
-                        ( $grandParentLine, $grandParentColumn ) =
-                          $recce->line_column($grandParentStart);
-                        $grandParentLC = join ':', $grandParentLine,
-                          $grandParentColumn;
-                        $grandParentColumn--;    # 0-based
-                        my ($lhs) = $grammar->rule_expand($grandParentRuleID);
-                        $grandParentName = $grammar->symbol_display_form($lhs);
-                    }
-                    if ( $grandParentName eq 'tallSemsig' ) {
-
-                        $previousLine = $grandParentLine;
-                      CHILD: for my $childIX ( 0 .. $#$children ) {
-                            my $isProblem = 0;
-                            my $child     = $children->[$childIX];
-                            doLint( $child, $parentContext );
-                            my $childStart = $child->{start};
-                            my $symbol     = $child->{symbol};
-                            next CHILD
-                              if defined $symbol
-                              and $symbolReverseDB{$symbol}->{gap};
-                            my ( $childLine, $childColumn ) =
-                              $recce->line_column($childStart);
-                            my $childLC = join ':', $childLine, $childColumn;
-                            $childColumn--;    # 0-based
-
-                            my $indentDesc = 'RUN';
-                          SET_INDENT_DESC: {
-                                my $suppression =
-                                  $suppression{'sequence'}{$childLC};
-                                if ( defined $suppression ) {
-                                    $indentDesc = "SUPPRESSION $suppression";
-                                    $unusedSuppression{'sequence'}{$childLC} =
-                                      undef;
-                                    last SET_INDENT_DESC;
+                                    if (    $childLine != $previousLine
+                                        and $childColumn !=
+                                        $grandParentColumn + 2 )
+                                    {
+                                        $isProblem = 1;
+                                        $indentDesc = join " ", $grandParentLC,
+                                          $childLC;
+                                    }
                                 }
-
-                                if (    $childLine != $previousLine
-                                    and $childColumn != $grandParentColumn + 2 )
-                                {
-                                    $isProblem = 1;
-                                    $indentDesc = join " ", $grandParentLC,
-                                      $childLC;
-                                }
+                                print reportItem(
+"$fileName $grandParentLC sequence $lhsName $indentDesc",
+                                    $parentLine, $childLine, $contextLines )
+                                  if $censusWhitespace or $isProblem;
+                                $previousLine = $childLine;
                             }
-                            print reportItem( "$fileName $grandParentLC sequence $lhsName $indentDesc",
-                               $parentLine, $childLine,
-                                $contextLines )
-                              if $censusWhitespace or $isProblem;
-                            $previousLine = $childLine;
-                        }
 
-                        last TYPE_INDENT;
-                    }
-                }
-
-              CHILD: for my $childIX ( 0 .. $#$children ) {
-                    my $isProblem = 0;
-                    my $child     = $children->[$childIX];
-                    doLint( $child, $parentContext );
-                    my $childStart = $child->{start};
-                    my $symbol     = $child->{symbol};
-                    next CHILD
-                      if defined $symbol
-                      and $symbolReverseDB{$symbol}->{gap};
-                    my ( $childLine, $childColumn ) =
-                      $recce->line_column($childStart);
-                    my $childLC = join ':', $childLine, $childColumn;
-                    $childColumn--;    # 0-based
-
-                    my $indentDesc = 'REGULAR';
-                  SET_INDENT_DESC: {
-                        my $suppression = $suppression{'sequence'}{$childLC};
-                        if ( defined $suppression ) {
-                            $indentDesc = "SUPPRESSION $suppression";
-                            $unusedSuppression{'sequence'}{$childLC} = undef;
-                            last SET_INDENT_DESC;
-                        }
-
-                        if (    $childLine != $previousLine
-                            and $childColumn != $parentColumn )
-                        {
-                            $isProblem = 1;
-                            $indentDesc = join " ", $parentLC, $childLC;
+                            last TYPE_INDENT;
                         }
                     }
-                    print reportItem( "$fileName $parentLC sequence $lhsName $indentDesc",
-                       $parentLine, $childLine, $contextLines )
-                      if $censusWhitespace or $isProblem;
-                    $previousLine = $childLine;
+
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $isProblem = 0;
+                        my $child     = $children->[$childIX];
+                        my $childStart = $child->{start};
+                        my $symbol     = $child->{symbol};
+                        next CHILD
+                          if defined $symbol
+                          and $symbolReverseDB{$symbol}->{gap};
+                        my ( $childLine, $childColumn ) =
+                          $recce->line_column($childStart);
+                        my $childLC = join ':', $childLine, $childColumn;
+                        $childColumn--;    # 0-based
+
+                        my $indentDesc = 'REGULAR';
+                      SET_INDENT_DESC: {
+                            my $suppression =
+                              $suppression{'sequence'}{$childLC};
+                            if ( defined $suppression ) {
+                                $indentDesc = "SUPPRESSION $suppression";
+                                $unusedSuppression{'sequence'}{$childLC} =
+                                  undef;
+                                last SET_INDENT_DESC;
+                            }
+
+                            if (    $childLine != $previousLine
+                                and $childColumn != $parentColumn )
+                            {
+                                $isProblem = 1;
+                                $indentDesc = join " ", $parentLC, $childLC;
+                            }
+                        }
+                        print reportItem(
+                            "$fileName $parentLC sequence $lhsName $indentDesc",
+                            $parentLine, $childLine, $contextLines )
+                          if $censusWhitespace or $isProblem;
+                        $previousLine = $childLine;
+                    }
                 }
+                last WHITESPACE_POLICY;
             }
-            last NODE;
-        }
 
-        sub isLuslusStyle {
-            my ( $indents ) = @_;
-            my ( $baseLine, $baseColumn) = @{$indents->[0]};
+            sub isLuslusStyle {
+                my ($indents) = @_;
+                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
 
-            # say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
-            my $indentCount = scalar @{$indents};
-            my $indentIX    = 1;
-          INDENT: while ( $indentIX < $indentCount ) {
-                my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
+                # say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
+                my $indentCount = scalar @{$indents};
+                my $indentIX    = 1;
+              INDENT: while ( $indentIX < $indentCount ) {
+                    my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
 
-                # say join " ", __FILE__, __LINE__, "L$thisLine vs. $baseLine";
-                last INDENT if $thisLine != $baseLine;
-                $indentIX++;
-            }
-          INDENT: while ( $indentIX < $indentCount ) {
-                my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
+                 # say join " ", __FILE__, __LINE__, "L$thisLine vs. $baseLine";
+                    last INDENT if $thisLine != $baseLine;
+                    $indentIX++;
+                }
+              INDENT: while ( $indentIX < $indentCount ) {
+                    my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
 
              # say join " ", __FILE__, __LINE__, "L$thisColumn vs. $baseColumn";
-                return 0 if $thisColumn != $baseColumn + 2;
-                $indentIX++;
+                    return 0 if $thisColumn != $baseColumn + 2;
+                    $indentIX++;
+                }
+                return 1;
             }
-            return 1;
-        }
 
-        # Semsig must have first child properly aligned on same line as
-        # rune; tistis (==) must be on its own line, aligned with the rune.
-        #
-        # This is backdenting, with further restrictions:  The first
-        # child must be on the rune line, and the last child must NOT
-        # be on the rune line.
-        sub issemsig {
-            my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-            return 0 if $#$gapIndents < 3;
-            my ( $firstChildLine, $firstChildColumn ) = @{ $gapIndents->[1] };
-            return 0
-              if $firstChildLine != $runeLine
-              or $firstChildColumn != $runeColumn + 4;
+            # Semsig must have first child properly aligned on same line as
+            # rune; tistis (==) must be on its own line, aligned with the rune.
+            #
+            # This is backdenting, with further restrictions:  The first
+            # child must be on the rune line, and the last child must NOT
+            # be on the rune line.
+            sub issemsig {
+                my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+                return 0 if $#$gapIndents < 3;
+                my ( $firstChildLine, $firstChildColumn ) =
+                  @{ $gapIndents->[1] };
+                return 0
+                  if $firstChildLine != $runeLine
+                  or $firstChildColumn != $runeColumn + 4;
 
-            # Second child must be on rune line, or
-            # at ruleColumn+2
-            my ( $secondChildLine, $secondChildColumn ) = @{ $gapIndents->[2] };
+                # Second child must be on rune line, or
+                # at ruleColumn+2
+                my ( $secondChildLine, $secondChildColumn ) =
+                  @{ $gapIndents->[2] };
 
 # say "issemsig: $runeLine:$runeColumn; (secondChildLine, secondChildColumn ) = ( $secondChildLine, $secondChildColumn )";
-            return 0
-              if $secondChildLine != $runeLine
-              and $secondChildColumn != $runeColumn + 2;
+                return 0
+                  if $secondChildLine != $runeLine
+                  and $secondChildColumn != $runeColumn + 2;
 
-            my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
-            return 0
-              if $tistisLine == $runeLine or $tistisColumn != $runeColumn;
-            return 1;
-        }
+                my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
+                return 0
+                  if $tistisLine == $runeLine or $tistisColumn != $runeColumn;
+                return 1;
+            }
 
-        sub isJog {
-            my ( $indents ) = @_;
-            return 0 if $#$indents != 1;
-            my ( $line1, $column1 ) = @{ $indents->[0] };
-            my ( $line2, $column2 ) = @{ $indents->[1] };
+            sub isJog {
+                my ($indents) = @_;
+                return 0 if $#$indents != 1;
+                my ( $line1, $column1 ) = @{ $indents->[0] };
+                my ( $line2, $column2 ) = @{ $indents->[1] };
 
-            # TODO: enforce alignment for "flat jogs"
-            return 1 if $line1 == $line2;
+                # TODO: enforce alignment for "flat jogs"
+                return 1 if $line1 == $line2;
 
-            # say "lc1: ( $line1, $column1, baseColumn: $baseColumn )";
-            # say "lc2: ( $line2, $column2 )";
-            return 1 if $column2 + 2 == $column1;
-            return 0;
-        }
+                # say "lc1: ( $line1, $column1, baseColumn: $baseColumn )";
+                # say "lc2: ( $line2, $column2 )";
+                return 1 if $column2 + 2 == $column1;
+                return 0;
+            }
 
-        sub isBackdented {
-            my ( $indents, $baseIndent ) = @_;
-            my @mistakes = ();
-            # say Data::Dumper::Dumper($indents);
-            my ( $baseLine, $baseColumn ) = @{$indents->[0]};
-            $baseIndent //= $baseColumn;
-            my $currentIndent = $baseIndent + $#$indents * 2;
-            my $lastLine      = $baseLine;
-          INDENT: for my $ix (1 .. $#$indents) {
-                my $indent = $indents->[$ix];
-                my ( $thisLine, $thisColumn ) = @{$indent};
-                $currentIndent -= 2;
-                # say "$currentIndent vs. $thisColumn";
-                next INDENT if $thisLine == $lastLine;
-                if ($currentIndent != $thisColumn) {
-                    my $msg = "Child #$ix @ line $thisLine; backdent is $thisColumn; should be $currentIndent";
-                    push @mistakes,
-                      {
-                        desc   => $msg,
-                        line   => $thisLine,
-                        column => $thisColumn,
-                        child => $ix,
-                        backdentColumn => $currentIndent,
-                      };
+            sub isBackdented {
+                my ( $indents, $baseIndent ) = @_;
+                my @mistakes = ();
+
+                # say Data::Dumper::Dumper($indents);
+                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
+                $baseIndent //= $baseColumn;
+                my $currentIndent = $baseIndent + $#$indents * 2;
+                my $lastLine      = $baseLine;
+              INDENT: for my $ix ( 1 .. $#$indents ) {
+                    my $indent = $indents->[$ix];
+                    my ( $thisLine, $thisColumn ) = @{$indent};
+                    $currentIndent -= 2;
+
+                    # say "$currentIndent vs. $thisColumn";
+                    next INDENT if $thisLine == $lastLine;
+                    if ( $currentIndent != $thisColumn ) {
+                        my $msg = sprintf 
+"Child #%d @ line %d; backdent is %d; should be %d",
+$ix, $thisLine, $thisColumn, $currentIndent;
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $thisLine,
+                            column         => $thisColumn,
+                            child          => $ix,
+                            backdentColumn => $currentIndent,
+                          };
+                    }
+                    $lastLine = $thisLine;
                 }
-                $lastLine = $thisLine;
+                return \@mistakes;
             }
-            return \@mistakes;
-        }
 
-        # By default, report anomalies in terms of differences from backdenting
-        # to the rule start.
-        sub defaultMistakes {
-            my ($indents) = @_;
-            my $mistakes = isBackdented($indents);
-            return [{ msg => "Undetected mistakes" }] if not @{$mistakes};
-            for my $mistake (@{$mistakes}) {
-                my $mistakeChild  = $mistake->{child};
-                my $mistakeColumn = $mistake->{column};
-                my $defaultColumn = $mistake->{backdentColumn};
-                my $mistakeLine   = $mistake->{line};
-                my $msg           = sprintf
-                  "Unclassed child #%d; line %d; indent=%d vs. default of %d",
-                  $mistakeChild, $mistakeLine, $mistakeColumn, $defaultColumn;
-                $mistake->{msg} = $msg;
+         # By default, report anomalies in terms of differences from backdenting
+         # to the rule start.
+            sub defaultMistakes {
+                my ($indents) = @_;
+                my $mistakes = isBackdented($indents);
+                return [ { msg => "Undetected mistakes" } ] if not @{$mistakes};
+                for my $mistake ( @{$mistakes} ) {
+                    my $mistakeChild  = $mistake->{child};
+                    my $mistakeColumn = $mistake->{column};
+                    my $defaultColumn = $mistake->{backdentColumn};
+                    my $mistakeLine   = $mistake->{line};
+                    my $msg           = sprintf
+"Unclassed child #%d; line %d; indent=%d vs. default of %d",
+                      $mistakeChild, $mistakeLine, $mistakeColumn,
+                      $defaultColumn;
+                    $mistake->{msg} = $msg;
+                }
+                return $mistakes;
             }
-            return $mistakes;
-        }
 
-        sub isFlat {
-            my ($indents)   = @_;
-            my ($firstLine) = @{ $indents->[0] };
-            my ($lastLine)  = @{ $indents->[$#$indents] };
-            return $firstLine == $lastLine;
-        }
-
-        # TODO: Delete?
-        sub relativeIndentDesc {
-            my ($indents) = @_;
-            my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
-            my @pieces = ();
-            for my $ix ( 1 .. $#$indents ) {
-                my ( $line, $column ) = @{ $indents->[$ix] };
-                push @pieces,
-                   join ':', ( $line - $baseLine ), ( $column - $baseColumn );
+            sub isFlat {
+                my ($indents)   = @_;
+                my ($firstLine) = @{ $indents->[0] };
+                my ($lastLine)  = @{ $indents->[$#$indents] };
+                return $firstLine == $lastLine;
             }
-            return join " ", @pieces;
-        }
 
-        # TODO: Delete?
-        sub indentDesc {
-            my ($indents) = @_;
-
-            # say Data::Dumper::Dumper($indents);
-            my ( $line, $column, $baseColumn );
-            return 'NO-GAPS' if $#$indents < 0;
-            return relativeIndentDesc($indents) if $relativeIndents;
-            ( $line, $baseColumn ) = @{ $indents->[0] };
-            my @pieces = ();
-            for my $ix ( 1 .. $#$indents ) {
-                ( $line, $column ) = @{ $indents->[$ix] };
-                push @pieces, "$line:$column";
+            # TODO: Delete?
+            sub relativeIndentDesc {
+                my ($indents) = @_;
+                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
+                my @pieces = ();
+                for my $ix ( 1 .. $#$indents ) {
+                    my ( $line, $column ) = @{ $indents->[$ix] };
+                    push @pieces,
+                      join ':', ( $line - $baseLine ),
+                      ( $column - $baseColumn );
+                }
+                return join " ", @pieces;
             }
-            return join " ", @pieces;
-        }
 
-        my $displayMistakes = sub {
-        # say join " ", __FILE__, __LINE__, "displayMistakes()";
-            my ($mistakes) = @_;
-            my @pieces = ();
-          MISTAKE: for my $mistake ( @{$mistakes} ) {
-        # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                my $desc        = $mistake->{desc};
-                my $type        = $mistake->{type};
-                my $mistakeLine = $mistake->{line};
-                push @pieces,
-                reportItem(
-                  ("$fileName " . ( join ':', $parentLine, $parentColumn ) .
-                  " $type $lhsName $desc"),
-                   $parentLine, $mistakeLine, $contextLines );
+            # TODO: Delete?
+            sub indentDesc {
+                my ($indents) = @_;
+
+                # say Data::Dumper::Dumper($indents);
+                my ( $line, $column, $baseColumn );
+                return 'NO-GAPS' if $#$indents < 0;
+                return relativeIndentDesc($indents) if $relativeIndents;
+                ( $line, $baseColumn ) = @{ $indents->[0] };
+                my @pieces = ();
+                for my $ix ( 1 .. $#$indents ) {
+                    ( $line, $column ) = @{ $indents->[$ix] };
+                    push @pieces, "$line:$column";
+                }
+                return join " ", @pieces;
             }
-            return join "", @pieces;
-        };
 
-        # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
-        # if here, gapiness > 0
-        {
-            my $isProblem = 0;
-            my $mistakes = [];
-            my $start     = $node->{start};
+            my $displayMistakes = sub {
 
-            my $indentDesc = '???';
+                # say join " ", __FILE__, __LINE__, "displayMistakes()";
+                my ($mistakes) = @_;
+                my @pieces = ();
+              MISTAKE: for my $mistake ( @{$mistakes} ) {
 
-            my @gapIndents = ();
+                    # say join " ", __FILE__, __LINE__, "displayMistakes()";
+                    my $desc        = $mistake->{desc};
+                    my $type        = $mistake->{type};
+                    my $mistakeLine = $mistake->{line};
+                    push @pieces,
+                      reportItem(
+                        (
+                                "$fileName "
+                              . ( join ':', $parentLine, $parentColumn+1 )
+                              . " $type $lhsName $desc"
+                        ),
+                        $parentLine,
+                        $mistakeLine,
+                        $contextLines
+                      );
+                }
+                return join "", @pieces;
+            };
+
+          # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
+          # if here, gapiness > 0
             {
-                my $child      = $children->[0];
-                my $childStart = $child->{start};
-                my ( $childLine, $childColumn ) =
-                  $recce->line_column($childStart);
-                push @gapIndents, [ $childLine, $childColumn - 1 ];
-                for my $childIX ( 0 .. ( $#$children - 1 ) ) {
-                    my $child  = $children->[$childIX];
-                    my $symbol = $child->{symbol};
-                    if ( defined $symbol and $symbolReverseDB{$symbol}->{gap} )
-                    {
-                        my $nextChild = $children->[ $childIX + 1 ];
-                        my $nextStart = $nextChild->{start};
-                        my ( $nextLine, $nextColumn ) =
-                          $recce->line_column($nextStart);
-                        push @gapIndents, [ $nextLine, $nextColumn - 1 ];
+                my $isProblem = 0;
+                my $mistakes  = [];
+                my $start     = $node->{start};
+
+                my $indentDesc = '???';
+
+                my @gapIndents = ();
+                {
+                    my $child      = $children->[0];
+                    my $childStart = $child->{start};
+                    my ( $childLine, $childColumn ) =
+                      $recce->line_column($childStart);
+                    push @gapIndents, [ $childLine, $childColumn - 1 ];
+                    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
+                        my $child  = $children->[$childIX];
+                        my $symbol = $child->{symbol};
+                        if ( defined $symbol
+                            and $symbolReverseDB{$symbol}->{gap} )
+                        {
+                            my $nextChild = $children->[ $childIX + 1 ];
+                            my $nextStart = $nextChild->{start};
+                            my ( $nextLine, $nextColumn ) =
+                              $recce->line_column($nextStart);
+                            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
+                        }
                     }
                 }
-            }
 
-          TYPE_INDENT: {
+              TYPE_INDENT: {
 
-                my $suppression = $suppression{'indent'}{$parentLC};
-                if ( defined $suppression ) {
-                    $indentDesc = "SUPPRESSION $suppression";
-                    $unusedSuppression{'indent'}{$parentLC} = undef;
-                    last TYPE_INDENT;
-                }
-
-                if ( isFlat( \@gapIndents ) ) {
-                    $indentDesc = 'FLAT';
-                    last TYPE_INDENT;
-                }
-
-                if ( $tallJogRule{$lhsName} ) {
-                    if ( isJog( \@gapIndents ) ) {
-                        $indentDesc = 'JOG-STYLE';
+                    my $suppression = $suppression{'indent'}{$parentLC};
+                    if ( defined $suppression ) {
+                        $indentDesc = "SUPPRESSION $suppression";
+                        $unusedSuppression{'indent'}{$parentLC} = undef;
                         last TYPE_INDENT;
                     }
-                    $isProblem = 1;
-                }
 
-                if ( $tallSemsigRule{$lhsName} ) {
-                    if ( issemsig( $parentLine, $parentColumn, \@gapIndents ) )
-                    {
-                        $indentDesc = 'SEMSIG-STYLE';
+                    if ( isFlat( \@gapIndents ) ) {
+                        $indentDesc = 'FLAT';
                         last TYPE_INDENT;
                     }
-                    $isProblem  = 1;
-                    $mistakes = defaultMistakes( \@gapIndents );
-                    last TYPE_INDENT;
-                }
 
-                if ( $tallNoteRule{$lhsName} ) {
-                    $mistakes = isBackdented( \@gapIndents, $noteIndent );
-                    if ( not @{$mistakes} ) {
-                        $indentDesc = 'CAST-STYLE';
+                    if ( $tallJogRule{$lhsName} ) {
+                        if ( isJog( \@gapIndents ) ) {
+                            $indentDesc = 'JOG-STYLE';
+                            last TYPE_INDENT;
+                        }
+                        $isProblem = 1;
+                    }
+
+                    if ( $tallSemsigRule{$lhsName} ) {
+                        if (
+                            issemsig(
+                                $parentLine, $parentColumn, \@gapIndents
+                            )
+                          )
+                        {
+                            $indentDesc = 'SEMSIG-STYLE';
+                            last TYPE_INDENT;
+                        }
+                        $isProblem = 1;
+                        $mistakes  = defaultMistakes( \@gapIndents );
                         last TYPE_INDENT;
                     }
-                    $mistakes = defaultMistakes( \@gapIndents );
-                    last TYPE_INDENT;
-                }
-                if ( $tallLuslusRule{$lhsName} ) {
-                    if (
-                        isLuslusStyle( \@gapIndents ) )
-                    {
-                        $indentDesc = 'LUSLUS-STYLE';
+
+                    if ( $tallNoteRule{$lhsName} ) {
+                        $mistakes = isBackdented( \@gapIndents, $noteIndent );
+                        if ( not @{$mistakes} ) {
+                            $indentDesc = 'CAST-STYLE';
+                            last TYPE_INDENT;
+                        }
+                        $mistakes = defaultMistakes( \@gapIndents );
                         last TYPE_INDENT;
                     }
-                    $mistakes = defaultMistakes( \@gapIndents );
-                    last TYPE_INDENT;
-                }
-                if ( $tallBackdentRule{$lhsName} ) {
-                    $mistakes = isBackdented( \@gapIndents);
+                    if ( $tallLuslusRule{$lhsName} ) {
+                        if ( isLuslusStyle( \@gapIndents ) ) {
+                            $indentDesc = 'LUSLUS-STYLE';
+                            last TYPE_INDENT;
+                        }
+                        $mistakes = defaultMistakes( \@gapIndents );
+                        last TYPE_INDENT;
+                    }
+
+                    # By default, treat as backdented
+                    $mistakes = isBackdented( \@gapIndents );
                     if ( not @{$mistakes} ) {
                         $indentDesc = 'BACKDENTED';
                         last TYPE_INDENT;
                     }
+
                     $mistakes = defaultMistakes( \@gapIndents );
-                    last TYPE_INDENT;
                 }
 
-                $isProblem = 1;
+                # say "$lhsName $indentDesc $censusWhitespace $isProblem";
+              PRINT: {
+          # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
+                    if ( @{$mistakes} ) {
+                        $_->{type} = 'indent' for @{$mistakes};
+                        print $displayMistakes->($mistakes);
+                        last PRINT;
+                    }
 
-                # If here, indenting did not match the LHS --
-                # we try the standard patterns to see if any
-                # match.  More than one may match.
-                {
-                    my @patterns = ();
-                    push @patterns, 'BACKDENTED' if not @{isBackdented( \@gapIndents)};
-                    push @patterns, 'CAST-STYLE' if not @{isBackdented( \@gapIndents, $noteIndent)};
-                    push @patterns, 'LUSLUS-STYLE'
-                      if isLuslusStyle( \@gapIndents );
-                    push @patterns, 'JOG-STYLE'
-                      if isJog( \@gapIndents );
-                    push @patterns, 'SEMSIG-STYLE'
-                      if issemsig( $parentLine, $parentColumn, \@gapIndents );
-                    if (@patterns) {
-                        $indentDesc = join " ", @patterns;
-                        last TYPE_INDENT;
+# say join " ", __FILE__, __LINE__, "$lhsName $indentDesc $censusWhitespace $isProblem";
+                    if ( $censusWhitespace or $isProblem ) {
+                        print "$fileName ",
+                          ( join ':', $recce->line_column($start) ),
+                          " indent $lhsName $indentDesc\n",
+                          context( $parentStart, $parentLength, $contextLines );
                     }
                 }
-
-                # If here, indenting does not match any pattern --
-                # we proceed to a rough characterization
-                for (
-                    my $indentIX = $#parentIndents ;
-                    $indentIX >= 0 ;
-                    $indentIX--
-                  )
-                {
-                    my $indent = $parentIndents[$indentIX];
-                    my $theseMistakes = isBackdented( \@gapIndents, $indent);
-                    if ( not @{$theseMistakes} ) {
-                        my $depth = $#parentIndents - $indentIX;
-                        $indentDesc = "BACKDENTED-$depth";
-                        $isProblem  = 1;
-                        last TYPE_INDENT;
-                    }
-                }
-
-                $isProblem = 1;
-                my $startOfLine = 1 + rindex ${$pHoonSource}, "\n", $start;
-                my $lineLiteral = substr ${$pHoonSource},
-                  $startOfLine, $start - $startOfLine;
-
-                # say qq{lineLiteral: "$lineLiteral"};
-                my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
-                my $theseMistakes = isBackdented( \@gapIndents, ( length $spaces ));
-                if ( not @{$theseMistakes} ) {
-                    $indentDesc = 'LINE-BACKDENTED';
-                    last TYPE_INDENT;
-                }
-                if ( isLuslusStyle( \@gapIndents ) ) {
-
-                    # luslus style for non-luslus rules
-                    $indentDesc = 'LUSLUS-STYLE';
-                    last TYPE_INDENT;
-                }
-                $mistakes = defaultMistakes( \@gapIndents );
             }
-            # say "$lhsName $indentDesc $censusWhitespace $isProblem";
-          PRINT: {
-            # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
-                if ( @{$mistakes} ) {
-                    $_->{type} = 'indent' for @{$mistakes};
-                    print $displayMistakes->($mistakes);
-                    last PRINT;
-                }
-            # say join " ", __FILE__, __LINE__, "$lhsName $indentDesc $censusWhitespace $isProblem";
-                if ( $censusWhitespace or $isProblem ) {
-                    print "$fileName ",
-                      ( join ':', $recce->line_column($start) ),
-                      " indent $lhsName $indentDesc\n",
-                      context( $parentStart, $parentLength, $contextLines );
-                }
-            }
-        }
+        }    # End of whitespace "policy"
 
-        # If here, use backdenting
       CHILD: for my $childIX ( 0 .. $#$children ) {
             my $child = $children->[$childIX];
             doLint( $child, $parentContext );
