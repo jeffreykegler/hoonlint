@@ -3,6 +3,7 @@
 use 5.010;
 use strict;
 use warnings;
+no warnings 'recursion';
 
 use Data::Dumper;
 use English qw( -no_match_vars );
@@ -369,29 +370,35 @@ sub context2 {
   if ($mistakeRangeStart <= $runeRangeEnd + 2) {
     for my $lineNum ( $runeRangeStart .. $mistakeRangeEnd ) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal( $start, ( $lineToPos[$lineNum] - $start ) );
+        my $line = literal( $start, ( $lineToPos[$lineNum+1] - $start ) );
         my $tag =
-            $lineNum == $runeLine        ? '+'
-          : ( $lineNum == $mistakeLine ) ? '!'
-          :                                q{ };
+            $lineNum == $runeLine        ? '+ '
+          : ( $lineNum == $mistakeLine ) ? '! '
+          :                                q{  };
         push @pieces, $tag, $line;
     }
   } else {
       for my $lineNum ($runeRangeStart .. $runeRangeEnd) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal($start, ($lineToPos[$lineNum]-$start));
-        my $tag = $lineNum == $runeLine ? '+' : q{ };
+        my $line = literal($start, ($lineToPos[$lineNum+1]-$start));
+        my $tag = $lineNum == $runeLine ? '+ ' : q{  };
         push @pieces, $tag, $line;
       }
-      push @pieces, "[ ... lines " . ($runeRangeEnd+1) . q{-} . ($mistakeRangeStart-1) . ' ... ]';
+      push @pieces, "  [ lines " . ($runeRangeEnd+1) . q{-} . ($mistakeRangeStart-1) . ' omitted ]';
       for my $lineNum ($mistakeRangeStart .. $mistakeRangeEnd) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal($start, ($lineToPos[$lineNum]-$start));
-        my $tag = $lineNum == $mistakeLine ? '!' : q{ };
+        my $line = literal($start, ($lineToPos[$lineNum+1]-$start));
+        my $tag = $lineNum == $mistakeLine ? '! ' : q{  };
         push @pieces, $tag, $line;
       }
   }
   return join q{}, @pieces;
+}
+
+sub reportItem {
+  my ($topic, $runeLine, $mistakeLine, $contextLines) = @_;
+  return "$topic\n" if not $contextLines;
+  return join q{}, "==", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
 }
 
 sub context {
@@ -548,7 +555,6 @@ sub testStyleCensus {
 testStyleCensus();
 
 sub doLint {
-    no warnings 'recursion';
     my ( $node, $argContext ) = @_;
 
     my $parentSymbol = $node->{symbol};
@@ -729,8 +735,8 @@ sub doLint {
                                       $childLC;
                                 }
                             }
-                            print "$fileName $grandParentLC sequence $lhsName $indentDesc\n",
-                              context( $parentStart, $parentLength,
+                            print reportItem( "$fileName $grandParentLC sequence $lhsName $indentDesc",
+                               $parentLine, $childLine,
                                 $contextLines )
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
@@ -770,8 +776,8 @@ sub doLint {
                             $indentDesc = join " ", $parentLC, $childLC;
                         }
                     }
-                    print "$fileName $parentLC sequence $lhsName $indentDesc\n",
-                      context( $parentStart, $parentLength, $contextLines )
+                    print reportItem( "$fileName $parentLC sequence $lhsName $indentDesc",
+                       $parentLine, $childLine, $contextLines )
                       if $censusWhitespace or $isProblem;
                     $previousLine = $childLine;
                 }
@@ -862,13 +868,38 @@ sub doLint {
                 # say "$currentIndent vs. $thisColumn";
                 next INDENT if $thisLine == $lastLine;
                 if ($currentIndent != $thisColumn) {
-                    my $msg = "Backdent is $thisColumn; should be $currentIndent";
-                    push @mistakes, {desc => $msg,
-                    line => $thisLine, column => $thisColumn};
+                    my $msg = "Child #$ix @ line $thisLine; backdent is $thisColumn; should be $currentIndent";
+                    push @mistakes,
+                      {
+                        desc   => $msg,
+                        line   => $thisLine,
+                        column => $thisColumn,
+                        child => $ix,
+                        backdentColumn => $currentIndent,
+                      };
                 }
                 $lastLine = $thisLine;
             }
             return \@mistakes;
+        }
+
+        # By default, report anomalies in terms of differences from backdenting
+        # to the rule start.
+        sub defaultMistakes {
+            my ($indents) = @_;
+            my $mistakes = isBackdented($indents);
+            return [{ msg => "Undetected mistakes" }] if not @{$mistakes};
+            for my $mistake (@{$mistakes}) {
+                my $mistakeChild  = $mistake->{child};
+                my $mistakeColumn = $mistake->{column};
+                my $defaultColumn = $mistake->{backdentColumn};
+                my $mistakeLine   = $mistake->{line};
+                my $msg           = sprintf
+                  "Unclassed child #%d; line %d; indent=%d vs. default of %d",
+                  $mistakeChild, $mistakeLine, $mistakeColumn, $defaultColumn;
+                $mistake->{msg} = $msg;
+            }
+            return $mistakes;
         }
 
         sub isFlat {
@@ -878,6 +909,7 @@ sub doLint {
             return $firstLine == $lastLine;
         }
 
+        # TODO: Delete?
         sub relativeIndentDesc {
             my ($indents) = @_;
             my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
@@ -890,6 +922,7 @@ sub doLint {
             return join " ", @pieces;
         }
 
+        # TODO: Delete?
         sub indentDesc {
             my ($indents) = @_;
 
@@ -916,11 +949,10 @@ sub doLint {
                 my $type        = $mistake->{type};
                 my $mistakeLine = $mistake->{line};
                 push @pieces,
-                  "$fileName ", ( join ':', $parentLine, $parentColumn ),
-                  " $type $lhsName $desc\n";
-                  next MISTAKE if not $contextLines;
-                push @pieces,
-                  context2( $parentLine, $mistakeLine, $contextLines );
+                reportItem(
+                  ("$fileName " . ( join ':', $parentLine, $parentColumn ) .
+                  " $type $lhsName $desc"),
+                   $parentLine, $mistakeLine, $contextLines );
             }
             return join "", @pieces;
         };
@@ -984,7 +1016,7 @@ sub doLint {
                         last TYPE_INDENT;
                     }
                     $isProblem  = 1;
-                    $indentDesc = indentDesc( \@gapIndents );
+                    $mistakes = defaultMistakes( \@gapIndents );
                     last TYPE_INDENT;
                 }
 
@@ -994,8 +1026,8 @@ sub doLint {
                         $indentDesc = 'CAST-STYLE';
                         last TYPE_INDENT;
                     }
-                    $isProblem = 1;
-
+                    $mistakes = defaultMistakes( \@gapIndents );
+                    last TYPE_INDENT;
                 }
                 if ( $tallLuslusRule{$lhsName} ) {
                     if (
@@ -1004,7 +1036,8 @@ sub doLint {
                         $indentDesc = 'LUSLUS-STYLE';
                         last TYPE_INDENT;
                     }
-                    $isProblem = 1;
+                    $mistakes = defaultMistakes( \@gapIndents );
+                    last TYPE_INDENT;
                 }
                 if ( $tallBackdentRule{$lhsName} ) {
                     $mistakes = isBackdented( \@gapIndents);
@@ -1012,7 +1045,8 @@ sub doLint {
                         $indentDesc = 'BACKDENTED';
                         last TYPE_INDENT;
                     }
-                    $isProblem = 1;
+                    $mistakes = defaultMistakes( \@gapIndents );
+                    last TYPE_INDENT;
                 }
 
                 $isProblem = 1;
@@ -1072,7 +1106,7 @@ sub doLint {
                     $indentDesc = 'LUSLUS-STYLE';
                     last TYPE_INDENT;
                 }
-                $indentDesc = indentDesc( \@gapIndents );
+                $mistakes = defaultMistakes( \@gapIndents );
             }
             # say "$lhsName $indentDesc $censusWhitespace $isProblem";
           PRINT: {
