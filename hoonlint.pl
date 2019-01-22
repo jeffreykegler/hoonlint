@@ -781,26 +781,34 @@ sub doLint {
 
             sub isLuslusStyle {
                 my ($indents) = @_;
+                my @mistakes = ();
                 my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
 
-                # say join " ", __FILE__, __LINE__, "L$baseLine:$baseColumn";
                 my $indentCount = scalar @{$indents};
                 my $indentIX    = 1;
               INDENT: while ( $indentIX < $indentCount ) {
                     my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-
-                 # say join " ", __FILE__, __LINE__, "L$thisLine vs. $baseLine";
                     last INDENT if $thisLine != $baseLine;
                     $indentIX++;
                 }
               INDENT: while ( $indentIX < $indentCount ) {
                     my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-
-             # say join " ", __FILE__, __LINE__, "L$thisColumn vs. $baseColumn";
-                    return 0 if $thisColumn != $baseColumn + 2;
+                    if ( $thisColumn != $baseColumn + 2 ) {
+                        my $msg = sprintf
+                          "Child #%d @ line %d; backdent is %d; should be %d",
+                          $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $thisLine,
+                            column         => $thisColumn,
+                            child          => $indentIX,
+                            expectedColumn => $baseColumn + 2
+                          };
+                    }
                     $indentIX++;
                 }
-                return 1;
+                return \@mistakes;
             }
 
             # Semsig must have first child properly aligned on same line as
@@ -811,42 +819,116 @@ sub doLint {
             # be on the rune line.
             sub issemsig {
                 my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-                return 0 if $#$gapIndents < 3;
+                my @mistakes = ();
+                die "Semsig-style rule with only $gapIndents gap indents"
+                  if $#$gapIndents < 3;
                 my ( $firstChildLine, $firstChildColumn ) =
                   @{ $gapIndents->[1] };
-                return 0
-                  if $firstChildLine != $runeLine
-                  or $firstChildColumn != $runeColumn + 4;
+                if ( $firstChildLine != $runeLine ) {
+                    my $msg = sprintf
+"Semsig-style Child #%d @ line %d; first child is on line %d; should be on rune line",
+                      1, $runeLine, $firstChildLine;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $firstChildLine,
+                        column       => $firstChildColumn,
+                        child        => 1,
+                        expectedLine => $runeLine,
+                      };
+                }
+                if ( $firstChildColumn != $runeColumn + 4 ) {
+                    my $msg = sprintf
+"Semsig-style Child #%d @ line %d; first child is at column %d; should be at column %d",
+                      1, $runeLine, $firstChildColumn, $runeColumn + 4;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $firstChildLine,
+                        column       => $firstChildColumn,
+                        child        => 1,
+                        expectedColumn => $runeColumn+4,
+                      };
+                }
 
                 # Second child must be on rune line, or
                 # at ruleColumn+2
                 my ( $secondChildLine, $secondChildColumn ) =
                   @{ $gapIndents->[2] };
 
-# say "issemsig: $runeLine:$runeColumn; (secondChildLine, secondChildColumn ) = ( $secondChildLine, $secondChildColumn )";
-                return 0
-                  if $secondChildLine != $runeLine
-                  and $secondChildColumn != $runeColumn + 2;
+                if (    $secondChildLine != $runeLine
+                    and $secondChildColumn != $runeColumn + 2 )
+                {
+                    my $msg = sprintf
+"Semsig-style Child #%d @ line %d; 2nd child is at column %d; should be at column %d",
+                      2, $runeLine, $secondChildColumn, $runeColumn + 2;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $secondChildLine,
+                        column       => $secondChildColumn,
+                        child        => 2,
+                        expectedColumn => $runeColumn+2,
+                      };
+                }
 
                 my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
-                return 0
-                  if $tistisLine == $runeLine or $tistisColumn != $runeColumn;
-                return 1;
+                if ( $tistisLine == $runeLine ) {
+                    my $msg = sprintf
+"Semsig-style line %d; TISTIS is on rune line %d; should not be",
+                      $runeLine, $tistisLine;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $tistisLine,
+                        column       => $tistisColumn,
+                        child        => 3,
+                        expectedLine => $runeLine,
+                      };
+                }
+                if ( $tistisColumn != $runeColumn ) {
+                    my $msg = sprintf
+"Semsig-style line %d; TISTIS is at column %d; should be at rune column %d",
+                      $runeLine, $tistisColumn, $runeColumn;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $tistisLine,
+                        column       => $tistisColumn,
+                        child        => 3,
+                        expectedColumn => $runeColumn,
+                      };
+                }
+                return \@mistakes;
             }
 
             sub isJog {
                 my ($indents) = @_;
-                return 0 if $#$indents != 1;
+                my @mistakes = ();
+                die "Jog rule has "
+                  . ( scalar @{$indents} )
+                  . "indents; should have 2"
+                  if $#$indents != 1;
                 my ( $line1, $column1 ) = @{ $indents->[0] };
                 my ( $line2, $column2 ) = @{ $indents->[1] };
 
                 # TODO: enforce alignment for "flat jogs"
                 return 1 if $line1 == $line2;
 
-                # say "lc1: ( $line1, $column1, baseColumn: $baseColumn )";
-                # say "lc2: ( $line2, $column2 )";
                 return 1 if $column2 + 2 == $column1;
-                return 0;
+                my $msg =
+                  sprintf
+"Jog-style line %d; Child 2 is at column %d; should be at column %d",
+                  $line1, $column2, $column1 - 2;
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    line           => $line2,
+                    column         => $column2,
+                    child          => 2,
+                    expectedColumn => $column1 - 2,
+                  };
+                return \@mistakes;
             }
 
             sub isBackdented {
@@ -1013,7 +1095,8 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                     }
 
                     if ( $tallJogRule{$lhsName} ) {
-                        if ( isJog( \@gapIndents ) ) {
+                        $mistakes = isJog( \@gapIndents );
+                        if ( not @{$mistakes} ) {
                             $indentDesc = 'JOG-STYLE';
                             last TYPE_INDENT;
                         }
@@ -1021,12 +1104,9 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                     }
 
                     if ( $tallSemsigRule{$lhsName} ) {
-                        if (
-                            issemsig(
-                                $parentLine, $parentColumn, \@gapIndents
-                            )
-                          )
-                        {
+                        $mistakes =
+                          issemsig( $parentLine, $parentColumn, \@gapIndents );
+                        if ( not @{$mistakes} ) {
                             $indentDesc = 'SEMSIG-STYLE';
                             last TYPE_INDENT;
                         }
@@ -1045,7 +1125,8 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                         last TYPE_INDENT;
                     }
                     if ( $tallLuslusRule{$lhsName} ) {
-                        if ( isLuslusStyle( \@gapIndents ) ) {
+                        $mistakes = isLuslusStyle( \@gapIndents ) ;
+                        if ( not @{$mistakes} ) {
                             $indentDesc = 'LUSLUS-STYLE';
                             last TYPE_INDENT;
                         }
