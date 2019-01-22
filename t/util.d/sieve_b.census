@@ -5,13 +5,13 @@ t/ast.d/sieve_b.hoon 4:1 indent tallTisgal CAST-STYLE
 t/ast.d/sieve_b.hoon 5:1 indent tallBarcen BACKDENTED
 t/ast.d/sieve_b.hoon 6:1 indent wisp5d CAST-STYLE
 t/ast.d/sieve_b.hoon 6:1 indent LuslusCell LUSLUS-STYLE
-SEQUENCE whap5d REGULAR # t/ast.d/sieve_b.hoon L6:1
+t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR
 t/ast.d/sieve_b.hoon 9:1 indent LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_b.hoon 10:3 indent tallTisfas BACKDENTED
 t/ast.d/sieve_b.hoon 11:3 indent tallBarhep FLAT
 t/ast.d/sieve_b.hoon 11:7 indent tallKetlus CAST-STYLE
 t/ast.d/sieve_b.hoon 12:3 indent tallWutcol BACKDENTED
-SEQUENCE whap5d REGULAR # t/ast.d/sieve_b.hoon L6:1
+t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR
 t/ast.d/sieve_b.hoon 16:1 indent LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_b.hoon 17:3 indent tallBartis BACKDENTED
 t/ast.d/sieve_b.hoon 18:3 indent tallTisfas BACKDENTED
@@ -20,7 +20,7 @@ t/ast.d/sieve_b.hoon 19:7 indent tallKetlus CAST-STYLE
 t/ast.d/sieve_b.hoon 20:3 indent tallWutcol BACKDENTED
 t/ast.d/sieve_b.hoon 22:3 indent tallCentis SEMSIG-STYLE
 t/ast.d/sieve_b.hoon 23:5 indent rick5dJog FLAT
-SEQUENCE rick5d REGULAR # t/ast.d/sieve_b.hoon L23:5
+t/ast.d/sieve_b.hoon 23:5 sequence rick5d REGULAR
 t/ast.d/sieve_b.hoon 24:5 indent rick5dJog FLAT
-SEQUENCE rick5d REGULAR # t/ast.d/sieve_b.hoon L23:5
-SEQUENCE whap5d REGULAR # t/ast.d/sieve_b.hoon L6:1
+t/ast.d/sieve_b.hoon 23:5 sequence rick5d REGULAR
+t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR

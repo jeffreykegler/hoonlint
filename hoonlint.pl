@@ -13,15 +13,15 @@ require "yahc.pm";
 
 my $style;
 
-my $verbose;
+my $verbose; # right now does nothing
 my $censusWhitespace;
 my $suppressionFileName;
 my $relativeIndents;
-my $sayContext = 0;
+my $contextLines = 0;
 
 GetOptions(
     "verbose"             => \$verbose,
-    "context=i"           => \$sayContext,
+    "context|C=i"         => \$contextLines,
     "relative-indents"    => \$relativeIndents,
     "census-whitespace"   => \$censusWhitespace,
     "suppressions_file=s" => \$suppressionFileName,
@@ -356,6 +356,42 @@ while (${$pHoonSource} =~ m/\n/g) { push @lineToPos, pos ${$pHoonSource} };
 sub column {
     my ($pos) = @_;
     return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
+}
+
+sub context2 {
+  my ($runeLine, $mistakeLine, $contextLines) = @_;
+  return '' if $contextLines <= 0;
+  my @pieces = ();
+  my $runeRangeStart = $runeLine - ($contextLines - 1);
+  my $runeRangeEnd = $runeLine + ($contextLines - 1);
+  my $mistakeRangeStart = $mistakeLine - ($contextLines - 1);
+  my $mistakeRangeEnd = $mistakeLine + ($contextLines - 1);
+  if ($mistakeRangeStart <= $runeRangeEnd + 2) {
+    for my $lineNum ( $runeRangeStart .. $mistakeRangeEnd ) {
+        my $start = $lineToPos[$lineNum];
+        my $line = literal( $start, ( $lineToPos[$lineNum] - $start ) );
+        my $tag =
+            $lineNum == $runeLine        ? '+'
+          : ( $lineNum == $mistakeLine ) ? '!'
+          :                                q{ };
+        push @pieces, $tag, $line;
+    }
+  } else {
+      for my $lineNum ($runeRangeStart .. $runeRangeEnd) {
+        my $start = $lineToPos[$lineNum];
+        my $line = literal($start, ($lineToPos[$lineNum]-$start));
+        my $tag = $lineNum == $runeLine ? '+' : q{ };
+        push @pieces, $tag, $line;
+      }
+      push @pieces, "[ ... lines " . ($runeRangeEnd+1) . q{-} . ($mistakeRangeStart-1) . ' ... ]';
+      for my $lineNum ($mistakeRangeStart .. $mistakeRangeEnd) {
+        my $start = $lineToPos[$lineNum];
+        my $line = literal($start, ($lineToPos[$lineNum]-$start));
+        my $tag = $lineNum == $mistakeLine ? '!' : q{ };
+        push @pieces, $tag, $line;
+      }
+  }
+  return join q{}, @pieces;
 }
 
 sub context {
@@ -695,7 +731,7 @@ sub doLint {
                             }
                             print "$fileName $grandParentLC sequence $lhsName $indentDesc\n",
                               context( $parentStart, $parentLength,
-                                $sayContext )
+                                $contextLines )
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
                         }
@@ -734,9 +770,8 @@ sub doLint {
                             $indentDesc = join " ", $parentLC, $childLC;
                         }
                     }
-                    print
-                      "SEQUENCE $lhsName $indentDesc # $fileName L$parentLC",
-                      "\n", context( $parentStart, $parentLength, $sayContext )
+                    print "$fileName $parentLC sequence $lhsName $indentDesc\n",
+                      context( $parentStart, $parentLength, $contextLines )
                       if $censusWhitespace or $isProblem;
                     $previousLine = $childLine;
                 }
@@ -875,21 +910,18 @@ sub doLint {
             my ($mistakes) = @_;
             my @pieces = ();
           MISTAKE: for my $mistake ( @{$mistakes} ) {
-                my $desc = $mistake->{desc};
-                my $type = $mistake->{type};
+                my $desc        = $mistake->{desc};
+                my $type        = $mistake->{type};
                 my $mistakeLine = $mistake->{line};
                 push @pieces,
                   " # $fileName L", ( join ':', $parentLine, $parentColumn ),
-                  " $type $lhsName $desc\n",
-                next MISTAKE
-                  if not $sayContext;
+                  " $type $lhsName $desc\n", next MISTAKE
+                  if not $contextLines;
                 push @pieces,
-                  context( $parentStart, $parentLength, $sayContext ),
-                  '---\n',
-                  context( $lineToPos[$mistakeLine], 1, $sayContext );
+                  context2( $parentLine, $mistakeLine, $contextLines );
             }
             return join "", @pieces;
-          };
+        };
 
         # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
         # if here, gapiness > 0
@@ -1046,7 +1078,7 @@ sub doLint {
             } elsif ($censusWhitespace or $isProblem) {
                 print 
                   "$fileName ", ( join ':', $recce->line_column($start) ),
-                  " indent $lhsName $indentDesc\n", context( $parentStart, $parentLength, $sayContext );
+                  " indent $lhsName $indentDesc\n", context( $parentStart, $parentLength, $contextLines );
             }
         }
 
