@@ -907,16 +907,18 @@ sub doLint {
         }
 
         my $displayMistakes = sub {
+        # say join " ", __FILE__, __LINE__, "displayMistakes()";
             my ($mistakes) = @_;
             my @pieces = ();
           MISTAKE: for my $mistake ( @{$mistakes} ) {
+        # say join " ", __FILE__, __LINE__, "displayMistakes()";
                 my $desc        = $mistake->{desc};
                 my $type        = $mistake->{type};
                 my $mistakeLine = $mistake->{line};
                 push @pieces,
-                  " # $fileName L", ( join ':', $parentLine, $parentColumn ),
-                  " $type $lhsName $desc\n", next MISTAKE
-                  if not $contextLines;
+                  "$fileName ", ( join ':', $parentLine, $parentColumn ),
+                  " $type $lhsName $desc\n";
+                  next MISTAKE if not $contextLines;
                 push @pieces,
                   context2( $parentLine, $mistakeLine, $contextLines );
             }
@@ -1043,8 +1045,8 @@ sub doLint {
                   )
                 {
                     my $indent = $parentIndents[$indentIX];
-                    $mistakes = isBackdented( \@gapIndents, $indent);
-                    if ( not @{$mistakes} ) {
+                    my $theseMistakes = isBackdented( \@gapIndents, $indent);
+                    if ( not @{$theseMistakes} ) {
                         my $depth = $#parentIndents - $indentIX;
                         $indentDesc = "BACKDENTED-$depth";
                         $isProblem  = 1;
@@ -1059,8 +1061,8 @@ sub doLint {
 
                 # say qq{lineLiteral: "$lineLiteral"};
                 my ($spaces) = ( $lineLiteral =~ m/^([ ]*)/ );
-                my $mistakes = isBackdented( \@gapIndents, ( length $spaces ));
-                if ( not @{$mistakes} ) {
+                my $theseMistakes = isBackdented( \@gapIndents, ( length $spaces ));
+                if ( not @{$theseMistakes} ) {
                     $indentDesc = 'LINE-BACKDENTED';
                     last TYPE_INDENT;
                 }
@@ -1072,13 +1074,21 @@ sub doLint {
                 }
                 $indentDesc = indentDesc( \@gapIndents );
             }
-            if (@{$mistakes}) {
-                $_->{type} = 'indent' for @{$mistakes};
-                print $displayMistakes->($mistakes);
-            } elsif ($censusWhitespace or $isProblem) {
-                print 
-                  "$fileName ", ( join ':', $recce->line_column($start) ),
-                  " indent $lhsName $indentDesc\n", context( $parentStart, $parentLength, $contextLines );
+            # say "$lhsName $indentDesc $censusWhitespace $isProblem";
+          PRINT: {
+            # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
+                if ( @{$mistakes} ) {
+                    $_->{type} = 'indent' for @{$mistakes};
+                    print $displayMistakes->($mistakes);
+                    last PRINT;
+                }
+            # say join " ", __FILE__, __LINE__, "$lhsName $indentDesc $censusWhitespace $isProblem";
+                if ( $censusWhitespace or $isProblem ) {
+                    print "$fileName ",
+                      ( join ':', $recce->line_column($start) ),
+                      " indent $lhsName $indentDesc\n",
+                      context( $parentStart, $parentLength, $contextLines );
+                }
             }
         }
 
