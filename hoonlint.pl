@@ -141,7 +141,7 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
 my %tallSemsigRule =
-  map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig);
+  map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig tallWuthep);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
@@ -204,7 +204,6 @@ my %tallBackdentRule = map { +( $_, 1 ) } qw(
   tallWutbar
   tallWutcol
   tallWutdot
-  tallWuthep
   tallWutket
   tallWutlus
   tallWutpam
