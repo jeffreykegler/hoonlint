@@ -16,16 +16,16 @@ my $style;
 
 my $verbose; # right now does nothing
 my $censusWhitespace;
-my $suppressionFileName;
-my $relativeIndents;
+my $inclusionsFileName;
+my $suppressionsFileName;
 my $contextLines = 0;
 
 GetOptions(
     "verbose"             => \$verbose,
     "context|C=i"         => \$contextLines,
-    "relative-indents"    => \$relativeIndents,
     "census-whitespace"   => \$censusWhitespace,
-    "suppressions_file=s" => \$suppressionFileName,
+    "inclusions-file|I=s" => \$inclusionsFileName,
+    "suppressions_file=s" => \$suppressionsFileName,
 ) or die("Error in command line arguments\n");
 
 sub usage {
@@ -46,50 +46,65 @@ sub slurp {
 }
 
 my $defaultSuppressionFile = 'hoonlint.suppressions';
-if ( not defined $suppressionFileName
+if ( not defined $suppressionsFileName
     and -f $defaultSuppressionFile )
 {
-    $suppressionFileName = $defaultSuppressionFile;
+    $suppressionsFileName = $defaultSuppressionFile;
 }
 
-sub suppressionError {
+sub itemError {
     my ( $error, $line ) = @_;
-    say STDERR qq{Error in suppression file "$suppressionFileName": $error};
+    return qq{Error in item file "$fileName": $error\n}
+    . qq{  Problem with line: $line\n};
 }
 
 my $pSuppressions =
-  $suppressionFileName ? slurp($suppressionFileName) : \"# empty file\n";
-my %suppressionType   = map { +( $_, 1 ) } qw(indent sequence);
-my %suppression       = ();
-my %unusedSuppression = ();
-SUPPRESSION: for my $suppression ( split "\n", ${$pSuppressions} ) {
-    my $rawSuppression = $suppression;
-    $suppression =~ s/\s*[#].*$//;    # remove comments and preceding whitespace
-    $suppression =~ s/^\s*//;         # remove leading whitespace
-    $suppression =~ s/\s*$//;         # remove trailing whitespace
-    next SUPPRESSION unless $suppression;
-    my ( $thisFileName, $lc, $type, $message ) = split /\s+/, $suppression, 4;
-    suppressionError( "Problem in suppression line", $rawSuppression )
-      if not $thisFileName;
+  $suppressionsFileName ? slurp($suppressionsFileName) : \"# empty file\n";
+my %reportItemType   = map { +( $_, 1 ) } qw(indent sequence);
+my ($suppressions, $unusedSuppressions) = parseReportItems($pSuppressions);
+die $unusedSuppressions if not $suppressions;
 
-    # "all" is only suppression type currently allowed
-    suppressionError( qq{Bad suppression type "$type"}, $rawSuppression )
-      if not exists $suppressionType{$type};
-    suppressionError( qq{Malformed line:column in suppression line: "$lc"},
-        $rawSuppression )
-      unless $lc =~ /^[0-9]+[:][0-9]+$/;
-    my ( $line, $column ) = split ':', $lc, 2;
-    suppressionError( qq{Malformed line:column in suppression line: "$lc"},
-        $rawSuppression )
-      unless Scalar::Util::looks_like_number($line)
-      and Scalar::Util::looks_like_number($column);
-    next SUPPRESSION unless $thisFileName eq $fileName;
+my $pInclusions;
+my ( $inclusions, $unusedInclusions );
+if ( defined $inclusionsFileName ) {
+    $pInclusions = slurp($inclusionsFileName);
+    ( $inclusions, $unusedInclusions ) = parseReportItems($pInclusions);
+    die $unusedInclusions if not $inclusions;
+}
 
-    # We reassemble line:column to "normalize" it -- be indifferent to
-    # leading zeros, etc.
-    my $tag = join ':', $line, $column;
-    $suppression{$type}{$tag}       = $message;
-    $unusedSuppression{$type}{$tag} = 1;
+sub parseReportItems {
+    my ($reportItems)        = @_;
+    my %itemHash       = ();
+    my %unusedItemHash = ();
+  ITEM: for my $itemLine ( split "\n", ${$reportItems} ) {
+        my $rawItemLine = $itemLine;
+        $itemLine =~ s/\s*[#].*$//;   # remove comments and preceding whitespace
+        $itemLine =~ s/^\s*//;        # remove leading whitespace
+        $itemLine =~ s/\s*$//;        # remove trailing whitespace
+        next ITEM unless $itemLine;
+        my ( $thisFileName, $lc, $type, $message ) = split /\s+/, $itemLine, 4;
+        return undef, itemError( "Problem in report line", $rawItemLine )
+          if not $thisFileName;
+
+        return undef, itemError( qq{Bad report item type "$type"}, $rawItemLine )
+          if not exists $reportItemType{$type};
+        return undef, itemError( qq{Malformed line:column in item line: "$lc"},
+            $rawItemLine )
+          unless $lc =~ /^[0-9]+[:][0-9]+$/;
+        my ( $line, $column ) = split ':', $lc, 2;
+        itemError( qq{Malformed line:column in item line: "$lc"},
+            $rawItemLine )
+          unless Scalar::Util::looks_like_number($line)
+          and Scalar::Util::looks_like_number($column);
+        next ITEM unless $thisFileName eq $fileName;
+
+        # We reassemble line:column to "normalize" it -- be indifferent to
+        # leading zeros, etc.
+        my $tag = join ':', $line, $column;
+        $itemHash{$type}{$tag}         = $message;
+        $unusedItemHash{$type}{$tag} = 1;
+    }
+    return \%itemHash, \%unusedItemHash;
 }
 
 my $pHoonSource = slurp($fileName);
@@ -567,15 +582,20 @@ sub doLint {
     my $noteIndent = ( $parentBodyIndent // $parentTallRuneIndent )
       // $parentColumn;
 
-  NODE: {
+    my $children = $node->{children};
+    my $type = $node->{type};
+
+  LINT_NODE: {
+
+        if ( $inclusions and not $inclusions->{$type}{$parentLC} ) {
+          last LINT_NODE;
+        }
 
         # "Policies" will go here
         # As of this writing, these is only one policy -- the "whitespace"
         # policy.
-            my $children   = $node->{children};
 
       WHITESPACE_POLICY: {
-            my $type = $node->{type};
 
             # say STDERR "= $type $key\n";
             last WHITESPACE_POLICY if $type eq 'null';
@@ -655,8 +675,8 @@ sub doLint {
 
                             $previousLine = $grandParentLine;
                           CHILD: for my $childIX ( 0 .. $#$children ) {
-                                my $isProblem = 0;
-                                my $child     = $children->[$childIX];
+                                my $isProblem  = 0;
+                                my $child      = $children->[$childIX];
                                 my $childStart = $child->{start};
                                 my $symbol     = $child->{symbol};
                                 next CHILD
@@ -671,12 +691,12 @@ sub doLint {
                                 my $indentDesc = 'RUN';
                               SET_INDENT_DESC: {
                                     my $suppression =
-                                      $suppression{'sequence'}{$childLC};
+                                      $suppressions->{'sequence'}{$childLC};
                                     if ( defined $suppression ) {
                                         $indentDesc =
                                           "SUPPRESSION $suppression";
-                                        $unusedSuppression{'sequence'}{$childLC}
-                                          = undef;
+                                        $unusedSuppressions->{'sequence'}
+                                          {$childLC} = undef;
                                         last SET_INDENT_DESC;
                                     }
 
@@ -701,8 +721,8 @@ sub doLint {
                     }
 
                   CHILD: for my $childIX ( 0 .. $#$children ) {
-                        my $isProblem = 0;
-                        my $child     = $children->[$childIX];
+                        my $isProblem  = 0;
+                        my $child      = $children->[$childIX];
                         my $childStart = $child->{start};
                         my $symbol     = $child->{symbol};
                         next CHILD
@@ -716,10 +736,10 @@ sub doLint {
                         my $indentDesc = 'REGULAR';
                       SET_INDENT_DESC: {
                             my $suppression =
-                              $suppression{'sequence'}{$childLC};
+                              $suppressions->{'sequence'}{$childLC};
                             if ( defined $suppression ) {
                                 $indentDesc = "SUPPRESSION $suppression";
-                                $unusedSuppression{'sequence'}{$childLC} =
+                                $unusedSuppressions->{'sequence'}{$childLC} =
                                   undef;
                                 last SET_INDENT_DESC;
                             }
@@ -805,11 +825,11 @@ sub doLint {
                       1, $runeLine, $firstChildColumn, $runeColumn + 4;
                     push @mistakes,
                       {
-                        desc         => $msg,
-                        line         => $firstChildLine,
-                        column       => $firstChildColumn,
-                        child        => 1,
-                        expectedColumn => $runeColumn+4,
+                        desc           => $msg,
+                        line           => $firstChildLine,
+                        column         => $firstChildColumn,
+                        child          => 1,
+                        expectedColumn => $runeColumn + 4,
                       };
                 }
 
@@ -826,11 +846,11 @@ sub doLint {
                       2, $runeLine, $secondChildColumn, $runeColumn + 2;
                     push @mistakes,
                       {
-                        desc         => $msg,
-                        line         => $secondChildLine,
-                        column       => $secondChildColumn,
-                        child        => 2,
-                        expectedColumn => $runeColumn+2,
+                        desc           => $msg,
+                        line           => $secondChildLine,
+                        column         => $secondChildColumn,
+                        child          => 2,
+                        expectedColumn => $runeColumn + 2,
                       };
                 }
 
@@ -854,10 +874,10 @@ sub doLint {
                       $runeLine, $tistisColumn, $runeColumn;
                     push @mistakes,
                       {
-                        desc         => $msg,
-                        line         => $tistisLine,
-                        column       => $tistisColumn,
-                        child        => 3,
+                        desc           => $msg,
+                        line           => $tistisLine,
+                        column         => $tistisColumn,
+                        child          => 3,
                         expectedColumn => $runeColumn,
                       };
                 }
@@ -910,9 +930,9 @@ sub doLint {
                     # say "$currentIndent vs. $thisColumn";
                     next INDENT if $thisLine == $lastLine;
                     if ( $currentIndent != $thisColumn ) {
-                        my $msg = sprintf 
-"Child #%d @ line %d; backdent is %d; should be %d",
-$ix, $thisLine, $thisColumn, $currentIndent;
+                        my $msg = sprintf
+                          "Child #%d @ line %d; backdent is %d; should be %d",
+                          $ix, $thisLine, $thisColumn, $currentIndent;
                         push @mistakes,
                           {
                             desc           => $msg,
@@ -930,16 +950,17 @@ $ix, $thisLine, $thisColumn, $currentIndent;
          # By default, report anomalies in terms of differences from backdenting
          # to the rule start.
             sub defaultMistakes {
-                my ($indents, $type) = @_;
+                my ( $indents, $type ) = @_;
                 my $mistakes = isBackdented($indents);
-                return [ { desc => "Undetected mistakes" } ] if not @{$mistakes};
+                return [ { desc => "Undetected mistakes" } ]
+                  if not @{$mistakes};
                 for my $mistake ( @{$mistakes} ) {
                     my $mistakeChild  = $mistake->{child};
                     my $mistakeColumn = $mistake->{column};
                     my $defaultColumn = $mistake->{backdentColumn};
                     my $mistakeLine   = $mistake->{line};
                     my $msg           = sprintf
-"$type child #%d; line %d; indent=%d vs. default of %d",
+                      "$type child #%d; line %d; indent=%d vs. default of %d",
                       $mistakeChild, $mistakeLine, $mistakeColumn,
                       $defaultColumn;
                     $mistake->{desc} = $msg;
@@ -952,37 +973,6 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                 my ($firstLine) = @{ $indents->[0] };
                 my ($lastLine)  = @{ $indents->[$#$indents] };
                 return $firstLine == $lastLine;
-            }
-
-            # TODO: Delete?
-            sub relativeIndentDesc {
-                my ($indents) = @_;
-                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
-                my @pieces = ();
-                for my $ix ( 1 .. $#$indents ) {
-                    my ( $line, $column ) = @{ $indents->[$ix] };
-                    push @pieces,
-                      join ':', ( $line - $baseLine ),
-                      ( $column - $baseColumn );
-                }
-                return join " ", @pieces;
-            }
-
-            # TODO: Delete?
-            sub indentDesc {
-                my ($indents) = @_;
-
-                # say Data::Dumper::Dumper($indents);
-                my ( $line, $column, $baseColumn );
-                return 'NO-GAPS' if $#$indents < 0;
-                return relativeIndentDesc($indents) if $relativeIndents;
-                ( $line, $baseColumn ) = @{ $indents->[0] };
-                my @pieces = ();
-                for my $ix ( 1 .. $#$indents ) {
-                    ( $line, $column ) = @{ $indents->[$ix] };
-                    push @pieces, "$line:$column";
-                }
-                return join " ", @pieces;
             }
 
             my $displayMistakes = sub {
@@ -1000,7 +990,7 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                       reportItem(
                         (
                                 "$fileName "
-                              . ( join ':', $parentLine, $parentColumn+1 )
+                              . ( join ':', $parentLine, $parentColumn + 1 )
                               . " $type $lhsName $desc"
                         ),
                         $parentLine,
@@ -1014,8 +1004,8 @@ $ix, $thisLine, $thisColumn, $currentIndent;
           # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
           # if here, gapiness > 0
             {
-                my $mistakes  = [];
-                my $start     = $node->{start};
+                my $mistakes = [];
+                my $start    = $node->{start};
 
                 my $indentDesc = '???';
 
@@ -1043,10 +1033,10 @@ $ix, $thisLine, $thisColumn, $currentIndent;
 
               TYPE_INDENT: {
 
-                    my $suppression = $suppression{'indent'}{$parentLC};
+                    my $suppression = $suppressions->{'indent'}{$parentLC};
                     if ( defined $suppression ) {
                         $indentDesc = "SUPPRESSION $suppression";
-                        $unusedSuppression{'indent'}{$parentLC} = undef;
+                        $unusedSuppressions->{'indent'}{$parentLC} = undef;
                         last TYPE_INDENT;
                     }
 
@@ -1078,7 +1068,7 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                     }
 
                     if ( $tallLuslusRule{$lhsName} ) {
-                        $mistakes = isLuslusStyle( \@gapIndents ) ;
+                        $mistakes = isLuslusStyle( \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'LUSLUS-STYLE';
                         last TYPE_INDENT;
@@ -1110,20 +1100,20 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                 }
             }
         }    # End of whitespace "policy"
+    }
 
-      CHILD: for my $childIX ( 0 .. $#$children ) {
-            my $child = $children->[$childIX];
-            doLint( $child, $parentContext );
-        }
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child = $children->[$childIX];
+        doLint( $child, $parentContext );
     }
 }
 
 doLint( $astValue, { line => -1, indents => [], ancestors => [] } );
 
-for my $type ( keys %unusedSuppression ) {
+for my $type ( keys %{$unusedSuppressions} ) {
     for my $tag (
-        grep { $unusedSuppression{$type}{$_} }
-        keys %{ $unusedSuppression{$type} }
+        grep { $unusedSuppressions->{$type}{$_} }
+        keys %{ $unusedSuppressions->{$type} }
       )
     {
         say "Unused suppression: $type $tag";
