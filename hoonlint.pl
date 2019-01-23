@@ -372,7 +372,7 @@ sub context2 {
         my $start = $lineToPos[$lineNum];
         my $line = literal( $start, ( $lineToPos[$lineNum+1] - $start ) );
         my $tag =
-            $lineNum == $runeLine        ? '+ '
+            $lineNum == $runeLine        ? '> '
           : ( $lineNum == $mistakeLine ) ? '! '
           :                                q{  };
         push @pieces, $tag, $line;
@@ -381,7 +381,7 @@ sub context2 {
       for my $lineNum ($runeRangeStart .. $runeRangeEnd) {
         my $start = $lineToPos[$lineNum];
         my $line = literal($start, ($lineToPos[$lineNum+1]-$start));
-        my $tag = $lineNum == $runeLine ? '+ ' : q{  };
+        my $tag = $lineNum == $runeLine ? '> ' : q{  };
         push @pieces, $tag, $line;
       }
       push @pieces, "  [ lines " . ($runeRangeEnd+1) . q{-} . ($mistakeRangeStart-1) . ' omitted ]';
@@ -399,44 +399,6 @@ sub reportItem {
   my ($topic, $runeLine, $mistakeLine, $contextLines) = @_;
   return "$topic\n" if not $contextLines;
   return join q{}, "==", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
-}
-
-sub context {
-    my ( $pos, $length, $lines ) = @_;
-    return '' if $lines <= 0;
-    my $contextStart = $pos;
-    my $contextEnd   = $pos + $length - 1;
-  IX: for my $ix ( 1 .. $lines ) {
-        $contextStart = rindex ${$pHoonSource}, "\n", $contextStart - 1;
-        if ( $contextStart < 0 ) {
-            $contextStart = -1;
-            last IX;
-        }
-    }
-    $contextStart++;
-  IX: for my $ix ( 1 .. $lines ) {
-        $contextEnd = index ${$pHoonSource}, "\n", $contextEnd + 1;
-        if ( $contextEnd < 0 ) {
-            $contextEnd = length ${$pHoonSource};
-            last IX;
-        }
-    }
-    my @lines = split "\n",
-      ( substr ${$pHoonSource}, $contextStart, $contextEnd - $contextStart );
-
-    # say Data::Dumper::Dumper(\@lines);
-    my @pieces = ();
-    my $ix     = 0;
-    for ( ; $ix < $lines - 1 ; $ix++ ) {
-        push @pieces, ' ', $lines[$ix], "\n";
-    }
-    for ( ; $ix < $#lines - ( $lines - 2 ) ; $ix++ ) {
-        push @pieces, '+', $lines[$ix], "\n";
-    }
-    for ( ; $ix <= $#lines ; $ix++ ) {
-        push @pieces, ' ', $lines[$ix], "\n";
-    }
-    return join '', @pieces;
 }
 
 # The "name" of a node
@@ -913,9 +875,9 @@ sub doLint {
                 my ( $line2, $column2 ) = @{ $indents->[1] };
 
                 # TODO: enforce alignment for "flat jogs"
-                return 1 if $line1 == $line2;
+                return \@mistakes if $line1 == $line2;
 
-                return 1 if $column2 + 2 == $column1;
+                return \@mistakes if $column2 + 2 == $column1;
                 my $msg =
                   sprintf
 "Jog-style line %d; Child 2 is at column %d; should be at column %d",
@@ -968,19 +930,19 @@ $ix, $thisLine, $thisColumn, $currentIndent;
          # By default, report anomalies in terms of differences from backdenting
          # to the rule start.
             sub defaultMistakes {
-                my ($indents) = @_;
+                my ($indents, $type) = @_;
                 my $mistakes = isBackdented($indents);
-                return [ { msg => "Undetected mistakes" } ] if not @{$mistakes};
+                return [ { desc => "Undetected mistakes" } ] if not @{$mistakes};
                 for my $mistake ( @{$mistakes} ) {
                     my $mistakeChild  = $mistake->{child};
                     my $mistakeColumn = $mistake->{column};
                     my $defaultColumn = $mistake->{backdentColumn};
                     my $mistakeLine   = $mistake->{line};
                     my $msg           = sprintf
-"Unclassed child #%d; line %d; indent=%d vs. default of %d",
+"$type child #%d; line %d; indent=%d vs. default of %d",
                       $mistakeChild, $mistakeLine, $mistakeColumn,
                       $defaultColumn;
-                    $mistake->{msg} = $msg;
+                    $mistake->{desc} = $msg;
                 }
                 return $mistakes;
             }
@@ -1052,7 +1014,6 @@ $ix, $thisLine, $thisColumn, $currentIndent;
           # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
           # if here, gapiness > 0
             {
-                my $isProblem = 0;
                 my $mistakes  = [];
                 my $start     = $node->{start};
 
@@ -1096,41 +1057,30 @@ $ix, $thisLine, $thisColumn, $currentIndent;
 
                     if ( $tallJogRule{$lhsName} ) {
                         $mistakes = isJog( \@gapIndents );
-                        if ( not @{$mistakes} ) {
-                            $indentDesc = 'JOG-STYLE';
-                            last TYPE_INDENT;
-                        }
-                        $isProblem = 1;
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'JOG-STYLE';
+                        last TYPE_INDENT;
                     }
 
                     if ( $tallSemsigRule{$lhsName} ) {
                         $mistakes =
                           issemsig( $parentLine, $parentColumn, \@gapIndents );
-                        if ( not @{$mistakes} ) {
-                            $indentDesc = 'SEMSIG-STYLE';
-                            last TYPE_INDENT;
-                        }
-                        $isProblem = 1;
-                        $mistakes  = defaultMistakes( \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'SEMSIG-STYLE';
                         last TYPE_INDENT;
                     }
 
                     if ( $tallNoteRule{$lhsName} ) {
                         $mistakes = isBackdented( \@gapIndents, $noteIndent );
-                        if ( not @{$mistakes} ) {
-                            $indentDesc = 'CAST-STYLE';
-                            last TYPE_INDENT;
-                        }
-                        $mistakes = defaultMistakes( \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'CAST-STYLE';
                         last TYPE_INDENT;
                     }
+
                     if ( $tallLuslusRule{$lhsName} ) {
                         $mistakes = isLuslusStyle( \@gapIndents ) ;
-                        if ( not @{$mistakes} ) {
-                            $indentDesc = 'LUSLUS-STYLE';
-                            last TYPE_INDENT;
-                        }
-                        $mistakes = defaultMistakes( \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'LUSLUS-STYLE';
                         last TYPE_INDENT;
                     }
 
@@ -1141,10 +1091,8 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                         last TYPE_INDENT;
                     }
 
-                    $mistakes = defaultMistakes( \@gapIndents );
                 }
 
-                # say "$lhsName $indentDesc $censusWhitespace $isProblem";
               PRINT: {
           # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
                     if ( @{$mistakes} ) {
@@ -1153,12 +1101,11 @@ $ix, $thisLine, $thisColumn, $currentIndent;
                         last PRINT;
                     }
 
-# say join " ", __FILE__, __LINE__, "$lhsName $indentDesc $censusWhitespace $isProblem";
-                    if ( $censusWhitespace or $isProblem ) {
-                        print "$fileName ",
-                          ( join ':', $recce->line_column($start) ),
-                          " indent $lhsName $indentDesc\n",
-                          context( $parentStart, $parentLength, $contextLines );
+                    if ($censusWhitespace) {
+                        print reportItem( "$fileName "
+                              . ( join ':', $recce->line_column($start) )
+                              . " indent $lhsName $indentDesc",
+                            $parentLine, $parentLine, $contextLines );
                     }
                 }
             }
