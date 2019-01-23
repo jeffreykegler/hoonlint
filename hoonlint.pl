@@ -385,7 +385,7 @@ sub context2 {
   if ($mistakeRangeStart <= $runeRangeEnd + 2) {
     for my $lineNum ( $runeRangeStart .. $mistakeRangeEnd ) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal( $start, ( $lineToPos[$lineNum+1] - $start ) );
+        my $line = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
         my $tag =
             $lineNum == $runeLine        ? '> '
           : ( $lineNum == $mistakeLine ) ? '! '
@@ -393,19 +393,20 @@ sub context2 {
         push @pieces, $tag, $line;
     }
   } else {
-      for my $lineNum ($runeRangeStart .. $runeRangeEnd) {
+    for my $lineNum ( $runeRangeStart .. $runeRangeEnd ) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal($start, ($lineToPos[$lineNum+1]-$start));
-        my $tag = $lineNum == $runeLine ? '> ' : q{  };
+        my $line  = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
+        my $tag   = $lineNum == $runeLine ? '> ' : q{  };
         push @pieces, $tag, $line;
-      }
-      push @pieces, "  [ lines " . ($runeRangeEnd+1) . q{-} . ($mistakeRangeStart-1) . ' omitted ]';
-      for my $lineNum ($mistakeRangeStart .. $mistakeRangeEnd) {
+    }
+    push @pieces, sprintf "[ lines %d-%d omitted ]\n", $runeRangeEnd + 1,
+      $mistakeRangeStart - 1;
+    for my $lineNum ( $mistakeRangeStart .. $mistakeRangeEnd ) {
         my $start = $lineToPos[$lineNum];
-        my $line = literal($start, ($lineToPos[$lineNum+1]-$start));
-        my $tag = $lineNum == $mistakeLine ? '! ' : q{  };
+        my $line  = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
+        my $tag   = $lineNum == $mistakeLine ? '! ' : q{  };
         push @pieces, $tag, $line;
-      }
+    }
   }
   return join q{}, @pieces;
 }
@@ -413,7 +414,7 @@ sub context2 {
 sub reportItem {
   my ($topic, $runeLine, $mistakeLine, $contextLines) = @_;
   return "$topic\n" if not $contextLines;
-  return join q{}, "==", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
+  return join q{}, "== ", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
 }
 
 # The "name" of a node
