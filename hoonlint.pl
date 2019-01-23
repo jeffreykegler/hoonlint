@@ -583,13 +583,8 @@ sub doLint {
       // $parentColumn;
 
     my $children = $node->{children};
-    my $type = $node->{type};
 
   LINT_NODE: {
-
-        if ( $inclusions and not $inclusions->{$type}{$parentLC} ) {
-          last LINT_NODE;
-        }
 
         # "Policies" will go here
         # As of this writing, these is only one policy -- the "whitespace"
@@ -597,10 +592,8 @@ sub doLint {
 
       WHITESPACE_POLICY: {
 
-            # say STDERR "= $type $key\n";
-            last WHITESPACE_POLICY if $type eq 'null';
-            last WHITESPACE_POLICY if $type eq 'lexeme';
-            last WHITESPACE_POLICY if $type eq 'separator';
+            my $nodeType = $node->{type};
+            last WHITESPACE_POLICY if $nodeType ne 'node';
 
             my $ruleID = $node->{ruleID};
             die Data::Dumper::Dumper($node) if not defined $ruleID;
@@ -633,6 +626,11 @@ sub doLint {
             my $firstChildIndent = column( $children->[0]->{start} ) - 1;
 
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
+
+            my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
+            if ( $inclusions and not $inclusions->{$reportType}{$parentLC} ) {
+              last WHITESPACE_POLICY;
+            }
 
             # TODO: In another policy, warn on tall children of wide nodes
             if ( $gapiness == 0 ) {    # wide node
