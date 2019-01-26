@@ -846,7 +846,16 @@ sub doLint {
                         expectedLine => $runeLine,
                       };
                 }
-                if ( $tistisColumn != $runeColumn ) {
+
+                my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+                # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                if ($tistisIsMisaligned) {
+                   my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                   my $tistis = literal($tistisPos, 2);
+                    # say join " ", __FILE__, __LINE__, $tistis;
+                   $tistisIsMisaligned = $tistis ne '==';
+                }
+                if ( $tistisIsMisaligned ) {
                     my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
                       $tistisLine, $tistisColumn+1,
                       describeMisindent( $tistisColumn, $runeColumn);
@@ -935,7 +944,16 @@ sub doLint {
                         expectedLine => $runeLine,
                       };
                 }
-                if ( $tistisColumn != $runeColumn ) {
+
+                my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+                # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                if ($tistisIsMisaligned) {
+                   my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                   my $tistis = literal($tistisPos, 2);
+                    # say join " ", __FILE__, __LINE__, $tistis;
+                   $tistisIsMisaligned = $tistis ne '==';
+                }
+                if ( $tistisIsMisaligned ) {
                     my $msg = sprintf "Jogging-1-style; TISTIS @%d:%d; %s",
                       $tistisLine, $tistisColumn+1,
                       describeMisindent( $tistisColumn, $runeColumn);
