@@ -57,7 +57,7 @@ t/ast.d/toe.hoon 39:3 sequence whap5d REGULAR
 t/ast.d/toe.hoon 39:3 indent LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 40:5 indent tallBartis BACKDENTED
 t/ast.d/toe.hoon 41:5 indent tallKethep CAST-STYLE
-t/ast.d/toe.hoon 42:5 indent tallWuthep SEMSIG-STYLE
+t/ast.d/toe.hoon 42:5 indent tallWuthep JOGGING-1-STYLE
 t/ast.d/toe.hoon 43:7 sequence ruck5d REGULAR
 t/ast.d/toe.hoon 43:7 sequence ruck5d REGULAR
 t/ast.d/toe.hoon 43:7 sequence ruck5d REGULAR
@@ -71,7 +71,7 @@ t/ast.d/toe.hoon 51:5 indent wisp5d CAST-STYLE
 t/ast.d/toe.hoon 51:5 sequence whap5d REGULAR
 t/ast.d/toe.hoon 51:5 sequence whap5d REGULAR
 t/ast.d/toe.hoon 51:5 indent LuslusCell FLAT
-t/ast.d/toe.hoon 51:13 indent tallWutbar BACKDENTED
+t/ast.d/toe.hoon 51:13 indent tallWutbar JOGGING-0-STYLE
 t/ast.d/toe.hoon 51:17 sequence tall5dSeq REGULAR
 t/ast.d/toe.hoon 51:17 sequence tall5dSeq REGULAR
 t/ast.d/toe.hoon 54:5 indent LuslusCell FLAT

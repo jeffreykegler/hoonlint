@@ -143,6 +143,8 @@ my %tallBodyRule =
 my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
 my %tallJogging1Rule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig tallWuthep);
+# my %tallJogging2Rule = qw(tallCentar);
+# Tiscol jogging+1
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
