@@ -140,7 +140,8 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
-my %tallSemsigRule =
+my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
+my %tallJogging1Rule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig tallWuthep);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
@@ -201,12 +202,10 @@ my %tallBackdentRule = map { +( $_, 1 ) } qw(
   tallTissem
   tallTistar
   tallTiswut
-  tallWutbar
   tallWutcol
   tallWutdot
   tallWutket
   tallWutlus
-  tallWutpam
   tallWutpat
   tallWutsig
   tallZapcol
@@ -791,22 +790,86 @@ sub doLint {
                 return \@mistakes;
             }
 
-            # Semsig must have first child properly aligned on same line as
-            # rune; tistis (==) must be on its own line, aligned with the rune.
-            #
-            # This is backdenting, with further restrictions:  The first
-            # child must be on the rune line, and the last child must NOT
-            # be on the rune line.
-            sub issemsig {
+            sub describeMisindent {
+              my ($got, $sought) = @_;
+              if ($got > $sought) {
+                 return "overindented by " . ($got - $sought);
+              }
+              if ($got < $sought) {
+                 return "underindented by " . ($sought - $got);
+              }
+             return "correctly indented";
+            }
+
+            sub isJogging0 {
                 my ( $runeLine, $runeColumn, $gapIndents ) = @_;
                 my @mistakes = ();
-                die "Semsig-style rule with only $gapIndents gap indents"
+                die "Jogging-0-style rule with only $gapIndents gap indents"
+                  if $#$gapIndents < 2;
+
+                # Second child must be on rune line, or
+                # at ruleColumn+2
+                my ( $firstChildLine, $firstChildColumn ) =
+                  @{ $gapIndents->[1] };
+
+                if (    $firstChildLine != $runeLine
+                    and $firstChildColumn != $runeColumn + 2 )
+                {
+                    my $msg = sprintf
+"Jogging-0-style Child #%d @%d:%d; %s",
+                      2, $firstChildLine,
+                      $firstChildColumn+1,
+                      describeMisindent($firstChildColumn, $runeColumn + 2);
+                    push @mistakes,
+                      {
+                        desc           => $msg,
+                        line           => $firstChildLine,
+                        column         => $firstChildColumn,
+                        child          => 2,
+                        expectedColumn => $runeColumn + 2,
+                      };
+                }
+
+                my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
+                if ( $tistisLine == $runeLine ) {
+                    my $msg = sprintf
+"Jogging-0-style line %d; TISTIS is on rune line %d; should not be",
+                      $runeLine, $tistisLine;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        line         => $tistisLine,
+                        column       => $tistisColumn,
+                        child        => 3,
+                        expectedLine => $runeLine,
+                      };
+                }
+                if ( $tistisColumn != $runeColumn ) {
+                    my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
+                      $tistisLine, $tistisColumn+1,
+                      describeMisindent( $tistisColumn, $runeColumn);
+                    push @mistakes,
+                      {
+                        desc           => $msg,
+                        line           => $tistisLine,
+                        column         => $tistisColumn,
+                        child          => 3,
+                        expectedColumn => $runeColumn,
+                      };
+                }
+                return \@mistakes;
+            }
+
+            sub isJogging1 {
+                my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+                my @mistakes = ();
+                die "Jogging-1-style rule with only $gapIndents gap indents"
                   if $#$gapIndents < 3;
                 my ( $firstChildLine, $firstChildColumn ) =
                   @{ $gapIndents->[1] };
                 if ( $firstChildLine != $runeLine ) {
                     my $msg = sprintf
-"Semsig-style Child #%d @ line %d; first child is on line %d; should be on rune line",
+"Jogging-1-style Child #%d @ line %d; first child is on line %d; should be on rune line",
                       1, $runeLine, $firstChildLine;
                     push @mistakes,
                       {
@@ -819,8 +882,10 @@ sub doLint {
                 }
                 if ( $firstChildColumn != $runeColumn + 4 ) {
                     my $msg = sprintf
-"Semsig-style Child #%d @ line %d; first child is at column %d; should be at column %d",
-                      1, $runeLine, $firstChildColumn, $runeColumn + 4;
+"Jogging-1-style Child #%d @%d:%d; %s",
+                      1, $runeLine,
+                      $firstChildColumn+1,
+                      describeMisindent( $firstChildColumn, $runeColumn + 4);
                     push @mistakes,
                       {
                         desc           => $msg,
@@ -840,8 +905,10 @@ sub doLint {
                     and $secondChildColumn != $runeColumn + 2 )
                 {
                     my $msg = sprintf
-"Semsig-style Child #%d @ line %d; 2nd child is at column %d; should be at column %d",
-                      2, $runeLine, $secondChildColumn, $runeColumn + 2;
+"Jogging-1-style Child #%d @%d:%d; %s",
+                      2, $secondChildLine,
+                      $secondChildColumn+1,
+                      describeMisindent($secondChildColumn, $runeColumn + 2);
                     push @mistakes,
                       {
                         desc           => $msg,
@@ -855,7 +922,7 @@ sub doLint {
                 my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
                 if ( $tistisLine == $runeLine ) {
                     my $msg = sprintf
-"Semsig-style line %d; TISTIS is on rune line %d; should not be",
+"Jogging-1-style line %d; TISTIS is on rune line %d; should not be",
                       $runeLine, $tistisLine;
                     push @mistakes,
                       {
@@ -867,9 +934,9 @@ sub doLint {
                       };
                 }
                 if ( $tistisColumn != $runeColumn ) {
-                    my $msg = sprintf
-"Semsig-style line %d; TISTIS is at column %d; should be at rune column %d",
-                      $runeLine, $tistisColumn, $runeColumn;
+                    my $msg = sprintf "Jogging-1-style; TISTIS @%d:%d; %s",
+                      $tistisLine, $tistisColumn+1,
+                      describeMisindent( $tistisColumn, $runeColumn);
                     push @mistakes,
                       {
                         desc           => $msg,
@@ -1050,11 +1117,19 @@ sub doLint {
                         last TYPE_INDENT;
                     }
 
-                    if ( $tallSemsigRule{$lhsName} ) {
+                    if ( $tallJogging0Rule{$lhsName} ) {
                         $mistakes =
-                          issemsig( $parentLine, $parentColumn, \@gapIndents );
+                          isJogging0( $parentLine, $parentColumn, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
-                        $indentDesc = 'SEMSIG-STYLE';
+                        $indentDesc = 'JOGGING-0-STYLE';
+                        last TYPE_INDENT;
+                    }
+
+                    if ( $tallJogging1Rule{$lhsName} ) {
+                        $mistakes =
+                          isJogging1( $parentLine, $parentColumn, \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'JOGGING-1-STYLE';
                         last TYPE_INDENT;
                     }
 
