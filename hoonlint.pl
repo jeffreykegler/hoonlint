@@ -818,7 +818,7 @@ sub doLint {
                     and $firstChildColumn != $runeColumn + 2 )
                 {
                     my $msg = sprintf
-"Jogging-0-style Child #%d @%d:%d; %s",
+"Jogging-0-style child #%d @%d:%d; %s",
                       2, $firstChildLine,
                       $firstChildColumn+1,
                       describeMisindent($firstChildColumn, $runeColumn + 2);
@@ -880,7 +880,7 @@ sub doLint {
                   @{ $gapIndents->[1] };
                 if ( $firstChildLine != $runeLine ) {
                     my $msg = sprintf
-"Jogging-1-style Child #%d @ line %d; first child is on line %d; should be on rune line",
+"Jogging-1-style child #%d @ line %d; first child is on line %d; should be on rune line",
                       1, $runeLine, $firstChildLine;
                     push @mistakes,
                       {
@@ -891,42 +891,50 @@ sub doLint {
                         expectedLine => $runeLine,
                       };
                 }
-                if ( $firstChildColumn != $runeColumn + 4 ) {
+
+                # Even misalignments are classified kingside/queenside, with those that are underindented
+                # being kingside, and those which are not kingside being arbitrarily classed queenside.
+                my $chessSide = $firstChildColumn <= $runeColumn + 4 ?  'kingside' : 'queenside';
+
+                my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
+                if ( $firstChildColumn != $expectedColumn) {
                     my $msg = sprintf
-"Jogging-1-style Child #%d @%d:%d; %s",
-                      1, $runeLine,
+"Jogging-1-style %s child #%d @%d:%d; %s",
+                      $chessSide, 1, $runeLine,
                       $firstChildColumn+1,
-                      describeMisindent( $firstChildColumn, $runeColumn + 4);
+                      describeMisindent( $firstChildColumn, $expectedColumn);
                     push @mistakes,
                       {
                         desc           => $msg,
                         line           => $firstChildLine,
                         column         => $firstChildColumn,
                         child          => 1,
-                        expectedColumn => $runeColumn + 4,
+                        expectedColumn => $expectedColumn,
                       };
                 }
 
                 # Second child must be on rune line, or
                 # at ruleColumn+2
+                $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
                 my ( $secondChildLine, $secondChildColumn ) =
                   @{ $gapIndents->[2] };
 
                 if (    $secondChildLine != $runeLine
-                    and $secondChildColumn != $runeColumn + 2 )
+                    and $secondChildColumn != $expectedColumn )
                 {
                     my $msg = sprintf
-"Jogging-1-style Child #%d @%d:%d; %s",
+"Jogging-1-style %s child #%d @%d:%d; %s",
+                      $chessSide,
                       2, $secondChildLine,
                       $secondChildColumn+1,
-                      describeMisindent($secondChildColumn, $runeColumn + 2);
+                      describeMisindent($secondChildColumn, $expectedColumn);
                     push @mistakes,
                       {
                         desc           => $msg,
                         line           => $secondChildLine,
                         column         => $secondChildColumn,
                         child          => 2,
-                        expectedColumn => $runeColumn + 2,
+                        expectedColumn => $expectedColumn,
                       };
                 }
 
@@ -985,7 +993,7 @@ sub doLint {
                 return \@mistakes if $column2 + 2 == $column1;
                 my $msg =
                   sprintf
-"Jog-style line %d; Child 2 is at column %d; should be at column %d",
+"Jog-style line %d; child 2 is at column %d; should be at column %d",
                   $line1, $column2, $column1 - 2;
                 push @mistakes,
                   {
