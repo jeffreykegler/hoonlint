@@ -142,13 +142,16 @@ my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
 my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
 my %tallJogging1Rule =
-  map { +( $_, 1 ) } qw(tallCentis tallCencab tallSemcol tallSemsig tallWuthep);
-# my %tallJogging2Rule = qw(tallCentar);
-# Tiscol jogging+1
+  map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
+my %tallJogging2Rule = map { +( $_, 1 ) } qw(tallCentar);
+my %tallJoggingSuffix1Rule = map { +( $_, 1 ) } qw(tallTiscol);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
-my %tallBackdentRule = map { +( $_, 1 ) } qw(
+my @unimplementedRule = qw( tallSemCol tallSemsig ),
+  ( keys %tallJogging2Rule ), ( keys %tallJoggingSuffix1Rule );
+my %tallBackdentRule = map { +( $_, 1 ) } @unimplementedRule,
+qw(
   bonz5d
   fordFasbar
   fordFascom
@@ -194,7 +197,6 @@ my %tallBackdentRule = map { +( $_, 1 ) } qw(
   tallSigpam
   tallSigwut
   tallSigzap
-  tallTiscol
   tallTisdot
   tallTisfas
   tallTisgar
@@ -417,8 +419,8 @@ sub reportItem {
   return join q{}, "== ", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
 }
 
-# The "name" of a node
-sub name {
+# The "symbol" of a node.  Not necessarily unique.
+sub symbol {
     my ($node) = @_;
     my $name = $node->{symbol};
     return $name if defined $name;
@@ -426,9 +428,20 @@ sub name {
     if ( $type eq 'node' ) {
         my $ruleID = $node->{ruleID};
         my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-        return $grammar->symbol_name($lhs) . '#' . ( scalar @rhs );
+        return $grammar->symbol_name($lhs);
     }
     return "[$type]";
+}
+
+# The "name" of a node.  Not necessarily unique
+sub name {
+    my ($node) = @_;
+    my $type = $node->{type};
+    my $symbol = symbol($node);
+    return $symbol if $type ne 'node';
+    my $ruleID = $node->{ruleID};
+    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+    return $symbol . '#' . ( scalar @rhs );
 }
 
 die "Parse failed" if not $astRef;
@@ -522,12 +535,6 @@ sub testStyleCensus {
         $symbolReverseDB{$lhs}->{lexeme} = 0;
     }
 
-    # for my $symbolID ( $grammar->symbol_ids() ) {
-    # say STDERR Data::Dumper::Dumper($symbolDB[$symbolID]);
-    # }
-    # for my $ruleID ( $grammar->rule_ids() ) {
-    # say STDERR Data::Dumper::Dumper($ruleDB[$ruleID]);
-    # }
 }
 
 testStyleCensus();
@@ -619,7 +626,6 @@ sub doLint {
             $parentContext->{tallRuneIndent} = $parentColumn
               if $tallRuneRule{$lhsName};
 
-            # say STDERR join " ", __FILE__, __LINE__, "lhsName=$lhsName";
             if ( $lhsName eq 'optGay4i' ) {
                 last WHITESPACE_POLICY;
             }
@@ -809,6 +815,21 @@ sub doLint {
                  return "correctly indented";
                 }
 
+                my $censusJog = sub {
+                    my ($node, $runeColumn) = @_;
+                    my $children = $node->{children};
+                    my $twig1 = $children->[0];
+                    my $twig2 = $children->[2];
+                    my ($line1, $column1) = $recce->line_column($twig1->{start});
+                    $column1--; # 0-based
+                    my ($line2, $column2) = $recce->line_column($twig2->{start});
+                    $column2--; # 0-based
+                    if ($line1 == $line2 and $column2 <= $runeColumn+2) {
+                       return 'kingside', $column2;
+                    }
+                    return 'queenside',
+                };
+
                 my $censusJogging = sub {
                     my ($node) = @_;
                     my $children = $node->{children};
@@ -820,16 +841,19 @@ sub doLint {
                     my %firstLine = ();
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child     = $children->[$childIX];
-                        my $symbol    = $child->{symbol};
+                        my $symbol    = symbol($child);
                         my ($jogLine) = $recce->line_column( $child->{start} );
+                        # say STDERR join " ", "census jog:",  $symbol;
                         next CHILD
-                          unless $lhsName eq "rick5dJog"
-                          or $lhsName eq "ruck5dJog";
+                          unless $symbol eq "rick5dJog"
+                          or $symbol eq "ruck5dJog";
                         my ( $side, $kingJogColumn );
-                        ( $side, $jogLine, $kingJogColumn ) =
-                          censusJog( $child, $runeColumn );
+                        ( $side, $kingJogColumn ) =
+                          $censusJog->( $child, $runeColumn );
+                        # say STDERR join " ", "census jog:",  $side, ($kingJogColumn // 'na');
                         $sideCount{$side}++;
-                        $firstLine{$kingJogColumn} //= $jogLine;
+                        next CHILD if not defined $kingJogColumn;
+                        $firstLine{$kingJogColumn} = $jogLine if not defined $firstLine{$kingJogColumn};
                         $count{$kingJogColumn}++;
                     }
                     my @sortedSides =
@@ -840,6 +864,18 @@ sub doLint {
                           or $firstLine{$a} <=> $firstLine{$b}
                     } keys %count;
                     return $sortedSides[0], $sortedColumns[0];
+                };
+
+                my $censusJoggingHoon = sub {
+                    my ($node) = @_;
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $child  = $children->[$childIX];
+                        my $symbol = symbol($child);
+                        return $censusJogging->($child)
+                          if $symbol eq 'rick5d'
+                          or $symbol eq 'ruck5d';
+                    }
+                  die "No jogging found for ", symbol($node);
                 };
 
                 sub isJogging0 {
@@ -914,7 +950,8 @@ sub doLint {
                     my ( $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $side, $kingJogColumn ) = $censusJogging->($node);
+                    my ( $side, $kingJogColumn ) = $censusJoggingHoon->($node);
+                    say STDERR join " ", "jog census:", $side, $kingJogColumn ;
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
@@ -934,8 +971,6 @@ sub doLint {
                           };
                     }
 
-                    # Even misalignments are classified kingside/queenside, with those that are underindented
-                    # being kingside, and those which are not kingside being arbitrarily classed queenside.
                     my $chessSide = $firstChildColumn <= $runeColumn + 4 ?  'kingside' : 'queenside';
 
                     my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
@@ -1017,22 +1052,6 @@ sub doLint {
                           };
                     }
                     return \@mistakes;
-                };
-
-                my $censusJog = sub {
-                    my ($node, $runeColumn) = @_;
-                    my $chessSide = "kingside";
-                    my $children = $node->{children};
-                    my $twig1 = $children->[0];
-                    my $twig2 = $children->[2];
-                    my ($line1, $column1) = $recce->line_column($twig1);
-                    $column1--; # 0-based
-                    my ($line2, $column2) = $recce->line_column($twig2);
-                    $column2--; # 0-based
-                    if ($line1 == $line2 or $column1 <= $runeColumn+2) {
-                       return 'kingside', $column2;
-                    }
-                    return 'queenside',
                 };
 
                 sub isJog {
