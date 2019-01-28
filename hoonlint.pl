@@ -532,6 +532,13 @@ sub testStyleCensus {
 
 testStyleCensus();
 
+sub line_column {
+   my ($pos) = @_;
+   my ( $line, $column ) = $recce->line_column($pos);
+   $column--;
+   return $line, $column;
+}
+
 sub doLint {
     my ( $node, $argContext ) = @_;
 
@@ -539,9 +546,8 @@ sub doLint {
     my $parentStart  = $node->{start};
     my $parentLength = $node->{length};
     my $parentRuleID = $node->{ruleID};
-    my ( $parentLine, $parentColumn ) = $recce->line_column($parentStart);
-    my $parentLC = join ':', $parentLine, $parentColumn;
-    $parentColumn--;    # 0-based
+    my ( $parentLine, $parentColumn ) = line_column($parentStart);
+    my $parentLC = join ':', $parentLine, $parentColumn+1;
 
     my @parentIndents = @{ $argContext->{indents} };
 
@@ -803,6 +809,39 @@ sub doLint {
                  return "correctly indented";
                 }
 
+                my $censusJogging = sub {
+                    my ($node) = @_;
+                    my $children = $node->{children};
+                    my ( undef, $runeColumn ) =
+                      $recce->line_column( $node->{start} );
+                    $runeColumn--;    # 0-based
+                    my %count     = ();
+                    my %sideCount = ();
+                    my %firstLine = ();
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $child     = $children->[$childIX];
+                        my $symbol    = $child->{symbol};
+                        my ($jogLine) = $recce->line_column( $child->{start} );
+                        next CHILD
+                          unless $lhsName eq "rick5dJog"
+                          or $lhsName eq "ruck5dJog";
+                        my ( $side, $kingJogColumn );
+                        ( $side, $jogLine, $kingJogColumn ) =
+                          censusJog( $child, $runeColumn );
+                        $sideCount{$side}++;
+                        $firstLine{$kingJogColumn} //= $jogLine;
+                        $count{$kingJogColumn}++;
+                    }
+                    my @sortedSides =
+                      sort { $sideCount{$b} <=> $sideCount{$a} }
+                      keys %sideCount;
+                    my @sortedColumns = sort {
+                             $count{$b} <=> $count{$a}
+                          or $firstLine{$a} <=> $firstLine{$b}
+                    } keys %count;
+                    return $sortedSides[0], $sortedColumns[0];
+                };
+
                 sub isJogging0 {
                     my ( $runeLine, $runeColumn, $gapIndents ) = @_;
                     my @mistakes = ();
@@ -871,8 +910,11 @@ sub doLint {
                     return \@mistakes;
                 }
 
-                sub isJogging1 {
-                    my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+                my $isJogging1 = sub  {
+                    my ( $node, $gapIndents ) = @_;
+                    my $start  = $node->{start};
+                    my ( $runeLine, $runeColumn ) = line_column($start);
+                    my ( $side, $kingJogColumn ) = $censusJogging->($node);
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
@@ -975,41 +1017,6 @@ sub doLint {
                           };
                     }
                     return \@mistakes;
-                }
-
-                my $censusJogging = sub {
-                    my $children = $node->{children};
-                    my ( undef, $runeColumn ) =
-                      $recce->line_column( $node->{start} );
-                    $runeColumn--;    # 0-based
-                    my %count     = ();
-                    my %sideCount = ();
-                    my %firstLine = ();
-                  CHILD: for my $childIX ( 0 .. $#$children ) {
-                        my $child     = $children->[$childIX];
-                        my $symbol    = $child->{symbol};
-                        my ($jogLine) = $recce->line_column( $child->{start} );
-                        next CHILD
-                          if defined $symbol
-                          and $symbolReverseDB{$symbol}->{gap};
-                        die "Bad child node $symbol for censusJogging()"
-                          unless $lhsName eq "rick5dJog"
-                          or $lhsName eq "ruck5dJog";
-                        my ( $side, $kingJogColumn );
-                        ( $side, $jogLine, $kingJogColumn ) =
-                          censusJog( $child, $runeColumn );
-                        $sideCount{$side}++;
-                        $firstLine{$kingJogColumn} //= $jogLine;
-                        $count{$kingJogColumn}++;
-                    }
-                    my @sortedSides =
-                      sort { $sideCount{$b} <=> $sideCount{$a} }
-                      keys %sideCount;
-                    my @sortedColumns = sort {
-                             $count{$b} <=> $count{$a}
-                          or $firstLine{$a} <=> $firstLine{$b}
-                    } keys %count;
-                    return $sortedSides[0], $sortedColumns[0];
                 };
 
                 my $censusJog = sub {
@@ -1206,7 +1213,7 @@ sub doLint {
 
                     if ( $tallJogging1Rule{$lhsName} ) {
                         $mistakes =
-                          isJogging1( $parentLine, $parentColumn, \@gapIndents );
+                          $isJogging1->( $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-1-STYLE';
                         last TYPE_INDENT;
