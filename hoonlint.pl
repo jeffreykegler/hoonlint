@@ -751,340 +751,391 @@ sub doLint {
                             }
                         }
                         print reportItem(
-                            "$fileName $parentLC sequence $lhsName $indentDesc",
-                            $parentLine, $childLine, $contextLines )
-                          if $censusWhitespace or $isProblem;
-                        $previousLine = $childLine;
+                                "$fileName $parentLC sequence $lhsName $indentDesc",
+                                $parentLine, $childLine, $contextLines )
+                              if $censusWhitespace or $isProblem;
+                            $previousLine = $childLine;
+                        }
                     }
+                    last WHITESPACE_POLICY;
                 }
-                last WHITESPACE_POLICY;
-            }
 
-            sub isLuslusStyle {
-                my ($indents) = @_;
-                my @mistakes = ();
-                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
+                sub isLuslusStyle {
+                    my ($indents) = @_;
+                    my @mistakes = ();
+                    my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
 
-                my $indentCount = scalar @{$indents};
-                my $indentIX    = 1;
-              INDENT: while ( $indentIX < $indentCount ) {
-                    my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-                    last INDENT if $thisLine != $baseLine;
-                    $indentIX++;
+                    my $indentCount = scalar @{$indents};
+                    my $indentIX    = 1;
+                  INDENT: while ( $indentIX < $indentCount ) {
+                        my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
+                        last INDENT if $thisLine != $baseLine;
+                        $indentIX++;
+                    }
+                  INDENT: while ( $indentIX < $indentCount ) {
+                        my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
+                        if ( $thisColumn != $baseColumn + 2 ) {
+                            my $msg = sprintf
+                              "Child #%d @ line %d; backdent is %d; should be %d",
+                              $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $thisLine,
+                                column         => $thisColumn,
+                                child          => $indentIX,
+                                expectedColumn => $baseColumn + 2
+                              };
+                        }
+                        $indentIX++;
+                    }
+                    return \@mistakes;
                 }
-              INDENT: while ( $indentIX < $indentCount ) {
-                    my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-                    if ( $thisColumn != $baseColumn + 2 ) {
+
+                sub describeMisindent {
+                  my ($got, $sought) = @_;
+                  if ($got > $sought) {
+                     return "overindented by " . ($got - $sought);
+                  }
+                  if ($got < $sought) {
+                     return "underindented by " . ($sought - $got);
+                  }
+                 return "correctly indented";
+                }
+
+                sub isJogging0 {
+                    my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+                    my @mistakes = ();
+                    die "Jogging-0-style rule with only $gapIndents gap indents"
+                      if $#$gapIndents < 2;
+
+                    # Second child must be on rune line, or
+                    # at ruleColumn+2
+                    my ( $firstChildLine, $firstChildColumn ) =
+                      @{ $gapIndents->[1] };
+
+                    if (    $firstChildLine != $runeLine
+                        and $firstChildColumn != $runeColumn + 2 )
+                    {
                         my $msg = sprintf
-                          "Child #%d @ line %d; backdent is %d; should be %d",
-                          $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
+    "Jogging-0-style child #%d @%d:%d; %s",
+                          2, $firstChildLine,
+                          $firstChildColumn+1,
+                          describeMisindent($firstChildColumn, $runeColumn + 2);
                         push @mistakes,
                           {
                             desc           => $msg,
-                            line           => $thisLine,
-                            column         => $thisColumn,
-                            child          => $indentIX,
-                            expectedColumn => $baseColumn + 2
+                            line           => $firstChildLine,
+                            column         => $firstChildColumn,
+                            child          => 2,
+                            expectedColumn => $runeColumn + 2,
                           };
                     }
-                    $indentIX++;
-                }
-                return \@mistakes;
-            }
 
-            sub describeMisindent {
-              my ($got, $sought) = @_;
-              if ($got > $sought) {
-                 return "overindented by " . ($got - $sought);
-              }
-              if ($got < $sought) {
-                 return "underindented by " . ($sought - $got);
-              }
-             return "correctly indented";
-            }
-
-            sub isJogging0 {
-                my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-                my @mistakes = ();
-                die "Jogging-0-style rule with only $gapIndents gap indents"
-                  if $#$gapIndents < 2;
-
-                # Second child must be on rune line, or
-                # at ruleColumn+2
-                my ( $firstChildLine, $firstChildColumn ) =
-                  @{ $gapIndents->[1] };
-
-                if (    $firstChildLine != $runeLine
-                    and $firstChildColumn != $runeColumn + 2 )
-                {
-                    my $msg = sprintf
-"Jogging-0-style child #%d @%d:%d; %s",
-                      2, $firstChildLine,
-                      $firstChildColumn+1,
-                      describeMisindent($firstChildColumn, $runeColumn + 2);
-                    push @mistakes,
-                      {
-                        desc           => $msg,
-                        line           => $firstChildLine,
-                        column         => $firstChildColumn,
-                        child          => 2,
-                        expectedColumn => $runeColumn + 2,
-                      };
-                }
-
-                my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
-                if ( $tistisLine == $runeLine ) {
-                    my $msg = sprintf
-"Jogging-0-style line %d; TISTIS is on rune line %d; should not be",
-                      $runeLine, $tistisLine;
-                    push @mistakes,
-                      {
-                        desc         => $msg,
-                        line         => $tistisLine,
-                        column       => $tistisColumn,
-                        child        => 3,
-                        expectedLine => $runeLine,
-                      };
-                }
-
-                my $tistisIsMisaligned = $tistisColumn != $runeColumn;
-                # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
-                if ($tistisIsMisaligned) {
-                   my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
-                   my $tistis = literal($tistisPos, 2);
-                    # say join " ", __FILE__, __LINE__, $tistis;
-                   $tistisIsMisaligned = $tistis ne '==';
-                }
-                if ( $tistisIsMisaligned ) {
-                    my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
-                      $tistisLine, $tistisColumn+1,
-                      describeMisindent( $tistisColumn, $runeColumn);
-                    push @mistakes,
-                      {
-                        desc           => $msg,
-                        line           => $tistisLine,
-                        column         => $tistisColumn,
-                        child          => 3,
-                        expectedColumn => $runeColumn,
-                      };
-                }
-                return \@mistakes;
-            }
-
-            sub isJogging1 {
-                my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-                my @mistakes = ();
-                die "Jogging-1-style rule with only $gapIndents gap indents"
-                  if $#$gapIndents < 3;
-                my ( $firstChildLine, $firstChildColumn ) =
-                  @{ $gapIndents->[1] };
-                if ( $firstChildLine != $runeLine ) {
-                    my $msg = sprintf
-"Jogging-1-style child #%d @ line %d; first child is on line %d; should be on rune line",
-                      1, $runeLine, $firstChildLine;
-                    push @mistakes,
-                      {
-                        desc         => $msg,
-                        line         => $firstChildLine,
-                        column       => $firstChildColumn,
-                        child        => 1,
-                        expectedLine => $runeLine,
-                      };
-                }
-
-                # Even misalignments are classified kingside/queenside, with those that are underindented
-                # being kingside, and those which are not kingside being arbitrarily classed queenside.
-                my $chessSide = $firstChildColumn <= $runeColumn + 4 ?  'kingside' : 'queenside';
-
-                my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
-                if ( $firstChildColumn != $expectedColumn) {
-                    my $msg = sprintf
-"Jogging-1-style %s child #%d @%d:%d; %s",
-                      $chessSide, 1, $runeLine,
-                      $firstChildColumn+1,
-                      describeMisindent( $firstChildColumn, $expectedColumn);
-                    push @mistakes,
-                      {
-                        desc           => $msg,
-                        line           => $firstChildLine,
-                        column         => $firstChildColumn,
-                        child          => 1,
-                        expectedColumn => $expectedColumn,
-                      };
-                }
-
-                # Second child must be on rune line, or
-                # at ruleColumn+2
-                $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
-                my ( $secondChildLine, $secondChildColumn ) =
-                  @{ $gapIndents->[2] };
-
-                if (    $secondChildLine != $runeLine
-                    and $secondChildColumn != $expectedColumn )
-                {
-                    my $msg = sprintf
-"Jogging-1-style %s child #%d @%d:%d; %s",
-                      $chessSide,
-                      2, $secondChildLine,
-                      $secondChildColumn+1,
-                      describeMisindent($secondChildColumn, $expectedColumn);
-                    push @mistakes,
-                      {
-                        desc           => $msg,
-                        line           => $secondChildLine,
-                        column         => $secondChildColumn,
-                        child          => 2,
-                        expectedColumn => $expectedColumn,
-                      };
-                }
-
-                my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
-                if ( $tistisLine == $runeLine ) {
-                    my $msg = sprintf
-"Jogging-1-style line %d; TISTIS is on rune line %d; should not be",
-                      $runeLine, $tistisLine;
-                    push @mistakes,
-                      {
-                        desc         => $msg,
-                        line         => $tistisLine,
-                        column       => $tistisColumn,
-                        child        => 3,
-                        expectedLine => $runeLine,
-                      };
-                }
-
-                my $tistisIsMisaligned = $tistisColumn != $runeColumn;
-                # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
-                if ($tistisIsMisaligned) {
-                   my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
-                   my $tistis = literal($tistisPos, 2);
-                    # say join " ", __FILE__, __LINE__, $tistis;
-                   $tistisIsMisaligned = $tistis ne '==';
-                }
-                if ( $tistisIsMisaligned ) {
-                    my $msg = sprintf "Jogging-1-style; TISTIS @%d:%d; %s",
-                      $tistisLine, $tistisColumn+1,
-                      describeMisindent( $tistisColumn, $runeColumn);
-                    push @mistakes,
-                      {
-                        desc           => $msg,
-                        line           => $tistisLine,
-                        column         => $tistisColumn,
-                        child          => 3,
-                        expectedColumn => $runeColumn,
-                      };
-                }
-                return \@mistakes;
-            }
-
-            sub isJog {
-                my ($indents) = @_;
-                my @mistakes = ();
-                die "Jog rule has "
-                  . ( scalar @{$indents} )
-                  . "indents; should have 2"
-                  if $#$indents != 1;
-                my ( $line1, $column1 ) = @{ $indents->[0] };
-                my ( $line2, $column2 ) = @{ $indents->[1] };
-
-                # TODO: enforce alignment for "flat jogs"
-                return \@mistakes if $line1 == $line2;
-
-                return \@mistakes if $column2 + 2 == $column1;
-                my $msg =
-                  sprintf
-"Jog-style line %d; child 2 is at column %d; should be at column %d",
-                  $line1, $column2, $column1 - 2;
-                push @mistakes,
-                  {
-                    desc           => $msg,
-                    line           => $line2,
-                    column         => $column2,
-                    child          => 2,
-                    expectedColumn => $column1 - 2,
-                  };
-                return \@mistakes;
-            }
-
-            sub isBackdented {
-                my ( $indents, $baseIndent ) = @_;
-                my @mistakes = ();
-
-                # say Data::Dumper::Dumper($indents);
-                my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
-                $baseIndent //= $baseColumn;
-                my $currentIndent = $baseIndent + $#$indents * 2;
-                my $lastLine      = $baseLine;
-              INDENT: for my $ix ( 1 .. $#$indents ) {
-                    my $indent = $indents->[$ix];
-                    my ( $thisLine, $thisColumn ) = @{$indent};
-                    $currentIndent -= 2;
-
-                    # say "$currentIndent vs. $thisColumn";
-                    next INDENT if $thisLine == $lastLine;
-                    if ( $currentIndent != $thisColumn ) {
+                    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
+                    if ( $tistisLine == $runeLine ) {
                         my $msg = sprintf
-                          "Child #%d @ line %d; backdent is %d; should be %d",
-                          $ix, $thisLine, $thisColumn, $currentIndent;
+    "Jogging-0-style line %d; TISTIS is on rune line %d; should not be",
+                          $runeLine, $tistisLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $tistisLine,
+                            column       => $tistisColumn,
+                            child        => 3,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+                    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                    if ($tistisIsMisaligned) {
+                       my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                       my $tistis = literal($tistisPos, 2);
+                        # say join " ", __FILE__, __LINE__, $tistis;
+                       $tistisIsMisaligned = $tistis ne '==';
+                    }
+                    if ( $tistisIsMisaligned ) {
+                        my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
+                          $tistisLine, $tistisColumn+1,
+                          describeMisindent( $tistisColumn, $runeColumn);
                         push @mistakes,
                           {
                             desc           => $msg,
-                            line           => $thisLine,
-                            column         => $thisColumn,
-                            child          => $ix,
-                            backdentColumn => $currentIndent,
+                            line           => $tistisLine,
+                            column         => $tistisColumn,
+                            child          => 3,
+                            expectedColumn => $runeColumn,
                           };
                     }
-                    $lastLine = $thisLine;
+                    return \@mistakes;
                 }
-                return \@mistakes;
-            }
 
-         # By default, report anomalies in terms of differences from backdenting
-         # to the rule start.
-            sub defaultMistakes {
-                my ( $indents, $type ) = @_;
-                my $mistakes = isBackdented($indents);
-                return [ { desc => "Undetected mistakes" } ]
-                  if not @{$mistakes};
-                for my $mistake ( @{$mistakes} ) {
-                    my $mistakeChild  = $mistake->{child};
-                    my $mistakeColumn = $mistake->{column};
-                    my $defaultColumn = $mistake->{backdentColumn};
-                    my $mistakeLine   = $mistake->{line};
-                    my $msg           = sprintf
-                      "$type child #%d; line %d; indent=%d vs. default of %d",
-                      $mistakeChild, $mistakeLine, $mistakeColumn,
-                      $defaultColumn;
-                    $mistake->{desc} = $msg;
+                sub isJogging1 {
+                    my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+                    my @mistakes = ();
+                    die "Jogging-1-style rule with only $gapIndents gap indents"
+                      if $#$gapIndents < 3;
+                    my ( $firstChildLine, $firstChildColumn ) =
+                      @{ $gapIndents->[1] };
+                    if ( $firstChildLine != $runeLine ) {
+                        my $msg = sprintf
+    "Jogging-1-style child #%d @ line %d; first child is on line %d; should be on rune line",
+                          1, $runeLine, $firstChildLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $firstChildLine,
+                            column       => $firstChildColumn,
+                            child        => 1,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    # Even misalignments are classified kingside/queenside, with those that are underindented
+                    # being kingside, and those which are not kingside being arbitrarily classed queenside.
+                    my $chessSide = $firstChildColumn <= $runeColumn + 4 ?  'kingside' : 'queenside';
+
+                    my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
+                    if ( $firstChildColumn != $expectedColumn) {
+                        my $msg = sprintf
+    "Jogging-1-style %s child #%d @%d:%d; %s",
+                          $chessSide, 1, $runeLine,
+                          $firstChildColumn+1,
+                          describeMisindent( $firstChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $firstChildLine,
+                            column         => $firstChildColumn,
+                            child          => 1,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    # Second child must be on rune line, or
+                    # at ruleColumn+2
+                    $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
+                    my ( $secondChildLine, $secondChildColumn ) =
+                      @{ $gapIndents->[2] };
+
+                    if (    $secondChildLine != $runeLine
+                        and $secondChildColumn != $expectedColumn )
+                    {
+                        my $msg = sprintf
+    "Jogging-1-style %s child #%d @%d:%d; %s",
+                          $chessSide,
+                          2, $secondChildLine,
+                          $secondChildColumn+1,
+                          describeMisindent($secondChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $secondChildLine,
+                            column         => $secondChildColumn,
+                            child          => 2,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
+                    if ( $tistisLine == $runeLine ) {
+                        my $msg = sprintf
+    "Jogging-1-style line %d; TISTIS is on rune line %d; should not be",
+                          $runeLine, $tistisLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $tistisLine,
+                            column       => $tistisColumn,
+                            child        => 3,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+                    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                    if ($tistisIsMisaligned) {
+                       my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                       my $tistis = literal($tistisPos, 2);
+                        # say join " ", __FILE__, __LINE__, $tistis;
+                       $tistisIsMisaligned = $tistis ne '==';
+                    }
+                    if ( $tistisIsMisaligned ) {
+                        my $msg = sprintf "Jogging-1-style; TISTIS @%d:%d; %s",
+                          $tistisLine, $tistisColumn+1,
+                          describeMisindent( $tistisColumn, $runeColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $tistisLine,
+                            column         => $tistisColumn,
+                            child          => 3,
+                            expectedColumn => $runeColumn,
+                          };
+                    }
+                    return \@mistakes;
                 }
-                return $mistakes;
-            }
 
-            sub isFlat {
-                my ($indents)   = @_;
-                my ($firstLine) = @{ $indents->[0] };
-                my ($lastLine)  = @{ $indents->[$#$indents] };
-                return $firstLine == $lastLine;
-            }
+                my $censusJogging = sub {
+                    my $children = $node->{children};
+                    my ( undef, $runeColumn ) =
+                      $recce->line_column( $node->{start} );
+                    $runeColumn--;    # 0-based
+                    my %count     = ();
+                    my %sideCount = ();
+                    my %firstLine = ();
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $child     = $children->[$childIX];
+                        my $symbol    = $child->{symbol};
+                        my ($jogLine) = $recce->line_column( $child->{start} );
+                        next CHILD
+                          if defined $symbol
+                          and $symbolReverseDB{$symbol}->{gap};
+                        die "Bad child node $symbol for censusJogging()"
+                          unless $lhsName eq "rick5dJog"
+                          or $lhsName eq "ruck5dJog";
+                        my ( $side, $kingJogColumn );
+                        ( $side, $jogLine, $kingJogColumn ) =
+                          censusJog( $child, $runeColumn );
+                        $sideCount{$side}++;
+                        $firstLine{$kingJogColumn} //= $jogLine;
+                        $count{$kingJogColumn}++;
+                    }
+                    my @sortedSides =
+                      sort { $sideCount{$b} <=> $sideCount{$a} }
+                      keys %sideCount;
+                    my @sortedColumns = sort {
+                             $count{$b} <=> $count{$a}
+                          or $firstLine{$a} <=> $firstLine{$b}
+                    } keys %count;
+                    return $sortedSides[0], $sortedColumns[0];
+                };
 
-            my $displayMistakes = sub {
+                my $censusJog = sub {
+                    my ($node, $runeColumn) = @_;
+                    my $chessSide = "kingside";
+                    my $children = $node->{children};
+                    my $twig1 = $children->[0];
+                    my $twig2 = $children->[2];
+                    my ($line1, $column1) = $recce->line_column($twig1);
+                    $column1--; # 0-based
+                    my ($line2, $column2) = $recce->line_column($twig2);
+                    $column2--; # 0-based
+                    if ($line1 == $line2 or $column1 <= $runeColumn+2) {
+                       return 'kingside', $column2;
+                    }
+                    return 'queenside',
+                };
 
-                # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                my ($mistakes) = @_;
-                my @pieces = ();
-              MISTAKE: for my $mistake ( @{$mistakes} ) {
+                sub isJog {
+                    my ($indents) = @_;
+                    my @mistakes = ();
+                    die "Jog rule has "
+                      . ( scalar @{$indents} )
+                      . "indents; should have 2"
+                      if $#$indents != 1;
+                    my ( $line1, $column1 ) = @{ $indents->[0] };
+                    my ( $line2, $column2 ) = @{ $indents->[1] };
+
+                    # TODO: enforce alignment for "flat jogs"
+                    return \@mistakes if $line1 == $line2;
+
+                    return \@mistakes if $column2 + 2 == $column1;
+                    my $msg =
+                      sprintf
+    "Jog-style line %d; child 2 is at column %d; should be at column %d",
+                      $line1, $column2, $column1 - 2;
+                    push @mistakes,
+                      {
+                        desc           => $msg,
+                        line           => $line2,
+                        column         => $column2,
+                        child          => 2,
+                        expectedColumn => $column1 - 2,
+                      };
+                    return \@mistakes;
+                }
+
+                sub isBackdented {
+                    my ( $indents, $baseIndent ) = @_;
+                    my @mistakes = ();
+
+                    # say Data::Dumper::Dumper($indents);
+                    my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
+                    $baseIndent //= $baseColumn;
+                    my $currentIndent = $baseIndent + $#$indents * 2;
+                    my $lastLine      = $baseLine;
+                  INDENT: for my $ix ( 1 .. $#$indents ) {
+                        my $indent = $indents->[$ix];
+                        my ( $thisLine, $thisColumn ) = @{$indent};
+                        $currentIndent -= 2;
+
+                        # say "$currentIndent vs. $thisColumn";
+                        next INDENT if $thisLine == $lastLine;
+                        if ( $currentIndent != $thisColumn ) {
+                            my $msg = sprintf
+                              "Child #%d @ line %d; backdent is %d; should be %d",
+                              $ix, $thisLine, $thisColumn, $currentIndent;
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $thisLine,
+                                column         => $thisColumn,
+                                child          => $ix,
+                                backdentColumn => $currentIndent,
+                              };
+                        }
+                        $lastLine = $thisLine;
+                    }
+                    return \@mistakes;
+                }
+
+             # By default, report anomalies in terms of differences from backdenting
+             # to the rule start.
+                sub defaultMistakes {
+                    my ( $indents, $type ) = @_;
+                    my $mistakes = isBackdented($indents);
+                    return [ { desc => "Undetected mistakes" } ]
+                      if not @{$mistakes};
+                    for my $mistake ( @{$mistakes} ) {
+                        my $mistakeChild  = $mistake->{child};
+                        my $mistakeColumn = $mistake->{column};
+                        my $defaultColumn = $mistake->{backdentColumn};
+                        my $mistakeLine   = $mistake->{line};
+                        my $msg           = sprintf
+                          "$type child #%d; line %d; indent=%d vs. default of %d",
+                          $mistakeChild, $mistakeLine, $mistakeColumn,
+                          $defaultColumn;
+                        $mistake->{desc} = $msg;
+                    }
+                    return $mistakes;
+                }
+
+                sub isFlat {
+                    my ($indents)   = @_;
+                    my ($firstLine) = @{ $indents->[0] };
+                    my ($lastLine)  = @{ $indents->[$#$indents] };
+                    return $firstLine == $lastLine;
+                }
+
+                my $displayMistakes = sub {
 
                     # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                    my $desc        = $mistake->{desc};
-                    my $type        = $mistake->{type};
-                    my $mistakeLine = $mistake->{line};
-                    push @pieces,
-                      reportItem(
-                        (
-                                "$fileName "
-                              . ( join ':', $parentLine, $parentColumn + 1 )
-                              . " $type $lhsName $desc"
+                    my ($mistakes) = @_;
+                    my @pieces = ();
+                  MISTAKE: for my $mistake ( @{$mistakes} ) {
+
+                        # say join " ", __FILE__, __LINE__, "displayMistakes()";
+                        my $desc        = $mistake->{desc};
+                        my $type        = $mistake->{type};
+                        my $mistakeLine = $mistake->{line};
+                        push @pieces,
+                          reportItem(
+                            (
+                                    "$fileName "
+                                  . ( join ':', $parentLine, $parentColumn + 1 )
+                                  . " $type $lhsName $desc"
                         ),
                         $parentLine,
                         $mistakeLine,
