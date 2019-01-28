@@ -816,18 +816,16 @@ sub doLint {
                 }
 
                 my $censusJog = sub {
-                    my ($node, $runeColumn) = @_;
+                    my ( $node, $runeColumn ) = @_;
                     my $children = $node->{children};
-                    my $twig1 = $children->[0];
-                    my $twig2 = $children->[2];
-                    my ($line1, $column1) = $recce->line_column($twig1->{start});
-                    $column1--; # 0-based
-                    my ($line2, $column2) = $recce->line_column($twig2->{start});
-                    $column2--; # 0-based
-                    if ($line1 == $line2 and $column2 <= $runeColumn+2) {
-                       return 'kingside', $column2;
-                    }
-                    return 'queenside',
+                    my $twig1    = $children->[0];
+                    my $twig2    = $children->[2];
+                    my ( $line1, $column1 ) = line_column( $twig1->{start} );
+                    my ( $line2, $column2 ) = line_column( $twig2->{start} );
+                    return 'queenside' if $line1 != $line2;
+                    return ( $column1 <= $runeColumn + 2
+                        ? 'kingside'
+                        : 'queenside' ), $column2;
                 };
 
                 my $censusJogging = sub {
@@ -836,13 +834,15 @@ sub doLint {
                     my ( undef, $runeColumn ) =
                       $recce->line_column( $node->{start} );
                     $runeColumn--;    # 0-based
-                    my %count     = ();
-                    my %sideCount = ();
-                    my %firstLine = ();
+                    my %count          = ();
+                    my %sideCount      = ();
+                    my %firstLine      = ();
+                    my $forceQueenside = 0;
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child     = $children->[$childIX];
                         my $symbol    = symbol($child);
                         my ($jogLine) = $recce->line_column( $child->{start} );
+
                         # say STDERR join " ", "census jog:",  $symbol;
                         next CHILD
                           unless $symbol eq "rick5dJog"
@@ -850,20 +850,32 @@ sub doLint {
                         my ( $side, $kingJogColumn );
                         ( $side, $kingJogColumn ) =
                           $censusJog->( $child, $runeColumn );
-                        # say STDERR join " ", "census jog:",  $side, ($kingJogColumn // 'na');
+                        $forceQueenside = 1 if not defined $kingJogColumn;
+
+         # say STDERR join " ", "census jog:",  $side, ($kingJogColumn // 'na');
                         $sideCount{$side}++;
                         next CHILD if not defined $kingJogColumn;
-                        $firstLine{$kingJogColumn} = $jogLine if not defined $firstLine{$kingJogColumn};
+                        $firstLine{$kingJogColumn} = $jogLine
+                          if not defined $firstLine{$kingJogColumn};
                         $count{$kingJogColumn}++;
                     }
-                    my @sortedSides =
-                      sort { $sideCount{$b} <=> $sideCount{$a} }
-                      keys %sideCount;
+                    my $side;
+                    if ($forceQueenside) {
+                        $side = 'queenside';
+                    }
+                    else {
+                        my @sortedSides =
+                          sort { $sideCount{$b} <=> $sideCount{$a} }
+                          keys %sideCount;
+                        $side = $sortedSides[0];
+                    }
                     my @sortedColumns = sort {
                              $count{$b} <=> $count{$a}
                           or $firstLine{$a} <=> $firstLine{$b}
                     } keys %count;
-                    return $sortedSides[0], $sortedColumns[0];
+                    my $jogAlignColumn = $sortedColumns[0]
+                      if scalar @sortedColumns;
+                    return $side, $jogAlignColumn;
                 };
 
                 my $censusJoggingHoon = sub {
@@ -951,7 +963,7 @@ sub doLint {
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
                     my ( $side, $kingJogColumn ) = $censusJoggingHoon->($node);
-                    say STDERR join " ", "jog census:", $side, $kingJogColumn ;
+                    # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
