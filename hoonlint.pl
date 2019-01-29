@@ -596,6 +596,10 @@ sub doLint {
     my $noteIndent = ( $parentBodyIndent // $parentTallRuneIndent )
       // $parentColumn;
 
+    my $parentKingJogColumn2 = $argContext->{kingJogColumn2};
+    $parentContext->{kingJogColumn2} = $parentKingJogColumn2
+      if defined $parentKingJogColumn2;
+
     my $children = $node->{children};
 
   LINT_NODE: {
@@ -823,21 +827,18 @@ sub doLint {
                     my ( $line1, $column1 ) = line_column( $twig1->{start} );
                     my ( $line2, $column2 ) = line_column( $twig2->{start} );
                     return 'queenside' if $line1 != $line2;
+                    # say STDERR "column1=$column1 runeColumn=$runeColumn";
                     return ( $column1 <= $runeColumn + 2
                         ? 'kingside'
                         : 'queenside' ), $column2;
                 };
 
                 my $censusJogging = sub {
-                    my ($node) = @_;
+                    my ($node, $runeColumn) = @_;
                     my $children = $node->{children};
-                    my ( undef, $runeColumn ) =
-                      $recce->line_column( $node->{start} );
-                    $runeColumn--;    # 0-based
-                    my %count          = ();
-                    my %sideCount      = ();
-                    my %firstLine      = ();
-                    my $forceQueenside = 0;
+                    my %count     = ();
+                    my %sideCount = ();
+                    my %firstLine = ();
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child     = $children->[$childIX];
                         my $symbol    = symbol($child);
@@ -850,7 +851,6 @@ sub doLint {
                         my ( $side, $kingJogColumn );
                         ( $side, $kingJogColumn ) =
                           $censusJog->( $child, $runeColumn );
-                        $forceQueenside = 1 if not defined $kingJogColumn;
 
          # say STDERR join " ", "census jog:",  $side, ($kingJogColumn // 'na');
                         $sideCount{$side}++;
@@ -859,16 +859,10 @@ sub doLint {
                           if not defined $firstLine{$kingJogColumn};
                         $count{$kingJogColumn}++;
                     }
-                    my $side;
-                    if ($forceQueenside) {
-                        $side = 'queenside';
-                    }
-                    else {
-                        my @sortedSides =
-                          sort { $sideCount{$b} <=> $sideCount{$a} }
-                          keys %sideCount;
-                        $side = $sortedSides[0];
-                    }
+                    my @sortedSides =
+                      sort { $sideCount{$b} <=> $sideCount{$a} }
+                      keys %sideCount;
+                    my $side          = $sortedSides[0];
                     my @sortedColumns = sort {
                              $count{$b} <=> $count{$a}
                           or $firstLine{$a} <=> $firstLine{$b}
@@ -880,10 +874,11 @@ sub doLint {
 
                 my $censusJoggingHoon = sub {
                     my ($node) = @_;
+                    my ( undef, $runeColumn ) = line_column( $node->{start} );
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child  = $children->[$childIX];
                         my $symbol = symbol($child);
-                        return $censusJogging->($child)
+                        return $censusJogging->($child, $runeColumn)
                           if $symbol eq 'rick5d'
                           or $symbol eq 'ruck5d';
                     }
@@ -959,10 +954,12 @@ sub doLint {
                 }
 
                 my $isJogging1 = sub  {
-                    my ( $node, $gapIndents ) = @_;
+                    my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $kingJogColumn ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $kingJogColumn2 ) = $censusJoggingHoon->($node);
+                    $context->{chessSide} = $chessSide;
+                    $context->{kingJogColumn2} = $kingJogColumn2 if $kingJogColumn2;
                     # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
@@ -1065,7 +1062,9 @@ sub doLint {
                 };
 
                 sub isJog {
-                    my ($indents) = @_;
+                    my ($context, $indents) = @_;
+                    my $kingJogColumn2 = $context->{kingJogcolumn2};
+                    my $chessSide = $context->{chessSide};
                     my @mistakes = ();
                     die "Jog rule has "
                       . ( scalar @{$indents} )
@@ -1226,7 +1225,7 @@ sub doLint {
                     }
 
                     if ( $tallJogRule{$lhsName} ) {
-                        $mistakes = isJog( \@gapIndents );
+                        $mistakes = isJog( $parentContext, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
@@ -1242,7 +1241,7 @@ sub doLint {
 
                     if ( $tallJogging1Rule{$lhsName} ) {
                         $mistakes =
-                          $isJogging1->( $node, \@gapIndents );
+                          $isJogging1->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-1-STYLE';
                         last TYPE_INDENT;
