@@ -962,7 +962,7 @@ sub doLint {
                     my ( $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $side, $kingJogColumn ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $kingJogColumn ) = $censusJoggingHoon->($node);
                     # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
@@ -983,8 +983,6 @@ sub doLint {
                           };
                     }
 
-                    my $chessSide = $firstChildColumn <= $runeColumn + 4 ?  'kingside' : 'queenside';
-
                     my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
                     if ( $firstChildColumn != $expectedColumn) {
                         my $msg = sprintf
@@ -1003,7 +1001,7 @@ sub doLint {
                     }
 
                     # Second child must be on rune line, or
-                    # at ruleColumn+2
+                    # at side-dependent column
                     $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
                     my ( $secondChildLine, $secondChildColumn ) =
                       @{ $gapIndents->[2] };
