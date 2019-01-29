@@ -35,6 +35,13 @@ sub usage {
 usage() if scalar @ARGV != 1;
 my $fileName = $ARGV[0];
 
+sub internalError {
+   my @pieces = ("$PROGRAM_NAME $fileName: Internal Error\n", @_);
+   push @pieces, "\n" unless $pieces[$#pieces] =~ m/\n$/;
+   my (undef, $codeFilename, $codeLine) = caller;
+   die join q{}, @pieces, "Internal error was at $codeFilename, line $codeLine";
+}
+
 sub slurp {
     my ($fileName) = @_;
     local $RS = undef;
@@ -596,6 +603,10 @@ sub doLint {
     my $noteIndent = ( $parentBodyIndent // $parentTallRuneIndent )
       // $parentColumn;
 
+    my $parentChessSide = $argContext->{chessSide};
+    $parentContext->{chessSide} = $parentChessSide
+      if defined $parentChessSide;
+
     my $parentKingJogColumn2 = $argContext->{kingJogColumn2};
     $parentContext->{kingJogColumn2} = $parentKingJogColumn2
       if defined $parentKingJogColumn2;
@@ -617,6 +628,8 @@ sub doLint {
             die Data::Dumper::Dumper($node) if not defined $ruleID;
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
+
+            # say "=== $lhsName"; # TODO delete after development
 
             $parentContext->{bodyIndent} = $parentColumn
               if $tallBodyRule{$lhsName};
@@ -959,7 +972,9 @@ sub doLint {
                     my ( $runeLine, $runeColumn ) = line_column($start);
                     my ( $chessSide, $kingJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
+                    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
                     $context->{kingJogColumn2} = $kingJogColumn2 if $kingJogColumn2;
+                    internalError("Chess side undefined") unless $chessSide;
                     # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
@@ -1061,17 +1076,24 @@ sub doLint {
                     return \@mistakes;
                 };
 
-                sub isJog {
-                    my ($context, $indents) = @_;
-                    my $kingJogColumn2 = $context->{kingJogcolumn2};
+                my $isJog = sub {
+                    my ($node, $context) = @_;
                     my $chessSide = $context->{chessSide};
+                    die Data::Dumper::Dumper([(line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
+                    internalError("Chess side undefined") unless $chessSide;
+
+                    my $kingJogColumn2 = $context->{kingJogcolumn2};
+                    # do not pass these attributes on to child nodes
+                    delete $context->{kingJogcolumn2};
+                    delete $context->{chessSide};
+
+                    my $children = $node->{children};
+                    my $twig1    = $children->[0];
+                    my $twig2    = $children->[2];
+                    my ( $line1, $column1 ) = line_column( $twig1->{start} );
+                    my ( $line2, $column2 ) = line_column( $twig2->{start} );
+
                     my @mistakes = ();
-                    die "Jog rule has "
-                      . ( scalar @{$indents} )
-                      . "indents; should have 2"
-                      if $#$indents != 1;
-                    my ( $line1, $column1 ) = @{ $indents->[0] };
-                    my ( $line2, $column2 ) = @{ $indents->[1] };
 
                     # TODO: enforce alignment for "flat jogs"
                     return \@mistakes if $line1 == $line2;
@@ -1090,7 +1112,7 @@ sub doLint {
                         expectedColumn => $column1 - 2,
                       };
                     return \@mistakes;
-                }
+                };
 
                 sub isBackdented {
                     my ( $indents, $baseIndent ) = @_;
@@ -1225,7 +1247,7 @@ sub doLint {
                     }
 
                     if ( $tallJogRule{$lhsName} ) {
-                        $mistakes = isJog( $parentContext, \@gapIndents );
+                        $mistakes = $isJog->( $node, $parentContext );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
