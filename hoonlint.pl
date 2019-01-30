@@ -145,6 +145,7 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
   tallTailOfElem tallTailOfTop
 );
 
+my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
 my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
@@ -605,6 +606,10 @@ sub doLint {
     $parentContext->{chessSide} = $parentChessSide
       if defined $parentChessSide;
 
+    my $parentJogColumn1 = $argContext->{jogColumn1};
+    $parentContext->{jogColumn1} = $parentJogColumn1
+      if defined $parentJogColumn1;
+
     my $parentKingJogColumn2 = $argContext->{kingJogColumn2};
     $parentContext->{kingJogColumn2} = $parentKingJogColumn2
       if defined $parentKingJogColumn2;
@@ -841,15 +846,17 @@ sub doLint {
                     # say STDERR "column1=$column1 runeColumn=$runeColumn";
                     return ( $column1 <= $runeColumn + 2
                         ? 'kingside'
-                        : 'queenside' ), $column2;
+                        : 'queenside' ), $column1, $column2;
                 };
 
                 my $censusJogging = sub {
                     my ($node, $runeColumn) = @_;
                     my $children = $node->{children};
-                    my %count     = ();
                     my %sideCount = ();
-                    my %firstLine = ();
+                    my %column1Count     = ();
+                    my %firstColumn1Line = ();
+                    my %column2Count     = ();
+                    my %firstColumn2Line = ();
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child     = $children->[$childIX];
                         my $symbol    = symbol($child);
@@ -859,28 +866,36 @@ sub doLint {
                         next CHILD
                           unless $symbol eq "rick5dJog"
                           or $symbol eq "ruck5dJog";
-                        my ( $side, $kingJogColumn );
-                        ( $side, $kingJogColumn ) =
+                        my ( $side, $jogColumn1, $kingJogColumn2 );
+                        ( $side, $jogColumn1, $kingJogColumn2 ) =
                           $censusJog->( $child, $runeColumn );
 
-         # say STDERR join " ", "census jog:",  $side, ($kingJogColumn // 'na');
+         # say STDERR join " ", "census jog:",  $side, ($kingJogColumn2 // 'na');
                         $sideCount{$side}++;
-                        next CHILD if not defined $kingJogColumn;
-                        $firstLine{$kingJogColumn} = $jogLine
-                          if not defined $firstLine{$kingJogColumn};
-                        $count{$kingJogColumn}++;
+                        $firstColumn1Line{$jogColumn1} = $jogLine
+                          if not defined $firstColumn1Line{$jogColumn1};
+                        $column1Count{$jogColumn1}++;
+                        next CHILD if not defined $kingJogColumn2;
+                        $firstColumn1Line{$kingJogColumn2} = $jogLine
+                          if not defined $firstColumn1Line{$kingJogColumn2};
+                        $column1Count{$kingJogColumn2}++;
                     }
                     my @sortedSides =
                       sort { $sideCount{$b} <=> $sideCount{$a} }
                       keys %sideCount;
                     my $side          = $sortedSides[0];
-                    my @sortedColumns = sort {
-                             $count{$b} <=> $count{$a}
-                          or $firstLine{$a} <=> $firstLine{$b}
-                    } keys %count;
-                    my $jogAlignColumn = $sortedColumns[0]
-                      if scalar @sortedColumns;
-                    return $side, $jogAlignColumn;
+                    my @sortedColumns1 = sort {
+                             $column1Count{$b} <=> $column1Count{$a}
+                          or $firstColumn1Line{$a} <=> $firstColumn1Line{$b}
+                    } keys %column1Count;
+                    my @sortedColumns2 = sort {
+                             $column2Count{$b} <=> $column2Count{$a}
+                          or $firstColumn2Line{$a} <=> $firstColumn2Line{$b}
+                    } keys %column2Count;
+                    my $alignColumn1 = $sortedColumns1[0];
+                    my $alignColumn2 = $sortedColumns2[0]
+                      if scalar @sortedColumns2;
+                    return $side, $alignColumn1;
                 };
 
                 my $censusJoggingHoon = sub {
