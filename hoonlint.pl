@@ -1149,7 +1149,7 @@ sub doLint {
                     #
                     # Third child must be on rune line, or
                     # at chess-side-dependent column
-                    $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
+                    $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
                     my ( $thirdChildLine, $thirdChildColumn ) =
                       @{ $gapIndents->[3] };
 
@@ -1159,7 +1159,7 @@ sub doLint {
                         my $msg = sprintf
     "Jogging-2-style %s child #%d @%d:%d; %s",
                           $chessSide,
-                          2, $thirdChildLine,
+                          3, $thirdChildLine,
                           $thirdChildColumn+1,
                           describeMisindent($thirdChildColumn, $expectedColumn);
                         push @mistakes,
