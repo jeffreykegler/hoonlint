@@ -150,13 +150,12 @@ my %tallBodyRule =
 my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
 my %tallJogging1Rule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
-my %tallJogging2Rule = map { +( $_, 1 ) } qw(tallCentar);
+my %tallJogging2Rule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
 my %tallJoggingSuffix1Rule = map { +( $_, 1 ) } qw(tallTiscol);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
-my @unimplementedRule = qw( tallSemCol tallSemsig ),
-  ( keys %tallJogging2Rule ), ( keys %tallJoggingSuffix1Rule );
+my @unimplementedRule = qw( tallSemCol tallSemsig ), ( keys %tallJoggingSuffix1Rule );
 my %tallBackdentRule = map { +( $_, 1 ) } @unimplementedRule,
 qw(
   bonz5d
@@ -216,7 +215,6 @@ qw(
   tallWutcol
   tallWutdot
   tallWutket
-  tallWutlus
   tallWutpat
   tallWutsig
   tallZapcol
@@ -1012,6 +1010,8 @@ sub doLint {
                           };
                     }
 
+                    # TODO: This is redundant with the checks on the individual jogs?
+                    #
                     # Second child must be on rune line, or
                     # at side-dependent column
                     $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
@@ -1076,10 +1076,145 @@ sub doLint {
                     return \@mistakes;
                 };
 
+                my $isJogging2 = sub  {
+                    my ( $context, $node, $gapIndents ) = @_;
+                    my $start  = $node->{start};
+                    my ( $runeLine, $runeColumn ) = line_column($start);
+                    my ( $chessSide, $kingJogColumn2 ) = $censusJoggingHoon->($node);
+                    $context->{chessSide} = $chessSide;
+                    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
+                    $context->{kingJogColumn2} = $kingJogColumn2 if $kingJogColumn2;
+                    internalError("Chess side undefined") unless $chessSide;
+                    # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
+                    my @mistakes = ();
+                    my ( $firstChildLine, $firstChildColumn ) =
+                      @{ $gapIndents->[1] };
+                    if ( $firstChildLine != $runeLine ) {
+                        my $msg = sprintf
+    "Jogging-2-style child #%d @ line %d; first child is on line %d; should be on rune line",
+                          1, $runeLine, $firstChildLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $firstChildLine,
+                            column       => $firstChildColumn,
+                            child        => 1,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 6 : 8);
+                    if ( $firstChildColumn != $expectedColumn) {
+                        my $msg = sprintf
+    "Jogging-2-style %s child #%d @%d:%d; %s",
+                          $chessSide, 1, $runeLine,
+                          $firstChildColumn+1,
+                          describeMisindent( $firstChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $firstChildLine,
+                            column         => $firstChildColumn,
+                            child          => 1,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    # Second child must be on rune line, or
+                    # at chess-side-dependent column
+                    $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
+                    my ( $secondChildLine, $secondChildColumn ) =
+                      @{ $gapIndents->[2] };
+
+                    if (    $secondChildLine != $runeLine
+                        and $secondChildColumn != $expectedColumn )
+                    {
+                        my $msg = sprintf
+    "Jogging-2-style %s child #%d @%d:%d; %s",
+                          $chessSide,
+                          2, $secondChildLine,
+                          $secondChildColumn+1,
+                          describeMisindent($secondChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $secondChildLine,
+                            column         => $secondChildColumn,
+                            child          => 2,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    # TODO: This is redundant with the checks on the individual jogs?
+                    #
+                    # Third child must be on rune line, or
+                    # at chess-side-dependent column
+                    $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
+                    my ( $thirdChildLine, $thirdChildColumn ) =
+                      @{ $gapIndents->[3] };
+
+                    if (    $thirdChildLine != $runeLine
+                        and $thirdChildColumn != $expectedColumn )
+                    {
+                        my $msg = sprintf
+    "Jogging-2-style %s child #%d @%d:%d; %s",
+                          $chessSide,
+                          2, $thirdChildLine,
+                          $thirdChildColumn+1,
+                          describeMisindent($thirdChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $thirdChildLine,
+                            column         => $thirdChildColumn,
+                            child          => 2,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[4] };
+                    if ( $tistisLine == $runeLine ) {
+                        my $msg = sprintf
+    "Jogging-2-style line %d; TISTIS is on rune line %d; should not be",
+                          $runeLine, $tistisLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $tistisLine,
+                            column       => $tistisColumn,
+                            child        => 3,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+                    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                    if ($tistisIsMisaligned) {
+                       my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                       my $tistis = literal($tistisPos, 2);
+                        # say join " ", __FILE__, __LINE__, $tistis;
+                       $tistisIsMisaligned = $tistis ne '==';
+                    }
+                    if ( $tistisIsMisaligned ) {
+                        my $msg = sprintf "Jogging-2-style; TISTIS @%d:%d; %s",
+                          $tistisLine, $tistisColumn+1,
+                          describeMisindent( $tistisColumn, $runeColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $tistisLine,
+                            column         => $tistisColumn,
+                            child          => 3,
+                            expectedColumn => $runeColumn,
+                          };
+                    }
+                    return \@mistakes;
+                };
+
                 my $isJog = sub {
                     my ($node, $context) = @_;
                     my $chessSide = $context->{chessSide};
-                    die Data::Dumper::Dumper([(line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
+                    die Data::Dumper::Dumper([$fileName, (line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
                     internalError("Chess side undefined") unless $chessSide;
 
                     my $kingJogColumn2 = $context->{kingJogcolumn2};
@@ -1095,8 +1230,24 @@ sub doLint {
 
                     my @mistakes = ();
 
-                    # TODO: enforce alignment for "flat jogs"
-                    return \@mistakes if $line1 == $line2;
+                    if ( $line1 == $line2 ) {
+                        internalError("Unexpected flat jog, line $line2") unless defined $kingJogColumn2;
+                        if ( $column2 != $kingJogColumn2 ) {
+                            my $msg =
+                              sprintf
+"Jog-style line %d; flat child 2 is at column %d; expected column %d",
+                              $line1, $column2, $kingJogColumn2;
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $line2,
+                                column         => $column2,
+                                child          => 2,
+                                expectedColumn => $kingJogColumn2,
+                              };
+                        }
+                        return \@mistakes;
+                    }
 
                     return \@mistakes if $column2 + 2 == $column1;
                     my $msg =
@@ -1266,6 +1417,14 @@ sub doLint {
                           $isJogging1->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-1-STYLE';
+                        last TYPE_INDENT;
+                    }
+
+                    if ( $tallJogging2Rule{$lhsName} ) {
+                        $mistakes =
+                          $isJogging2->( $parentContext, $node, \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'JOGGING-2-STYLE';
                         last TYPE_INDENT;
                     }
 
