@@ -868,7 +868,7 @@ sub doLint {
                     my $twig2    = $children->[2];
                     my ( $line1, $column1 ) = line_column( $twig1->{start} );
                     my ( $line2, $column2 ) = line_column( $twig2->{start} );
-                    return 'queenside' if $line1 != $line2;
+                    return 'queenside', $column1 if $line1 != $line2;
                     # say STDERR "column1=$column1 runeColumn=$runeColumn";
                     return ( $column1 <= $runeColumn + 2
                         ? 'kingside'
@@ -1012,7 +1012,8 @@ sub doLint {
                     my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
-                    $context->{flatJogColumn2} = $flatJogColumn2 if $flatJogColumn2;
+                    $context->{jogColumn1} = $jogColumn1;
+                    $context->{flatJogColumn2} = $flatJogColumn2 if defined $flatJogColumn2;
                     internalError("Chess side undefined") unless $chessSide;
                     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
                     my @mistakes = ();
@@ -1121,9 +1122,10 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $flatJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
+                    $context->{jogColumn1} = $jogColumn1;
                     $context->{flatJogColumn2} = $flatJogColumn2 if $flatJogColumn2;
                     internalError("Chess side undefined") unless $chessSide;
                     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
@@ -1258,9 +1260,11 @@ sub doLint {
                     die Data::Dumper::Dumper([$fileName, (line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
                     internalError("Chess side undefined") unless $chessSide;
 
-                    my $flatJogColumn2 = $context->{flatJogcolumn2};
+                    my $jogColumn1 = $context->{jogColumn1};
+                    my $flatJogColumn2 = $context->{flatJogColumn2};
                     # do not pass these attributes on to child nodes
-                    delete $context->{flatJogcolumn2};
+                    delete $context->{jogColumn1};
+                    delete $context->{flatJogColumn2};
                     delete $context->{chessSide};
 
                     my $children = $node->{children};
@@ -1271,12 +1275,27 @@ sub doLint {
 
                     my @mistakes = ();
 
+                    if ( $column1 != $jogColumn1 ) {
+                            my $msg =
+                              sprintf
+"Jog line %d; child 1 is at column %d; expected column %d",
+                              $line1, $column1, $jogColumn1;
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $line1,
+                                column         => $column1,
+                                child          => 1,
+                                expectedColumn => $jogColumn1,
+                              };
+                    }
+
                     if ( $line1 == $line2 ) {
                         internalError("Unexpected flat jog, line $line2") unless defined $flatJogColumn2;
                         if ( $column2 != $flatJogColumn2 ) {
                             my $msg =
                               sprintf
-"Jog-style line %d; flat child 2 is at column %d; expected column %d",
+"Jog line %d; flat child 2 is at column %d; expected column %d",
                               $line1, $column2, $flatJogColumn2;
                             push @mistakes,
                               {
@@ -1293,7 +1312,7 @@ sub doLint {
                     return \@mistakes if $column2 + 2 == $column1;
                     my $msg =
                       sprintf
-    "Jog-style line %d; child 2 is at column %d; should be at column %d",
+    "Jog line %d; child 2 is at column %d; should be at column %d",
                       $line1, $column2, $column1 - 2;
                     push @mistakes,
                       {
@@ -1371,7 +1390,7 @@ sub doLint {
                 my $displayMistakes = sub {
 
                     # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                    my ($mistakes) = @_;
+                    my ($mistakes, $hoonDesc) = @_;
                     my @pieces = ();
                   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
@@ -1384,7 +1403,7 @@ sub doLint {
                             (
                                     "$fileName "
                                   . ( join ':', $parentLine, $parentColumn + 1 )
-                                  . " $type $lhsName $desc"
+                                  . " $type $hoonDesc $desc"
                         ),
                         $parentLine,
                         $mistakeLine,
@@ -1496,7 +1515,7 @@ sub doLint {
           # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
                     if ( @{$mistakes} ) {
                         $_->{type} = 'indent' for @{$mistakes};
-                        print $displayMistakes->($mistakes);
+                        print $displayMistakes->($mistakes, diagName($node, $parentContext));
                         last PRINT;
                     }
 
