@@ -152,11 +152,11 @@ my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
 my %tallJogging1Rule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
 my %tallJogging2Rule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
-my %tallJoggingSuffix1Rule = map { +( $_, 1 ) } qw(tallTiscol);
+my %tallJoggingPrefixRule = map { +( $_, 1 ) } qw(tallTiscol);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
-my @unimplementedRule = qw( tallSemCol tallSemsig ), ( keys %tallJoggingSuffix1Rule );
+my @unimplementedRule = qw( tallSemCol tallSemsig );
 my %tallBackdentRule = map { +( $_, 1 ) } @unimplementedRule,
 qw(
   bonz5d
@@ -651,14 +651,14 @@ sub doLint {
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
 
+            # say STDERR join " ", __FILE__, __LINE__, $lhsName;
+
             # say STDERR "current hoonName = $parentHoonName ", $parentContext->{hoonName};
             if (not $mortarLHS{$lhsName}) {
                 $parentHoonName = $lhsName;
                 # say STDERR "resetting hoonName = $parentHoonName";
                 $parentContext->{hoonName} = $parentHoonName;
             }
-
-            # say "=== $lhsName"; # TODO delete after development
 
             $parentContext->{bodyIndent} = $parentColumn
               if $tallBodyRule{$lhsName};
@@ -1208,6 +1208,84 @@ sub doLint {
                     return \@mistakes;
                 };
 
+                my $isJoggingPrefix = sub  {
+                    my ( $context, $node, $gapIndents ) = @_;
+                    my $start  = $node->{start};
+                    my ( $runeLine, $runeColumn ) = line_column($start);
+                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
+                    $context->{chessSide} = $chessSide;
+                    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
+                    $context->{jogRuneColumn} = $runeColumn;
+                    $context->{jogColumn1} = $runeColumn + ($chessSide eq 'kingside' ? 2 : 4);
+                    $context->{flatJogColumn2} = $flatJogColumn2 if defined $flatJogColumn2;
+                    internalError("Chess side undefined") unless $chessSide;
+                    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
+                    my @mistakes = ();
+                    die "Jogging-prefix rule with only $gapIndents gap indents"
+                      if $#$gapIndents < 3;
+
+                    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
+                    if ( $tistisLine == $runeLine ) {
+                        my $msg = sprintf
+    "Jogging-prefix line %d; TISTIS is on rune line %d; should not be",
+                          $runeLine, $tistisLine;
+                        push @mistakes,
+                          {
+                            desc         => $msg,
+                            line         => $tistisLine,
+                            column       => $tistisColumn,
+                            child        => 3,
+                            expectedLine => $runeLine,
+                          };
+                    }
+
+                    my $expectedColumn =  $runeColumn + 2;
+                    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+                    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+                    if ($tistisIsMisaligned) {
+                       my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
+                       my $tistis = literal($tistisPos, 2);
+                        # say join " ", __FILE__, __LINE__, $tistis;
+                       $tistisIsMisaligned = $tistis ne '==';
+                    }
+                    if ( $tistisIsMisaligned ) {
+                        my $msg = sprintf "Jogging-prefix; TISTIS @%d:%d; %s",
+                          $tistisLine, $tistisColumn+1,
+                          describeMisindent( $tistisColumn, $runeColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $tistisLine,
+                            column         => $tistisColumn,
+                            child          => 3,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    my ( $thirdChildLine, $thirdChildColumn ) =
+                      @{ $gapIndents->[3] };
+
+		    # TODO: No examples of "jogging prefix" queenside in arvo/ corpus
+                    $expectedColumn = $runeColumn;
+                    if ( $thirdChildColumn != $expectedColumn) {
+                        my $msg = sprintf
+    "Jogging-prefix %s child #%d @%d:%d; %s",
+                          $chessSide, 1, $runeLine,
+                          $thirdChildColumn+1,
+                          describeMisindent( $thirdChildColumn, $expectedColumn);
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $thirdChildLine,
+                            column         => $thirdChildColumn,
+                            child          => 1,
+                            expectedColumn => $expectedColumn,
+                          };
+                    }
+
+                    return \@mistakes;
+                };
+
                 my $isJog = sub {
                     my ($node, $context) = @_;
                     my $chessSide = $context->{chessSide};
@@ -1408,17 +1486,17 @@ sub doLint {
                         last TYPE_INDENT;
                     }
 
-                    if ( isFlat( \@gapIndents ) ) {
-                        $indentDesc = 'FLAT';
-                        last TYPE_INDENT;
-                    }
-
                     if ( $tallJogRule{$lhsName} ) {
                         $mistakes = $isJog->( $node, $parentContext );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOG-STYLE';
                         last TYPE_INDENT;
                     }
+
+                    # if ( isFlat( \@gapIndents ) ) {
+                        # $indentDesc = 'FLAT';
+                        # last TYPE_INDENT;
+                    # }
 
                     if ( $tallJogging0Rule{$lhsName} ) {
                         $mistakes =
@@ -1441,6 +1519,14 @@ sub doLint {
                           $isJogging2->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-2-STYLE';
+                        last TYPE_INDENT;
+                    }
+
+                    if ( $tallJoggingPrefixRule{$lhsName} ) {
+                        $mistakes =
+                          $isJoggingPrefix->( $parentContext, $node, \@gapIndents );
+                        last TYPE_INDENT if @{$mistakes};
+                        $indentDesc = 'JOGGING-PREFIX-STYLE';
                         last TYPE_INDENT;
                     }
 
