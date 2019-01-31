@@ -58,9 +58,6 @@ t/ast.d/toe.hoon 39:3 indent LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 40:5 indent tallBartis BACKDENTED
 t/ast.d/toe.hoon 41:5 indent tallKethep CAST-STYLE
 t/ast.d/toe.hoon 42:5 indent tallWuthep JOGGING-1-STYLE
-t/ast.d/toe.hoon 43:7 sequence tallWuthep REGULAR
-t/ast.d/toe.hoon 43:7 sequence tallWuthep REGULAR
-t/ast.d/toe.hoon 43:7 sequence tallWuthep REGULAR
 t/ast.d/toe.hoon 43:7 indent tallWuthep FLAT
 t/ast.d/toe.hoon 44:7 indent tallWuthep FLAT
 t/ast.d/toe.hoon 45:7 indent tallWuthep FLAT
