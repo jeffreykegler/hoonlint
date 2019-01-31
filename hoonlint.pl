@@ -439,6 +439,21 @@ sub symbol {
     return "[$type]";
 }
 
+# The name of a name for diagnostics purposes.  Prefers
+# "brick" symbols over "mortar" symbols.
+sub diagName {
+    my ($node, $context) = @_;
+    my $type = $node->{type};
+    return symbol($node) if $type ne 'node';
+    my $ruleID = $node->{ruleID};
+    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+    my $lhsName = $grammar->symbol_name($lhs);
+    return $lhsName if not $mortarLHS{$lhsName};
+    my $hoonName = $context->{hoonName};
+    internalError("No hoon name for $lhsName") if not $hoonName;
+    return $hoonName;
+}
+
 # The "name" of a node.  Not necessarily unique
 sub name {
     my ($node) = @_;
@@ -610,9 +625,13 @@ sub doLint {
     $parentContext->{jogColumn1} = $parentJogColumn1
       if defined $parentJogColumn1;
 
-    my $parentKingJogColumn2 = $argContext->{kingJogColumn2};
-    $parentContext->{kingJogColumn2} = $parentKingJogColumn2
-      if defined $parentKingJogColumn2;
+    my $parentFlatJogColumn2 = $argContext->{flatJogColumn2};
+    $parentContext->{flatJogColumn2} = $parentFlatJogColumn2
+      if defined $parentFlatJogColumn2;
+
+    my $parentHoonName = $argContext->{hoonName};
+    # say STDERR "setting hoonName = $parentHoonName";
+    $parentContext->{hoonName} = $parentHoonName;
 
     my $children = $node->{children};
 
@@ -631,6 +650,13 @@ sub doLint {
             die Data::Dumper::Dumper($node) if not defined $ruleID;
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
+
+            # say STDERR "current hoonName = $parentHoonName ", $parentContext->{hoonName};
+            if (not $mortarLHS{$lhsName}) {
+                $parentHoonName = $lhsName;
+                # say STDERR "resetting hoonName = $parentHoonName";
+                $parentContext->{hoonName} = $parentHoonName;
+            }
 
             # say "=== $lhsName"; # TODO delete after development
 
@@ -783,7 +809,7 @@ sub doLint {
                             }
                         }
                         print reportItem(
-                                "$fileName $parentLC sequence $lhsName $indentDesc",
+                                (sprintf "$fileName $parentLC sequence %s $indentDesc", diagName($node, $parentContext)),
                                 $parentLine, $childLine, $contextLines )
                               if $censusWhitespace or $isProblem;
                             $previousLine = $childLine;
@@ -866,19 +892,19 @@ sub doLint {
                         next CHILD
                           unless $symbol eq "rick5dJog"
                           or $symbol eq "ruck5dJog";
-                        my ( $side, $jogColumn1, $kingJogColumn2 );
-                        ( $side, $jogColumn1, $kingJogColumn2 ) =
+                        my ( $side, $jogColumn1, $flatJogColumn2 );
+                        ( $side, $jogColumn1, $flatJogColumn2 ) =
                           $censusJog->( $child, $runeColumn );
 
-         # say STDERR join " ", "census jog:",  $side, ($kingJogColumn2 // 'na');
+         # say STDERR join " ", "census jog:",  $side, ($flatJogColumn2 // 'na');
                         $sideCount{$side}++;
                         $firstColumn1Line{$jogColumn1} = $jogLine
                           if not defined $firstColumn1Line{$jogColumn1};
                         $column1Count{$jogColumn1}++;
-                        next CHILD if not defined $kingJogColumn2;
-                        $firstColumn1Line{$kingJogColumn2} = $jogLine
-                          if not defined $firstColumn1Line{$kingJogColumn2};
-                        $column1Count{$kingJogColumn2}++;
+                        next CHILD if not defined $flatJogColumn2;
+                        $firstColumn2Line{$flatJogColumn2} = $jogLine
+                          if not defined $firstColumn2Line{$flatJogColumn2};
+                        $column2Count{$flatJogColumn2}++;
                     }
                     my @sortedSides =
                       sort { $sideCount{$b} <=> $sideCount{$a} }
@@ -895,7 +921,7 @@ sub doLint {
                     my $alignColumn1 = $sortedColumns1[0];
                     my $alignColumn2 = $sortedColumns2[0]
                       if scalar @sortedColumns2;
-                    return $side, $alignColumn1;
+                    return $side, $alignColumn1, $alignColumn2;
                 };
 
                 my $censusJoggingHoon = sub {
@@ -983,12 +1009,12 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $kingJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
-                    $context->{kingJogColumn2} = $kingJogColumn2 if $kingJogColumn2;
+                    $context->{flatJogColumn2} = $flatJogColumn2 if $flatJogColumn2;
                     internalError("Chess side undefined") unless $chessSide;
-                    # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
+                    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
                     my @mistakes = ();
                     die "Jogging-1-style rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
@@ -1095,12 +1121,12 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $kingJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
-                    $context->{kingJogColumn2} = $kingJogColumn2 if $kingJogColumn2;
+                    $context->{flatJogColumn2} = $flatJogColumn2 if $flatJogColumn2;
                     internalError("Chess side undefined") unless $chessSide;
-                    # say join " ", "=== jog census:", $side, ($kingJogColumn // 'na');
+                    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
                     my @mistakes = ();
                     my ( $firstChildLine, $firstChildColumn ) =
                       @{ $gapIndents->[1] };
@@ -1232,9 +1258,9 @@ sub doLint {
                     die Data::Dumper::Dumper([$fileName, (line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
                     internalError("Chess side undefined") unless $chessSide;
 
-                    my $kingJogColumn2 = $context->{kingJogcolumn2};
+                    my $flatJogColumn2 = $context->{flatJogcolumn2};
                     # do not pass these attributes on to child nodes
-                    delete $context->{kingJogcolumn2};
+                    delete $context->{flatJogcolumn2};
                     delete $context->{chessSide};
 
                     my $children = $node->{children};
@@ -1246,19 +1272,19 @@ sub doLint {
                     my @mistakes = ();
 
                     if ( $line1 == $line2 ) {
-                        internalError("Unexpected flat jog, line $line2") unless defined $kingJogColumn2;
-                        if ( $column2 != $kingJogColumn2 ) {
+                        internalError("Unexpected flat jog, line $line2") unless defined $flatJogColumn2;
+                        if ( $column2 != $flatJogColumn2 ) {
                             my $msg =
                               sprintf
 "Jog-style line %d; flat child 2 is at column %d; expected column %d",
-                              $line1, $column2, $kingJogColumn2;
+                              $line1, $column2, $flatJogColumn2;
                             push @mistakes,
                               {
                                 desc           => $msg,
                                 line           => $line2,
                                 column         => $column2,
                                 child          => 2,
-                                expectedColumn => $kingJogColumn2,
+                                expectedColumn => $flatJogColumn2,
                               };
                         }
                         return \@mistakes;
@@ -1475,9 +1501,10 @@ sub doLint {
                     }
 
                     if ($censusWhitespace) {
-                        print reportItem( "$fileName "
-                              . ( join ':', $recce->line_column($start) )
-                              . " indent $lhsName $indentDesc",
+                        print reportItem(
+                        (sprintf "$fileName %s indent %s %s",
+                              ( join ':', $recce->line_column($start) ),
+                              diagName($node, $parentContext), $indentDesc),
                             $parentLine, $parentLine, $contextLines );
                     }
                 }
@@ -1491,7 +1518,7 @@ sub doLint {
     }
 }
 
-doLint( $astValue, { line => -1, indents => [], ancestors => [] } );
+doLint( $astValue, { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
 
 for my $type ( keys %{$unusedSuppressions} ) {
     for my $tag (

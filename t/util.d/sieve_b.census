@@ -20,7 +20,7 @@ t/ast.d/sieve_b.hoon 19:3 indent tallBarhep FLAT
 t/ast.d/sieve_b.hoon 19:7 indent tallKetlus CAST-STYLE
 t/ast.d/sieve_b.hoon 20:3 indent tallWutcol BACKDENTED
 t/ast.d/sieve_b.hoon 22:3 indent tallCentis JOGGING-1-STYLE
-t/ast.d/sieve_b.hoon 23:5 sequence rick5d REGULAR
-t/ast.d/sieve_b.hoon 23:5 sequence rick5d REGULAR
-t/ast.d/sieve_b.hoon 23:5 indent rick5dJog FLAT
-t/ast.d/sieve_b.hoon 24:5 indent rick5dJog FLAT
+t/ast.d/sieve_b.hoon 23:5 sequence tallCentis REGULAR
+t/ast.d/sieve_b.hoon 23:5 sequence tallCentis REGULAR
+t/ast.d/sieve_b.hoon 23:5 indent tallCentis FLAT
+t/ast.d/sieve_b.hoon 24:5 indent tallCentis FLAT
