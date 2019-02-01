@@ -1,0 +1,1226 @@
+== hoons/arvo/sys/zuse.hoon 3889:15 indent tallWuthep Jog line 3889; kingside child 1 at column 15; expected column 16
+        ?-  -.p.rag
+          $|   ?-  -.new
+>               $|  [[%| (weld p.new p.p.rag) (weld q.new q.p.rag)] q.rag]
+                $&  [new [p.rag q.rag]]
+              ==
+== hoons/arvo/sys/zuse.hoon 3890:15 indent tallWuthep Jog line 3890; kingside child 1 at column 15; expected column 16
+          $|   ?-  -.new
+                $|  [[%| (weld p.new p.p.rag) (weld q.new q.p.rag)] q.rag]
+>               $&  [new [p.rag q.rag]]
+              ==
+          $&   ?-  -.new
+== hoons/arvo/sys/zuse.hoon 3893:15 indent tallWuthep Jog line 3893; kingside child 1 at column 15; expected column 16
+              ==
+          $&   ?-  -.new
+>               $|  [new ?:(=(0 p.p.rag) q.rag [p.rag q.rag])]
+                $&  [[%& (add p.p.rag p.new)] q.rag]
+              ==
+== hoons/arvo/sys/zuse.hoon 3894:15 indent tallWuthep Jog line 3894; kingside child 1 at column 15; expected column 16
+          $&   ?-  -.new
+                $|  [new ?:(=(0 p.p.rag) q.rag [p.rag q.rag])]
+>               $&  [[%& (add p.p.rag p.new)] q.rag]
+              ==
+        ==
+== hoons/arvo/sys/hoon.hoon 2114:28 indent tallWuthep Jog line 2114; kingside child 1 at column 28; expected column 9
+        |=  {a/{e/@s a/@u} t/?}  ^-  fn
+        ?-  r
+>         $z  (lug %fl a t)  $d  (lug %fl a t)
+          $a  (lug %ce a t)  $u  (lug %ce a t)
+          $n  (lug %ne a t)
+== hoons/arvo/sys/hoon.hoon 2114:28 indent tallWuthep Jog line 2114; kingside flat child 2 at column 32; expected column 13
+        |=  {a/{e/@s a/@u} t/?}  ^-  fn
+        ?-  r
+>         $z  (lug %fl a t)  $d  (lug %fl a t)
+          $a  (lug %ce a t)  $u  (lug %ce a t)
+          $n  (lug %ne a t)
+== hoons/arvo/sys/hoon.hoon 2115:28 indent tallWuthep Jog line 2115; kingside child 1 at column 28; expected column 9
+        ?-  r
+          $z  (lug %fl a t)  $d  (lug %fl a t)
+>         $a  (lug %ce a t)  $u  (lug %ce a t)
+          $n  (lug %ne a t)
+        ==
+== hoons/arvo/sys/hoon.hoon 2115:28 indent tallWuthep Jog line 2115; kingside flat child 2 at column 32; expected column 13
+        ?-  r
+          $z  (lug %fl a t)  $d  (lug %fl a t)
+>         $a  (lug %ce a t)  $u  (lug %ce a t)
+          $n  (lug %ne a t)
+        ==
+== hoons/arvo/sys/hoon.hoon 2131:30 indent tallWuthep Jog line 2131; kingside child 1 at column 30; expected column 11
+        ?:  =((cmp:si w x) --1)                           ::  don't need to add
+          ?-  r
+>           $z  (lug %fl a &)  $d  (lug %fl a &)
+            $a  (lug %lg a &)  $u  (lug %lg a &)
+            $n  (lug %na a &)
+== hoons/arvo/sys/hoon.hoon 2131:30 indent tallWuthep Jog line 2131; kingside flat child 2 at column 34; expected column 15
+        ?:  =((cmp:si w x) --1)                           ::  don't need to add
+          ?-  r
+>           $z  (lug %fl a &)  $d  (lug %fl a &)
+            $a  (lug %lg a &)  $u  (lug %lg a &)
+            $n  (lug %na a &)
+== hoons/arvo/sys/hoon.hoon 2132:30 indent tallWuthep Jog line 2132; kingside child 1 at column 30; expected column 11
+          ?-  r
+            $z  (lug %fl a &)  $d  (lug %fl a &)
+>           $a  (lug %lg a &)  $u  (lug %lg a &)
+            $n  (lug %na a &)
+          ==
+== hoons/arvo/sys/hoon.hoon 2132:30 indent tallWuthep Jog line 2132; kingside flat child 2 at column 34; expected column 15
+          ?-  r
+            $z  (lug %fl a &)  $d  (lug %fl a &)
+>           $a  (lug %lg a &)  $u  (lug %lg a &)
+            $n  (lug %na a &)
+          ==
+== hoons/arvo/sys/hoon.hoon 2148:30 indent tallWuthep Jog line 2148; kingside child 1 at column 30; expected column 11
+        ?:  &(!e =((cmp:si w x) --1))
+          ?-  r
+>           $z  (lug %sm a &)  $d  (lug %sm a &)
+            $a  (lug %ce a &)  $u  (lug %ce a &)
+            $n  (lug %nt a &)
+== hoons/arvo/sys/hoon.hoon 2148:30 indent tallWuthep Jog line 2148; kingside flat child 2 at column 34; expected column 15
+        ?:  &(!e =((cmp:si w x) --1))
+          ?-  r
+>           $z  (lug %sm a &)  $d  (lug %sm a &)
+            $a  (lug %ce a &)  $u  (lug %ce a &)
+            $n  (lug %nt a &)
+== hoons/arvo/sys/hoon.hoon 2149:30 indent tallWuthep Jog line 2149; kingside child 1 at column 30; expected column 11
+          ?-  r
+            $z  (lug %sm a &)  $d  (lug %sm a &)
+>           $a  (lug %ce a &)  $u  (lug %ce a &)
+            $n  (lug %nt a &)
+          ==
+== hoons/arvo/sys/hoon.hoon 2149:30 indent tallWuthep Jog line 2149; kingside flat child 2 at column 34; expected column 15
+          ?-  r
+            $z  (lug %sm a &)  $d  (lug %sm a &)
+>           $a  (lug %ce a &)  $u  (lug %ce a &)
+            $n  (lug %nt a &)
+          ==
+== hoons/arvo/sys/hoon.hoon 5790:5 indent tallWuthep Jogging-1-style queenside child #1 @5790:9; underindented by 2
+      ::
+      =+  [now=(cap axe) lat=(mas axe)]
+>     ?-  -.mask.bus
+      ::  subject is fully blocked or complete
+      ::
+== hoons/arvo/sys/hoon.hoon 5793:7 indent tallWuthep Jog line 5793; queenside child 1 at column 7; expected column 9
+      ::  subject is fully blocked or complete
+      ::
+>       $&  ::  if fully blocked, produce self
+            ::
+            ?^  blocks.mask.bus  bus
+== hoons/arvo/sys/hoon.hoon 5793:7 indent tallWuthep Jog line 5793; queenside child 2 at 5795:11; expected column 7
+      ::  subject is fully blocked or complete
+      ::
+>       $&  ::  if fully blocked, produce self
+            ::
+!           ?^  blocks.mask.bus  bus
+            ::  descending into atom, stop
+            ::
+== hoons/arvo/sys/hoon.hoon 5804:7 indent tallWuthep Jog line 5804; queenside child 1 at column 7; expected column 9
+      ::  subject is partly blocked
+      ::
+>       $|  ::  descend into partial cell
+            ::
+            %=  $
+== hoons/arvo/sys/hoon.hoon 5804:7 indent tallWuthep Jog line 5804; queenside child 2 at 5806:11; expected column 7
+      ::  subject is partly blocked
+      ::
+>       $|  ::  descend into partial cell
+            ::
+!           %=  $
+              axe  lat
+              bus  ?:  =(2 now) 
+== hoons/arvo/sys/hoon.hoon 6384:9 indent tallWuthep Jog line 6384; queenside flat child 2 at column 17; expected column 19
+          {$1 $1}   nif
+          {$1 $0}   bos
+>         *       [%6 bos nif [%1 1]]
+      ==
+    ==
+== hoons/arvo/sys/hoon.hoon 6397:3 indent tallWuthep Jogging-1-style queenside child #1 @6397:7; underindented by 2
+    |=  {bos/nock nif/nock}
+    ^-  nock
+>   ?-  bos
+        {$1 $1}   nif
+        {$1 $0}   bos
+== hoons/arvo/sys/hoon.hoon 6401:5 indent tallWuthep Jogging-1-style queenside child #1 @6401:9; underindented by 2
+        {$1 $0}   bos
+        *
+>     ?-  nif
+          {$1 $1}   bos
+          {$1 $0}   nif
+== hoons/arvo/sys/hoon.hoon 6450:3 indent tallWuthep Jogging-1-style queenside child #1 @6450:7; underindented by 2
+    =+  axe=1
+    |-  ^-  (unit {p/axis q/(pair what foot)})
+>   ?-  dab
+        $~  ~
+    ::
+== hoons/arvo/sys/hoon.hoon 6483:3 indent tallWuthep Jogging-1-style queenside child #1 @6483:7; underindented by 2
+    =+  axe=1
+    |-  ^-  (unit {p/axis q/(pair what foot)})
+>   ?-  dom
+        $~  ~
+    ::
+== hoons/arvo/sys/hoon.hoon 7535:9 indent tallWuthep Jog line 7535; queenside flat child 2 at column 21; expected column 20
+          {$bust *}  ~(bunt al %axil p.gen)
+          {$cold *}  p.gen
+>         {$dbug *}   q.gen
+          {$eror *}  ~|(p.gen !!)
+      ::
+== hoons/arvo/sys/hoon.hoon 7754:7 indent tallWuthep Jogging-1-style queenside child #1 @7754:11; underindented by 2
+          {$smsg *}                                       ::                  ;~
+        |-  ^-  hoon
+>       ?-  q.gen
+            $~      ~_(leaf+"open-smsg" !!)
+            ^
+== hoons/arvo/sys/hoon.hoon 7835:9 indent tallWuthep Jog line 7835; queenside flat child 2 at column 21; expected column 20
+        ?~(p.gen [%rock %f 1] [%wtcl i.p.gen [%rock %f 0] $(p.gen t.p.gen)])
+      ::
+>         {$wtdt *}   [%wtcl p.gen r.gen q.gen]
+          {$wtgl *}   [%wtcl p.gen [%zpzp ~] q.gen]
+          {$wtgr *}   [%wtcl p.gen q.gen [%zpzp ~]]
+== hoons/arvo/sys/hoon.hoon 7836:9 indent tallWuthep Jog line 7836; queenside flat child 2 at column 21; expected column 20
+      ::
+          {$wtdt *}   [%wtcl p.gen r.gen q.gen]
+>         {$wtgl *}   [%wtcl p.gen [%zpzp ~] q.gen]
+          {$wtgr *}   [%wtcl p.gen q.gen [%zpzp ~]]
+          {$wtkt *}   [%wtcl [%wtts [%base %atom %$] p.gen] r.gen q.gen]
+== hoons/arvo/sys/hoon.hoon 7837:9 indent tallWuthep Jog line 7837; queenside flat child 2 at column 21; expected column 20
+          {$wtdt *}   [%wtcl p.gen r.gen q.gen]
+          {$wtgl *}   [%wtcl p.gen [%zpzp ~] q.gen]
+>         {$wtgr *}   [%wtcl p.gen q.gen [%zpzp ~]]
+          {$wtkt *}   [%wtcl [%wtts [%base %atom %$] p.gen] r.gen q.gen]
+      ::
+== hoons/arvo/sys/hoon.hoon 7838:9 indent tallWuthep Jog line 7838; queenside flat child 2 at column 21; expected column 20
+          {$wtgl *}   [%wtcl p.gen [%zpzp ~] q.gen]
+          {$wtgr *}   [%wtcl p.gen q.gen [%zpzp ~]]
+>         {$wtkt *}   [%wtcl [%wtts [%base %atom %$] p.gen] r.gen q.gen]
+      ::
+          {$wthp *}
+== hoons/arvo/sys/hoon.hoon 7869:9 indent tallWuthep Jog line 7869; queenside flat child 2 at column 21; expected column 20
+        --
+      ::
+>         {$wtpt *}   [%wtcl [%wtts [%base %atom %$] p.gen] q.gen r.gen]
+          {$wtsg *}   [%wtcl [%wtts [%base %null] p.gen] q.gen r.gen]
+          {$wtts *}   [%fits ~(bunt al %herb p.gen) q.gen]
+== hoons/arvo/sys/hoon.hoon 7870:9 indent tallWuthep Jog line 7870; queenside flat child 2 at column 21; expected column 20
+      ::
+          {$wtpt *}   [%wtcl [%wtts [%base %atom %$] p.gen] q.gen r.gen]
+>         {$wtsg *}   [%wtcl [%wtts [%base %null] p.gen] q.gen r.gen]
+          {$wtts *}   [%fits ~(bunt al %herb p.gen) q.gen]
+          {$wtzp *}   [%wtcl p.gen [%rock %f 1] [%rock %f 0]]
+== hoons/arvo/sys/hoon.hoon 7871:9 indent tallWuthep Jog line 7871; queenside flat child 2 at column 21; expected column 20
+          {$wtpt *}   [%wtcl [%wtts [%base %atom %$] p.gen] q.gen r.gen]
+          {$wtsg *}   [%wtcl [%wtts [%base %null] p.gen] q.gen r.gen]
+>         {$wtts *}   [%fits ~(bunt al %herb p.gen) q.gen]
+          {$wtzp *}   [%wtcl p.gen [%rock %f 1] [%rock %f 0]]
+          {$zpgr *}
+== hoons/arvo/sys/hoon.hoon 7872:9 indent tallWuthep Jog line 7872; queenside flat child 2 at column 21; expected column 20
+          {$wtsg *}   [%wtcl [%wtts [%base %null] p.gen] q.gen r.gen]
+          {$wtts *}   [%fits ~(bunt al %herb p.gen) q.gen]
+>         {$wtzp *}   [%wtcl p.gen [%rock %f 1] [%rock %f 0]]
+          {$zpgr *}
+        [%cnhp [%limb %onan] [%zpsm [%bunt [%limb %abel]] p.gen] ~]
+== hoons/arvo/sys/hoon.hoon 7883:9 indent tallWuthep Jog line 7883; queenside flat child 2 at column 21; expected column 20
+        ~_(leaf+"hoon-version" !!)
+      ::
+>         *           gen
+      ==
+    ::
+== hoons/arvo/sys/hoon.hoon 8003:9 indent tallWuthep Jog line 8003; kingside flat child 2 at column 17; expected column 16
+          $sgwt  (lead -.gen %.(+.gen (quad noop expr expr expr)))
+          $sgzp  (lead -.gen %.(+.gen dubs))
+>         $smcl   (lead -.gen %.(+.gen (twin expr moar)))
+          $smfs   (lead -.gen %.(+.gen expr))
+          $smsg   (lead -.gen %.(+.gen (twin expr moar)))
+== hoons/arvo/sys/hoon.hoon 8004:9 indent tallWuthep Jog line 8004; kingside flat child 2 at column 17; expected column 16
+          $sgzp  (lead -.gen %.(+.gen dubs))
+          $smcl   (lead -.gen %.(+.gen (twin expr moar)))
+>         $smfs   (lead -.gen %.(+.gen expr))
+          $smsg   (lead -.gen %.(+.gen (twin expr moar)))
+          $smsm   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8005:9 indent tallWuthep Jog line 8005; kingside flat child 2 at column 17; expected column 16
+          $smcl   (lead -.gen %.(+.gen (twin expr moar)))
+          $smfs   (lead -.gen %.(+.gen expr))
+>         $smsg   (lead -.gen %.(+.gen (twin expr moar)))
+          $smsm   (lead -.gen %.(+.gen dubs))
+          $tsbr   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8006:9 indent tallWuthep Jog line 8006; kingside flat child 2 at column 17; expected column 16
+          $smfs   (lead -.gen %.(+.gen expr))
+          $smsg   (lead -.gen %.(+.gen (twin expr moar)))
+>         $smsm   (lead -.gen %.(+.gen dubs))
+          $tsbr   (lead -.gen %.(+.gen dubs))
+          $tscl   (lead -.gen %.(+.gen (twin moan expr)))
+== hoons/arvo/sys/hoon.hoon 8007:9 indent tallWuthep Jog line 8007; kingside flat child 2 at column 17; expected column 16
+          $smsg   (lead -.gen %.(+.gen (twin expr moar)))
+          $smsm   (lead -.gen %.(+.gen dubs))
+>         $tsbr   (lead -.gen %.(+.gen dubs))
+          $tscl   (lead -.gen %.(+.gen (twin moan expr)))
+          $tsfs   (lead -.gen %.(+.gen (trio tora expr expr)))
+== hoons/arvo/sys/hoon.hoon 8008:9 indent tallWuthep Jog line 8008; kingside flat child 2 at column 17; expected column 16
+          $smsm   (lead -.gen %.(+.gen dubs))
+          $tsbr   (lead -.gen %.(+.gen dubs))
+>         $tscl   (lead -.gen %.(+.gen (twin moan expr)))
+          $tsfs   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tssm   (lead -.gen %.(+.gen (trio tora expr expr)))
+== hoons/arvo/sys/hoon.hoon 8009:9 indent tallWuthep Jog line 8009; kingside flat child 2 at column 17; expected column 16
+          $tsbr   (lead -.gen %.(+.gen dubs))
+          $tscl   (lead -.gen %.(+.gen (twin moan expr)))
+>         $tsfs   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tssm   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tsdt   (lead -.gen %.(+.gen trip))
+== hoons/arvo/sys/hoon.hoon 8010:9 indent tallWuthep Jog line 8010; kingside flat child 2 at column 17; expected column 16
+          $tscl   (lead -.gen %.(+.gen (twin moan expr)))
+          $tsfs   (lead -.gen %.(+.gen (trio tora expr expr)))
+>         $tssm   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tsdt   (lead -.gen %.(+.gen trip))
+          $tswt   (lead -.gen %.(+.gen (quad noop expr expr expr)))
+== hoons/arvo/sys/hoon.hoon 8011:9 indent tallWuthep Jog line 8011; kingside flat child 2 at column 17; expected column 16
+          $tsfs   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tssm   (lead -.gen %.(+.gen (trio tora expr expr)))
+>         $tsdt   (lead -.gen %.(+.gen trip))
+          $tswt   (lead -.gen %.(+.gen (quad noop expr expr expr)))
+          $tsgl   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8012:9 indent tallWuthep Jog line 8012; kingside flat child 2 at column 17; expected column 16
+          $tssm   (lead -.gen %.(+.gen (trio tora expr expr)))
+          $tsdt   (lead -.gen %.(+.gen trip))
+>         $tswt   (lead -.gen %.(+.gen (quad noop expr expr expr)))
+          $tsgl   (lead -.gen %.(+.gen dubs))
+          $tshp   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8013:9 indent tallWuthep Jog line 8013; kingside flat child 2 at column 17; expected column 16
+          $tsdt   (lead -.gen %.(+.gen trip))
+          $tswt   (lead -.gen %.(+.gen (quad noop expr expr expr)))
+>         $tsgl   (lead -.gen %.(+.gen dubs))
+          $tshp   (lead -.gen %.(+.gen dubs))
+          $tsgr   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8014:9 indent tallWuthep Jog line 8014; kingside flat child 2 at column 17; expected column 16
+          $tswt   (lead -.gen %.(+.gen (quad noop expr expr expr)))
+          $tsgl   (lead -.gen %.(+.gen dubs))
+>         $tshp   (lead -.gen %.(+.gen dubs))
+          $tsgr   (lead -.gen %.(+.gen dubs))
+          $tskt   (lead -.gen %.(+.gen (quad tora noop expr expr)))
+== hoons/arvo/sys/hoon.hoon 8015:9 indent tallWuthep Jog line 8015; kingside flat child 2 at column 17; expected column 16
+          $tsgl   (lead -.gen %.(+.gen dubs))
+          $tshp   (lead -.gen %.(+.gen dubs))
+>         $tsgr   (lead -.gen %.(+.gen dubs))
+          $tskt   (lead -.gen %.(+.gen (quad tora noop expr expr)))
+          $tsls   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8016:9 indent tallWuthep Jog line 8016; kingside flat child 2 at column 17; expected column 16
+          $tshp   (lead -.gen %.(+.gen dubs))
+          $tsgr   (lead -.gen %.(+.gen dubs))
+>         $tskt   (lead -.gen %.(+.gen (quad tora noop expr expr)))
+          $tsls   (lead -.gen %.(+.gen dubs))
+          $tssg   (lead -.gen %.(+.gen moar))
+== hoons/arvo/sys/hoon.hoon 8017:9 indent tallWuthep Jog line 8017; kingside flat child 2 at column 17; expected column 16
+          $tsgr   (lead -.gen %.(+.gen dubs))
+          $tskt   (lead -.gen %.(+.gen (quad tora noop expr expr)))
+>         $tsls   (lead -.gen %.(+.gen dubs))
+          $tssg   (lead -.gen %.(+.gen moar))
+          $tstr   (lead -.gen %.(+.gen trip))
+== hoons/arvo/sys/hoon.hoon 8018:9 indent tallWuthep Jog line 8018; kingside flat child 2 at column 17; expected column 16
+          $tskt   (lead -.gen %.(+.gen (quad tora noop expr expr)))
+          $tsls   (lead -.gen %.(+.gen dubs))
+>         $tssg   (lead -.gen %.(+.gen moar))
+          $tstr   (lead -.gen %.(+.gen trip))
+          $tscm   (lead -.gen %.(+.gen dubs))
+== hoons/arvo/sys/hoon.hoon 8019:9 indent tallWuthep Jog line 8019; kingside flat child 2 at column 17; expected column 16
+          $tsls   (lead -.gen %.(+.gen dubs))
+          $tssg   (lead -.gen %.(+.gen moar))
+>         $tstr   (lead -.gen %.(+.gen trip))
+          $tscm   (lead -.gen %.(+.gen dubs))
+          $wtbr    (lead -.gen %.(+.gen moar))
+== hoons/arvo/sys/hoon.hoon 8020:9 indent tallWuthep Jog line 8020; kingside flat child 2 at column 17; expected column 16
+          $tssg   (lead -.gen %.(+.gen moar))
+          $tstr   (lead -.gen %.(+.gen trip))
+>         $tscm   (lead -.gen %.(+.gen dubs))
+          $wtbr    (lead -.gen %.(+.gen moar))
+          $wthp  (lead -.gen %.(+.gen (twin noop (moto dubs))))
+== hoons/arvo/sys/hoon.hoon 8021:9 indent tallWuthep Jog line 8021; kingside flat child 2 at column 18; expected column 16
+          $tstr   (lead -.gen %.(+.gen trip))
+          $tscm   (lead -.gen %.(+.gen dubs))
+>         $wtbr    (lead -.gen %.(+.gen moar))
+          $wthp  (lead -.gen %.(+.gen (twin noop (moto dubs))))
+          $wtcl    (lead -.gen %.(+.gen trey))
+== hoons/arvo/sys/hoon.hoon 8023:9 indent tallWuthep Jog line 8023; kingside flat child 2 at column 18; expected column 16
+          $wtbr    (lead -.gen %.(+.gen moar))
+          $wthp  (lead -.gen %.(+.gen (twin noop (moto dubs))))
+>         $wtcl    (lead -.gen %.(+.gen trey))
+          $wtdt  (lead -.gen %.(+.gen trey))
+          $wtkt  (lead -.gen %.(+.gen trip))
+== hoons/arvo/sys/hoon.hoon 8029:9 indent tallWuthep Jog line 8029; kingside flat child 2 at column 17; expected column 16
+          $wtgr  (lead -.gen %.(+.gen dubs))
+          $wtls  (lead -.gen %.(+.gen (trio noop expr (moto dubs))))
+>         $wtpm   (lead -.gen %.(+.gen moar))
+          $wtpt  (lead -.gen %.(+.gen trip))
+          $wtsg  (lead -.gen %.(+.gen trip))
+== hoons/arvo/sys/hoon.hoon 8033:9 indent tallWuthep Jog line 8033; kingside flat child 2 at column 17; expected column 16
+          $wtsg  (lead -.gen %.(+.gen trip))
+          $wtts  (lead -.gen %.(+.gen (twin expr noop)))
+>         $wtzp   (lead -.gen %.(+.gen expr))
+          $zpcm  (lead -.gen %.(+.gen dubs))
+          $zpgr  (lead -.gen %.(+.gen expr))
+== hoons/arvo/sys/hoon.hoon 8255:5 indent tallWuthep Jogging-1-style kingside child #1 @8255:11; overindented by 2
+      =+  gil=*(set type)
+      |-  ^-  seminoun:musk
+>     ?-    sut
+        $noun      [&+[~ ~ ~] ~]
+        $void      [&+[~ ~ ~] ~]
+== hoons/arvo/sys/hoon.hoon 8790:21 indent tallWuthep Jogging-1-style kingside child #1 @8790:27; overindented by 2
+                    $(q.zot t.q.zot, p.heg p.p.fid)
+                  =+  ^-  {wat/what vat/(pair type nock)}
+>                     ?-    -.fid
+                        $&  [p.p.fid (fine %& q.p.fid)]
+                        $|  [p.p.p.fid (fine %| q.p.p.fid)]
+== hoons/arvo/sys/hoon.hoon 8818:9 indent tallWuthep Jogging-1-style kingside child #1 @8818:15; overindented by 2
+      ~_  (show [%c %find] %l hyp)
+      =-  ?@  -  !!
+>         ?-    -<
+            $&  [%& q.p.-]
+            $|  ?-  -.p.-
+== hoons/arvo/sys/hoon.hoon 8880:5 indent tallWuthep Jogging-1-style queenside child #1 @8880:9; underindented by 2
+      =+  vot=*(set type)
+      |-  ^-  nock
+>     ?-  sut
+          $void       [%1 1]
+          $noun       [%1 0]
+== hoons/arvo/sys/hoon.hoon 8940:9 indent tallWuthep Jog line 8940; queenside flat child 2 at column 21; expected column 20
+        $(sut repo, bix (~(put in bix) [sut ref]))
+      ::
+>         $noun       ref
+          $void       %void
+      ==
+== hoons/arvo/sys/hoon.hoon 8941:9 indent tallWuthep Jog line 8941; queenside flat child 2 at column 21; expected column 20
+      ::
+          $noun       ref
+>         $void       %void
+      ==
+    ::
+== hoons/arvo/sys/hoon.hoon 8959:5 indent tallWuthep Jogging-1-style kingside child #1 @8959:11; overindented by 2
+            $elm  q:(mint(vet |) %noun p.q.q.n.dab)
+          ==
+>     ?-    dab
+        {* $~ $~}   vad
+        {* $~ *}    [vad $(dab r.dab)]
+== hoons/arvo/sys/hoon.hoon 8972:5 indent tallWuthep Jogging-1-style kingside child #1 @8972:11; overindented by 2
+        ~
+      =+  dov=(harp q.q.n.dom)
+>     ?-    dom
+        {* $~ $~}   dov
+        {* $~ *}    [dov $(dom r.dom)]
+== hoons/arvo/sys/hoon.hoon 9112:9 indent tallWuthep Jog line 9112; queenside flat child 2 at column 21; expected column 20
+        [p.hum [%10 [%spot %1 p.gen] q.hum]]
+      ::
+>         {$zpcm *}   [(nice (play p.gen)) [%1 q.gen]]   ::  XX validate!
+          {$lost *}
+        ?:  vet
+== hoons/arvo/sys/hoon.hoon 9133:9 indent tallWuthep Jog line 9133; queenside flat child 2 at column 21; expected column 20
+        ==
+      ::
+>         {$zpts *}   [(nice %noun) [%1 q:$(vet |, gen p.gen)]]
+          {$zpzp $~}  [%void [%0 0]]
+          *
+== hoons/arvo/sys/hoon.hoon 9134:9 indent tallWuthep Jog line 9134; queenside flat child 2 at column 21; expected column 20
+      ::
+          {$zpts *}   [(nice %noun) [%1 q:$(vet |, gen p.gen)]]
+>         {$zpzp $~}  [%void [%0 0]]
+          *
+        =+  doz=~(open ap gen)
+== hoons/arvo/sys/hoon.hoon 9346:7 indent tallWuthep Jogging-1-style kingside child #1 @9346:13; overindented by 2
+          ~
+        =+  dov=(bake q.q.n.dom)
+>       ?-    dom
+          {* $~ $~}   dov
+          {* $~ *}    [dov $(dom r.dom)]
+== hoons/arvo/sys/hoon.hoon 9590:7 indent tallWuthep Jog line 9590; kingside flat child 2 at column 19; expected column 18
+        {$sgzp *}  ~_(duck(sut ^$(gen p.gen)) $(gen q.gen))
+        {$sggr *}  $(gen q.gen)
+>       {$tsgr *}   $(gen q.gen, sut $(gen p.gen))
+        {$tstr *}   $(gen r.gen, sut (buss p.gen q.gen))
+        {$wtcl *}    =+  [fex=(gain p.gen) wux=(lose p.gen)]
+== hoons/arvo/sys/hoon.hoon 9591:7 indent tallWuthep Jog line 9591; kingside flat child 2 at column 19; expected column 18
+        {$sggr *}  $(gen q.gen)
+        {$tsgr *}   $(gen q.gen, sut $(gen p.gen))
+>       {$tstr *}   $(gen r.gen, sut (buss p.gen q.gen))
+        {$wtcl *}    =+  [fex=(gain p.gen) wux=(lose p.gen)]
+                   %-  fork  :~
+== hoons/arvo/sys/hoon.hoon 9592:7 indent tallWuthep Jog line 9592; kingside flat child 2 at column 20; expected column 18
+        {$tsgr *}   $(gen q.gen, sut $(gen p.gen))
+        {$tstr *}   $(gen r.gen, sut (buss p.gen q.gen))
+>       {$wtcl *}    =+  [fex=(gain p.gen) wux=(lose p.gen)]
+                   %-  fork  :~
+                     ?:(=(%void fex) %void $(sut fex, gen q.gen))
+== hoons/arvo/sys/hoon.hoon 11273:15 indent tallWuthep Jog line 11273; kingside flat child 2 at column 31; expected column 22
+          ::
+              ::  can't(/directly) contain text
+>               ?($lord $lunt)  ~|(bad-leaf-container+p.cur !!)
+          ::
+              ::  only one line in a header
+== hoons/arvo/sys/hoon.hoon 11282:15 indent tallWuthep Jog line 11282; kingside flat child 2 at column 49; expected column 22
+          ::
+              ::  text tarps must continue aligned
+>               ?($down $lunt $lime $lord $bloc)  =(col.saw inr.ind)
+            ==
+            ~?  verbose  bad-block-structure+[p.cur inr.ind col.saw]
+== hoons/arvo/sys/hoon.hoon 11568:13 indent tallWuthep kingside jog children on different lines 11570 vs. 11568
+              $talc  [[%i ~] ^$(gaf p.nex)]~
+              $code  [[%code ~] ;/(p.nex) ~]~
+>             $quod  ::
+                     ::  smart quotes
+!                    %=    ^$
+                         gaf
+                       :-  [%text (tufa ~-~201c. ~)]
+== hoons/arvo/sys/hoon.hoon 12436:5 indent tallWuthep Jogging-1-style kingside child #1 @12436:11; overindented by 2
+      |=  lang
+      ^-  (unit hoon)
+>     ?-    -.vil
+        $col  ?:(=([%base %bean] ros) ~ [~ %tsgl ros p.vil])
+        $pel  (bind ~(reek ap ros) |=(hyp/wing [%cnts hyp p.vil]))
+== hoons/arvo/sys/hoon.hoon 12619:7 indent tallWuthep Jogging-1-style queenside child #1 @12619:11; underindented by 2
+      =^  mes  +>+<.$  (slot 6 dor)
+      =^  hip  +>+<.$
+>       ?-  -.som
+           $&  (nest p.mes p.p.som)
+           $|  (nets p.mes -.p.som)
+== hoons/arvo/sys/hoon.hoon 12620:10 indent tallWuthep Jog line 12620; queenside child 1 at column 10; expected column 11
+      =^  hip  +>+<.$
+        ?-  -.som
+>          $&  (nest p.mes p.p.som)
+           $|  (nets p.mes -.p.som)
+        ==
+== hoons/arvo/sys/hoon.hoon 12621:10 indent tallWuthep Jog line 12621; queenside child 1 at column 10; expected column 11
+        ?-  -.som
+           $&  (nest p.mes p.p.som)
+>          $|  (nets p.mes -.p.som)
+        ==
+      ?>  hip
+== hoons/arvo/sys/vane/ford.hoon 510:9 indent tallWuthep kingside jog children on different lines 511 vs. 510
+          $2  [%2 p=*(set beam) q=p.ton]
+          $0  [%0 p=*(set beam) q=(fun p.ton)]
+>         $1  ::  ~&  [%coup-need ((list path) p.ton)]
+!             =-  ?-  -.faw
+                    $&  :-  %1
+                        ^=  p
+== hoons/arvo/sys/vane/ford.hoon 1339:11 indent tallWuthep Jog line 1339; queenside flat child 2 at column 15; expected column 18
+          ==
+        ::
+>           $$  (fine cof %& p.kas)
+            $alts
+          |-  ^-  (bolt gage)
+== hoons/arvo/sys/vane/ford.hoon 1704:13 indent tallWuthep Jog line 1704; queenside child 2 at 1705:13; expected column 11
+            ==
+          ::
+>             $fszy
+!             =?  arg  lit  many+~
+              (cope (make cof %bake q.hon arg how) flay)
+          ==
+== hoons/arvo/sys/vane/ames.hoon 1638:5 indent tallWuthep Jogging-1-style queenside child #1 @1638:9; underindented by 2
+      |=  [tea=wire hen=duct sih=sign:able]
+      ^-  [(list move) _+>]
+>     ?-  +<.sih
+          %crud  [[[hen [%slip %d %flog +.sih]] ~] +>]
+          %mack  ?~  +>.sih  $(sih [%g %nice ~])          ::  XX using old code
+== hoons/arvo/sys/vane/gall.hoon 341:9 indent tallWuthep Jog line 341; kingside flat child 2 at column 15; expected column 16
+        ?-  -.q.+.sih
+          $tabl  ~|(%made-tabl !!)
+>         $&    (mo-give %unto %diff p.q.+>.sih)
+          $|     =.  p.q.+>.sih  (turn p.q.+>.sih |=(a/tank rose+[~ "! " ~]^[a]~))
+                ~>  %slog.`%*(. >[%wh %y]< +> [>%mo-cyst-fail< (flop p.q.+>.sih)])
+== hoons/arvo/sys/vane/gall.hoon 385:11 indent tallWuthep Jog line 385; kingside flat child 2 at column 18; expected column 15
+        ?:  ?=({$f $made *} sih)
+          ?-  -.q.+>.sih
+>           $tabl  ~|(%made-tabl !!)
+            $|  (mo-give %mack `p.q.+>.sih)               ::  XX should crash
+            $&  (mo-pass [%sys pax] %g %deal [him our] i.t.t.pax %poke p.q.+>.sih)
+== hoons/arvo/sys/vane/gall.hoon 392:7 indent tallWuthep Jogging-1-style kingside child #1 @392:13; overindented by 2
+        ?>  ?=({$g $unto *} sih)
+        =+  cuf=`cuft`+>.sih
+>       ?-    -.cuf
+          $coup  (mo-give %mack p.cuf)
+          $diff  %+  mo-pass  [%sys %red t.pax]
+== hoons/arvo/sys/vane/gall.hoon 653:9 indent tallWuthep Jog line 653; kingside flat child 2 at column 21; expected column 17
+          $puff   !!
+          $punk   !!
+>         $peer-not   !!
+          $pull   ap-pull
+          $pump   ap-fall
+== hoons/arvo/sys/vane/gall.hoon 1297:3 indent tallWuthep Jogging-1-style queenside child #1 @1297:7; underindented by 2
+    |=  old/axle-n
+    ^+  ..^$
+>   ?-  -.old
+        $0  ..^$(all old)
+    ==
+== hoons/arvo/sys/vane/eyre.hoon 715:7 indent tallWuthep Jogging-1-style queenside child #1 @715:11; underindented by 2
+        =+  lid=(~(got by lyv) hen)
+        :: ~&  did-thud+[-.lid hen]
+>       ?-  -.lid
+            $exec
+          (pass-note p.lid %f [%exec our ~])
+== hoons/arvo/sys/vane/eyre.hoon 750:9 indent tallWuthep kingside jog children on different lines 751 vs. 750
+          $gib  (pass-note ay+(dray p+uv+~ q.p.kyz p.u.mez) [%e %thud ~])
+          $get  (pass-note ay+(dray p+uv+~ q.p.kyz p.u.mez) [%e %this q.u.mez])
+>         $got
+!           ?.  (~(has by pox) p.u.mez)
+              ~&  lost-gram-thou+p.kyz^p.u.mez
+              +>.$
+== hoons/arvo/sys/vane/eyre.hoon 759:9 indent tallWuthep kingside jog children on different lines 761 vs. 759
+            (give-thou q.u.mez)
+        ::
+>         $lon
+            ::  ~&  ses-ask+[p.u.mez sop (~(run by wup) $~)]
+!           ?:  (ses-authed p.u.mez)
+              (ames-gram q.p.kyz aut+~ p.u.mez)
+            =.  sop  (~(put by sop) p.u.mez q.p.kyz |)
+== hoons/arvo/sys/vane/eyre.hoon 767:7 indent tallWuthep Jog line 767; queenside child 1 at column 7; expected column 9
+        ==
+      ::
+>       $wegh  !!                                         ::  handled elsewhere
+      ==
+    ::
+== hoons/arvo/sys/vane/eyre.hoon 767:7 indent tallWuthep Jog line 767; queenside flat child 2 at column 14; expected column 16
+        ==
+      ::
+>       $wegh  !!                                         ::  handled elsewhere
+      ==
+    ::
+== hoons/arvo/sys/vane/eyre.hoon 790:9 indent tallWuthep Jog line 790; queenside child 2 at 793:11; expected column 7
+      ::
+          $woot  +>.$
+>         $went
+            :: XX eyre sends no wests, so should get no wents
+            ::~&  e+unexpected+sih
+!           +>.$
+      ::
+      ::
+== hoons/arvo/sys/vane/eyre.hoon 847:11 indent tallWuthep Jog line 847; queenside flat child 2 at column 38; expected column 21
+        |-  ^+  ..axon
+        ?-    tee
+>           $@($~ {?($on $ay $ow) *})  ~|(e+ford+lost+tee !!)
+            {$of @ $~}  ~|(e+ford+lost+tee !!)
+            {$si $~}  (give-sigh q.sih)
+== hoons/arvo/sys/vane/eyre.hoon 848:11 indent tallWuthep Jog line 848; queenside flat child 2 at column 23; expected column 21
+        ?-    tee
+            $@($~ {?($on $ay $ow) *})  ~|(e+ford+lost+tee !!)
+>           {$of @ $~}  ~|(e+ford+lost+tee !!)
+            {$si $~}  (give-sigh q.sih)
+            {$se ^}   (get-made:(dom-vi q.tee) p.tee [p q]:sih)
+== hoons/arvo/sys/vane/eyre.hoon 900:11 indent tallWuthep Jog line 900; queenside flat child 2 at column 20; expected column 21
+          $(tee q.tee, q.q.p.q.sih (add-json jon q.q.p.q.sih))
+        ::
+>           {$ac ^}  ?>((~(has by wup) p.tee) $(ses `p.tee, tee q.tee))
+            {$ha *}
+          %-  emule  |.  ^+  ..apex
+== hoons/arvo/sys/vane/eyre.hoon 1094:7 indent tallWuthep Jogging-1-style queenside child #1 @1094:11; underindented by 2
+        |=  {cug/(list @t) pez/pest}  ^+  done
+        ?~  pez  done
+>       ?-  -.pez
+            $~     (give-thou (add-cookies cug p.pez))
+            $js    $(pez [%$ (resp 200 text+/javascript p.pez)])
+== hoons/arvo/sys/vane/eyre.hoon 1471:9 indent tallWuthep Jog line 1471; kingside flat child 2 at column 29; expected column 17
+        ?-  r.hat
+          {$| @}  (cat 3 '; Domain=' (rsh 3 1 (scot %if p.r.hat)))
+>         {$& $org $urbit *}  '; Domain=.urbit.org'
+          {$& @ @ *}  =-  (rap 3 "; Domain={-}{i.p.r.hat ~}")
+                      (turn (flop `path`t.p.r.hat) |=(a/knot (cat 3 a '.')))
+== hoons/arvo/sys/vane/eyre.hoon 1472:9 indent tallWuthep Jog line 1472; kingside flat child 2 at column 21; expected column 17
+          {$| @}  (cat 3 '; Domain=' (rsh 3 1 (scot %if p.r.hat)))
+          {$& $org $urbit *}  '; Domain=.urbit.org'
+>         {$& @ @ *}  =-  (rap 3 "; Domain={-}{i.p.r.hat ~}")
+                      (turn (flop `path`t.p.r.hat) |=(a/knot (cat 3 a '.')))
+  
+== hoons/arvo/sys/vane/xmas.hoon 1243:13 indent tallWuthep Jogging-1-style queenside child #1 @1243:17; underindented by 2
+              ?>  ?=({@ @ $~} +.tea)
+              =+  [who kos]=[(slav %p i.t.tea) (slav %ud i.t.t.tea)]
+>             ?-  +<.hin
+                  $rend  
+                [%rend who kos p.+.hin q.+.hin]
+== hoons/arvo/sys/vane/clay.hoon 529:9 indent tallWuthep Jog line 529; kingside child 1 at column 9; expected column 16
+        $|     (mule |.(`$~`(ford-fail p.p.i.p.gag)))
+        $&     ?-  -.q.i.p.gag
+>         $tabl  (mule |.(`$~`(ford-fail >%strange-gage< ~)))
+          $|     (mule |.(`$~`(ford-fail p.q.i.p.gag)))
+          $&     =+  $(p.gag t.p.gag)
+== hoons/arvo/sys/vane/clay.hoon 530:9 indent tallWuthep Jog line 530; kingside child 1 at column 9; expected column 16
+        $&     ?-  -.q.i.p.gag
+          $tabl  (mule |.(`$~`(ford-fail >%strange-gage< ~)))
+>         $|     (mule |.(`$~`(ford-fail p.q.i.p.gag)))
+          $&     =+  $(p.gag t.p.gag)
+                 ?+(- [[p.p p.q]:i.p.gag -] {@ *} -)
+== hoons/arvo/sys/vane/clay.hoon 531:9 indent tallWuthep Jog line 531; kingside child 1 at column 9; expected column 16
+          $tabl  (mule |.(`$~`(ford-fail >%strange-gage< ~)))
+          $|     (mule |.(`$~`(ford-fail p.q.i.p.gag)))
+>         $&     =+  $(p.gag t.p.gag)
+                 ?+(- [[p.p p.q]:i.p.gag -] {@ *} -)
+      ==       ==
+== hoons/arvo/sys/vane/clay.hoon 1751:11 indent tallWuthep kingside jog children on different lines 1752 vs. 1751
+          ?-  -.a
+            $direct  [[%$ %blob !>([%direct p.a *page])] (vale-page p.q.a q.q.a)]
+>           $delta
+!             [[%$ %blob !>([%delta p.a q.a *page])] (vale-page p.r.a q.r.a)]
+          ==
+      ==
+== hoons/arvo/sys/vane/clay.hoon 2160:7 indent tallWuthep Jogging-1-style queenside child #1 @2160:11; underindented by 2
+        |=  {wen/@da lem/nuri}
+        ^-  {(unit (map path lobe)) _..ze}
+>       ?-  -.lem
+          $&
+             =^  yak  lat.ran  (forge-yaki wen p.lem)     ::  create new commit
+== hoons/arvo/sys/vane/clay.hoon 2161:9 indent tallWuthep Jog line 2161; queenside child 1 at column 9; expected column 11
+        ^-  {(unit (map path lobe)) _..ze}
+        ?-  -.lem
+>         $&
+             =^  yak  lat.ran  (forge-yaki wen p.lem)     ::  create new commit
+             ?.  ?|  =(0 let.dom)
+== hoons/arvo/sys/vane/clay.hoon 2161:9 indent tallWuthep Jog line 2161; queenside child 2 at 2162:12; expected column 9
+        ^-  {(unit (map path lobe)) _..ze}
+        ?-  -.lem
+>         $&
+!            =^  yak  lat.ran  (forge-yaki wen p.lem)     ::  create new commit
+             ?.  ?|  =(0 let.dom)
+                     !=((lent p.yak) 1)
+== hoons/arvo/sys/vane/clay.hoon 2174:9 indent tallWuthep Jog line 2174; queenside child 1 at column 9; expected column 11
+             [`q.yak ..ze]
+             ::  +>.$(ank (map-to-ankh q.yak))
+>         $|
+             ?<  (~(has by lab.dom) p.lem)
+             [~ ..ze(lab.dom (~(put by lab.dom) p.lem let.dom))]
+== hoons/arvo/sys/vane/clay.hoon 2174:9 indent tallWuthep Jog line 2174; queenside child 2 at 2175:12; expected column 9
+             [`q.yak ..ze]
+             ::  +>.$(ank (map-to-ankh q.yak))
+>         $|
+!            ?<  (~(has by lab.dom) p.lem)
+             [~ ..ze(lab.dom (~(put by lab.dom) p.lem let.dom))]
+        ==
+== hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep Jog line 2595; kingside child 1 at column 11; expected column 9
+          ~
+        ?-  p.mun
+>           $d
+          =+  rom=(~(get by fat.ruf) her)
+          ?~  rom
+== hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep kingside jog children on different lines 2596 vs. 2595
+          ~
+        ?-  p.mun
+>           $d
+!         =+  rom=(~(get by fat.ruf) her)
+          ?~  rom
+            ~&(%null-rom-cd [~ ~])
+== hoons/arvo/sys/vane/clay.hoon 3813:3 indent tallWuthep Jogging-1-style queenside child #1 @3813:7; underindented by 2
+    |=  old/axle
+    ^+  ..^$
+>   ?-  -.old
+        $1
+      ..^$(ruf ruf.old)
+== hoons/arvo/app/test.hoon 94:7 indent tallWuthep Jog line 94; queenside flat child 2 at column 14; expected column 15
+    :_  +>
+    ?-    -.a
+>       %arvo  ~|(%stub !!) ::basically double solid?
+        %hoons  ~&((list-hoons p.a ~) ~)
+        %cores  [ost (build-core [- +]:(list-hoons p.a skip=(sy /sys /ren ~)))]~
+== hoons/arvo/app/test.hoon 99:7 indent tallWuthep Jog line 99; queenside flat child 2 at column 17; expected column 15
+        %names  ~&((list-names p.a) ~)
+        %marks  ~|(%stub !!) ::TODO restore historical handler
+>       %renders  [ost (build-rend [- +]:(list-names (weld /ren p.a)))]~
+    ==    
+  ::
+== hoons/arvo/app/static.hoon 145:3 indent tallWuthep Jogging-1-style queenside child #1 @145:7; underindented by 2
+    |=  act=action:static
+    ^-  (quip move _this)
+>   ?-  -.act
+      %build
+    ?>  !?=(~ s.in.act)
+== hoons/arvo/app/static.hoon 146:5 indent tallWuthep Jog line 146; queenside child 1 at column 5; expected column 7
+    ^-  (quip move _this)
+    ?-  -.act
+>     %build
+    ?>  !?=(~ s.in.act)
+    =.  s.out.act  [-.s.in.act s.out.act]
+== hoons/arvo/app/static.hoon 146:5 indent tallWuthep Jog line 146; queenside child 2 at 147:3; expected column 5
+    ^-  (quip move _this)
+    ?-  -.act
+>     %build
+!   ?>  !?=(~ s.in.act)
+    =.  s.out.act  [-.s.in.act s.out.act]
+    =/  sil  (find-file in.act ext.act)
+== hoons/arvo/app/hood.hoon 52:9 indent tallWuthep Jog line 52; kingside flat child 2 at column 17; expected column 16
+          $kiln  ?>(?=($kiln -.paw) `part:hood-kiln`paw)  ::
+          $womb  ?>(?=($womb -.paw) `part:hood-womb`paw)  ::
+>         $write  ?>(?=($write -.paw) `part:hood-write`paw) ::
+        ==                                                ::  module name
+      ++  hood-head  _-:*hood-part                        ::  initialize state
+== hoons/arvo/app/hood.hoon 62:9 indent tallWuthep Jog line 62; kingside flat child 2 at column 17; expected column 16
+          $kiln  *part:hood-kiln                          ::
+          $womb  *part:hood-womb                          ::
+>         $write  *part:hood-write                        ::
+        ==                                                ::
+      ++  hood-part-old  hood-part                        ::  old state for ++prep
+== hoons/arvo/app/dojo.hoon 363:7 indent tallWuthep Jogging-1-style kingside child #1 @363:13; overindented by 2
+        |=  bul/dojo-build
+        ^+  [bul +>]
+>       ?-    -.bul
+          $ex  [bul +>.$]
+          $dv  [bul +>.$]
+== hoons/arvo/app/dojo.hoon 635:9 indent tallWuthep Jogging-1-style queenside child #1 @635:13; underindented by 2
+            ::  we have no more search path. return the rest as an overview
+            (build-inspectable-recursively sut)
+>         ?-  sut
+              {$atom *}  ~
+          ::
+== hoons/arvo/app/dojo.hoon 711:9 indent tallWuthep Jogging-1-style queenside child #1 @711:13; underindented by 2
+          |=  sut/type
+          ^-  (unit item)
+>         ?-  sut
+          ::
+              {$atom *}  ~
+== hoons/arvo/app/dojo.hoon 761:9 indent tallWuthep Jogging-1-style queenside child #1 @761:13; underindented by 2
+          ?~  uit  ~
+          =+  itm=u.uit
+>         ?-  itm
+          ::
+              {$view *}
+== hoons/arvo/app/dojo.hoon 1000:11 indent tallWuthep Jogging-1-style queenside child #1 @1000:15; underindented by 2
+            ?~  ovr
+              output
+>           ?-  i.ovr
+            ::
+                {$header *}
+== hoons/arvo/app/dojo.hoon 1160:9 indent tallWuthep Jog line 1160; kingside flat child 2 at column 26; expected column 14
+        |-  ^-  dy-shown
+        ?-  -.bil
+>         $?($ur $dv $sa)  bil
+          $ex  ?.  ?=({$cltr *} p.bil)  p.bil
+                   |-  ^-  hoon
+== hoons/arvo/app/dojo.hoon 1503:7 indent tallWuthep Jog line 1503; kingside flat child 2 at column 14; expected column 11
+            ==
+        $|  (he-diff(poy ~) %tan p.reg)
+>       $tabl  !!
+      ==
+    ::
+== hoons/arvo/app/talk.hoon 151:3 indent tallWuthep Jogging-1-style queenside child #1 @151:7; underindented by 2
+    ?~  old
+      ta-done:ta-init:ta
+>   ?-  -.u.old
+        $1
+      [mos ..prep(+<+ u.old)]
+== hoons/arvo/app/talk.hoon 408:7 indent tallWuthep Jogging-1-style queenside child #1 @408:11; underindented by 2
+      ?+  -.rum  +>
+          $client
+>       ?-  -.rum.rum
+            $glyph
+          (ta-change-glyph +.rum.rum)
+== hoons/arvo/app/talk.hoon 1067:11 indent tallWuthep Jog line 1067; kingside flat child 2 at column 22; expected column 20
+            $banish  (permit | +.job)
+            $source  (source & +.job)
+>           $unsource  (source | +.job)
+            ::  personal metadata
+            $attend  (attend +.job)
+== hoons/arvo/app/talk.hoon 1080:11 indent tallWuthep Jog line 1080; kingside flat child 2 at column 21; expected column 20
+            $who     (who +.job)
+            $what    (what +.job)
+>           $circles  circles
+            $sources  (list-sources +.job)
+            ::  ui settings
+== hoons/arvo/app/talk.hoon 1081:11 indent tallWuthep Jog line 1081; kingside flat child 2 at column 21; expected column 20
+            $what    (what +.job)
+            $circles  circles
+>           $sources  (list-sources +.job)
+            ::  ui settings
+            $bind    (bind +.job)
+== hoons/arvo/app/talk.hoon 1868:7 indent tallWuthep Jogging-1-style queenside child #1 @1868:11; underindented by 2
+        %+  weld
+          (weld ~(cr-phat cr cir) ": ")
+>       ?-  -.dif
+            $full
+          "hey {(scow %p who)} {(scow %tas pec.sat.dif)}"
+== hoons/arvo/app/talk.hoon 1907:7 indent tallWuthep Jogging-1-style queenside child #1 @1907:11; underindented by 2
+        %+  weld
+          (weld ~(cr-phat cr cir) ": ")
+>       ?-  -.dif
+            $source
+          %+  weld  ?:(add.dif "onn " "off ")
+== hoons/arvo/app/talk.hoon 2284:5 indent tallWuthep Jogging-1-style queenside child #1 @2284:9; underindented by 2
+      ::
+      |-  ^-  sole-effect
+>     ?-  -.sep
+          $lin
+        tan+~[leaf+"{?:(pat.sep "@ " "")}{(trip msg.sep)}"]
+== hoons/arvo/app/talk.hoon 2368:5 indent tallWuthep Jogging-1-style queenside child #1 @2368:9; underindented by 2
+      |=  wyd/@ud
+      ^-  (list tape)
+>     ?-  -.sep
+          $fat
+        %+  weld  $(sep sep.sep)
+== hoons/arvo/app/hall.hoon 172:3 indent tallWuthep Jogging-1-style queenside child #1 @172:7; underindented by 2
+      %-  pre-bake
+      ta-done:ta-init:ta
+>   ?-  -.u.old
+        $1
+      [mos ..prep(+<+ u.old)]
+== hoons/arvo/app/hall.hoon 985:7 indent tallWuthep Jogging-1-style queenside child #1 @985:11; underindented by 2
+        ::    ==
+        ^+  +>
+>       ?-  -.rum
+          $bear     (so-bear bur.rum)
+          $peer     (so-delta-our rum)
+== hoons/arvo/app/hall.hoon 986:9 indent tallWuthep Jog line 986; queenside child 1 at column 9; expected column 11
+        ^+  +>
+        ?-  -.rum
+>         $bear     (so-bear bur.rum)
+          $peer     (so-delta-our rum)
+          $gram     (so-open src nev.rum)
+== hoons/arvo/app/hall.hoon 987:9 indent tallWuthep Jog line 987; queenside child 1 at column 9; expected column 11
+        ?-  -.rum
+          $bear     (so-bear bur.rum)
+>         $peer     (so-delta-our rum)
+          $gram     (so-open src nev.rum)
+          $remove   ::TODO  should also remove from {remotes}?
+== hoons/arvo/app/hall.hoon 988:9 indent tallWuthep Jog line 988; queenside child 1 at column 9; expected column 11
+          $bear     (so-bear bur.rum)
+          $peer     (so-delta-our rum)
+>         $gram     (so-open src nev.rum)
+          $remove   ::TODO  should also remove from {remotes}?
+                    (so-delta-our %config src %remove ~)
+== hoons/arvo/app/hall.hoon 989:9 indent tallWuthep Jog line 989; queenside child 1 at column 9; expected column 11
+          $peer     (so-delta-our rum)
+          $gram     (so-open src nev.rum)
+>         $remove   ::TODO  should also remove from {remotes}?
+                    (so-delta-our %config src %remove ~)
+        ::
+== hoons/arvo/app/hall.hoon 989:9 indent tallWuthep Jog line 989; queenside child 2 at 990:19; expected column 9
+          $peer     (so-delta-our rum)
+          $gram     (so-open src nev.rum)
+>         $remove   ::TODO  should also remove from {remotes}?
+!                   (so-delta-our %config src %remove ~)
+        ::
+            $new
+== hoons/arvo/app/hall.hoon 2306:3 indent tallWuthep Jogging-1-style queenside child #1 @2306:7; underindented by 2
+    |=  qer/query
+    ^-  (unit (unit prize))
+>   ?-  -.qer
+        $client
+      ``[%client binds nicks]
+== hoons/arvo/app/hall.hoon 2464:3 indent tallWuthep Jogging-1-style queenside child #1 @2464:7; underindented by 2
+    |=  {qer/query det/delta}
+    ^-  (unit rumor)
+>   ?-  -.qer
+        $client
+      ::  changes to shared ui state apply.
+== hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep Jog line 2678; kingside child 1 at column 7; expected column 5
+      $report   =(who (above our.bol))
+    ::
+>       $circle
+      ?.  (~(has by stories) nom.qer)  |
+      %.  who
+== hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep kingside jog children on different lines 2679 vs. 2678
+      $report   =(who (above our.bol))
+    ::
+>       $circle
+!     ?.  (~(has by stories) nom.qer)  |
+      %.  who
+      ~(so-visible so:ta nom.qer ~ (~(got by stories) nom.qer))
+== hoons/arvo/lib/hall-json.hoon 76:5 indent tallWuthep Jogging-1-style queenside child #1 @76:9; underindented by 2
+      %+  frond  -.a
+      %-  pairs
+>     ?-  -.a
+          $palm
+        :+  :-  %style
+== hoons/arvo/lib/down-jet/rend.hoon 132:7 indent tallWuthep kingside jog children on different lines 133 vs. 132
+        $html  !!                       ::  handled earlier   XX do type stuff
+        $para  [/p (sung p.a)]
+>       $head  
+!         =+  [hed=(add %h0 (lsh 3 1 p.a)) kid=(sung q.a)]
+          [[hed id+(sanitize kid) ~] kid]
+      ::
+== hoons/arvo/lib/sole.hoon 15:3 indent tallWuthep Jogging-1-style kingside child #1 @15:9; overindented by 2
+    |=  ted/sole-edit
+    ^+  +>
+>   ?-    -.ted
+      $del  +>.$(buf (weld (scag p.ted buf) (slag +(p.ted) buf)))
+      $ins  +>.$(buf (weld (scag p.ted buf) `_buf`[q.ted (slag p.ted buf)]))
+== hoons/arvo/lib/twitter.hoon 34:5 indent tallWuthep kingside jog children on different lines 35 vs. 34
+    ?-  med
+      $get  [url med *math ~]
+>     $post
+!       =+  hed=(my:nl content-type+['application/x-www-form-urlencoded']~ ~)
+        [url(r ~) med hed ?~(r.url ~ (some (as-octt +:(tail:en-purl r.url))))]
+    ==
+== hoons/arvo/lib/hood/helm.hoon 231:3 indent tallWuthep Jogging-1-style kingside child #1 @231:8; overindented by 1
+    |=  saw/(each suss:gall tang)  =<  abet
+    %-  emit
+>   ?-   -.saw
+      $|  [%flog ~ %crud %onto `tang`p.saw]
+      $&  [%flog ~ %text "<{<p.saw>}>"]
+== hoons/arvo/lib/hood/drum.hoon 792:9 indent tallWuthep Jogging-1-style queenside child #1 @792:13; underindented by 2
+      |=  {dir/?($l $r) til/?($ace $edg $wrd) pos/@ud}
+      ^-  @ud
+>     %-  ?-  til  $ace  ace:offset
+                   $edg  edg:offset
+                   $wrd  wrd:offset
+== hoons/arvo/lib/hood/drum.hoon 792:18 indent tallWuthep Jog line 792; queenside child 1 at column 18; expected column 13
+      |=  {dir/?($l $r) til/?($ace $edg $wrd) pos/@ud}
+      ^-  @ud
+>     %-  ?-  til  $ace  ace:offset
+                   $edg  edg:offset
+                   $wrd  wrd:offset
+== hoons/arvo/lib/hood/drum.hoon 793:18 indent tallWuthep Jog line 793; queenside child 1 at column 18; expected column 13
+      ^-  @ud
+      %-  ?-  til  $ace  ace:offset
+>                  $edg  edg:offset
+                   $wrd  wrd:offset
+          ==
+== hoons/arvo/lib/hood/drum.hoon 794:18 indent tallWuthep Jog line 794; queenside child 1 at column 18; expected column 13
+      %-  ?-  til  $ace  ace:offset
+                   $edg  edg:offset
+>                  $wrd  wrd:offset
+          ==
+      ?-  dir  $l  (flop (scag pos buf.say.inp))
+== hoons/arvo/lib/hood/drum.hoon 796:5 indent tallWuthep Jogging-1-style queenside child #1 @796:9; underindented by 2
+                   $wrd  wrd:offset
+          ==
+>     ?-  dir  $l  (flop (scag pos buf.say.inp))
+               $r  (slag pos buf.say.inp)
+      ==
+== hoons/arvo/lib/hood/drum.hoon 796:14 indent tallWuthep Jog line 796; queenside child 1 at column 14; expected column 9
+                   $wrd  wrd:offset
+          ==
+>     ?-  dir  $l  (flop (scag pos buf.say.inp))
+               $r  (slag pos buf.say.inp)
+      ==
+== hoons/arvo/lib/hood/drum.hoon 797:14 indent tallWuthep Jog line 797; queenside child 1 at column 14; expected column 9
+          ==
+      ?-  dir  $l  (flop (scag pos buf.say.inp))
+>              $r  (slag pos buf.say.inp)
+      ==
+    ::
+== hoons/arvo/lib/hood/womb.hoon 35:5 indent tallWuthep Jog line 35; kingside flat child 2 at column 13; expected column 16
+    |*  (managed)                                         ::
+    ?-  +<                                                ::
+>     $~      ~                                           ::  unsplit
+      {$~ $| *}  ~                                        ::  delivered
+      {$~ $& *}  (some p.u.+<)                            ::  subdivided
+== hoons/arvo/lib/hood/womb.hoon 610:7 indent tallWuthep Jog line 610; kingside flat child 2 at column 17; expected column 18
+      ?-  -.pok.i.a
+        $claim     (teba (poke-claim +.pok.i.a))
+>       $bonus    (teba (poke-bonus +.pok.i.a))
+        $invite    (teba (poke-invite +.pok.i.a))
+        $report    (teba (poke-report +.pok.i.a))
+== hoons/arvo/lib/hood/womb.hoon 616:7 indent tallWuthep Jog line 616; kingside flat child 2 at column 23; expected column 18
+        $recycle   (teba (poke-recycle +.pok.i.a))
+        $reinvite  (teba (poke-reinvite +.pok.i.a))
+>       $release-ships  (teba (poke-release-ships +.pok.i.a))
+      ==
+    ==
+== hoons/arvo/lib/hall.hoon 144:7 indent tallWuthep Jog line 144; kingside child 1 at column 7; expected column 5
+      $remove   cof
+    ::
+>       $usage
+      %=  cof
+          tag
+== hoons/arvo/lib/hall.hoon 144:7 indent tallWuthep kingside jog children on different lines 145 vs. 144
+      $remove   cof
+    ::
+>       $usage
+!     %=  cof
+          tag
+        %.  tas.dif
+== hoons/arvo/lib/hall.hoon 153:7 indent tallWuthep Jog line 153; kingside child 1 at column 7; expected column 5
+      ==
+    ::
+>       $source
+      %=  cof
+          src
+== hoons/arvo/lib/hall.hoon 153:7 indent tallWuthep kingside jog children on different lines 154 vs. 153
+      ==
+    ::
+>       $source
+!     %=  cof
+          src
+        %.  src.dif
+== hoons/arvo/lib/hall.hoon 162:7 indent tallWuthep Jog line 162; kingside child 1 at column 7; expected column 5
+      ==
+    ::
+>       $permit
+      %=  cof
+          sis.con
+== hoons/arvo/lib/hall.hoon 162:7 indent tallWuthep kingside jog children on different lines 163 vs. 162
+      ==
+    ::
+>       $permit
+!     %=  cof
+          sis.con
+        %.  sis.dif
+== hoons/arvo/lib/hall.hoon 171:7 indent tallWuthep Jog line 171; kingside child 1 at column 7; expected column 5
+      ==
+    ::
+>       $secure
+      %=  cof
+          sec.con
+== hoons/arvo/lib/hall.hoon 171:7 indent tallWuthep kingside jog children on different lines 172 vs. 171
+      ==
+    ::
+>       $secure
+!     %=  cof
+          sec.con
+        sec.dif
+== hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep Jog line 194; kingside child 1 at column 7; expected column 5
+      $remove     sat
+    ::
+>       $human
+      %=  sat
+          man
+== hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep kingside jog children on different lines 195 vs. 194
+      $remove     sat
+    ::
+>       $human
+!     %=  sat
+          man
+        ?-  -.dif.dif
+== hoons/arvo/mar/womb/stat-all.hoon 29:7 indent tallWuthep Jog line 29; kingside flat child 2 at column 14; expected column 15
+      %+  joba  -.a
+      ?-  -.a
+>       $free  b+&
+        $owned  s+p.a
+        $split  json(all p.a)
+== hoons/arvo/mar/txt.hoon 71:7 indent tallWuthep Jogging-1-style queenside child #1 @71:11; underindented by 2
+      ::
+          $|
+>       ?-  -.i.bob
+            $|  ~
+            $&
+== hoons/arvo/mar/txt.hoon 130:7 indent tallWuthep Jogging-1-style queenside child #1 @130:11; underindented by 2
+      ::
+          $|
+>       ?-  -.i.bob
+            $|
+          =+  ^-  {fic/(unce cord) ali/(urge cord) bob/(urge cord)}
+== hoons/arvo/gen/test.hoon 25:3 indent tallWuthep Jogging-1-style queenside child #1 @25:7; underindented by 2
+    ?.  matches
+      ~
+>   ?-  -.q.b
+        %&
+      (run-test [p.b pax] eny p.q.b)
+== hoons/arvo/gen/test.hoon 40:5 indent tallWuthep kingside jog children on different lines 41 vs. 40
+    =+  run=(mule |.((test eny)))
+    ?-  -.run
+>     $|  ::  the stack is already flopped for output?
+!         ;:  weld
+            p.run
+            `tang`[[%leaf (weld name " CRASHED")] ~]
+== hoons/arvo/gen/musk.hoon 62:5 indent tallWuthep Jogging-1-style kingside child #1 @62:11; overindented by 2
+      =+  gil=*(set type)
+      |-  ^-  seminoun
+>     ?-    sut
+        $noun      [&+[~ ~ ~] ~]
+        $void      [&+[~ ~ ~] ~]
+== hoons/arvo/gen/musk.hoon 314:5 indent tallWuthep Jogging-1-style queenside child #1 @314:9; underindented by 2
+      ::
+      =+  [now=(cap axe) lat=(mas axe)]
+>     ?-  -.mask.bus
+      ::  subject is fully blocked or complete
+      ::
+== hoons/arvo/gen/musk.hoon 317:7 indent tallWuthep Jog line 317; queenside child 1 at column 7; expected column 9
+      ::  subject is fully blocked or complete
+      ::
+>       $&  ::  if fully blocked, produce self
+            ::
+            ?^  blocks.mask.bus  bus
+== hoons/arvo/gen/musk.hoon 317:7 indent tallWuthep Jog line 317; queenside child 2 at 319:11; expected column 7
+      ::  subject is fully blocked or complete
+      ::
+>       $&  ::  if fully blocked, produce self
+            ::
+!           ?^  blocks.mask.bus  bus
+            ::  descending into atom, stop
+            ::
+== hoons/arvo/gen/musk.hoon 328:7 indent tallWuthep Jog line 328; queenside child 1 at column 7; expected column 9
+      ::  subject is partly blocked
+      ::
+>       $|  ::  descend into partial cell
+            ::
+            %=  $
+== hoons/arvo/gen/musk.hoon 328:7 indent tallWuthep Jog line 328; queenside child 2 at 330:11; expected column 7
+      ::  subject is partly blocked
+      ::
+>       $|  ::  descend into partial cell
+            ::
+!           %=  $
+              axe  lat
+              bus  ?:  =(2 now) 
+== hoons/arvo/gen/help.hoon 24:9 indent tallWuthep Jog line 24; kingside flat child 2 at column 13; expected column 20
+      [%palm ["  {(reap tab ' ')}" ``~] leaf+p.c leaf+q.c ~]
+    :-  ?-  b
+>         $~  "/"  :: XX !! maybe?
+          {$hood ^}  "|{(path-heps t.b)}"
+          ^          "+{(path-heps b)}"  :: XX deal with :hall|foo
+== hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep Jog line 267; kingside child 1 at column 7; expected column 5
+      {$none *}  a
+    ::
+>       {$uplo *}
+      ?-  type
+        $upper  (sub a 1)
+== hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep kingside jog children on different lines 268 vs. 267
+      {$none *}  a
+    ::
+>       {$uplo *}
+!     ?-  type
+        $upper  (sub a 1)
+        $lower  (add a 1)
+== hoons/arvo/gen/cat.hoon 21:1 indent tallWuthep Jogging-1-style queenside child #1 @21:8; overindented by 1
+      [>.^((map @da cord) (cat 3 vane %x) pax)<]~
+    [leaf+(spud pax) (pretty-file .^(noun (cat 3 vane %x) pax))]
+> ?-     dir.ark                                          ::  handle ambiguity
+      $~
+    [rose+[" " `~]^~[leaf+"~" (smyt pax)]]~
+== hoons/arvo/gen/hood/merge.hoon 23:5 indent tallWuthep Jogging-1-style queenside child #1 @23:9; underindented by 2
+  |^  :-  %kiln-merge
+      ^-  {syd/desk her/ship sud/desk cas/case gem/?(germ $auto)}
+>     ?-  arg
+        {@ @ $~}
+          =+(arg [sud ?.(=(our her) her (sein her)) sud (opt-case da+now) gem])
+== hoons/arvo/gen/hood/merge.hoon 24:7 indent tallWuthep Jog line 24; queenside child 1 at column 7; expected column 9
+      ^-  {syd/desk her/ship sud/desk cas/case gem/?(germ $auto)}
+      ?-  arg
+>       {@ @ $~}
+          =+(arg [sud ?.(=(our her) her (sein her)) sud (opt-case da+now) gem])
+      ::
+== hoons/arvo/gen/hood/merge.hoon 24:7 indent tallWuthep Jog line 24; queenside child 2 at 25:9; expected column 7
+      ^-  {syd/desk her/ship sud/desk cas/case gem/?(germ $auto)}
+      ?-  arg
+>       {@ @ $~}
+!         =+(arg [sud ?.(=(our her) her (sein her)) sud (opt-case da+now) gem])
+      ::
+        {^ $~}
+== hoons/arvo/gen/hood/merge.hoon 27:7 indent tallWuthep Jog line 27; queenside child 1 at column 7; expected column 9
+          =+(arg [sud ?.(=(our her) her (sein her)) sud (opt-case da+now) gem])
+      ::
+>       {^ $~}
+          =+  (pars bek.arg)
+          [dez ?.(=(our who) who (sein who)) dez (opt-case caz) gem]
+== hoons/arvo/gen/hood/merge.hoon 27:7 indent tallWuthep Jog line 27; queenside child 2 at 28:9; expected column 7
+          =+(arg [sud ?.(=(our her) her (sein her)) sud (opt-case da+now) gem])
+      ::
+>       {^ $~}
+!         =+  (pars bek.arg)
+          [dez ?.(=(our who) who (sein who)) dez (opt-case caz) gem]
+      ::
+== hoons/arvo/gen/hood/merge.hoon 31:7 indent tallWuthep Jog line 31; queenside child 1 at column 7; expected column 9
+          [dez ?.(=(our who) who (sein who)) dez (opt-case caz) gem]
+      ::
+>       {* @ @ $~}
+          :-  (pars-src syd.arg)
+          =+(arg [her sud (opt-case da+now) gem])
+== hoons/arvo/gen/hood/merge.hoon 31:7 indent tallWuthep Jog line 31; queenside child 2 at 32:9; expected column 7
+          [dez ?.(=(our who) who (sein who)) dez (opt-case caz) gem]
+      ::
+>       {* @ @ $~}
+!         :-  (pars-src syd.arg)
+          =+(arg [her sud (opt-case da+now) gem])
+      ::
+== hoons/arvo/gen/hood/merge.hoon 35:7 indent tallWuthep Jog line 35; queenside child 1 at column 7; expected column 9
+          =+(arg [her sud (opt-case da+now) gem])
+      ::
+>       {* ^ $~}
+          :-  (pars-src syd.arg)
+          =+((pars bek.arg) [who dez (opt-case caz) gem])
+== hoons/arvo/gen/hood/merge.hoon 35:7 indent tallWuthep Jog line 35; queenside child 2 at 36:9; expected column 7
+          =+(arg [her sud (opt-case da+now) gem])
+      ::
+>       {* ^ $~}
+!         :-  (pars-src syd.arg)
+          =+((pars bek.arg) [who dez (opt-case caz) gem])
+      ==

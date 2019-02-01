@@ -687,9 +687,6 @@ sub doLint {
             my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
 
             my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
-            if ( $inclusions and not $inclusions->{$reportType}{$parentLC} ) {
-              last WHITESPACE_POLICY;
-            }
 
             # TODO: In another policy, warn on tall children of wide nodes
             if ( $gapiness == 0 ) {    # wide node
@@ -771,10 +768,14 @@ sub doLint {
                                           $childLC;
                                     }
                                 }
-                                print reportItem(
+                                if (   not $inclusions
+                                    or $inclusions->{sequence}{$grandParentLC} )
+                                {
+                                    print reportItem(
 "$fileName $grandParentLC sequence $lhsName $indentDesc",
-                                    $parentLine, $childLine, $contextLines )
-                                  if $censusWhitespace or $isProblem;
+                                        $parentLine, $childLine, $contextLines )
+                                      if $censusWhitespace or $isProblem;
+                                }
                                 $previousLine = $childLine;
                             }
 
@@ -813,13 +814,23 @@ sub doLint {
                                 $indentDesc = join " ", $parentLC, $childLC;
                             }
                         }
-                        print reportItem(
-                                (sprintf "$fileName $parentLC sequence %s $indentDesc", diagName($node, $parentContext)),
-                                $parentLine, $childLine, $contextLines )
-                              if $censusWhitespace or $isProblem;
-                            $previousLine = $childLine;
+                        if (   not $inclusions
+                            or $inclusions->{sequence}{$parentLC} )
+                        {
+                            print reportItem(
+                                (
+                                    sprintf
+"$fileName $parentLC sequence %s $indentDesc",
+                                    diagName( $node, $parentContext )
+                                ),
+                                $parentLine,
+                                $childLine,
+                                $contextLines
+                            ) if $censusWhitespace or $isProblem;
                         }
+                        $previousLine = $childLine;
                     }
+                }
                     last WHITESPACE_POLICY;
                 }
 
@@ -1318,10 +1329,9 @@ sub doLint {
                     my @mistakes = ();
 
                     if ( $column1 != $jogColumn1 ) {
-                        my $msg =
-                          sprintf
-"Jog line %d; $chessSide child 1 at column %d; expected column %d",
-                          $line1, $column1 + 1, $jogColumn1 + 1;
+                        my $msg = sprintf 'Jog %s child 1 @%d:%d; %s',
+                          $chessSide, $line1, $column1 + 1,
+                          describeMisindent( $column1, $jogColumn1 );
                         push @mistakes,
                           {
                             desc           => $msg,
@@ -1352,9 +1362,10 @@ sub doLint {
                             }
                             if ( $column2 != $flatJogColumn2 ) {
                                 my $msg =
-                                  sprintf
-"Jog line %d; $chessSide flat child 2 at column %d; expected column %d",
-                                  $line1, $column2 + 1, $flatJogColumn2 + 1;
+                                  sprintf 'Jog %s flat child 2 @%d:%d; %s',
+                                  $chessSide, $line1, $column2 + 1,
+                                  describeMisindent( $column2,
+                                    $flatJogColumn2 );
                                 push @mistakes,
                                   {
                                     desc           => $msg,
@@ -1374,10 +1385,10 @@ sub doLint {
                         internalError("Unexpected flat jog, line $line2")
                           unless defined $flatJogColumn2;
                         if ( $column2 != $flatJogColumn2 ) {
-                            my $msg =
-                              sprintf
-"Jog line %d; $chessSide flat child 2 at column %d; expected column %d",
-                              $line1, $column2 + 1, $flatJogColumn2 + 1;
+                            my $msg = sprintf 'Jog %s flat child 2 @%d:%d; %s',
+                              $chessSide, $line1,
+                              $column2 + 1,
+                              describeMisindent( $column2, $flatJogColumn2 );
                             push @mistakes,
                               {
                                 desc           => $msg,
@@ -1391,10 +1402,10 @@ sub doLint {
                     }
 
                     return \@mistakes if $column2 + 2 == $jogColumn1;
-                    my $msg =
-                      sprintf
-"Jog line %d; $chessSide child 2 at %d:%d; expected column %d",
-                      $line1, $line2, $column2 + 1, ( $jogColumn1 - 2 ) + 1;
+                    my $msg = sprintf 'Jog %s child 2 @%d:%d; %s',
+                      $chessSide, $line2,
+                      $column2 + 1,
+                      describeMisindent( $column2, $jogColumn1 - 2 );
                     push @mistakes,
                       {
                         desc           => $msg,
@@ -1471,7 +1482,8 @@ sub doLint {
                 my $displayMistakes = sub {
 
                     # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                    my ($mistakes, $hoonDesc) = @_;
+                    my ( $mistakes, $hoonDesc ) = @_;
+                    my $parentLC = join ':', $parentLine, $parentColumn + 1;
                     my @pieces = ();
                   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
@@ -1479,20 +1491,22 @@ sub doLint {
                         my $desc        = $mistake->{desc};
                         my $type        = $mistake->{type};
                         my $mistakeLine = $mistake->{line};
+
+                    next MISTAKE
+                      if $inclusions and not $inclusions->{$type}{$parentLC};
+
                         push @pieces,
                           reportItem(
                             (
-                                    "$fileName "
-                                  . ( join ':', $parentLine, $parentColumn + 1 )
-                                  . " $type $hoonDesc $desc"
-                        ),
-                        $parentLine,
-                        $mistakeLine,
-                        $contextLines
-                      );
-                }
-                return join "", @pieces;
-            };
+                                    "$fileName $parentLC $type $hoonDesc $desc"
+                            ),
+                            $parentLine,
+                            $mistakeLine,
+                            $contextLines
+                          );
+                    }
+                    return join "", @pieces;
+                };
 
           # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
           # if here, gapiness > 0
