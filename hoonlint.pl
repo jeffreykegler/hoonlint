@@ -1287,14 +1287,22 @@ sub doLint {
                 };
 
                 my $isJog = sub {
-                    my ($node, $context) = @_;
+                    my ( $node, $context ) = @_;
                     my $chessSide = $context->{chessSide};
-                    die Data::Dumper::Dumper([$fileName, (line_column($node->{start})), map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID)]) unless $chessSide; # TODO: Delete after development
+                    die Data::Dumper::Dumper(
+                        [
+                            $fileName,
+                            ( line_column( $node->{start} ) ),
+                            map { $grammar->symbol_display_form($_) }
+                              $grammar->rule_expand($ruleID)
+                        ]
+                    ) unless $chessSide;    # TODO: Delete after development
                     internalError("Chess side undefined") unless $chessSide;
 
-                    my $runeColumn = $context->{runeColumn};
-                    my $jogColumn1 = $context->{jogColumn1};
+                    my $runeColumn     = $context->{runeColumn};
+                    my $jogColumn1     = $context->{jogColumn1};
                     my $flatJogColumn2 = $context->{flatJogColumn2};
+
                     # do not pass these attributes on to child nodes
                     delete $context->{runeColumn};
                     delete $context->{jogColumn1};
@@ -1310,27 +1318,66 @@ sub doLint {
                     my @mistakes = ();
 
                     if ( $column1 != $jogColumn1 ) {
-                            my $msg =
-                              sprintf
+                        my $msg =
+                          sprintf
 "Jog line %d; $chessSide child 1 at column %d; expected column %d",
-                              $line1, $column1+1, $jogColumn1+1;
-                            push @mistakes,
-                              {
-                                desc           => $msg,
-                                line           => $line1,
-                                column         => $column1,
-                                child          => 1,
-                                expectedColumn => $jogColumn1,
-                              };
+                          $line1, $column1 + 1, $jogColumn1 + 1;
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $line1,
+                            column         => $column1,
+                            child          => 1,
+                            expectedColumn => $jogColumn1,
+                          };
                     }
 
+                    if ( $chessSide eq 'kingside' ) {
+                      KINGSIDE_CHECK: {
+                            last KINGSIDE_CHECK unless $chessSide eq 'kingside';
+                            if ( $line1 != $line2 ) {
+                                my $msg =
+                                  sprintf
+"$chessSide jog children on different lines %d vs. %d",
+                                  $line2, $line1;
+                                push @mistakes,
+                                  {
+                                    desc         => $msg,
+                                    line         => $line2,
+                                    column       => $column2,
+                                    child        => 2,
+                                    expectedLine => $line1,
+                                  };
+                                last KINGSIDE_CHECK;
+                            }
+                            if ( $column2 != $flatJogColumn2 ) {
+                                my $msg =
+                                  sprintf
+"Jog line %d; $chessSide flat child 2 at column %d; expected column %d",
+                                  $line1, $column2 + 1, $flatJogColumn2 + 1;
+                                push @mistakes,
+                                  {
+                                    desc           => $msg,
+                                    line           => $line2,
+                                    column         => $column2,
+                                    child          => 2,
+                                    expectedColumn => $flatJogColumn2,
+                                  };
+                            }
+                        }
+                        return \@mistakes;
+                    }
+
+                    # If here, queenside.
+
                     if ( $line1 == $line2 ) {
-                        internalError("Unexpected flat jog, line $line2") unless defined $flatJogColumn2;
+                        internalError("Unexpected flat jog, line $line2")
+                          unless defined $flatJogColumn2;
                         if ( $column2 != $flatJogColumn2 ) {
                             my $msg =
                               sprintf
 "Jog line %d; $chessSide flat child 2 at column %d; expected column %d",
-                              $line1, $column2+1, $flatJogColumn2+1;
+                              $line1, $column2 + 1, $flatJogColumn2 + 1;
                             push @mistakes,
                               {
                                 desc           => $msg,
@@ -1346,8 +1393,8 @@ sub doLint {
                     return \@mistakes if $column2 + 2 == $jogColumn1;
                     my $msg =
                       sprintf
-    "Jog line %d; $chessSide child 2 at %d:%d; expected column %d",
-                      $line1, $line2, $column2+1, ($jogColumn1 - 2)+1;
+"Jog line %d; $chessSide child 2 at %d:%d; expected column %d",
+                      $line1, $line2, $column2 + 1, ( $jogColumn1 - 2 ) + 1;
                     push @mistakes,
                       {
                         desc           => $msg,
