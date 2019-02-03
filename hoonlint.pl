@@ -17,7 +17,7 @@ my $style;
 my $verbose; # right now does nothing
 my $censusWhitespace;
 my $inclusionsFileName;
-my $suppressionsFileName;
+my @suppressionsFileNames;
 my $contextLines = 0;
 
 GetOptions(
@@ -25,7 +25,7 @@ GetOptions(
     "context|C=i"         => \$contextLines,
     "census-whitespace"   => \$censusWhitespace,
     "inclusions-file|I=s" => \$inclusionsFileName,
-    "suppressions_file=s" => \$suppressionsFileName,
+    "suppressions_file=s" => \@suppressionsFileNames,
 ) or die("Error in command line arguments\n");
 
 sub usage {
@@ -53,10 +53,10 @@ sub slurp {
 }
 
 my $defaultSuppressionFile = 'hoonlint.suppressions';
-if ( not defined $suppressionsFileName
+if ( not @suppressionsFileNames
     and -f $defaultSuppressionFile )
 {
-    $suppressionsFileName = $defaultSuppressionFile;
+    @suppressionsFileNames = ($defaultSuppressionFile);
 }
 
 sub itemError {
@@ -65,8 +65,15 @@ sub itemError {
     . qq{  Problem with line: $line\n};
 }
 
-my $pSuppressions =
-  $suppressionsFileName ? slurp($suppressionsFileName) : \"# empty file\n";
+my $pSuppressions;
+{
+    my @suppressions = ();
+    for my $fileName (@suppressionsFileNames) {
+        push @suppressions, ${ slurp($fileName) };
+    }
+    $pSuppressions = \(join "", @suppressions);
+}
+
 my %reportItemType   = map { +( $_, 1 ) } qw(indent sequence);
 my ($suppressions, $unusedSuppressions) = parseReportItems($pSuppressions);
 die $unusedSuppressions if not $suppressions;
