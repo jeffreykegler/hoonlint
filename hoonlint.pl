@@ -25,7 +25,7 @@ GetOptions(
     "context|C=i"         => \$contextLines,
     "census-whitespace"   => \$censusWhitespace,
     "inclusions-file|I=s" => \$inclusionsFileName,
-    "suppressions_file=s" => \@suppressionsFileNames,
+    "suppressions_file|S=s" => \@suppressionsFileNames,
 ) or die("Error in command line arguments\n");
 
 sub usage {
@@ -573,6 +573,29 @@ sub line_column {
    $column--;
    return $line, $column;
 }
+
+my $calcGapIndents = sub () {
+    my ($node)     = @_;
+    my $children   = $node->{children};
+    my @gapIndents = ();
+    my $child      = $children->[0];
+    my $childStart = $child->{start};
+    my ( $childLine, $childColumn ) = $recce->line_column($childStart);
+    push @gapIndents, [ $childLine, $childColumn - 1 ];
+    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $child->{symbol};
+        if ( defined $symbol
+            and $symbolReverseDB{$symbol}->{gap} )
+        {
+            my $nextChild = $children->[ $childIX + 1 ];
+            my $nextStart = $nextChild->{start};
+            my ( $nextLine, $nextColumn ) = $recce->line_column($nextStart);
+            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
+        }
+    }
+    return \@gapIndents;
+};
 
 sub doLint {
     my ( $node, $argContext ) = @_;
@@ -1523,27 +1546,7 @@ sub doLint {
 
                 my $indentDesc = '???';
 
-                my @gapIndents = ();
-                {
-                    my $child      = $children->[0];
-                    my $childStart = $child->{start};
-                    my ( $childLine, $childColumn ) =
-                      $recce->line_column($childStart);
-                    push @gapIndents, [ $childLine, $childColumn - 1 ];
-                    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
-                        my $child  = $children->[$childIX];
-                        my $symbol = $child->{symbol};
-                        if ( defined $symbol
-                            and $symbolReverseDB{$symbol}->{gap} )
-                        {
-                            my $nextChild = $children->[ $childIX + 1 ];
-                            my $nextStart = $nextChild->{start};
-                            my ( $nextLine, $nextColumn ) =
-                              $recce->line_column($nextStart);
-                            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
-                        }
-                    }
-                }
+                my @gapIndents = @{$calcGapIndents->($node)};
 
               TYPE_INDENT: {
 
