@@ -907,67 +907,50 @@ sub doLint {
                  return "correctly indented";
                 }
 
-                my $censusJog = sub {
-                    my ( $node, $runeColumn ) = @_;
-                    my $children = $node->{children};
-                    my $twig1    = $children->[0];
-                    my $twig2    = $children->[2];
-                    my ( $line1, $column1 ) = line_column( $twig1->{start} );
-                    my ( $line2, $column2 ) = line_column( $twig2->{start} );
-                    return 'queenside', $column1 if $line1 != $line2;
-                    # say STDERR "column1=$column1 runeColumn=$runeColumn";
-                    return ( $column1 <= $runeColumn + 2
-                        ? 'kingside'
-                        : 'queenside' ), $column1, $column2;
-                };
-
                 my $censusJogging = sub {
-                    my ($node, $runeColumn) = @_;
-                    my $children = $node->{children};
+                    my ( $node, $runeColumn ) = @_;
+                    my $children  = $node->{children};
                     my %sideCount = ();
-                    my %column1Count     = ();
-                    my %firstColumn1Line = ();
-                    my %column2Count     = ();
-                    my %firstColumn2Line = ();
+                    my $firstSide;
+                    my %bodyColumnCount = ();
+                    my $kingsideCount   = 0;
+                    my $queensideCount  = 0;
                   CHILD: for my $childIX ( 0 .. $#$children ) {
-                        my $child     = $children->[$childIX];
-                        my $symbol    = symbol($child);
-                        my ($jogLine) = $recce->line_column( $child->{start} );
-
-                        # say STDERR join " ", "census jog:",  $symbol;
-                        next CHILD
-                          unless $symbol eq "rick5dJog"
-                          or $symbol eq "ruck5dJog";
-                        my ( $side, $jogColumn1, $flatJogColumn2 );
-                        ( $side, $jogColumn1, $flatJogColumn2 ) =
-                          $censusJog->( $child, $runeColumn );
-
-         # say STDERR join " ", "census jog:",  $side, $jogColumn1, ($flatJogColumn2 // 'na');
-
-                        $sideCount{$side}++;
-                        $firstColumn1Line{$jogColumn1} = $jogLine
-                          if not defined $firstColumn1Line{$jogColumn1};
-                        $column1Count{$jogColumn1}++;
-                        next CHILD if not defined $flatJogColumn2;
-                        $firstColumn2Line{$flatJogColumn2} = $jogLine
-                          if not defined $firstColumn2Line{$flatJogColumn2};
-                        $column2Count{$flatJogColumn2}++;
+                        my $jog  = $children->[$childIX];
+                        my $head = $jog->{children}->[0];
+                        my ( undef, $column1 ) = line_column( $head->{start} );
+                        if ( $column1 - $runeColumn >= 6 ) {
+                            $queensideCount++;
+                        }
+                        $kingsideCount++;
                     }
-                    my @sortedSides =
-                      sort { $sideCount{$b} <=> $sideCount{$a} }
-                      keys %sideCount;
-                    my $side          = $sortedSides[0];
-                    my @sortedColumns1 = sort {
-                             $column1Count{$b} <=> $column1Count{$a}
-                          or $firstColumn1Line{$a} <=> $firstColumn1Line{$b}
-                    } keys %column1Count;
-                    my @sortedColumns2 = sort {
-                             $column2Count{$b} <=> $column2Count{$a}
-                          or $firstColumn2Line{$a} <=> $firstColumn2Line{$b}
-                    } keys %column2Count;
-                    my $alignColumn1 = $sortedColumns1[0];
-                    my $alignColumn2 = $sortedColumns2[0]
-                      if scalar @sortedColumns2;
+                    my $side =
+                      $kingsideCount > $queensideCount
+                      ? 'kingside'
+                      : 'queenside';
+
+                    my $firstAlignedBodyColumn;
+                    my %bodyColumnCount = ();
+                  CHILD: for my $childIX ( 0 .. $#$children ) {
+                        my $jog         = $children->[$childIX];
+                        my $jogChildren = $jog->{children};
+                        my $gap         = $jogChildren->[1];
+                        next CHILD unless $gap > 2;
+                        my $body = $jogChildren->[2];
+                        my ( undef, $bodyColumn ) =
+                          line_column( $body->{start} );
+                        $firstAlignedBodyColumn = $bodyColumn
+                          if not defined $firstAlignedBodyColumn;
+                        $bodyColumnCount{$bodyColumn}++;
+                    }
+                    my @bodyColumns = keys %bodyColumns;
+                    if (@bodyColumns) {
+                        my @sortedBodyColumns =
+                          sort { $bodyColumnCount{$b} <=> $bodyColumnCount{$a} }
+                          keys %bodyColumns;
+                          !!! TO HERE !!! Finish
+                    }
+
                     return $side, $alignColumn1, $alignColumn2;
                 };
 
