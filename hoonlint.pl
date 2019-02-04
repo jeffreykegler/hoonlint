@@ -907,7 +907,7 @@ sub doLint {
                  return "correctly indented";
                 }
 
-                my $censusJogging = sub {
+                my $joggingSide = sub {
                     my ( $node, $runeColumn ) = @_;
                     my $children  = $node->{children};
                     my %sideCount = ();
@@ -924,34 +924,49 @@ sub doLint {
                         }
                         $kingsideCount++;
                     }
-                    my $side =
-                      $kingsideCount > $queensideCount
+                    return $kingsideCount > $queensideCount
                       ? 'kingside'
                       : 'queenside';
+                };
 
-                    my $firstAlignedBodyColumn;
+                my $joggingBodyAlignment = sub {
+                    my ( $node, $runeColumn ) = @_;
+                    my $children = $node->{children};
+                    my $firstBodyColumn;
+                    my %firstLine       = ();
                     my %bodyColumnCount = ();
-                  CHILD: for my $childIX ( 0 .. $#$children ) {
+
+                    # Traverse first to last to make it easy to record
+                    # first line of occurrence of each body column
+                  CHILD:
+                    for ( my $childIX = $#$children ; $childIX >= 0; $childIX-- ) {
                         my $jog         = $children->[$childIX];
                         my $jogChildren = $jog->{children};
                         my $gap         = $jogChildren->[1];
-                        next CHILD unless $gap > 2;
+                        my $gapLength   = $gap->{length};
                         my $body = $jogChildren->[2];
-                        my ( undef, $bodyColumn ) =
+                        my ( $bodyLine, $bodyColumn ) =
                           line_column( $body->{start} );
-                        $firstAlignedBodyColumn = $bodyColumn
-                          if not defined $firstAlignedBodyColumn;
-                        $bodyColumnCount{$bodyColumn}++;
+                        $firstBodyColumn = $bodyColumn
+                          if not defined $firstBodyColumn;
+                        next CHILD unless $gap > 2;
+                        $bodyColumnCount{$bodyColumn} =
+                          $bodyColumnCount{$bodyColumn}++;
+                        $firstLine{$bodyColumn} = $bodyLine;
                     }
-                    my @bodyColumns = keys %bodyColumns;
-                    if (@bodyColumns) {
-                        my @sortedBodyColumns =
-                          sort { $bodyColumnCount{$b} <=> $bodyColumnCount{$a} }
-                          keys %bodyColumns;
-                          !!! TO HERE !!! Finish
-                    }
+                    my @bodyColumns = keys %bodyColumnCount;
 
-                    return $side, $alignColumn1, $alignColumn2;
+                    # If no aligned columns, simply return first
+                    return $firstBodyColumn if not @bodyColumns;
+
+                    my @sortedBodyColumns =
+                      sort {
+                             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
+                          or $firstLine{$b} <=> $firstLine{$a}
+                      }
+                      keys %bodyColumnCount;
+                    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
+                    return $topBodyColumn;
                 };
 
                 my $censusJoggingHoon = sub {
@@ -960,9 +975,10 @@ sub doLint {
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $child  = $children->[$childIX];
                         my $symbol = symbol($child);
-                        return $censusJogging->($child, $runeColumn)
-                          if $symbol eq 'rick5d'
-                          or $symbol eq 'ruck5d';
+                        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
+                        my $side = $joggingSide->($child, $runeColumn);
+                        my $bodyAlignment = $joggingBodyAlignment->($child, $runeColumn);
+                        return $side, $bodyAlignment;
                     }
                   die "No jogging found for ", symbol($node);
                 };
@@ -1039,7 +1055,7 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
                     $context->{jogRuneColumn} = $runeColumn;
@@ -1126,7 +1142,7 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
                     $context->{jogRuneColumn} = $runeColumn;
@@ -1236,7 +1252,7 @@ sub doLint {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $jogColumn1, $flatJogColumn2 ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $flatJogColumn2 ) = $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
                     # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
                     $context->{jogRuneColumn} = $runeColumn;
