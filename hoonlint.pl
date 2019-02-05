@@ -923,10 +923,14 @@ sub doLint {
                     my $queensideCount  = 0;
                   CHILD: for my $childIX ( 0 .. $#$children ) {
                         my $jog  = $children->[$childIX];
+                        my $symbol = $jog->{symbol};
+                        next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
                         my $head = $jog->{children}->[0];
                         my ( undef, $column1 ) = line_column( $head->{start} );
-                        if ( $column1 - $runeColumn >= 6 ) {
+                        # say " $column1 - $runeColumn >= 4 ";
+                        if ( $column1 - $runeColumn >= 4 ) {
                             $queensideCount++;
+                            next CHILD;
                         }
                         $kingsideCount++;
                     }
@@ -1057,26 +1061,35 @@ sub doLint {
                     return \@mistakes;
                 }
 
-                my $isJogging1 = sub  {
+                my $isJogging1 = sub {
                     my ( $context, $node, $gapIndents ) = @_;
-                    my $start  = $node->{start};
+                    my $start = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
-                    my ( $chessSide, $jogBodyColumn ) = $censusJoggingHoon->($node);
+                    my ( $chessSide, $jogBodyColumn ) =
+                      $censusJoggingHoon->($node);
                     $context->{chessSide} = $chessSide;
-                    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
+
+              # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
                     $context->{jogRuneColumn} = $runeColumn;
-                    $context->{jogBodyColumn} = $jogBodyColumn if defined $jogBodyColumn;
+
+# say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
+
+                    $context->{jogBodyColumn} = $jogBodyColumn
+                      if defined $jogBodyColumn;
                     internalError("Chess side undefined") unless $chessSide;
-                    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
+
+             # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
                     my @mistakes = ();
-                    die "Jogging-1-style rule with only $gapIndents gap indents"
+                    die "1-Jogging-1 rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
                     my ( $firstChildLine, $firstChildColumn ) =
                       @{ $gapIndents->[1] };
                     if ( $firstChildLine != $runeLine ) {
                         my $msg = sprintf
-    "Jogging-1-style child #%d @ line %d; first child is on line %d; should be on rune line",
-                          1, $runeLine, $firstChildLine;
+                          "1-Jogging %s head %s; should be on rune line %d",
+                          $chessSide,
+                          describeLC( $firstChildLine, $firstChildColumn ),
+                          $runeLine;
                         push @mistakes,
                           {
                             desc         => $msg,
@@ -1087,13 +1100,15 @@ sub doLint {
                           };
                     }
 
-                    my $expectedColumn = $runeColumn + ($chessSide eq 'kingside' ? 4 : 6);
-                    if ( $firstChildColumn != $expectedColumn) {
+                    my $expectedColumn =
+                      $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
+                    if ( $firstChildColumn != $expectedColumn ) {
                         my $msg = sprintf
-    "Jogging-1-style %s child #%d @%d:%d; %s",
-                          $chessSide, 1, $runeLine,
-                          $firstChildColumn+1,
-                          describeMisindent( $firstChildColumn, $expectedColumn);
+                          "1-Jogging %s head %s; %s",
+                          $chessSide,
+                          describeLC( $firstChildLine, $firstChildColumn ),
+                          describeMisindent( $firstChildColumn,
+                            $expectedColumn );
                         push @mistakes,
                           {
                             desc           => $msg,
@@ -1107,8 +1122,9 @@ sub doLint {
                     my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
                     if ( $tistisLine == $runeLine ) {
                         my $msg = sprintf
-    "Jogging-1-style line %d; TISTIS is on rune line %d; should not be",
-                          $runeLine, $tistisLine;
+                          "1-Jogging TISTIS %s; should not be on rune line",
+                          $chessSide,
+                          describeLC( $tistisLine, $tistisColumn );
                         push @mistakes,
                           {
                             desc         => $msg,
@@ -1120,17 +1136,19 @@ sub doLint {
                     }
 
                     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
-                    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+
+                # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
                     if ($tistisIsMisaligned) {
-                       my $tistisPos = $lineToPos[$tistisLine]+$tistisColumn;
-                       my $tistis = literal($tistisPos, 2);
+                        my $tistisPos = $lineToPos[$tistisLine] + $tistisColumn;
+                        my $tistis = literal( $tistisPos, 2 );
+
                         # say join " ", __FILE__, __LINE__, $tistis;
-                       $tistisIsMisaligned = $tistis ne '==';
+                        $tistisIsMisaligned = $tistis ne '==';
                     }
-                    if ( $tistisIsMisaligned ) {
-                        my $msg = sprintf "Jogging-1-style; TISTIS @%d:%d; %s",
-                          $tistisLine, $tistisColumn+1,
-                          describeMisindent( $tistisColumn, $runeColumn);
+                    if ($tistisIsMisaligned) {
+                        my $msg = sprintf "1-Jogging TISTIS %s; %s",
+                          describeLC( $tistisLine, $tistisColumn ),
+                          describeMisindent( $tistisColumn, $runeColumn );
                         push @mistakes,
                           {
                             desc           => $msg,
@@ -1331,9 +1349,11 @@ sub doLint {
 
                 my $checkKingsideJog = sub {
                     my ( $node, $context ) = @_;
+                    # say join " ", __FILE__, __LINE__, "rune column:", $context->{jogRuneColumn} ;
                     my $chessSide = $context->{chessSide};
-                    die Data::Dumper::Dumper(
+                    say STDERR Data::Dumper::Dumper(
                         [
+                            $context->{hoonName},
                             $fileName,
                             ( line_column( $node->{start} ) ),
                             map { $grammar->symbol_display_form($_) }
@@ -1345,15 +1365,19 @@ sub doLint {
                     my @mistakes = ();
 
                     my $runeColumn    = $context->{jogRuneColumn};
-                    die Data::Dumper::Dumper(
+                    say STDERR Data::Dumper::Dumper(
                         [
+                            $context->{hoonName},
                             $fileName,
                             ( line_column( $node->{start} ) ),
                             map { $grammar->symbol_display_form($_) }
                               $grammar->rule_expand($ruleID)
                         ]
-                    ) unless $runeColumn;    # TODO: Delete after development
+                    ) unless defined $runeColumn;    # TODO: Delete after development
+                    internalError("Rune column undefined") unless defined $runeColumn;
                     my $jogBodyColumn = $context->{jogBodyColumn};
+
+                    # say join " ", __FILE__, __LINE__, "rune column:", $context->{jogRuneColumn} ;
 
                     # do not pass these attributes on to child nodes
                     delete $context->{jogRuneColumn};
@@ -1391,7 +1415,7 @@ sub doLint {
 
                         # Check for "seaside"
                         my $expectedBodyColumn = $runeColumn + 4;
-                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
+                        my $msg = sprintf 'Jog %s body %s; %s',
                           $sideDesc,
                           describeLC( $bodyLine, $bodyColumn ),
                           describeMisindent( $bodyColumn, $expectedBodyColumn );
@@ -1403,12 +1427,13 @@ sub doLint {
                             child          => 2,
                             expectedColumn => $expectedBodyColumn,
                           };
+                        return \@mistakes;
                     }
 
                     # Check for flat kingside misalignments
                     my $gapLength = $gap->{length};
                     if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
-                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
+                        my $msg = sprintf 'Jog %s body %s; %s',
                           $sideDesc,
                           describeLC( $bodyLine, $bodyColumn ),
                           describeMisindent( $bodyColumn, $jogBodyColumn );
@@ -1426,6 +1451,8 @@ sub doLint {
 
                 my $checkQueensideJog = sub {
                     my ( $node, $context ) = @_;
+
+# say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
                     my $chessSide = $context->{chessSide};
                     die Data::Dumper::Dumper(
                         [
@@ -1473,10 +1500,12 @@ sub doLint {
                           };
                     }
 
-                    if ( $headLine != $bodyLine ) {
+                    my $expectedBodyColumn = $runeColumn + 2;
+                    if (    $headLine != $bodyLine
+                        and $bodyColumn != $expectedBodyColumn )
+                    {
 
-                        my $expectedBodyColumn = $runeColumn + 6;
-                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
+                        my $msg = sprintf 'Jog %s body %s; %s',
                           $sideDesc,
                           describeLC( $bodyLine, $bodyColumn ),
                           describeMisindent( $bodyColumn, $expectedBodyColumn );
@@ -1491,26 +1520,31 @@ sub doLint {
                     }
 
                     # Check for flat queenside misalignments
-                    my $gapLength = $gap->{length};
-                    if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
-                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
-                          $sideDesc,
-                          describeLC( $bodyLine, $bodyColumn ),
-                          describeMisindent( $bodyColumn, $jogBodyColumn );
-                        push @mistakes,
-                          {
-                            desc           => $msg,
-                            line           => $bodyLine,
-                            column         => $bodyColumn,
-                            child          => 2,
-                            expectedColumn => $jogBodyColumn,
-                          };
+                    if ( $headLine == $bodyLine ) {
+                        $expectedBodyColumn = $jogBodyColumn;
+                        my $gapLength = $gap->{length};
+                        if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn )
+                        {
+                            my $msg = sprintf 'Jog %s body %s; %s',
+                              $sideDesc,
+                              describeLC( $bodyLine, $bodyColumn ),
+                              describeMisindent( $bodyColumn, $jogBodyColumn );
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $bodyLine,
+                                column         => $bodyColumn,
+                                child          => 2,
+                                expectedColumn => $jogBodyColumn,
+                              };
+                        }
                     }
                     return \@mistakes;
                 };
 
                 my $isJog = sub {
                     my ( $node, $context ) = @_;
+                    # say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
                     my $chessSide = $context->{chessSide};
                     return $checkQueensideJog->( $node, $context )
                       if $chessSide eq 'queenside';
