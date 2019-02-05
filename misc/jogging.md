@@ -9,14 +9,15 @@ if `X` must be `Y`, in order to meet the standard described
 in this document.
 Code, or practices which do not meet this standard we
 will call **non-standard**.
-One pragmatic consequence of non-standard code or practices
+One pragmatic consequence of non-standard code
 is that,
-by default, they may draw warnings from the hoon toolkit.
+by default, it may draw warnings from the hoon toolkit.
 
-It is expected that, even in the most carefully written hoon code,
+It is expected that, even in carefully written hoon code,
 non-standard practices will occur.
-For this reason, much attention is given in this document to
-defining its terms so that they are meaningful even
+For this reason, at points,
+we will be careful to define
+terms in such a what that they are meaningful even
 when applied to non-standard code.
 
 ### Jogging hoons
@@ -41,10 +42,13 @@ A 1-jogging has one head and no tail.
 A 2-jogging has a head and a subhead and no tail.
 A jogging-1 has a tail and no head.
 
-The current 0-jogging rules are WUTBAR (`?|`) and WUTPAM (`?&`).
-The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
-The current 2-jogging rules are CENTAR (`%*`) and WUTLUS (`?+`).
-The current jogging-1 rule is TISCOL (`=:`).
+* The current 0-jogging rules are WUTBAR (`?|`) and WUTPAM (`?&`).
+
+* The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
+
+* The current 2-jogging rules are CENTAR (`%*`) and WUTLUS (`?+`).
+
+* The current jogging-1 rule is TISCOL (`=:`).
 
 ### Jogs
 
