@@ -64,7 +64,8 @@ Otherwise, the jog is said to be **split**.
 
 Jogs, joggings and jogging hoons have **chess-sidedness**.
 Chess-sidedness is always either kingside and queenside.
-No properly indented jogging or jogging hoon has "mixed"
+In standard code,
+No jogging or jogging hoon has "mixed"
 sidedness.
 What is called a "seaside" jog is a split kingside jog.
 
