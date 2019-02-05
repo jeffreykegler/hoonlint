@@ -143,10 +143,11 @@ common in C language code.
 The indentation of the body of a split queenside jog
 should be 1 stop less than the indentation of the jog's head.
 
-## Linting considerations
+## Non-standard code
 
 For linting purposes, it is necessary to decide the intended
-chess-sidedness of misindented jogging hoons, joggings and jogs.
+chess-sidedness of misindented jogging hoons, joggings and jogs
+in non-standard code.
 A jog is considered queenside if its indentation is 2 stops or more
 greater than the rune column.
 Otherwise, the jog is considered kingside.
