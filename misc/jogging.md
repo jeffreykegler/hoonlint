@@ -65,26 +65,26 @@ Otherwise, the jog is said to be **split**.
 Jogs, joggings and jogging hoons have **chess-sidedness**.
 Chess-sidedness is always either kingside and queenside.
 In standard code,
-No jogging or jogging hoon has "mixed"
+no jogging or jogging hoon has "mixed"
 sidedness.
 What is called a "seaside" jog is a split kingside jog.
 
-Informally, kingside means the indentation has a left-side bias;
-and queenside means that the indentation has a right-side bias.
+Informally, **kingside** means the indentation has a left-side bias;
+and **queenside** means that the indentation has a right-side bias.
 Indentation will be described more precisely in what follows.
 
 ### Lines, columns and indentation
 
 In this document, a **stop** is two spaces.
-We say the text `Y` is indented `N` stops after text `X`
+We say the text `Y` is indented `N` stops **after** text `X`,
 if there are exactly `N` stops between the end of text `X`
 and the beginning of text `Y`.
 
 Let `Column(Y)` be column at which text `Y` begins.
-We say the indentation of text `X` is `N` stops greater than
-text `Y` if text `X` begins at column `Column(Y)+N*2`.
-We say the indentation of text `X` is `N` stops less than
-text `Y` if text `X` begins at column `Column(Y)-N*2`.
+We say the indentation of text `X` is `N` stops **greater than the indentation**
+of text `Y` if text `X` begins at column `Column(Y)+N*2`.
+We say the indentation of text `X` is `N` stops **less than the indentation**
+of text `Y` if text `X` begins at column `Column(Y)-N*2`.
 
 ## Limitations of this current document
 
