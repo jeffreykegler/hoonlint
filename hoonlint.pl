@@ -651,6 +651,10 @@ sub doLint {
     $parentContext->{chessSide} = $parentChessSide
       if defined $parentChessSide;
 
+    my $parentJogRuneColumn = $argContext->{jogRuneColumn};
+    $parentContext->{jogRuneColumn} = $parentJogRuneColumn
+      if defined $parentJogRuneColumn;
+
     my $parentJogBodyColumn = $argContext->{jogBodyColumn};
     $parentContext->{jogBodyColumn} = $parentJogBodyColumn
       if defined $parentJogBodyColumn;
@@ -1338,11 +1342,21 @@ sub doLint {
                     ) unless $chessSide;    # TODO: Delete after development
                     internalError("Chess side undefined") unless $chessSide;
 
-                    my $runeColumn     = $context->{runeColumn};
+                    my @mistakes = ();
+
+                    my $runeColumn    = $context->{jogRuneColumn};
+                    die Data::Dumper::Dumper(
+                        [
+                            $fileName,
+                            ( line_column( $node->{start} ) ),
+                            map { $grammar->symbol_display_form($_) }
+                              $grammar->rule_expand($ruleID)
+                        ]
+                    ) unless $runeColumn;    # TODO: Delete after development
                     my $jogBodyColumn = $context->{jogBodyColumn};
 
                     # do not pass these attributes on to child nodes
-                    delete $context->{runeColumn};
+                    delete $context->{jogRuneColumn};
                     delete $context->{jogBodyColumn};
                     delete $context->{chessSide};
 
@@ -1354,10 +1368,11 @@ sub doLint {
                       line_column( $head->{start} );
                     my ( $bodyLine, $bodyColumn ) =
                       line_column( $body->{start} );
-                    my $sideDesc = $bodyLine == $headLine ? 'kingside' : 'seaside';
+                    my $sideDesc =
+                      $bodyLine == $headLine ? 'kingside' : 'seaside';
 
                     my $expectedHeadColumn = $runeColumn + 2;
-                    if ( $column1 != $jogColumn1 ) {
+                    if ( $headColumn != $expectedHeadColumn ) {
                         my $msg = sprintf 'Jog %s head %s; %s',
                           $sideDesc,
                           describeLC( $headLine, $headColumn ),
@@ -1372,7 +1387,7 @@ sub doLint {
                           };
                     }
 
-                    if ( $line1 != $line2 ) {
+                    if ( $headLine != $bodyLine ) {
 
                         # Check for "seaside"
                         my $expectedBodyColumn = $runeColumn + 4;
@@ -1392,10 +1407,10 @@ sub doLint {
 
                     # Check for flat kingside misalignments
                     my $gapLength = $gap->{length};
-                    if ($gapLength != 2 and $bodyColumn != $jogBodyColumn) {
+                    if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
                         my $msg = sprintf 'Jog %s body @%d:%d; %s',
                           $sideDesc,
-                          describeLC($bodyLine, $bodyColumn),
+                          describeLC( $bodyLine, $bodyColumn ),
                           describeMisindent( $bodyColumn, $jogBodyColumn );
                         push @mistakes,
                           {
@@ -1407,6 +1422,99 @@ sub doLint {
                           };
                     }
                     return \@mistakes;
+                };
+
+                my $checkQueensideJog = sub {
+                    my ( $node, $context ) = @_;
+                    my $chessSide = $context->{chessSide};
+                    die Data::Dumper::Dumper(
+                        [
+                            $fileName,
+                            ( line_column( $node->{start} ) ),
+                            map { $grammar->symbol_display_form($_) }
+                              $grammar->rule_expand($ruleID)
+                        ]
+                    ) unless $chessSide;    # TODO: Delete after development
+                    internalError("Chess side undefined") unless $chessSide;
+
+                    my @mistakes = ();
+
+                    my $runeColumn    = $context->{jogRuneColumn};
+                    my $jogBodyColumn = $context->{jogBodyColumn};
+
+                    # do not pass these attributes on to child nodes
+                    delete $context->{jogRuneColumn};
+                    delete $context->{jogBodyColumn};
+                    delete $context->{chessSide};
+
+                    my $children = $node->{children};
+                    my $head     = $children->[0];
+                    my $gap      = $children->[1];
+                    my $body     = $children->[2];
+                    my ( $headLine, $headColumn ) =
+                      line_column( $head->{start} );
+                    my ( $bodyLine, $bodyColumn ) =
+                      line_column( $body->{start} );
+                    my $sideDesc = 'queenside';
+
+                    my $expectedHeadColumn = $runeColumn + 4;
+                    if ( $headColumn != $expectedHeadColumn ) {
+                        my $msg = sprintf 'Jog %s head %s; %s',
+                          $sideDesc,
+                          describeLC( $headLine, $headColumn ),
+                          describeMisindent( $headColumn, $expectedHeadColumn );
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $headLine,
+                            column         => $headColumn,
+                            child          => 1,
+                            expectedColumn => $expectedHeadColumn,
+                          };
+                    }
+
+                    if ( $headLine != $bodyLine ) {
+
+                        my $expectedBodyColumn = $runeColumn + 6;
+                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
+                          $sideDesc,
+                          describeLC( $bodyLine, $bodyColumn ),
+                          describeMisindent( $bodyColumn, $expectedBodyColumn );
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $bodyLine,
+                            column         => $bodyColumn,
+                            child          => 2,
+                            expectedColumn => $expectedBodyColumn,
+                          };
+                    }
+
+                    # Check for flat queenside misalignments
+                    my $gapLength = $gap->{length};
+                    if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
+                        my $msg = sprintf 'Jog %s body @%d:%d; %s',
+                          $sideDesc,
+                          describeLC( $bodyLine, $bodyColumn ),
+                          describeMisindent( $bodyColumn, $jogBodyColumn );
+                        push @mistakes,
+                          {
+                            desc           => $msg,
+                            line           => $bodyLine,
+                            column         => $bodyColumn,
+                            child          => 2,
+                            expectedColumn => $jogBodyColumn,
+                          };
+                    }
+                    return \@mistakes;
+                };
+
+                my $isJog = sub {
+                    my ( $node, $context ) = @_;
+                    my $chessSide = $context->{chessSide};
+                    return $checkQueensideJog->( $node, $context )
+                      if $chessSide eq 'queenside';
+                    return $checkKingsideJog->( $node, $context );
                 };
 
                 sub isBackdented {
