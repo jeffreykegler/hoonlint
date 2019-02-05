@@ -24,10 +24,10 @@ A 1-jogging has one head and no tail.
 A 2-jogging has a head and a subhead and no tail.
 A jogging-1 has a tail and no head.
 
-The current 0-jogging rules are WUTBAR (?|) and WUTPAM (?&).
-The current 1-jogging rules are CENTIS (%=), CENCAB (%_) and WUTHEP (?-).
-The current 2-jogging rules are CENTAR (%*) and WUTLUS (?+).
-The current jogging-1 rule is TISCOL (=:).
+The current 0-jogging rules are WUTBAR (`?|`) and WUTPAM (`?&`).
+The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
+The current 2-jogging rules are CENTAR (`%*`) and WUTLUS (`?+`).
+The current jogging-1 rule is TISCOL (`=:`).
 
 ### Jogs
 
@@ -120,9 +120,25 @@ common in C language code.
 The indentation of the body of a split queenside jog
 should be 1 stop less than the indentation of the jog's head.
 
-## Sidedness in misindented hoons
+## Linting considerations
 
 For linting purposes, it is necessary to decide the intended
-chess-sidedness.
-A jog is consider queenside if its indentation is 2 stops or more
-than than indentation of the rune 
+chess-sidedness of misindented jogging hoons, joggings and jogs.
+A jog is considered queenside if its indentation is 2 stops or more
+greater than the rune column.
+Otherwise, the jog is considered kingside.
+
+The chess-sidedness of a misindented jogging is that of the majority
+of its jogs.
+In case of a tie, the jogging is considered to be queenside.
+
+The chess-sidedness of a misindented jogging hoon is that of its
+jogging.
+
+Also for linting purposes,
+the jog body column of a jogging is considered to be the most common start column
+of the bodies of the jogging's aligned jogs.
+In case of a tie, the body column of the first jog with one of the most common
+body columns is the jog body column of the jogging.
+If there are no aligned jogs in a jogging,
+the jog body column is the body column of the first jog in the jogging.
