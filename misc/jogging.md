@@ -155,11 +155,10 @@ Otherwise, the jog is considered kingside.
 The chess-sidedness of a misindented jogging is that of the majority
 of its jogs.
 In case of a tie, the jogging is considered to be queenside.
-
 The chess-sidedness of a misindented jogging hoon is that of its
 jogging.
 
-Also for linting purposes,
+In non-standard code,
 the jog body column of a jogging is considered to be the most common start column
 of the bodies of the jogging's aligned jogs.
 In case of a tie, the body column of the first jog with one of the most common
