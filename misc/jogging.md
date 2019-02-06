@@ -61,10 +61,6 @@ Otherwise, the jog is said to be **split**.
 
 Jogs, joggings and jogging hoons have **chess-sidedness**.
 Chess-sidedness is always either kingside and queenside.
-In standard code,
-no jogging or jogging hoon has "mixed"
-sidedness.
-What is called a "seaside" jog is a split kingside jog.
 
 Informally, **kingside** means the indentation has a left-side bias;
 and **queenside** means that the indentation has a right-side bias.
@@ -132,13 +128,9 @@ same column.
 This column is called the **jog body column** of the jogging.
 
 The indentation of the body of a split kingside jog
-should be 1 stop greater than the indentation of the jog's head.
-A split kingside is sometimes called "seaside",
-because of the resemblance of its indentation to the indentation
-common in C language code.
-
+should be 1 stop *greater* than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
-should be 1 stop less than the indentation of the jog's head.
+should be 1 stop *less* than the indentation of the jog's head.
 
 ## Non-standard code
 

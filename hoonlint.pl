@@ -1400,8 +1400,7 @@ sub doLint {
                       line_column( $head->{start} );
                     my ( $bodyLine, $bodyColumn ) =
                       line_column( $body->{start} );
-                    my $sideDesc =
-                      $bodyLine == $headLine ? 'kingside' : 'seaside';
+                    my $sideDesc = 'kingside';
 
                     my $expectedHeadColumn = $runeColumn + 2;
                     if ( $headColumn != $expectedHeadColumn ) {
