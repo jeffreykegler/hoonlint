@@ -155,11 +155,11 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
-my %tallJogging0Rule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
-my %tallJogging1Rule =
+my %tall_0JoggingRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
+my %tall_1JoggingRule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
-my %tallJogging2Rule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
-my %tallJoggingPrefixRule = map { +( $_, 1 ) } qw(tallTiscol);
+my %tall_2JoggingRule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
+my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
@@ -394,9 +394,13 @@ sub context2 {
   return '' if $contextLines <= 0;
   my @pieces = ();
   my $runeRangeStart = $runeLine - ($contextLines - 1);
+  $runeRangeStart = 1 if $runeRangeStart < 1;
   my $runeRangeEnd = $runeLine + ($contextLines - 1);
+  $runeRangeEnd = $#lineToPos if $runeRangeEnd > $#lineToPos;
   my $mistakeRangeStart = $mistakeLine - ($contextLines - 1);
+  $mistakeRangeStart = 1 if $mistakeRangeStart < 1;
   my $mistakeRangeEnd = $mistakeLine + ($contextLines - 1);
+  $mistakeRangeEnd = $#lineToPos if $mistakeRangeEnd > $#lineToPos;
   if ($mistakeRangeStart <= $runeRangeEnd + 2) {
     for my $lineNum ( $runeRangeStart .. $mistakeRangeEnd ) {
         my $start = $lineToPos[$lineNum];
@@ -993,7 +997,7 @@ sub doLint {
                   die "No jogging found for ", symbol($node);
                 };
 
-                sub isJogging0 {
+                sub is_0Jogging {
                     my ( $runeLine, $runeColumn, $gapIndents ) = @_;
                     my @mistakes = ();
                     die "Jogging-0-style rule with only $gapIndents gap indents"
@@ -1080,13 +1084,13 @@ sub doLint {
 
              # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
                     my @mistakes = ();
-                    die "1-Jogging-1 rule with only $gapIndents gap indents"
+                    die "1-jogging rule with only $gapIndents gap indents"
                       if $#$gapIndents < 3;
                     my ( $firstChildLine, $firstChildColumn ) =
                       @{ $gapIndents->[1] };
                     if ( $firstChildLine != $runeLine ) {
                         my $msg = sprintf
-                          "1-Jogging %s head %s; should be on rune line %d",
+                          "1-jogging %s head %s; should be on rune line %d",
                           $chessSide,
                           describeLC( $firstChildLine, $firstChildColumn ),
                           $runeLine;
@@ -1104,7 +1108,7 @@ sub doLint {
                       $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
                     if ( $firstChildColumn != $expectedColumn ) {
                         my $msg = sprintf
-                          "1-Jogging %s head %s; %s",
+                          "1-jogging %s head %s; %s",
                           $chessSide,
                           describeLC( $firstChildLine, $firstChildColumn ),
                           describeMisindent( $firstChildColumn,
@@ -1122,7 +1126,7 @@ sub doLint {
                     my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[3] };
                     if ( $tistisLine == $runeLine ) {
                         my $msg = sprintf
-                          "1-Jogging TISTIS %s; should not be on rune line",
+                          "1-jogging TISTIS %s; should not be on rune line",
                           $chessSide,
                           describeLC( $tistisLine, $tistisColumn );
                         push @mistakes,
@@ -1146,7 +1150,7 @@ sub doLint {
                         $tistisIsMisaligned = $tistis ne '==';
                     }
                     if ($tistisIsMisaligned) {
-                        my $msg = sprintf "1-Jogging TISTIS %s; %s",
+                        my $msg = sprintf "1-jogging TISTIS %s; %s",
                           describeLC( $tistisLine, $tistisColumn ),
                           describeMisindent( $tistisColumn, $runeColumn );
                         push @mistakes,
@@ -1270,7 +1274,7 @@ sub doLint {
                     return \@mistakes;
                 };
 
-                my $isJoggingPrefix = sub  {
+                my $isJogging_1 = sub  {
                     my ( $context, $node, $gapIndents ) = @_;
                     my $start  = $node->{start};
                     my ( $runeLine, $runeColumn ) = line_column($start);
@@ -1673,15 +1677,15 @@ sub doLint {
                         # last TYPE_INDENT;
                     # }
 
-                    if ( $tallJogging0Rule{$lhsName} ) {
+                    if ( $tall_0JoggingRule{$lhsName} ) {
                         $mistakes =
-                          isJogging0( $parentLine, $parentColumn, \@gapIndents );
+                          is_0Jogging( $parentLine, $parentColumn, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-0-STYLE';
                         last TYPE_INDENT;
                     }
 
-                    if ( $tallJogging1Rule{$lhsName} ) {
+                    if ( $tall_1JoggingRule{$lhsName} ) {
                         $mistakes =
                           $isJogging1->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
@@ -1689,7 +1693,7 @@ sub doLint {
                         last TYPE_INDENT;
                     }
 
-                    if ( $tallJogging2Rule{$lhsName} ) {
+                    if ( $tall_2JoggingRule{$lhsName} ) {
                         $mistakes =
                           $isJogging2->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
@@ -1697,9 +1701,9 @@ sub doLint {
                         last TYPE_INDENT;
                     }
 
-                    if ( $tallJoggingPrefixRule{$lhsName} ) {
+                    if ( $tallJogging1_Rule{$lhsName} ) {
                         $mistakes =
-                          $isJoggingPrefix->( $parentContext, $node, \@gapIndents );
+                          $isJogging_1->( $parentContext, $node, \@gapIndents );
                         last TYPE_INDENT if @{$mistakes};
                         $indentDesc = 'JOGGING-PREFIX-STYLE';
                         last TYPE_INDENT;
