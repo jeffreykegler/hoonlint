@@ -37,12 +37,9 @@ are called, in order, the **head** and **subhead** of
 the jogging.
 
 There are current four kinds of jogging.
-A 0-jogging has no head and no tail.
 A 1-jogging has one head and no tail.
 A 2-jogging has a head and a subhead and no tail.
 A jogging-1 has a tail and no head.
-
-* The current 0-jogging rules are WUTBAR (`?|`) and WUTPAM (`?&`).
 
 * The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
 
@@ -57,7 +54,7 @@ Every **jog** contains a **jog head**, followed by a gap and a **jog body**.
 Note that it is important to distinguish between the head of a jogging
 hoon, defined above, and the head of a jog.
 
-A jog is **flat** if its head and its body are both on the same line.
+A jog is **joined** if its head and its body are both on the same line.
 Otherwise, the jog is said to be **split**.
 
 ### Chess-sidedness
@@ -125,10 +122,10 @@ the rune column.
 A queenside jog should have an indentation 2 stops greater than
 the rune column.
 
-A flat jog may be either **aligned** or **ragged**.
-A flat jog is ragged is its body is indented 1 stop after
+A joined jog may be either **aligned** or **ragged**.
+A joined jog is ragged is its body is indented 1 stop after
 its head.
-Otherwise, a flat jog is considered aligned.
+Otherwise, a joined jog is considered aligned.
 
 All aligned jogs in a jogging should be indented to the
 same column.
