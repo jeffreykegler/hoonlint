@@ -155,7 +155,11 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
+
+# TODO: These are *not* jogging rules.  Change the name and look
+# at the logic.
 my %tall_0JoggingRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
+
 my %tall_1JoggingRule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
 my %tall_2JoggingRule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
