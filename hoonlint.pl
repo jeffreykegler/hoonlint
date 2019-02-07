@@ -1549,6 +1549,8 @@ sub doLint {
                     return \@mistakes;
                 };
 
+                # TODO: Add a check (optional?) for queenside joggings with no
+                # split jogs.
                 my $isJog = sub {
                     my ( $node, $context ) = @_;
                     # say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
