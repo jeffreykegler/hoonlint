@@ -1422,18 +1422,20 @@ sub doLint {
 
                         # Check for "seaside"
                         my $expectedBodyColumn = $runeColumn + 4;
-                        my $msg = sprintf 'Jog %s body %s; %s',
-                          $sideDesc,
-                          describeLC( $bodyLine, $bodyColumn ),
-                          describeMisindent( $bodyColumn, $expectedBodyColumn );
-                        push @mistakes,
-                          {
-                            desc           => $msg,
-                            line           => $bodyLine,
-                            column         => $bodyColumn,
-                            child          => 2,
-                            expectedColumn => $expectedBodyColumn,
-                          };
+                        if ( $bodyColumn != $expectedBodyColumn ) {
+                            my $msg = sprintf 'Jog %s body %s; %s',
+                              $sideDesc, describeLC( $bodyLine, $bodyColumn ),
+                              describeMisindent( $bodyColumn,
+                                $expectedBodyColumn );
+                            push @mistakes,
+                              {
+                                desc           => $msg,
+                                line           => $bodyLine,
+                                column         => $bodyColumn,
+                                child          => 2,
+                                expectedColumn => $expectedBodyColumn,
+                              };
+                        }
                         return \@mistakes;
                     }
 
