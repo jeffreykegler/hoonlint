@@ -14,14 +14,6 @@ hoons/arvo/sys/hoon.hoon 12272:22 sequence indentation off by one
 hoons/arvo/sys/hoon.hoon 12278:22 sequence indentation off by one
 hoons/arvo/sys/hoon.hoon 12279:22 sequence indentation off by one
 
-# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l13
-hoons/arvo/sys/hoon.hoon 2114:28 sequence two jogs on one line
-hoons/arvo/sys/hoon.hoon 2115:28 sequence two jogs on one line
-hoons/arvo/sys/hoon.hoon 2131:30 sequence two jogs on one line
-hoons/arvo/sys/hoon.hoon 2132:30 sequence two jogs on one line
-hoons/arvo/sys/hoon.hoon 2148:30 sequence two jogs on one line
-hoons/arvo/sys/hoon.hoon 2149:30 sequence two jogs on one line
-
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l14
 hoons/arvo/sys/hoon.hoon 11964:13 sequence misaligned
 
@@ -116,3 +108,29 @@ hoons/arvo/sys/hoon.hoon 7361:9 indent irregular COLHEP indentation
 hoons/arvo/sys/hoon.hoon 7812:18 indent irregular COLHEP indentation
 hoons/arvo/sys/hoon.hoon 8435:11 indent irregular COLHEP indentation
 hoons/arvo/sys/hoon.hoon 8452:9 indent irregular COLHEP indentation
+
+# "Flatward" indentation, correct to lint, see:
+# https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
+hoons/arvo/lib/hood/drum.hoon 792:9 indent tallWuthep 1-jogging queenside head @792:13; underindented by 2
+hoons/arvo/lib/hood/drum.hoon 792:18 indent tallWuthep Jog queenside head @792:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 793:18 indent tallWuthep Jog queenside head @793:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 794:18 indent tallWuthep Jog queenside head @794:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 796:5 indent tallWuthep 1-jogging queenside head @796:9; underindented by 2
+hoons/arvo/lib/hood/drum.hoon 796:14 indent tallWuthep Jog queenside head @796:14; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 797:14 indent tallWuthep Jog queenside head @797:14; overindented by 5
+
+# "Floats", see
+# https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
+hoons/arvo/sys/hoon.hoon 2114:28 indent tallWuthep Jog kingside head @2114:28; overindented by 19
+hoons/arvo/sys/hoon.hoon 2115:28 indent tallWuthep Jog kingside head @2115:28; overindented by 19
+hoons/arvo/sys/hoon.hoon 2131:30 indent tallWuthep Jog kingside head @2131:30; overindented by 19
+hoons/arvo/sys/hoon.hoon 2132:30 indent tallWuthep Jog kingside head @2132:30; overindented by 19
+hoons/arvo/sys/hoon.hoon 2148:30 indent tallWuthep Jog kingside head @2148:30; overindented by 19
+hoons/arvo/sys/hoon.hoon 2149:30 indent tallWuthep Jog kingside head @2149:30; overindented by 19
+
+# Stray space, see
+# https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
+hoons/arvo/sys/zuse.hoon 3889:15 indent tallWuthep Jog kingside head @3889:15; underindented by 1
+hoons/arvo/sys/zuse.hoon 3890:15 indent tallWuthep Jog kingside head @3890:15; underindented by 1
+hoons/arvo/sys/zuse.hoon 3893:15 indent tallWuthep Jog kingside head @3893:15; underindented by 1
+hoons/arvo/sys/zuse.hoon 3894:15 indent tallWuthep Jog kingside head @3894:15; underindented by 1

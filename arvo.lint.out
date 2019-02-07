@@ -150,11 +150,7 @@ hoons/arvo/sys/zuse.hoon 3372:13 indent tallKetwut Child #1 @ line 3373; backden
 hoons/arvo/sys/zuse.hoon 3562:15 indent tallKethep Child #2 @ line 3563; backdent is 10; should be 6
 hoons/arvo/sys/zuse.hoon 3737:15 indent tallKethep Child #2 @ line 3738; backdent is 10; should be 6
 hoons/arvo/sys/zuse.hoon 3762:13 indent tallKetwut Child #1 @ line 3763; backdent is 2; should be 12
-hoons/arvo/sys/zuse.hoon 3854:7 indent tallCentis 1-Jogging kingside head @3854:12; overindented by 1
-hoons/arvo/sys/zuse.hoon 3889:15 indent tallWuthep Jog kingside head @3889:15; underindented by 1
-hoons/arvo/sys/zuse.hoon 3890:15 indent tallWuthep Jog kingside head @3890:15; underindented by 1
-hoons/arvo/sys/zuse.hoon 3893:15 indent tallWuthep Jog kingside head @3893:15; underindented by 1
-hoons/arvo/sys/zuse.hoon 3894:15 indent tallWuthep Jog kingside head @3894:15; underindented by 1
+hoons/arvo/sys/zuse.hoon 3854:7 indent tallCentis 1-jogging kingside head @3854:12; overindented by 1
 hoons/arvo/sys/zuse.hoon 3920:11 indent tallKetwut Child #1 @ line 3921; backdent is 2; should be 10
 hoons/arvo/sys/zuse.hoon 3926:14 indent tallKetwut Child #1 @ line 3927; backdent is 4; should be 13
 hoons/arvo/sys/zuse.hoon 3950:11 indent tallKettis Child #2 @ line 3951; backdent is 6; should be 10
@@ -166,7 +162,7 @@ hoons/arvo/sys/zuse.hoon 3965:7 sequence tall5dSeq 3965:7 3968:10
 hoons/arvo/sys/zuse.hoon 3965:7 sequence tall5dSeq 3965:7 3969:10
 hoons/arvo/sys/zuse.hoon 3965:7 sequence tall5dSeq 3965:7 3970:10
 hoons/arvo/sys/zuse.hoon 4020:7 indent tallWutlus Jogging-2-style kingside child #1 @4020:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 4166:7 indent tallCentis 1-Jogging kingside head @4166:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 4166:7 indent tallCentis 1-jogging kingside head @4166:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 4189:15 indent tallSiglus Child #1 @ line 4190; backdent is 6; should be 14
 hoons/arvo/sys/zuse.hoon 4206:9 indent tallCenlus Child #3 @ line 4207; backdent is 10; should be 8
 hoons/arvo/sys/zuse.hoon 4263:11 indent tallSemsig Child #2 @ line 4264; backdent is 14; should be 12
@@ -233,17 +229,11 @@ hoons/arvo/sys/hoon.hoon 2056:12 indent tallWutcol Child #3 @ line 2062; backden
 hoons/arvo/sys/hoon.hoon 2072:1 indent LuslusCell Child #2 @ line 2075; backdent is 8; should be 2
 hoons/arvo/sys/hoon.hoon 2080:1 indent LuslusCell Child #2 @ line 2082; backdent is 8; should be 2
 hoons/arvo/sys/hoon.hoon 2087:1 indent LuslusCell Child #2 @ line 2089; backdent is 8; should be 2
-hoons/arvo/sys/hoon.hoon 2114:28 indent tallWuthep Jog kingside head @2114:28; overindented by 19
-hoons/arvo/sys/hoon.hoon 2115:28 indent tallWuthep Jog kingside head @2115:28; overindented by 19
 hoons/arvo/sys/hoon.hoon 2122:11 indent tallWutdot Child #3 @ line 2123; backdent is 6; should be 10
 hoons/arvo/sys/hoon.hoon 2126:35 indent tallCenhep Child #2 @ line 2127; backdent is 8; should be 34
-hoons/arvo/sys/hoon.hoon 2131:30 indent tallWuthep Jog kingside head @2131:30; overindented by 19
-hoons/arvo/sys/hoon.hoon 2132:30 indent tallWuthep Jog kingside head @2132:30; overindented by 19
 hoons/arvo/sys/hoon.hoon 2140:11 indent tallWutdot Child #2 @ line 2141; backdent is 8; should be 12
 hoons/arvo/sys/hoon.hoon 2140:11 indent tallWutdot Child #3 @ line 2142; backdent is 6; should be 10
 hoons/arvo/sys/hoon.hoon 2143:35 indent tallCenhep Child #2 @ line 2144; backdent is 8; should be 34
-hoons/arvo/sys/hoon.hoon 2148:30 indent tallWuthep Jog kingside head @2148:30; overindented by 19
-hoons/arvo/sys/hoon.hoon 2149:30 indent tallWuthep Jog kingside head @2149:30; overindented by 19
 hoons/arvo/sys/hoon.hoon 2153:11 indent tallWutdot Child #2 @ line 2154; backdent is 8; should be 12
 hoons/arvo/sys/hoon.hoon 2153:11 indent tallWutdot Child #3 @ line 2155; backdent is 6; should be 10
 hoons/arvo/sys/hoon.hoon 2167:14 indent tallWutcol Child #3 @ line 2168; backdent is 6; should be 13
@@ -321,7 +311,7 @@ hoons/arvo/sys/hoon.hoon 3696:11 indent tallKettis Child #2 @ line 3697; backden
 hoons/arvo/sys/hoon.hoon 3749:20 indent tallSiglus Child #1 @ line 3750; backdent is 6; should be 2
 hoons/arvo/sys/hoon.hoon 3956:9 indent tallWutlus Jogging-2-style kingside child #1 @3956:13; underindented by 2
 hoons/arvo/sys/hoon.hoon 4049:3 indent tallWutlus Jogging-2-style kingside child #1 @4049:7; underindented by 2
-hoons/arvo/sys/hoon.hoon 4056:10 indent tallCentis 1-Jogging kingside head @4056:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 4056:10 indent tallCentis 1-jogging kingside head @4056:16; overindented by 2
 hoons/arvo/sys/hoon.hoon 4057:13 indent tallCentis Jog kingside head @4057:13; overindented by 1
 hoons/arvo/sys/hoon.hoon 4058:13 indent tallCentis Jog kingside head @4058:13; overindented by 1
 hoons/arvo/sys/hoon.hoon 4059:13 indent tallCentis Jog kingside head @4059:13; overindented by 1
@@ -358,7 +348,6 @@ hoons/arvo/sys/hoon.hoon 5034:11 indent tallWutlus Jogging-2-style queenside chi
 hoons/arvo/sys/hoon.hoon 5038:17 indent tallKetlus Child #2 @ line 5039; backdent is 16; should be 12
 hoons/arvo/sys/hoon.hoon 5072:11 indent tallWutlus Jogging-2-style kingside child #1 @5072:15; underindented by 2
 hoons/arvo/sys/hoon.hoon 5090:13 indent tallCentis Jog kingside body @5090:22; overindented by 4
-hoons/arvo/sys/hoon.hoon 5091:13 indent tallCentis Jog seaside body @5092:15; correctly indented
 hoons/arvo/sys/hoon.hoon 5093:15 indent tallSemcol Child #3 @ line 5098; backdent is 13; should be 14
 hoons/arvo/sys/hoon.hoon 5102:11 indent tallWutlus Jogging-2-style kingside child #1 @5102:15; underindented by 2
 hoons/arvo/sys/hoon.hoon 5115:11 indent tallWutlus Jogging-2-style kingside child #1 @5115:15; underindented by 2
@@ -385,8 +374,8 @@ hoons/arvo/sys/hoon.hoon 5679:7 indent tallBartis Child #1 @ line 5681; backdent
 hoons/arvo/sys/hoon.hoon 5691:7 indent tallBartis Child #1 @ line 5693; backdent is 10; should be 8
 hoons/arvo/sys/hoon.hoon 5750:9 indent tallBuccolMold Child #1 @ line 5753; backdent is 12; should be 10
 hoons/arvo/sys/hoon.hoon 5776:9 indent tallBuccolMold Child #1 @ line 5779; backdent is 12; should be 10
-hoons/arvo/sys/hoon.hoon 5793:7 indent tallWuthep Jog seaside body @5795:11; overindented by 2
-hoons/arvo/sys/hoon.hoon 5804:7 indent tallWuthep Jog seaside body @5806:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 5793:7 indent tallWuthep Jog kingside body @5795:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 5804:7 indent tallWuthep Jog kingside body @5806:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 5861:3 indent tallWutlus Jogging-2-style queenside child #1 @5861:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 5872:14 indent tallColsig Child #2 @ line 5875; backdent is 2; should be 13
 hoons/arvo/sys/hoon.hoon 5958:1 indent LuslusCell Child #2 @ line 5959; backdent is 10; should be 2
@@ -401,10 +390,10 @@ hoons/arvo/sys/hoon.hoon 6202:1 indent LuslusCell Child #2 @ line 6203; backdent
 hoons/arvo/sys/hoon.hoon 6213:1 indent LuslusCell Child #2 @ line 6214; backdent is 10; should be 2
 hoons/arvo/sys/hoon.hoon 6226:1 indent LuslusCell Child #2 @ line 6227; backdent is 10; should be 2
 hoons/arvo/sys/hoon.hoon 6384:9 indent tallWuthep Jog queenside body @6384:17; underindented by 2
-hoons/arvo/sys/hoon.hoon 6397:3 indent tallWuthep 1-Jogging queenside head @6397:7; underindented by 2
-hoons/arvo/sys/hoon.hoon 6401:5 indent tallWuthep 1-Jogging queenside head @6401:9; underindented by 2
-hoons/arvo/sys/hoon.hoon 6450:3 indent tallWuthep 1-Jogging queenside head @6450:7; underindented by 2
-hoons/arvo/sys/hoon.hoon 6483:3 indent tallWuthep 1-Jogging queenside head @6483:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 6397:3 indent tallWuthep 1-jogging queenside head @6397:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 6401:5 indent tallWuthep 1-jogging queenside head @6401:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 6450:3 indent tallWuthep 1-jogging queenside head @6450:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 6483:3 indent tallWuthep 1-jogging queenside head @6483:7; underindented by 2
 hoons/arvo/sys/hoon.hoon 6583:7 indent tallWutlus Jogging-2-style kingside child #1 @6583:11; underindented by 2
 hoons/arvo/sys/hoon.hoon 6715:9 indent tallBuccolMold Child #1 @ line 6718; backdent is 12; should be 10
 hoons/arvo/sys/hoon.hoon 6778:11 indent tallBuccolMold Child #1 @ line 6781; backdent is 14; should be 12
@@ -423,7 +412,7 @@ hoons/arvo/sys/hoon.hoon 7465:5 indent tallWutlus Jogging-2-style kingside child
 hoons/arvo/sys/hoon.hoon 7489:5 indent tallWutlus Jogging-2-style queenside child #1 @7489:9; underindented by 4
 hoons/arvo/sys/hoon.hoon 7535:9 indent tallWuthep Jog queenside body @7535:21; overindented by 1
 hoons/arvo/sys/hoon.hoon 7607:20 indent tallCollus Child #2 @ line 7608; backdent is 22; should be 21
-hoons/arvo/sys/hoon.hoon 7754:7 indent tallWuthep 1-Jogging queenside head @7754:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 7754:7 indent tallWuthep 1-jogging queenside head @7754:11; underindented by 2
 hoons/arvo/sys/hoon.hoon 7785:9 indent tallCollus Child #2 @ line 7786; backdent is 8; should be 10
 hoons/arvo/sys/hoon.hoon 7815:22 indent tallCollus Child #2 @ line 7816; backdent is 24; should be 23
 hoons/arvo/sys/hoon.hoon 7835:9 indent tallWuthep Jog queenside body @7835:21; overindented by 1
@@ -459,7 +448,7 @@ hoons/arvo/sys/hoon.hoon 8023:9 indent tallWuthep Jog kingside body @8023:18; ov
 hoons/arvo/sys/hoon.hoon 8029:9 indent tallWuthep Jog kingside body @8029:17; overindented by 1
 hoons/arvo/sys/hoon.hoon 8033:9 indent tallWuthep Jog kingside body @8033:17; overindented by 1
 hoons/arvo/sys/hoon.hoon 8240:21 indent tallCenlus Child #3 @ line 8241; backdent is 18; should be 20
-hoons/arvo/sys/hoon.hoon 8255:5 indent tallWuthep 1-Jogging kingside head @8255:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8255:5 indent tallWuthep 1-jogging kingside head @8255:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 8314:9 indent tallWutlus Jogging-2-style kingside child #1 @8314:13; underindented by 2
 hoons/arvo/sys/hoon.hoon 8322:9 indent tallWutlus Jogging-2-style kingside child #1 @8322:13; underindented by 2
 hoons/arvo/sys/hoon.hoon 8334:11 indent tallWuthep Jog queenside body @8334:22; overindented by 13
@@ -486,16 +475,16 @@ hoons/arvo/sys/hoon.hoon 8574:9 indent LushepCell Child #2 @ line 8575; backdent
 hoons/arvo/sys/hoon.hoon 8661:9 indent LuslusCell Child #2 @ line 8662; backdent is 18; should be 10
 hoons/arvo/sys/hoon.hoon 8684:11 indent tallColcab Child #2 @ line 8685; backdent is 10; should be 6
 hoons/arvo/sys/hoon.hoon 8789:21 indent tallKethep Child #2 @ line 8790; backdent is 20; should be 16
-hoons/arvo/sys/hoon.hoon 8790:21 indent tallWuthep 1-Jogging kingside head @8790:27; overindented by 2
-hoons/arvo/sys/hoon.hoon 8818:9 indent tallWuthep 1-Jogging kingside head @8818:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 8880:5 indent tallWuthep 1-Jogging queenside head @8880:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 8790:21 indent tallWuthep 1-jogging kingside head @8790:27; overindented by 2
+hoons/arvo/sys/hoon.hoon 8818:9 indent tallWuthep 1-jogging kingside head @8818:15; overindented by 2
+hoons/arvo/sys/hoon.hoon 8880:5 indent tallWuthep 1-jogging queenside head @8880:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 8940:9 indent tallWuthep Jog queenside body @8940:21; overindented by 14
 hoons/arvo/sys/hoon.hoon 8941:9 indent tallWuthep Jog queenside body @8941:21; overindented by 14
-hoons/arvo/sys/hoon.hoon 8959:5 indent tallWuthep 1-Jogging kingside head @8959:11; overindented by 2
-hoons/arvo/sys/hoon.hoon 8972:5 indent tallWuthep 1-Jogging kingside head @8972:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8959:5 indent tallWuthep 1-jogging kingside head @8959:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8972:5 indent tallWuthep 1-jogging kingside head @8972:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 9112:9 indent tallWuthep Jog queenside body @9112:21; overindented by 14
 hoons/arvo/sys/hoon.hoon 9133:9 indent tallWuthep Jog queenside body @9133:21; overindented by 14
-hoons/arvo/sys/hoon.hoon 9346:7 indent tallWuthep 1-Jogging kingside head @9346:13; overindented by 2
+hoons/arvo/sys/hoon.hoon 9346:7 indent tallWuthep 1-jogging kingside head @9346:13; overindented by 2
 hoons/arvo/sys/hoon.hoon 9356:9 indent tallBuccolMold Child #1 @ line 9358; backdent is 12; should be 10
 hoons/arvo/sys/hoon.hoon 9382:20 indent tallWutcol Child #2 @ line 9383; backdent is 22; should be 21
 hoons/arvo/sys/hoon.hoon 9389:7 indent tallWutlus Jogging-2-style kingside child #1 @9389:11; underindented by 2
@@ -535,7 +524,7 @@ hoons/arvo/sys/hoon.hoon 11203:17 indent tallKetlus Child #2 @ line 11206; backd
 hoons/arvo/sys/hoon.hoon 11240:13 indent tallWutlus Jogging-2-style kingside child #1 @11240:17; underindented by 2
 hoons/arvo/sys/hoon.hoon 11318:19 indent tallKetlus Child #2 @ line 11319; backdent is 10; should be 18
 hoons/arvo/sys/hoon.hoon 11389:13 indent tallBuccolMold Child #1 @ line 11392; backdent is 16; should be 14
-hoons/arvo/sys/hoon.hoon 11568:13 indent tallWuthep Jog seaside body @11570:20; overindented by 5
+hoons/arvo/sys/hoon.hoon 11568:13 indent tallWuthep Jog kingside body @11570:20; overindented by 5
 hoons/arvo/sys/hoon.hoon 11664:3 indent LuslusCell Child #2 @ line 11665; backdent is 6; should be 4
 hoons/arvo/sys/hoon.hoon 11670:7 indent tallWutlus Jogging-2-style kingside child #1 @11670:11; underindented by 2
 hoons/arvo/sys/hoon.hoon 11682:15 indent tallKetdot Child #2 @ line 11683; backdent is 4; should be 14
@@ -566,7 +555,7 @@ hoons/arvo/sys/hoon.hoon 12330:23 indent tallWutcol Child #2 @ line 12331; backd
 hoons/arvo/sys/hoon.hoon 12379:15 indent tallBardot Child #1 @ line 12380; backdent is 6; should be 14
 hoons/arvo/sys/hoon.hoon 12384:15 indent tallBardot Child #1 @ line 12385; backdent is 6; should be 14
 hoons/arvo/sys/hoon.hoon 12398:15 indent tallBardot Child #1 @ line 12399; backdent is 8; should be 14
-hoons/arvo/sys/hoon.hoon 12436:5 indent tallWuthep 1-Jogging kingside head @12436:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 12436:5 indent tallWuthep 1-jogging kingside head @12436:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 12588:9 indent tallZapcol Child #1 @ line 12589; backdent is 2; should be 8
 hoons/arvo/sys/hoon.hoon 12620:10 indent tallWuthep Jog kingside head @12620:10; overindented by 1
 hoons/arvo/sys/hoon.hoon 12621:10 indent tallWuthep Jog kingside head @12621:10; overindented by 1
@@ -577,12 +566,6 @@ hoons/arvo/sys/hoon.hoon 12777:1 indent LuslusCell Child #2 @ line 12778; backde
 hoons/arvo/sys/hoon.hoon 12783:1 indent LuslusCell Child #2 @ line 12784; backdent is 10; should be 2
 hoons/arvo/sys/hoon.hoon 12814:1 indent LuslusCell Child #2 @ line 12815; backdent is 4; should be 2
 hoons/arvo/sys/hoon.hoon 12843:3 indent tallWutlus Jogging-2-style kingside child #1 @12843:7; underindented by 2
-Unused suppression: sequence 2149:30
-Unused suppression: sequence 2131:30
-Unused suppression: sequence 2114:28
-Unused suppression: sequence 2132:30
-Unused suppression: sequence 2148:30
-Unused suppression: sequence 2115:28
 === hoons/arvo/sys/arvo.hoon ===
 hoons/arvo/sys/arvo.hoon 9:1 indent tallTisgar Child #1 @ line 10; backdent is 0; should be 2
 hoons/arvo/sys/arvo.hoon 17:1 indent LuslusCell Child #2 @ line 18; backdent is 10; should be 2
@@ -617,7 +600,7 @@ hoons/arvo/sys/vane/dill.hoon 62:3 indent tallBucwut Child #2 @ line 67; backden
 hoons/arvo/sys/vane/dill.hoon 62:7 sequence till5dSeq 62:7 63:3
 hoons/arvo/sys/vane/dill.hoon 87:3 indent tallBucwut Child #2 @ line 92; backdent is 6; should be 2
 hoons/arvo/sys/vane/dill.hoon 87:7 sequence till5dSeq 87:7 88:3
-hoons/arvo/sys/vane/dill.hoon 115:11 indent tallWutlus Jog seaside body @116:18; overindented by 5
+hoons/arvo/sys/vane/dill.hoon 115:11 indent tallWutlus Jog kingside body @116:18; overindented by 5
 hoons/arvo/sys/vane/dill.hoon 198:21 indent tallCenlus Child #3 @ line 199; backdent is 10; should be 20
 hoons/arvo/sys/vane/dill.hoon 201:11 indent tallSemcol Child #2 @ line 202; backdent is 14; should be 12
 hoons/arvo/sys/vane/dill.hoon 498:9 indent tallTiscol Jog queenside body @498:19; overindented by 1
@@ -643,7 +626,7 @@ hoons/arvo/sys/vane/ford.hoon 341:9 indent tallWutlus Jogging-2-style queenside 
 hoons/arvo/sys/vane/ford.hoon 343:11 indent tallTisfas Child #2 @ line 344; backdent is 14; should be 12
 hoons/arvo/sys/vane/ford.hoon 365:9 indent tallWutlus Jogging-2-style kingside child #1 @365:13; underindented by 2
 hoons/arvo/sys/vane/ford.hoon 446:15 indent tallZapdot Child #1 @ line 447; backdent is 6; should be 14
-hoons/arvo/sys/vane/ford.hoon 510:9 indent tallWuthep Jog seaside body @511:13; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 510:9 indent tallWuthep Jog kingside body @511:13; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 730:11 indent tallCencab Jog kingside body @730:17; overindented by 1
 hoons/arvo/sys/vane/ford.hoon 931:30 indent tallColcab Child #2 @ line 932; backdent is 12; should be 10
 hoons/arvo/sys/vane/ford.hoon 974:30 indent tallColcab Child #2 @ line 975; backdent is 12; should be 10
@@ -667,7 +650,7 @@ hoons/arvo/sys/vane/ames.hoon 85:17 indent tallKethep Child #2 @ line 86; backde
 hoons/arvo/sys/vane/ames.hoon 625:13 indent tallColhep Child #2 @ line 626; backdent is 14; should be 12
 hoons/arvo/sys/vane/ames.hoon 688:13 indent tallZapcol Child #1 @ line 689; backdent is 6; should be 12
 hoons/arvo/sys/vane/ames.hoon 819:7 indent tallTisket Child #3 @ line 820; backdent is 10; should be 8
-hoons/arvo/sys/vane/ames.hoon 865:9 indent tallCencab 1-Jogging kingside head @865:15; overindented by 2
+hoons/arvo/sys/vane/ames.hoon 865:9 indent tallCencab 1-jogging kingside head @865:15; overindented by 2
 hoons/arvo/sys/vane/ames.hoon 975:15 indent tallZapcol Child #1 @ line 976; backdent is 6; should be 14
 hoons/arvo/sys/vane/ames.hoon 1153:15 indent tallKethep Child #2 @ line 1154; backdent is 14; should be 10
 hoons/arvo/sys/vane/ames.hoon 1278:26 indent tallKethep Child #2 @ line 1279; backdent is 18; should be 16
@@ -678,19 +661,18 @@ hoons/arvo/sys/vane/ames.hoon 1386:11 indent tallTisdot Child #2 @ line 1387; ba
 hoons/arvo/sys/vane/ames.hoon 1424:11 indent tallTisdot Child #2 @ line 1425; backdent is 14; should be 12
 hoons/arvo/sys/vane/ames.hoon 1432:15 indent tallColsig Child #2 @ line 1454; backdent is 14; should be 10
 hoons/arvo/sys/vane/ames.hoon 1568:7 indent tallWutlus Jogging-2-style queenside child #1 @1568:13; underindented by 2
-hoons/arvo/sys/vane/ames.hoon 1638:5 indent tallWuthep 1-Jogging queenside head @1638:9; underindented by 2
+hoons/arvo/sys/vane/ames.hoon 1638:5 indent tallWuthep 1-jogging queenside head @1638:9; underindented by 2
 === hoons/arvo/sys/vane/gall.hoon ===
 hoons/arvo/sys/vane/gall.hoon 6:5 indent tallTissig Child #1 @ line 7; backdent is 0; should be 8
 hoons/arvo/sys/vane/gall.hoon 6:5 indent tallTissig Child #2 @ line 22; backdent is 0; should be 6
 hoons/arvo/sys/vane/gall.hoon 6:5 indent tallTissig Child #3 @ line 97; backdent is 3; should be 4
 hoons/arvo/sys/vane/gall.hoon 53:1 indent LuslusCell Child #2 @ line 54; backdent is 4; should be 2
-hoons/arvo/sys/vane/gall.hoon 117:5 indent tallCencab 1-Jogging kingside head @117:11; overindented by 2
+hoons/arvo/sys/vane/gall.hoon 117:5 indent tallCencab 1-jogging kingside head @117:11; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 317:5 indent tallWutlus Jogging-2-style queenside child #1 @317:11; underindented by 2
 hoons/arvo/sys/vane/gall.hoon 341:9 indent tallWuthep Jog kingside body @341:15; underindented by 1
 hoons/arvo/sys/vane/gall.hoon 342:16 indent tallTisdot Child #3 @ line 343; backdent is 14; should be 15
-hoons/arvo/sys/vane/gall.hoon 392:7 indent tallWuthep 1-Jogging kingside head @392:13; overindented by 2
+hoons/arvo/sys/vane/gall.hoon 392:7 indent tallWuthep 1-jogging kingside head @392:13; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 632:7 indent tallWutlus Jogging-2-style kingside child #1 @632:11; underindented by 2
-hoons/arvo/sys/vane/gall.hoon 635:9 indent tallWutlus Jog seaside body @636:11; correctly indented
 hoons/arvo/sys/vane/gall.hoon 653:9 indent tallWuthep Jog kingside body @653:21; overindented by 4
 hoons/arvo/sys/vane/gall.hoon 743:9 indent tallColtar Child #2 @ line 755; backdent is 12; should be 8
 hoons/arvo/sys/vane/gall.hoon 750:13 indent tallColtar Child #2 @ line 755; backdent is 8; should be 12
@@ -702,7 +684,7 @@ hoons/arvo/sys/vane/gall.hoon 1031:7 indent tallTisket Child #3 @ line 1032; bac
 hoons/arvo/sys/vane/gall.hoon 1088:7 indent tallTisket Child #3 @ line 1089; backdent is 10; should be 8
 hoons/arvo/sys/vane/gall.hoon 1179:30 indent tallBardot Child #1 @ line 1180; backdent is 10; should be 19
 hoons/arvo/sys/vane/gall.hoon 1208:7 indent tallWutlus Jogging-2-style kingside child #1 @1208:11; underindented by 2
-hoons/arvo/sys/vane/gall.hoon 1297:3 indent tallWuthep 1-Jogging queenside head @1297:7; underindented by 2
+hoons/arvo/sys/vane/gall.hoon 1297:3 indent tallWuthep 1-jogging queenside head @1297:7; underindented by 2
 === hoons/arvo/sys/vane/eyre.hoon ===
 hoons/arvo/sys/vane/eyre.hoon 12:5 indent tallTissig Child #1 @ line 13; backdent is 0; should be 8
 hoons/arvo/sys/vane/eyre.hoon 12:5 indent tallTissig Child #2 @ line 86; backdent is 0; should be 6
@@ -741,15 +723,13 @@ hoons/arvo/sys/vane/eyre.hoon 581:7 indent tallTailOfTop Child #1 @ line 591; ba
 hoons/arvo/sys/vane/eyre.hoon 594:10 indent tallTailOfElem Child #1 @ line 607; backdent is 4; should be 9
 hoons/arvo/sys/vane/eyre.hoon 595:12 indent tallTailOfElem Child #1 @ line 605; backdent is 6; should be 11
 hoons/arvo/sys/vane/eyre.hoon 625:3 indent wisp5d Child #1 @ line 1981; backdent is 4; should be 2
-hoons/arvo/sys/vane/eyre.hoon 715:7 indent tallWuthep 1-Jogging queenside head @715:11; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 715:7 indent tallWuthep 1-jogging queenside head @715:11; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 720:9 indent tallWutdot Child #2 @ line 721; backdent is 9; should be 10
-hoons/arvo/sys/vane/eyre.hoon 750:9 indent tallWuthep Jog seaside body @751:11; correctly indented
-hoons/arvo/sys/vane/eyre.hoon 759:9 indent tallWuthep Jog seaside body @761:11; correctly indented
 hoons/arvo/sys/vane/eyre.hoon 767:7 indent tallWuthep Jog queenside head @767:7; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 790:9 indent tallWuthep Jog queenside body @793:11; overindented by 4
 hoons/arvo/sys/vane/eyre.hoon 850:11 indent tallWuthep Jog queenside body @850:21; underindented by 17
 hoons/arvo/sys/vane/eyre.hoon 877:16 indent tallWutlus Jogging-2-style kingside child #1 @877:20; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1094:7 indent tallWuthep 1-Jogging queenside head @1094:11; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1094:7 indent tallWuthep 1-jogging queenside head @1094:11; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1107:9 indent tallWutlus Jogging-2-style queenside child #1 @1107:15; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1166:9 indent tallWutlus Jogging-2-style queenside child #1 @1166:15; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1184:13 indent tallTisgal Child #2 @ line 1185; backdent is 12; should be 8
@@ -765,15 +745,12 @@ hoons/arvo/sys/vane/eyre.hoon 1318:7 indent tallWutlus Jogging-2-style kingside 
 hoons/arvo/sys/vane/eyre.hoon 1378:9 indent tallBarhep Child #1 @ line 1379; backdent is 10; should be 8
 hoons/arvo/sys/vane/eyre.hoon 1408:9 indent tallWutlus Jogging-2-style queenside child #1 @1408:15; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1506:11 indent tallKethep Child #2 @ line 1507; backdent is 10; should be 6
-hoons/arvo/sys/vane/eyre.hoon 1562:9 indent tallCencab Jog seaside body @1564:11; correctly indented
 hoons/arvo/sys/vane/eyre.hoon 1785:5 indent wisp5d Child #1 @ line 1981; backdent is 0; should be 4
 hoons/arvo/sys/vane/eyre.hoon 1820:19 indent tallKethep Child #2 @ line 1821; backdent is 6; should be 18
 hoons/arvo/sys/vane/eyre.hoon 1867:7 indent tallWutlus Jogging-2-style kingside child #1 @1867:11; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1869:9 indent tallWutlus Jog seaside body @1870:11; correctly indented
 hoons/arvo/sys/vane/eyre.hoon 1944:11 indent bont5d Child #1 @ line 1945; backdent is 8; should be 10
 hoons/arvo/sys/vane/eyre.hoon 2045:3 indent tallWutlus Jogging-2-style queenside child #1 @2045:9; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 2057:5 indent tallWutlus Jogging-2-style kingside child #1 @2057:9; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 2059:7 indent tallWutlus Jog seaside body @2060:9; correctly indented
 === hoons/arvo/sys/vane/xmas.hoon ===
 hoons/arvo/sys/vane/xmas.hoon 3:3 indent tallZapcol Child #1 @ line 4; backdent is 0; should be 2
 hoons/arvo/sys/vane/xmas.hoon 5:5 indent tallTissig Child #1 @ line 6; backdent is 0; should be 8
@@ -795,7 +772,7 @@ hoons/arvo/sys/vane/xmas.hoon 104:1 sequence tall5dSeq 104:1 1162:3
 hoons/arvo/sys/vane/xmas.hoon 434:11 indent tallZapcol Child #1 @ line 435; backdent is 2; should be 10
 hoons/arvo/sys/vane/xmas.hoon 460:13 indent tallColsig Child #2 @ line 462; backdent is 12; should be 8
 hoons/arvo/sys/vane/xmas.hoon 764:11 indent tallKethep Child #2 @ line 769; backdent is 10; should be 6
-hoons/arvo/sys/vane/xmas.hoon 863:7 indent tallCentis 1-Jogging kingside head @863:13; overindented by 2
+hoons/arvo/sys/vane/xmas.hoon 863:7 indent tallCentis 1-jogging kingside head @863:13; overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 919:5 indent tallWutlus Jogging-2-style kingside child #1 @919:9; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1144:5 indent tallColtar Child #2 @ line 1159; backdent is 8; should be 4
 hoons/arvo/sys/vane/xmas.hoon 1148:9 indent tallColtar Child #2 @ line 1159; backdent is 4; should be 8
@@ -807,7 +784,7 @@ hoons/arvo/sys/vane/xmas.hoon 1153:17 indent tallColtar Child #2 @ line 1156; ba
 hoons/arvo/sys/vane/xmas.hoon 1227:18 indent tallKethep Child #2 @ line 1228; backdent is 12; should be 8
 hoons/arvo/sys/vane/xmas.hoon 1238:18 indent tallKethep Child #2 @ line 1239; backdent is 10; should be 8
 hoons/arvo/sys/vane/xmas.hoon 1239:11 indent tallWutlus Jogging-2-style queenside child #1 @1239:17; underindented by 2
-hoons/arvo/sys/vane/xmas.hoon 1243:13 indent tallWuthep 1-Jogging queenside head @1243:17; underindented by 2
+hoons/arvo/sys/vane/xmas.hoon 1243:13 indent tallWuthep 1-jogging queenside head @1243:17; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1288:3 indent tallWutlus Jogging-2-style queenside child #1 @1288:9; underindented by 2
 === hoons/arvo/sys/vane/clay.hoon ===
 hoons/arvo/sys/vane/clay.hoon 14:1 indent tallTisgar Child #2 @ line 321; backdent is 4; should be 0
@@ -852,7 +829,6 @@ hoons/arvo/sys/vane/clay.hoon 1499:9 indent tallKethep Child #2 @ line 1500; bac
 hoons/arvo/sys/vane/clay.hoon 1584:9 indent tallWutlus Jogging-2-style kingside child #1 @1584:13; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 1686:9 indent tallKethep Child #2 @ line 1687; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 1691:9 indent tallKethep Child #2 @ line 1692; backdent is 8; should be 4
-hoons/arvo/sys/vane/clay.hoon 1751:11 indent tallWuthep Jog seaside body @1752:13; correctly indented
 hoons/arvo/sys/vane/clay.hoon 1764:9 indent tallKethep Child #2 @ line 1765; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 1859:7 indent tallBarket Child #1 @ line 1860; backdent is 6; should be 8
 hoons/arvo/sys/vane/clay.hoon 1875:7 indent tallTissem Child #2 @ line 1876; backdent is 10; should be 8
@@ -861,15 +837,15 @@ hoons/arvo/sys/vane/clay.hoon 1989:32 indent tallColtar Child #1 @ line 1990; ba
 hoons/arvo/sys/vane/clay.hoon 1989:32 indent tallColtar Child #2 @ line 1992; backdent is 4; should be 31
 hoons/arvo/sys/vane/clay.hoon 2049:11 indent tallKethep Child #2 @ line 2050; backdent is 10; should be 6
 hoons/arvo/sys/vane/clay.hoon 2131:11 indent tallWuthep Jog queenside body @2131:17; overindented by 8
-hoons/arvo/sys/vane/clay.hoon 2161:9 indent tallWuthep Jog seaside body @2162:12; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 2174:9 indent tallWuthep Jog seaside body @2175:12; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 2161:9 indent tallWuthep Jog kingside body @2162:12; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 2174:9 indent tallWuthep Jog kingside body @2175:12; overindented by 1
 hoons/arvo/sys/vane/clay.hoon 2295:11 indent tallWutgar Child #2 @ line 2296; backdent is 10; should be 6
 hoons/arvo/sys/vane/clay.hoon 2316:11 indent tallKethep Child #2 @ line 2317; backdent is 10; should be 6
 hoons/arvo/sys/vane/clay.hoon 2391:7 indent tallWutlus Jogging-2-style queenside child #1 @2391:11; underindented by 4
 hoons/arvo/sys/vane/clay.hoon 2391:7 indent tallWutlus Jogging-2-style queenside child #2 @2392:9; underindented by 4
 hoons/arvo/sys/vane/clay.hoon 2560:11 indent tallKethep Child #2 @ line 2563; backdent is 10; should be 6
-hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep Jog seaside head @2595:11; overindented by 2
-hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep Jog seaside body @2596:9; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep Jog kingside head @2595:11; overindented by 2
+hoons/arvo/sys/vane/clay.hoon 2595:11 indent tallWuthep Jog kingside body @2596:9; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 2653:11 indent tallKethep Child #2 @ line 2654; backdent is 10; should be 6
 hoons/arvo/sys/vane/clay.hoon 2719:11 indent tallSigbar Child #2 @ line 2726; backdent is 11; should be 10
 hoons/arvo/sys/vane/clay.hoon 2727:9 indent tallWutlus Jogging-2-style kingside child #1 @2727:13; underindented by 2
@@ -892,7 +868,7 @@ hoons/arvo/sys/vane/clay.hoon 3628:9 indent tallKethep Child #2 @ line 3629; bac
 hoons/arvo/sys/vane/clay.hoon 3640:11 indent tallKethep Child #2 @ line 3641; backdent is 10; should be 6
 hoons/arvo/sys/vane/clay.hoon 3689:5 indent tallColhep Child #2 @ line 3690; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 3769:28 indent tallColhep Child #2 @ line 3770; backdent is 8; should be 27
-hoons/arvo/sys/vane/clay.hoon 3813:3 indent tallWuthep 1-Jogging queenside head @3813:7; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 3813:3 indent tallWuthep 1-jogging queenside head @3813:7; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 3900:9 indent tallKethep Child #2 @ line 3901; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 3931:5 indent tallWutlus Jogging-2-style queenside child #1 @3931:11; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 4007:11 indent tallKethep Child #2 @ line 4008; backdent is 10; should be 6
@@ -950,8 +926,8 @@ hoons/arvo/app/gmail.hoon 89:23 indent tallColtar Child #2 @ line 100; backdent 
 hoons/arvo/app/gmail.hoon 142:3 indent tallWutlus Jogging-2-style queenside child #1 @142:7; underindented by 4
 hoons/arvo/app/gmail.hoon 150:5 indent tallWutdot Child #3 @ line 156; backdent is 2; should be 4
 hoons/arvo/app/gmail.hoon 159:5 indent tallWutlus Jogging-2-style kingside child #1 @159:9; underindented by 2
-hoons/arvo/app/gmail.hoon 160:7 indent tallWutlus Jog seaside body @161:5; underindented by 4
-hoons/arvo/app/gmail.hoon 171:7 indent tallWutlus Jog seaside body @176:5; underindented by 4
+hoons/arvo/app/gmail.hoon 160:7 indent tallWutlus Jog kingside body @161:5; underindented by 4
+hoons/arvo/app/gmail.hoon 171:7 indent tallWutlus Jog kingside body @176:5; underindented by 4
 hoons/arvo/app/gmail.hoon 176:9 indent tallKethep Child #2 @ line 179; backdent is 8; should be 4
 hoons/arvo/app/gmail.hoon 209:5 indent tallWutlus Jog queenside head @209:5; underindented by 2
 hoons/arvo/app/gmail.hoon 209:5 indent tallWutlus Jog queenside body @210:3; underindented by 2
@@ -966,7 +942,6 @@ hoons/arvo/app/test.hoon 86:7 sequence tall5dSeq 86:7 87:5
 hoons/arvo/app/twit.hoon 41:3 indent tallBucwut Child #2 @ line 45; backdent is 6; should be 2
 hoons/arvo/app/twit.hoon 41:7 sequence till5dSeq 41:7 42:3
 hoons/arvo/app/twit.hoon 174:7 indent tallKethep Child #2 @ line 175; backdent is 6; should be 2
-hoons/arvo/app/twit.hoon 180:5 indent tallWutlus Jog seaside body @181:7; correctly indented
 === hoons/arvo/app/fora.hoon ===
 hoons/arvo/app/fora.hoon 84:7 indent tallKethep Child #2 @ line 85; backdent is 6; should be 2
 === hoons/arvo/app/static.hoon ===
@@ -974,27 +949,27 @@ hoons/arvo/app/static.hoon 43:3 indent tallCenlus Child #2 @ line 45; backdent i
 hoons/arvo/app/static.hoon 65:3 indent tallCenlus Child #2 @ line 66; backdent is 2; should be 4
 hoons/arvo/app/static.hoon 77:7 indent tallCenlus Child #2 @ line 78; backdent is 6; should be 8
 hoons/arvo/app/static.hoon 85:5 indent tallCenlus Child #2 @ line 86; backdent is 4; should be 6
-hoons/arvo/app/static.hoon 146:5 indent tallWuthep Jog seaside body @147:3; underindented by 4
+hoons/arvo/app/static.hoon 146:5 indent tallWuthep Jog kingside body @147:3; underindented by 4
 hoons/arvo/app/static.hoon 152:3 indent tallColhep Child #2 @ line 153; backdent is 4; should be 2
 hoons/arvo/app/static.hoon 174:3 indent tallTisfas Child #2 @ line 175; backdent is 2; should be 4
 hoons/arvo/app/static.hoon 258:3 indent tallTisfas Child #2 @ line 259; backdent is 2; should be 4
+Unused suppression: indent 146:5
 === hoons/arvo/app/hood.hoon ===
 === hoons/arvo/app/dojo.hoon ===
-hoons/arvo/app/dojo.hoon 363:7 indent tallWuthep 1-Jogging kingside head @363:13; overindented by 2
+hoons/arvo/app/dojo.hoon 363:7 indent tallWuthep 1-jogging kingside head @363:13; overindented by 2
 hoons/arvo/app/dojo.hoon 371:14 indent tallTisket Child #3 @ line 372; backdent is 17; should be 15
 hoons/arvo/app/dojo.hoon 465:9 indent tallWutlus Jogging-2-style kingside child #1 @465:13; underindented by 2
 hoons/arvo/app/dojo.hoon 477:9 indent tallWutlus Jogging-2-style queenside child #1 @477:13; underindented by 4
 hoons/arvo/app/dojo.hoon 512:29 indent tallColtar Child #1 @ line 513; backdent is 10; should be 30
 hoons/arvo/app/dojo.hoon 512:29 indent tallColtar Child #2 @ line 517; backdent is 8; should be 28
 hoons/arvo/app/dojo.hoon 548:7 indent tallWutlus Jogging-2-style kingside child #1 @548:11; underindented by 2
-hoons/arvo/app/dojo.hoon 550:9 indent tallWutlus Jog seaside body @551:11; correctly indented
 hoons/arvo/app/dojo.hoon 563:11 indent tallKethep Child #2 @ line 564; backdent is 10; should be 6
 hoons/arvo/app/dojo.hoon 579:9 indent tallBuccen Child #1 @ line 580; backdent is 12; should be 10
 hoons/arvo/app/dojo.hoon 587:9 indent tallBuccen Child #1 @ line 588; backdent is 12; should be 10
-hoons/arvo/app/dojo.hoon 635:9 indent tallWuthep 1-Jogging queenside head @635:13; underindented by 2
-hoons/arvo/app/dojo.hoon 711:9 indent tallWuthep 1-Jogging queenside head @711:13; underindented by 2
+hoons/arvo/app/dojo.hoon 635:9 indent tallWuthep 1-jogging queenside head @635:13; underindented by 2
+hoons/arvo/app/dojo.hoon 711:9 indent tallWuthep 1-jogging queenside head @711:13; underindented by 2
 hoons/arvo/app/dojo.hoon 716:11 indent tallCenlus Child #3 @ line 718; backdent is 12; should be 10
-hoons/arvo/app/dojo.hoon 761:9 indent tallWuthep 1-Jogging queenside head @761:13; underindented by 2
+hoons/arvo/app/dojo.hoon 761:9 indent tallWuthep 1-jogging queenside head @761:13; underindented by 2
 hoons/arvo/app/dojo.hoon 788:9 indent tallCenlus Child #3 @ line 789; backdent is 10; should be 8
 hoons/arvo/app/dojo.hoon 843:9 indent tallCenlus Child #3 @ line 844; backdent is 10; should be 8
 hoons/arvo/app/dojo.hoon 856:9 indent tallWutlus Jogging-2-style kingside child #1 @856:13; underindented by 2
@@ -1003,7 +978,7 @@ hoons/arvo/app/dojo.hoon 939:11 indent tallCenlus Child #3 @ line 941; backdent 
 hoons/arvo/app/dojo.hoon 962:9 indent tallCenlus Child #3 @ line 964; backdent is 10; should be 8
 hoons/arvo/app/dojo.hoon 975:11 indent tallCenlus Child #3 @ line 977; backdent is 12; should be 10
 hoons/arvo/app/dojo.hoon 980:9 indent tallCenlus Child #3 @ line 982; backdent is 10; should be 8
-hoons/arvo/app/dojo.hoon 1000:11 indent tallWuthep 1-Jogging queenside head @1000:15; underindented by 2
+hoons/arvo/app/dojo.hoon 1000:11 indent tallWuthep 1-jogging queenside head @1000:15; underindented by 2
 hoons/arvo/app/dojo.hoon 1004:23 indent tallSemcol Child #2 @ line 1005; backdent is 16; should be 24
 hoons/arvo/app/dojo.hoon 1004:23 indent tallSemcol Child #3 @ line 1013; backdent is 14; should be 22
 hoons/arvo/app/dojo.hoon 1066:21 indent tallSemcol Child #2 @ line 1067; backdent is 10; should be 22
@@ -1036,37 +1011,37 @@ hoons/arvo/app/ask.hoon 8:3 indent wisp5d Child #1 @ line 14; backdent is 0; sho
 hoons/arvo/app/talk.hoon 24:1 indent tallTisgar Child #1 @ line 29; backdent is 4; should be 2
 hoons/arvo/app/talk.hoon 31:7 indent tallBuccol Child #1 @ line 32; backdent is 10; should be 8
 hoons/arvo/app/talk.hoon 70:7 indent tallBuccen Child #1 @ line 71; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 151:3 indent tallWuthep 1-Jogging queenside head @151:7; underindented by 2
-hoons/arvo/app/talk.hoon 164:7 indent tallCentis 1-Jogging queenside head @164:11; underindented by 2
+hoons/arvo/app/talk.hoon 151:3 indent tallWuthep 1-jogging queenside head @151:7; underindented by 2
+hoons/arvo/app/talk.hoon 164:7 indent tallCentis 1-jogging queenside head @164:11; underindented by 2
 hoons/arvo/app/talk.hoon 309:3 indent tallBarcab Child #1 @ line 311; backdent is 6; should be 4
 hoons/arvo/app/talk.hoon 384:5 indent tallWutlus Jogging-2-style queenside child #1 @384:9; underindented by 4
 hoons/arvo/app/talk.hoon 406:5 indent tallWutlus Jogging-2-style queenside child #1 @406:9; underindented by 4
-hoons/arvo/app/talk.hoon 408:7 indent tallWuthep 1-Jogging queenside head @408:11; underindented by 2
+hoons/arvo/app/talk.hoon 408:7 indent tallWuthep 1-jogging queenside head @408:11; underindented by 2
 hoons/arvo/app/talk.hoon 425:5 indent tallWutlus Jogging-2-style queenside child #1 @425:9; underindented by 4
 hoons/arvo/app/talk.hoon 425:5 indent tallWutlus Jogging-2-style queenside child #2 @426:9; underindented by 2
-hoons/arvo/app/talk.hoon 460:7 indent tallCentis 1-Jogging queenside head @460:11; underindented by 2
-hoons/arvo/app/talk.hoon 482:7 indent tallCentis 1-Jogging queenside head @482:11; underindented by 2
+hoons/arvo/app/talk.hoon 460:7 indent tallCentis 1-jogging queenside head @460:11; underindented by 2
+hoons/arvo/app/talk.hoon 482:7 indent tallCentis 1-jogging queenside head @482:11; underindented by 2
 hoons/arvo/app/talk.hoon 558:7 indent tallCenlus Child #2 @ line 559; backdent is 6; should be 8
 hoons/arvo/app/talk.hoon 595:9 indent tallBuccolMold Child #1 @ line 597; backdent is 12; should be 10
-hoons/arvo/app/talk.hoon 627:7 indent tallCentis 1-Jogging queenside head @627:11; underindented by 2
+hoons/arvo/app/talk.hoon 627:7 indent tallCentis 1-jogging queenside head @627:11; underindented by 2
 hoons/arvo/app/talk.hoon 745:9 indent tallWutlus Jogging-2-style kingside child #1 @745:13; underindented by 2
 hoons/arvo/app/talk.hoon 948:15 indent tallWutcol Child #2 @ line 949; backdent is 14; should be 16
 hoons/arvo/app/talk.hoon 989:7 indent tallWutlus Jogging-2-style queenside child #1 @989:11; underindented by 4
 hoons/arvo/app/talk.hoon 989:7 indent tallWutlus Jogging-2-style queenside child #2 @990:9; underindented by 4
 hoons/arvo/app/talk.hoon 1002:7 indent tallTisket Child #3 @ line 1003; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 1514:9 indent tallCentis 1-Jogging queenside head @1514:13; underindented by 2
+hoons/arvo/app/talk.hoon 1514:9 indent tallCentis 1-jogging queenside head @1514:13; underindented by 2
 hoons/arvo/app/talk.hoon 1769:7 indent tallColhep Child #2 @ line 1770; backdent is 10; should be 6
 hoons/arvo/app/talk.hoon 1810:7 indent tallTisfas Child #2 @ line 1811; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 1868:7 indent tallWuthep 1-Jogging queenside head @1868:11; underindented by 2
-hoons/arvo/app/talk.hoon 1907:7 indent tallWuthep 1-Jogging queenside head @1907:11; underindented by 2
+hoons/arvo/app/talk.hoon 1868:7 indent tallWuthep 1-jogging queenside head @1868:11; underindented by 2
+hoons/arvo/app/talk.hoon 1907:7 indent tallWuthep 1-jogging queenside head @1907:11; underindented by 2
 hoons/arvo/app/talk.hoon 1978:3 indent tallBarcab Child #1 @ line 1980; backdent is 6; should be 4
 hoons/arvo/app/talk.hoon 2089:3 indent tallBarcab Child #1 @ line 2091; backdent is 6; should be 4
 hoons/arvo/app/talk.hoon 2190:7 indent tallBuccolMold Child #1 @ line 2197; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 2284:5 indent tallWuthep 1-Jogging queenside head @2284:9; underindented by 2
+hoons/arvo/app/talk.hoon 2284:5 indent tallWuthep 1-jogging queenside head @2284:9; underindented by 2
 hoons/arvo/app/talk.hoon 2299:17 indent tallCenlus Child #2 @ line 2300; backdent is 8; should be 18
 hoons/arvo/app/talk.hoon 2299:17 indent tallCenlus Child #3 @ line 2303; backdent is 6; should be 16
 hoons/arvo/app/talk.hoon 2300:16 indent tallColhep Child #2 @ line 2301; backdent is 8; should be 15
-hoons/arvo/app/talk.hoon 2368:5 indent tallWuthep 1-Jogging queenside head @2368:9; underindented by 2
+hoons/arvo/app/talk.hoon 2368:5 indent tallWuthep 1-jogging queenside head @2368:9; underindented by 2
 hoons/arvo/app/talk.hoon 2372:7 indent tallWutlus Jogging-2-style kingside child #1 @2372:11; underindented by 2
 hoons/arvo/app/talk.hoon 2498:9 indent tallCenhep Child #2 @ line 2499; backdent is 6; should be 8
 hoons/arvo/app/talk.hoon 2506:9 indent tallCenlus Child #3 @ line 2507; backdent is 6; should be 8
@@ -1079,8 +1054,8 @@ hoons/arvo/app/hall.hoon 23:1 indent tallTisgar Child #1 @ line 28; backdent is 
 hoons/arvo/app/hall.hoon 58:7 indent tallBuccen Child #1 @ line 59; backdent is 10; should be 8
 hoons/arvo/app/hall.hoon 82:7 indent tallBucwut Child #2 @ line 88; backdent is 10; should be 6
 hoons/arvo/app/hall.hoon 82:11 sequence till5dSeq 82:11 83:7
-hoons/arvo/app/hall.hoon 172:3 indent tallWuthep 1-Jogging queenside head @172:7; underindented by 2
-hoons/arvo/app/hall.hoon 193:7 indent tallCentis 1-Jogging queenside head @193:11; underindented by 2
+hoons/arvo/app/hall.hoon 172:3 indent tallWuthep 1-jogging queenside head @172:7; underindented by 2
+hoons/arvo/app/hall.hoon 193:7 indent tallCentis 1-jogging queenside head @193:11; underindented by 2
 hoons/arvo/app/hall.hoon 240:3 indent tallBarcab Child #1 @ line 242; backdent is 6; should be 4
 hoons/arvo/app/hall.hoon 659:5 indent tallWutlus Jogging-2-style kingside child #1 @659:9; underindented by 2
 hoons/arvo/app/hall.hoon 671:37 indent tallTisgal Child #2 @ line 672; backdent is 4; should be 23
@@ -1096,72 +1071,72 @@ hoons/arvo/app/hall.hoon 761:43 indent tallTisgal Child #2 @ line 762; backdent 
 hoons/arvo/app/hall.hoon 788:37 indent tallTisgal Child #2 @ line 789; backdent is 4; should be 23
 hoons/arvo/app/hall.hoon 844:37 indent tallTisgal Child #2 @ line 845; backdent is 4; should be 23
 hoons/arvo/app/hall.hoon 863:5 indent tallBarcab Child #1 @ line 867; backdent is 8; should be 6
-hoons/arvo/app/hall.hoon 989:9 indent tallWuthep Jog seaside body @990:19; overindented by 8
-hoons/arvo/app/hall.hoon 992:11 indent tallWuthep Jog seaside head @992:11; overindented by 2
-hoons/arvo/app/hall.hoon 992:11 indent tallWuthep Jog seaside body @993:9; underindented by 2
-hoons/arvo/app/hall.hoon 997:11 indent tallWuthep Jog seaside head @997:11; overindented by 2
-hoons/arvo/app/hall.hoon 997:11 indent tallWuthep Jog seaside body @999:9; underindented by 2
-hoons/arvo/app/hall.hoon 1016:11 indent tallWuthep Jog seaside head @1016:11; overindented by 2
-hoons/arvo/app/hall.hoon 1016:11 indent tallWuthep Jog seaside body @1018:9; underindented by 2
-hoons/arvo/app/hall.hoon 1102:9 indent tallCencab 1-Jogging queenside head @1102:13; underindented by 2
+hoons/arvo/app/hall.hoon 989:9 indent tallWuthep Jog kingside body @990:19; overindented by 8
+hoons/arvo/app/hall.hoon 992:11 indent tallWuthep Jog kingside head @992:11; overindented by 2
+hoons/arvo/app/hall.hoon 992:11 indent tallWuthep Jog kingside body @993:9; underindented by 2
+hoons/arvo/app/hall.hoon 997:11 indent tallWuthep Jog kingside head @997:11; overindented by 2
+hoons/arvo/app/hall.hoon 997:11 indent tallWuthep Jog kingside body @999:9; underindented by 2
+hoons/arvo/app/hall.hoon 1016:11 indent tallWuthep Jog kingside head @1016:11; overindented by 2
+hoons/arvo/app/hall.hoon 1016:11 indent tallWuthep Jog kingside body @1018:9; underindented by 2
+hoons/arvo/app/hall.hoon 1102:9 indent tallCencab 1-jogging queenside head @1102:13; underindented by 2
 hoons/arvo/app/hall.hoon 1414:7 indent tallWutlus Jogging-2-style queenside child #1 @1414:11; underindented by 4
 hoons/arvo/app/hall.hoon 1574:3 indent tallBarcab Child #1 @ line 1576; backdent is 6; should be 4
 hoons/arvo/app/hall.hoon 1580:3 indent wisp5d Child #1 @ line 2124; backdent is 0; should be 2
-hoons/arvo/app/hall.hoon 1713:5 indent tallCencab 1-Jogging queenside head @1713:9; underindented by 2
+hoons/arvo/app/hall.hoon 1713:5 indent tallCencab 1-jogging queenside head @1713:9; underindented by 2
 hoons/arvo/app/hall.hoon 1720:7 indent tallCenlus Child #2 @ line 1721; backdent is 6; should be 8
 hoons/arvo/app/hall.hoon 1772:5 indent tallWutlus Jogging-2-style kingside child #1 @1772:9; underindented by 2
 hoons/arvo/app/hall.hoon 1772:5 indent tallWutlus Jogging-2-style kingside child #2 @1773:7; underindented by 2
 hoons/arvo/app/hall.hoon 1811:5 indent tallBarcab Child #1 @ line 1814; backdent is 8; should be 6
 hoons/arvo/app/hall.hoon 1903:7 indent tallWutlus Jogging-2-style queenside child #1 @1903:11; underindented by 4
 hoons/arvo/app/hall.hoon 1903:7 indent tallWutlus Jogging-2-style queenside child #2 @1904:9; underindented by 4
-hoons/arvo/app/hall.hoon 1939:9 indent tallCencab 1-Jogging queenside head @1939:13; underindented by 2
+hoons/arvo/app/hall.hoon 1939:9 indent tallCencab 1-jogging queenside head @1939:13; underindented by 2
 hoons/arvo/app/hall.hoon 1985:18 indent tallCenlus Child #2 @ line 1986; backdent is 17; should be 19
 hoons/arvo/app/hall.hoon 1997:7 indent tallWutlus Jogging-2-style queenside child #1 @1997:11; underindented by 4
 hoons/arvo/app/hall.hoon 1997:7 indent tallWutlus Jogging-2-style queenside child #2 @1998:9; underindented by 4
 hoons/arvo/app/hall.hoon 2004:11 indent tallCenlus Child #2 @ line 2005; backdent is 10; should be 12
-hoons/arvo/app/hall.hoon 2010:9 indent tallCencab 1-Jogging queenside head @2010:13; underindented by 2
+hoons/arvo/app/hall.hoon 2010:9 indent tallCencab 1-jogging queenside head @2010:13; underindented by 2
 hoons/arvo/app/hall.hoon 2025:7 indent tallWutlus Jogging-2-style kingside child #1 @2025:11; underindented by 2
 hoons/arvo/app/hall.hoon 2164:3 indent tallWutlus Jogging-2-style queenside child #1 @2164:7; underindented by 4
 hoons/arvo/app/hall.hoon 2187:3 indent tallWutlus Jogging-2-style queenside child #1 @2187:9; underindented by 2
 hoons/arvo/app/hall.hoon 2209:11 indent tallBuchepMold Child #2 @ line 2210; backdent is 14; should be 10
 hoons/arvo/app/hall.hoon 2220:11 indent tallBuchepMold Child #2 @ line 2221; backdent is 14; should be 10
-hoons/arvo/app/hall.hoon 2306:3 indent tallWuthep 1-Jogging queenside head @2306:7; underindented by 2
-hoons/arvo/app/hall.hoon 2357:11 indent tallCencab 1-Jogging queenside head @2357:15; underindented by 2
+hoons/arvo/app/hall.hoon 2306:3 indent tallWuthep 1-jogging queenside head @2306:7; underindented by 2
+hoons/arvo/app/hall.hoon 2357:11 indent tallCencab 1-jogging queenside head @2357:15; underindented by 2
 hoons/arvo/app/hall.hoon 2381:3 indent tallWutlus Jogging-2-style kingside child #1 @2381:7; underindented by 2
-hoons/arvo/app/hall.hoon 2389:7 indent tallWutlus Jog seaside head @2389:7; overindented by 2
-hoons/arvo/app/hall.hoon 2389:7 indent tallWutlus Jog seaside body @2390:5; underindented by 2
-hoons/arvo/app/hall.hoon 2395:5 indent tallCencab 1-Jogging queenside head @2395:9; underindented by 2
-hoons/arvo/app/hall.hoon 2403:7 indent tallWutlus Jog seaside head @2403:7; overindented by 2
-hoons/arvo/app/hall.hoon 2403:7 indent tallWutlus Jog seaside body @2404:5; underindented by 2
-hoons/arvo/app/hall.hoon 2408:7 indent tallWutlus Jog seaside head @2408:7; overindented by 2
-hoons/arvo/app/hall.hoon 2408:7 indent tallWutlus Jog seaside body @2409:5; underindented by 2
+hoons/arvo/app/hall.hoon 2389:7 indent tallWutlus Jog kingside head @2389:7; overindented by 2
+hoons/arvo/app/hall.hoon 2389:7 indent tallWutlus Jog kingside body @2390:5; underindented by 2
+hoons/arvo/app/hall.hoon 2395:5 indent tallCencab 1-jogging queenside head @2395:9; underindented by 2
+hoons/arvo/app/hall.hoon 2403:7 indent tallWutlus Jog kingside head @2403:7; overindented by 2
+hoons/arvo/app/hall.hoon 2403:7 indent tallWutlus Jog kingside body @2404:5; underindented by 2
+hoons/arvo/app/hall.hoon 2408:7 indent tallWutlus Jog kingside head @2408:7; overindented by 2
+hoons/arvo/app/hall.hoon 2408:7 indent tallWutlus Jog kingside body @2409:5; underindented by 2
 hoons/arvo/app/hall.hoon 2437:5 indent tallWutlus Jogging-2-style kingside child #1 @2437:9; underindented by 2
 hoons/arvo/app/hall.hoon 2445:5 indent tallWutlus Jogging-2-style kingside child #1 @2445:9; underindented by 2
 hoons/arvo/app/hall.hoon 2449:17 indent tallWutcol Child #2 @ line 2450; backdent is 16; should be 18
 hoons/arvo/app/hall.hoon 2451:17 indent tallWutcol Child #2 @ line 2452; backdent is 16; should be 18
-hoons/arvo/app/hall.hoon 2464:3 indent tallWuthep 1-Jogging queenside head @2464:7; underindented by 2
+hoons/arvo/app/hall.hoon 2464:3 indent tallWuthep 1-jogging queenside head @2464:7; underindented by 2
 hoons/arvo/app/hall.hoon 2467:5 indent tallWutlus Jogging-2-style kingside child #1 @2467:9; underindented by 2
 hoons/arvo/app/hall.hoon 2539:5 indent tallWutdot Child #2 @ line 2540; backdent is 54; should be 6
 hoons/arvo/app/hall.hoon 2551:5 indent tallWutlus Jogging-2-style queenside child #1 @2551:9; underindented by 4
 hoons/arvo/app/hall.hoon 2602:7 indent tallKethep Child #2 @ line 2603; backdent is 4; should be 2
 hoons/arvo/app/hall.hoon 2612:3 indent tallWutlus Jogging-2-style kingside child #1 @2612:7; underindented by 2
 hoons/arvo/app/hall.hoon 2612:3 indent tallWutlus Jogging-2-style kingside child #2 @2613:5; underindented by 2
-hoons/arvo/app/hall.hoon 2615:19 indent tallCencab 1-Jogging queenside head @2615:23; underindented by 2
+hoons/arvo/app/hall.hoon 2615:19 indent tallCencab 1-jogging queenside head @2615:23; underindented by 2
 hoons/arvo/app/hall.hoon 2615:26 indent tallCencab Jog queenside head @2615:26; overindented by 3
 hoons/arvo/app/hall.hoon 2616:21 indent tallCencab Jog queenside head @2616:21; underindented by 2
-hoons/arvo/app/hall.hoon 2618:19 indent tallCencab 1-Jogging queenside head @2618:23; underindented by 2
+hoons/arvo/app/hall.hoon 2618:19 indent tallCencab 1-jogging queenside head @2618:23; underindented by 2
 hoons/arvo/app/hall.hoon 2618:26 indent tallCencab Jog queenside head @2618:26; overindented by 3
 hoons/arvo/app/hall.hoon 2619:21 indent tallCencab Jog queenside head @2619:21; underindented by 2
-hoons/arvo/app/hall.hoon 2623:19 indent tallCencab 1-Jogging queenside head @2623:23; underindented by 2
+hoons/arvo/app/hall.hoon 2623:19 indent tallCencab 1-jogging queenside head @2623:23; underindented by 2
 hoons/arvo/app/hall.hoon 2623:26 indent tallCencab Jog queenside head @2623:26; overindented by 3
 hoons/arvo/app/hall.hoon 2624:21 indent tallCencab Jog queenside head @2624:21; underindented by 2
 hoons/arvo/app/hall.hoon 2648:15 indent tallColsig Child #1 @ line 2649; backdent is 10; should be 8
-hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep Jog seaside head @2678:7; overindented by 2
-hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep Jog seaside body @2679:5; underindented by 2
+hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep Jog kingside head @2678:7; overindented by 2
+hoons/arvo/app/hall.hoon 2678:7 indent tallWuthep Jog kingside body @2679:5; underindented by 2
 hoons/arvo/app/hall.hoon 2899:5 indent tallDotket Child #2 @ line 2900; backdent is 8; should be 6
 hoons/arvo/app/hall.hoon 2919:5 indent tallDotket Child #2 @ line 2920; backdent is 8; should be 6
-hoons/arvo/app/hall.hoon 2934:3 indent tallCentis 1-Jogging queenside head @2934:7; underindented by 2
-hoons/arvo/app/hall.hoon 2955:7 indent tallCencab 1-Jogging queenside head @2955:11; underindented by 2
+hoons/arvo/app/hall.hoon 2934:3 indent tallCentis 1-jogging queenside head @2934:7; underindented by 2
+hoons/arvo/app/hall.hoon 2955:7 indent tallCencab 1-jogging queenside head @2955:11; underindented by 2
 hoons/arvo/app/hall.hoon 2973:7 indent tallKethep Child #2 @ line 2974; backdent is 6; should be 2
 hoons/arvo/app/hall.hoon 2995:9 indent tallCenhep Child #2 @ line 2996; backdent is 6; should be 8
 hoons/arvo/app/hall.hoon 3012:9 indent tallKethep Child #2 @ line 3013; backdent is 8; should be 4
@@ -1193,7 +1168,7 @@ hoons/arvo/lib/http.hoon 26:7 indent tallKethep Child #2 @ line 27; backdent is 
 === hoons/arvo/lib/tester.hoon ===
 === hoons/arvo/lib/hall-json.hoon ===
 hoons/arvo/lib/hall-json.hoon 39:9 indent tallWutlus Jogging-2-style kingside child #1 @39:13; underindented by 2
-hoons/arvo/lib/hall-json.hoon 76:5 indent tallWuthep 1-Jogging queenside head @76:9; underindented by 2
+hoons/arvo/lib/hall-json.hoon 76:5 indent tallWuthep 1-jogging queenside head @76:9; underindented by 2
 hoons/arvo/lib/hall-json.hoon 160:5 indent tallWutlus Jogging-2-style kingside child #1 @160:9; underindented by 2
 === hoons/arvo/lib/prey.hoon ===
 === hoons/arvo/lib/down-jet/rend.hoon ===
@@ -1202,7 +1177,6 @@ hoons/arvo/lib/down-jet/rend.hoon 24:27 indent tallBartis Child #2 @ line 25; ba
 hoons/arvo/lib/down-jet/rend.hoon 26:7 indent tallWutlus Jogging-2-style kingside child #1 @26:11; underindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 32:1 indent LuslusCell Child #2 @ line 33; backdent is 1; should be 2
 hoons/arvo/lib/down-jet/rend.hoon 62:7 indent tallKethep Child #2 @ line 63; backdent is 6; should be 2
-hoons/arvo/lib/down-jet/rend.hoon 132:7 indent tallWuthep Jog seaside body @133:9; correctly indented
 hoons/arvo/lib/down-jet/rend.hoon 160:7 indent tallKethep Child #2 @ line 161; backdent is 6; should be 2
 === hoons/arvo/lib/down-jet/parse.hoon ===
 hoons/arvo/lib/down-jet/parse.hoon 8:1 indent tallTislus Child #2 @ line 97; backdent is 2; should be 0
@@ -1230,9 +1204,6 @@ hoons/arvo/lib/down-jet/parse.hoon 565:16 indent tallBartis Child #2 @ line 566;
 hoons/arvo/lib/down-jet/parse.hoon 602:7 indent tallKethep Child #2 @ line 603; backdent is 6; should be 2
 hoons/arvo/lib/down-jet/parse.hoon 611:3 indent wisp5d Child #1 @ line 1007; backdent is 0; should be 2
 hoons/arvo/lib/down-jet/parse.hoon 621:5 indent tallWutlus Jogging-2-style kingside child #1 @621:9; underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 622:7 indent tallWutlus Jog seaside body @623:9; correctly indented
-hoons/arvo/lib/down-jet/parse.hoon 625:7 indent tallWutlus Jog seaside body @626:9; correctly indented
-hoons/arvo/lib/down-jet/parse.hoon 628:7 indent tallWutlus Jog seaside body @629:9; correctly indented
 hoons/arvo/lib/down-jet/parse.hoon 656:5 indent tallWutlus Jogging-2-style queenside child #1 @656:11; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 701:5 indent tallWutlus Jogging-2-style queenside child #1 @701:11; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 790:14 indent tallKetlus Child #2 @ line 791; backdent is 4; should be 13
@@ -1243,7 +1214,7 @@ hoons/arvo/lib/down-jet/parse.hoon 998:7 indent tallWutlus Jogging-2-style kings
 === hoons/arvo/lib/time-to-id.hoon ===
 === hoons/arvo/lib/httr-to-json.hoon ===
 === hoons/arvo/lib/sole.hoon ===
-hoons/arvo/lib/sole.hoon 15:3 indent tallWuthep 1-Jogging kingside head @15:9; overindented by 2
+hoons/arvo/lib/sole.hoon 15:3 indent tallWuthep 1-jogging kingside head @15:9; overindented by 2
 === hoons/arvo/lib/cram.hoon ===
 hoons/arvo/lib/cram.hoon 10:5 indent tallWutlus Jog kingside body @10:11; underindented by 1
 hoons/arvo/lib/cram.hoon 23:3 indent tallWutlus Jogging-2-style queenside child #1 @23:9; underindented by 2
@@ -1267,7 +1238,6 @@ hoons/arvo/lib/oauth1.hoon 109:17 indent tallCenhep Child #2 @ line 110; backden
 hoons/arvo/lib/oauth1.hoon 166:9 indent tallKethep Child #2 @ line 167; backdent is 8; should be 4
 === hoons/arvo/lib/pretty-file.hoon ===
 === hoons/arvo/lib/twitter.hoon ===
-hoons/arvo/lib/twitter.hoon 34:5 indent tallWuthep Jog seaside body @35:7; correctly indented
 hoons/arvo/lib/twitter.hoon 72:12 indent tallKetwut Child #1 @ line 73; backdent is 2; should be 11
 hoons/arvo/lib/twitter.hoon 151:5 indent tallWutlus Jogging-2-style kingside child #1 @151:9; underindented by 2
 === hoons/arvo/lib/down-jet.hoon ===
@@ -1297,20 +1267,13 @@ hoons/arvo/lib/hood/helm.hoon 152:3 indent tallBartis Child #2 @ line 153; backd
 hoons/arvo/lib/hood/helm.hoon 153:5 indent tallTisdot Child #2 @ line 154; backdent is 4; should be 6
 hoons/arvo/lib/hood/helm.hoon 153:5 indent tallTisdot Child #3 @ line 160; backdent is 2; should be 4
 hoons/arvo/lib/hood/helm.hoon 156:9 indent tallKethep Child #2 @ line 157; backdent is 8; should be 4
-hoons/arvo/lib/hood/helm.hoon 231:3 indent tallWuthep 1-Jogging kingside head @231:8; overindented by 1
+hoons/arvo/lib/hood/helm.hoon 231:3 indent tallWuthep 1-jogging kingside head @231:8; overindented by 1
 hoons/arvo/lib/hood/helm.hoon 250:7 indent tallKethep Child #2 @ line 251; backdent is 6; should be 2
 === hoons/arvo/lib/hood/drum.hoon ===
 hoons/arvo/lib/hood/drum.hoon 62:7 indent tallBuctisMold Child #2 @ line 63; backdent is 8; should be 6
 hoons/arvo/lib/hood/drum.hoon 541:5 indent tallWutlus Jogging-2-style queenside child #1 @541:11; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 666:5 indent tallCentis 1-Jogging queenside head @666:9; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 741:7 indent tallWutlus Jog seaside body @742:13; overindented by 4
-hoons/arvo/lib/hood/drum.hoon 792:9 indent tallWuthep 1-Jogging queenside head @792:13; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 792:18 indent tallWuthep Jog queenside head @792:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 793:18 indent tallWuthep Jog queenside head @793:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 794:18 indent tallWuthep Jog queenside head @794:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 796:5 indent tallWuthep 1-Jogging queenside head @796:9; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 796:14 indent tallWuthep Jog queenside head @796:14; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 797:14 indent tallWuthep Jog queenside head @797:14; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 666:5 indent tallCentis 1-jogging queenside head @666:9; underindented by 2
+hoons/arvo/lib/hood/drum.hoon 741:7 indent tallWutlus Jog kingside body @742:13; overindented by 4
 hoons/arvo/lib/hood/drum.hoon 829:5 indent tallTisfas Child #2 @ line 830; backdent is 8; should be 6
 hoons/arvo/lib/hood/drum.hoon 937:5 indent tallCenlus Child #2 @ line 938; backdent is 4; should be 6
 hoons/arvo/lib/hood/drum.hoon 939:15 indent tallCenlus Child #3 @ line 940; backdent is 4; should be 14
@@ -1361,19 +1324,19 @@ hoons/arvo/lib/hood/womb.hoon 810:3 indent tallWutlus Jogging-2-style kingside c
 hoons/arvo/lib/hood/womb.hoon 848:3 indent tallTisdot Child #2 @ line 849; backdent is 6; should be 4
 === hoons/arvo/lib/hall.hoon ===
 hoons/arvo/lib/hall.hoon 52:7 indent tallKethep Child #2 @ line 53; backdent is 4; should be 2
-hoons/arvo/lib/hall.hoon 138:3 indent tallWuthep 1-Jogging queenside head @138:7; underindented by 2
+hoons/arvo/lib/hall.hoon 138:3 indent tallWuthep 1-jogging queenside head @138:7; underindented by 2
 hoons/arvo/lib/hall.hoon 139:5 indent tallWuthep Jog queenside head @139:5; underindented by 2
 hoons/arvo/lib/hall.hoon 140:5 indent tallWuthep Jog queenside head @140:5; underindented by 2
 hoons/arvo/lib/hall.hoon 141:5 indent tallWuthep Jog queenside head @141:5; underindented by 2
 hoons/arvo/lib/hall.hoon 142:5 indent tallWuthep Jog queenside head @142:5; underindented by 2
-hoons/arvo/lib/hall.hoon 145:5 indent tallCentis 1-Jogging queenside head @145:9; underindented by 2
-hoons/arvo/lib/hall.hoon 154:5 indent tallCentis 1-Jogging queenside head @154:9; underindented by 2
-hoons/arvo/lib/hall.hoon 163:5 indent tallCentis 1-Jogging queenside head @163:9; underindented by 2
-hoons/arvo/lib/hall.hoon 172:5 indent tallCentis 1-Jogging queenside head @172:9; underindented by 2
+hoons/arvo/lib/hall.hoon 145:5 indent tallCentis 1-jogging queenside head @145:9; underindented by 2
+hoons/arvo/lib/hall.hoon 154:5 indent tallCentis 1-jogging queenside head @154:9; underindented by 2
+hoons/arvo/lib/hall.hoon 163:5 indent tallCentis 1-jogging queenside head @163:9; underindented by 2
+hoons/arvo/lib/hall.hoon 172:5 indent tallCentis 1-jogging queenside head @172:9; underindented by 2
 hoons/arvo/lib/hall.hoon 177:11 indent tallDottis Child #2 @ line 178; backdent is 14; should be 10
-hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep Jog seaside head @194:7; overindented by 2
-hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep Jog seaside body @195:5; underindented by 2
-hoons/arvo/lib/hall.hoon 195:5 indent tallCentis 1-Jogging queenside head @195:9; underindented by 2
+hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep Jog kingside head @194:7; overindented by 2
+hoons/arvo/lib/hall.hoon 194:7 indent tallWuthep Jog kingside body @195:5; underindented by 2
+hoons/arvo/lib/hall.hoon 195:5 indent tallCentis 1-jogging queenside head @195:9; underindented by 2
 === hoons/arvo/mar/coffee.hoon ===
 === hoons/arvo/mar/urb.hoon ===
 hoons/arvo/mar/urb.hoon 17:10 indent tallTailOfElem Child #1 @ line 38; backdent is 4; should be 9
@@ -1528,10 +1491,10 @@ hoons/arvo/mar/front.hoon 18:11 indent wisp5d Child #1 @ line 20; backdent is 0;
 === hoons/arvo/mar/html.hoon ===
 === hoons/arvo/mar/txt.hoon ===
 hoons/arvo/mar/txt.hoon 41:5 indent tallBarket Child #1 @ line 42; backdent is 4; should be 6
-hoons/arvo/mar/txt.hoon 71:7 indent tallWuthep 1-Jogging queenside head @71:11; underindented by 2
+hoons/arvo/mar/txt.hoon 71:7 indent tallWuthep 1-jogging queenside head @71:11; underindented by 2
 hoons/arvo/mar/txt.hoon 102:5 indent tallBarket Child #1 @ line 103; backdent is 4; should be 6
 hoons/arvo/mar/txt.hoon 123:13 indent tallKethep Child #2 @ line 124; backdent is 12; should be 8
-hoons/arvo/mar/txt.hoon 130:7 indent tallWuthep 1-Jogging queenside head @130:11; underindented by 2
+hoons/arvo/mar/txt.hoon 130:7 indent tallWuthep 1-jogging queenside head @130:11; underindented by 2
 hoons/arvo/mar/txt.hoon 132:13 indent tallKethep Child #2 @ line 133; backdent is 12; should be 8
 hoons/arvo/mar/txt.hoon 141:13 indent tallKethep Child #2 @ line 142; backdent is 12; should be 8
 hoons/arvo/mar/txt.hoon 157:11 indent tallColcab Child #2 @ line 158; backdent is 10; should be 6
@@ -1555,7 +1518,6 @@ hoons/arvo/web/unmark/test.hoon 8:3 indent tallTailOfTop Child #1 @ line 9; back
 === hoons/arvo/web/unmark/all.hoon ===
 hoons/arvo/web/unmark/all.hoon 32:13 indent tallTailOfElem Child #1 @ line 35; backdent is 2; should be 12
 hoons/arvo/web/unmark/all.hoon 47:3 indent tallWutlus Jogging-2-style kingside child #1 @47:7; underindented by 2
-hoons/arvo/web/unmark/all.hoon 49:5 indent tallWutlus Jog seaside body @50:7; correctly indented
 hoons/arvo/web/unmark/all.hoon 56:4 indent tallTailOfElem Child #1 @ line 65; backdent is 0; should be 3
 hoons/arvo/web/unmark/all.hoon 57:6 indent tallTailOfElem Child #1 @ line 64; backdent is 2; should be 5
 hoons/arvo/web/unmark/all.hoon 58:8 indent tallTailOfElem Child #1 @ line 63; backdent is 4; should be 7
@@ -1617,8 +1579,8 @@ hoons/arvo/gen/glass.hoon 27:5 indent tallKethep Child #2 @ line 31; backdent is
 hoons/arvo/gen/glass.hoon 98:3 indent tallBartis Child #1 @ line 100; backdent is 6; should be 4
 hoons/arvo/gen/glass.hoon 120:3 indent tallTiswut Child #3 @ line 124; backdent is 6; should be 4
 === hoons/arvo/gen/test.hoon ===
-hoons/arvo/gen/test.hoon 25:3 indent tallWuthep 1-Jogging queenside head @25:7; underindented by 2
-hoons/arvo/gen/test.hoon 40:5 indent tallWuthep Jog seaside body @41:9; overindented by 2
+hoons/arvo/gen/test.hoon 25:3 indent tallWuthep 1-jogging queenside head @25:7; underindented by 2
+hoons/arvo/gen/test.hoon 40:5 indent tallWuthep Jog kingside body @41:9; overindented by 2
 === hoons/arvo/gen/gmail/list.hoon ===
 === hoons/arvo/gen/gmail/send.hoon ===
 === hoons/arvo/gen/hello.hoon ===
@@ -1651,7 +1613,7 @@ hoons/arvo/gen/metal.hoon 242:7 indent tallBartis Child #1 @ line 244; backdent 
 hoons/arvo/gen/metal.hoon 266:7 indent tallTiswut Child #3 @ line 267; backdent is 10; should be 8
 === hoons/arvo/gen/musk.hoon ===
 hoons/arvo/gen/musk.hoon 41:9 indent tallBuccen Child #1 @ line 43; backdent is 12; should be 10
-hoons/arvo/gen/musk.hoon 62:5 indent tallWuthep 1-Jogging kingside head @62:11; overindented by 2
+hoons/arvo/gen/musk.hoon 62:5 indent tallWuthep 1-jogging kingside head @62:11; overindented by 2
 hoons/arvo/gen/musk.hoon 81:9 indent tallBuccolMold Child #1 @ line 83; backdent is 12; should be 10
 hoons/arvo/gen/musk.hoon 104:9 indent tallBuccolMold Child #1 @ line 107; backdent is 12; should be 10
 hoons/arvo/gen/musk.hoon 143:5 indent tallWutlus Jogging-2-style queenside child #1 @143:11; underindented by 2
@@ -1662,8 +1624,8 @@ hoons/arvo/gen/musk.hoon 203:7 indent tallBartis Child #1 @ line 205; backdent i
 hoons/arvo/gen/musk.hoon 215:7 indent tallBartis Child #1 @ line 217; backdent is 10; should be 8
 hoons/arvo/gen/musk.hoon 274:9 indent tallBuccolMold Child #1 @ line 277; backdent is 12; should be 10
 hoons/arvo/gen/musk.hoon 300:9 indent tallBuccolMold Child #1 @ line 303; backdent is 12; should be 10
-hoons/arvo/gen/musk.hoon 317:7 indent tallWuthep Jog seaside body @319:11; overindented by 2
-hoons/arvo/gen/musk.hoon 328:7 indent tallWuthep Jog seaside body @330:11; overindented by 2
+hoons/arvo/gen/musk.hoon 317:7 indent tallWuthep Jog kingside body @319:11; overindented by 2
+hoons/arvo/gen/musk.hoon 328:7 indent tallWuthep Jog kingside body @330:11; overindented by 2
 === hoons/arvo/gen/serving.hoon ===
 === hoons/arvo/gen/ls.hoon ===
 === hoons/arvo/gen/twit/as.hoon ===
@@ -1685,18 +1647,17 @@ hoons/arvo/gen/brass.hoon 273:5 indent tallTiswut Child #3 @ line 274; backdent 
 === hoons/arvo/gen/tree.hoon ===
 hoons/arvo/gen/tree.hoon 13:12 indent tallCenhep Child #2 @ line 14; backdent is 0; should be 11
 === hoons/arvo/gen/capitalize.hoon ===
-hoons/arvo/gen/capitalize.hoon 40:11 indent tallCentis Jog seaside body @41:13; correctly indented
 hoons/arvo/gen/capitalize.hoon 57:11 indent tallWutlus Jogging-2-style kingside child #1 @57:15; underindented by 2
 hoons/arvo/gen/capitalize.hoon 72:9 indent tallTiswut Child #3 @ line 73; backdent is 11; should be 10
 hoons/arvo/gen/capitalize.hoon 158:9 indent tallBuccol Child #1 @ line 159; backdent is 12; should be 10
-hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep Jog seaside head @267:7; overindented by 2
-hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep Jog seaside body @268:5; underindented by 2
+hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep Jog kingside head @267:7; overindented by 2
+hoons/arvo/gen/capitalize.hoon 267:7 indent tallWuthep Jog kingside body @268:5; underindented by 2
 === hoons/arvo/gen/bug.hoon ===
 === hoons/arvo/gen/code.hoon ===
 === hoons/arvo/gen/curl-hiss.hoon ===
 hoons/arvo/gen/curl-hiss.hoon 10:11 indent tallBartis Child #2 @ line 11; backdent is 0; should be 10
 === hoons/arvo/gen/cat.hoon ===
-hoons/arvo/gen/cat.hoon 21:1 indent tallWuthep 1-Jogging queenside head @21:8; overindented by 1
+hoons/arvo/gen/cat.hoon 21:1 indent tallWuthep 1-jogging queenside head @21:8; overindented by 1
 === hoons/arvo/gen/curl/url.hoon ===
 === hoons/arvo/gen/curl.hoon ===
 hoons/arvo/gen/curl.hoon 10:11 indent tallBartis Child #2 @ line 11; backdent is 0; should be 10
@@ -1736,10 +1697,6 @@ hoons/arvo/gen/hood/invite.hoon 19:16 indent tallKetsig Child #1 @ line 20; back
 === hoons/arvo/gen/hood/release-ships.hoon ===
 === hoons/arvo/gen/hood/exit.hoon ===
 === hoons/arvo/gen/hood/merge.hoon ===
-hoons/arvo/gen/hood/merge.hoon 24:7 indent tallWuthep Jog seaside body @25:9; correctly indented
-hoons/arvo/gen/hood/merge.hoon 27:7 indent tallWuthep Jog seaside body @28:9; correctly indented
-hoons/arvo/gen/hood/merge.hoon 31:7 indent tallWuthep Jog seaside body @32:9; correctly indented
-hoons/arvo/gen/hood/merge.hoon 35:7 indent tallWuthep Jog seaside body @36:9; correctly indented
 === hoons/arvo/gen/hood/rf.hoon ===
 === hoons/arvo/gen/hood/report.hoon ===
 === hoons/arvo/gen/hood/verb.hoon ===
@@ -1758,7 +1715,6 @@ hoons/arvo/gen/hood/nuke.hoon 8:3 indent tallZapcol Child #1 @ line 9; backdent 
 === hoons/arvo/gen/hood/transfer.hoon ===
 === hoons/arvo/gen/hood/load.hoon ===
 hoons/arvo/gen/hood/load.hoon 16:1 indent tallWutlus Jogging-2-style kingside child #1 @16:5; underindented by 2
-hoons/arvo/gen/hood/load.hoon 17:3 indent tallWutlus Jog seaside body @18:5; correctly indented
 === hoons/arvo/gen/hood/track.hoon ===
 === hoons/arvo/gen/hood/save.hoon ===
 hoons/arvo/gen/hood/save.hoon 15:1 indent tallWutlus Jogging-2-style kingside child #1 @15:5; underindented by 2
