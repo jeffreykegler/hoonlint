@@ -7,7 +7,7 @@ no warnings 'recursion';
 
 use Data::Dumper;
 use English qw( -no_match_vars );
-use Scalar::Util qw(looks_like_number);
+use Scalar::Util qw(looks_like_number weaken);
 use Getopt::Long;
 
 require "yahc.pm";
@@ -285,94 +285,108 @@ sub doNode {
     my ( $first_g1, $last_g1 ) = Marpa::R2::Context::location();
     my ($lhsStart) = $recce->g1_location_to_span( $first_g1 + 1 );
 
-    if ( $childCount <= 0 ) {
-        return {
-            type   => 'null',
-            symbol => $lhs,
-            start  => $lhsStart,
-            length => 0,
-        };
-    }
-    my ( $last_g1_start, $last_g1_length ) =
-      $recce->g1_location_to_span($last_g1);
-    my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
-  RESULT: {
-      CHILD: for my $childIX ( 0 .. $#children ) {
-            my $child   = $children[$childIX];
-            my $refType = ref $child;
-            next CHILD unless $refType eq 'ARRAY';
-
-            my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
-
-            if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
-                my $terminator = q{"""};
-                my $terminatorPos = index ${$pHoonSource}, $terminator,
-                  $lexemeStart + $lexemeLength;
-                $lexemeLength =
-                  $terminatorPos + ( length $terminator ) - $lexemeStart;
-            }
-            if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
-                my $terminator = q{'''};
-                my $terminatorPos = index ${$pHoonSource}, $terminator,
-                  $lexemeStart + $lexemeLength;
-                $lexemeLength =
-                  $terminatorPos + ( length $terminator ) - $lexemeStart;
-            }
-            $children[$childIX] = {
-                type   => 'lexeme',
-                start  => $lexemeStart,
-                length => $lexemeLength,
-                symbol => $lexemeName,
+    my $node;
+  CREATE_NODE: {
+        if ( $childCount <= 0 ) {
+            $node = {
+                type   => 'null',
+                symbol => $lhs,
+                start  => $lhsStart,
+                length => 0,
             };
+            last CREATE_NODE;
         }
+        my ( $last_g1_start, $last_g1_length ) =
+          $recce->g1_location_to_span($last_g1);
+        my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
+      RESULT: {
+          CHILD: for my $childIX ( 0 .. $#children ) {
+                my $child   = $children[$childIX];
+                my $refType = ref $child;
+                next CHILD unless $refType eq 'ARRAY';
 
-        my $lastLocation = $lhsStart;
-        if ( ( scalar @rhs ) != $childCount ) {
+                my ( $lexemeStart, $lexemeLength, $lexemeName ) = @{$child};
+
+                if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
+                    my $terminator = q{"""};
+                    my $terminatorPos = index ${$pHoonSource}, $terminator,
+                      $lexemeStart + $lexemeLength;
+                    $lexemeLength =
+                      $terminatorPos + ( length $terminator ) - $lexemeStart;
+                }
+                if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
+                    my $terminator = q{'''};
+                    my $terminatorPos = index ${$pHoonSource}, $terminator,
+                      $lexemeStart + $lexemeLength;
+                    $lexemeLength =
+                      $terminatorPos + ( length $terminator ) - $lexemeStart;
+                }
+                $children[$childIX] = {
+                    type   => 'lexeme',
+                    start  => $lexemeStart,
+                    length => $lexemeLength,
+                    symbol => $lexemeName,
+                };
+            }
+
+            my $lastLocation = $lhsStart;
+            if ( ( scalar @rhs ) != $childCount ) {
 
           # This is a non-trivial (that is, longer than one item) sequence rule.
-            my $childIX = 0;
-            my $lastSeparator;
-          CHILD: for ( ; ; ) {
+                my $childIX = 0;
+                my $lastSeparator;
+              CHILD: for ( ; ; ) {
 
-                my $child     = $children[$childIX];
-                my $childType = $child->{type};
-                $childIX++;
-              ITEM: {
-                    if ( defined $lastSeparator ) {
-                        my $length = $child->{start} - $lastSeparator->{start};
-                        $lastSeparator->{length} = $length;
+                    my $child     = $children[$childIX];
+                    my $childType = $child->{type};
+                    $childIX++;
+                  ITEM: {
+                        if ( defined $lastSeparator ) {
+                            my $length =
+                              $child->{start} - $lastSeparator->{start};
+                            $lastSeparator->{length} = $length;
+                        }
+                        push @results, $child;
+                        $lastLocation = $child->{start} + $child->{length};
                     }
-                    push @results, $child;
-                    $lastLocation = $child->{start} + $child->{length};
-                }
-                last RESULT if $childIX > $#children;
-                my $separator = $separator{$lhs};
-                next CHILD unless $separator;
-                $lastSeparator = {
-                    type   => 'separator',
-                    symbol => $separator,
-                    start  => $lastLocation,
+                    last RESULT if $childIX > $#children;
+                    my $separator = $separator{$lhs};
+                    next CHILD unless $separator;
+                    $lastSeparator = {
+                        type   => 'separator',
+                        symbol => $separator,
+                        start  => $lastLocation,
 
-                    # length supplied later
-                };
-                push @results, $lastSeparator;
+                        # length supplied later
+                    };
+                    push @results, $lastSeparator;
+                }
+                last RESULT;
             }
-            last RESULT;
+
+            # All other rules
+          CHILD: for my $childIX ( 0 .. $#children ) {
+                my $child = $children[$childIX];
+                push @results, $child;
+            }
         }
 
-        # All other rules
+        # Add weak links
       CHILD: for my $childIX ( 0 .. $#children ) {
             my $child = $children[$childIX];
-            push @results, $child;
+            $child->{PARENT} = $node;
         }
+
+        $node = {
+            type     => 'node',
+            ruleID   => $ruleID,
+            start    => $lhsStart,
+            length   => $lhsLength,
+            children => \@results,
+        };
     }
-    return {
-        type     => 'node',
-        ruleID   => $ruleID,
-        start    => $lhsStart,
-        length   => $lhsLength,
-        children => \@results,
-    };
+
+    return $node;
 }
 
 $parser->read($pHoonSource);
@@ -617,6 +631,7 @@ sub doLint {
 
     my @parentIndents = @{ $argContext->{indents} };
 
+    # TODO: Delete "ancestors" in favor of tree traversal
     my @ancestors = @{ $argContext->{ancestors} };
     shift @ancestors if scalar @ancestors >= 5;    # no more than 5
     push @ancestors, { ruleID => $parentRuleID, start => $parentStart };
@@ -1765,6 +1780,7 @@ sub doLint {
     }
 }
 
+# TODO: ancestors, indents in favor of tree traversal
 doLint( $astValue, { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
 
 for my $type ( keys %{$unusedSuppressions} ) {
