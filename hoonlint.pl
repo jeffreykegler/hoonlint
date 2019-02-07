@@ -274,9 +274,9 @@ my %separator = qw(
 );
 
 sub doNode {
-    my ( undef, @children ) = @_;
+    my ( undef, @argChildren ) = @_;
     my @results    = ();
-    my $childCount = scalar @children;
+    my $childCount = scalar @argChildren;
     no warnings 'once';
     my $ruleID = $Marpa::R2::Context::rule;
     use warnings;
@@ -300,8 +300,8 @@ sub doNode {
           $recce->g1_location_to_span($last_g1);
         my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
       RESULT: {
-          CHILD: for my $childIX ( 0 .. $#children ) {
-                my $child   = $children[$childIX];
+          CHILD: for my $childIX ( 0 .. $#argChildren ) {
+                my $child   = $argChildren[$childIX];
                 my $refType = ref $child;
                 next CHILD unless $refType eq 'ARRAY';
 
@@ -321,7 +321,7 @@ sub doNode {
                     $lexemeLength =
                       $terminatorPos + ( length $terminator ) - $lexemeStart;
                 }
-                $children[$childIX] = {
+                $argChildren[$childIX] = {
                     type   => 'lexeme',
                     start  => $lexemeStart,
                     length => $lexemeLength,
@@ -337,7 +337,7 @@ sub doNode {
                 my $lastSeparator;
               CHILD: for ( ; ; ) {
 
-                    my $child     = $children[$childIX];
+                    my $child     = $argChildren[$childIX];
                     my $childType = $child->{type};
                     $childIX++;
                   ITEM: {
@@ -349,7 +349,7 @@ sub doNode {
                         push @results, $child;
                         $lastLocation = $child->{start} + $child->{length};
                     }
-                    last RESULT if $childIX > $#children;
+                    last RESULT if $childIX > $#argChildren;
                     my $separator = $separator{$lhs};
                     next CHILD unless $separator;
                     $lastSeparator = {
@@ -365,18 +365,13 @@ sub doNode {
             }
 
             # All other rules
-          CHILD: for my $childIX ( 0 .. $#children ) {
-                my $child = $children[$childIX];
+          CHILD: for my $childIX ( 0 .. $#argChildren ) {
+                my $child = $argChildren[$childIX];
                 push @results, $child;
             }
         }
 
         # Add weak links
-      CHILD: for my $childIX ( 0 .. $#children ) {
-            my $child = $children[$childIX];
-            $child->{PARENT} = $node;
-        }
-
         $node = {
             type     => 'node',
             ruleID   => $ruleID,
@@ -384,6 +379,23 @@ sub doNode {
             length   => $lhsLength,
             children => \@results,
         };
+    }
+
+    my $children = $node->{children};
+    if ( $children and scalar @{$children} >= 1 ) {
+      CHILD: for my $childIX ( 0 .. $#$children ) {
+            my $child = $children->[$childIX];
+            $child->{PARENT} = $node;
+            weaken( $child->{PARENT} );
+        }
+      CHILD: for my $childIX ( 1 .. $#$children ) {
+            my $thisChild = $children->[$childIX];
+            my $prevChild = $children->[ $childIX - 1 ];
+            $thisChild->{PREV} = $prevChild;
+            weaken( $thisChild->{PREV} );
+            $prevChild->{NEXT} = $thisChild;
+            weaken( $prevChild->{NEXT} );
+        }
     }
 
     return $node;
