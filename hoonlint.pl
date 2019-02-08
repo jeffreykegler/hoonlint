@@ -420,50 +420,58 @@ sub column {
 }
 
 sub context2 {
-  my ($runeLine, $mistakeLine, $contextLines) = @_;
-  return '' if $contextLines <= 0;
-  my @pieces = ();
-  my $runeRangeStart = $runeLine - ($contextLines - 1);
-  $runeRangeStart = 1 if $runeRangeStart < 1;
-  my $runeRangeEnd = $runeLine + ($contextLines - 1);
-  $runeRangeEnd = $#lineToPos if $runeRangeEnd > $#lineToPos;
-  my $mistakeRangeStart = $mistakeLine - ($contextLines - 1);
-  $mistakeRangeStart = 1 if $mistakeRangeStart < 1;
-  my $mistakeRangeEnd = $mistakeLine + ($contextLines - 1);
-  $mistakeRangeEnd = $#lineToPos if $mistakeRangeEnd > $#lineToPos;
-  if ($mistakeRangeStart <= $runeRangeEnd + 2) {
-    for my $lineNum ( $runeRangeStart .. $mistakeRangeEnd ) {
-        my $start = $lineToPos[$lineNum];
-        my $line = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
-        my $tag =
-            $lineNum == $runeLine        ? '> '
-          : ( $lineNum == $mistakeLine ) ? '! '
-          :                                q{  };
-        push @pieces, $tag, $line;
+    my ( $pContextLines, $pMistakeLines, $contextSize ) = @_;
+    return '' if $contextSize <= 0;
+    my @pieces      = ();
+    my $runeLine    = $pContextLines->[0];
+    my $mistakeLine = $pMistakeLines->[0];
+    my %tag         = map { $_ => q{>} } @{$pContextLines};
+    $tag{$_} = q{!} for @{$pMistakeLines};
+    my $runeRangeStart = $runeLine - ( $contextSize - 1 );
+    $runeRangeStart = 1 if $runeRangeStart < 1;
+    my $runeRangeEnd = $runeLine + ( $contextSize - 1 );
+    $runeRangeEnd = $#lineToPos if $runeRangeEnd > $#lineToPos;
+    my $mistakeRangeStart = $mistakeLine - ( $contextSize - 1 );
+    $mistakeRangeStart = 1 if $mistakeRangeStart < 1;
+    my $mistakeRangeEnd = $mistakeLine + ( $contextSize - 1 );
+    $mistakeRangeEnd = $#lineToPos if $mistakeRangeEnd > $#lineToPos;
+
+    # Note: duplicate lines OK (I hope!)
+    my @sortedLines = sort { $a <=> $b } (@{$pContextLines}, @{$pMistakeLines});
+    my $lineNumFormat = q{%} . (length q{} . $sortedLines[$#sortedLines]) . 'd';
+
+    # Add to @pieces a set of lines to be displayed consecutively
+    my $doConsec = sub () {
+        my ($start, $end) = @_;
+        $start = 1 if $start < 1;
+        $end = $#lineToPos if $end > $#lineToPos;
+        for my $lineNum ( $start .. $end ) {
+            my $startPos = $lineToPos[$lineNum];
+            my $line =
+              literal( $startPos, ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
+            my $tag = $tag{$lineNum} // q{:};
+            push @pieces, (sprintf $lineNumFormat, $lineNum), $tag, q{ }, $line;
+        }
+    };
+
+    if ( $mistakeRangeStart <= $runeRangeEnd + 2 ) {
+        $doConsec->( $runeRangeStart , $mistakeRangeEnd );
     }
-  } else {
-    for my $lineNum ( $runeRangeStart .. $runeRangeEnd ) {
-        my $start = $lineToPos[$lineNum];
-        my $line  = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
-        my $tag   = $lineNum == $runeLine ? '> ' : q{  };
-        push @pieces, $tag, $line;
+    else {
+        $doConsec-> ( $runeRangeStart , $runeRangeEnd );
+        push @pieces, sprintf "[ lines %d-%d omitted ]\n", $runeRangeEnd + 1,
+          $mistakeRangeStart - 1;
+        $doConsec -> ( $mistakeRangeStart , $mistakeRangeEnd );
     }
-    push @pieces, sprintf "[ lines %d-%d omitted ]\n", $runeRangeEnd + 1,
-      $mistakeRangeStart - 1;
-    for my $lineNum ( $mistakeRangeStart .. $mistakeRangeEnd ) {
-        my $start = $lineToPos[$lineNum];
-        my $line  = literal( $start, ( $lineToPos[ $lineNum + 1 ] - $start ) );
-        my $tag   = $lineNum == $mistakeLine ? '! ' : q{  };
-        push @pieces, $tag, $line;
-    }
-  }
-  return join q{}, @pieces;
+    return join q{}, @pieces;
 }
 
 sub reportItem {
-  my ($topic, $runeLine, $mistakeLine, $contextLines) = @_;
-  return "$topic\n" if not $contextLines;
-  return join q{}, "== ", $topic, "\n", context2($runeLine, $mistakeLine, $contextLines);
+  my ($topic, $runeLines, $mistakeLines, $contextSize) = @_;
+  return "$topic\n" if not $contextSize;
+  $mistakeLines = [$mistakeLines] unless ref $mistakeLines;
+  $runeLines = [$runeLines] unless ref $runeLines;
+  return join q{}, "== ", $topic, "\n", context2($runeLines, $mistakeLines, $contextSize);
 }
 
 # The "symbol" of a node.  Not necessarily unique.
@@ -478,6 +486,18 @@ sub symbol {
         return $grammar->symbol_name($lhs);
     }
     return "[$type]";
+}
+
+# Can be used as test of "brick-ness"
+sub brickName {
+    my ($node) = @_;
+    my $type = $node->{type};
+    return symbol($node) if $type ne 'node';
+    my $ruleID = $node->{ruleID};
+    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+    my $lhsName = $grammar->symbol_name($lhs);
+    return $lhsName if not $mortarLHS{$lhsName};
+    return;
 }
 
 # The name of a name for diagnostics purposes.  Prefers
@@ -607,6 +627,14 @@ sub line_column {
    $column--;
    return $line, $column;
 }
+
+my $brickLC = sub() {
+    my ($node)     = @_;
+    for (my $thisNode = $node; $thisNode; $thisNode = $node->{PARENT} ) {
+        return line_column($node) if brickName($node);
+    }
+    internalError("No brick parent");
+};
 
 my $calcGapIndents = sub () {
     my ($node)     = @_;
