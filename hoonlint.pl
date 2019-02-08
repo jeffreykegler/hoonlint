@@ -438,7 +438,7 @@ sub context2 {
 
     # Note: duplicate lines OK (I hope!)
     my @sortedLines = sort { $a <=> $b } (@{$pContextLines}, @{$pMistakeLines});
-    my $lineNumFormat = q{%} . (length q{} . $sortedLines[$#sortedLines]) . 'd';
+    my $lineNumFormat = q{%} . (length q{} . $#lineToPos) . 'd';
 
     # Add to @pieces a set of lines to be displayed consecutively
     my $doConsec = sub () {
@@ -449,20 +449,40 @@ sub context2 {
             my $startPos = $lineToPos[$lineNum];
             my $line =
               literal( $startPos, ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
-            my $tag = $tag{$lineNum} // q{:};
+            my $tag = $tag{$lineNum} // q{ };
             push @pieces, (sprintf $lineNumFormat, $lineNum), $tag, q{ }, $line;
         }
     };
 
-    if ( $mistakeRangeStart <= $runeRangeEnd + 2 ) {
-        $doConsec->( $runeRangeStart , $mistakeRangeEnd );
+    my $lastIX = -1;
+  CONSEC_RANGE: while ( $lastIX < $#sortedLines ) {
+        my $firstIX = $lastIX + 1;
+
+        # Divider line if after first consecutive range
+        say '-----' if $firstIX > 0;
+        $lastIX = $firstIX;
+      SET_LAST_IX: while (1) {
+            my $nextIX = $lastIX + 1;
+            last SET_LAST_IX if $nextIX > $#sortedLines;
+
+    # We combine lines if by doing so, we make the listing shorter.
+    # This is calculated by
+    # 1.) Taking the current last line.
+    # 2.) Add the context lines for the last and next lines (2*($contextSize-1))
+    # 3.) Adding 1 for the divider line, which we save if we combine ranges.
+    # 4.) Adding 1 because we test if they abut, not overlap
+    # Doing the arithmetic, we get
+            last SET_LAST_IX
+              if $sortedLines[$lastIX] + 2 * $contextSize <
+              $sortedLines[$nextIX];
+            $lastIX = $nextIX;
+        }
+        $doConsec->(
+            $sortedLines[$firstIX] - ( $contextLines - 1 ),
+            $sortedLines[$lastIX] + ( $contextLines - 1 )
+        );
     }
-    else {
-        $doConsec-> ( $runeRangeStart , $runeRangeEnd );
-        push @pieces, sprintf "[ lines %d-%d omitted ]\n", $runeRangeEnd + 1,
-          $mistakeRangeStart - 1;
-        $doConsec -> ( $mistakeRangeStart , $mistakeRangeEnd );
-    }
+
     return join q{}, @pieces;
 }
 
