@@ -371,7 +371,6 @@ sub doNode {
             }
         }
 
-        # Add weak links
         $node = {
             type     => 'node',
             ruleID   => $ruleID,
@@ -381,6 +380,7 @@ sub doNode {
         };
     }
 
+        # Add weak links
     my $children = $node->{children};
     if ( $children and scalar @{$children} >= 1 ) {
       CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -423,22 +423,12 @@ sub context2 {
     my ( $pContextLines, $pMistakeLines, $contextSize ) = @_;
     return '' if $contextSize <= 0;
     my @pieces      = ();
-    my $runeLine    = $pContextLines->[0];
-    my $mistakeLine = $pMistakeLines->[0];
     my %tag         = map { $_ => q{>} } @{$pContextLines};
     $tag{$_} = q{!} for @{$pMistakeLines};
-    my $runeRangeStart = $runeLine - ( $contextSize - 1 );
-    $runeRangeStart = 1 if $runeRangeStart < 1;
-    my $runeRangeEnd = $runeLine + ( $contextSize - 1 );
-    $runeRangeEnd = $#lineToPos if $runeRangeEnd > $#lineToPos;
-    my $mistakeRangeStart = $mistakeLine - ( $contextSize - 1 );
-    $mistakeRangeStart = 1 if $mistakeRangeStart < 1;
-    my $mistakeRangeEnd = $mistakeLine + ( $contextSize - 1 );
-    $mistakeRangeEnd = $#lineToPos if $mistakeRangeEnd > $#lineToPos;
 
-    # Note: duplicate lines OK (I hope!)
-    my @sortedLines = sort { $a <=> $b } (@{$pContextLines}, @{$pMistakeLines});
-    my $lineNumFormat = q{%} . (length q{} . $#lineToPos) . 'd';
+    my @sortedLines = sort { $a <=> $b } map { $_+0; } keys %tag;
+    my $maxNumWidth = length q{} . $#lineToPos;
+    my $lineNumFormat = q{%} . $maxNumWidth . 'd';
 
     # Add to @pieces a set of lines to be displayed consecutively
     my $doConsec = sub () {
@@ -459,7 +449,7 @@ sub context2 {
         my $firstIX = $lastIX + 1;
 
         # Divider line if after first consecutive range
-        say '-----' if $firstIX > 0;
+        push @pieces, ('-' x ($maxNumWidth+2)), "\n" if $firstIX > 0;
         $lastIX = $firstIX;
       SET_LAST_IX: while (1) {
             my $nextIX = $lastIX + 1;
@@ -500,6 +490,7 @@ sub symbol {
     my $name = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
+    die Data::Dumper::Dumper($node) if not $type;
     if ( $type eq 'node' ) {
         my $ruleID = $node->{ruleID};
         my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
@@ -650,8 +641,16 @@ sub line_column {
 
 my $brickLC = sub() {
     my ($node)     = @_;
-    for (my $thisNode = $node; $thisNode; $thisNode = $node->{PARENT} ) {
-        return line_column($node) if brickName($node);
+    my $thisNode = $node;
+    while ( $thisNode ) {
+        # say STDERR join " ", __FILE__, __LINE__, name($node), name($thisNode);
+        # say STDERR join " ", __FILE__, __LINE__, 'PARENT:', name($thisNode->{PARENT}) if name($thisNode->{PARENT});
+        # say STDERR join " ", __FILE__, __LINE__, 'PREV:', name($thisNode->{PREV}) if name($thisNode->{PREV});
+        # say STDERR join " ", __FILE__, __LINE__, 'NEXT:', name($thisNode->{NEXT}) if name($thisNode->{NEXT});
+        return line_column($thisNode->{start}) if brickName($thisNode);
+        # local $Data::Dumper::Maxdepth = 2;
+        # say STDERR Data::Dumper::Dumper($thisNode);
+        $thisNode = $thisNode->{PARENT};
     }
     internalError("No brick parent");
 };
@@ -760,7 +759,6 @@ sub doLint {
             last WHITESPACE_POLICY if $nodeType ne 'node';
 
             my $ruleID = $node->{ruleID};
-            die Data::Dumper::Dumper($node) if not defined $ruleID;
             my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
             my $lhsName = $grammar->symbol_name($lhs);
 
@@ -1467,6 +1465,9 @@ sub doLint {
                     delete $context->{jogBodyColumn};
                     delete $context->{chessSide};
 
+                    # Replace inherited attribute rune LC with brick LC
+                    my ($brickLine, $brickColumn) = $brickLC->($node);
+
                     my $children = $node->{children};
                     my $head     = $children->[0];
                     my $gap      = $children->[1];
@@ -1490,12 +1491,12 @@ sub doLint {
                             column         => $headColumn,
                             child          => 1,
                             expectedColumn => $expectedHeadColumn,
+                            topicLines =>[$brickLine],
                           };
                     }
 
                     if ( $headLine != $bodyLine ) {
 
-                        # Check for "seaside"
                         my $expectedBodyColumn = $runeColumn + 4;
                         if ( $bodyColumn != $expectedBodyColumn ) {
                             my $msg = sprintf 'Jog %s body %s; %s',
@@ -1509,6 +1510,7 @@ sub doLint {
                                 column         => $bodyColumn,
                                 child          => 2,
                                 expectedColumn => $expectedBodyColumn,
+                            topicLines =>[$brickLine],
                               };
                         }
                         return \@mistakes;
@@ -1528,6 +1530,7 @@ sub doLint {
                             column         => $bodyColumn,
                             child          => 2,
                             expectedColumn => $jogBodyColumn,
+                            topicLines =>[$brickLine],
                           };
                     }
                     return \@mistakes;
@@ -1558,6 +1561,9 @@ sub doLint {
                     delete $context->{jogBodyColumn};
                     delete $context->{chessSide};
 
+                    # Replace inherited attribute rune LC with brick LC
+                    my ($brickLine, $brickColumn) = $brickLC->($node);
+
                     my $children = $node->{children};
                     my $head     = $children->[0];
                     my $gap      = $children->[1];
@@ -1581,6 +1587,7 @@ sub doLint {
                             column         => $headColumn,
                             child          => 1,
                             expectedColumn => $expectedHeadColumn,
+                            topicLines =>[$brickLine],
                           };
                     }
 
@@ -1600,6 +1607,7 @@ sub doLint {
                             column         => $bodyColumn,
                             child          => 2,
                             expectedColumn => $expectedBodyColumn,
+                            topicLines =>[$brickLine],
                           };
                     }
 
@@ -1620,6 +1628,7 @@ sub doLint {
                                 column         => $bodyColumn,
                                 child          => 2,
                                 expectedColumn => $jogBodyColumn,
+                            topicLines =>[$brickLine],
                               };
                         }
                     }
@@ -1708,19 +1717,22 @@ sub doLint {
                   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
                         # say join " ", __FILE__, __LINE__, "displayMistakes()";
-                        my $desc        = $mistake->{desc};
                         my $type        = $mistake->{type};
-                        my $mistakeLine = $mistake->{line};
-
                     next MISTAKE
                       if $inclusions and not $inclusions->{$type}{$parentLC};
+
+                        my $desc        = $mistake->{desc};
+                        my $mistakeLine = $mistake->{line};
+                        my $mistakeTopicLines = $mistake->{topicLines};
+                        my @topicLines = ($parentLine);
+                        push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
 
                         push @pieces,
                           reportItem(
                             (
                                     "$fileName $parentLC $type $hoonDesc $desc"
                             ),
-                            $parentLine,
+                            \@topicLines,
                             $mistakeLine,
                             $contextLines
                           );
