@@ -35,6 +35,13 @@ sub usage {
 usage() if scalar @ARGV != 1;
 my $fileName = $ARGV[0];
 
+no warnings 'once';
+local $Marpa::YAHC::Lint::fileName = $fileName;
+no warnings 'recursion';
+
+local $Marpa::YAHC::Lint::topicLines = [];
+local $Marpa::YAHC::Lint::mistakeLines = {};
+
 sub internalError {
    my @pieces = ("$PROGRAM_NAME $fileName: Internal Error\n", @_);
    push @pieces, "\n" unless $pieces[$#pieces] =~ m/\n$/;
@@ -122,6 +129,8 @@ sub parseReportItems {
 }
 
 my $pHoonSource = slurp($fileName);
+
+local $Marpa::YAHC::Lint::contextSize = $contextLines;
 
 my @data = ();
 my $recce;
@@ -420,13 +429,23 @@ sub column {
 }
 
 sub context2 {
-    my ( $pContextLines, $pMistakeLines, $contextSize ) = @_;
-    return '' if $contextSize <= 0;
+    my ( $pContextLines, $pMistakeLines ) = @_;
+    my $contextSize = $Marpa::YAHC::Lint::contextSize;
     my @pieces      = ();
     my %tag         = map { $_ => q{>} } @{$pContextLines};
-    $tag{$_} = q{!} for @{$pMistakeLines};
-
+    $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_+0; } keys %tag;
+
+    if ($contextSize <= 0) {
+        for my $lineNum (@sortedLines) {
+            my $mistakeDescs = $pMistakeLines->{$lineNum};
+            for my $mistakeDesc (@{$mistakeDescs}) {
+                push @pieces, $mistakeDesc, "\n";
+            }
+        }
+        return join q{}, @pieces;
+    }
+
     my $maxNumWidth = length q{} . $#lineToPos;
     my $lineNumFormat = q{%} . $maxNumWidth . 'd';
 
@@ -440,6 +459,10 @@ sub context2 {
             my $line =
               literal( $startPos, ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
             my $tag = $tag{$lineNum} // q{ };
+            my $mistakeDescs = $pMistakeLines->{$lineNum};
+            for my $mistakeDesc (@{$mistakeDescs}) {
+                push @pieces, '[ ', $mistakeDesc, " ]\n";
+            }
             push @pieces, (sprintf $lineNumFormat, $lineNum), $tag, q{ }, $line;
         }
     };
@@ -477,11 +500,17 @@ sub context2 {
 }
 
 sub reportItem {
-  my ($topic, $runeLines, $mistakeLines, $contextSize) = @_;
-  return "$topic\n" if not $contextSize;
-  $mistakeLines = [$mistakeLines] unless ref $mistakeLines;
-  $runeLines = [$runeLines] unless ref $runeLines;
-  return join q{}, "== ", $topic, "\n", context2($runeLines, $mistakeLines, $contextSize);
+    my ( $mistakeDesc, $topicLineArg, $mistakeLine ) = @_;
+
+    my $topicLines = $Marpa::YAHC::Lint::topicLines;
+    push @{$topicLines},
+      ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
+    my $mistakeLines = $Marpa::YAHC::Lint::mistakeLines;
+    my $thisMistakeDescs = $mistakeLines->{$mistakeLine};
+    $thisMistakeDescs = [] if not defined $thisMistakeDescs;
+    push @{$thisMistakeDescs}, $mistakeDesc;
+    $mistakeLines->{$mistakeLine} = $thisMistakeDescs;
+
 }
 
 # The "symbol" of a node.  Not necessarily unique.
@@ -880,11 +909,11 @@ sub doLint {
                                     }
                                 }
                                 if (   not $inclusions
-                                    or $inclusions->{sequence}{$grandParentLC} )
+                                    or $inclusions->{sequence}{$childLC} )
                                 {
-                                    print reportItem(
-"$fileName $grandParentLC sequence $lhsName $indentDesc",
-                                        $parentLine, $childLine, $contextLines )
+                                    reportItem(
+"$fileName $childLC sequence $lhsName $indentDesc",
+                                        $parentLine, $childLine )
                                       if $censusWhitespace or $isProblem;
                                 }
                                 $previousLine = $childLine;
@@ -926,17 +955,16 @@ sub doLint {
                             }
                         }
                         if (   not $inclusions
-                            or $inclusions->{sequence}{$parentLC} )
+                            or $inclusions->{sequence}{$childLC} )
                         {
-                            print reportItem(
+                            reportItem(
                                 (
                                     sprintf
-"$fileName $parentLC sequence %s $indentDesc",
+"$fileName $childLC sequence %s $indentDesc",
                                     diagName( $node, $parentContext )
                                 ),
                                 $parentLine,
                                 $childLine,
-                                $contextLines
                             ) if $censusWhitespace or $isProblem;
                         }
                         $previousLine = $childLine;
@@ -1727,17 +1755,14 @@ sub doLint {
                         my @topicLines = ($parentLine);
                         push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
 
-                        push @pieces,
                           reportItem(
                             (
                                     "$fileName $parentLC $type $hoonDesc $desc"
                             ),
                             \@topicLines,
                             $mistakeLine,
-                            $contextLines
                           );
                     }
-                    return join "", @pieces;
                 };
 
           # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
@@ -1830,16 +1855,16 @@ sub doLint {
           # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
                     if ( @{$mistakes} ) {
                         $_->{type} = 'indent' for @{$mistakes};
-                        print $displayMistakes->($mistakes, diagName($node, $parentContext));
+                        $displayMistakes->($mistakes, diagName($node, $parentContext));
                         last PRINT;
                     }
 
                     if ($censusWhitespace) {
-                        print reportItem(
+                        reportItem(
                         (sprintf "$fileName %s indent %s %s",
                               ( join ':', $recce->line_column($start) ),
                               diagName($node, $parentContext), $indentDesc),
-                            $parentLine, $parentLine, $contextLines );
+                            $parentLine, $parentLine );
                     }
                 }
             }
@@ -1854,6 +1879,9 @@ sub doLint {
 
 # TODO: ancestors, indents in favor of tree traversal
 doLint( $astValue, { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
+print context2(
+     $Marpa::YAHC::Lint::topicLines,
+     $Marpa::YAHC::Lint::mistakeLines);
 
 for my $type ( keys %{$unusedSuppressions} ) {
     for my $tag (

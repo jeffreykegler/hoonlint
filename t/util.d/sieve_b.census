@@ -5,14 +5,14 @@ t/ast.d/sieve_b.hoon 4:1 indent tallTisgal CAST-STYLE
 t/ast.d/sieve_b.hoon 5:1 indent tallBarcen BACKDENTED
 t/ast.d/sieve_b.hoon 6:1 indent wisp5d CAST-STYLE
 t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR
-t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR
-t/ast.d/sieve_b.hoon 6:1 sequence whap5d REGULAR
 t/ast.d/sieve_b.hoon 6:1 indent LuslusCell LUSLUS-STYLE
+t/ast.d/sieve_b.hoon 9:1 sequence whap5d REGULAR
 t/ast.d/sieve_b.hoon 9:1 indent LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_b.hoon 10:3 indent tallTisfas BACKDENTED
 t/ast.d/sieve_b.hoon 11:3 indent tallBarhep CAST-STYLE
 t/ast.d/sieve_b.hoon 11:7 indent tallKetlus CAST-STYLE
 t/ast.d/sieve_b.hoon 12:3 indent tallWutcol BACKDENTED
+t/ast.d/sieve_b.hoon 16:1 sequence whap5d REGULAR
 t/ast.d/sieve_b.hoon 16:1 indent LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_b.hoon 17:3 indent tallBartis BACKDENTED
 t/ast.d/sieve_b.hoon 18:3 indent tallTisfas BACKDENTED
