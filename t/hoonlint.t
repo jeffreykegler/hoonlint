@@ -43,7 +43,7 @@ for my $testData (@tests) {
 
     my ($stdinName, $stdoutName, @options) = @{$testData};
 
-    my $cmd = [ 'perl', 'hoonlint.pl', @options, $stdinName ];
+    my $cmd = [ 'perl', 'Lint/hoonlint.pl', @options, $stdinName ];
 
     my @stdout       = ();
     my $gatherStdout = sub {
