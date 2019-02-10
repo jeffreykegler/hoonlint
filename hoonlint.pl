@@ -1061,13 +1061,17 @@ sub doLint {
                     for ( my $childIX = $#$children ; $childIX >= 0; $childIX-- ) {
                         my $jog         = $children->[$childIX];
                         my $jogChildren = $jog->{children};
+                        my $head         = $jogChildren->[1];
                         my $gap         = $jogChildren->[1];
-                        my $gapLength   = $gap->{length};
                         my $body = $jogChildren->[2];
                         my ( $bodyLine, $bodyColumn ) =
                           line_column( $body->{start} );
+                        my ( $headLine, $headColumn ) =
+                          line_column( $head->{start} );
+                        my $gapLength   = $gap->{length};
                         $firstBodyColumn = $bodyColumn
                           if not defined $firstBodyColumn;
+                        next CHILD unless $headLine == $bodyLine;
                         next CHILD unless $gap > 2;
                         $bodyColumnCount{$bodyColumn} =
                           $bodyColumnCount{$bodyColumn}++;
