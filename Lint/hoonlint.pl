@@ -35,12 +35,19 @@ sub usage {
 usage() if scalar @ARGV != 1;
 my $fileName = $ARGV[0];
 
+# Eventually this will be packaged as a Perl module,
+# and the rare user who needs multiple lint instances
+# will be able to create them.  Right now there is only
+# one
+my %instance = ();
+local $Marpa::YAHC::Lint::instance = \%instance;
+
 no warnings 'once';
-local $Marpa::YAHC::Lint::fileName = $fileName;
+$instance{fileName} = $fileName;
 no warnings 'recursion';
 
-local $Marpa::YAHC::Lint::topicLines = [];
-local $Marpa::YAHC::Lint::mistakeLines = {};
+$instance{topicLines} = [];
+$instance{mistakeLines} = {};
 
 sub internalError {
    my @pieces = ("$PROGRAM_NAME $fileName: Internal Error\n", @_);
@@ -84,6 +91,8 @@ my $pSuppressions;
 my %reportItemType   = map { +( $_, 1 ) } qw(indent sequence);
 my ($suppressions, $unusedSuppressions) = parseReportItems($pSuppressions);
 die $unusedSuppressions if not $suppressions;
+$instance{suppressions} = $suppressions;
+$instance{unusedSuppressions} = $unusedSuppressions;
 
 my $pInclusions;
 my ( $inclusions, $unusedInclusions );
@@ -92,6 +101,8 @@ if ( defined $inclusionsFileName ) {
     ( $inclusions, $unusedInclusions ) = parseReportItems($pInclusions);
     die $unusedInclusions if not $inclusions;
 }
+$instance{inclusions} = $inclusions;
+$instance{unusedInclusions} = $unusedInclusions;
 
 sub parseReportItems {
     my ($reportItems)        = @_;
@@ -130,7 +141,7 @@ sub parseReportItems {
 
 my $pHoonSource = slurp($fileName);
 
-local $Marpa::YAHC::Lint::contextSize = $contextLines;
+$instance{contextSize} = $contextLines;
 
 my @data = ();
 my $recce;
@@ -143,7 +154,7 @@ EOS
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 my $dsl = $parser->dsl();
 my $grammar = $parser->rawGrammar();
-local $MarpaX::YAHC::Lint::grammar = $grammar;
+$instance{grammar} = $grammar;
 
 my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
@@ -422,7 +433,10 @@ sub doNode {
 }
 
 $parser->read($pHoonSource);
+
 $recce  = $parser->rawRecce();
+$instance{$recce} = $recce;
+
 $parser = undef;                 # free up memory
 my $astRef = $recce->value();
 
@@ -433,13 +447,14 @@ sub literal {
 
 my @lineToPos = (-1, 0);
 while (${$pHoonSource} =~ m/\n/g) { push @lineToPos, pos ${$pHoonSource} };
+$instance{lineToPos} = \@lineToPos;
 
 sub column {
     my ($pos) = @_;
     return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
 }
 
-sub context2 {
+my $context2 = sub {
     my ( $pContextLines, $pMistakeLines ) = @_;
     my $contextSize = $Marpa::YAHC::Lint::contextSize;
     my @pieces      = ();
@@ -508,7 +523,7 @@ sub context2 {
     }
 
     return join q{}, @pieces;
-}
+};
 
 sub reportItem {
     my ( $mistakeDesc, $topicLineArg, $mistakeLine ) = @_;
@@ -627,6 +642,7 @@ sub spacesNeeded {
 }
 
 my @ruleDB          = ();
+$instance{ruleDB} = \@ruleDB;
 my @symbolDB        = ();
 my %symbolReverseDB = ();
 
@@ -733,7 +749,7 @@ my $calcGapIndents = sub () {
     }
 
 
-print context2(
+print $context2->(
      $Marpa::YAHC::Lint::topicLines,
      $Marpa::YAHC::Lint::mistakeLines);
 

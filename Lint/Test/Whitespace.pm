@@ -13,7 +13,6 @@ use Scalar::Util qw(looks_like_number weaken);
 
 say STDERR join " ", __FILE__, __LINE__, "hi";
 
-my $mortarLHS = $Marpa::YAHC::Lint::mortarLHS;
 
 # TODO: delete ancestors, indents in favor of tree traversal
 
@@ -22,10 +21,91 @@ sub new {
     return bless {}, $class;
 }
 
+sub is_0Jogging {
+    my ( $runeLine, $runeColumn, $gapIndents ) = @_;
+    my $instance =  $Marpa::YAHC::Lint::instance;
+    my $lineToPos = $instance->{lineToPos};
+    my @mistakes = ();
+    die "Jogging-0-style rule with only $gapIndents gap indents"
+      if $#$gapIndents < 2;
+
+    # Second child must be on rune line, or
+    # at ruleColumn+2
+    my ( $firstChildLine, $firstChildColumn ) =
+      @{ $gapIndents->[1] };
+
+    if (    $firstChildLine != $runeLine
+        and $firstChildColumn != $runeColumn + 2 )
+    {
+        my $msg = sprintf "Jogging-0-style child #%d @%d:%d; %s", 2,
+          $firstChildLine,
+          $firstChildColumn + 1,
+          describeMisindent( $firstChildColumn, $runeColumn + 2 );
+        push @mistakes,
+          {
+            desc           => $msg,
+            line           => $firstChildLine,
+            column         => $firstChildColumn,
+            child          => 2,
+            expectedColumn => $runeColumn + 2,
+          };
+    }
+
+    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
+    if ( $tistisLine == $runeLine ) {
+        my $msg = sprintf
+          "Jogging-0-style line %d; TISTIS is on rune line %d; should not be",
+          $runeLine, $tistisLine;
+        push @mistakes,
+          {
+            desc         => $msg,
+            line         => $tistisLine,
+            column       => $tistisColumn,
+            child        => 3,
+            expectedLine => $runeLine,
+          };
+    }
+
+    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+
+    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistis = literal( $tistisPos, 2 );
+
+        # say join " ", __FILE__, __LINE__, $tistis;
+        $tistisIsMisaligned = $tistis ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
+          $tistisLine, $tistisColumn + 1,
+          describeMisindent( $tistisColumn, $runeColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            child          => 3,
+            expectedColumn => $runeColumn,
+          };
+    }
+    return \@mistakes;
+}
+
 sub validate {
     my ( $node, $argContext ) = @_;
 
-    my $grammar = $MarpaX::YAHC::Lint::grammar;
+    my $instance =  $Marpa::YAHC::Lint::instance;
+    my $fileName = $instance->{fileName};
+    my $grammar = $instance->{grammar};
+    my $recce = $instance->{recce};
+    my $mortarLHS = $instance->{mortarLHS};
+    my $tallRuneRule = $instance->{tallRuneRule};
+    my $ruleDB = $instance->{ruleDB};
+    my $suppressions = $instance->{suppressions};
+    my $unusedSuppressions = $instance->{unusedSuppressions};
+    my $inclusions = $instance->{inclusions};
+    my $lineToPos = $instance->{lineToPos};
 
     my $parentSymbol = $node->{symbol};
     my $parentStart  = $node->{start};
@@ -111,7 +191,7 @@ sub validate {
     }
 
     $parentContext->{bodyIndent} = $parentColumn
-      if $tallBodyRule->{$lhsName};
+      if $instance->{tallBodyRule}->{$lhsName};
 
     $parentContext->{tallRuneIndent} = $parentColumn
       if $tallRuneRule->{$lhsName};
@@ -128,7 +208,7 @@ sub validate {
 
     my $firstChildIndent = column( $children->[0]->{start} ) - 1;
 
-    my $gapiness = $ruleDB[$ruleID]->{gapiness} // 0;
+    my $gapiness = $ruleDB->[$ruleID]->{gapiness} // 0;
 
     my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
 
@@ -403,75 +483,6 @@ sub validate {
         die "No jogging found for ", symbol($node);
     };
 
-    sub is_0Jogging {
-        my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-        my @mistakes = ();
-        die "Jogging-0-style rule with only $gapIndents gap indents"
-          if $#$gapIndents < 2;
-
-        # Second child must be on rune line, or
-        # at ruleColumn+2
-        my ( $firstChildLine, $firstChildColumn ) =
-          @{ $gapIndents->[1] };
-
-        if (    $firstChildLine != $runeLine
-            and $firstChildColumn != $runeColumn + 2 )
-        {
-            my $msg = sprintf
-              "Jogging-0-style child #%d @%d:%d; %s", 2, $firstChildLine,
-              $firstChildColumn + 1,
-              describeMisindent( $firstChildColumn, $runeColumn + 2 );
-            push @mistakes,
-              {
-                desc           => $msg,
-                line           => $firstChildLine,
-                column         => $firstChildColumn,
-                child          => 2,
-                expectedColumn => $runeColumn + 2,
-              };
-        }
-
-        my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
-        if ( $tistisLine == $runeLine ) {
-            my $msg = sprintf
-"Jogging-0-style line %d; TISTIS is on rune line %d; should not be",
-              $runeLine, $tistisLine;
-            push @mistakes,
-              {
-                desc         => $msg,
-                line         => $tistisLine,
-                column       => $tistisColumn,
-                child        => 3,
-                expectedLine => $runeLine,
-              };
-        }
-
-        my $tistisIsMisaligned = $tistisColumn != $runeColumn;
-
-        # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
-        if ($tistisIsMisaligned) {
-            my $tistisPos = $lineToPos[$tistisLine] + $tistisColumn;
-            my $tistis = literal( $tistisPos, 2 );
-
-            # say join " ", __FILE__, __LINE__, $tistis;
-            $tistisIsMisaligned = $tistis ne '==';
-        }
-        if ($tistisIsMisaligned) {
-            my $msg = sprintf "Jogging-0-style; TISTIS @%d:%d; %s",
-              $tistisLine, $tistisColumn + 1,
-              describeMisindent( $tistisColumn, $runeColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                line           => $tistisLine,
-                column         => $tistisColumn,
-                child          => 3,
-                expectedColumn => $runeColumn,
-              };
-        }
-        return \@mistakes;
-    }
-
     my $isJogging1 = sub {
         my ( $context, $node, $gapIndents ) = @_;
         my $start = $node->{start};
@@ -547,7 +558,7 @@ sub validate {
 
         # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
         if ($tistisIsMisaligned) {
-            my $tistisPos = $lineToPos[$tistisLine] + $tistisColumn;
+            my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
             my $tistis = literal( $tistisPos, 2 );
 
             # say join " ", __FILE__, __LINE__, $tistis;
@@ -659,7 +670,7 @@ sub validate {
 
         # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
         if ($tistisIsMisaligned) {
-            my $tistisPos = $lineToPos[$tistisLine] + $tistisColumn;
+            my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
             my $tistis = literal( $tistisPos, 2 );
 
             # say join " ", __FILE__, __LINE__, $tistis;
@@ -718,7 +729,7 @@ sub validate {
 
         # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
         if ($tistisIsMisaligned) {
-            my $tistisPos = $lineToPos[$tistisLine] + $tistisColumn;
+            my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
             my $tistis = literal( $tistisPos, 2 );
 
             # say join " ", __FILE__, __LINE__, $tistis;
