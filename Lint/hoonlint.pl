@@ -5,6 +5,8 @@ use strict;
 use warnings;
 no warnings 'recursion';
 
+package MarpaX::YAHC::Lint;
+
 use Data::Dumper;
 use English qw( -no_match_vars );
 use Scalar::Util qw(looks_like_number weaken);
@@ -39,15 +41,17 @@ my $fileName = $ARGV[0];
 # and the rare user who needs multiple lint instances
 # will be able to create them.  Right now there is only
 # one
-my %instance = ();
-local $Marpa::YAHC::Lint::instance = \%instance;
+my $lintInstance = {};
+bless $lintInstance, "MarpaX::YAHC::Lint";
+local $MarpaX::YAHC::Lint::instance = $lintInstance;
 
 no warnings 'once';
-$instance{fileName} = $fileName;
+$lintInstance->{fileName} = $fileName;
 no warnings 'recursion';
 
-$instance{topicLines} = [];
-$instance{mistakeLines} = {};
+$lintInstance->{censusWhitespace} = [];
+$lintInstance->{topicLines} = [];
+$lintInstance->{mistakeLines} = {};
 
 sub internalError {
    my @pieces = ("$PROGRAM_NAME $fileName: Internal Error\n", @_);
@@ -91,8 +95,8 @@ my $pSuppressions;
 my %reportItemType   = map { +( $_, 1 ) } qw(indent sequence);
 my ($suppressions, $unusedSuppressions) = parseReportItems($pSuppressions);
 die $unusedSuppressions if not $suppressions;
-$instance{suppressions} = $suppressions;
-$instance{unusedSuppressions} = $unusedSuppressions;
+$lintInstance->{suppressions} = $suppressions;
+$lintInstance->{unusedSuppressions} = $unusedSuppressions;
 
 my $pInclusions;
 my ( $inclusions, $unusedInclusions );
@@ -101,8 +105,8 @@ if ( defined $inclusionsFileName ) {
     ( $inclusions, $unusedInclusions ) = parseReportItems($pInclusions);
     die $unusedInclusions if not $inclusions;
 }
-$instance{inclusions} = $inclusions;
-$instance{unusedInclusions} = $unusedInclusions;
+$lintInstance->{inclusions} = $inclusions;
+$lintInstance->{unusedInclusions} = $unusedInclusions;
 
 sub parseReportItems {
     my ($reportItems)        = @_;
@@ -141,20 +145,20 @@ sub parseReportItems {
 
 my $pHoonSource = slurp($fileName);
 
-$instance{contextSize} = $contextLines;
+$lintInstance->{contextSize} = $contextLines;
 
 my @data = ();
 my $recce;
 
 my $semantics = <<'EOS';
-:default ::= action=>main::doNode
+:default ::= action=>MarpaX::YAHC::Lint::doNode
 lexeme default = latm => 1 action=>[start,length,name]
 EOS
 
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 my $dsl = $parser->dsl();
 my $grammar = $parser->rawGrammar();
-$instance{grammar} = $grammar;
+$lintInstance->{grammar} = $grammar;
 
 my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
@@ -174,30 +178,34 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 );
 
 my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
-local $Marpa::YAHC::Lint::mortarLHS = \%mortarLHS;
+$lintInstance->{mortarLHS} = \%mortarLHS;
 
 my %tallBodyRule =
   map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
-local $Marpa::YAHC::Lint::tallBodyRule = \%tallBodyRule;
+$lintInstance->{tallBodyRule} = \%tallBodyRule;
 
 # TODO: These are *not* jogging rules.  Change the name and look
 # at the logic.
 my %tall_0JoggingRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
-local $Marpa::YAHC::Lint::tall_0JoggingRule = \%tall_0JoggingRule;
+$lintInstance->{tall_0JoggingRule} = \%tall_0JoggingRule;
 
 my %tall_1JoggingRule =
   map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
-local $Marpa::YAHC::Lint::tall_1JoggingRule = \%tall_1JoggingRule;
+$lintInstance->{tall_1JoggingRule} = \%tall_1JoggingRule;
 
 my %tall_2JoggingRule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
-local $Marpa::YAHC::Lint::tall_2JoggingRule = \%tall_2JoggingRule;
+$lintInstance->{tall_2JoggingRule} = \%tall_2JoggingRule;
 
 my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
-local $Marpa::YAHC::Lint::tallJogging1_Rule = \%tallJogging1_Rule;
+$lintInstance->{tallJogging1_Rule} = \%tallJogging1_Rule;
 
 my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
   optFordFashep optFordFaslus fordFaswut fordFastis);
+$lintInstance->{tallLuslusRule} = \%tallLuslusRule;
+
 my %tallJogRule      = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
+$lintInstance->{tallJogRule} = \%tallJogRule;
+
 my @unimplementedRule = qw( tallSemCol tallSemsig );
 my %tallBackdentRule = map { +( $_, 1 ) } @unimplementedRule,
 qw(
@@ -435,7 +443,7 @@ sub doNode {
 $parser->read($pHoonSource);
 
 $recce  = $parser->rawRecce();
-$instance{$recce} = $recce;
+$lintInstance->{recce} = $recce;
 
 $parser = undef;                 # free up memory
 my $astRef = $recce->value();
@@ -447,7 +455,7 @@ sub literal {
 
 my @lineToPos = (-1, 0);
 while (${$pHoonSource} =~ m/\n/g) { push @lineToPos, pos ${$pHoonSource} };
-$instance{lineToPos} = \@lineToPos;
+$lintInstance->{lineToPos} = \@lineToPos;
 
 sub column {
     my ($pos) = @_;
@@ -456,7 +464,7 @@ sub column {
 
 my $context2 = sub {
     my ( $pContextLines, $pMistakeLines ) = @_;
-    my $contextSize = $Marpa::YAHC::Lint::contextSize;
+    my $contextSize = $MarpaX::YAHC::Lint::contextSize;
     my @pieces      = ();
     my %tag         = map { $_ => q{>} } @{$pContextLines};
     $tag{$_} = q{!} for keys %{$pMistakeLines};
@@ -528,10 +536,10 @@ my $context2 = sub {
 sub reportItem {
     my ( $mistakeDesc, $topicLineArg, $mistakeLine ) = @_;
 
-    my $topicLines = $Marpa::YAHC::Lint::topicLines;
+    my $topicLines = $MarpaX::YAHC::Lint::topicLines;
     push @{$topicLines},
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
-    my $mistakeLines = $Marpa::YAHC::Lint::mistakeLines;
+    my $mistakeLines = $MarpaX::YAHC::Lint::mistakeLines;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLine};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
     push @{$thisMistakeDescs}, $mistakeDesc;
@@ -594,10 +602,9 @@ sub name {
 
 die "Parse failed" if not $astRef;
 
-local $Data::Dumper::Deepcopy = 1;
-local $Data::Dumper::Terse    = 1;
-
-# say Data::Dumper::Dumper($astRef);
+# local $Data::Dumper::Deepcopy = 1;
+# local $Data::Dumper::Terse    = 1;
+# local $Data::Dumper::Maxdepth    = 3;
 
 my $astValue = ${$astRef};
 
@@ -642,9 +649,11 @@ sub spacesNeeded {
 }
 
 my @ruleDB          = ();
-$instance{ruleDB} = \@ruleDB;
+$lintInstance->{ruleDB} = \@ruleDB;
+
 my @symbolDB        = ();
 my %symbolReverseDB = ();
+$lintInstance->{symbolReverseDB} = \%symbolReverseDB;
 
 sub testStyleCensus {
   SYMBOL:
@@ -689,49 +698,21 @@ sub testStyleCensus {
 testStyleCensus();
 
 sub line_column {
-   my ($pos) = @_;
-   my ( $line, $column ) = $recce->line_column($pos);
+   my ($instance, $pos) = @_;
+   $Data::Dumper::Maxdepth = 3; die Data::Dumper::Dumper($instance) if not defined $instance->{recce};
+   my ( $line, $column ) = $instance->{recce}->line_column($pos);
    $column--;
    return $line, $column;
 }
 
-my $brickLC = sub() {
+sub brickLC {
     my ($node)     = @_;
     my $thisNode = $node;
     while ( $thisNode ) {
-        # say STDERR join " ", __FILE__, __LINE__, name($node), name($thisNode);
-        # say STDERR join " ", __FILE__, __LINE__, 'PARENT:', name($thisNode->{PARENT}) if name($thisNode->{PARENT});
-        # say STDERR join " ", __FILE__, __LINE__, 'PREV:', name($thisNode->{PREV}) if name($thisNode->{PREV});
-        # say STDERR join " ", __FILE__, __LINE__, 'NEXT:', name($thisNode->{NEXT}) if name($thisNode->{NEXT});
         return line_column($thisNode->{start}) if brickName($thisNode);
-        # local $Data::Dumper::Maxdepth = 2;
-        # say STDERR Data::Dumper::Dumper($thisNode);
         $thisNode = $thisNode->{PARENT};
     }
     internalError("No brick parent");
-};
-
-my $calcGapIndents = sub () {
-    my ($node)     = @_;
-    my $children   = $node->{children};
-    my @gapIndents = ();
-    my $child      = $children->[0];
-    my $childStart = $child->{start};
-    my ( $childLine, $childColumn ) = $recce->line_column($childStart);
-    push @gapIndents, [ $childLine, $childColumn - 1 ];
-    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
-        my $child  = $children->[$childIX];
-        my $symbol = $child->{symbol};
-        if ( defined $symbol
-            and $symbolReverseDB{$symbol}->{gap} )
-        {
-            my $nextChild = $children->[ $childIX + 1 ];
-            my $nextStart = $nextChild->{start};
-            my ( $nextLine, $nextColumn ) = $recce->line_column($nextStart);
-            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
-        }
-    }
-    return \@gapIndents;
 };
 
   LINT_NODE: {
@@ -742,16 +723,16 @@ my $calcGapIndents = sub () {
 
       WHITESPACE_POLICY: {
            require Test::Whitespace;
-           my $policy = MarpaX::YAHC::Test::Whitespace->new();
-           $policy->validate($astValue, 
+           my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new();
+           $policy->validate($lintInstance, $astValue, 
 { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
         }
     }
 
 
 print $context2->(
-     $Marpa::YAHC::Lint::topicLines,
-     $Marpa::YAHC::Lint::mistakeLines);
+     $MarpaX::YAHC::Lint::topicLines,
+     $MarpaX::YAHC::Lint::mistakeLines);
 
 for my $type ( keys %{$unusedSuppressions} ) {
     for my $tag (

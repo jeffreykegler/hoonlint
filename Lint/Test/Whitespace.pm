@@ -21,9 +21,35 @@ sub new {
     return bless {}, $class;
 }
 
+sub calcGapIndents {
+    my ($node)     = @_;
+    my $instance =  $MarpaX::YAHC::Lint::instance;
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $recce = $instance->{recce};
+    my $children   = $node->{children};
+    my @gapIndents = ();
+    my $child      = $children->[0];
+    my $childStart = $child->{start};
+    my ( $childLine, $childColumn ) = $recce->line_column($childStart);
+    push @gapIndents, [ $childLine, $childColumn - 1 ];
+    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $child->{symbol};
+        if ( defined $symbol
+            and $symbolReverseDB->{$symbol}->{gap} )
+        {
+            my $nextChild = $children->[ $childIX + 1 ];
+            my $nextStart = $nextChild->{start};
+            my ( $nextLine, $nextColumn ) = $recce->line_column($nextStart);
+            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
+        }
+    }
+    return \@gapIndents;
+}
+
 sub is_0Jogging {
     my ( $runeLine, $runeColumn, $gapIndents ) = @_;
-    my $instance =  $Marpa::YAHC::Lint::instance;
+    my $instance =  $MarpaX::YAHC::Lint::instance;
     my $lineToPos = $instance->{lineToPos};
     my @mistakes = ();
     die "Jogging-0-style rule with only $gapIndents gap indents"
@@ -93,25 +119,39 @@ sub is_0Jogging {
 }
 
 sub validate {
-    my ( $node, $argContext ) = @_;
+    my ( $policy, $instance, $node, $argContext ) = @_;
 
-    my $instance =  $Marpa::YAHC::Lint::instance;
     my $fileName = $instance->{fileName};
     my $grammar = $instance->{grammar};
     my $recce = $instance->{recce};
     my $mortarLHS = $instance->{mortarLHS};
+
     my $tallRuneRule = $instance->{tallRuneRule};
+    my $tallJogRule = $instance->{tallJogRule};
+    my $tallNoteRule = $instance->{tallNoteRule};
+    my $tallLuslusRule = $instance->{tallLuslusRule};
+    my $tall_0JoggingRule = $instance->{tall_0JoggingRule};
+    my $tall_1JoggingRule = $instance->{tall_1JoggingRule};
+    my $tall_2JoggingRule = $instance->{tall_2JoggingRule};
+    my $tallJogging1_Rule = $instance->{tallJogging1_Rule};
+
     my $ruleDB = $instance->{ruleDB};
     my $suppressions = $instance->{suppressions};
     my $unusedSuppressions = $instance->{unusedSuppressions};
     my $inclusions = $instance->{inclusions};
     my $lineToPos = $instance->{lineToPos};
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $censusWhitespace = $instance->{censusWhitespace};
 
     my $parentSymbol = $node->{symbol};
     my $parentStart  = $node->{start};
     my $parentLength = $node->{length};
     my $parentRuleID = $node->{ruleID};
-    my ( $parentLine, $parentColumn ) = line_column($parentStart);
+
+    $Data::Dumper::Maxdepth = 3;
+    say Data::Dumper::Dumper($node);
+
+    my ( $parentLine, $parentColumn ) = $instance->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn+1;
 
     my @parentIndents = @{ $argContext->{indents} };
@@ -261,7 +301,7 @@ sub validate {
                         my $symbol     = $child->{symbol};
                         next CHILD
                           if defined $symbol
-                          and $symbolReverseDB{$symbol}->{gap};
+                          and $symbolReverseDB->{$symbol}->{gap};
                         my ( $childLine, $childColumn ) =
                           $recce->line_column($childStart);
                         my $childLC = join ':', $childLine, $childColumn;
@@ -309,7 +349,7 @@ sub validate {
                 my $symbol     = $child->{symbol};
                 next CHILD
                   if defined $symbol
-                  and $symbolReverseDB{$symbol}->{gap};
+                  and $symbolReverseDB->{$symbol}->{gap};
                 my ( $childLine, $childColumn ) =
                   $recce->line_column($childStart);
                 my $childLC = join ':', $childLine, $childColumn;
@@ -410,9 +450,9 @@ sub validate {
       CHILD: for my $childIX ( 0 .. $#$children ) {
             my $jog    = $children->[$childIX];
             my $symbol = $jog->{symbol};
-            next CHILD if defined $symbol and $symbolReverseDB{$symbol}->{gap};
+            next CHILD if defined $symbol and $symbolReverseDB->{$symbol}->{gap};
             my $head = $jog->{children}->[0];
-            my ( undef, $column1 ) = line_column( $head->{start} );
+            my ( undef, $column1 ) = $instance->line_column( $head->{start} );
 
             # say " $column1 - $runeColumn >= 4 ";
             if ( $column1 - $runeColumn >= 4 ) {
@@ -443,9 +483,9 @@ sub validate {
             my $gap         = $jogChildren->[1];
             my $body        = $jogChildren->[2];
             my ( $bodyLine, $bodyColumn ) =
-              line_column( $body->{start} );
+              $instance->line_column( $body->{start} );
             my ( $headLine, $headColumn ) =
-              line_column( $head->{start} );
+              $instance->line_column( $head->{start} );
             my $gapLength = $gap->{length};
             $firstBodyColumn = $bodyColumn
               if not defined $firstBodyColumn;
@@ -471,7 +511,7 @@ sub validate {
 
     my $censusJoggingHoon = sub {
         my ($node) = @_;
-        my ( undef, $runeColumn ) = line_column( $node->{start} );
+        my ( undef, $runeColumn ) = $instance->line_column( $node->{start} );
       CHILD: for my $childIX ( 0 .. $#$children ) {
             my $child  = $children->[$childIX];
             my $symbol = symbol($child);
@@ -486,7 +526,7 @@ sub validate {
     my $isJogging1 = sub {
         my ( $context, $node, $gapIndents ) = @_;
         my $start = $node->{start};
-        my ( $runeLine,  $runeColumn )    = line_column($start);
+        my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
         my ( $chessSide, $jogBodyColumn ) = $censusJoggingHoon->($node);
         $context->{chessSide} = $chessSide;
 
@@ -583,7 +623,7 @@ sub validate {
     my $isJogging2 = sub {
         my ( $context, $node, $gapIndents ) = @_;
         my $start = $node->{start};
-        my ( $runeLine,  $runeColumn )    = line_column($start);
+        my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
         my ( $chessSide, $jogBodyColumn ) = $censusJoggingHoon->($node);
         $context->{chessSide} = $chessSide;
 
@@ -695,7 +735,7 @@ sub validate {
     my $isJogging_1 = sub {
         my ( $context, $node, $gapIndents ) = @_;
         my $start = $node->{start};
-        my ( $runeLine,  $runeColumn )    = line_column($start);
+        my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
         my ( $chessSide, $jogBodyColumn ) = $censusJoggingHoon->($node);
         $context->{chessSide} = $chessSide;
 
@@ -782,7 +822,7 @@ sub validate {
             [
                 $context->{hoonName},
                 $fileName,
-                ( line_column( $node->{start} ) ),
+                ( $instance->line_column( $node->{start} ) ),
                 map { $grammar->symbol_display_form($_) }
                   $grammar->rule_expand($ruleID)
             ]
@@ -796,7 +836,7 @@ sub validate {
             [
                 $context->{hoonName},
                 $fileName,
-                ( line_column( $node->{start} ) ),
+                ( $instance->line_column( $node->{start} ) ),
                 map { $grammar->symbol_display_form($_) }
                   $grammar->rule_expand($ruleID)
             ]
@@ -812,16 +852,16 @@ sub validate {
         delete $context->{chessSide};
 
         # Replace inherited attribute rune LC with brick LC
-        my ( $brickLine, $brickColumn ) = $brickLC->($node);
+        my ( $brickLine, $brickColumn ) = MarpaX::YAHC::Lint::brickLC($node);
 
         my $children = $node->{children};
         my $head     = $children->[0];
         my $gap      = $children->[1];
         my $body     = $children->[2];
         my ( $headLine, $headColumn ) =
-          line_column( $head->{start} );
+          $instance->line_column( $head->{start} );
         my ( $bodyLine, $bodyColumn ) =
-          line_column( $body->{start} );
+          $instance->line_column( $body->{start} );
         my $sideDesc = 'kingside';
 
         my $expectedHeadColumn = $runeColumn + 2;
@@ -889,7 +929,7 @@ sub validate {
         die Data::Dumper::Dumper(
             [
                 $fileName,
-                ( line_column( $node->{start} ) ),
+                ( $instance->line_column( $node->{start} ) ),
                 map { $grammar->symbol_display_form($_) }
                   $grammar->rule_expand($ruleID)
             ]
@@ -907,16 +947,16 @@ sub validate {
         delete $context->{chessSide};
 
         # Replace inherited attribute rune LC with brick LC
-        my ( $brickLine, $brickColumn ) = $brickLC->($node);
+        my ( $brickLine, $brickColumn ) = MarpaX::YAHC::Lint::brickLC($node);
 
         my $children = $node->{children};
         my $head     = $children->[0];
         my $gap      = $children->[1];
         my $body     = $children->[2];
         my ( $headLine, $headColumn ) =
-          line_column( $head->{start} );
+          $instance->line_column( $head->{start} );
         my ( $bodyLine, $bodyColumn ) =
-          line_column( $body->{start} );
+          $instance->line_column( $body->{start} );
         my $sideDesc = 'queenside';
 
         my $expectedHeadColumn = $runeColumn + 4;
@@ -1085,7 +1125,7 @@ sub validate {
 
         my $indentDesc = '???';
 
-        my @gapIndents = @{ $calcGapIndents->($node) };
+        my @gapIndents = @{ calcGapIndents($node) };
 
       TYPE_INDENT: {
 
@@ -1096,7 +1136,7 @@ sub validate {
                 last TYPE_INDENT;
             }
 
-            if ( $tallJogRule{$lhsName} ) {
+            if ( $tallJogRule->{$lhsName} ) {
                 $mistakes = $isJog->( $node, $parentContext );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOG-STYLE';
@@ -1108,7 +1148,7 @@ sub validate {
             # last TYPE_INDENT;
             # }
 
-            if ( $tall_0JoggingRule{$lhsName} ) {
+            if ( $tall_0JoggingRule->{$lhsName} ) {
                 $mistakes =
                   is_0Jogging( $parentLine, $parentColumn, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
@@ -1116,7 +1156,7 @@ sub validate {
                 last TYPE_INDENT;
             }
 
-            if ( $tall_1JoggingRule{$lhsName} ) {
+            if ( $tall_1JoggingRule->{$lhsName} ) {
                 $mistakes =
                   $isJogging1->( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
@@ -1124,7 +1164,7 @@ sub validate {
                 last TYPE_INDENT;
             }
 
-            if ( $tall_2JoggingRule{$lhsName} ) {
+            if ( $tall_2JoggingRule->{$lhsName} ) {
                 $mistakes =
                   $isJogging2->( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
@@ -1132,7 +1172,7 @@ sub validate {
                 last TYPE_INDENT;
             }
 
-            if ( $tallJogging1_Rule{$lhsName} ) {
+            if ( $tallJogging1_Rule->{$lhsName} ) {
                 $mistakes =
                   $isJogging_1->( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
@@ -1140,14 +1180,14 @@ sub validate {
                 last TYPE_INDENT;
             }
 
-            if ( $tallNoteRule{$lhsName} ) {
+            if ( $tallNoteRule->{$lhsName} ) {
                 $mistakes = isBackdented( \@gapIndents, $noteIndent );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
             }
 
-            if ( $tallLuslusRule{$lhsName} ) {
+            if ( $tallLuslusRule->{$lhsName} ) {
                 $mistakes = isLuslusStyle( \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUSLUS-STYLE';
@@ -1189,6 +1229,6 @@ sub validate {
     }
   CHILD: for my $childIX ( 0 .. $#$children ) {
         my $child = $children->[$childIX];
-        validate( $child, $parentContext );
+        $policy->validate( $instance, $child, $parentContext );
     }
 }
