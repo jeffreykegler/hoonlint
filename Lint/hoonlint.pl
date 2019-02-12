@@ -48,7 +48,7 @@ no warnings 'once';
 $lintInstance->{fileName} = $fileName;
 no warnings 'recursion';
 
-$lintInstance->{censusWhitespace} = [];
+$lintInstance->{censusWhitespace} = $censusWhitespace;
 $lintInstance->{topicLines} = [];
 $lintInstance->{mistakeLines} = {};
 
@@ -464,7 +464,6 @@ sub column {
 }
 
 sub contextDisplay {
-     say STDERR join " ", __FILE__, __LINE__, "context2()";
     my ( $instance ) = @_;
     my $pTopicLines = $instance->{topicLines};
     my $pMistakeLines = $instance->{mistakeLines};
@@ -474,7 +473,7 @@ sub contextDisplay {
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_+0; } keys %tag;
 
-     say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
+     # say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
     if ($contextSize <= 0) {
         for my $lineNum (@sortedLines) {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
@@ -543,8 +542,8 @@ sub reportItem {
 
     my $topicLines = $instance->{topicLines};
     my $mistakeLines = $instance->{mistakeLines};
-    say join " ", __FILE__, __LINE__, "# topic lines:", (scalar @{ $instance->{topicLines}});
-    say join " ", __FILE__, __LINE__, "# mistake lines:", (scalar %{ $instance->{mistakeLines}});
+    # say join " ", __FILE__, __LINE__, "# topic lines:", (scalar @{ $instance->{topicLines}});
+    # say join " ", __FILE__, __LINE__, "# mistake lines:", (scalar %{ $instance->{mistakeLines}});
     push @{$topicLines},
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
@@ -558,11 +557,9 @@ sub displayMistakes {
     my ( $instance, $mistakes, $hoonDesc ) = @_;
     my $fileName = $instance->{fileName};
 
-    say join " ", __FILE__, __LINE__, "displayMistakes()";
     my @pieces = ();
   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
-        # say join " ", __FILE__, __LINE__, "displayMistakes()";
         my $type = $mistake->{type};
         my $parentLine = $mistake->{parentLine};
         my $parentColumn = $mistake->{parentColumn};
@@ -661,18 +658,14 @@ sub spacesNeeded {
     my ( $strings, $spacesNeeded ) = @_;
     for ( my $arrayIX = $#$strings ; $arrayIX >= 0 ; $arrayIX-- ) {
 
- # say STDERR join " ", __FILE__, __LINE__, "tab command: needed=$spacesNeeded";
         my $string = $strings->[$arrayIX];
 
-       # say STDERR join " ", __FILE__, __LINE__, "tab command: string=$string";
-       # say STDERR +(join " ", __FILE__, __LINE__, ''), (length $string);
         for (
             my $stringIX = ( length $string ) - 1 ;
             $stringIX >= 0 ;
             $stringIX--
           )
         {
-# say STDERR join " ", __FILE__, __LINE__, "tab command: stringIX=$stringIX; needed=$spacesNeeded";
             my $char = substr $string, $stringIX, 1;
             return 0 if $char eq "\n";
             return $spacesNeeded if $char ne q{ };
@@ -731,7 +724,8 @@ sub testStyleCensus {
         }
         $ruleDB->[$ruleID] = $data;
 
-say STDERR join " ", __FILE__, __LINE__, "setting rule $ruleID gapiness to", $data->{gapiness} // 'undef';
+
+# say STDERR join " ", __FILE__, __LINE__, "setting rule $ruleID gapiness to", $data->{gapiness} // 'undef';
         $symbolReverseDB->{$lhs}->{lexeme} = 0;
     }
 

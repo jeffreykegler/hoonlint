@@ -11,7 +11,7 @@ use Data::Dumper;
 use English qw( -no_match_vars );
 use Scalar::Util qw(looks_like_number weaken);
 
-say STDERR join " ", __FILE__, __LINE__, "hi";
+# say STDERR join " ", __FILE__, __LINE__, "hi";
 
 # TODO: delete ancestors, indents in favor of tree traversal
 
@@ -101,12 +101,10 @@ sub is_0Jogging {
 
     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
 
-    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
         my $tistis = literal( $tistisPos, 2 );
 
-        # say join " ", __FILE__, __LINE__, $tistis;
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
@@ -281,10 +279,7 @@ sub isJogging1 {
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
     $context->{jogRuneColumn} = $runeColumn;
-
-# say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
 
     $context->{jogBodyColumn} = $jogBodyColumn
       if defined $jogBodyColumn;
@@ -353,12 +348,10 @@ sub isJogging1 {
 
     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
 
-    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
         my $tistis = literal( $tistisPos, 2 );
 
-        # say join " ", __FILE__, __LINE__, $tistis;
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
@@ -390,7 +383,6 @@ sub isJogging2 {
     my ( $chessSide, $jogBodyColumn ) = $instance->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
     $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if $jogBodyColumn;
     internalError("Chess side undefined") unless $chessSide;
@@ -479,12 +471,10 @@ sub isJogging2 {
 
     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
 
-    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
         my $tistis = literal( $tistisPos, 2 );
 
-        # say join " ", __FILE__, __LINE__, $tistis;
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
@@ -516,7 +506,6 @@ sub isJogging_1 {
     my ( $chessSide, $jogBodyColumn ) = $instance->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    # say join " ", __FILE__, __LINE__, "set chess side:", $chessSide;
     $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if defined $jogBodyColumn;
     internalError("Chess side undefined") unless $chessSide;
@@ -546,12 +535,10 @@ sub isJogging_1 {
     my $expectedColumn     = $runeColumn + 2;
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
-    # say join " ", __FILE__, __LINE__, $tistisColumn , $runeColumn;
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
         my $tistis = literal( $tistisPos, 2 );
 
-        # say join " ", __FILE__, __LINE__, $tistis;
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
@@ -604,7 +591,6 @@ sub checkKingsideJog {
     my $ruleID   = $node->{ruleID};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
 
- # say join " ", __FILE__, __LINE__, "rune column:", $context->{jogRuneColumn} ;
     my $chessSide = $context->{chessSide};
     say STDERR Data::Dumper::Dumper(
         [
@@ -632,7 +618,6 @@ sub checkKingsideJog {
     internalError("Rune column undefined") unless defined $runeColumn;
     my $jogBodyColumn = $context->{jogBodyColumn};
 
- # say join " ", __FILE__, __LINE__, "rune column:", $context->{jogRuneColumn} ;
 
     # do not pass these attributes on to child nodes
     delete $context->{jogRuneColumn};
@@ -721,7 +706,6 @@ sub checkQueensideJog {
     my $fileName = $instance->{fileName};
     my $grammar  = $instance->{grammar};
 
-# say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
     my $chessSide = $context->{chessSide};
     die Data::Dumper::Dumper(
         [
@@ -828,7 +812,6 @@ sub isJog {
     my ( $policy, $node, $context ) = @_;
     my $instance = $policy->{lint};
 
-# say join " ", __FILE__, __LINE__, "set rune column:", $context->{jogRuneColumn} ;
     my $chessSide = $context->{chessSide};
     return $policy->checkQueensideJog( $node, $context )
       if $chessSide eq 'queenside';
@@ -888,7 +871,7 @@ sub validate {
   return if $node->{type} ne 'node';
   my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
-          say STDERR join " ", __FILE__, __LINE__, "child $childIX of ", (scalar @{$children});
+          # say STDERR join " ", __FILE__, __LINE__, "child $childIX of ", (scalar @{$children});
         my $child = $children->[$childIX];
         $policy->validate( $child, $parentContext );
     }
@@ -896,7 +879,7 @@ sub validate {
 
 sub validate_node {
     my ( $policy, $node, $argContext ) = @_;
-		      say STDERR join " ", __FILE__, __LINE__, "validate(), hoon =", $argContext->{hoonName};
+		      # say STDERR join " ", __FILE__, __LINE__, "validate(), hoon =", $argContext->{hoonName};
 
     my $instance  = $policy->{lint};
     my $fileName  = $instance->{fileName};
@@ -999,8 +982,6 @@ sub validate_node {
     my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName = $grammar->symbol_name($lhs);
 
-			  say STDERR join " ", __FILE__, __LINE__, "validate()";
-
     if ( not $mortarLHS->{$lhsName} ) {
         $parentHoonName = $lhsName;
 
@@ -1014,23 +995,18 @@ sub validate_node {
     $parentContext->{tallRuneIndent} = $parentColumn
       if $tallRuneRule->{$lhsName};
 
-			  say STDERR join " ", __FILE__, __LINE__, "validate()";
     if ( $lhsName eq 'optGay4i' ) {
         return $parentContext;
     }
 
-			  say STDERR join " ", __FILE__, __LINE__, "validate()";
     my $childCount = scalar @{$children};
     if ( $childCount <= 1 ) {
         return $parentContext;
     }
 
-			  say STDERR join " ", __FILE__, __LINE__, "validate()";
     my $firstChildIndent = $instance->column( $children->[0]->{start} ) - 1;
 
-			  say STDERR join " ", __FILE__, __LINE__, "Rule DB:", Data::Dumper::Dumper($ruleDB->[$ruleID]);
     my $gapiness = $ruleDB->[$ruleID]->{gapiness} // 0;
-			  say STDERR join " ", __FILE__, __LINE__, "gapiness:", $gapiness;
 
     my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
 
@@ -1040,14 +1016,12 @@ sub validate_node {
     }
 
     # tall node
-			  say STDERR join " ", __FILE__, __LINE__;
 
     if ( $gapiness < 0 ) {     # sequence
         my ( $parentLine, $parentColumn ) = $recce->line_column($parentStart);
         my $parentLC = join ':', $parentLine, $parentColumn;
         $parentColumn--;       # 0-based
         my $previousLine = $parentLine;
-			  say STDERR join " ", __FILE__, __LINE__;
       TYPE_INDENT: {
 
             # Jogging problems are detected by the individual jogs --
@@ -1075,7 +1049,6 @@ sub validate_node {
                     my ($lhs) = $grammar->rule_expand($grandParentRuleID);
                     $grandParentName = $grammar->symbol_display_form($lhs);
                 }
-			  say STDERR join " ", __FILE__, __LINE__;
                 if ( $grandParentName eq 'tallSemsig' ) {
 
                     $previousLine = $grandParentLine;
@@ -1111,11 +1084,9 @@ sub validate_node {
                                   $childLC;
                             }
                         }
-			say STDERR join " ", __FILE__, __LINE__;
                         if ( not $inclusions
                             or $inclusions->{sequence}{$childLC} )
                         {
-			  say STDERR join " ", __FILE__, __LINE__;
                             $instance->reportItem(
 "$fileName $childLC sequence $lhsName $indentDesc",
                                 $parentLine,
@@ -1264,7 +1235,6 @@ sub validate_node {
         }
 
       PRINT: {
-          # say join " ", __FILE__, __LINE__, "$lhsName", (scalar @{$mistakes});
             if ( @{$mistakes} ) {
                 $_->{type} = 'indent' for @{$mistakes};
                 $instance->displayMistakes( $mistakes,
@@ -1290,3 +1260,4 @@ sub validate_node {
     return $parentContext;
 }
 
+1;
