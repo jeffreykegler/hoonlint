@@ -145,6 +145,7 @@ sub parseReportItems {
 
 my $pHoonSource = slurp($fileName);
 
+$lintInstance->{pHoonSource} = $pHoonSource;
 $lintInstance->{contextSize} = $contextLines;
 
 my @data = ();
@@ -458,18 +459,21 @@ while (${$pHoonSource} =~ m/\n/g) { push @lineToPos, pos ${$pHoonSource} };
 $lintInstance->{lineToPos} = \@lineToPos;
 
 sub column {
-    my ($pos) = @_;
-    return $pos - ( rindex ${$pHoonSource}, "\n", $pos - 1 );
+    my ($instance, $pos) = @_;
+    my $pSource = $instance->{pHoonSource};
+    return $pos - ( rindex ${$pSource}, "\n", $pos - 1 );
 }
 
-my $context2 = sub {
-    my ( $pContextLines, $pMistakeLines ) = @_;
-    my $contextSize = $MarpaX::YAHC::Lint::contextSize;
+sub context2 {
+     say STDERR join " ", __FILE__, __LINE__, "context2()";
+    my ( $instance, $pContextLines, $pMistakeLines ) = @_;
+    my $contextSize = $instance->{contextSize};
     my @pieces      = ();
     my %tag         = map { $_ => q{>} } @{$pContextLines};
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_+0; } keys %tag;
 
+     say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
     if ($contextSize <= 0) {
         for my $lineNum (@sortedLines) {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
@@ -531,7 +535,7 @@ my $context2 = sub {
     }
 
     return join q{}, @pieces;
-};
+}
 
 sub reportItem {
     my ( $mistakeDesc, $topicLineArg, $mistakeLine ) = @_;
@@ -723,14 +727,14 @@ sub brickLC {
 
       WHITESPACE_POLICY: {
            require Test::Whitespace;
-           my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new();
-           $policy->validate($lintInstance, $astValue, 
+           my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new($lintInstance);
+           $policy->validate($astValue, 
 { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
         }
     }
 
 
-print $context2->(
+print $lintInstance->context2(
      $MarpaX::YAHC::Lint::topicLines,
      $MarpaX::YAHC::Lint::mistakeLines);
 

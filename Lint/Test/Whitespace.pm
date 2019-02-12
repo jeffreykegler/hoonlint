@@ -17,8 +17,11 @@ say STDERR join " ", __FILE__, __LINE__, "hi";
 # TODO: delete ancestors, indents in favor of tree traversal
 
 sub new {
-    my ($class) = @_;
-    return bless {}, $class;
+    my ($class, $lintInstance) = @_;
+    my $priority = {};
+    $priority->{lint} = $lintInstance;
+    Scalar::Util::weaken($priority->{lint});
+    return bless $priority, $class;
 }
 
 sub calcGapIndents {
@@ -119,8 +122,9 @@ sub is_0Jogging {
 }
 
 sub validate {
-    my ( $policy, $instance, $node, $argContext ) = @_;
+    my ( $policy, $node, $argContext ) = @_;
 
+    my $instance = $policy->{lint};
     my $fileName = $instance->{fileName};
     my $grammar = $instance->{grammar};
     my $recce = $instance->{recce};
@@ -148,8 +152,8 @@ sub validate {
     my $parentLength = $node->{length};
     my $parentRuleID = $node->{ruleID};
 
-    $Data::Dumper::Maxdepth = 3;
-    say Data::Dumper::Dumper($node);
+    # $Data::Dumper::Maxdepth = 3;
+    # say Data::Dumper::Dumper($node);
 
     my ( $parentLine, $parentColumn ) = $instance->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn+1;
@@ -214,7 +218,7 @@ sub validate {
     my $children = $node->{children};
 
     my $nodeType = $node->{type};
-    last WHITESPACE_POLICY if $nodeType ne 'node';
+    return if $nodeType ne 'node';
 
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
@@ -237,16 +241,16 @@ sub validate {
       if $tallRuneRule->{$lhsName};
 
     if ( $lhsName eq 'optGay4i' ) {
-        last WHITESPACE_POLICY;
+        return;
     }
 
     my $childCount = scalar @{$children};
-    last WHITESPACE_POLICY if $childCount <= 0;
+    return if $childCount <= 0;
     if ( $childCount == 1 ) {
-        last WHITESPACE_POLICY;
+        return;
     }
 
-    my $firstChildIndent = column( $children->[0]->{start} ) - 1;
+    my $firstChildIndent = $instance->column( $children->[0]->{start} ) - 1;
 
     my $gapiness = $ruleDB->[$ruleID]->{gapiness} // 0;
 
@@ -254,7 +258,7 @@ sub validate {
 
     # TODO: In another policy, warn on tall children of wide nodes
     if ( $gapiness == 0 ) {    # wide node
-        last WHITESPACE_POLICY;
+        return;
     }
 
     # tall node
@@ -387,7 +391,7 @@ sub validate {
                 $previousLine = $childLine;
             }
         }
-        last WHITESPACE_POLICY;
+        return;
     }
 
     sub isLuslusStyle {
