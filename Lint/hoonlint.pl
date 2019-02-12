@@ -464,9 +464,11 @@ sub column {
     return $pos - ( rindex ${$pSource}, "\n", $pos - 1 );
 }
 
-sub context2 {
+sub contextDisplay {
      say STDERR join " ", __FILE__, __LINE__, "context2()";
-    my ( $instance, $pContextLines, $pMistakeLines ) = @_;
+    my ( $instance ) = @_;
+    my $pContextLines = $instance->{contextLines};
+    my $pMistakeLines = $instance->{mistakeLines};
     my $contextSize = $instance->{contextSize};
     my @pieces      = ();
     my %tag         = map { $_ => q{>} } @{$pContextLines};
@@ -538,16 +540,16 @@ sub context2 {
 }
 
 sub reportItem {
-    my ( $mistakeDesc, $topicLineArg, $mistakeLine ) = @_;
+    my ( $instance, $mistakeDesc, $topicLineArg, $mistakeLineArg ) = @_;
 
-    my $topicLines = $MarpaX::YAHC::Lint::topicLines;
+    my $topicLines = $instance->{topicLines};
+    my $mistakeLines = $instance->{mistakeLines};
     push @{$topicLines},
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
-    my $mistakeLines = $MarpaX::YAHC::Lint::mistakeLines;
-    my $thisMistakeDescs = $mistakeLines->{$mistakeLine};
+    my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
     push @{$thisMistakeDescs}, $mistakeDesc;
-    $mistakeLines->{$mistakeLine} = $thisMistakeDescs;
+    $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
 
@@ -734,9 +736,7 @@ sub brickLC {
     }
 
 
-print $lintInstance->context2(
-     $MarpaX::YAHC::Lint::topicLines,
-     $MarpaX::YAHC::Lint::mistakeLines);
+print $lintInstance->contextDisplay();
 
 for my $type ( keys %{$unusedSuppressions} ) {
     for my $tag (
