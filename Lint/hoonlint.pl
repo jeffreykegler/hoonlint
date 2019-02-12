@@ -20,11 +20,11 @@ my $verbose; # right now does nothing
 my $censusWhitespace;
 my $inclusionsFileName;
 my @suppressionsFileNames;
-my $contextLines = 0;
+my $contextSize = 0;
 
 GetOptions(
     "verbose"             => \$verbose,
-    "context|C=i"         => \$contextLines,
+    "context|C=i"         => \$contextSize,
     "census-whitespace"   => \$censusWhitespace,
     "inclusions-file|I=s" => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
@@ -43,7 +43,6 @@ my $fileName = $ARGV[0];
 # one
 my $lintInstance = {};
 bless $lintInstance, "MarpaX::YAHC::Lint";
-local $MarpaX::YAHC::Lint::instance = $lintInstance;
 
 no warnings 'once';
 $lintInstance->{fileName} = $fileName;
@@ -146,7 +145,7 @@ sub parseReportItems {
 my $pHoonSource = slurp($fileName);
 
 $lintInstance->{pHoonSource} = $pHoonSource;
-$lintInstance->{contextSize} = $contextLines;
+$lintInstance->{contextSize} = $contextSize;
 
 my @data = ();
 my $recce;
@@ -158,13 +157,13 @@ EOS
 
 my $parser = MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
 my $dsl = $parser->dsl();
-my $grammar = $parser->rawGrammar();
-$lintInstance->{grammar} = $grammar;
+my $lintGrammar = $parser->rawGrammar();
+$lintInstance->{grammar} = $lintGrammar;
 
 my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
       or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
-} map { $grammar->symbol_name($_); } $grammar->symbol_ids();
+} map { $lintGrammar->symbol_name($_); } $lintGrammar->symbol_ids();
 
 # TODO: wisp5d needs study -- may depend on parent
 my %tallNoteRule = map { +( $_, 1 ) } qw(
@@ -321,7 +320,7 @@ sub doNode {
     my $ruleID = $Marpa::R2::Context::rule;
     use warnings;
     my ( $lhs, @rhs ) =
-      map { $grammar->symbol_display_form($_) } $grammar->rule_expand($ruleID);
+      map { $lintGrammar->symbol_display_form($_) } $lintGrammar->rule_expand($ruleID);
     my ( $first_g1, $last_g1 ) = Marpa::R2::Context::location();
     my ($lhsStart) = $recce->g1_location_to_span( $first_g1 + 1 );
 
@@ -467,11 +466,11 @@ sub column {
 sub contextDisplay {
      say STDERR join " ", __FILE__, __LINE__, "context2()";
     my ( $instance ) = @_;
-    my $pContextLines = $instance->{contextLines};
+    my $pTopicLines = $instance->{topicLines};
     my $pMistakeLines = $instance->{mistakeLines};
     my $contextSize = $instance->{contextSize};
     my @pieces      = ();
-    my %tag         = map { $_ => q{>} } @{$pContextLines};
+    my %tag         = map { $_ => q{>} } @{$pTopicLines};
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_+0; } keys %tag;
 
@@ -531,8 +530,8 @@ sub contextDisplay {
             $lastIX = $nextIX;
         }
         $doConsec->(
-            $sortedLines[$firstIX] - ( $contextLines - 1 ),
-            $sortedLines[$lastIX] + ( $contextLines - 1 )
+            $sortedLines[$firstIX] - ( $contextSize - 1 ),
+            $sortedLines[$lastIX] + ( $contextSize - 1 )
         );
     }
 
@@ -544,6 +543,8 @@ sub reportItem {
 
     my $topicLines = $instance->{topicLines};
     my $mistakeLines = $instance->{mistakeLines};
+    say join " ", __FILE__, __LINE__, "# topic lines:", (scalar @{ $instance->{topicLines}});
+    say join " ", __FILE__, __LINE__, "# mistake lines:", (scalar %{ $instance->{mistakeLines}});
     push @{$topicLines},
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
@@ -553,9 +554,37 @@ sub reportItem {
 
 }
 
+sub displayMistakes {
+    my ( $instance, $mistakes, $hoonDesc ) = @_;
+    my $fileName = $instance->{fileName};
+
+    say join " ", __FILE__, __LINE__, "displayMistakes()";
+    my @pieces = ();
+  MISTAKE: for my $mistake ( @{$mistakes} ) {
+
+        # say join " ", __FILE__, __LINE__, "displayMistakes()";
+        my $type = $mistake->{type};
+        my $parentLine = $mistake->{parentLine};
+        my $parentColumn = $mistake->{parentColumn};
+    my $parentLC = join ':', $parentLine, $parentColumn + 1;
+        next MISTAKE
+          if $inclusions and not $inclusions->{$type}{$parentLC};
+
+        my $desc              = $mistake->{desc};
+        my $mistakeLine       = $mistake->{line};
+        my $mistakeTopicLines = $mistake->{topicLines};
+        my @topicLines        = ($parentLine);
+        push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
+
+        $instance->reportItem( ("$fileName $parentLC $type $hoonDesc $desc"),
+            \@topicLines, $mistakeLine, );
+    }
+}
+
 # The "symbol" of a node.  Not necessarily unique.
 sub symbol {
-    my ($node) = @_;
+    my ($instance, $node) = @_;
+    my $grammar = $instance->{grammar};
     my $name = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
@@ -570,7 +599,8 @@ sub symbol {
 
 # Can be used as test of "brick-ness"
 sub brickName {
-    my ($node) = @_;
+    my ($instance, $node) = @_;
+    my $grammar = $instance->{grammar};
     my $type = $node->{type};
     return symbol($node) if $type ne 'node';
     my $ruleID = $node->{ruleID};
@@ -583,23 +613,24 @@ sub brickName {
 # The name of a name for diagnostics purposes.  Prefers
 # "brick" symbols over "mortar" symbols.
 sub diagName {
-    my ($node, $context) = @_;
+    my ($instance, $node, $hoonName) = @_;
+    my $grammar = $instance->{grammar};
     my $type = $node->{type};
     return symbol($node) if $type ne 'node';
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
     my $lhsName = $grammar->symbol_name($lhs);
     return $lhsName if not $mortarLHS{$lhsName};
-    my $hoonName = $context->{hoonName};
     internalError("No hoon name for $lhsName") if not $hoonName;
     return $hoonName;
 }
 
 # The "name" of a node.  Not necessarily unique
 sub name {
-    my ($node) = @_;
+    my ($instance, $node) = @_;
+    my $grammar = $instance->{grammar};
     my $type = $node->{type};
-    my $symbol = symbol($node);
+    my $symbol = $instance->symbol($node);
     return $symbol if $type ne 'node';
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
@@ -654,14 +685,17 @@ sub spacesNeeded {
     return 0;
 }
 
-my @ruleDB          = ();
-$lintInstance->{ruleDB} = \@ruleDB;
-
-my @symbolDB        = ();
-my %symbolReverseDB = ();
-$lintInstance->{symbolReverseDB} = \%symbolReverseDB;
+$lintInstance->{ruleDB} = [];
+$lintInstance->{symbolDB} = [];
+$lintInstance->{symbolReverseDB} = {};
 
 sub testStyleCensus {
+  my ($instance) = @_;
+  my $ruleDB = $instance->{ruleDB};
+  my $symbolDB = $instance->{symbolDB};
+  my $symbolReverseDB = $instance->{symbolReverseDB};
+  my $grammar = $instance->{grammar};
+
   SYMBOL:
     for my $symbolID ( $grammar->symbol_ids() ) {
         my $name = $grammar->symbol_name($symbolID);
@@ -672,10 +706,10 @@ sub testStyleCensus {
         $data->{gap}    = 1 if $name eq 'GAP';
         $data->{gap}    = 1
           if $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/;
-        $symbolDB[$symbolID] = $data;
-        $symbolReverseDB{$name} = $data;
+        $symbolDB->[$symbolID] = $data;
+        $symbolReverseDB->{$name} = $data;
     }
-    my $gapID = $symbolReverseDB{'GAP'}->{id};
+    my $gapID = $symbolReverseDB->{'GAP'}->{id};
   RULE:
     for my $ruleID ( $grammar->rule_ids() ) {
         my $data = { id => $ruleID };
@@ -684,7 +718,7 @@ sub testStyleCensus {
         my $lhsName       = $grammar->symbol_name($lhs);
         my $separatorName = $separator{$lhsName};
         if ($separatorName) {
-            my $separatorID = $symbolReverseDB{$separatorName}->{id};
+            my $separatorID = $symbolReverseDB->{$separatorName}->{id};
             $data->{separator} = $separatorID;
             if ( $separatorID == $gapID ) {
                 $data->{gapiness} = -1;
@@ -692,16 +726,18 @@ sub testStyleCensus {
         }
         if ( not defined $data->{gapiness} ) {
             for my $rhsID (@rhs) {
-                $data->{gapiness}++ if $symbolDB[$rhsID]->{gap};
+                $data->{gapiness}++ if $symbolDB->[$rhsID]->{gap};
             }
         }
-        $ruleDB[$ruleID] = $data;
-        $symbolReverseDB{$lhs}->{lexeme} = 0;
+        $ruleDB->[$ruleID] = $data;
+
+say STDERR join " ", __FILE__, __LINE__, "setting rule $ruleID gapiness to", $data->{gapiness} // 'undef';
+        $symbolReverseDB->{$lhs}->{lexeme} = 0;
     }
 
 }
 
-testStyleCensus();
+$lintInstance->testStyleCensus();
 
 sub line_column {
    my ($instance, $pos) = @_;
@@ -712,28 +748,29 @@ sub line_column {
 }
 
 sub brickLC {
-    my ($node)     = @_;
+    my ($instance, $node)     = @_;
     my $thisNode = $node;
     while ( $thisNode ) {
-        return line_column($thisNode->{start}) if brickName($thisNode);
+        return $instance->line_column($thisNode->{start}) if $instance->brickName($thisNode);
         $thisNode = $thisNode->{PARENT};
     }
     internalError("No brick parent");
 };
 
-  LINT_NODE: {
+LINT_NODE: {
 
-        # "Policies" will go here
-        # As of this writing, these is only one policy -- the "whitespace"
-        # policy.
+    # "Policies" will go here
+    # As of this writing, these is only one policy -- the "whitespace"
+    # policy.
 
-      WHITESPACE_POLICY: {
-           require Test::Whitespace;
-           my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new($lintInstance);
-           $policy->validate($astValue, 
-{ hoonName => '[TOP]', line => -1, indents => [], ancestors => [] } );
-        }
+  WHITESPACE_POLICY: {
+        require Test::Whitespace;
+        my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new($lintInstance);
+        $policy->validate( $astValue,
+            { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] }
+        );
     }
+}
 
 
 print $lintInstance->contextDisplay();
