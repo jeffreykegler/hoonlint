@@ -103,8 +103,7 @@ sub is_0Jogging {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
-        my $tistis = literal( $tistisPos, 2 );
-
+        my $tistis = $instance->literal( $tistisPos, 2 );
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
@@ -143,7 +142,6 @@ sub isLuslusStyle {
   INDENT: while ( $indentIX < $indentCount ) {
         my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
         if ( $thisColumn != $baseColumn + 2 ) {
-		say STDERR join " ", __FILE__, __LINE__;
             my $msg = sprintf
               "Child #%d @ line %d; backdent is %d; should be %d",
               $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
@@ -352,7 +350,7 @@ sub isJogging1 {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
-        my $tistis = literal( $tistisPos, 2 );
+        my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
     }
@@ -382,7 +380,7 @@ sub isJogging2 {
 
     my $start = $node->{start};
     my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
-    my ( $chessSide, $jogBodyColumn ) = $instance->censusJoggingHoon($node);
+    my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
     $context->{jogRuneColumn} = $runeColumn;
@@ -475,7 +473,7 @@ sub isJogging2 {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
-        my $tistis = literal( $tistisPos, 2 );
+        my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
     }
@@ -505,7 +503,7 @@ sub isJogging_1 {
 
     my $start = $node->{start};
     my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
-    my ( $chessSide, $jogBodyColumn ) = $instance->censusJoggingHoon($node);
+    my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
     $context->{jogRuneColumn} = $runeColumn;
@@ -539,7 +537,7 @@ sub isJogging_1 {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
-        my $tistis = literal( $tistisPos, 2 );
+        my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
     }
@@ -592,6 +590,15 @@ sub checkKingsideJog {
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
+    say STDERR Data::Dumper::Dumper(
+        [
+            $context->{hoonName},
+            $fileName,
+            $parentLine, $parentColumn,
+            map { $grammar->symbol_display_form($_) }
+              $grammar->rule_expand($ruleID)
+        ]
+    ) unless $parentLine;    # TODO: Delete after development
 
     my $chessSide = $context->{chessSide};
     say STDERR Data::Dumper::Dumper(
@@ -690,6 +697,8 @@ sub checkKingsideJog {
         push @mistakes,
           {
             desc           => $msg,
+	    parentLine => $parentLine,
+	    parentColumn => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
             child          => 2,

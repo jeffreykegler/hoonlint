@@ -6,10 +6,10 @@ all:
 	echo empty default target
 
 arvo_lint: 
-	find hoons -name '*.hoon' | \
+	(cd ..; find hoons -name '*.hoon') | \
 	while read f; do \
 	  echo === $$f ===; \
-	  perl hoonlint.pl -S arvo.suppressions -S anomaly.suppressions $$f; \
+	  (cd ..; perl -ILint Lint/hoonlint.pl -S Lint/arvo.suppressions -S Lint/anomaly.suppressions $$f); \
 	done > arvo.lint.out
 
 dev:

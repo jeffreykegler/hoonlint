@@ -451,8 +451,9 @@ $parser = undef;                 # free up memory
 my $astRef = $recce->value();
 
 sub literal {
-    my ( $start, $length ) = @_;
-    return substr ${$pHoonSource}, $start, $length;
+    my ( $instance, $start, $length ) = @_;
+    my $pSource = $instance->{pHoonSource};
+    return substr ${$pSource}, $start, $length;
 }
 
 my @lineToPos = (-1, 0);
