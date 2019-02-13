@@ -134,3 +134,91 @@ hoons/arvo/sys/zuse.hoon 3889:15 indent tallWuthep Jog kingside head @3889:15; u
 hoons/arvo/sys/zuse.hoon 3890:15 indent tallWuthep Jog kingside head @3890:15; underindented by 1
 hoons/arvo/sys/zuse.hoon 3893:15 indent tallWuthep Jog kingside head @3893:15; underindented by 1
 hoons/arvo/sys/zuse.hoon 3894:15 indent tallWuthep Jog kingside head @3894:15; underindented by 1
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/app/dojo.hoon 1000:11 indent tallWuthep 1-jogging queenside head @1000:15; underindented by 2
+hoons/arvo/app/dojo.hoon 635:9 indent tallWuthep 1-jogging queenside head @635:13; underindented by 2
+hoons/arvo/app/dojo.hoon 711:9 indent tallWuthep 1-jogging queenside head @711:13; underindented by 2
+hoons/arvo/app/dojo.hoon 761:9 indent tallWuthep 1-jogging queenside head @761:13; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/app/hall.hoon 172:3 indent tallWuthep 1-jogging queenside head @172:7; underindented by 2
+hoons/arvo/app/hall.hoon 2306:3 indent tallWuthep 1-jogging queenside head @2306:7; underindented by 2
+hoons/arvo/app/hall.hoon 2464:3 indent tallWuthep 1-jogging queenside head @2464:7; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/app/talk.hoon 151:3 indent tallWuthep 1-jogging queenside head @151:7; underindented by 2
+hoons/arvo/app/talk.hoon 1868:7 indent tallWuthep 1-jogging queenside head @1868:11; underindented by 2
+hoons/arvo/app/talk.hoon 1907:7 indent tallWuthep 1-jogging queenside head @1907:11; underindented by 2
+hoons/arvo/app/talk.hoon 2284:5 indent tallWuthep 1-jogging queenside head @2284:9; underindented by 2
+hoons/arvo/app/talk.hoon 2368:5 indent tallWuthep 1-jogging queenside head @2368:9; underindented by 2
+hoons/arvo/app/talk.hoon 408:7 indent tallWuthep 1-jogging queenside head @408:11; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/gen/cat.hoon 21:1 indent tallWuthep 1-jogging queenside head @21:8; overindented by 1
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/gen/test.hoon 25:3 indent tallWuthep 1-jogging queenside head @25:7; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/lib/hall.hoon 138:3 indent tallWuthep 1-jogging queenside head @138:7; underindented by 2
+hoons/arvo/lib/hall.hoon 139:5 indent tallWuthep Jog queenside head @139:5; underindented by 2
+hoons/arvo/lib/hall.hoon 140:5 indent tallWuthep Jog queenside head @140:5; underindented by 2
+hoons/arvo/lib/hall.hoon 141:5 indent tallWuthep Jog queenside head @141:5; underindented by 2
+hoons/arvo/lib/hall.hoon 142:5 indent tallWuthep Jog queenside head @142:5; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/lib/hall-json.hoon 76:5 indent tallWuthep 1-jogging queenside head @76:9; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/mar/txt.hoon 130:7 indent tallWuthep 1-jogging queenside head @130:11; underindented by 2
+hoons/arvo/mar/txt.hoon 71:7 indent tallWuthep 1-jogging queenside head @71:11; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/hoon.hoon 6384:9 indent tallWuthep Jog queenside body @6384:17; underindented by 2
+hoons/arvo/sys/hoon.hoon 6397:3 indent tallWuthep 1-jogging queenside head @6397:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 6401:5 indent tallWuthep 1-jogging queenside head @6401:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 6450:3 indent tallWuthep 1-jogging queenside head @6450:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 6483:3 indent tallWuthep 1-jogging queenside head @6483:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 7535:9 indent tallWuthep Jog queenside body @7535:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7754:7 indent tallWuthep 1-jogging queenside head @7754:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 7835:9 indent tallWuthep Jog queenside body @7835:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7836:9 indent tallWuthep Jog queenside body @7836:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7837:9 indent tallWuthep Jog queenside body @7837:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7838:9 indent tallWuthep Jog queenside body @7838:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7869:9 indent tallWuthep Jog queenside body @7869:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7870:9 indent tallWuthep Jog queenside body @7870:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7871:9 indent tallWuthep Jog queenside body @7871:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 7872:9 indent tallWuthep Jog queenside body @7872:21; overindented by 1
+# From issue #8: '"overindented by 1" is particularly delightful (and 100% accurate)'
+hoons/arvo/sys/hoon.hoon 7883:9 indent tallWuthep Jog queenside body @7883:21; overindented by 1
+# From issue #8: 'seem consistently indented by 3 spaces instead of 2,
+# I wonder if this is related to the inconsistent indent by 3 spaces in other places?'
+hoons/arvo/sys/hoon.hoon 8880:5 indent tallWuthep 1-jogging queenside head @8880:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 8940:9 indent tallWuthep Jog queenside body @8940:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 8941:9 indent tallWuthep Jog queenside body @8941:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 9112:9 indent tallWuthep Jog queenside body @9112:21; overindented by 1
+hoons/arvo/sys/hoon.hoon 9133:9 indent tallWuthep Jog queenside body @9133:21; overindented by 1
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/vane/ames.hoon 1638:5 indent tallWuthep 1-jogging queenside head @1638:9; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/vane/clay.hoon 3813:3 indent tallWuthep 1-jogging queenside head @3813:7; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/vane/eyre.hoon 1094:7 indent tallWuthep 1-jogging queenside head @1094:11; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 715:7 indent tallWuthep 1-jogging queenside head @715:11; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 767:7 indent tallWuthep Jog queenside head @767:7; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 790:9 indent tallWuthep Jog queenside body @793:11; overindented by 4
+hoons/arvo/sys/vane/eyre.hoon 850:11 indent tallWuthep Jog queenside body @850:21; underindented by 17
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/vane/ford.hoon 1704:13 indent tallWuthep Jog queenside body @1705:13; overindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+# 'probably just wants to be kingside? Agree that it's an anomaly at any rate'
+hoons/arvo/sys/vane/gall.hoon 1297:3 indent tallWuthep 1-jogging queenside head @1297:7; underindented by 2
+
+# See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
+hoons/arvo/sys/vane/xmas.hoon 1243:13 indent tallWuthep 1-jogging queenside head @1243:17; underindented by 2
