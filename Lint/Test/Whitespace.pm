@@ -980,9 +980,13 @@ sub validate_node {
       if defined $parentJogBodyColumn;
 
     my $parentHoonName = $argContext->{hoonName};
+    my $parentHoonLine = $argContext->{hoonLine};
+    my $parentHoonColumn = $argContext->{hoonColumn};
 
     # say STDERR "setting hoonName = $parentHoonName";
     $parentContext->{hoonName} = $parentHoonName;
+    $parentContext->{hoonLine} = $parentHoonLine;
+    $parentContext->{hoonColumn} = $parentHoonColumn;
 
     my $children = $node->{children};
 
@@ -998,6 +1002,8 @@ sub validate_node {
 
         # say STDERR "resetting hoonName = $parentHoonName";
         $parentContext->{hoonName} = $parentHoonName;
+        $parentContext->{hoonLine} = $parentLine;
+        $parentContext->{hoonColumn} = $parentColumn;
     }
 
     $parentContext->{bodyIndent} = $parentColumn
@@ -1100,7 +1106,7 @@ sub validate_node {
                         {
                             $instance->reportItem(
 "$fileName $childLC sequence $lhsName $indentDesc",
-                                $parentLine,
+                                $parentHoonLine,
                                 $childLine
                             ) if $censusWhitespace or $isProblem;
                         }
@@ -1149,7 +1155,7 @@ sub validate_node {
                               "$fileName $childLC sequence %s $indentDesc",
                             $instance->diagName( $node, $parentContext->{hoonName} )
                         ),
-                        $parentLine,
+                        $parentHoonLine,
                         $childLine,
                     ) if $censusWhitespace or $isProblem;
                 }

@@ -179,7 +179,7 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
 );
 $lintInstance->{tallNoteRule} = \%tallNoteRule;
 
-my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
+my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq);
 $lintInstance->{mortarLHS} = \%mortarLHS;
 
 my %tallBodyRule =
