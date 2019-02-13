@@ -164,6 +164,7 @@ my %tallRuneRule = map { +( $_, 1 ) } grep {
          /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
       or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
 } map { $lintGrammar->symbol_name($_); } $lintGrammar->symbol_ids();
+$lintInstance->{tallRuneRule} = \%tallRuneRule;
 
 # TODO: wisp5d needs study -- may depend on parent
 my %tallNoteRule = map { +( $_, 1 ) } qw(
@@ -176,6 +177,7 @@ my %tallNoteRule = map { +( $_, 1 ) } qw(
   tallZapgar wisp5d
   tallTailOfElem tallTailOfTop
 );
+$lintInstance->{tallNoteRule} = \%tallNoteRule;
 
 my %mortarLHS = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog rick5d ruck5d);
 $lintInstance->{mortarLHS} = \%mortarLHS;

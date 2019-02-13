@@ -143,6 +143,7 @@ sub isLuslusStyle {
   INDENT: while ( $indentIX < $indentCount ) {
         my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
         if ( $thisColumn != $baseColumn + 2 ) {
+		say STDERR join " ", __FILE__, __LINE__;
             my $msg = sprintf
               "Child #%d @ line %d; backdent is %d; should be %d",
               $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
@@ -292,6 +293,7 @@ sub isJogging1 {
     my ( $firstChildLine, $firstChildColumn ) =
       @{ $gapIndents->[1] };
     if ( $firstChildLine != $runeLine ) {
+		say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "1-jogging %s head %s; should be on rune line %d",
           $chessSide,
