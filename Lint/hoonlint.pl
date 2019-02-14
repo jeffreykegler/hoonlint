@@ -53,6 +53,8 @@ $lintInstance->{topicLines} = [];
 $lintInstance->{mistakeLines} = {};
 
 sub internalError {
+   my ($instance) = @_;
+   my $fileName = $instance->{fileName} // "[No file name]";
    my @pieces = ("$PROGRAM_NAME $fileName: Internal Error\n", @_);
    push @pieces, "\n" unless $pieces[$#pieces] =~ m/\n$/;
    my (undef, $codeFilename, $codeLine) = caller;
@@ -541,8 +543,12 @@ sub contextDisplay {
 }
 
 sub reportItem {
-    my ( $instance, $mistakeDesc, $topicLineArg, $mistakeLineArg ) = @_;
+    my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) = @_;
 
+    my $fileName = $instance->{fileName};
+    my $reportLine = $mistake->{reportLine} // $mistake->{line};
+    my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
+    my $reportLC = join ':', $reportLine, $reportColumn+1;
     my $topicLines = $instance->{topicLines};
     my $mistakeLines = $instance->{mistakeLines};
     # say join " ", __FILE__, __LINE__, "# topic lines:", (scalar @{ $instance->{topicLines}});
@@ -551,34 +557,9 @@ sub reportItem {
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, $mistakeDesc;
+    push @{$thisMistakeDescs}, "$fileName $reportLC $mistakeDesc";
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
-}
-
-sub displayMistakes {
-    my ( $instance, $mistakes, $hoonDesc ) = @_;
-    my $fileName = $instance->{fileName};
-
-    my @pieces = ();
-  MISTAKE: for my $mistake ( @{$mistakes} ) {
-
-        my $type = $mistake->{type};
-        my $parentLine = $mistake->{parentLine};
-        my $parentColumn = $mistake->{parentColumn};
-    my $parentLC = join ':', $parentLine, $parentColumn + 1;
-        next MISTAKE
-          if $inclusions and not $inclusions->{$type}{$parentLC};
-
-        my $desc              = $mistake->{desc};
-        my $mistakeLine       = $mistake->{line};
-        my $mistakeTopicLines = $mistake->{topicLines};
-        my @topicLines        = ($parentLine);
-        push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
-
-        $instance->reportItem( ("$fileName $parentLC $type $hoonDesc $desc"),
-            \@topicLines, $mistakeLine, );
-    }
 }
 
 # The "symbol" of a node.  Not necessarily unique.
@@ -621,7 +602,7 @@ sub diagName {
     my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
     my $lhsName = $grammar->symbol_name($lhs);
     return $lhsName if not $mortarLHS{$lhsName};
-    internalError("No hoon name for $lhsName") if not $hoonName;
+    $instance->internalError("No hoon name for $lhsName") if not $hoonName;
     return $hoonName;
 }
 
@@ -751,7 +732,7 @@ sub brickLC {
         return $instance->line_column($thisNode->{start}) if $instance->brickName($thisNode);
         $thisNode = $thisNode->{PARENT};
     }
-    internalError("No brick parent");
+    $instance->internalError("No brick parent");
 };
 
 LINT_NODE: {

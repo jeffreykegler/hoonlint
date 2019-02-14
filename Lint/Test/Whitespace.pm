@@ -282,7 +282,7 @@ sub isJogging1 {
 
     $context->{jogBodyColumn} = $jogBodyColumn
       if defined $jogBodyColumn;
-    internalError("Chess side undefined") unless $chessSide;
+    $instance->internalError("Chess side undefined") unless $chessSide;
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
@@ -385,7 +385,7 @@ sub isJogging2 {
 
     $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if $jogBodyColumn;
-    internalError("Chess side undefined") unless $chessSide;
+    $instance->internalError("Chess side undefined") unless $chessSide;
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
@@ -508,7 +508,7 @@ sub isJogging_1 {
 
     $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if defined $jogBodyColumn;
-    internalError("Chess side undefined") unless $chessSide;
+    $instance->internalError("Chess side undefined") unless $chessSide;
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
@@ -610,7 +610,7 @@ sub checkKingsideJog {
               $grammar->rule_expand($ruleID)
         ]
     ) unless $chessSide;    # TODO: Delete after development
-    internalError("Chess side undefined") unless $chessSide;
+    $instance->internalError("Chess side undefined") unless $chessSide;
 
     my @mistakes = ();
 
@@ -624,7 +624,7 @@ sub checkKingsideJog {
               $grammar->rule_expand($ruleID)
         ]
     ) unless defined $runeColumn;    # TODO: Delete after development
-    internalError("Rune column undefined") unless defined $runeColumn;
+    $instance->internalError("Rune column undefined") unless defined $runeColumn;
     my $jogBodyColumn = $context->{jogBodyColumn};
 
 
@@ -726,7 +726,7 @@ sub checkQueensideJog {
               $grammar->rule_expand($ruleID)
         ]
     ) unless $chessSide;    # TODO: Delete after development
-    internalError("Chess side undefined") unless $chessSide;
+    $instance->internalError("Chess side undefined") unless $chessSide;
 
     my @mistakes = ();
 
@@ -885,6 +885,38 @@ sub validate {
           # say STDERR join " ", __FILE__, __LINE__, "child $childIX of ", (scalar @{$children});
         my $child = $children->[$childIX];
         $policy->validate( $child, $parentContext );
+    }
+}
+
+sub displayMistakes {
+    my ( $policy, $mistakes, $hoonDesc ) = @_;
+    my $instance = $policy->{lint};
+    my $fileName = $instance->{fileName};
+    my $inclusions         = $instance->{inclusions};
+
+    my @pieces = ();
+  MISTAKE: for my $mistake ( @{$mistakes} ) {
+
+        my $type = $mistake->{type};
+        my $parentLine = $mistake->{parentLine};
+        my $parentColumn = $mistake->{parentColumn};
+        my $reportLine = $mistake->{reportLine} // $mistake->{line};
+        my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
+	my $reportLC = join ':', $reportLine, $reportColumn+1;
+        next MISTAKE
+          if $inclusions and not $inclusions->{$type}{$reportLC};
+
+        my $desc              = $mistake->{desc};
+        my $mistakeLine       = $mistake->{line};
+        $mistake->{reportLine}       = $parentLine;
+        $mistake->{reportColumn}       = $parentColumn;
+        my $mistakeTopicLines = $mistake->{topicLines};
+        my @topicLines        = ($parentLine);
+        push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
+
+        $instance->reportItem( $mistake,
+	("$type $hoonDesc $desc"),
+            \@topicLines, $mistakeLine, );
     }
 }
 
@@ -1105,7 +1137,8 @@ sub validate_node {
                             or $inclusions->{sequence}{$childLC} )
                         {
                             $instance->reportItem(
-"$fileName $childLC sequence $lhsName $indentDesc",
+			    { reportLine=>$childLine, reportColumn=>$childColumn },
+"sequence $lhsName $indentDesc",
                                 $parentHoonLine,
                                 $childLine
                             ) if $censusWhitespace or $isProblem;
@@ -1151,8 +1184,9 @@ sub validate_node {
                 {
                     $instance->reportItem(
                         (
+			    { reportLine=>$childLine, reportColumn=>$childColumn },
                             sprintf
-                              "$fileName $childLC sequence %s $indentDesc",
+                              "sequence %s $indentDesc",
                             $instance->diagName( $node, $parentContext->{hoonName} )
                         ),
                         $parentHoonLine,
@@ -1254,16 +1288,18 @@ sub validate_node {
       PRINT: {
             if ( @{$mistakes} ) {
                 $_->{type} = 'indent' for @{$mistakes};
-                $instance->displayMistakes( $mistakes,
+                $policy->displayMistakes( $mistakes,
                     $instance->diagName( $node, $parentContext->{hoonName} ) );
                 last PRINT;
             }
 
             if ($censusWhitespace) {
+		my ($reportLine, $reportColumn ) = $instance->line_column($start);
+		my $mistake = { reportLine=>$reportLine, reportColumn=>$reportColumn };
                 $instance->reportItem(
                     (
-                        sprintf "$fileName %s indent %s %s",
-                        ( join ':', $recce->line_column($start) ),
+			$mistake,
+                        sprintf "indent %s %s",
                         $instance->diagName( $node, $parentContext->{hoonName} ),
                         $indentDesc
                     ),
