@@ -75,4 +75,4 @@ t/ast.d/toe.hoon 54:5 indent LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 54:13 indent tallKethep CAST-STYLE
 t/ast.d/toe.hoon 55:13 indent tallWutgal CAST-STYLE
 t/ast.d/toe.hoon 56:13 indent tallTisfas BACKDENTED
-t/ast.d/toe.hoon 57:13 indent tallWutcol SUPPRESSION indentation is one-off
+t/ast.d/toe.hoon 57:13 indent SUPPRESSION tallWutcol indentation is one-off

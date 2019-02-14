@@ -2,7 +2,7 @@ t/ast.d/fizzbuzz.hoon 1:1 indent tallBartis BACKDENTED
 t/ast.d/fizzbuzz.hoon 2:1 indent tallTislus BACKDENTED
 t/ast.d/fizzbuzz.hoon 3:1 indent tallBarhep CAST-STYLE
 t/ast.d/fizzbuzz.hoon 4:1 indent tallKethep CAST-STYLE
-t/ast.d/fizzbuzz.hoon 5:1 indent tallWutcol SUPPRESSION indentation is one-off
+t/ast.d/fizzbuzz.hoon 5:1 indent SUPPRESSION tallWutcol indentation is one-off
 t/ast.d/fizzbuzz.hoon 7:1 indent tallColhep BACKDENTED
 t/ast.d/fizzbuzz.hoon 8:3 indent tallWutcol BACKDENTED
 t/ast.d/fizzbuzz.hoon 10:3 indent tallWutcol BACKDENTED
