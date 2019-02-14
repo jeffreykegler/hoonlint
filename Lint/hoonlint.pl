@@ -752,8 +752,8 @@ LINT_NODE: {
     # policy.
 
   WHITESPACE_POLICY: {
-        require Test::Whitespace;
-        my $policy = MarpaX::YAHC::Lint::Test::Whitespace->new($lintInstance);
+        require Policy::Test::Whitespace;
+        my $policy = MarpaX::YAHC::Lint::Policy::Test::Whitespace->new($lintInstance);
         $policy->validate( $astValue,
             { hoonName => '[TOP]', line => -1, indents => [], ancestors => [] }
         );
