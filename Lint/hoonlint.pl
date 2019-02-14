@@ -545,13 +545,20 @@ sub contextDisplay {
 sub reportItem {
     my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) = @_;
 
-    my $inclusions = $mistake->{inclusions};
+    my $inclusions = $instance->{inclusions};
+    my $suppressions = $instance->{suppressions};
     my $reportType = $mistake->{type};
     my $reportLine = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC = join ':', $reportLine, $reportColumn+1;
 
     return if $inclusions and not $inclusions->{$reportType}{$reportLC};
+    my $suppression = $suppressions->{$reportType}{$reportLC};
+    if ( defined $suppression ) {
+        $unusedSuppressions->{$reportType}{$reportLC} = undef;
+        return unless $instance->{censusWhitespace};
+        $mistakeDesc = "SUPPRESSION $suppression";
+    }
 
     my $fileName = $instance->{fileName};
     my $topicLines = $instance->{topicLines};

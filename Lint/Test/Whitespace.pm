@@ -931,8 +931,6 @@ sub validate_node {
     my $tallJogging1_Rule = $instance->{tallJogging1_Rule};
 
     my $ruleDB             = $instance->{ruleDB};
-    my $suppressions       = $instance->{suppressions};
-    my $unusedSuppressions = $instance->{unusedSuppressions};
     my $lineToPos          = $instance->{lineToPos};
     my $symbolReverseDB    = $instance->{symbolReverseDB};
     my $censusWhitespace   = $instance->{censusWhitespace};
@@ -1106,15 +1104,6 @@ sub validate_node {
 
                         my $indentDesc = 'RUN';
                       SET_INDENT_DESC: {
-                            my $suppression =
-                              $suppressions->{'sequence'}{$childLC};
-                            if ( defined $suppression ) {
-                                $indentDesc = "SUPPRESSION $suppression";
-                                $unusedSuppressions->{'sequence'}{$childLC} =
-                                  undef;
-                                last SET_INDENT_DESC;
-                            }
-
                             if (    $childLine != $previousLine
                                 and $childColumn != $grandParentColumn + 2 )
                             {
@@ -1151,13 +1140,6 @@ sub validate_node {
 
                 my $indentDesc = 'REGULAR';
               SET_INDENT_DESC: {
-                    my $suppression = $suppressions->{'sequence'}{$childLC};
-                    if ( defined $suppression ) {
-                        $indentDesc = "SUPPRESSION $suppression";
-                        $unusedSuppressions->{'sequence'}{$childLC} = undef;
-                        last SET_INDENT_DESC;
-                    }
-
                     if (    $childLine != $previousLine
                         and $childColumn != $parentColumn )
                     {
@@ -1197,13 +1179,6 @@ sub validate_node {
         my @gapIndents = @{ $policy->calcGapIndents($node) };
 
       TYPE_INDENT: {
-
-            my $suppression = $suppressions->{'indent'}{$parentLC};
-            if ( defined $suppression ) {
-                $indentDesc = "SUPPRESSION $suppression";
-                $unusedSuppressions->{'indent'}{$parentLC} = undef;
-                last TYPE_INDENT;
-            }
 
             if ( $tallJogRule->{$lhsName} ) {
                 $mistakes = $policy->isJog( $node, $parentContext );

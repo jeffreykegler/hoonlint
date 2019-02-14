@@ -1,2 +1,2 @@
-t/ast.d/fizzbuzz.hoon 5:1 indent indentation is one-off
-t/ast.d/toe.hoon 57:13 indent indentation is one-off
+t/ast.d/fizzbuzz.hoon 5:1 indent tallWutcol indentation is one-off
+t/ast.d/toe.hoon 57:13 indent tallWutcol indentation is one-off
