@@ -892,7 +892,6 @@ sub displayMistakes {
     my ( $policy, $mistakes, $hoonDesc ) = @_;
     my $instance = $policy->{lint};
     my $fileName = $instance->{fileName};
-    my $inclusions         = $instance->{inclusions};
 
     my @pieces = ();
   MISTAKE: for my $mistake ( @{$mistakes} ) {
@@ -900,12 +899,6 @@ sub displayMistakes {
         my $type = $mistake->{type};
         my $parentLine = $mistake->{parentLine};
         my $parentColumn = $mistake->{parentColumn};
-        my $reportLine = $mistake->{reportLine} // $mistake->{line};
-        my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
-	my $reportLC = join ':', $reportLine, $reportColumn+1;
-        next MISTAKE
-          if $inclusions and not $inclusions->{$type}{$reportLC};
-
         my $desc              = $mistake->{desc};
         my $mistakeLine       = $mistake->{line};
         $mistake->{reportLine}       = $parentLine;
@@ -914,9 +907,7 @@ sub displayMistakes {
         my @topicLines        = ($parentLine);
         push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
 
-        $instance->reportItem( $mistake,
-	("$type $hoonDesc $desc"),
-            \@topicLines, $mistakeLine, );
+        $instance->reportItem( $mistake, "$hoonDesc $desc", \@topicLines, $mistakeLine, );
     }
 }
 
@@ -942,7 +933,6 @@ sub validate_node {
     my $ruleDB             = $instance->{ruleDB};
     my $suppressions       = $instance->{suppressions};
     my $unusedSuppressions = $instance->{unusedSuppressions};
-    my $inclusions         = $instance->{inclusions};
     my $lineToPos          = $instance->{lineToPos};
     my $symbolReverseDB    = $instance->{symbolReverseDB};
     my $censusWhitespace   = $instance->{censusWhitespace};
@@ -1133,16 +1123,12 @@ sub validate_node {
                                   $childLC;
                             }
                         }
-                        if ( not $inclusions
-                            or $inclusions->{sequence}{$childLC} )
-                        {
                             $instance->reportItem(
-			    { reportLine=>$childLine, reportColumn=>$childColumn },
-"sequence $lhsName $indentDesc",
+			    { type=>'sequence', reportLine=>$childLine, reportColumn=>$childColumn },
+"$lhsName $indentDesc",
                                 $parentHoonLine,
                                 $childLine
                             ) if $censusWhitespace or $isProblem;
-                        }
                         $previousLine = $childLine;
                     }
 
@@ -1179,20 +1165,21 @@ sub validate_node {
                         $indentDesc = join " ", $parentLC, $childLC;
                     }
                 }
-                if ( not $inclusions
-                    or $inclusions->{sequence}{$childLC} )
-                {
-                    $instance->reportItem(
-                        (
-			    { reportLine=>$childLine, reportColumn=>$childColumn },
-                            sprintf
-                              "sequence %s $indentDesc",
-                            $instance->diagName( $node, $parentContext->{hoonName} )
-                        ),
-                        $parentHoonLine,
-                        $childLine,
-                    ) if $censusWhitespace or $isProblem;
-                }
+                $instance->reportItem(
+                    (
+                        {
+                            type         => 'sequence',
+                            reportLine   => $childLine,
+                            reportColumn => $childColumn
+                        },
+                        sprintf "%s $indentDesc",
+                        $instance->diagName(
+                            $node, $parentContext->{hoonName}
+                        )
+                    ),
+                    $parentHoonLine,
+                    $childLine,
+                ) if $censusWhitespace or $isProblem;
                 $previousLine = $childLine;
             }
         }
@@ -1295,11 +1282,11 @@ sub validate_node {
 
             if ($censusWhitespace) {
 		my ($reportLine, $reportColumn ) = $instance->line_column($start);
-		my $mistake = { reportLine=>$reportLine, reportColumn=>$reportColumn };
+		my $mistake = { type=>'indent', reportLine=>$reportLine, reportColumn=>$reportColumn };
                 $instance->reportItem(
                     (
 			$mistake,
-                        sprintf "indent %s %s",
+                        sprintf "%s %s",
                         $instance->diagName( $node, $parentContext->{hoonName} ),
                         $indentDesc
                     ),

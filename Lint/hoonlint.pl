@@ -545,19 +545,22 @@ sub contextDisplay {
 sub reportItem {
     my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) = @_;
 
-    my $fileName = $instance->{fileName};
+    my $inclusions = $mistake->{inclusions};
+    my $reportType = $mistake->{type};
     my $reportLine = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC = join ':', $reportLine, $reportColumn+1;
+
+    return if $inclusions and not $inclusions->{$reportType}{$reportLC};
+
+    my $fileName = $instance->{fileName};
     my $topicLines = $instance->{topicLines};
     my $mistakeLines = $instance->{mistakeLines};
-    # say join " ", __FILE__, __LINE__, "# topic lines:", (scalar @{ $instance->{topicLines}});
-    # say join " ", __FILE__, __LINE__, "# mistake lines:", (scalar %{ $instance->{mistakeLines}});
     push @{$topicLines},
       ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, "$fileName $reportLC $mistakeDesc";
+    push @{$thisMistakeDescs}, "$fileName $reportLC $reportType $mistakeDesc";
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
