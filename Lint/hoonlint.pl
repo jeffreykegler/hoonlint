@@ -500,7 +500,7 @@ sub contextDisplay {
         for my $lineNum ( $start .. $end ) {
             my $startPos = $lineToPos[$lineNum];
             my $line =
-              literal( $startPos, ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
+              $instance->literal( $startPos, ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
             my $tag = $tag{$lineNum} // q{ };
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc (@{$mistakeDescs}) {
