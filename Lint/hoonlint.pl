@@ -544,16 +544,11 @@ sub brickLC {
     $instance->internalError("No brick parent");
 };
 
-# Eventually this will be packaged as a Perl module,
-# and the rare user who needs multiple lint instances
-# will be able to create them.  Right now there is only
-# one
+sub new {
 my $lintInstance = {};
 bless $lintInstance, "MarpaX::YAHC::Lint";
 
-no warnings 'once';
 $lintInstance->{fileName} = $fileName;
-no warnings 'recursion';
 
 $lintInstance->{censusWhitespace} = $censusWhitespace;
 $lintInstance->{topicLines} = [];
@@ -779,5 +774,10 @@ for my $type ( keys %{$unusedSuppressions} ) {
         say "Unused suppression: $type $tag";
     }
 }
+
+return $lintInstance;
+}
+
+MarpaX::YAHC::Lint->new();
 
 # vim: expandtab shiftwidth=4:
