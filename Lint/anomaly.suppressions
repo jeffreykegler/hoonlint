@@ -326,3 +326,23 @@ hoons/arvo/sys/vane/gall.hoon 341:9 indent tallWuthep Jog kingside body @341:15;
 hoons/arvo/sys/vane/gall.hoon 392:7 indent tallWuthep 1-jogging kingside head @392:13; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 653:9 indent tallWuthep Jog kingside body @653:21; overindented by 4
 
+# See github issue #10: https://github.com/jeffreykegler/yahc/issues/10
+hoons/arvo/app/hall.hoon 1102:9 indent tallCencab 1-jogging queenside head @1102:13; underindented by 2
+hoons/arvo/app/hall.hoon 1713:5 indent tallCencab 1-jogging queenside head @1713:9; underindented by 2
+hoons/arvo/app/hall.hoon 1939:9 indent tallCencab 1-jogging queenside head @1939:13; underindented by 2
+hoons/arvo/app/hall.hoon 2010:9 indent tallCencab 1-jogging queenside head @2010:13; underindented by 2
+hoons/arvo/app/hall.hoon 2357:11 indent tallCencab 1-jogging queenside head @2357:15; underindented by 2
+hoons/arvo/app/hall.hoon 2395:5 indent tallCencab 1-jogging queenside head @2395:9; underindented by 2
+hoons/arvo/app/hall.hoon 2615:19 indent tallCencab 1-jogging queenside head @2615:23; underindented by 2
+hoons/arvo/app/hall.hoon 2615:26 indent tallCencab Jog queenside head @2615:26; overindented by 3
+hoons/arvo/app/hall.hoon 2616:21 indent tallCencab Jog queenside head @2616:21; underindented by 2
+hoons/arvo/app/hall.hoon 2618:19 indent tallCencab 1-jogging queenside head @2618:23; underindented by 2
+hoons/arvo/app/hall.hoon 2618:26 indent tallCencab Jog queenside head @2618:26; overindented by 3
+hoons/arvo/app/hall.hoon 2619:21 indent tallCencab Jog queenside head @2619:21; underindented by 2
+hoons/arvo/app/hall.hoon 2623:19 indent tallCencab 1-jogging queenside head @2623:23; underindented by 2
+hoons/arvo/app/hall.hoon 2623:26 indent tallCencab Jog queenside head @2623:26; overindented by 3
+hoons/arvo/app/hall.hoon 2624:21 indent tallCencab Jog queenside head @2624:21; underindented by 2
+hoons/arvo/app/hall.hoon 2955:7 indent tallCencab 1-jogging queenside head @2955:11; underindented by 2
+hoons/arvo/sys/vane/ames.hoon 865:9 indent tallCencab 1-jogging kingside head @865:15; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 730:11 indent tallCencab Jog kingside body @730:17; overindented by 1
+hoons/arvo/sys/vane/gall.hoon 117:5 indent tallCencab 1-jogging kingside head @117:11; overindented by 2
