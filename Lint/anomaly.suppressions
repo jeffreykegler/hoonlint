@@ -346,3 +346,36 @@ hoons/arvo/app/hall.hoon 2955:7 indent tallCencab 1-jogging queenside head @2955
 hoons/arvo/sys/vane/ames.hoon 865:9 indent tallCencab 1-jogging kingside head @865:15; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 730:11 indent tallCencab Jog kingside body @730:17; overindented by 1
 hoons/arvo/sys/vane/gall.hoon 117:5 indent tallCencab 1-jogging kingside head @117:11; overindented by 2
+
+# See github issue #9: https://github.com/jeffreykegler/yahc/issues/9
+hoons/arvo/app/hall.hoon 193:7 indent tallCentis 1-jogging queenside head @193:11; underindented by 2
+hoons/arvo/app/hall.hoon 2934:3 indent tallCentis 1-jogging queenside head @2934:7; underindented by 2
+hoons/arvo/app/talk.hoon 164:7 indent tallCentis 1-jogging queenside head @164:11; underindented by 2
+hoons/arvo/app/talk.hoon 460:7 indent tallCentis 1-jogging queenside head @460:11; underindented by 2
+hoons/arvo/app/talk.hoon 482:7 indent tallCentis 1-jogging queenside head @482:11; underindented by 2
+hoons/arvo/app/talk.hoon 627:7 indent tallCentis 1-jogging queenside head @627:11; underindented by 2
+hoons/arvo/app/talk.hoon 1514:9 indent tallCentis 1-jogging queenside head @1514:13; underindented by 2
+hoons/arvo/lib/hall.hoon 145:5 indent tallCentis 1-jogging queenside head @145:9; underindented by 2
+hoons/arvo/lib/hall.hoon 154:5 indent tallCentis 1-jogging queenside head @154:9; underindented by 2
+hoons/arvo/lib/hall.hoon 163:5 indent tallCentis 1-jogging queenside head @163:9; underindented by 2
+hoons/arvo/lib/hall.hoon 172:5 indent tallCentis 1-jogging queenside head @172:9; underindented by 2
+hoons/arvo/lib/hall.hoon 195:5 indent tallCentis 1-jogging queenside head @195:9; underindented by 2
+hoons/arvo/lib/hood/drum.hoon 666:5 indent tallCentis 1-jogging queenside head @666:9; underindented by 2
+# "hoon:2325 is interesting? But indenting everything in it(including the `==`) seems reasonable"
+hoons/arvo/sys/hoon.hoon 2326:11 indent tallCentis Jog kingside head @2326:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 2327:11 indent tallCentis Jog kingside head @2327:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 2328:11 indent tallCentis Jog kingside head @2328:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 2329:11 indent tallCentis Jog kingside head @2329:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 2330:11 indent tallCentis Jog kingside head @2330:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 4056:10 indent tallCentis 1-jogging kingside head @4056:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 4057:13 indent tallCentis Jog kingside head @4057:13; overindented by 1
+hoons/arvo/sys/hoon.hoon 4058:13 indent tallCentis Jog kingside head @4058:13; overindented by 1
+hoons/arvo/sys/hoon.hoon 4059:13 indent tallCentis Jog kingside head @4059:13; overindented by 1
+hoons/arvo/sys/hoon.hoon 5090:13 indent tallCentis Jog kingside body @5090:22; overindented by 4
+# "ames:1323 is doing the "sidenote" or w/e we decided to call it stacked indentation style,
+# but should be a `%_` instead"
+hoons/arvo/sys/vane/ames.hoon 1324:21 indent tallCentis Jog kingside head @1324:21; underindented by 8
+hoons/arvo/sys/vane/ames.hoon 1325:21 indent tallCentis Jog kingside head @1325:21; underindented by 8
+hoons/arvo/sys/vane/xmas.hoon 863:7 indent tallCentis 1-jogging kingside head @863:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 3854:7 indent tallCentis 1-jogging kingside head @3854:12; overindented by 1
+hoons/arvo/sys/zuse.hoon 4166:7 indent tallCentis 1-jogging kingside head @4166:13; overindented by 2
