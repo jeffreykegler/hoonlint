@@ -92,11 +92,23 @@ $config{censusWhitespace} = $censusWhitespace;
 $config{topicLines}       = [];
 $config{mistakeLines}     = {};
 
-my $policies = [];
-push @{$policies}, @policiesArg;
+my @policies = ();
+push @policies, @policiesArg;
 # Default policy
-$policies = ['Test::Whitespace'] if not scalar @{$policies};
-die "Multiple policies not yet implemented" if scalar @{$policies} != 1;
+@policies = ('Test::Whitespace') if not scalar @policies;
+die "Multiple policies not yet implemented" if scalar @policies != 1;
+my %policies = ();
+for my $shortPolicyName (@policies) {
+  my $fullPolicyName = 'MarpaX::YAHC::Lint::Policy::' . $shortPolicyName;
+
+  # "require policy name" is a hack until I create the full directory
+  # structure required to make this a Perl module
+  my $requirePolicyName = 'Policy::' . $shortPolicyName;
+  my $eval_ok = eval "require $requirePolicyName";
+  die $EVAL_ERROR if not $eval_ok;
+  $policies{$shortPolicyName} = $fullPolicyName;
+}
+$config{policies} = \%policies;
 
 my $defaultSuppressionFile = 'hoonlint.suppressions';
 if ( not @suppressionsFileNames
@@ -608,11 +620,12 @@ sub brickLC {
 }
 
 sub new {
+
     # my ($config) = (@_);
-    my %lint = %config;
+    my %lint         = %config;
     my $lintInstance = \%lint;
     bless $lintInstance, "MarpaX::YAHC::Lint";
-
+    my $policies = $lintInstance->{policies};
 
     my @data = ();
 
@@ -772,40 +785,19 @@ EOS
 
     $lintInstance->testStyleCensus();
 
-  LINT_NODE: {
-
-        # "Policies" will go here
-        # As of this writing, these is only one policy -- the "whitespace"
-        # policy.
-
-      WHITESPACE_POLICY: {
-            require Policy::Test::Whitespace;
-            my $policy =
-              MarpaX::YAHC::Lint::Policy::Test::Whitespace->new($lintInstance);
-
-# say join " ", "can static validate?",
-#   (
-#     UNIVERSAL::can( 'MarpaX::YAHC::Lint::Policy::Test::Whitespace',
-#         , 'validate' ) ? "y" : "n"
-#   );
-# say join " ", "can static bark?",
-#   (
-#     UNIVERSAL::can( 'MarpaX::YAHC::Lint::Policy::Test::Whitespace',
-#         , 'bark' ) ? "y" : "n"
-#   );
-# say join " ", "can validate?", (UNIVERSAL::can($policy, 'validate') ? "y" : "n");
-# say join " ", "can bark?", (UNIVERSAL::can($policy, 'bark') ? "y" : "n");
-
-            $policy->validate(
-                $astValue,
-                {
-                    hoonName  => '[TOP]',
-                    line      => -1,
-                    indents   => [],
-                    ancestors => []
-                }
-            );
-        }
+    for my $policy ( keys %{$policies} ) {
+        my $policyFullName = $policies->{$policy};
+        my $constructor    = UNIVERSAL::can( $policyFullName, 'new' );
+        my $policy         = $constructor->( $policyFullName, $lintInstance );
+        $policy->validate(
+            $astValue,
+            {
+                hoonName  => '[TOP]',
+                line      => -1,
+                indents   => [],
+                ancestors => []
+            }
+        );
     }
 
     print $lintInstance->contextDisplay();
