@@ -751,6 +751,20 @@ sub checkQueensideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'queenside';
 
+    {
+	my $msg = join " ",
+	  ($headLine == $bodyLine ? "joined" : "split");
+        push @mistakes,
+	{
+            desc           => $msg,
+	    parentLine => $parentLine,
+	    parentColumn => $parentColumn,
+            line           => $parentLine,
+            column         => $parentColumn,
+            topicLines     => [$brickLine],
+	}
+    }
+
     my $expectedHeadColumn = $runeColumn + 4;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
@@ -1117,7 +1131,7 @@ sub validate_node {
 "$lhsName $indentDesc",
                                 $parentHoonLine,
                                 $childLine
-                            ) if $censusWhitespace or $isProblem;
+                            ) if 0;
                         $previousLine = $childLine;
                     }
 
@@ -1161,7 +1175,7 @@ sub validate_node {
                     ),
                     $parentHoonLine,
                     $childLine,
-                ) if $censusWhitespace or $isProblem;
+                ) if 0;
                 $previousLine = $childLine;
             }
         }
@@ -1248,27 +1262,15 @@ sub validate_node {
         }
 
       PRINT: {
+            my $diagName =
+              $instance->diagName( $node, $parentContext->{hoonName} );
+	    last PRINT unless $tall_1JoggingRule->{$diagName};
             if ( @{$mistakes} ) {
                 $_->{type} = 'indent' for @{$mistakes};
-                $policy->displayMistakes( $mistakes,
-                    $instance->diagName( $node, $parentContext->{hoonName} ) );
+                $policy->displayMistakes( $mistakes, $diagName );
                 last PRINT;
             }
 
-            if ($censusWhitespace) {
-		my ($reportLine, $reportColumn ) = $instance->line_column($start);
-		my $mistake = { type=>'indent', reportLine=>$reportLine, reportColumn=>$reportColumn };
-                $instance->reportItem(
-                    (
-			$mistake,
-                        sprintf "%s %s",
-                        $instance->diagName( $node, $parentContext->{hoonName} ),
-                        $indentDesc
-                    ),
-                    $parentLine,
-                    $parentLine
-                );
-            }
         }
     }
 
