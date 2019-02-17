@@ -11,8 +11,6 @@ use Data::Dumper;
 use English qw( -no_match_vars );
 use Scalar::Util qw(looks_like_number weaken);
 
-say STDERR join " ", __FILE__, __LINE__, "hi";
-
 # TODO: delete ancestors, indents in favor of tree traversal
 
 sub new {
@@ -21,6 +19,42 @@ sub new {
     $policy->{lint} = $lintInstance;
     Scalar::Util::weaken( $policy->{lint} );
     return bless $policy, $class;
+}
+
+# Assume gap contains at least one newline
+sub findGapComments {
+    my ( $policy, $gap ) = @_;
+    my @results = ();
+    my $instance        = $policy->{lint};
+    my $gapLiteral = $instance->literalNode($gap);
+    my $gapStart = $gap->{start};
+    my $gapEnd = $gap->{start} + $gap->{length};
+
+    # first partial line (must exist)
+    my $firstNewline = index $gapLiteral, "\n";
+    return [] if $firstNewline < 0;
+    my $firstColon = index $gapLiteral, ':';
+    if ( $firstColon >= 0 and $firstColon < $firstNewline ) {
+        my ( $commentLine, $commentColumn ) =
+          $instance->line_column( $gapStart + $firstColon );
+        $commentColumn++;
+        push @results, join ':', $commentLine, $commentColumn
+          if $commentColumn < 57;
+    }
+
+    # intermediate full lines (there may not be any)
+    my ($gapLine2) = $instance->line_column($gapStart+$firstNewline+1);
+    my ($gapLastLine) = $instance->line_column($gapEnd-1);
+    LINE: for my $lineNum ($gapLine2 .. ($gapLastLine-1)) {
+        my $literalLine = $instance->literalLine($lineNum);
+	my $commentOffset = index $literalLine, ':';
+	next LINE if $commentOffset < 0;
+	$commentOffset++;
+	next LINE if $commentOffset >= 57;
+	push @results, join ':', $lineNum, $commentOffset;
+    }
+
+    return \@results;
 }
 
 sub calcGapIndents {
@@ -176,6 +210,17 @@ sub describeMisindent {
         return "underindented by " . ( $sought - $got );
     }
     return "correctly indented";
+}
+
+sub describeIndent {
+    my ( $base, $this ) = @_;
+    if ( $this > $base ) {
+        return "indented by " . ( $this - $base );
+    }
+    if ( $this < $base ) {
+        return "outdented by " . ( $base - $this );
+    }
+    return "identically indented";
 }
 
 sub joggingSide {
@@ -646,6 +691,24 @@ sub checkKingsideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'kingside';
 
+    my $comments = $policy->findGapComments($gap);
+    if ( $headColumn > $bodyColumn and @{$comments} ) {
+        my $msg = join " ",
+          ( $headLine == $bodyLine ? "joined" : "split" ),
+	  describeIndent($headColumn, $bodyColumn),
+          @{$comments};
+        push @mistakes,
+          {
+            useMe        => 1,
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $parentLine,
+            column       => $parentColumn,
+            topicLines   => [$brickLine],
+          };
+    }
+
     my $expectedHeadColumn = $runeColumn + 2;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
@@ -751,11 +814,15 @@ sub checkQueensideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'queenside';
 
-    {
-	my $msg = join " ",
-	  ($headLine == $bodyLine ? "joined" : "split");
+    my $comments = $policy->findGapComments($gap);
+    if ( $headColumn > $bodyColumn and @{$comments} ) {
+        my $msg = join " ",
+          ( $headLine == $bodyLine ? "joined" : "split" ),
+	  describeIndent($headColumn, $bodyColumn),
+          @{$comments};
         push @mistakes,
 	{
+	    useMe => 1,
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
@@ -1265,9 +1332,10 @@ sub validate_node {
             my $diagName =
               $instance->diagName( $node, $parentContext->{hoonName} );
 	    last PRINT unless $tall_1JoggingRule->{$diagName};
-            if ( @{$mistakes} ) {
-                $_->{type} = 'indent' for @{$mistakes};
-                $policy->displayMistakes( $mistakes, $diagName );
+	    my @useMeMistakes = grep { $_->{useMe} } @{$mistakes};
+            if ( @useMeMistakes ) {
+                $_->{type} = 'indent' for @useMeMistakes;
+                $policy->displayMistakes( \@useMeMistakes, $diagName );
                 last PRINT;
             }
 

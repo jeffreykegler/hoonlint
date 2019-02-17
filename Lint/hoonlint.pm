@@ -14,8 +14,6 @@ use Getopt::Long;
 
 require "yahc.pm";
 
-my %reportItemType = map { +( $_, 1 ) } qw(indent sequence);
-
 my %separator = qw(
   hyf4jSeq DOT
   singleQuoteCord gon4k
@@ -53,99 +51,6 @@ my %separator = qw(
   fordHoofSeq commaWS
 );
 
-my $style;
-
-my $verbose;    # right now does nothing
-my $censusWhitespace;
-my $inclusionsFileName;
-my @suppressionsFileNames;
-my @policiesArg;
-my $contextSize = 0;
-
-GetOptions(
-    "verbose"               => \$verbose,
-    "context|C=i"           => \$contextSize,
-    "census-whitespace"     => \$censusWhitespace,
-    "inclusions-file|I=s"   => \$inclusionsFileName,
-    "suppressions_file|S=s" => \@suppressionsFileNames,
-    "policy|P=s"            => \@policiesArg,
-) or die("Error in command line arguments\n");
-
-sub usage {
-    die "usage: $PROGRAM_NAME [options ...] fileName\n";
-}
-
-usage() if scalar @ARGV != 1;
-my $fileName = $ARGV[0];
-
-# Globals
-local $MarpaX::YAHC::Lint::grammar;
-local $MarpaX::YAHC::Lint::recce;
-
-# TODO: Move %config creation into hoonlint.pl
-
-my %config = ();
-
-$config{fileName} = $fileName;
-
-$config{censusWhitespace} = $censusWhitespace;
-$config{topicLines}       = [];
-$config{mistakeLines}     = {};
-
-my @policies = ();
-push @policies, @policiesArg;
-# Default policy
-@policies = ('Test::Whitespace') if not scalar @policies;
-die "Multiple policies not yet implemented" if scalar @policies != 1;
-my %policies = ();
-for my $shortPolicyName (@policies) {
-  my $fullPolicyName = 'MarpaX::YAHC::Lint::Policy::' . $shortPolicyName;
-
-  # "require policy name" is a hack until I create the full directory
-  # structure required to make this a Perl module
-  my $requirePolicyName = 'Policy::' . $shortPolicyName;
-  my $eval_ok = eval "require $requirePolicyName";
-  die $EVAL_ERROR if not $eval_ok;
-  $policies{$shortPolicyName} = $fullPolicyName;
-}
-$config{policies} = \%policies;
-
-my $defaultSuppressionFile = 'hoonlint.suppressions';
-if ( not @suppressionsFileNames
-    and -f $defaultSuppressionFile )
-{
-    @suppressionsFileNames = ($defaultSuppressionFile);
-}
-
-my $pSuppressions;
-{
-    my @suppressions = ();
-    for my $fileName (@suppressionsFileNames) {
-        push @suppressions, ${ slurp($fileName) };
-    }
-    $pSuppressions = \( join "", @suppressions );
-}
-
-my ( $suppressions, $unusedSuppressions ) = parseReportItems($pSuppressions);
-die $unusedSuppressions if not $suppressions;
-$config{suppressions}       = $suppressions;
-$config{unusedSuppressions} = $unusedSuppressions;
-
-my $pInclusions;
-my ( $inclusions, $unusedInclusions );
-if ( defined $inclusionsFileName ) {
-    $pInclusions = slurp($inclusionsFileName);
-    ( $inclusions, $unusedInclusions ) = parseReportItems($pInclusions);
-    die $unusedInclusions if not $inclusions;
-}
-$config{inclusions}       = $inclusions;
-$config{unusedInclusions} = $unusedInclusions;
-
-my $pHoonSource = slurp($fileName);
-
-$config{pHoonSource} = $pHoonSource;
-$config{contextSize} = $contextSize;
-
 sub internalError {
     my ($instance) = @_;
     my $fileName = $instance->{fileName} // "[No file name]";
@@ -156,60 +61,9 @@ sub internalError {
       "Internal error was at $codeFilename, line $codeLine";
 }
 
-sub slurp {
-    my ($fileName) = @_;
-    local $RS = undef;
-    my $fh;
-    open $fh, q{<}, $fileName or die "Cannot open $fileName";
-    my $file = <$fh>;
-    close $fh;
-    return \$file;
-}
-
-sub itemError {
-    my ( $error, $line ) = @_;
-    return qq{Error in item file "$fileName": $error\n}
-      . qq{  Problem with line: $line\n};
-}
-
-sub parseReportItems {
-    my ($reportItems)  = @_;
-    my %itemHash       = ();
-    my %unusedItemHash = ();
-  ITEM: for my $itemLine ( split "\n", ${$reportItems} ) {
-        my $rawItemLine = $itemLine;
-        $itemLine =~ s/\s*[#].*$//;   # remove comments and preceding whitespace
-        $itemLine =~ s/^\s*//;        # remove leading whitespace
-        $itemLine =~ s/\s*$//;        # remove trailing whitespace
-        next ITEM unless $itemLine;
-        my ( $thisFileName, $lc, $type, $message ) = split /\s+/, $itemLine, 4;
-        return undef, itemError( "Problem in report line", $rawItemLine )
-          if not $thisFileName;
-
-        return undef,
-          itemError( qq{Bad report item type "$type"}, $rawItemLine )
-          if not exists $reportItemType{$type};
-        return undef,
-          itemError( qq{Malformed line:column in item line: "$lc"},
-            $rawItemLine )
-          unless $lc =~ /^[0-9]+[:][0-9]+$/;
-        my ( $line, $column ) = split ':', $lc, 2;
-        itemError( qq{Malformed line:column in item line: "$lc"}, $rawItemLine )
-          unless Scalar::Util::looks_like_number($line)
-          and Scalar::Util::looks_like_number($column);
-        next ITEM unless $thisFileName eq $fileName;
-
-        # We reassemble line:column to "normalize" it -- be indifferent to
-        # leading zeros, etc.
-        my $tag = join ':', $line, $column;
-        $itemHash{$type}{$tag}       = $message;
-        $unusedItemHash{$type}{$tag} = 1;
-    }
-    return \%itemHash, \%unusedItemHash;
-}
-
 sub doNode {
     my ( $instance, @argChildren ) = @_;
+    my $pSource = $instance->{pHoonSource};
     my @results    = ();
     my $childCount = scalar @argChildren;
     no warnings 'once';
@@ -246,7 +100,7 @@ sub doNode {
 
                 if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
                     my $terminator    = q{"""};
-                    my $terminatorPos = index ${ $instance->{pHoonSource} },
+                    my $terminatorPos = index ${ $pSource },
                       $terminator,
                       $lexemeStart + $lexemeLength;
                     $lexemeLength =
@@ -254,7 +108,7 @@ sub doNode {
                 }
                 if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
                     my $terminator    = q{'''};
-                    my $terminatorPos = index ${ $instance->{pHoonSource} },
+                    my $terminatorPos = index ${ $pSource },
                       $terminator,
                       $lexemeStart + $lexemeLength;
                     $lexemeLength =
@@ -338,6 +192,23 @@ sub doNode {
     }
 
     return $node;
+}
+
+sub literalNode {
+    my ( $instance, $node ) = @_;
+    my $start = $node->{start};
+    my $length = $node->{length};
+    return $instance->literal($start, $length);
+}
+
+sub literalLine {
+    my ( $instance, $lineNum ) = @_;
+    my $lineToPos     = $instance->{lineToPos};
+    my $startPos = $lineToPos->[$lineNum];
+    my $line =
+      $instance->literal( $startPos,
+        ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
+    return $line;
 }
 
 sub literal {
@@ -620,12 +491,12 @@ sub brickLC {
 }
 
 sub new {
-
-    # my ($config) = (@_);
-    my %lint         = %config;
+    my ($class, $config) = (@_);
+    my %lint         = %{$config};
     my $lintInstance = \%lint;
     bless $lintInstance, "MarpaX::YAHC::Lint";
     my $policies = $lintInstance->{policies};
+    my $pSource = $lintInstance->{pHoonSource};
 
     my @data = ();
 
@@ -759,7 +630,7 @@ EOS
 
     # say Data::Dumper::Dumper(\%tallBodyRule);
 
-    $parser->read($pHoonSource);
+    $parser->read($pSource);
 
     $MarpaX::YAHC::Lint::recce = $parser->rawRecce();
     $lintInstance->{recce} = $MarpaX::YAHC::Lint::recce;
@@ -768,7 +639,7 @@ EOS
     my $astRef = $MarpaX::YAHC::Lint::recce->value($lintInstance);
 
     my @lineToPos = ( -1, 0 );
-    while ( ${$pHoonSource} =~ m/\n/g ) { push @lineToPos, pos ${$pHoonSource} }
+    while ( ${$pSource} =~ m/\n/g ) { push @lineToPos, pos ${$pSource} }
     $lintInstance->{lineToPos} = \@lineToPos;
 
     die "Parse failed" if not $astRef;
@@ -802,6 +673,7 @@ EOS
 
     print $lintInstance->contextDisplay();
 
+    my $unusedSuppressions = $lintInstance->{unusedSuppressions};
     for my $type ( keys %{$unusedSuppressions} ) {
         for my $tag (
             grep { $unusedSuppressions->{$type}{$_} }
