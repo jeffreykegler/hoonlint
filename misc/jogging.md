@@ -83,20 +83,15 @@ The **rune line** of a hoon is the line on which the hoon's rune occurs,
 and the **rune column** of a hoon
 is the column at which the hoon's rune begins.
 
-## Limitations of this current document
-
-The rest of this document describes the indentation of the 1-jogging
-rules only.
-I expect to treat the other rules along similar lines,
-and expect to revise this document accordingly.
-
-## Proper spacing of Jogs
+## Proper spacing of jogs
 
 The indentation of a jog is that of its head.
 A kingside jog should have an indentation 1 stop greater than
-the rune column.
+the base column of its jogging hoon.
 A queenside jog should have an indentation 2 stops greater than
-the rune column.
+the base column of its jogging hoon.
+The base column of a jogging hoon is described below,
+in the description for the different kinds of jogging hoon.
 
 A joined jog may be either **aligned** or **ragged**.
 A joined jog is ragged is its body is indented 1 stop after
@@ -141,6 +136,7 @@ This is the source of the name.
 ## Proper spacing of 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
+The base column for jogs of a 1-jogging hoon is its rune column.
 
 "Sidedness" should be consistent:
 
@@ -165,6 +161,7 @@ and should consist entirely of queenside jogs.
 Every jogging-1 hoon is either kingside or queenside.
 Queenside jogs do not actually occur in the `arvo/` corpus,
 so their description here is speculative.
+The base column for jogs of a jogging-1 hoon is one stop greater than its rune column.
 
 "Sidedness" of a jogging-1 hoon should be consistent:
 
