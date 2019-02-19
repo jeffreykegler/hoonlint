@@ -268,7 +268,7 @@ sub censusJoggingHoon {
     die "No jogging found for ", symbol($node);
 }
 
-sub is_Jogging1 {
+sub is_1Jogging {
     my ( $policy, $context, $node, $gapIndents ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
@@ -284,7 +284,6 @@ sub is_Jogging1 {
       if defined $jogBodyColumn;
     $instance->internalError("Chess side undefined") unless $chessSide;
 
-    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
     die "1-jogging rule with only $gapIndents gap indents"
       if $#$gapIndents < 3;
@@ -495,7 +494,7 @@ sub is_2Jogging {
     return \@mistakes;
 }
 
-sub is_1Jogging {
+sub is_Jogging1 {
     my ( $policy, $context, $node, $gapIndents ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
@@ -1202,7 +1201,7 @@ sub validate_node {
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_Jogging1( $parentContext, $node, \@gapIndents );
+                  $policy->is_1Jogging( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
@@ -1218,9 +1217,9 @@ sub validate_node {
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_1Jogging( $parentContext, $node, \@gapIndents );
+                  $policy->is_Jogging1( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOGGING-PREFIX-STYLE';
+                $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
             }
 
