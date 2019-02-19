@@ -268,7 +268,7 @@ sub censusJoggingHoon {
     die "No jogging found for ", symbol($node);
 }
 
-sub isJogging1 {
+sub is_Jogging1 {
     my ( $policy, $context, $node, $gapIndents ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
@@ -372,7 +372,7 @@ sub isJogging1 {
     return \@mistakes;
 }
 
-sub isJogging2 {
+sub is_2Jogging {
     my ( $policy, $context, $node, $gapIndents ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
@@ -495,7 +495,7 @@ sub isJogging2 {
     return \@mistakes;
 }
 
-sub isJogging_1 {
+sub is_1Jogging {
     my ( $policy, $context, $node, $gapIndents ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
@@ -928,7 +928,7 @@ sub validate_node {
     my $tall_0JoggingRule = $instance->{tall_0JoggingRule};
     my $tall_1JoggingRule = $instance->{tall_1JoggingRule};
     my $tall_2JoggingRule = $instance->{tall_2JoggingRule};
-    my $tallJogging1_Rule = $instance->{tallJogging1_Rule};
+    my $tall_Jogging1Rule = $instance->{tallJogging1_Rule};
 
     my $ruleDB             = $instance->{ruleDB};
     my $lineToPos          = $instance->{lineToPos};
@@ -1202,7 +1202,7 @@ sub validate_node {
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->isJogging1( $parentContext, $node, \@gapIndents );
+                  $policy->is_Jogging1( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
@@ -1210,15 +1210,15 @@ sub validate_node {
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->isJogging2( $parentContext, $node, \@gapIndents );
+                  $policy->is_2Jogging( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-2-STYLE';
                 last TYPE_INDENT;
             }
 
-            if ( $tallJogging1_Rule->{$lhsName} ) {
+            if ( $tall_Jogging1Rule->{$lhsName} ) {
                 $mistakes =
-                  $policy->isJogging_1( $parentContext, $node, \@gapIndents );
+                  $policy->is_1Jogging( $parentContext, $node, \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-PREFIX-STYLE';
                 last TYPE_INDENT;

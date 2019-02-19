@@ -1,6 +1,6 @@
-# Hoon 1-jogging census
+# Hoon jogging-1 census
 
-package MarpaX::YAHC::Lint::Policy::Test::2Jogging;
+package MarpaX::YAHC::Lint::Policy::Test::Jogging1;
 
 use 5.010;
 use strict;
@@ -215,10 +215,10 @@ sub describeMisindent {
 sub describeIndent {
     my ( $base, $this ) = @_;
     if ( $this > $base ) {
-        return ( $this - $base ) . '-indented';
+        return "indented by " . ( $this - $base );
     }
     if ( $this < $base ) {
-        return ( $base - $this ) . '-indented';
+        return "outdented by " . ( $base - $this );
     }
     return "identically indented";
 }
@@ -344,6 +344,7 @@ sub isJogging1 {
           $runeLine;
         push @mistakes,
           {
+	    useMe => 1,
             desc         => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
@@ -428,8 +429,6 @@ sub isJogging2 {
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
-
     $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if $jogBodyColumn;
     $instance->internalError("Chess side undefined") unless $chessSide;
@@ -499,62 +498,6 @@ sub isJogging2 {
           };
     }
 
-    {
-        my $children = $node->{children};
-        my $headGap  = $children->[2];
-        my ( $headGapLine, $headGapColumn ) =
-          $instance->line_column( $headGap->{start} );
-        my $head = $children->[3];
-        my ( $headLine, $headColumn ) =
-          $instance->line_column( $head->{start} );
-        my $subHeadGap = $children->[4];
-        my ( $subHeadGapLine, $subHeadGapColumn ) =
-          $instance->line_column( $subHeadGap->{start} );
-        my $subHead = $children->[5];
-        my ( $subHeadLine, $subHeadColumn ) =
-          $instance->line_column( $subHead->{start} );
-        my $jogging = $children->[7];
-        my ( $joggingLine, $joggingColumn ) =
-          $instance->line_column( $jogging->{start} );
-
-        if ( $headLine == $subHeadLine ) {
-            my $msg = join " ",
-              $chessSide,
-              ( $headLine == $subHeadLine ? "head-joined" : "head-split" ),
-              "head-gap=" . $headGap->{length},
-              "subhead-gap=" . $subHeadGap->{length},
-              "jogging-indent=" . describeIndent($runeColumn, $joggingColumn);
-            push @mistakes,
-              {
-                # useMe        => 1,
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $parentLine,
-                column       => $parentColumn,
-                topicLines   => [$brickLine, $subHeadLine],
-              };
-        }
-        else {
-            my $msg = join " ",
-              $chessSide,
-              ( $headLine == $subHeadLine ? "head-joined" : "head-split" ),
-              "head-gap=" . $headGap->{length},
-              "subhead-indent=" . describeIndent($runeColumn, $subHeadColumn),
-              "jogging-indent=" . describeIndent($runeColumn, $joggingColumn);
-            push @mistakes,
-              {
-                useMe        => 1,
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $parentLine,
-                column       => $parentColumn,
-                topicLines   => [$brickLine, $subHeadLine],
-              };
-        }
-    }
-
     my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[4] };
     if ( $tistisLine == $runeLine ) {
         my $msg = sprintf
@@ -615,13 +558,35 @@ sub isJogging_1 {
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
-    die "Jogging-prefix rule with only $gapIndents gap indents"
+    die "Jogging-1 rule with only $gapIndents gap indents"
       if $#$gapIndents < 3;
 
+    my ( $joggingLine, $joggingColumn ) = @{ $gapIndents->[1] };
     my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
+    my ( $tailLine, $tailColumn ) =
+      @{ $gapIndents->[3] };
+
+    {
+        my $msg = join " ",
+          ( $joggingLine == $runeLine ? "joined" : "split" ),
+	  "jogging-indent=" . describeIndent($runeColumn, $joggingColumn),
+	  "tail-indent=" . describeIndent($runeColumn, $tailColumn)
+	  ;
+        push @mistakes,
+          {
+            # useMe        => 1,
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $parentLine,
+            column       => $parentColumn,
+            topicLines   => [$joggingLine, $tailLine],
+          };
+    }
+
     if ( $tistisLine == $runeLine ) {
         my $msg = sprintf
-          "Jogging-prefix line %d; TISTIS is on rune line %d; should not be",
+          "Jogging-1 line %d; TISTIS is on rune line %d; should not be",
           $runeLine, $tistisLine;
         push @mistakes,
           {
@@ -645,7 +610,7 @@ sub isJogging_1 {
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf "Jogging-prefix; TISTIS @%d:%d; %s",
+        my $msg = sprintf "Jogging-1; TISTIS @%d:%d; %s",
           $tistisLine, $tistisColumn + 1,
           describeMisindent( $tistisColumn, $runeColumn );
         push @mistakes,
@@ -660,24 +625,21 @@ sub isJogging_1 {
           };
     }
 
-    my ( $thirdChildLine, $thirdChildColumn ) =
-      @{ $gapIndents->[3] };
-
-    # TODO: No examples of "jogging prefix" queenside in arvo/ corpus
+    # TODO: No examples of "jogging-1" queenside in arvo/ corpus
     $expectedColumn = $runeColumn;
-    if ( $thirdChildColumn != $expectedColumn ) {
+    if ( $tailColumn != $expectedColumn ) {
         my $msg = sprintf
           "Jogging-prefix %s child #%d @%d:%d; %s",
           $chessSide, 1, $runeLine,
-          $thirdChildColumn + 1,
-          describeMisindent( $thirdChildColumn, $expectedColumn );
+          $tailColumn + 1,
+          describeMisindent( $tailColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
-            line           => $thirdChildLine,
-            column         => $thirdChildColumn,
+            line           => $tailLine,
+            column         => $tailColumn,
             child          => 1,
             expectedColumn => $expectedColumn,
           };
@@ -750,13 +712,14 @@ sub checkKingsideJog {
     my $sideDesc = 'kingside';
 
     my $comments = $policy->findGapComments($gap);
-    if ( $headColumn > $bodyColumn and @{$comments} ) {
+    if ( $headColumn < $bodyColumn and @{$comments} ) {
         my $msg = join " ",
           ( $headLine == $bodyLine ? "joined" : "split" ),
 	  describeIndent($headColumn, $bodyColumn),
           @{$comments};
         push @mistakes,
           {
+            # useMe        => 1,
             desc         => $msg,
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
@@ -872,13 +835,14 @@ sub checkQueensideJog {
     my $sideDesc = 'queenside';
 
     my $comments = $policy->findGapComments($gap);
-    if ( $headColumn > $bodyColumn and @{$comments} ) {
+    if ( $headColumn < $bodyColumn and @{$comments} ) {
         my $msg = join " ",
           ( $headLine == $bodyLine ? "joined" : "split" ),
 	  describeIndent($headColumn, $bodyColumn),
           @{$comments};
         push @mistakes,
 	{
+	    # useMe => 1,
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
@@ -1387,7 +1351,7 @@ sub validate_node {
       PRINT: {
             my $diagName =
               $instance->diagName( $node, $parentContext->{hoonName} );
-	    last PRINT unless $tall_2JoggingRule->{$diagName};
+	    # last PRINT unless $tall_1JoggingRule->{$diagName};
 	    my @useMeMistakes = grep { $_->{useMe} } @{$mistakes};
             if ( @useMeMistakes ) {
                 $_->{type} = 'indent' for @useMeMistakes;

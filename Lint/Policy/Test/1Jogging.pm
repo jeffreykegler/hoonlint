@@ -692,7 +692,7 @@ sub checkKingsideJog {
     my $sideDesc = 'kingside';
 
     my $comments = $policy->findGapComments($gap);
-    if ( $headColumn > $bodyColumn and @{$comments} ) {
+    if ( $headColumn < $bodyColumn and @{$comments} ) {
         my $msg = join " ",
           ( $headLine == $bodyLine ? "joined" : "split" ),
 	  describeIndent($headColumn, $bodyColumn),
@@ -815,7 +815,7 @@ sub checkQueensideJog {
     my $sideDesc = 'queenside';
 
     my $comments = $policy->findGapComments($gap);
-    if ( $headColumn > $bodyColumn and @{$comments} ) {
+    if ( $headColumn < $bodyColumn and @{$comments} ) {
         my $msg = join " ",
           ( $headLine == $bodyLine ? "joined" : "split" ),
 	  describeIndent($headColumn, $bodyColumn),
