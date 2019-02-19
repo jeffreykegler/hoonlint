@@ -142,12 +142,12 @@ so their description here is speculative.
 
 "Sidedness" of a jogging-1 hoon should be consistent:
 
-* The jogging of a kingside jogging hoon should be kingside.
+* The jogging of a kingside jogging-1 hoon should be kingside.
 It should start on the rune line,
 1 stop after the rune line,
 and should consist entirely of kingside jogs.
 
-* The jogging of a queenside jogging hoon should be queenside.
+* The jogging of a queenside jogging-1 hoon should be queenside.
 It should start on the rune line,
 2 stops after the rune line,
 and should consist entirely of queenside jogs.
