@@ -118,26 +118,26 @@ Every 1-jogging hoon is either kingside or queenside.
 
 "Sidedness" should be consistent:
 
-* The head of a kingside jogging hoon should be kingside.
+* The head of a kingside 1-jogging hoon should be kingside.
 It should be on the rune line,
 indented 1 stop after the rune.
 
-* The jogging of a kingside jogging hoon should be kingside.
+* The jogging of a kingside 1-jogging hoon should be kingside.
 It should be on a line after the rune line,
 and should consist entirely of kingside jogs.
 
-* The head of a queenside jogging hoon should be queenside.
+* The head of a queenside 1-jogging hoon should be queenside.
 It should be on the rune line,
 indented 2 stops after the rune.
 
-* The jogging of a queenside jogging hoon should be queenside.
+* The jogging of a queenside 1-jogging hoon should be queenside.
 It should be on a line after the rune line,
 and should consist entirely of queenside jogs.
 
 ## Proper spacing of jogging-1 hoons
 
 Every jogging-1 hoon is either kingside or queenside.
-Queenside jobs do not actually occur in the `arvo/` corpus,
+Queenside jogs do not actually occur in the `arvo/` corpus,
 so their description here is speculative.
 
 "Sidedness" of a jogging-1 hoon should be consistent:
