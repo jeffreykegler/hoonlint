@@ -112,6 +112,32 @@ should be 1 stop *greater* than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
 should be 1 stop *less* than the indentation of the jog's head.
 
+## Proper spacing of Joggings
+
+A jogging is considered to start at the start of jog head
+of its first jog.
+Every jogging ends in a TISTIS (`==`).
+The TISTIS should occur on its own line, or a part of a criss-cross
+TISTIS line.
+
+The TISTIS of a kingside jogging should be outdented one stop
+from the start of its jogging.
+The TISTIS of a queenside jogging should be outdented two stops
+from the start of its jogging.
+
+Successive TISTIS's may occur on the same line,
+as part of a **criss-cross TISTIS line**.
+If a TISTIS is in a criss-cross line, it does not have to
+be properly aligned, if some other TISTIS with the required alignment
+"stands in" for it.
+
+When this is consistently done,
+a diagram showing
+the containments of the jogging hoons,
+if it took alignment as its key to which TISTIS matched which rune,
+would show containments that appeared to "criss-cross".
+This is the source of the name.
+
 ## Proper spacing of 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
