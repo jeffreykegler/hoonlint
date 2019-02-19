@@ -79,6 +79,10 @@ of text `Y` if text `X` begins at column `Column(Y)+N*2`.
 We say the indentation of text `X` is `N` stops **less than the indentation**
 of text `Y` if text `X` begins at column `Column(Y)-N*2`.
 
+The **rune line** of a hoon is the line on which the hoon's rune occurs,
+and the **rune column** of a hoon
+is the column at which the hoon's rune begins.
+
 ## Limitations of this current document
 
 The rest of this document describes the indentation of the 1-jogging
@@ -86,31 +90,7 @@ rules only.
 I expect to treat the other rules along similar lines,
 and expect to revise this document accordingly.
 
-## Proper spacing of 1-jogging hoons
-
-Every jogging hoon is either kingside or queenside --
-none of them are considered "mixed".
-The **rune line** is the line on which the rune occurs,
-and the **rune column** is the column at which the rune begins.
-
-
-"Sidedness" should be consistent:
-
-* The head of a kingside jogging hoon should be kingside.
-It should be on the rune line,
-indented 1 stop after the rune.
-
-* The jogging of a kingside jogging hoon should be kingside.
-It should be on a line after the rune line,
-and should consist entirely of kingside jogs.
-
-* The head of a queenside jogging hoon should be queenside.
-It should be on the rune line,
-indented 2 stops after the rune.
-
-* The jogging of a queenside jogging hoon should be queenside.
-It should be on a line after the rune line,
-and should consist entirely of queenside jogs.
+## Proper spacing of Jogs
 
 The indentation of a jog is that of its head.
 A kingside jog should have an indentation 1 stop greater than
@@ -131,6 +111,50 @@ The indentation of the body of a split kingside jog
 should be 1 stop *greater* than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
 should be 1 stop *less* than the indentation of the jog's head.
+
+## Proper spacing of 1-jogging hoons
+
+Every 1-jogging hoon is either kingside or queenside.
+
+"Sidedness" should be consistent:
+
+* The head of a kingside jogging hoon should be kingside.
+It should be on the rune line,
+indented 1 stop after the rune.
+
+* The jogging of a kingside jogging hoon should be kingside.
+It should be on a line after the rune line,
+and should consist entirely of kingside jogs.
+
+* The head of a queenside jogging hoon should be queenside.
+It should be on the rune line,
+indented 2 stops after the rune.
+
+* The jogging of a queenside jogging hoon should be queenside.
+It should be on a line after the rune line,
+and should consist entirely of queenside jogs.
+
+## Proper spacing of jogging-1 hoons
+
+Every jogging-1 hoon is either kingside or queenside.
+Queenside jobs do not actually occur in the `arvo/` corpus,
+so their description here is speculative.
+
+"Sidedness" of a jogging-1 hoon should be consistent:
+
+* The jogging of a kingside jogging hoon should be kingside.
+It should start on the rune line,
+1 stop after the rune line,
+and should consist entirely of kingside jogs.
+
+* The jogging of a queenside jogging hoon should be queenside.
+It should start on the rune line,
+2 stops after the rune line,
+and should consist entirely of queenside jogs.
+
+* The tail of a jogging-1 hoon should be
+should be on its own line,
+and aligned with the rune.
 
 ## Non-standard code
 

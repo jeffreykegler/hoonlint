@@ -208,7 +208,7 @@ sub joggingSide {
 }
 
 sub joggingBodyAlignment {
-    my ( $policy, $node, $runeColumn ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $children = $node->{children};
     my $firstBodyColumn;
@@ -252,17 +252,20 @@ sub joggingBodyAlignment {
 }
 
 sub censusJoggingHoon {
-    my ( $policy, $node ) = @_;
+    my ( $policy, $node, $baseColumn ) = @_;
     my $instance = $policy->{lint};
-    my ( undef, $runeColumn ) = $instance->line_column( $node->{start} );
+    if (not defined $baseColumn )
+    {
+      ( undef, $baseColumn ) = $instance->line_column( $node->{start} );
+    }
     my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
         my $child  = $children->[$childIX];
         my $symbol = $instance->symbol($child);
         next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $side = $policy->joggingSide( $child, $runeColumn );
+        my $side = $policy->joggingSide( $child, $baseColumn );
         my $bodyAlignment =
-          $policy->joggingBodyAlignment( $child, $runeColumn );
+          $policy->joggingBodyAlignment( $child );
         return $side, $bodyAlignment;
     }
     die "No jogging found for ", symbol($node);
@@ -495,7 +498,7 @@ sub is_2Jogging {
 }
 
 sub is_Jogging1 {
-    my ( $policy, $context, $node, $gapIndents ) = @_;
+    my ( $policy, $context, $node, ) = @_;
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
@@ -511,14 +514,61 @@ sub is_Jogging1 {
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
-    die "Jogging-prefix rule with only $gapIndents gap indents"
-      if $#$gapIndents < 3;
 
-    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[2] };
-    if ( $tistisLine == $runeLine ) {
+    my $children = $node->{children};
+    my $jogging = $children->[3];
+    my ( $joggingLine, $joggingColumn ) = $instance->line_column($jogging->{start});
+    my $tistisGap = $children->[4];
+    my ( $tistisGapLine, $tistisGapColumn ) = $instance->line_column($tistisGap->{start});
+    my $tistis = $children->[5];
+    my ( $tistisLine, $tistisColumn ) = $instance->line_column($tistis->{start});
+    my $tail = $children->[8];
+    my ( $tailLine, $tailColumn ) = $instance->line_column($tail->{start});
+
+    if ( $joggingLine != $runeLine ) {
         my $msg = sprintf
-          "Jogging-prefix line %d; TISTIS is on rune line %d; should not be",
-          $runeLine, $tistisLine;
+          "Jogging-1 %s; jogging %s must be on rune line %d",
+	  $chessSide,
+          describeLC( $joggingLine, $joggingColumn ),
+          $runeLine;
+        push @mistakes,
+          {
+            desc         => $msg,
+	    parentLine => $parentLine,
+	    parentColumn => $parentColumn,
+            line         => $joggingLine,
+            column       => $joggingColumn,
+            expectedLine => $runeLine,
+            topicLines     => [$joggingLine],
+          };
+    }
+
+    # We allow for queenside, but there are no examples of it in
+    # the arvo/ corpus as of this writing.
+    my $expectedColumn = $runeColumn + 4;
+    if ( $joggingColumn != $expectedColumn ) {
+        my $msg = sprintf
+          "Jogging-1 %s; jogging %s %s",
+	  $chessSide,
+          describeLC( $joggingLine, $joggingColumn ),
+          describeMisindent( $expectedColumn, $joggingColumn );
+        push @mistakes,
+          {
+            desc         => $msg,
+	    parentLine => $parentLine,
+	    parentColumn => $parentColumn,
+            line         => $joggingLine,
+            column       => $joggingColumn,
+            expectedColumn => $runeColumn,
+            topicLines     => [$joggingLine],
+          };
+    }
+
+    if ( $tistisGapLine >= $tistisLine) {
+        my $msg = sprintf
+          "Jogging-1 %s; TISTIS %s must be on its own line",
+	  $chessSide,
+          describeLC( $tistisLine, $tistisColumn );
         push @mistakes,
           {
             desc         => $msg,
@@ -526,12 +576,12 @@ sub is_Jogging1 {
 	    parentColumn => $parentColumn,
             line         => $tistisLine,
             column       => $tistisColumn,
-            child        => 3,
-            expectedLine => $runeLine,
+            expectedLine => $tistisGapLine+1,
+            topicLines     => [$tistisLine, $tistisGapLine],
           };
     }
 
-    my $expectedColumn     = $runeColumn + 2;
+    $expectedColumn     = $runeColumn + 2;
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
@@ -541,9 +591,10 @@ sub is_Jogging1 {
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf "Jogging-prefix; TISTIS @%d:%d; %s",
-          $tistisLine, $tistisColumn + 1,
-          describeMisindent( $tistisColumn, $runeColumn );
+        my $msg = sprintf "Jogging-1 %s; TISTIS %s %s",
+	  $chessSide,
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $expectedColumn, $tistisColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -551,31 +602,44 @@ sub is_Jogging1 {
 	    parentColumn => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            child          => 3,
             expectedColumn => $expectedColumn,
+            topicLines     => [$tistisLine],
           };
     }
 
-    my ( $thirdChildLine, $thirdChildColumn ) =
-      @{ $gapIndents->[3] };
-
-    # TODO: No examples of "jogging prefix" queenside in arvo/ corpus
-    $expectedColumn = $runeColumn;
-    if ( $thirdChildColumn != $expectedColumn ) {
+    if ( $tailLine <= $tistisLine) {
         my $msg = sprintf
-          "Jogging-prefix %s child #%d @%d:%d; %s",
-          $chessSide, 1, $runeLine,
-          $thirdChildColumn + 1,
-          describeMisindent( $thirdChildColumn, $expectedColumn );
+          "Jogging-1 %s; tail %s must be on its own line",
+	  $chessSide,
+          describeLC( $tistisLine, $tistisColumn );
+        push @mistakes,
+          {
+            desc         => $msg,
+	    parentLine => $parentLine,
+	    parentColumn => $parentColumn,
+            line         => $tailLine,
+            column       => $tailColumn,
+            expectedLine => $tistisLine+1,
+            topicLines     => [$tailLine],
+          };
+    }
+
+    $expectedColumn = $runeColumn;
+    if ( $tailColumn != $expectedColumn ) {
+        my $msg = sprintf
+          "Jogging-1 %s; tail %s; %s",
+	  $chessSide,
+          describeLC( $tailLine, $tailColumn ),
+          describeMisindent( $expectedColumn, $tailColumn );
         push @mistakes,
           {
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
-            line           => $thirdChildLine,
-            column         => $thirdChildColumn,
-            child          => 1,
+            line           => $tailLine,
+            column         => $tailColumn,
             expectedColumn => $expectedColumn,
+            topicLines     => [$tailLine],
           };
     }
 
