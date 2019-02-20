@@ -306,15 +306,15 @@ sub reportItem {
 
     my $inclusions   = $instance->{inclusions};
     my $suppressions = $instance->{suppressions};
-    my $reportType   = $mistake->{type};
+    my $reportPolicy = $mistake->{policy};
     my $reportLine   = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC     = join ':', $reportLine, $reportColumn + 1;
 
-    return if $inclusions and not $inclusions->{$reportType}{$reportLC};
-    my $suppression = $suppressions->{$reportType}{$reportLC};
+    return if $inclusions and not $inclusions->{$reportPolicy}{$reportLC};
+    my $suppression = $suppressions->{$reportPolicy}{$reportLC};
     if ( defined $suppression ) {
-        $instance->{unusedSuppressions}->{$reportType}{$reportLC} = undef;
+        $instance->{unusedSuppressions}->{$reportPolicy}{$reportLC} = undef;
         return unless $instance->{censusWhitespace};
         $mistakeDesc = "SUPPRESSION $suppression";
     }
@@ -325,7 +325,7 @@ sub reportItem {
     push @{$topicLines}, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, "$fileName $reportLC $reportType $mistakeDesc";
+    push @{$thisMistakeDescs}, "$fileName $reportLC $reportPolicy $mistakeDesc";
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
@@ -656,10 +656,12 @@ EOS
 
     $lintInstance->testStyleCensus();
 
-    for my $policy ( keys %{$policies} ) {
-        my $policyFullName = $policies->{$policy};
+    for my $policyShortName ( keys %{$policies} ) {
+        my $policyFullName = $policies->{$policyShortName};
         my $constructor    = UNIVERSAL::can( $policyFullName, 'new' );
         my $policy         = $constructor->( $policyFullName, $lintInstance );
+        $policy->{shortName} = $policyShortName;
+        $policy->{fullName} = $policyFullName;
         $policy->validate(
             $astValue,
             {

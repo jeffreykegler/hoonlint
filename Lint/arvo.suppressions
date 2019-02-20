@@ -1,3 +1,3 @@
 # Subject of proposed language change
 # See https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
-hoons/arvo/app/static.hoon 146:5 indent
+hoons/arvo/app/static.hoon 146:5 Test::Whitespace

@@ -19,8 +19,6 @@ sub slurp {
     return \$file;
 }
 
-my %reportItemType = map { +( $_, 1 ) } qw(indent sequence);
-
 sub parseReportItems {
     my ( $config, $reportItems ) = @_;
     my $fileName       = $config->{fileName};
@@ -40,18 +38,15 @@ sub parseReportItems {
         $itemLine =~ s/\s*$//;        # remove trailing whitespace
         next ITEM unless $itemLine;
         my ( $thisFileName, $lc, $type, $message ) = split /\s+/, $itemLine, 4;
-        return undef, itemError( "Problem in report line", $rawItemLine )
+        return undef, $itemError->( "Problem in report line", $rawItemLine )
           if not $thisFileName;
 
         return undef,
-          itemError( qq{Bad report item type "$type"}, $rawItemLine )
-          if not exists $reportItemType{$type};
-        return undef,
-          itemError( qq{Malformed line:column in item line: "$lc"},
+          $itemError->( qq{Malformed line:column in item line: "$lc"},
             $rawItemLine )
           unless $lc =~ /^[0-9]+[:][0-9]+$/;
         my ( $line, $column ) = split ':', $lc, 2;
-        itemError( qq{Malformed line:column in item line: "$lc"}, $rawItemLine )
+        $itemError->( qq{Malformed line:column in item line: "$lc"}, $rawItemLine )
           unless Scalar::Util::looks_like_number($line)
           and Scalar::Util::looks_like_number($column);
         next ITEM unless $thisFileName eq $fileName;

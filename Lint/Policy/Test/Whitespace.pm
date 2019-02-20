@@ -959,7 +959,6 @@ sub displayMistakes {
     my @pieces = ();
   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
-        my $type = $mistake->{type};
         my $parentLine = $mistake->{parentLine};
         my $parentColumn = $mistake->{parentColumn};
         my $desc              = $mistake->{desc};
@@ -976,13 +975,15 @@ sub displayMistakes {
 
 sub validate_node {
     my ( $policy, $node, $argContext ) = @_;
-		      # say STDERR join " ", __FILE__, __LINE__, "validate(), hoon =", $argContext->{hoonName};
 
-    my $instance  = $policy->{lint};
-    my $fileName  = $instance->{fileName};
-    my $grammar   = $instance->{grammar};
-    my $recce     = $instance->{recce};
-    my $mortarLHS = $instance->{mortarLHS};
+# say STDERR join " ", __FILE__, __LINE__, "validate(), hoon =", $argContext->{hoonName};
+
+    my $policyShortName = $policy->{shortName};
+    my $instance        = $policy->{lint};
+    my $fileName        = $instance->{fileName};
+    my $grammar         = $instance->{grammar};
+    my $recce           = $instance->{recce};
+    my $mortarLHS       = $instance->{mortarLHS};
 
     my $tallRuneRule      = $instance->{tallRuneRule};
     my $tallJogRule       = $instance->{tallJogRule};
@@ -993,10 +994,10 @@ sub validate_node {
     my $tall_2JoggingRule = $instance->{tall_2JoggingRule};
     my $tall_Jogging1Rule = $instance->{tallJogging1_Rule};
 
-    my $ruleDB             = $instance->{ruleDB};
-    my $lineToPos          = $instance->{lineToPos};
-    my $symbolReverseDB    = $instance->{symbolReverseDB};
-    my $censusWhitespace   = $instance->{censusWhitespace};
+    my $ruleDB           = $instance->{ruleDB};
+    my $lineToPos        = $instance->{lineToPos};
+    my $symbolReverseDB  = $instance->{symbolReverseDB};
+    my $censusWhitespace = $instance->{censusWhitespace};
 
     my $parentSymbol = $node->{symbol};
     my $parentStart  = $node->{start};
@@ -1062,13 +1063,13 @@ sub validate_node {
     $parentContext->{jogBodyColumn} = $parentJogBodyColumn
       if defined $parentJogBodyColumn;
 
-    my $parentHoonName = $argContext->{hoonName};
-    my $parentHoonLine = $argContext->{hoonLine};
+    my $parentHoonName   = $argContext->{hoonName};
+    my $parentHoonLine   = $argContext->{hoonLine};
     my $parentHoonColumn = $argContext->{hoonColumn};
 
     # say STDERR "setting hoonName = $parentHoonName";
-    $parentContext->{hoonName} = $parentHoonName;
-    $parentContext->{hoonLine} = $parentHoonLine;
+    $parentContext->{hoonName}   = $parentHoonName;
+    $parentContext->{hoonLine}   = $parentHoonLine;
     $parentContext->{hoonColumn} = $parentHoonColumn;
 
     my $children = $node->{children};
@@ -1084,8 +1085,8 @@ sub validate_node {
         $parentHoonName = $lhsName;
 
         # say STDERR "resetting hoonName = $parentHoonName";
-        $parentContext->{hoonName} = $parentHoonName;
-        $parentContext->{hoonLine} = $parentLine;
+        $parentContext->{hoonName}   = $parentHoonName;
+        $parentContext->{hoonLine}   = $parentLine;
         $parentContext->{hoonColumn} = $parentColumn;
     }
 
@@ -1175,12 +1176,16 @@ sub validate_node {
                                   $childLC;
                             }
                         }
-                            $instance->reportItem(
-			    { type=>'sequence', reportLine=>$childLine, reportColumn=>$childColumn },
-"$lhsName $indentDesc",
-                                $parentHoonLine,
-                                $childLine
-                            ) if $censusWhitespace or $isProblem;
+                        $instance->reportItem(
+                            {
+                                policy       => $policyShortName,
+                                reportLine   => $childLine,
+                                reportColumn => $childColumn
+                            },
+                            "$lhsName $indentDesc",
+                            $parentHoonLine,
+                            $childLine
+                        ) if $censusWhitespace or $isProblem;
                         $previousLine = $childLine;
                     }
 
@@ -1213,7 +1218,7 @@ sub validate_node {
                 $instance->reportItem(
                     (
                         {
-                            type         => 'sequence',
+                            policy       => $policyShortName,
                             reportLine   => $childLine,
                             reportColumn => $childColumn
                         },
@@ -1257,7 +1262,8 @@ sub validate_node {
 
             if ( $tall_0JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_0Jogging( $parentLine, $parentColumn, \@gapIndents );
+                  $policy->is_0Jogging( $parentLine, $parentColumn,
+                    \@gapIndents );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-0-STYLE';
                 last TYPE_INDENT;
@@ -1288,7 +1294,8 @@ sub validate_node {
             }
 
             if ( $tallNoteRule->{$lhsName} ) {
-                $mistakes = $policy->isBackdented( $node, \@gapIndents, $noteIndent );
+                $mistakes =
+                  $policy->isBackdented( $node, \@gapIndents, $noteIndent );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
@@ -1312,20 +1319,27 @@ sub validate_node {
 
       PRINT: {
             if ( @{$mistakes} ) {
-                $_->{type} = 'indent' for @{$mistakes};
+                $_->{policy} = $policyShortName for @{$mistakes};
                 $policy->displayMistakes( $mistakes,
                     $instance->diagName( $node, $parentContext->{hoonName} ) );
                 last PRINT;
             }
 
             if ($censusWhitespace) {
-		my ($reportLine, $reportColumn ) = $instance->line_column($start);
-		my $mistake = { type=>'indent', reportLine=>$reportLine, reportColumn=>$reportColumn };
+                my ( $reportLine, $reportColumn ) =
+                  $instance->line_column($start);
+                my $mistake = {
+                    policy       => $policyShortName,
+                    reportLine   => $reportLine,
+                    reportColumn => $reportColumn
+                };
                 $instance->reportItem(
                     (
-			$mistake,
+                        $mistake,
                         sprintf "%s %s",
-                        $instance->diagName( $node, $parentContext->{hoonName} ),
+                        $instance->diagName(
+                            $node, $parentContext->{hoonName}
+                        ),
                         $indentDesc
                     ),
                     $parentLine,
