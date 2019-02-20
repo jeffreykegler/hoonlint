@@ -1015,30 +1015,14 @@ sub validate_node {
     my ( $parentLine, $parentColumn ) = $instance->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn + 1;
 
-    my @parentIndents = @{ $argContext->{indents} };
-
-    my $argLine = $argContext->{line};
-    if ( $argLine != $parentLine ) {
-        @parentIndents = ($parentColumn);
-
-        # say "line $parentLine: new indents: ", (join " ", @parentIndents);
-    }
-    elsif ( $parentColumn != $parentIndents[$#parentIndents] ) {
-        push @parentIndents, $parentColumn;
-
-        # say "line $parentLine: indents: ", (join " ", @parentIndents);
-    }
-
+    my $argLine           = $argContext->{line};
     my $argBodyIndent     = $argContext->{bodyIndent};
     my $argTallRuneIndent = $argContext->{tallRuneIndent};
     my $parentBodyIndent;
     $parentBodyIndent = $argBodyIndent if $argLine == $parentLine;
     my $parentTallRuneIndent;
     $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
-    my $parentContext = {
-        line      => $parentLine,
-        indents   => [@parentIndents],
-    };
+    my $parentContext = { line => $parentLine, };
     $parentContext->{bodyIndent} = $parentBodyIndent
       if defined $parentBodyIndent;
     $parentContext->{tallRuneIndent} = $parentTallRuneIndent
@@ -1231,7 +1215,6 @@ sub validate_node {
         return $parentContext;
     }
 
-    # say STDERR __LINE__, " parentIndents: ", (join " ", @parentIndents);
     # if here, gapiness > 0
     {
         my $mistakes = [];

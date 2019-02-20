@@ -679,8 +679,6 @@ EOS
             {
                 hoonName  => '[TOP]',
                 line      => -1,
-                indents   => [],
-                ancestors => []
             }
         );
     }
