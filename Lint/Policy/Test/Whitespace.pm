@@ -13,7 +13,7 @@ use Scalar::Util qw(looks_like_number weaken);
 
 # say STDERR join " ", __FILE__, __LINE__, "hi";
 
-# TODO: delete ancestors, indents in favor of tree traversal
+# TODO: delete indents in favor of tree traversal
 
 sub new {
     my ( $class, $lintInstance ) = @_;
@@ -51,7 +51,8 @@ sub calcGapIndents {
 }
 
 sub is_0Jogging {
-    my ( $policy, $runeLine, $runeColumn, $gapIndents ) = @_;
+    my ( $policy, $node, $runeLine, $runeColumn ) = @_;
+    my $gapIndents = $policy->calcGapIndents($node);
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
     my @mistakes  = ();
@@ -125,7 +126,8 @@ sub is_0Jogging {
 }
 
 sub isLuslusStyle {
-    my ( $policy, $node, $indents ) = @_;
+    my ( $policy, $node ) = @_;
+    my $indents = $policy->calcGapIndents($node);
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
@@ -272,7 +274,8 @@ sub censusJoggingHoon {
 }
 
 sub is_1Jogging {
-    my ( $policy, $context, $node, $gapIndents ) = @_;
+    my ( $policy, $context, $node ) = @_;
+    my $gapIndents = $policy->calcGapIndents($node);
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
@@ -375,7 +378,8 @@ sub is_1Jogging {
 }
 
 sub is_2Jogging {
-    my ( $policy, $context, $node, $gapIndents ) = @_;
+    my ( $policy, $context, $node ) = @_;
+    my $gapIndents = $policy->calcGapIndents($node);
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
@@ -893,7 +897,8 @@ sub isJog {
 }
 
 sub isBackdented {
-    my ( $policy, $node, $indents, $baseIndent ) = @_;
+    my ( $policy, $node, $baseIndent ) = @_;
+    my $indents = $policy->calcGapIndents($node);
     my $instance = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my @mistakes = ();
@@ -1012,11 +1017,6 @@ sub validate_node {
 
     my @parentIndents = @{ $argContext->{indents} };
 
-    # TODO: Delete "ancestors" in favor of tree traversal
-    my @ancestors = @{ $argContext->{ancestors} };
-    shift @ancestors if scalar @ancestors >= 5;    # no more than 5
-    push @ancestors, { ruleID => $parentRuleID, start => $parentStart };
-
     my $argLine = $argContext->{line};
     if ( $argLine != $parentLine ) {
         @parentIndents = ($parentColumn);
@@ -1036,7 +1036,6 @@ sub validate_node {
     my $parentTallRuneIndent;
     $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
     my $parentContext = {
-        ancestors => \@ancestors,
         line      => $parentLine,
         indents   => [@parentIndents],
     };
@@ -1131,15 +1130,11 @@ sub validate_node {
             next TYPE_INDENT if $lhsName eq 'ruck5d';
 
             if ( $lhsName eq 'tall5dSeq' ) {
-                my $argAncestors = $argContext->{ancestors};
-
-                # say Data::Dumper::Dumper($argAncestors);
-                my $ancestorCount   = scalar @{$argAncestors};
                 my $grandParentName = "";
                 my $grandParentLC;
                 my ( $grandParentLine, $grandParentColumn );
-                if ( scalar @{$argAncestors} >= 1 ) {
-                    my $grandParent       = $argAncestors->[-1];
+                FIND_GRANDPARENT: {
+                    my $grandParent       = $instance->ancestor($node, 1);
                     my $grandParentRuleID = $grandParent->{ruleID};
                     my $grandParentStart  = $grandParent->{start};
                     ( $grandParentLine, $grandParentColumn ) =
@@ -1244,8 +1239,6 @@ sub validate_node {
 
         my $indentDesc = '???';
 
-        my @gapIndents = @{ $policy->calcGapIndents($node) };
-
       TYPE_INDENT: {
 
             if ( $tallJogRule->{$lhsName} ) {
@@ -1255,15 +1248,9 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            # if ( isFlat( \@gapIndents ) ) {
-            # $indentDesc = 'FLAT';
-            # last TYPE_INDENT;
-            # }
-
             if ( $tall_0JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_0Jogging( $parentLine, $parentColumn,
-                    \@gapIndents );
+                  $policy->is_0Jogging( $node, $parentLine, $parentColumn);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-0-STYLE';
                 last TYPE_INDENT;
@@ -1271,7 +1258,7 @@ sub validate_node {
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_1Jogging( $parentContext, $node, \@gapIndents );
+                  $policy->is_1Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
@@ -1279,7 +1266,7 @@ sub validate_node {
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_2Jogging( $parentContext, $node, \@gapIndents );
+                  $policy->is_2Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-2-STYLE';
                 last TYPE_INDENT;
@@ -1287,7 +1274,7 @@ sub validate_node {
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_Jogging1( $parentContext, $node, \@gapIndents );
+                  $policy->is_Jogging1( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
@@ -1295,21 +1282,21 @@ sub validate_node {
 
             if ( $tallNoteRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->isBackdented( $node, \@gapIndents, $noteIndent );
+                  $policy->isBackdented( $node, $noteIndent );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallLuslusRule->{$lhsName} ) {
-                $mistakes = $policy->isLuslusStyle( $node, \@gapIndents );
+                $mistakes = $policy->isLuslusStyle( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUSLUS-STYLE';
                 last TYPE_INDENT;
             }
 
             # By default, treat as backdented
-            $mistakes = $policy->isBackdented( $node, \@gapIndents );
+            $mistakes = $policy->isBackdented( $node );
             if ( not @{$mistakes} ) {
                 $indentDesc = 'BACKDENTED';
                 last TYPE_INDENT;

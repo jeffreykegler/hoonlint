@@ -312,6 +312,7 @@ sub reportItem {
     my $reportLC     = join ':', $reportLine, $reportColumn + 1;
 
     return if $inclusions and not $inclusions->{$reportPolicy}{$reportLC};
+    $DB::single = 1 if not defined $reportPolicy;
     my $suppression = $suppressions->{$reportPolicy}{$reportLC};
     if ( defined $suppression ) {
         $instance->{unusedSuppressions}->{$reportPolicy}{$reportLC} = undef;
@@ -477,6 +478,17 @@ sub line_column {
     my ( $line, $column ) = $instance->{recce}->line_column($pos);
     $column--;
     return $line, $column;
+}
+
+sub ancestor {
+    my ( $instance, $node, $generations ) = @_;
+    my $thisNode = $node;
+    PARENT: while ($thisNode) {
+        return $thisNode if $generations <= 0;
+        $generations--;
+        $thisNode = $thisNode->{PARENT};
+    }
+    return;
 }
 
 sub brickLC {
