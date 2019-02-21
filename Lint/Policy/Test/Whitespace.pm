@@ -50,6 +50,52 @@ sub calcGapIndents {
     return \@gapIndents;
 }
 
+# A "gapSeq" is an ordered subset of a node's children.
+# It consists of the first child, followed by zero or more
+# pairs of nodes, where each pair is a gap and it post-gap
+# symbol.  It is assumed that the first child is not a gap,
+# and no post-gap child is a gap.  The sequence will always
+# be off odd length.
+#
+# Intuitively, this is usually the subset of the children with
+# information useful for parsing.
+sub gapSeq {
+    my ( $policy, $node ) = @_;
+    my $instance        = $policy->{lint};
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $children        = $node->{children};
+    my $child           = $children->[0];
+    my @gapSeq      = ($child);
+
+    my $childIX = 1;
+    CHILD: while ($childIX < $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $child->{symbol};
+        if ( not defined $symbol
+            or not $symbolReverseDB->{$symbol}->{gap} )
+        {
+	  $childIX++;
+	  next CHILD;
+	}
+	my $nextChild = $children->[ $childIX + 1 ];
+	push @gapSeq, $child, $nextChild;
+	$childIX += 2;
+    }
+    return \@gapSeq;
+}
+
+# Is this a one-line gap, or its equivalent?
+# TODO: Allow aligned comments?
+sub isOneLineGap {
+   my ($policy, $gap) = @_;
+   my $instance        = $policy->{lint};
+   my $start = $gap->{start};
+   my $end = $start + $gap->{length};
+   my ($startLine) = $instance->line_column($start);
+   my ($endLine) = $instance->line_column($end);
+   return $startLine + 1 == $endLine;
+}
+
 sub is_0Running {
     my ( $policy, $node, $runeLine, $runeColumn ) = @_;
     my $gapIndents = $policy->calcGapIndents($node);
@@ -190,7 +236,7 @@ sub is_1Running {
         my $runStep = $runningChildren->[$childIX];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
-        if ( not $policy->lastGapOK($lastGap) ) {
+        if ( not $policy->isOneLineGap($lastGap) ) {
             my $msg = sprintf
               "1-running runstep %s; should be on line %d",
               describeLC( $runStepLine, $runStepColumn ),
