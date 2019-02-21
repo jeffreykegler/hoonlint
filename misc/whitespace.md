@@ -1,4 +1,10 @@
-# Hoon jogging indentation
+# Hoon whitespace standards
+
+## About this document
+
+This document is intended to describe the use of whitespace by
+Hoon to the level and degree of precision
+necessary for `hoonfmt` and `hoonlint`.
 
 ## Terminology
 
@@ -19,6 +25,64 @@ For this reason, at points,
 we will be careful to define
 terms in such a what that they are meaningful even
 when applied to non-standard code.
+
+### Comments
+
+Comments count as whitespace.
+A comment is a **header comment** if it is on a line
+by itself.
+Header comments outside of a running or a jogging
+should be immediately followed by a code line or
+a line containing another header comment,
+and should align with the the code or header comment
+which follows.
+Header comments inside of a running or a jogging should
+align at the rune column.
+
+If a comment is not a header
+comment, it is a **rightside** comment.
+A rightside comment is
+a **margin comment** if it begins at or after column 57,
+or immediately after a horizontal gap of 20 or more spaces.
+All margin comments should start at column 57.
+
+A rightside comment is an **inline comment** if it is not margin comment.
+Inline comments must be aligned according to a scheme yet to be
+investigated.
+
+### Running hoons
+
+A hoon is a **running hoon** if it contains an element that
+uses the running syntax.
+A running element is more often called simply a **running**.
+(Currently all hoons contains at most one running.)
+
+In addition to the running, a running hoon may contain
+an element before the running.
+If there is one element before the running, it
+is called the **head** of the running hoon.
+
+There are current two kinds of regular runnings.
+A 0-running has no head.
+A 1-running has one head.
+
+* The current 0-running rules are
+BUCCEN (`$%`),
+BUCCOL (`$:`),
+BUCWUT (`$?`),
+COLSIG (`:~`),
+COLTAR (`:*`),
+WUTBAR (`?|`),
+and
+WUTPAM (`?&`).
+
+* The current 1-running rules are
+CENCOL (`%:`),
+DOTKET (`.^`),
+SEMCOL (`;:`),
+SEMSIG (`;~),
+and
+TISSIG (`=~`).
 
 ### Jogging hoons
 
