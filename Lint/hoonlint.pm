@@ -556,13 +556,13 @@ EOS
     # BuccenMold BuccolMold BucwutMold
     # Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
     my %tall_0RunningRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
-    $lintInstance->{tall0RunningRule} = \%tall_0RunningRule;
+    $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
     # Will include:
     # CencolMold
     # Dotket Semcol Semsig Tissig
-    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallSemCol tallSemsig );
-    $lintInstance->{tall1RunningRule} = \%tall_1RunningRule;
+    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallSemcol tallSemsig );
+    $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
 
     my %tall_1JoggingRule =
       map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);

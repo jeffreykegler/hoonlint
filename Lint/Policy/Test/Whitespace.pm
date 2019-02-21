@@ -173,20 +173,20 @@ sub is_0Running {
 
 sub is_1Running {
     my ( $policy, $context, $node ) = @_;
-    my $gapSeq   = $policy->calcGaps($node);
+    my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
     my $start     = $node->{start};
     my ( $runeLine, $runeColumn ) = $instance->line_column($start);
-    my $head = $gapSeq->[3];
+    my $head = $gapSeq->[2];
     my ( $headLine, $headColumn ) = $instance->line_column( $head->{start} );
-    my $runningGap = $gapSeq->[4];
-    my $running = $gapSeq->[5];
+    my $runningGap = $gapSeq->[3];
+    my $running = $gapSeq->[4];
     my ( $runningLine, $runningColumn ) =
       $instance->line_column( $running->{start} );
-    my $tistis = $gapSeq->[7];
+    my $tistis = $gapSeq->[6];
     my ( $tistisLine, $tistisColumn ) =
       $instance->line_column( $tistis->{start} );
 
@@ -272,7 +272,7 @@ sub is_1Running {
         $childIX += 2;
     }
 
-    if ( $tistisLine < $expectedLine ) {
+    if ( $tistisLine != $expectedLine ) {
         my $msg = sprintf
           "1-running TISTIS %s; should be on its own line",
           describeLC( $tistisLine, $tistisColumn );
@@ -288,10 +288,11 @@ sub is_1Running {
           };
     }
 
-    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+    $expectedColumn = $runeColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
         my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
@@ -1430,7 +1431,9 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
+		$DB::single = 1;
             if ( $tall_1RunningRule->{$lhsName} ) {
+		$DB::single = 1;
                 $mistakes =
                   $policy->is_1Running( $parentContext, $node);
                 last TYPE_INDENT if @{$mistakes};
