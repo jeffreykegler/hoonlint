@@ -67,7 +67,7 @@ t/ast.d/toe.hoon 50:5 Test::Whitespace tallBarcab BACKDENTED
 t/ast.d/toe.hoon 51:5 Test::Whitespace wisp5d CAST-STYLE
 t/ast.d/toe.hoon 51:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 51:5 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 51:13 Test::Whitespace tallWutbar JOGGING-0-STYLE
+t/ast.d/toe.hoon 51:13 Test::Whitespace tallWutbar BACKDENTED
 t/ast.d/toe.hoon 51:17 Test::Whitespace tallWutbar REGULAR
 t/ast.d/toe.hoon 52:17 Test::Whitespace tallWutbar REGULAR
 t/ast.d/toe.hoon 54:5 Test::Whitespace whap5d REGULAR
