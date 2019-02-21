@@ -46,7 +46,7 @@ a **margin comment** if it begins at or after column 57,
 or immediately after a horizontal gap of 20 or more spaces.
 All margin comments should start at column 57.
 
-A rightside comment is an **inline comment** if it is not margin comment.
+A rightside comment is an **inline comment** if it is not a margin comment.
 Inline comments must be aligned according to a scheme yet to be
 investigated.
 
@@ -63,8 +63,8 @@ If there is one element before the running, it
 is called the **head** of the running hoon.
 
 There are current two kinds of regular runnings.
+A 1-running has a head.
 A 0-running has no head.
-A 1-running has one head.
 
 * The current 0-running rules are
 BUCCEN (`$%`),
@@ -80,7 +80,7 @@ WUTPAM (`?&`).
 CENCOL (`%:`),
 DOTKET (`.^`),
 SEMCOL (`;:`),
-SEMSIG (`;~),
+SEMSIG (`;~`),
 and
 TISSIG (`=~`).
 
