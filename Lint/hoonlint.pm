@@ -552,10 +552,17 @@ EOS
       map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
     $lintInstance->{tallBodyRule} = \%tallBodyRule;
 
-    # TODO: These are *not* jogging rules.  Change the name and look
-    # at the logic.
-    my %tall_0JoggingRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
-    $lintInstance->{tall_0JoggingRule} = \%tall_0JoggingRule;
+    # Will include:
+    # BuccenMold BuccolMold BucwutMold
+    # Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
+    my %tall_0RunningRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
+    $lintInstance->{tall0RunningRule} = \%tall_0RunningRule;
+
+    # Will include:
+    # CencolMold
+    # Dotket Semcol Semsig Tissig
+    my %tall_1RunningRule = map { +( $_, 1 ) } qw();
+    $lintInstance->{tall1RunningRule} = \%tall_1RunningRule;
 
     my %tall_1JoggingRule =
       map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);

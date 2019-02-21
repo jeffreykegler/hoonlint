@@ -50,7 +50,7 @@ sub calcGapIndents {
     return \@gapIndents;
 }
 
-sub is_0Jogging {
+sub is_0Running {
     my ( $policy, $node, $runeLine, $runeColumn ) = @_;
     my $gapIndents = $policy->calcGapIndents($node);
     my $instance  = $policy->{lint};
@@ -123,6 +123,10 @@ sub is_0Jogging {
           };
     }
     return \@mistakes;
+}
+
+sub is_1Running {
+   die "is_1Running() not yet implemented";
 }
 
 sub isLuslusStyle {
@@ -994,7 +998,8 @@ sub validate_node {
     my $tallJogRule       = $instance->{tallJogRule};
     my $tallNoteRule      = $instance->{tallNoteRule};
     my $tallLuslusRule    = $instance->{tallLuslusRule};
-    my $tall_0JoggingRule = $instance->{tall_0JoggingRule};
+    my $tall_0RunningRule = $instance->{tall_0RunningRule};
+    my $tall_1RunningRule = $instance->{tall_1RunningRule};
     my $tall_1JoggingRule = $instance->{tall_1JoggingRule};
     my $tall_2JoggingRule = $instance->{tall_2JoggingRule};
     my $tall_Jogging1Rule = $instance->{tallJogging1_Rule};
@@ -1231,11 +1236,19 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $tall_0JoggingRule->{$lhsName} ) {
+            if ( $tall_0RunningRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_0Jogging( $node, $parentLine, $parentColumn);
+                  $policy->is_0Running( $node, $parentLine, $parentColumn);
                 last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOGGING-0-STYLE';
+                $indentDesc = 'RUNNING-0-STYLE';
+                last TYPE_INDENT;
+            }
+
+            if ( $tall_1RunningRule->{$lhsName} ) {
+                $mistakes =
+                  $policy->is_1Running( $node, $parentLine, $parentColumn);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
