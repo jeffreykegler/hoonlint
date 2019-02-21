@@ -23,7 +23,7 @@ It is expected that, even in carefully written hoon code,
 non-standard practices will occur.
 For this reason, at points,
 we will be careful to define
-terms in such a what that they are meaningful even
+terms in such a way that they are meaningful even
 when applied to non-standard code.
 
 ### Comments

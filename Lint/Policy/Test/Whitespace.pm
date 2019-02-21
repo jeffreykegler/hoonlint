@@ -126,7 +126,146 @@ sub is_0Running {
 }
 
 sub is_1Running {
-   die "is_1Running() not yet implemented";
+    my ( $policy, $context, $node ) = @_;
+    my $gapSeq   = $policy->calcGaps($node);
+    my $instance = $policy->{lint};
+    my ( $parentLine, $parentColumn ) =
+      $instance->line_column( $node->{start} );
+    my $lineToPos = $instance->{lineToPos};
+    my $start     = $node->{start};
+    my ( $runeLine, $runeColumn ) = $instance->line_column($start);
+    my $head = $gapSeq->[3];
+    my ( $headLine, $headColumn ) = $instance->line_column( $head->{start} );
+    my $runningGap = $gapSeq->[4];
+    my $running = $gapSeq->[5];
+    my ( $runningLine, $runningColumn ) =
+      $instance->line_column( $running->{start} );
+    my $tistis = $gapSeq->[7];
+    my ( $tistisLine, $tistisColumn ) =
+      $instance->line_column( $tistis->{start} );
+
+    my @mistakes = ();
+    if ( $headLine != $runeLine ) {
+        my $msg = sprintf
+          "1-jogging s head %s; should be on rune line %d",
+          describeLC( $headLine, $headColumn ),
+          $runeLine;
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $headLine,
+            column       => $headColumn,
+            expectedLine => $runeLine,
+          };
+    }
+
+    my $expectedColumn = $runeColumn + 4;
+    if ( $headColumn != $expectedColumn ) {
+        my $msg = sprintf
+          "1-running head %s; %s",
+          describeLC( $headLine, $headColumn ),
+          describeMisindent( $headColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $headLine,
+            column         => $headColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+
+    # We deal with the running list here, rather that
+    # in its own node
+
+    my $runningChildren = $running->{children};
+    my $childIX         = 0;
+    $expectedColumn  = $runeColumn + 2;
+    my $expectedLine    = $runeLine + 1;
+    my $lastGap         = $runningGap;
+    while ( $childIX <= $#$runningChildren ) {
+        my $runStep = $runningChildren->[$childIX];
+        my ( $runStepLine, $runStepColumn ) =
+          $instance->line_column( $runStep->{start} );
+        if ( not $policy->lastGapOK($lastGap) ) {
+            my $msg = sprintf
+              "1-running runstep %s; should be on line %d",
+              describeLC( $runStepLine, $runStepColumn ),
+              $expectedLine;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $runStepLine,
+                column       => $runStepColumn,
+                expectedLine => $expectedLine,
+              };
+        }
+        if ( $runStepColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "1-running runstep #%d %s; %s",
+              ( $childIX / 2 ) + 1,
+              describeLC( $runStepLine, $runStepColumn ),
+              describeMisindent( $runStepColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $runStepLine,
+                column         => $runStepColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+        $lastGap      = $runningChildren->[ $childIX + 1 ];
+        $expectedLine = $runStepLine + 1;
+        $childIX += 2;
+    }
+
+    if ( $tistisLine < $expectedLine ) {
+        my $msg = sprintf
+          "1-running TISTIS %s; should be on its own line",
+          describeLC( $tistisLine, $tistisColumn );
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $tistisLine,
+            column       => $tistisColumn,
+            child        => 3,
+            expectedLine => $runeLine,
+          };
+    }
+
+    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistis = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistis ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "1-running TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $runeColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            child          => 3,
+            expectedColumn => $runeColumn,
+          };
+    }
+    return \@mistakes;
 }
 
 sub isLuslusStyle {
@@ -280,8 +419,9 @@ sub censusJoggingHoon {
 sub is_1Jogging {
     my ( $policy, $context, $node ) = @_;
     my $gapIndents = $policy->calcGapIndents($node);
-    my $instance  = $policy->{lint};
-    my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
+    my $instance   = $policy->{lint};
+    my ( $parentLine, $parentColumn ) =
+      $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
     my $start     = $node->{start};
     my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
@@ -300,7 +440,7 @@ sub is_1Jogging {
     my ( $firstChildLine, $firstChildColumn ) =
       @{ $gapIndents->[1] };
     if ( $firstChildLine != $runeLine ) {
-		say STDERR join " ", __FILE__, __LINE__;
+        say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "1-jogging %s head %s; should be on rune line %d",
           $chessSide,
@@ -309,8 +449,8 @@ sub is_1Jogging {
         push @mistakes,
           {
             desc         => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
             line         => $firstChildLine,
             column       => $firstChildColumn,
             child        => 1,
@@ -328,8 +468,8 @@ sub is_1Jogging {
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
             line           => $firstChildLine,
             column         => $firstChildColumn,
             child          => 1,
@@ -346,8 +486,8 @@ sub is_1Jogging {
         push @mistakes,
           {
             desc         => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
             line         => $tistisLine,
             column       => $tistisColumn,
             child        => 3,
@@ -370,8 +510,8 @@ sub is_1Jogging {
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
             child          => 3,
@@ -1246,7 +1386,7 @@ sub validate_node {
 
             if ( $tall_1RunningRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->is_1Running( $node, $parentLine, $parentColumn);
+                  $policy->is_1Running( $parentContext, $node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
