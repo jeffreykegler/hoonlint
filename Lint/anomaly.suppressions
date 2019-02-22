@@ -378,4 +378,4 @@ hoons/arvo/sys/vane/ames.hoon 1324:21 Test::Whitespace tallCentis Jog kingside h
 hoons/arvo/sys/vane/ames.hoon 1325:21 Test::Whitespace tallCentis Jog kingside head @1325:21; underindented by 8
 hoons/arvo/sys/vane/xmas.hoon 863:7 Test::Whitespace tallCentis 1-jogging kingside head @863:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3854:7 Test::Whitespace tallCentis 1-jogging kingside head @3854:12; overindented by 1
-hoons/arvo/sys/zuse.hoon 4166:7 Test::whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 4166:7 Test::Whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2

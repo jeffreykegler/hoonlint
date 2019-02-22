@@ -310,12 +310,18 @@ sub reportItem {
     my $reportLine   = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC     = join ':', $reportLine, $reportColumn + 1;
+    my $suppressThisItem = 0;
+    my $excludeThisItem = 0;
 
-    return if $inclusions and not $inclusions->{$reportPolicy}{$reportLC};
-    $DB::single = 1 if not defined $reportPolicy;
+    $excludeThisItem = 1 if $inclusions and not $inclusions->{$reportPolicy}{$reportLC};
     my $suppression = $suppressions->{$reportPolicy}{$reportLC};
     if ( defined $suppression ) {
+        $suppressThisItem = 1;
         $instance->{unusedSuppressions}->{$reportPolicy}{$reportLC} = undef;
+    }
+
+    return if $excludeThisItem;
+    if ( $suppressThisItem ) {
         return unless $instance->{censusWhitespace};
         $mistakeDesc = "SUPPRESSION $suppression";
     }

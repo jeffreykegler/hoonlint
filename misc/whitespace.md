@@ -50,6 +50,12 @@ A rightside comment is an **inline comment** if it is not a margin comment.
 Inline comments must be aligned according to a scheme yet to be
 investigated.
 
+### Gaps
+
+A **newline-equivalent gap** is a gap containing which contains only one
+newline, not counting those newlines which termination properly aligned
+header commments.
+
 ### Running hoons
 
 A hoon is a **running hoon** if it contains an element that
@@ -83,6 +89,28 @@ SEMCOL (`;:`),
 SEMSIG (`;~`),
 and
 TISSIG (`=~`).
+
+### Proper spacing of Runnings
+
+A running is considered to start at the start of its first run step.
+Every running ends in a TISTIS (`==`).
+The TISTIS should occur on its own line, or a part of a criss-cross
+TISTIS line.
+
+A newline-equivalent gap should occur between every pair of runsteps.
+A newline-equivalent gap should also occur between the last
+and the TISTIS.
+Header comments in a running should be aligned with the rune
+of the parent hoon.
+
+### Proper spacing of 1-running hoons
+
+The head of a 1-running hoon should occur on the rune line,
+one stop after the rune.
+The running should occur one newline-equivlent gap after the
+head, and should be indented one stop from the rune column.
+Header comments in a running hoon should be aligned with the rune
+of the parent hoon.
 
 ### Jogging hoons
 
