@@ -84,6 +84,51 @@ sub gapSeq {
     return \@gapSeq;
 }
 
+# Checks a gap to see if it is OK as a pseudo-join.
+# If so, returns the column at which code may resume.
+# Otherwise returns -1;
+
+sub pseudoJoinColumn {
+    my ( $policy, $gap ) = @_;
+    my $instance   = $policy->{lint};
+    my $gapLiteral = $instance->literalNode($gap);
+    my $gapStart   = $gap->{start};
+    my $gapEnd     = $gap->{start} + $gap->{length};
+
+    my ( $startLine, $startColumn ) = $instance->line_column($gapStart);
+    my ( $endLine,   $endColumn )   = $instance->line_column($gapEnd);
+
+    my $commentColumn; 
+    # first partial line (must exist)
+    my $firstNewline = index $gapLiteral, "\n";
+    return if $firstNewline < 0;
+    my $firstColon = index $gapLiteral, ':';
+    if ( $firstColon >= 0 and $firstColon < $firstNewline ) {
+        my ( undef, $commentColumn ) =
+          $instance->line_column( $gapStart + $firstColon );
+    }
+
+    return -1 if not $commentColumn;
+
+    # If the last line of the gap does not end in a newline,
+    # it **cannot** contain a comment, because the parser would
+    # recognize the whole comment as part of the gap.
+    # So we only look for properly aligned comments in full
+    # (that is, newline-terminated) lines.
+
+    my $lastFullLine =
+      ( substr $gapLiteral, -1, 1 ) eq "\n" ? $endLine : $endLine - 1;
+    for my $lineNum ( $startLine + 1 .. $lastFullLine ) {
+        my $literalLine = $instance->literalLine($lineNum);
+        my $commentOffset = index $literalLine, ':';
+
+        # say STDERR "comment offset $commentOffset vs. $commentColumn";
+        return -1 if $commentOffset < 0;
+        return -1 if $commentOffset != $commentColumn;
+    }
+    return $commentColumn;
+}
+
 # Is this a one-line gap, or its equivalent?
 # TODO: Allow aligned comments?
 sub isOneLineGap {
@@ -495,9 +540,6 @@ sub is_1Jogging {
     my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
-
-    $context->{jogRuneColumn} = $runeColumn;
-
     $context->{jogBodyColumn} = $jogBodyColumn
       if defined $jogBodyColumn;
     $instance->internalError("Chess side undefined") unless $chessSide;
@@ -601,7 +643,6 @@ sub is_2Jogging {
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if $jogBodyColumn;
     $instance->internalError("Chess side undefined") unless $chessSide;
 
@@ -724,7 +765,6 @@ sub is_Jogging1 {
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
-    $context->{jogRuneColumn} = $runeColumn;
     $context->{jogBodyColumn} = $jogBodyColumn if defined $jogBodyColumn;
     $instance->internalError("Chess side undefined") unless $chessSide;
 
@@ -868,49 +908,17 @@ sub checkKingsideJog {
     my $fileName = $instance->{fileName};
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
-    my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
-    say STDERR Data::Dumper::Dumper(
-        [
-            $context->{hoonName},
-            $fileName,
-            $parentLine, $parentColumn,
-            map { $grammar->symbol_display_form($_) }
-              $grammar->rule_expand($ruleID)
-        ]
-    ) unless $parentLine;    # TODO: Delete after development
+    my ( $parentLine, $parentColumn ) =
+      $instance->line_column( $node->{start} );
 
-    my $chessSide = $context->{chessSide};
-    say STDERR Data::Dumper::Dumper(
-        [
-            $context->{hoonName},
-            $fileName,
-            $parentLine, $parentColumn,
-            map { $grammar->symbol_display_form($_) }
-              $grammar->rule_expand($ruleID)
-        ]
-    ) unless $chessSide;    # TODO: Delete after development
-    $instance->internalError("Chess side undefined") unless $chessSide;
-
-    my @mistakes = ();
-
-    my $runeColumn = $context->{jogRuneColumn};
-    say STDERR Data::Dumper::Dumper(
-        [
-            $context->{hoonName},
-            $fileName,
-            $parentLine, $parentColumn,
-            map { $grammar->symbol_display_form($_) }
-              $grammar->rule_expand($ruleID)
-        ]
-    ) unless defined $runeColumn;    # TODO: Delete after development
-    $instance->internalError("Rune column undefined") unless defined $runeColumn;
+    my $chessSide     = $context->{chessSide};
     my $jogBodyColumn = $context->{jogBodyColumn};
 
-
     # do not pass these attributes on to child nodes
-    delete $context->{jogRuneColumn};
     delete $context->{jogBodyColumn};
     delete $context->{chessSide};
+
+    my @mistakes = ();
 
     # Replace inherited attribute rune LC with brick LC
     my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
@@ -925,7 +933,7 @@ sub checkKingsideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'kingside';
 
-    my $expectedHeadColumn = $runeColumn + 2;
+    my $expectedHeadColumn = $brickColumn + 2;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
@@ -934,54 +942,53 @@ sub checkKingsideJog {
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            child          => 1,
             expectedColumn => $expectedHeadColumn,
             topicLines     => [$brickLine],
           };
     }
 
-    if ( $headLine != $bodyLine ) {
-
-        my $expectedBodyColumn = $runeColumn + 4;
-        if ( $bodyColumn != $expectedBodyColumn ) {
+    if ( $headLine == $bodyLine ) {
+        my $gapLength = $gap->{length};
+        if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
             my $msg = sprintf 'Jog %s body %s; %s',
-              $sideDesc, describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              $sideDesc,
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $jogBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                child          => 2,
-                expectedColumn => $expectedBodyColumn,
+                expectedColumn => $jogBodyColumn,
                 topicLines     => [$brickLine],
               };
         }
         return \@mistakes;
     }
 
-    # Check for flat kingside misalignments
-    my $gapLength = $gap->{length};
-    if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
+    # If here head line != body line
+    my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
+
+    my $expectedBodyColumn = $brickColumn + 4;
+    if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'Jog %s body %s; %s',
-          $sideDesc,
-          describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $jogBodyColumn );
+          $sideDesc, describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
             child          => 2,
-            expectedColumn => $jogBodyColumn,
+            expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
           };
     }
@@ -1009,11 +1016,9 @@ sub checkQueensideJog {
 
     my @mistakes = ();
 
-    my $runeColumn    = $context->{jogRuneColumn};
     my $jogBodyColumn = $context->{jogBodyColumn};
 
     # do not pass these attributes on to child nodes
-    delete $context->{jogRuneColumn};
     delete $context->{jogBodyColumn};
     delete $context->{chessSide};
 
@@ -1030,7 +1035,7 @@ sub checkQueensideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'queenside';
 
-    my $expectedHeadColumn = $runeColumn + 4;
+    my $expectedHeadColumn = $brickColumn + 4;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
@@ -1049,7 +1054,7 @@ sub checkQueensideJog {
           };
     }
 
-    my $expectedBodyColumn = $runeColumn + 2;
+    my $expectedBodyColumn = $brickColumn + 2;
     if (    $headLine != $bodyLine
         and $bodyColumn != $expectedBodyColumn )
     {
@@ -1250,10 +1255,6 @@ sub validate_node {
     my $parentChessSide = $argContext->{chessSide};
     $parentContext->{chessSide} = $parentChessSide
       if defined $parentChessSide;
-
-    my $parentJogRuneColumn = $argContext->{jogRuneColumn};
-    $parentContext->{jogRuneColumn} = $parentJogRuneColumn
-      if defined $parentJogRuneColumn;
 
     my $parentJogBodyColumn = $argContext->{jogBodyColumn};
     $parentContext->{jogBodyColumn} = $parentJogBodyColumn
