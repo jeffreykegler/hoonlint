@@ -81,22 +81,22 @@ hoons/arvo/sys/zuse.hoon 1223:11 Test::Whitespace tallBuccenMold Child #2 @ line
 hoons/arvo/sys/zuse.hoon 1227:7 Test::Whitespace tallBuccen Child #2 @ line 1236; backdent is 14; should be 6
 hoons/arvo/sys/zuse.hoon 1231:15 Test::Whitespace tallBuccenMold Child #2 @ line 1236; backdent is 6; should be 14
 hoons/arvo/sys/zuse.hoon 1257:13 Test::Whitespace tallKetwut Child #1 @ line 1258; backdent is 2; should be 12
-hoons/arvo/sys/zuse.hoon 1368:26 Test::Whitespace tallSemcol 1-running runstep #1 @1368:26; should be on line 1369
+hoons/arvo/sys/zuse.hoon 1368:26 Test::Whitespace tallSemcol 1-running runstep #1 @1368:26; missing newline @1368:24
 hoons/arvo/sys/zuse.hoon 1368:26 Test::Whitespace tallSemcol 1-running runstep #1 @1368:26; overindented by 7
-hoons/arvo/sys/zuse.hoon 1368:29 Test::Whitespace tallSemcol 1-running runstep #2 @1368:29; should be on line 1369
+hoons/arvo/sys/zuse.hoon 1368:29 Test::Whitespace tallSemcol 1-running runstep #2 @1368:29; missing newline @1368:27
 hoons/arvo/sys/zuse.hoon 1368:29 Test::Whitespace tallSemcol 1-running runstep #2 @1368:29; overindented by 10
 hoons/arvo/sys/zuse.hoon 1369:28 Test::Whitespace tallCenhep Child #2 @ line 1370; backdent is 18; should be 27
-hoons/arvo/sys/zuse.hoon 1375:26 Test::Whitespace tallSemcol 1-running runstep #1 @1375:26; should be on line 1376
+hoons/arvo/sys/zuse.hoon 1375:26 Test::Whitespace tallSemcol 1-running runstep #1 @1375:26; missing newline @1375:24
 hoons/arvo/sys/zuse.hoon 1375:26 Test::Whitespace tallSemcol 1-running runstep #1 @1375:26; overindented by 7
-hoons/arvo/sys/zuse.hoon 1375:29 Test::Whitespace tallSemcol 1-running runstep #2 @1375:29; should be on line 1376
+hoons/arvo/sys/zuse.hoon 1375:29 Test::Whitespace tallSemcol 1-running runstep #2 @1375:29; missing newline @1375:27
 hoons/arvo/sys/zuse.hoon 1375:29 Test::Whitespace tallSemcol 1-running runstep #2 @1375:29; overindented by 10
 hoons/arvo/sys/zuse.hoon 1376:28 Test::Whitespace tallCenhep Child #2 @ line 1377; backdent is 18; should be 27
 hoons/arvo/sys/zuse.hoon 1387:28 Test::Whitespace tallCenhep Child #2 @ line 1388; backdent is 18; should be 27
-hoons/arvo/sys/zuse.hoon 1391:26 Test::Whitespace tallSemcol 1-running runstep #1 @1391:26; should be on line 1392
+hoons/arvo/sys/zuse.hoon 1391:26 Test::Whitespace tallSemcol 1-running runstep #1 @1391:26; missing newline @1391:24
 hoons/arvo/sys/zuse.hoon 1391:26 Test::Whitespace tallSemcol 1-running runstep #1 @1391:26; overindented by 7
-hoons/arvo/sys/zuse.hoon 1391:29 Test::Whitespace tallSemcol 1-running runstep #2 @1391:29; should be on line 1392
+hoons/arvo/sys/zuse.hoon 1391:29 Test::Whitespace tallSemcol 1-running runstep #2 @1391:29; missing newline @1391:27
 hoons/arvo/sys/zuse.hoon 1391:29 Test::Whitespace tallSemcol 1-running runstep #2 @1391:29; overindented by 10
-hoons/arvo/sys/zuse.hoon 1391:32 Test::Whitespace tallSemcol 1-running runstep #3 @1391:32; should be on line 1392
+hoons/arvo/sys/zuse.hoon 1391:32 Test::Whitespace tallSemcol 1-running runstep #3 @1391:32; missing newline @1391:30
 hoons/arvo/sys/zuse.hoon 1391:32 Test::Whitespace tallSemcol 1-running runstep #3 @1391:32; overindented by 13
 hoons/arvo/sys/zuse.hoon 1406:5 Test::Whitespace tallWutcol Child #2 @ line 1407; backdent is 7; should be 6
 hoons/arvo/sys/zuse.hoon 1505:13 Test::Whitespace tallKetwut Child #1 @ line 1506; backdent is 2; should be 12
@@ -183,61 +183,61 @@ hoons/arvo/sys/zuse.hoon 3969:10 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace tallSemsig 1-running runstep #5 @3970:10; overindented by 1
 hoons/arvo/sys/zuse.hoon 3965:7 Test::Whitespace tallSemsig 1-running TISTIS @3971:8; overindented by 1
 hoons/arvo/sys/zuse.hoon 4020:7 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @4020:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 4057:17 Test::Whitespace tallSemsig 1-running runstep #1 @4057:17; should be on line 4058
+hoons/arvo/sys/zuse.hoon 4057:17 Test::Whitespace tallSemsig 1-running runstep #1 @4057:17; missing newline @4057:15
 hoons/arvo/sys/zuse.hoon 4057:17 Test::Whitespace tallSemsig 1-running runstep #1 @4057:17; overindented by 8
 hoons/arvo/sys/zuse.hoon 4189:15 Test::Whitespace tallSiglus Child #1 @ line 4190; backdent is 6; should be 14
 hoons/arvo/sys/zuse.hoon 4206:9 Test::Whitespace tallCenlus Child #3 @ line 4207; backdent is 10; should be 8
 hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #1 @4264:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4374:11 Test::Whitespace tallKethep Child #2 @ line 4375; backdent is 10; should be 6
-hoons/arvo/sys/zuse.hoon 4457:14 Test::Whitespace tallSemsig 1-running runstep #2 @4457:14; should be on line 4458
+hoons/arvo/sys/zuse.hoon 4457:14 Test::Whitespace tallSemsig 1-running runstep #2 @4457:14; missing newline @4457:12
 hoons/arvo/sys/zuse.hoon 4457:14 Test::Whitespace tallSemsig 1-running runstep #2 @4457:14; overindented by 5
-hoons/arvo/sys/zuse.hoon 4457:19 Test::Whitespace tallSemsig 1-running runstep #3 @4457:19; should be on line 4458
+hoons/arvo/sys/zuse.hoon 4457:19 Test::Whitespace tallSemsig 1-running runstep #3 @4457:19; missing newline @4457:17
 hoons/arvo/sys/zuse.hoon 4457:19 Test::Whitespace tallSemsig 1-running runstep #3 @4457:19; overindented by 10
-hoons/arvo/sys/zuse.hoon 4457:24 Test::Whitespace tallSemsig 1-running runstep #4 @4457:24; should be on line 4458
+hoons/arvo/sys/zuse.hoon 4457:24 Test::Whitespace tallSemsig 1-running runstep #4 @4457:24; missing newline @4457:22
 hoons/arvo/sys/zuse.hoon 4457:24 Test::Whitespace tallSemsig 1-running runstep #4 @4457:24; overindented by 15
-hoons/arvo/sys/zuse.hoon 4457:29 Test::Whitespace tallSemsig 1-running runstep #5 @4457:29; should be on line 4458
+hoons/arvo/sys/zuse.hoon 4457:29 Test::Whitespace tallSemsig 1-running runstep #5 @4457:29; missing newline @4457:27
 hoons/arvo/sys/zuse.hoon 4457:29 Test::Whitespace tallSemsig 1-running runstep #5 @4457:29; overindented by 20
-hoons/arvo/sys/zuse.hoon 4457:34 Test::Whitespace tallSemsig 1-running runstep #6 @4457:34; should be on line 4458
+hoons/arvo/sys/zuse.hoon 4457:34 Test::Whitespace tallSemsig 1-running runstep #6 @4457:34; missing newline @4457:32
 hoons/arvo/sys/zuse.hoon 4457:34 Test::Whitespace tallSemsig 1-running runstep #6 @4457:34; overindented by 25
-hoons/arvo/sys/zuse.hoon 4458:14 Test::Whitespace tallSemsig 1-running runstep #8 @4458:14; should be on line 4459
+hoons/arvo/sys/zuse.hoon 4458:14 Test::Whitespace tallSemsig 1-running runstep #8 @4458:14; missing newline @4458:12
 hoons/arvo/sys/zuse.hoon 4458:14 Test::Whitespace tallSemsig 1-running runstep #8 @4458:14; overindented by 5
-hoons/arvo/sys/zuse.hoon 4458:19 Test::Whitespace tallSemsig 1-running runstep #9 @4458:19; should be on line 4459
+hoons/arvo/sys/zuse.hoon 4458:19 Test::Whitespace tallSemsig 1-running runstep #9 @4458:19; missing newline @4458:17
 hoons/arvo/sys/zuse.hoon 4458:19 Test::Whitespace tallSemsig 1-running runstep #9 @4458:19; overindented by 10
-hoons/arvo/sys/zuse.hoon 4458:24 Test::Whitespace tallSemsig 1-running runstep #10 @4458:24; should be on line 4459
+hoons/arvo/sys/zuse.hoon 4458:24 Test::Whitespace tallSemsig 1-running runstep #10 @4458:24; missing newline @4458:22
 hoons/arvo/sys/zuse.hoon 4458:24 Test::Whitespace tallSemsig 1-running runstep #10 @4458:24; overindented by 15
-hoons/arvo/sys/zuse.hoon 4458:29 Test::Whitespace tallSemsig 1-running runstep #11 @4458:29; should be on line 4459
+hoons/arvo/sys/zuse.hoon 4458:29 Test::Whitespace tallSemsig 1-running runstep #11 @4458:29; missing newline @4458:27
 hoons/arvo/sys/zuse.hoon 4458:29 Test::Whitespace tallSemsig 1-running runstep #11 @4458:29; overindented by 20
-hoons/arvo/sys/zuse.hoon 4463:14 Test::Whitespace tallSemsig 1-running runstep #2 @4463:14; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:14 Test::Whitespace tallSemsig 1-running runstep #2 @4463:14; missing newline @4463:12
 hoons/arvo/sys/zuse.hoon 4463:14 Test::Whitespace tallSemsig 1-running runstep #2 @4463:14; overindented by 5
-hoons/arvo/sys/zuse.hoon 4463:19 Test::Whitespace tallSemsig 1-running runstep #3 @4463:19; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:19 Test::Whitespace tallSemsig 1-running runstep #3 @4463:19; missing newline @4463:17
 hoons/arvo/sys/zuse.hoon 4463:19 Test::Whitespace tallSemsig 1-running runstep #3 @4463:19; overindented by 10
-hoons/arvo/sys/zuse.hoon 4463:24 Test::Whitespace tallSemsig 1-running runstep #4 @4463:24; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:24 Test::Whitespace tallSemsig 1-running runstep #4 @4463:24; missing newline @4463:22
 hoons/arvo/sys/zuse.hoon 4463:24 Test::Whitespace tallSemsig 1-running runstep #4 @4463:24; overindented by 15
-hoons/arvo/sys/zuse.hoon 4463:29 Test::Whitespace tallSemsig 1-running runstep #5 @4463:29; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:29 Test::Whitespace tallSemsig 1-running runstep #5 @4463:29; missing newline @4463:27
 hoons/arvo/sys/zuse.hoon 4463:29 Test::Whitespace tallSemsig 1-running runstep #5 @4463:29; overindented by 20
-hoons/arvo/sys/zuse.hoon 4463:34 Test::Whitespace tallSemsig 1-running runstep #6 @4463:34; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:34 Test::Whitespace tallSemsig 1-running runstep #6 @4463:34; missing newline @4463:32
 hoons/arvo/sys/zuse.hoon 4463:34 Test::Whitespace tallSemsig 1-running runstep #6 @4463:34; overindented by 25
-hoons/arvo/sys/zuse.hoon 4463:39 Test::Whitespace tallSemsig 1-running runstep #7 @4463:39; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:39 Test::Whitespace tallSemsig 1-running runstep #7 @4463:39; missing newline @4463:37
 hoons/arvo/sys/zuse.hoon 4463:39 Test::Whitespace tallSemsig 1-running runstep #7 @4463:39; overindented by 30
-hoons/arvo/sys/zuse.hoon 4463:44 Test::Whitespace tallSemsig 1-running runstep #8 @4463:44; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:44 Test::Whitespace tallSemsig 1-running runstep #8 @4463:44; missing newline @4463:42
 hoons/arvo/sys/zuse.hoon 4463:44 Test::Whitespace tallSemsig 1-running runstep #8 @4463:44; overindented by 35
-hoons/arvo/sys/zuse.hoon 4463:49 Test::Whitespace tallSemsig 1-running runstep #9 @4463:49; should be on line 4464
+hoons/arvo/sys/zuse.hoon 4463:49 Test::Whitespace tallSemsig 1-running runstep #9 @4463:49; missing newline @4463:47
 hoons/arvo/sys/zuse.hoon 4463:49 Test::Whitespace tallSemsig 1-running runstep #9 @4463:49; overindented by 40
-hoons/arvo/sys/zuse.hoon 4464:14 Test::Whitespace tallSemsig 1-running runstep #11 @4464:14; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:14 Test::Whitespace tallSemsig 1-running runstep #11 @4464:14; missing newline @4464:12
 hoons/arvo/sys/zuse.hoon 4464:14 Test::Whitespace tallSemsig 1-running runstep #11 @4464:14; overindented by 5
-hoons/arvo/sys/zuse.hoon 4464:19 Test::Whitespace tallSemsig 1-running runstep #12 @4464:19; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:19 Test::Whitespace tallSemsig 1-running runstep #12 @4464:19; missing newline @4464:17
 hoons/arvo/sys/zuse.hoon 4464:19 Test::Whitespace tallSemsig 1-running runstep #12 @4464:19; overindented by 10
-hoons/arvo/sys/zuse.hoon 4464:24 Test::Whitespace tallSemsig 1-running runstep #13 @4464:24; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:24 Test::Whitespace tallSemsig 1-running runstep #13 @4464:24; missing newline @4464:22
 hoons/arvo/sys/zuse.hoon 4464:24 Test::Whitespace tallSemsig 1-running runstep #13 @4464:24; overindented by 15
-hoons/arvo/sys/zuse.hoon 4464:29 Test::Whitespace tallSemsig 1-running runstep #14 @4464:29; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:29 Test::Whitespace tallSemsig 1-running runstep #14 @4464:29; missing newline @4464:27
 hoons/arvo/sys/zuse.hoon 4464:29 Test::Whitespace tallSemsig 1-running runstep #14 @4464:29; overindented by 20
-hoons/arvo/sys/zuse.hoon 4464:34 Test::Whitespace tallSemsig 1-running runstep #15 @4464:34; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:34 Test::Whitespace tallSemsig 1-running runstep #15 @4464:34; missing newline @4464:32
 hoons/arvo/sys/zuse.hoon 4464:34 Test::Whitespace tallSemsig 1-running runstep #15 @4464:34; overindented by 25
-hoons/arvo/sys/zuse.hoon 4464:39 Test::Whitespace tallSemsig 1-running runstep #16 @4464:39; should be on line 4465
+hoons/arvo/sys/zuse.hoon 4464:39 Test::Whitespace tallSemsig 1-running runstep #16 @4464:39; missing newline @4464:37
 hoons/arvo/sys/zuse.hoon 4464:39 Test::Whitespace tallSemsig 1-running runstep #16 @4464:39; overindented by 30
-hoons/arvo/sys/zuse.hoon 4519:9 Test::Whitespace tallSemsig 1-running runstep #1 @4519:9; should be on line 4517
-hoons/arvo/sys/zuse.hoon 4525:9 Test::Whitespace tallSemsig 1-running runstep #2 @4525:9; should be on line 4522
+hoons/arvo/sys/zuse.hoon 4519:9 Test::Whitespace tallSemsig 1-running runstep #1 @4519:9; comment overindented by 2
+hoons/arvo/sys/zuse.hoon 4525:9 Test::Whitespace tallSemsig 1-running runstep #2 @4525:9; comment overindented by 2
 hoons/arvo/sys/zuse.hoon 4538:3 Test::Whitespace LuslusCell Child #2 @ line 4539; backdent is 6; should be 4
 hoons/arvo/sys/zuse.hoon 4547:12 Test::Whitespace tallKetwut Child #1 @ line 4548; backdent is 2; should be 11
 hoons/arvo/sys/zuse.hoon 4602:5 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @4602:9; underindented by 4
@@ -267,13 +267,13 @@ hoons/arvo/sys/zuse.hoon 4712:12 Test::Whitespace tallKetwut Child #1 @ line 471
 hoons/arvo/sys/zuse.hoon 4745:14 Test::Whitespace tallKetwut Child #1 @ line 4746; backdent is 2; should be 13
 hoons/arvo/sys/zuse.hoon 4750:15 Test::Whitespace tallKetwut Child #1 @ line 4751; backdent is 4; should be 14
 hoons/arvo/sys/zuse.hoon 4818:11 Test::Whitespace tallColsig Child #1 @ line 4819; backdent is 14; should be 12
-hoons/arvo/sys/zuse.hoon 4841:24 Test::Whitespace tallSemsig 1-running runstep #2 @4841:24; should be on line 4842
+hoons/arvo/sys/zuse.hoon 4841:24 Test::Whitespace tallSemsig 1-running runstep #2 @4841:24; missing newline @4841:22
 hoons/arvo/sys/zuse.hoon 4841:24 Test::Whitespace tallSemsig 1-running runstep #2 @4841:24; overindented by 13
-hoons/arvo/sys/zuse.hoon 4841:37 Test::Whitespace tallSemsig 1-running runstep #3 @4841:37; should be on line 4842
+hoons/arvo/sys/zuse.hoon 4841:37 Test::Whitespace tallSemsig 1-running runstep #3 @4841:37; missing newline @4841:35
 hoons/arvo/sys/zuse.hoon 4841:37 Test::Whitespace tallSemsig 1-running runstep #3 @4841:37; overindented by 26
-hoons/arvo/sys/zuse.hoon 4841:50 Test::Whitespace tallSemsig 1-running runstep #4 @4841:50; should be on line 4842
+hoons/arvo/sys/zuse.hoon 4841:50 Test::Whitespace tallSemsig 1-running runstep #4 @4841:50; missing newline @4841:48
 hoons/arvo/sys/zuse.hoon 4841:50 Test::Whitespace tallSemsig 1-running runstep #4 @4841:50; overindented by 39
-hoons/arvo/sys/zuse.hoon 4842:24 Test::Whitespace tallSemsig 1-running runstep #6 @4842:24; should be on line 4843
+hoons/arvo/sys/zuse.hoon 4842:24 Test::Whitespace tallSemsig 1-running runstep #6 @4842:24; missing newline @4842:22
 hoons/arvo/sys/zuse.hoon 4842:24 Test::Whitespace tallSemsig 1-running runstep #6 @4842:24; overindented by 13
 hoons/arvo/sys/zuse.hoon 4920:14 Test::Whitespace tallKetwut Child #1 @ line 4921; backdent is 4; should be 13
 hoons/arvo/sys/zuse.hoon 4961:13 Test::Whitespace tallKetwut Child #1 @ line 4962; backdent is 4; should be 12
@@ -389,15 +389,15 @@ hoons/arvo/sys/hoon.hoon 4322:5 Test::Whitespace tallWutlus Jogging-2-style quee
 hoons/arvo/sys/hoon.hoon 4501:11 Test::Whitespace tallBartar Child #2 @ line 4502; backdent is 2; should be 10
 hoons/arvo/sys/hoon.hoon 4516:7 Test::Whitespace tallWutsig Child #3 @ line 4517; backdent is 2; should be 6
 hoons/arvo/sys/hoon.hoon 4832:7 Test::Whitespace tallWutsig Child #3 @ line 4833; backdent is 2; should be 6
-hoons/arvo/sys/hoon.hoon 4851:20 Test::Whitespace tallSemsig 1-running runstep #1 @4851:20; should be on line 4852
+hoons/arvo/sys/hoon.hoon 4851:20 Test::Whitespace tallSemsig 1-running runstep #1 @4851:20; missing newline @4851:18
 hoons/arvo/sys/hoon.hoon 4851:20 Test::Whitespace tallSemsig 1-running runstep #1 @4851:20; overindented by 8
-hoons/arvo/sys/hoon.hoon 4853:24 Test::Whitespace tallSemsig 1-running runstep #1 @4853:24; should be on line 4854
+hoons/arvo/sys/hoon.hoon 4853:24 Test::Whitespace tallSemsig 1-running runstep #1 @4853:24; missing newline @4853:22
 hoons/arvo/sys/hoon.hoon 4853:24 Test::Whitespace tallSemsig 1-running runstep #1 @4853:24; overindented by 8
 hoons/arvo/sys/hoon.hoon 4857:23 Test::Whitespace tallCenlus Child #2 @ line 4858; backdent is 15; should be 24
 hoons/arvo/sys/hoon.hoon 4857:23 Test::Whitespace tallCenlus Child #3 @ line 4860; backdent is 13; should be 22
-hoons/arvo/sys/hoon.hoon 4890:20 Test::Whitespace tallSemsig 1-running runstep #1 @4890:20; should be on line 4891
+hoons/arvo/sys/hoon.hoon 4890:20 Test::Whitespace tallSemsig 1-running runstep #1 @4890:20; missing newline @4890:18
 hoons/arvo/sys/hoon.hoon 4890:20 Test::Whitespace tallSemsig 1-running runstep #1 @4890:20; overindented by 8
-hoons/arvo/sys/hoon.hoon 4890:25 Test::Whitespace tallSemsig 1-running runstep #2 @4890:25; should be on line 4891
+hoons/arvo/sys/hoon.hoon 4890:25 Test::Whitespace tallSemsig 1-running runstep #2 @4890:25; missing newline @4890:23
 hoons/arvo/sys/hoon.hoon 4890:25 Test::Whitespace tallSemsig 1-running runstep #2 @4890:25; overindented by 13
 hoons/arvo/sys/hoon.hoon 4973:14 Test::Whitespace tallCenlus Child #3 @ line 4974; backdent is 15; should be 13
 hoons/arvo/sys/hoon.hoon 5014:9 Test::Whitespace tallZapdot Child #1 @ line 5015; backdent is 2; should be 8
@@ -410,27 +410,27 @@ hoons/arvo/sys/hoon.hoon 5102:11 Test::Whitespace tallWutlus Jogging-2-style kin
 hoons/arvo/sys/hoon.hoon 5115:11 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @5115:15; underindented by 2
 hoons/arvo/sys/hoon.hoon 5145:20 Test::Whitespace tallCenlus Child #3 @ line 5146; backdent is 10; should be 19
 hoons/arvo/sys/hoon.hoon 5149:13 Test::Whitespace tallKettis Child #2 @ line 5150; backdent is 10; should be 12
-hoons/arvo/sys/hoon.hoon 5232:17 Test::Whitespace tallSemsig 1-running runstep #1 @5232:17; should be on line 5233
+hoons/arvo/sys/hoon.hoon 5232:17 Test::Whitespace tallSemsig 1-running runstep #1 @5232:17; missing newline @5232:15
 hoons/arvo/sys/hoon.hoon 5232:17 Test::Whitespace tallSemsig 1-running runstep #1 @5232:17; overindented by 8
 hoons/arvo/sys/hoon.hoon 5302:15 Test::Whitespace tallKetdot Child #2 @ line 5303; backdent is 4; should be 14
 hoons/arvo/sys/hoon.hoon 5320:9 Test::Whitespace tallKettis Child #2 @ line 5321; backdent is 6; should be 8
 hoons/arvo/sys/hoon.hoon 5324:9 Test::Whitespace tallKettis Child #2 @ line 5325; backdent is 6; should be 8
-hoons/arvo/sys/hoon.hoon 5329:21 Test::Whitespace tallSemsig 1-running runstep #1 @5329:21; should be on line 5330
+hoons/arvo/sys/hoon.hoon 5329:21 Test::Whitespace tallSemsig 1-running runstep #1 @5329:21; missing newline @5329:19
 hoons/arvo/sys/hoon.hoon 5329:21 Test::Whitespace tallSemsig 1-running runstep #1 @5329:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 5329:35 Test::Whitespace tallSemsig 1-running runstep #2 @5329:35; should be on line 5330
+hoons/arvo/sys/hoon.hoon 5329:35 Test::Whitespace tallSemsig 1-running runstep #2 @5329:35; missing newline @5329:33
 hoons/arvo/sys/hoon.hoon 5329:35 Test::Whitespace tallSemsig 1-running runstep #2 @5329:35; overindented by 22
-hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; should be line 5329
+hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; missing newline @5329:43
 hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; overindented by 34
-hoons/arvo/sys/hoon.hoon 5330:21 Test::Whitespace tallSemsig 1-running runstep #1 @5330:21; should be on line 5331
+hoons/arvo/sys/hoon.hoon 5330:21 Test::Whitespace tallSemsig 1-running runstep #1 @5330:21; missing newline @5330:19
 hoons/arvo/sys/hoon.hoon 5330:21 Test::Whitespace tallSemsig 1-running runstep #1 @5330:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 5347:23 Test::Whitespace tallSemsig 1-running runstep #1 @5347:23; should be on line 5348
+hoons/arvo/sys/hoon.hoon 5347:23 Test::Whitespace tallSemsig 1-running runstep #1 @5347:23; missing newline @5347:21
 hoons/arvo/sys/hoon.hoon 5347:23 Test::Whitespace tallSemsig 1-running runstep #1 @5347:23; overindented by 8
-hoons/arvo/sys/hoon.hoon 5347:37 Test::Whitespace tallSemsig 1-running runstep #2 @5347:37; should be on line 5348
+hoons/arvo/sys/hoon.hoon 5347:37 Test::Whitespace tallSemsig 1-running runstep #2 @5347:37; missing newline @5347:35
 hoons/arvo/sys/hoon.hoon 5347:37 Test::Whitespace tallSemsig 1-running runstep #2 @5347:37; overindented by 22
-hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; should be line 5347
+hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; missing newline @5347:45
 hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; overindented by 34
 hoons/arvo/sys/hoon.hoon 5367:9 Test::Whitespace tallKettis Child #2 @ line 5368; backdent is 6; should be 8
-hoons/arvo/sys/hoon.hoon 5377:15 Test::Whitespace tallSemsig 1-running runstep #1 @5377:15; should be on line 5378
+hoons/arvo/sys/hoon.hoon 5377:15 Test::Whitespace tallSemsig 1-running runstep #1 @5377:15; missing newline @5377:13
 hoons/arvo/sys/hoon.hoon 5377:15 Test::Whitespace tallSemsig 1-running runstep #1 @5377:15; overindented by 8
 hoons/arvo/sys/hoon.hoon 5460:3 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @5460:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 5460:3 Test::Whitespace tallWutlus Jogging-2-style queenside child #2 @5461:5; underindented by 4
@@ -527,13 +527,13 @@ hoons/arvo/sys/hoon.hoon 10440:5 Test::Whitespace tallCenlus Child #3 @ line 104
 hoons/arvo/sys/hoon.hoon 10441:7 Test::Whitespace tallBartis Child #2 @ line 10442; backdent is 4; should be 6
 hoons/arvo/sys/hoon.hoon 10442:5 Test::Whitespace tallCenlus Child #3 @ line 10443; backdent is 6; should be 4
 hoons/arvo/sys/hoon.hoon 10443:7 Test::Whitespace tallBartis Child #2 @ line 10444; backdent is 4; should be 6
-hoons/arvo/sys/hoon.hoon 10696:15 Test::Whitespace tallSemsig 1-running runstep #1 @10696:15; should be on line 10697
+hoons/arvo/sys/hoon.hoon 10696:15 Test::Whitespace tallSemsig 1-running runstep #1 @10696:15; missing newline @10696:13
 hoons/arvo/sys/hoon.hoon 10696:15 Test::Whitespace tallSemsig 1-running runstep #1 @10696:15; overindented by 8
-hoons/arvo/sys/hoon.hoon 10821:19 Test::Whitespace tallSemsig 1-running runstep #1 @10821:19; should be on line 10822
+hoons/arvo/sys/hoon.hoon 10821:19 Test::Whitespace tallSemsig 1-running runstep #1 @10821:19; missing newline @10821:17
 hoons/arvo/sys/hoon.hoon 10821:19 Test::Whitespace tallSemsig 1-running runstep #1 @10821:19; overindented by 8
-hoons/arvo/sys/hoon.hoon 10912:17 Test::Whitespace tallSemsig 1-running runstep #1 @10912:17; should be on line 10913
+hoons/arvo/sys/hoon.hoon 10912:17 Test::Whitespace tallSemsig 1-running runstep #1 @10912:17; missing newline @10912:15
 hoons/arvo/sys/hoon.hoon 10912:17 Test::Whitespace tallSemsig 1-running runstep #1 @10912:17; overindented by 8
-hoons/arvo/sys/hoon.hoon 10936:17 Test::Whitespace tallSemsig 1-running runstep #1 @10936:17; should be on line 10937
+hoons/arvo/sys/hoon.hoon 10936:17 Test::Whitespace tallSemsig 1-running runstep #1 @10936:17; missing newline @10936:15
 hoons/arvo/sys/hoon.hoon 10936:17 Test::Whitespace tallSemsig 1-running runstep #1 @10936:17; overindented by 8
 hoons/arvo/sys/hoon.hoon 10994:11 Test::Whitespace tallBuccolMold 10993:19 10994:11
 hoons/arvo/sys/hoon.hoon 10995:19 Test::Whitespace tallBucwutMold 10994:15 10995:19
@@ -547,94 +547,94 @@ hoons/arvo/sys/hoon.hoon 11135:13 Test::Whitespace tallKethep Child #2 @ line 11
 hoons/arvo/sys/hoon.hoon 11203:17 Test::Whitespace tallKetlus Child #2 @ line 11206; backdent is 8; should be 16
 hoons/arvo/sys/hoon.hoon 11240:13 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @11240:17; underindented by 2
 hoons/arvo/sys/hoon.hoon 11318:19 Test::Whitespace tallKetlus Child #2 @ line 11319; backdent is 10; should be 18
-hoons/arvo/sys/hoon.hoon 11355:19 Test::Whitespace tallSemsig 1-running runstep #1 @11355:19; should be on line 11356
+hoons/arvo/sys/hoon.hoon 11355:19 Test::Whitespace tallSemsig 1-running runstep #1 @11355:19; missing newline @11355:17
 hoons/arvo/sys/hoon.hoon 11355:19 Test::Whitespace tallSemsig 1-running runstep #1 @11355:19; overindented by 8
 hoons/arvo/sys/hoon.hoon 11389:13 Test::Whitespace tallBuccolMold Child #1 @ line 11392; backdent is 16; should be 14
-hoons/arvo/sys/hoon.hoon 11510:15 Test::Whitespace tallSemsig 1-running runstep #1 @11510:15; should be on line 11509
+hoons/arvo/sys/hoon.hoon 11510:15 Test::Whitespace tallSemsig 1-running runstep #1 @11510:15; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 11664:3 Test::Whitespace LuslusCell Child #2 @ line 11665; backdent is 6; should be 4
 hoons/arvo/sys/hoon.hoon 11670:7 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @11670:11; underindented by 2
 hoons/arvo/sys/hoon.hoon 11682:15 Test::Whitespace tallKetdot Child #2 @ line 11683; backdent is 4; should be 14
-hoons/arvo/sys/hoon.hoon 11690:21 Test::Whitespace tallSemsig 1-running runstep #1 @11690:21; should be on line 11691
+hoons/arvo/sys/hoon.hoon 11690:21 Test::Whitespace tallSemsig 1-running runstep #1 @11690:21; missing newline @11690:19
 hoons/arvo/sys/hoon.hoon 11690:21 Test::Whitespace tallSemsig 1-running runstep #1 @11690:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 11703:21 Test::Whitespace tallSemsig 1-running runstep #1 @11703:21; should be on line 11704
+hoons/arvo/sys/hoon.hoon 11703:21 Test::Whitespace tallSemsig 1-running runstep #1 @11703:21; missing newline @11703:19
 hoons/arvo/sys/hoon.hoon 11703:21 Test::Whitespace tallSemsig 1-running runstep #1 @11703:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 11739:19 Test::Whitespace tallSemsig 1-running runstep #1 @11739:19; should be on line 11740
+hoons/arvo/sys/hoon.hoon 11739:19 Test::Whitespace tallSemsig 1-running runstep #1 @11739:19; missing newline @11739:17
 hoons/arvo/sys/hoon.hoon 11739:19 Test::Whitespace tallSemsig 1-running runstep #1 @11739:19; overindented by 8
 hoons/arvo/sys/hoon.hoon 11751:13 Test::Whitespace tallZapcol Child #1 @ line 11752; backdent is 4; should be 12
 hoons/arvo/sys/hoon.hoon 11754:15 Test::Whitespace tallKetdot Child #2 @ line 11755; backdent is 4; should be 14
-hoons/arvo/sys/hoon.hoon 11770:21 Test::Whitespace tallSemsig 1-running runstep #1 @11770:21; should be on line 11771
+hoons/arvo/sys/hoon.hoon 11770:21 Test::Whitespace tallSemsig 1-running runstep #1 @11770:21; missing newline @11770:19
 hoons/arvo/sys/hoon.hoon 11770:21 Test::Whitespace tallSemsig 1-running runstep #1 @11770:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 11782:19 Test::Whitespace tallSemsig 1-running runstep #1 @11782:19; should be on line 11783
+hoons/arvo/sys/hoon.hoon 11782:19 Test::Whitespace tallSemsig 1-running runstep #1 @11782:19; missing newline @11782:17
 hoons/arvo/sys/hoon.hoon 11782:19 Test::Whitespace tallSemsig 1-running runstep #1 @11782:19; overindented by 8
-hoons/arvo/sys/hoon.hoon 11847:19 Test::Whitespace tallSemsig 1-running runstep #1 @11847:19; should be on line 11848
+hoons/arvo/sys/hoon.hoon 11847:19 Test::Whitespace tallSemsig 1-running runstep #1 @11847:19; missing newline @11847:17
 hoons/arvo/sys/hoon.hoon 11847:19 Test::Whitespace tallSemsig 1-running runstep #1 @11847:19; overindented by 8
-hoons/arvo/sys/hoon.hoon 11868:19 Test::Whitespace tallSemsig 1-running runstep #1 @11868:19; should be on line 11869
+hoons/arvo/sys/hoon.hoon 11868:19 Test::Whitespace tallSemsig 1-running runstep #1 @11868:19; missing newline @11868:17
 hoons/arvo/sys/hoon.hoon 11868:19 Test::Whitespace tallSemsig 1-running runstep #1 @11868:19; overindented by 8
-hoons/arvo/sys/hoon.hoon 11873:23 Test::Whitespace tallSemsig 1-running runstep #1 @11873:23; should be on line 11874
+hoons/arvo/sys/hoon.hoon 11873:23 Test::Whitespace tallSemsig 1-running runstep #1 @11873:23; missing newline @11873:21
 hoons/arvo/sys/hoon.hoon 11873:23 Test::Whitespace tallSemsig 1-running runstep #1 @11873:23; overindented by 8
-hoons/arvo/sys/hoon.hoon 11899:21 Test::Whitespace tallSemsig 1-running runstep #1 @11899:21; should be on line 11900
+hoons/arvo/sys/hoon.hoon 11899:21 Test::Whitespace tallSemsig 1-running runstep #1 @11899:21; missing newline @11899:19
 hoons/arvo/sys/hoon.hoon 11899:21 Test::Whitespace tallSemsig 1-running runstep #1 @11899:21; overindented by 8
-hoons/arvo/sys/hoon.hoon 11923:17 Test::Whitespace tallSemsig 1-running runstep #1 @11923:17; should be on line 11924
+hoons/arvo/sys/hoon.hoon 11923:17 Test::Whitespace tallSemsig 1-running runstep #1 @11923:17; missing newline @11923:15
 hoons/arvo/sys/hoon.hoon 11923:17 Test::Whitespace tallSemsig 1-running runstep #1 @11923:17; overindented by 8
 hoons/arvo/sys/hoon.hoon 11933:16 Test::Whitespace tallCenlus Child #2 @ line 11934; backdent is 8; should be 17
 hoons/arvo/sys/hoon.hoon 11933:16 Test::Whitespace tallCenlus Child #3 @ line 11935; backdent is 6; should be 15
 hoons/arvo/sys/hoon.hoon 11948:21 Test::Whitespace tallKetdot Child #2 @ line 11949; backdent is 10; should be 20
-hoons/arvo/sys/hoon.hoon 11950:27 Test::Whitespace tallSemsig 1-running runstep #1 @11950:27; should be on line 11951
+hoons/arvo/sys/hoon.hoon 11950:27 Test::Whitespace tallSemsig 1-running runstep #1 @11950:27; missing newline @11950:25
 hoons/arvo/sys/hoon.hoon 11950:27 Test::Whitespace tallSemsig 1-running runstep #1 @11950:27; overindented by 8
 hoons/arvo/sys/hoon.hoon 11952:29 Test::Whitespace tallKetdot Child #2 @ line 11953; backdent is 18; should be 28
-hoons/arvo/sys/hoon.hoon 11965:25 Test::Whitespace tallSemsig 1-running runstep #1 @11965:25; should be on line 11966
+hoons/arvo/sys/hoon.hoon 11965:25 Test::Whitespace tallSemsig 1-running runstep #1 @11965:25; missing newline @11965:23
 hoons/arvo/sys/hoon.hoon 11965:25 Test::Whitespace tallSemsig 1-running runstep #1 @11965:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 11967:27 Test::Whitespace tallKetdot Child #2 @ line 11968; backdent is 16; should be 26
 hoons/arvo/sys/hoon.hoon 11976:19 Test::Whitespace tallKetdot Child #2 @ line 11977; backdent is 8; should be 18
-hoons/arvo/sys/hoon.hoon 11978:25 Test::Whitespace tallSemsig 1-running runstep #1 @11978:25; should be on line 11979
+hoons/arvo/sys/hoon.hoon 11978:25 Test::Whitespace tallSemsig 1-running runstep #1 @11978:25; missing newline @11978:23
 hoons/arvo/sys/hoon.hoon 11978:25 Test::Whitespace tallSemsig 1-running runstep #1 @11978:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 11980:27 Test::Whitespace tallKetdot Child #2 @ line 11981; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 11994:25 Test::Whitespace tallSemsig 1-running runstep #1 @11994:25; should be on line 11995
+hoons/arvo/sys/hoon.hoon 11994:25 Test::Whitespace tallSemsig 1-running runstep #1 @11994:25; missing newline @11994:23
 hoons/arvo/sys/hoon.hoon 11994:25 Test::Whitespace tallSemsig 1-running runstep #1 @11994:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 11996:27 Test::Whitespace tallKetdot Child #2 @ line 11997; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12009:25 Test::Whitespace tallSemsig 1-running runstep #1 @12009:25; should be on line 12010
+hoons/arvo/sys/hoon.hoon 12009:25 Test::Whitespace tallSemsig 1-running runstep #1 @12009:25; missing newline @12009:23
 hoons/arvo/sys/hoon.hoon 12009:25 Test::Whitespace tallSemsig 1-running runstep #1 @12009:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12011:27 Test::Whitespace tallKetdot Child #2 @ line 12012; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12024:25 Test::Whitespace tallSemsig 1-running runstep #1 @12024:25; should be on line 12025
+hoons/arvo/sys/hoon.hoon 12024:25 Test::Whitespace tallSemsig 1-running runstep #1 @12024:25; missing newline @12024:23
 hoons/arvo/sys/hoon.hoon 12024:25 Test::Whitespace tallSemsig 1-running runstep #1 @12024:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12026:27 Test::Whitespace tallKetdot Child #2 @ line 12027; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12036:25 Test::Whitespace tallSemsig 1-running runstep #1 @12036:25; should be on line 12037
+hoons/arvo/sys/hoon.hoon 12036:25 Test::Whitespace tallSemsig 1-running runstep #1 @12036:25; missing newline @12036:23
 hoons/arvo/sys/hoon.hoon 12036:25 Test::Whitespace tallSemsig 1-running runstep #1 @12036:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12038:27 Test::Whitespace tallKetdot Child #2 @ line 12039; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12047:25 Test::Whitespace tallSemsig 1-running runstep #1 @12047:25; should be on line 12048
+hoons/arvo/sys/hoon.hoon 12047:25 Test::Whitespace tallSemsig 1-running runstep #1 @12047:25; missing newline @12047:23
 hoons/arvo/sys/hoon.hoon 12047:25 Test::Whitespace tallSemsig 1-running runstep #1 @12047:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12049:27 Test::Whitespace tallKetdot Child #2 @ line 12050; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12062:25 Test::Whitespace tallSemsig 1-running runstep #1 @12062:25; should be on line 12063
+hoons/arvo/sys/hoon.hoon 12062:25 Test::Whitespace tallSemsig 1-running runstep #1 @12062:25; missing newline @12062:23
 hoons/arvo/sys/hoon.hoon 12062:25 Test::Whitespace tallSemsig 1-running runstep #1 @12062:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12064:27 Test::Whitespace tallKetdot Child #2 @ line 12065; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12080:25 Test::Whitespace tallSemsig 1-running runstep #1 @12080:25; should be on line 12081
+hoons/arvo/sys/hoon.hoon 12080:25 Test::Whitespace tallSemsig 1-running runstep #1 @12080:25; missing newline @12080:23
 hoons/arvo/sys/hoon.hoon 12080:25 Test::Whitespace tallSemsig 1-running runstep #1 @12080:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12082:27 Test::Whitespace tallKetdot Child #2 @ line 12083; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12090:25 Test::Whitespace tallSemsig 1-running runstep #1 @12090:25; should be on line 12091
+hoons/arvo/sys/hoon.hoon 12090:25 Test::Whitespace tallSemsig 1-running runstep #1 @12090:25; missing newline @12090:23
 hoons/arvo/sys/hoon.hoon 12090:25 Test::Whitespace tallSemsig 1-running runstep #1 @12090:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12092:27 Test::Whitespace tallKetdot Child #2 @ line 12093; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12110:25 Test::Whitespace tallSemsig 1-running runstep #1 @12110:25; should be on line 12111
+hoons/arvo/sys/hoon.hoon 12110:25 Test::Whitespace tallSemsig 1-running runstep #1 @12110:25; missing newline @12110:23
 hoons/arvo/sys/hoon.hoon 12110:25 Test::Whitespace tallSemsig 1-running runstep #1 @12110:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12112:27 Test::Whitespace tallKetdot Child #2 @ line 12113; backdent is 16; should be 26
-hoons/arvo/sys/hoon.hoon 12129:25 Test::Whitespace tallSemsig 1-running runstep #1 @12129:25; should be on line 12130
+hoons/arvo/sys/hoon.hoon 12129:25 Test::Whitespace tallSemsig 1-running runstep #1 @12129:25; missing newline @12129:23
 hoons/arvo/sys/hoon.hoon 12129:25 Test::Whitespace tallSemsig 1-running runstep #1 @12129:25; overindented by 8
 hoons/arvo/sys/hoon.hoon 12131:27 Test::Whitespace tallKetdot Child #2 @ line 12132; backdent is 16; should be 26
 hoons/arvo/sys/hoon.hoon 12152:11 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @12152:15; underindented by 2
 hoons/arvo/sys/hoon.hoon 12162:11 Test::Whitespace tallCenlus Child #2 @ line 12163; backdent is 14; should be 12
 hoons/arvo/sys/hoon.hoon 12171:11 Test::Whitespace tallCenlus Child #2 @ line 12172; backdent is 14; should be 12
-hoons/arvo/sys/hoon.hoon 12314:29 Test::Whitespace tallSemsig 1-running runstep #1 @12314:29; should be on line 12315
+hoons/arvo/sys/hoon.hoon 12314:29 Test::Whitespace tallSemsig 1-running runstep #1 @12314:29; missing newline @12314:27
 hoons/arvo/sys/hoon.hoon 12314:29 Test::Whitespace tallSemsig 1-running runstep #1 @12314:29; overindented by 8
-hoons/arvo/sys/hoon.hoon 12314:35 Test::Whitespace tallSemsig 1-running runstep #2 @12314:35; should be on line 12315
+hoons/arvo/sys/hoon.hoon 12314:35 Test::Whitespace tallSemsig 1-running runstep #2 @12314:35; missing newline @12314:33
 hoons/arvo/sys/hoon.hoon 12314:35 Test::Whitespace tallSemsig 1-running runstep #2 @12314:35; overindented by 14
-hoons/arvo/sys/hoon.hoon 12325:29 Test::Whitespace tallSemsig 1-running runstep #1 @12325:29; should be on line 12326
+hoons/arvo/sys/hoon.hoon 12325:29 Test::Whitespace tallSemsig 1-running runstep #1 @12325:29; missing newline @12325:27
 hoons/arvo/sys/hoon.hoon 12325:29 Test::Whitespace tallSemsig 1-running runstep #1 @12325:29; overindented by 8
 hoons/arvo/sys/hoon.hoon 12330:23 Test::Whitespace tallWutcol Child #2 @ line 12331; backdent is 25; should be 24
 hoons/arvo/sys/hoon.hoon 12379:15 Test::Whitespace tallBardot Child #1 @ line 12380; backdent is 6; should be 14
 hoons/arvo/sys/hoon.hoon 12384:15 Test::Whitespace tallBardot Child #1 @ line 12385; backdent is 6; should be 14
-hoons/arvo/sys/hoon.hoon 12390:17 Test::Whitespace tallSemsig 1-running runstep #1 @12390:17; should be on line 12391
+hoons/arvo/sys/hoon.hoon 12390:17 Test::Whitespace tallSemsig 1-running runstep #1 @12390:17; missing newline @12390:15
 hoons/arvo/sys/hoon.hoon 12390:17 Test::Whitespace tallSemsig 1-running runstep #1 @12390:17; overindented by 8
 hoons/arvo/sys/hoon.hoon 12398:15 Test::Whitespace tallBardot Child #1 @ line 12399; backdent is 8; should be 14
-hoons/arvo/sys/hoon.hoon 12495:17 Test::Whitespace tallSemsig 1-running runstep #1 @12495:17; should be on line 12496
+hoons/arvo/sys/hoon.hoon 12495:17 Test::Whitespace tallSemsig 1-running runstep #1 @12495:17; missing newline @12495:15
 hoons/arvo/sys/hoon.hoon 12495:17 Test::Whitespace tallSemsig 1-running runstep #1 @12495:17; overindented by 8
 hoons/arvo/sys/hoon.hoon 12588:9 Test::Whitespace tallZapcol Child #1 @ line 12589; backdent is 2; should be 8
 hoons/arvo/sys/hoon.hoon 12685:18 Test::Whitespace tallKethep Child #2 @ line 12686; backdent is 6; should be 8
@@ -708,9 +708,9 @@ hoons/arvo/sys/vane/ford.hoon 341:9 Test::Whitespace tallWutlus Jogging-2-style 
 hoons/arvo/sys/vane/ford.hoon 343:11 Test::Whitespace tallTisfas Child #2 @ line 344; backdent is 14; should be 12
 hoons/arvo/sys/vane/ford.hoon 365:9 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @365:13; underindented by 2
 hoons/arvo/sys/vane/ford.hoon 446:15 Test::Whitespace tallZapdot Child #1 @ line 447; backdent is 6; should be 14
-hoons/arvo/sys/vane/ford.hoon 768:19 Test::Whitespace tallSemsig 1-running runstep #1 @768:19; should be on line 769
+hoons/arvo/sys/vane/ford.hoon 768:19 Test::Whitespace tallSemsig 1-running runstep #1 @768:19; missing newline @768:17
 hoons/arvo/sys/vane/ford.hoon 768:19 Test::Whitespace tallSemsig 1-running runstep #1 @768:19; overindented by 8
-hoons/arvo/sys/vane/ford.hoon 826:21 Test::Whitespace tallSemsig 1-running runstep #1 @826:21; should be on line 827
+hoons/arvo/sys/vane/ford.hoon 826:21 Test::Whitespace tallSemsig 1-running runstep #1 @826:21; missing newline @826:19
 hoons/arvo/sys/vane/ford.hoon 826:21 Test::Whitespace tallSemsig 1-running runstep #1 @826:21; overindented by 8
 hoons/arvo/sys/vane/ford.hoon 931:30 Test::Whitespace tallColcab Child #2 @ line 932; backdent is 12; should be 10
 hoons/arvo/sys/vane/ford.hoon 974:30 Test::Whitespace tallColcab Child #2 @ line 975; backdent is 12; should be 10
@@ -1013,17 +1013,17 @@ hoons/arvo/app/static.hoon 174:3 Test::Whitespace tallTisfas Child #2 @ line 175
 hoons/arvo/app/static.hoon 258:3 Test::Whitespace tallTisfas Child #2 @ line 259; backdent is 2; should be 4
 === hoons/arvo/app/hood.hoon ===
 === hoons/arvo/app/dojo.hoon ===
-hoons/arvo/app/dojo.hoon 144:19 Test::Whitespace tallSemsig 1-running runstep #1 @144:19; should be on line 145
+hoons/arvo/app/dojo.hoon 144:19 Test::Whitespace tallSemsig 1-running runstep #1 @144:19; missing newline @144:17
 hoons/arvo/app/dojo.hoon 144:19 Test::Whitespace tallSemsig 1-running runstep #1 @144:19; overindented by 8
-hoons/arvo/app/dojo.hoon 149:19 Test::Whitespace tallSemsig 1-running runstep #1 @149:19; should be on line 150
+hoons/arvo/app/dojo.hoon 149:19 Test::Whitespace tallSemsig 1-running runstep #1 @149:19; missing newline @149:17
 hoons/arvo/app/dojo.hoon 149:19 Test::Whitespace tallSemsig 1-running runstep #1 @149:19; overindented by 8
-hoons/arvo/app/dojo.hoon 163:19 Test::Whitespace tallSemsig 1-running runstep #1 @163:19; should be on line 164
+hoons/arvo/app/dojo.hoon 163:19 Test::Whitespace tallSemsig 1-running runstep #1 @163:19; missing newline @163:17
 hoons/arvo/app/dojo.hoon 163:19 Test::Whitespace tallSemsig 1-running runstep #1 @163:19; overindented by 8
-hoons/arvo/app/dojo.hoon 170:19 Test::Whitespace tallSemsig 1-running runstep #1 @170:19; should be on line 171
+hoons/arvo/app/dojo.hoon 170:19 Test::Whitespace tallSemsig 1-running runstep #1 @170:19; missing newline @170:17
 hoons/arvo/app/dojo.hoon 170:19 Test::Whitespace tallSemsig 1-running runstep #1 @170:19; overindented by 8
-hoons/arvo/app/dojo.hoon 177:19 Test::Whitespace tallSemsig 1-running runstep #1 @177:19; should be on line 178
+hoons/arvo/app/dojo.hoon 177:19 Test::Whitespace tallSemsig 1-running runstep #1 @177:19; missing newline @177:17
 hoons/arvo/app/dojo.hoon 177:19 Test::Whitespace tallSemsig 1-running runstep #1 @177:19; overindented by 8
-hoons/arvo/app/dojo.hoon 179:23 Test::Whitespace tallSemsig 1-running runstep #1 @179:23; should be on line 180
+hoons/arvo/app/dojo.hoon 179:23 Test::Whitespace tallSemsig 1-running runstep #1 @179:23; missing newline @179:21
 hoons/arvo/app/dojo.hoon 179:23 Test::Whitespace tallSemsig 1-running runstep #1 @179:23; overindented by 8
 hoons/arvo/app/dojo.hoon 371:14 Test::Whitespace tallTisket Child #3 @ line 372; backdent is 17; should be 15
 hoons/arvo/app/dojo.hoon 465:9 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @465:13; underindented by 2
@@ -1061,11 +1061,11 @@ hoons/arvo/app/dojo.hoon 1353:7 Test::Whitespace tallWutlus Jogging-2-style quee
 hoons/arvo/app/dojo.hoon 1412:5 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @1412:9; underindented by 2
 hoons/arvo/app/dojo.hoon 1413:14 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @1413:18; underindented by 2
 hoons/arvo/app/dojo.hoon 1414:17 Test::Whitespace tallWutlus Jog kingside head @1414:17; overindented by 1
-hoons/arvo/app/dojo.hoon 1475:14 Test::Whitespace tallSemcol 1-running runstep #2 @1475:14; should be on line 1476
+hoons/arvo/app/dojo.hoon 1475:14 Test::Whitespace tallSemcol 1-running runstep #2 @1475:14; missing newline @1475:12
 hoons/arvo/app/dojo.hoon 1475:14 Test::Whitespace tallSemcol 1-running runstep #2 @1475:14; overindented by 5
-hoons/arvo/app/dojo.hoon 1476:14 Test::Whitespace tallSemcol 1-running runstep #4 @1476:14; should be on line 1477
+hoons/arvo/app/dojo.hoon 1476:14 Test::Whitespace tallSemcol 1-running runstep #4 @1476:14; missing newline @1476:12
 hoons/arvo/app/dojo.hoon 1476:14 Test::Whitespace tallSemcol 1-running runstep #4 @1476:14; overindented by 5
-hoons/arvo/app/dojo.hoon 1477:14 Test::Whitespace tallSemcol 1-running runstep #6 @1477:14; should be on line 1478
+hoons/arvo/app/dojo.hoon 1477:14 Test::Whitespace tallSemcol 1-running runstep #6 @1477:14; missing newline @1477:12
 hoons/arvo/app/dojo.hoon 1477:14 Test::Whitespace tallSemcol 1-running runstep #6 @1477:14; overindented by 5
 hoons/arvo/app/dojo.hoon 1494:11 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @1494:15; underindented by 2
 hoons/arvo/app/dojo.hoon 1513:5 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @1513:9; underindented by 2
@@ -1094,14 +1094,14 @@ hoons/arvo/app/talk.hoon 425:5 Test::Whitespace tallWutlus Jogging-2-style queen
 hoons/arvo/app/talk.hoon 558:7 Test::Whitespace tallCenlus Child #2 @ line 559; backdent is 6; should be 8
 hoons/arvo/app/talk.hoon 595:9 Test::Whitespace tallBuccolMold Child #1 @ line 597; backdent is 12; should be 10
 hoons/arvo/app/talk.hoon 745:9 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @745:13; underindented by 2
-hoons/arvo/app/talk.hoon 835:27 Test::Whitespace tallSemsig 1-running runstep #1 @835:27; should be on line 836
+hoons/arvo/app/talk.hoon 835:27 Test::Whitespace tallSemsig 1-running runstep #1 @835:27; missing newline @835:25
 hoons/arvo/app/talk.hoon 835:27 Test::Whitespace tallSemsig 1-running runstep #1 @835:27; overindented by 14
-hoons/arvo/app/talk.hoon 841:21 Test::Whitespace tallSemsig 1-running runstep #1 @841:21; should be on line 842
+hoons/arvo/app/talk.hoon 841:21 Test::Whitespace tallSemsig 1-running runstep #1 @841:21; missing newline @841:19
 hoons/arvo/app/talk.hoon 841:21 Test::Whitespace tallSemsig 1-running runstep #1 @841:21; overindented by 8
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace tallSemsig 1-running runstep #11 @864:11; should be on line 860
-hoons/arvo/app/talk.hoon 878:25 Test::Whitespace tallSemsig 1-running runstep #1 @878:25; should be on line 879
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace tallSemsig 1-running runstep #11 @864:11; comment overindented by 2
+hoons/arvo/app/talk.hoon 878:25 Test::Whitespace tallSemsig 1-running runstep #1 @878:25; missing newline @878:23
 hoons/arvo/app/talk.hoon 878:25 Test::Whitespace tallSemsig 1-running runstep #1 @878:25; overindented by 8
-hoons/arvo/app/talk.hoon 916:21 Test::Whitespace tallSemsig 1-running runstep #1 @916:21; should be on line 917
+hoons/arvo/app/talk.hoon 916:21 Test::Whitespace tallSemsig 1-running runstep #1 @916:21; missing newline @916:19
 hoons/arvo/app/talk.hoon 916:21 Test::Whitespace tallSemsig 1-running runstep #1 @916:21; overindented by 8
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol Child #2 @ line 949; backdent is 14; should be 16
 hoons/arvo/app/talk.hoon 989:7 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @989:11; underindented by 4
@@ -1112,11 +1112,11 @@ hoons/arvo/app/talk.hoon 1810:7 Test::Whitespace tallTisfas Child #2 @ line 1811
 hoons/arvo/app/talk.hoon 1978:3 Test::Whitespace tallBarcab Child #1 @ line 1980; backdent is 6; should be 4
 hoons/arvo/app/talk.hoon 2089:3 Test::Whitespace tallBarcab Child #1 @ line 2091; backdent is 6; should be 4
 hoons/arvo/app/talk.hoon 2190:7 Test::Whitespace tallBuccolMold Child #1 @ line 2197; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 2249:16 Test::Whitespace tallSemcol 1-running runstep #2 @2249:16; should be on line 2250
+hoons/arvo/app/talk.hoon 2249:16 Test::Whitespace tallSemcol 1-running runstep #2 @2249:16; missing newline @2249:14
 hoons/arvo/app/talk.hoon 2249:16 Test::Whitespace tallSemcol 1-running runstep #2 @2249:16; overindented by 5
-hoons/arvo/app/talk.hoon 2250:16 Test::Whitespace tallSemcol 1-running runstep #4 @2250:16; should be on line 2251
+hoons/arvo/app/talk.hoon 2250:16 Test::Whitespace tallSemcol 1-running runstep #4 @2250:16; missing newline @2250:14
 hoons/arvo/app/talk.hoon 2250:16 Test::Whitespace tallSemcol 1-running runstep #4 @2250:16; overindented by 5
-hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #6 @2251:16; should be on line 2252
+hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #6 @2251:16; missing newline @2251:14
 hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #6 @2251:16; overindented by 5
 hoons/arvo/app/talk.hoon 2299:17 Test::Whitespace tallCenlus Child #2 @ line 2300; backdent is 8; should be 18
 hoons/arvo/app/talk.hoon 2300:16 Test::Whitespace tallColhep Child #2 @ line 2301; backdent is 8; should be 15
@@ -1164,6 +1164,7 @@ hoons/arvo/app/hall.hoon 2025:7 Test::Whitespace tallWutlus Jogging-2-style king
 hoons/arvo/app/hall.hoon 1580:3 Test::Whitespace wisp5d Child #1 @ line 2124; backdent is 0; should be 2
 hoons/arvo/app/hall.hoon 2164:3 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @2164:7; underindented by 4
 hoons/arvo/app/hall.hoon 2187:3 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @2187:9; underindented by 2
+hoons/arvo/app/hall.hoon 2188:7 Test::Whitespace tallWutlus Jog queenside split body @2190:5; comment overindented by 2
 hoons/arvo/app/hall.hoon 2209:11 Test::Whitespace tallBuchepMold Child #2 @ line 2210; backdent is 14; should be 10
 hoons/arvo/app/hall.hoon 2220:11 Test::Whitespace tallBuchepMold Child #2 @ line 2221; backdent is 14; should be 10
 hoons/arvo/app/hall.hoon 2381:3 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @2381:7; underindented by 2
@@ -1216,9 +1217,9 @@ hoons/arvo/lib/http.hoon 26:7 Test::Whitespace tallKethep Child #2 @ line 27; ba
 === hoons/arvo/lib/old-zuse.hoon ===
 === hoons/arvo/lib/tester.hoon ===
 === hoons/arvo/lib/hall-json.hoon ===
-hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:12; should be on line 20
+hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:12; missing newline @19:10
 hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:12; overindented by 5
-hoons/arvo/lib/hall-json.hoon 35:15 Test::Whitespace tallSemsig 1-running runstep #1 @35:15; should be on line 36
+hoons/arvo/lib/hall-json.hoon 35:15 Test::Whitespace tallSemsig 1-running runstep #1 @35:15; missing newline @35:13
 hoons/arvo/lib/hall-json.hoon 35:15 Test::Whitespace tallSemsig 1-running runstep #1 @35:15; overindented by 8
 hoons/arvo/lib/hall-json.hoon 39:9 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @39:13; underindented by 2
 hoons/arvo/lib/hall-json.hoon 160:5 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @160:9; underindented by 2
@@ -1236,7 +1237,7 @@ hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tallTissig Child #2 @ li
 hoons/arvo/lib/down-jet/parse.hoon 27:19 Test::Whitespace tallKethep Child #2 @ line 29; backdent is 2; should be 14
 hoons/arvo/lib/down-jet/parse.hoon 8:1 Test::Whitespace tallTislus Child #2 @ line 97; backdent is 2; should be 0
 hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig Child #1 @ line 98; backdent is 0; should be 6
-hoons/arvo/lib/down-jet/parse.hoon 113:15 Test::Whitespace tallSemsig 1-running runstep #1 @113:15; should be on line 114
+hoons/arvo/lib/down-jet/parse.hoon 113:15 Test::Whitespace tallSemsig 1-running runstep #1 @113:15; missing newline @113:13
 hoons/arvo/lib/down-jet/parse.hoon 113:15 Test::Whitespace tallSemsig 1-running runstep #1 @113:15; overindented by 8
 hoons/arvo/lib/down-jet/parse.hoon 190:13 Test::Whitespace tallKethep Child #2 @ line 191; backdent is 12; should be 8
 hoons/arvo/lib/down-jet/parse.hoon 291:7 Test::Whitespace tallSemsig 1-running runstep #1 @291:7; underindented by 2
@@ -1248,7 +1249,7 @@ hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam 413:11 414:
 hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig Child #2 @ line 448; backdent is 0; should be 4
 hoons/arvo/lib/down-jet/parse.hoon 465:1 Test::Whitespace LuslusCell Child #2 @ line 466; backdent is 1; should be 2
 hoons/arvo/lib/down-jet/parse.hoon 475:1 Test::Whitespace LuslusCell Child #2 @ line 476; backdent is 3; should be 2
-hoons/arvo/lib/down-jet/parse.hoon 503:27 Test::Whitespace tallSemsig 1-running runstep #1 @503:27; should be on line 504
+hoons/arvo/lib/down-jet/parse.hoon 503:27 Test::Whitespace tallSemsig 1-running runstep #1 @503:27; missing newline @503:25
 hoons/arvo/lib/down-jet/parse.hoon 503:27 Test::Whitespace tallSemsig 1-running runstep #1 @503:27; overindented by 8
 hoons/arvo/lib/down-jet/parse.hoon 505:20 Test::Whitespace tallSemsig 1-running runstep #1 @505:20; underindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 506:20 Test::Whitespace tallSemsig 1-running runstep #2 @506:20; underindented by 1
@@ -1324,7 +1325,7 @@ hoons/arvo/lib/hood/helm.hoon 250:7 Test::Whitespace tallKethep Child #2 @ line 
 === hoons/arvo/lib/hood/drum.hoon ===
 hoons/arvo/lib/hood/drum.hoon 62:7 Test::Whitespace tallBuctisMold Child #2 @ line 63; backdent is 8; should be 6
 hoons/arvo/lib/hood/drum.hoon 541:5 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @541:11; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 741:7 Test::Whitespace tallWutlus Pseudo-joined kingside Jog @741:7; body/comment mismatch; body is overindented by 42
+hoons/arvo/lib/hood/drum.hoon 741:7 Test::Whitespace tallWutlus Pseudo-joined kingside Jog @741:7; body/comment mismatch; body is underindented by 42
 hoons/arvo/lib/hood/drum.hoon 829:5 Test::Whitespace tallTisfas Child #2 @ line 830; backdent is 8; should be 6
 hoons/arvo/lib/hood/drum.hoon 937:5 Test::Whitespace tallCenlus Child #2 @ line 938; backdent is 4; should be 6
 hoons/arvo/lib/hood/drum.hoon 939:15 Test::Whitespace tallCenlus Child #3 @ line 940; backdent is 4; should be 14
@@ -1649,7 +1650,7 @@ hoons/arvo/gen/glass.hoon 27:5 Test::Whitespace tallKethep Child #2 @ line 31; b
 hoons/arvo/gen/glass.hoon 98:3 Test::Whitespace tallBartis Child #1 @ line 100; backdent is 6; should be 4
 hoons/arvo/gen/glass.hoon 120:3 Test::Whitespace tallTiswut Child #3 @ line 124; backdent is 6; should be 4
 === hoons/arvo/gen/test.hoon ===
-hoons/arvo/gen/test.hoon 56:11 Test::Whitespace tallSemcol 1-running runstep #2 @56:11; should be on line 51
+hoons/arvo/gen/test.hoon 56:11 Test::Whitespace tallSemcol 1-running runstep #2 @56:11; comment overindented by 2
 === hoons/arvo/gen/gmail/list.hoon ===
 === hoons/arvo/gen/gmail/send.hoon ===
 === hoons/arvo/gen/hello.hoon ===

@@ -131,25 +131,27 @@ sub pseudoJoinColumn {
 }
 
 # Is this a one-line gap, or its equivalent?
-# TODO: Allow aligned comments?
 sub isOneLineGap {
-    my ( $policy, $gap, $commentColumn ) = @_;
-    my $instance    = $policy->{lint};
-    my $start       = $gap->{start};
-    my $end         = $start + $gap->{length};
-    my ($startLine) = $instance->line_column($start);
-    my ($endLine)   = $instance->line_column($end);
-    $commentColumn //= -1; # -1 will never match
+    my ( $policy, $gap, $expectedColumn ) = @_;
+    my $instance = $policy->{lint};
+    my $start    = $gap->{start};
+    my $end      = $start + $gap->{length};
+    my ( $startLine, $startColumn ) = $instance->line_column($start);
+    my ( $endLine,   $endColumn )   = $instance->line_column($end);
+    $expectedColumn //= -1;    # -1 will never match
 
-    return if $startLine == $endLine;
+    return "missing newline " . describeLC( $startLine, $startColumn )
+      if $startLine == $endLine;
     for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
         my $literalLine = $instance->literalLine($lineNum);
         my $commentOffset = index $literalLine, ':';
-        # say STDERR "comment offset $commentOffset vs. $commentColumn";
-        return if $commentOffset < 0;
-        return if $commentOffset != $commentColumn;
+
+        # say STDERR "comment offset $commentOffset vs. $expectedColumn";
+        return "missing comment on line $lineNum" if $commentOffset < 0;
+        return "comment " . describeMisindent( $commentOffset, $expectedColumn )
+          if $commentOffset != $expectedColumn;
     }
-    return 1;
+    return;
 
 }
 
@@ -296,14 +298,14 @@ sub is_1Running {
         my $runStep = $runningChildren->[$childIX];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
-        if ( not $policy->isOneLineGap($lastGap, $runeColumn) ) {
+        if ( my $gapMsg = $policy->isOneLineGap($lastGap, $runeColumn) ) {
 	    my ($lastGapLine) = $instance->line_column($lastGap->{start});
 	    my $expectedLine = $lastGapLine + 1;
             my $msg = sprintf
-              "1-running runstep #%d %s; should be on line %d",
+              "1-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $runStepLine, $runStepColumn ),
-              $expectedLine;
+	      $gapMsg;
             push @mistakes,
               {
                 desc         => $msg,
@@ -337,9 +339,9 @@ sub is_1Running {
         $childIX += 2;
     }
 
-    if ( not $policy->isOneLineGap($tistisGap, $runeColumn) ) {
+    if ( my $gapMsg = $policy->isOneLineGap($tistisGap, $runeColumn) ) {
         my $msg = sprintf
-          "1-running TISTIS %s; should be line %d",
+          "1-running TISTIS %s; $gapMsg",
           describeLC( $tistisLine, $tistisColumn ),
 	  $tistisGapLine;
         push @mistakes,
@@ -1042,10 +1044,10 @@ sub checkKingsideJog {
         return \@mistakes;
     }
 
-    if ( not $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
+    if ( my $gapMsg = $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
         my $msg = sprintf 'Jog %s split body %s; %s',
           $sideDesc, describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
+          $gapMsg;
         push @mistakes,
           {
             desc           => $msg,
@@ -1063,7 +1065,8 @@ sub checkKingsideJog {
 sub checkQueensideJog {
     my ( $policy, $node, $context ) = @_;
     my $instance = $policy->{lint};
-    my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
+    my ( $parentLine, $parentColumn ) =
+      $instance->line_column( $node->{start} );
     my $ruleID   = $node->{ruleID};
     my $fileName = $instance->{fileName};
     my $grammar  = $instance->{grammar};
@@ -1109,8 +1112,8 @@ sub checkQueensideJog {
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
             child          => 1,
@@ -1119,31 +1122,9 @@ sub checkQueensideJog {
           };
     }
 
-    my $expectedBodyColumn = $brickColumn + 2;
-    if (    $headLine != $bodyLine
-        and $bodyColumn != $expectedBodyColumn )
-    {
-
-        my $msg = sprintf 'Jog %s body %s; %s',
-          $sideDesc,
-          describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            child          => 2,
-            expectedColumn => $expectedBodyColumn,
-            topicLines     => [$brickLine],
-          };
-    }
-
     # Check for flat queenside misalignments
+    my $expectedBodyColumn = $jogBodyColumn;
     if ( $headLine == $bodyLine ) {
-        $expectedBodyColumn = $jogBodyColumn;
         my $gapLength = $gap->{length};
         if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
             my $msg = sprintf 'Jog %s body %s; %s',
@@ -1153,8 +1134,8 @@ sub checkQueensideJog {
             push @mistakes,
               {
                 desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
                 child          => 2,
@@ -1162,6 +1143,45 @@ sub checkQueensideJog {
                 topicLines     => [$brickLine],
               };
         }
+        return \@mistakes;
+    }
+
+    # If here, this is a split jog
+    $expectedBodyColumn = $brickColumn + 2;
+    if ( $bodyColumn != $expectedBodyColumn ) {
+
+        my $msg = sprintf 'Jog %s body %s; %s',
+          $sideDesc,
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedBodyColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            child          => 2,
+            expectedColumn => $expectedBodyColumn,
+            topicLines     => [$brickLine],
+          };
+        return \@mistakes;
+    }
+
+    if ( my $gapMsg = $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
+        my $msg = sprintf 'Jog %s split body %s; %s',
+          $sideDesc, describeLC( $bodyLine, $bodyColumn ),
+          $gapMsg;
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedBodyColumn,
+            topicLines     => [$brickLine],
+          };
     }
     return \@mistakes;
 }
