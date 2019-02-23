@@ -104,9 +104,11 @@ sub pseudoJoinColumn {
     return if $firstNewline < 0;
     my $firstColon = index $gapLiteral, ':';
     if ( $firstColon >= 0 and $firstColon < $firstNewline ) {
+        ( undef, $commentColumn ) =
           $instance->line_column( $gapStart + $firstColon );
     }
 
+    # say STDERR join " ", __FILE__, __LINE__, "commentColumn", $commentColumn;
     return -1 if not $commentColumn;
 
     # If the last line of the gap does not end in a newline,
@@ -549,7 +551,7 @@ sub is_1Jogging {
     my ( $firstChildLine, $firstChildColumn ) =
       @{ $gapIndents->[1] };
     if ( $firstChildLine != $runeLine ) {
-        say STDERR join " ", __FILE__, __LINE__;
+        # say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "1-jogging %s head %s; should be on rune line %d",
           $chessSide,
@@ -973,15 +975,17 @@ sub checkKingsideJog {
 
     # If here head line != body line
     my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
+    # say STDERR join " ", __FILE__, __LINE__, "pseudo join column", $pseudoJoinColumn;
     if ( $pseudoJoinColumn >= 0 ) {
         my $expectedBodyColumn = $pseudoJoinColumn;
+	# say STDERR join " ", __FILE__, __LINE__, "body column", $bodyColumn;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
               sprintf
               'Pseudo-joined %s Jog %s; body/comment mismatch; body is %s',
               $sideDesc,
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $expectedBodyColumn, $bodyColumn );
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -1017,9 +1021,29 @@ sub checkKingsideJog {
 	return \@mistakes;
     }
 
+    # If here, this is (or should be) a split jog
     my $expectedBodyColumn = $brickColumn + 4;
+
     if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'Jog %s body %s; %s',
+          $sideDesc,
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedBodyColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedBodyColumn,
+            topicLines     => [$brickLine],
+          };
+        return \@mistakes;
+    }
+
+    if ( not $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
+        my $msg = sprintf 'Jog %s split body %s; %s',
           $sideDesc, describeLC( $bodyLine, $bodyColumn ),
           describeMisindent( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
@@ -1029,7 +1053,6 @@ sub checkKingsideJog {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            child          => 2,
             expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
           };
