@@ -974,6 +974,49 @@ sub checkKingsideJog {
 
     # If here head line != body line
     my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
+    if ( $pseudoJoinColumn >= 0 ) {
+        my $expectedBodyColumn = $pseudoJoinColumn;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf
+              'Pseudo-joined %s Jog %s; body/comment mismatch; body is %s',
+              $sideDesc,
+              describeLC( $parentLine, $parentColumn ),
+              describeMisindent( $expectedBodyColumn, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                child          => 2,
+                expectedColumn => $expectedBodyColumn,
+                topicLines     => [$brickLine],
+              };
+        }
+        my $headLength = $head->{length};
+
+        # Treat the jogging body alignment as the "expected one"
+        my $expectedColumn = $jogBodyColumn;
+        my $raggedColumn   = $headColumn + $headLength + 2;
+        if ( $bodyColumn != $raggedColumn and $bodyColumn != $expectedColumn ) {
+            my $msg = sprintf 'Pseudo-joined %s Jog %s; body %s',
+              $sideDesc, describeLC( $parentLine, $parentColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+                topicLines     => [$brickLine],
+              };
+        }
+	return \@mistakes;
+    }
 
     my $expectedBodyColumn = $brickColumn + 4;
     if ( $bodyColumn != $expectedBodyColumn ) {
