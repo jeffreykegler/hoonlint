@@ -104,7 +104,6 @@ sub pseudoJoinColumn {
     return if $firstNewline < 0;
     my $firstColon = index $gapLiteral, ':';
     if ( $firstColon >= 0 and $firstColon < $firstNewline ) {
-        my ( undef, $commentColumn ) =
           $instance->line_column( $gapStart + $firstColon );
     }
 

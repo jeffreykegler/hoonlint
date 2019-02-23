@@ -252,12 +252,10 @@ sub contextDisplay {
     my $doConsec = sub () {
         my ( $start, $end ) = @_;
         $start = 1            if $start < 1;
-        $end   = $#$lineToPos if $end > $#$lineToPos;
+        $end   = $#$lineToPos-1 if $end >= $#$lineToPos;
         for my $lineNum ( $start .. $end ) {
             my $startPos = $lineToPos->[$lineNum];
-            my $line =
-              $instance->literal( $startPos,
-                ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
+            my $line = $instance->literalLine($lineNum);
             my $tag          = $tag{$lineNum} // q{ };
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
