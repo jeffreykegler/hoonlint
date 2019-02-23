@@ -510,6 +510,7 @@ sub brickLC {
 
 sub new {
     my ($class, $config) = (@_);
+    my $fileName = $config->{fileName};
     my %lint         = %{$config};
     my $lintInstance = \%lint;
     bless $lintInstance, "MarpaX::YAHC::Lint";
@@ -704,7 +705,7 @@ EOS
             keys %{ $unusedSuppressions->{$type} }
           )
         {
-            say "Unused suppression: $type $tag";
+            say "Unused suppression: $fileName $type $tag";
         }
     }
 
