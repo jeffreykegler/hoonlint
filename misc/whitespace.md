@@ -178,12 +178,12 @@ is the column at which the hoon's rune begins.
 ## Proper spacing of jogs
 
 The indentation of a jog is that of its head.
-A kingside jog should have an indentation 1 stop greater than
-the base column of its jogging hoon.
-A queenside jog should have an indentation 2 stops greater than
-the base column of its jogging hoon.
-The base column of a jogging hoon is described below,
-in the description for the different kinds of jogging hoon.
+A joined is **joined** if its head is on the same
+line as its body.
+Otherwise, a jog is **multiline**.
+As explained below,
+a multiline jog may be either **pseudo-joined**
+or **split**.
 
 A joined jog may be either **aligned** or **ragged**.
 A joined jog is ragged is its body is indented 1 stop after
@@ -194,6 +194,29 @@ All aligned jogs in a jogging should be indented to the
 same column.
 This column is called the **jog body column** of the jogging.
 
+Jogs are either kingside or queenside.
+A kingside jog should have an indentation 1 stop greater than
+the base column of its jogging hoon.
+A queenside jog should have an indentation 2 stops greater than
+the base column of its jogging hoon.
+The base column of a jogging hoon is described below,
+in the description for the different kinds of jogging hoon.
+
+A multi-line kingside jog may either be pseudo-joined or split.
+A multi-line kingside jog must be a split jog.
+
+A jog is **pseudo-joined** if and only every line of it,
+except the body line,
+has a comment aligned with the body.
+The body of a pseudo-joined jog should be indented two
+more stops than the head of the jog.
+Pseudo-joined jogs are so called because the comment on the
+line of the head of the jog is a kind of "place holder" for
+the join,
+and the comments can be seen as "postponing" the join.
+
+The gap of split jog, should be newline-equivalent,
+with the gap's comments are aligned with the jog body.
 The indentation of the body of a split kingside jog
 should be 1 stop *greater* than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
