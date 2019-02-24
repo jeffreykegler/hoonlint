@@ -227,7 +227,7 @@ line of the head of the jog is a kind of "place holder" for
 the join,
 and the comments can be seen as "postponing" the join.
 
-The gap of split jog, should be newline-equivalent,
+The gap of split jog should be newline-equivalent,
 with the gap's comments aligned with the jog body.
 The indentation of the body of a split kingside jog
 should be 1 stop *greater* than the indentation of the jog's head.
@@ -247,18 +247,22 @@ from the start of its jogging.
 The TISTIS of a queenside jogging should be outdented two stops
 from the start of its jogging.
 
+## Criss-cross TISTIS lines
+
 Successive TISTIS's may occur on the same line,
 as part of a **criss-cross TISTIS line**.
 If a TISTIS is in a criss-cross line, it does not have to
 be properly aligned, if some other TISTIS with the required alignment
 "stands in" for it.
 
-When this is consistently done,
-a diagram showing
-the containments of the jogging hoons,
-if it took alignment as its key to which TISTIS matched which rune,
-would show containments that appeared to "criss-cross".
-This is the source of the name.
+Such lines are called "criss-cross" because,
+it the boundaries of the hoons were drawn on a tree diagram
+of the parse,
+and the boundaries were drawn based on matching TISTIS's according
+to alignment,
+rather than following the logic of the syntax,
+the boundaries at the criss-cross TISTIS line
+would cross each other.
 
 ## Proper spacing of 1-jogging hoons
 
@@ -328,6 +332,7 @@ If more than one column is "most common",
 so that there is a tie,
 the jogging body column is
 the body column of the lexically first jog to have its jog body
-at one of the most common columns.
+start at one of the most common columns.
 If there are no aligned jogs in a jogging,
-the jogging body column is the body column of the first jog in the jogging.
+the jogging body column is the body column of the
+lexically first jog in the jogging.
