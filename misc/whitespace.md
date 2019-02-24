@@ -192,7 +192,11 @@ Otherwise, a joined jog is considered aligned.
 
 All aligned jogs in a jogging should be indented to the
 same column.
-This column is called the **jog body column** of the jogging.
+This column is called the **jogging body column** of the jogging.
+A jog body which is a aligned at the jog body column
+is said to be **jogging-body-aligned**.
+A jog whose jog body is jogging-body-aligned
+is also said to be **jogging-body-aligned**.
 
 Jogs are either kingside or queenside.
 A kingside jog should have an indentation 1 stop greater than
@@ -204,19 +208,27 @@ in the description for the different kinds of jogging hoon.
 
 A multi-line kingside jog may either be pseudo-joined or split.
 A multi-line kingside jog must be a split jog.
+A jog is **pseudo-joined**
 
-A jog is **pseudo-joined** if and only every line of it,
+* if and only every line of it,
 except the body line,
-has a comment aligned with the body.
-The body of a pseudo-joined jog should be indented two
-more stops than the head of the jog.
+has a comment at the column where the properly aligned body of
+a ragged jog would start; or
+
+* if and only every line of it,
+except the body line,
+has a comment at the column where the properly aligned body of
+a jogging-body-aligned jog would start.
+
+Note that this implies that the line containing the head of the
+jog must contain a comment.
 Pseudo-joined jogs are so called because the comment on the
 line of the head of the jog is a kind of "place holder" for
 the join,
 and the comments can be seen as "postponing" the join.
 
 The gap of split jog, should be newline-equivalent,
-with the gap's comments are aligned with the jog body.
+with the gap's comments aligned with the jog body.
 The indentation of the body of a split kingside jog
 should be 1 stop *greater* than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
@@ -310,9 +322,12 @@ The chess-sidedness of a misindented jogging hoon is that of its
 jogging.
 
 In non-standard code,
-the jog body column of a jogging is considered to be the most common start column
+the jogging body column of a jogging is considered to be the most common start column
 of the bodies of the jogging's aligned jogs.
-In case of a tie, the body column of the first jog with one of the most common
-body columns is the jog body column of the jogging.
+If more than one column is "most common",
+so that there is a tie,
+the jogging body column is
+the body column of the lexically first jog to have its jog body
+at one of the most common columns.
 If there are no aligned jogs in a jogging,
-the jog body column is the body column of the first jog in the jogging.
+the jogging body column is the body column of the first jog in the jogging.
