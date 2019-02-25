@@ -495,11 +495,16 @@ sub ancestor {
     return;
 }
 
+sub nodeLC {
+    my ( $instance, $node ) = @_;
+    return $instance->line_column( $node->{start} )
+}
+
 sub brickLC {
     my ( $instance, $node ) = @_;
     my $thisNode = $node;
     while ($thisNode) {
-        return $instance->line_column( $thisNode->{start} )
+        return $instance->nodeLC($thisNode)
           if $instance->brickName($thisNode);
         $thisNode = $thisNode->{PARENT};
     }

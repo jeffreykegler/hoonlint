@@ -636,13 +636,19 @@ sub is_1Jogging {
 
 sub is_2Jogging {
     my ( $policy, $context, $node ) = @_;
-    my $gapIndents = $policy->calcGapIndents($node);
+    my (
+        $rune,       $headGap, $head,      $subHeadGap, $subhead,
+        $joggingGap, $jogging, $tistisGap, $tistis
+    ) = @{ $policy->gapSeq($node) };
     my $instance  = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
 
-    my $start = $node->{start};
-    my ( $runeLine,  $runeColumn )    = $instance->line_column($start);
+    my ( $runeLine,  $runeColumn )    = $instance->nodeLC($rune);
+    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+    my ( $subheadLine, $subheadColumn ) = $instance->nodeLC($subhead);
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
 
@@ -651,38 +657,36 @@ sub is_2Jogging {
 
     # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
-    my ( $firstChildLine, $firstChildColumn ) =
-      @{ $gapIndents->[1] };
-    if ( $firstChildLine != $runeLine ) {
+    if ( $headLine != $runeLine ) {
         my $msg = sprintf
 "Jogging-2-style child #%d @ line %d; first child is on line %d; should be on rune line",
-          1, $runeLine, $firstChildLine;
+          1, $runeLine, $headLine;
         push @mistakes,
           {
             desc         => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
-            line         => $firstChildLine,
-            column       => $firstChildColumn,
+            line         => $headLine,
+            column       => $headColumn,
             child        => 1,
             expectedLine => $runeLine,
           };
     }
 
     my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 6 : 8 );
-    if ( $firstChildColumn != $expectedColumn ) {
+    if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
           "Jogging-2-style %s child #%d @%d:%d; %s",
           $chessSide, 1, $runeLine,
-          $firstChildColumn + 1,
-          describeMisindent( $firstChildColumn, $expectedColumn );
+          $headColumn + 1,
+          describeMisindent( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
-            line           => $firstChildLine,
-            column         => $firstChildColumn,
+            line           => $headLine,
+            column         => $headColumn,
             child          => 1,
             expectedColumn => $expectedColumn,
           };
@@ -691,30 +695,27 @@ sub is_2Jogging {
     # Second child must be on rune line, or
     # at chess-side-dependent column
     $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
-    my ( $secondChildLine, $secondChildColumn ) =
-      @{ $gapIndents->[2] };
 
-    if (    $secondChildLine != $runeLine
-        and $secondChildColumn != $expectedColumn )
+    if (    $subheadLine != $runeLine
+        and $subheadColumn != $expectedColumn )
     {
         my $msg = sprintf
           "Jogging-2-style %s child #%d @%d:%d; %s",
-          $chessSide, 2, $secondChildLine,
-          $secondChildColumn + 1,
-          describeMisindent( $secondChildColumn, $expectedColumn );
+          $chessSide, 2, $subheadLine,
+          $subheadColumn + 1,
+          describeMisindent( $subheadColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
 	    parentLine => $parentLine,
 	    parentColumn => $parentColumn,
-            line           => $secondChildLine,
-            column         => $secondChildColumn,
+            line           => $subheadLine,
+            column         => $subheadColumn,
             child          => 2,
             expectedColumn => $expectedColumn,
           };
     }
 
-    my ( $tistisLine, $tistisColumn ) = @{ $gapIndents->[4] };
     if ( $tistisLine == $runeLine ) {
         my $msg = sprintf
           "Jogging-2-style line %d; TISTIS is on rune line %d; should not be",
