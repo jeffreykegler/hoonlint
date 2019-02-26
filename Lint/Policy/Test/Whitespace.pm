@@ -694,100 +694,175 @@ sub is_1Jogging {
 
 sub is_2Jogging {
     my ( $policy, $context, $node ) = @_;
-    my (
-        $rune,       $headGap, $head,      $subHeadGap, $subhead,
-        $joggingGap, $jogging, $tistisGap, $tistis
-    ) = @{ $policy->gapSeq($node) };
-    my $instance  = $policy->{lint};
-    my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
+    my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
-    my ( $runeLine,  $runeColumn )    = $instance->nodeLC($rune);
-    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
-    my ( $subheadLine, $subheadColumn ) = $instance->nodeLC($subhead);
-    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+    my (
+        $rune,       $headGap, $head,      $subheadGap, $subhead,
+        $joggingGap, $jogging, $tistisGap, $tistis
+    ) = @{ $policy->gapSeq($node) };
+
+    my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
+    my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
+    my ( $subheadLine,    $subheadColumn )    = $instance->nodeLC($subhead);
+    my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
+    my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
     $context->{chessSide} = $chessSide;
+    $context->{jogBodyColumn} = $jogBodyColumn
+      if defined $jogBodyColumn;
 
-    $context->{jogBodyColumn} = $jogBodyColumn if $jogBodyColumn;
-    $instance->internalError("Chess side undefined") unless $chessSide;
-
-    # say join " ", "=== jog census:", $side, ($flatJogColumn // 'na');
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
+        # say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
-"Jogging-2-style child #%d @ line %d; first child is on line %d; should be on rune line",
-          1, $runeLine, $headLine;
+          "2-jogging %s head %s; should be on rune line %d",
+          $chessSide,
+          describeLC( $headLine, $headColumn ),
+          $runeLine;
         push @mistakes,
           {
             desc         => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
             line         => $headLine,
             column       => $headColumn,
-            child        => 1,
             expectedLine => $runeLine,
           };
     }
 
-    my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 6 : 8 );
+    my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
     if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
-          "Jogging-2-style %s child #%d @%d:%d; %s",
-          $chessSide, 1, $runeLine,
-          $headColumn + 1,
+          "2-jogging %s head %s; %s",
+          $chessSide,
+          describeLC( $headLine, $headColumn ),
           describeMisindent( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
-            child          => 1,
             expectedColumn => $expectedColumn,
           };
     }
 
-    # Second child must be on rune line, or
-    # at chess-side-dependent column
-    $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
+    if ( $headLine == $subheadLine ) {
+        if ( $subheadGap->{length} != 2 ) {
+            my ( undef, $subheadGapColumn ) = nodeLC($subheadGap);
+            my $expectedColumn = $subheadGapColumn + 2;
+            my $msg            = sprintf
+              "2-jogging %s subhead %s; %s",
+              $chessSide,
+              describeLC( $subheadLine, $subheadColumn ),
+              describeMisindent( $subheadColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+    }
 
-    if (    $subheadLine != $runeLine
-        and $subheadColumn != $expectedColumn )
+    if ( $headLine != $subheadLine ) {
+
+        # If here, we have "split heads", which should follow the "pseudo-jog"
+        # format
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $subheadGap, $runeColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "2-jogging %s subhead %s; %s",
+                  $chessSide,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                my ($subheadGapLine) = $instance->nodeLC($subheadGap);
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $runeLine,
+                    parentColumn => $runeColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [$subheadLine],
+                  };
+            }
+        }
+        my $expectedColumn = $headColumn - 2;
+        if ( $subheadColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "2-jogging %s subhead %s; %s",
+              $chessSide,
+              describeLC( $subheadLine, $subheadColumn ),
+              describeMisindent( $subheadColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $subheadLine,
+                column         => $subheadColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+    }
+
+    if ( my @gapMistakes = @{$policy->isOneLineGap( $joggingGap, $runeColumn )} )
     {
-        my $msg = sprintf
-          "Jogging-2-style %s child #%d @%d:%d; %s",
-          $chessSide, 2, $subheadLine,
-          $subheadColumn + 1,
-          describeMisindent( $subheadColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
-            line           => $subheadLine,
-            column         => $subheadColumn,
-            child          => 2,
-            expectedColumn => $expectedColumn,
-          };
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "2-jogging %s jogging %s; %s",
+              $chessSide,
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            my ($joggingGapLine) = $instance->nodeLC($joggingGap);
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$joggingLine],
+              };
+        }
     }
 
-    if ( $tistisLine == $runeLine ) {
-        my $msg = sprintf
-          "Jogging-2-style line %d; TISTIS is on rune line %d; should not be",
-          $runeLine, $tistisLine;
-        push @mistakes,
-          {
-            desc         => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
-            line         => $tistisLine,
-            column       => $tistisColumn,
-            child        => 3,
-            expectedLine => $runeLine,
-          };
+    if ( my @gapMistakes = @{$policy->isOneLineGap( $tistisGap, $runeColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "2-jogging %s TISTIS %s; %s",
+              $chessSide,
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$tistisLine],
+              };
+        }
     }
 
     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
@@ -799,17 +874,16 @@ sub is_2Jogging {
         $tistisIsMisaligned = $tistis ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf "Jogging-2-style; TISTIS @%d:%d; %s",
-          $tistisLine, $tistisColumn + 1,
+        my $msg = sprintf "2-jogging TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
           describeMisindent( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            child          => 3,
             expectedColumn => $runeColumn,
           };
     }
