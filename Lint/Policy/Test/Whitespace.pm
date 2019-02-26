@@ -133,6 +133,7 @@ sub pseudoJoinColumn {
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
     my ( $policy, $gap, $expectedColumn ) = @_;
+    my @mistakes = ();
     my $instance = $policy->{lint};
     my $start    = $gap->{start};
     my $end      = $start + $gap->{length};
@@ -144,18 +145,38 @@ sub isOneLineGap {
     if (    $startLine == $endLine
         and $instance->literal( $start - 2, 2 ) ne '==' )
     {
-        return "missing newline " . describeLC( $startLine, $startColumn );
+        return [{
+            msg  => "missing newline " . describeLC( $startLine, $startColumn ),
+            line => $startLine,
+            column => $startColumn,
+        }];
     }
-    for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
+  LINE: for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
         my $literalLine = $instance->literalLine($lineNum);
         my $commentOffset = index $literalLine, ':';
 
-        # say STDERR "comment offset $commentOffset vs. $expectedColumn";
-        return "missing comment on line $lineNum" if $commentOffset < 0;
-        return "comment " . describeMisindent( $commentOffset, $expectedColumn )
-          if $commentOffset != $expectedColumn;
+        if ( $commentOffset < 0 ) {
+            push @mistakes,
+              {
+                msg    => "missing comment on line $lineNum",
+                line   => $lineNum,
+                column => 0,
+              };
+            next LINE;
+        }
+        if ( $commentOffset != $expectedColumn ) {
+            push @mistakes,
+              {
+                msg => "comment "
+                  . describeMisindent( $commentOffset, $expectedColumn ),
+                line   => $lineNum,
+                column => $commentOffset,
+              };
+            next LINE;
+        }
+
     }
-    return;
+    return \@mistakes;
 }
 
 sub is_0Running {
@@ -301,24 +322,27 @@ sub is_1Running {
         my $runStep = $runningChildren->[$childIX];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
-        if ( my $gapMsg = $policy->isOneLineGap($lastGap, $runeColumn) ) {
-	    my ($lastGapLine) = $instance->line_column($lastGap->{start});
-	    my $expectedLine = $lastGapLine + 1;
-            my $msg = sprintf
-              "1-running runstep #%d %s; %s",
-              ( $childIX / 2 ) + 1,
-              describeLC( $runStepLine, $runStepColumn ),
-	      $gapMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $runStepLine,
-                parentColumn => $runStepColumn,
-                line         => $runStepLine,
-                column       => $runStepColumn,
-                expectedLine => $expectedLine,
-		topicLines     => [$parentLine, $expectedLine],
-              };
+        if ( my @gapMistakes = @{ $policy->isOneLineGap( $lastGap, $runeColumn )} )
+        {
+            for my $gapMistake ( @gapMistakes ) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "1-running runstep #%d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $runStepLine,
+                    parentColumn => $runStepColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [ $runStepLine, $parentLine ],
+                  };
+            }
         }
         if ( $runStepColumn != $expectedColumn ) {
             my $msg = sprintf
@@ -342,23 +366,27 @@ sub is_1Running {
         $childIX += 2;
     }
 
-    if ( my $gapMsg = $policy->isOneLineGap($tistisGap, $runeColumn) ) {
-        my $msg = sprintf
-          "1-running TISTIS %s; $gapMsg",
-          describeLC( $tistisLine, $tistisColumn ),
-	  $tistisGapLine;
-        push @mistakes,
-          {
-            desc         => $msg,
-            parentLine   => $parentLine,
-            parentColumn => $parentColumn,
-            line         => $tistisLine,
-            column       => $tistisColumn,
-            child        => 3,
-            expectedLine => $runeLine,
-	    topicLines     => [$parentLine, $tistisGapLine],
-          };
-    }
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $runeColumn )} )
+        {
+            for my $gapMistake ( @gapMistakes ) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "1-running TISTIS %s; $gapMistakeMsg",
+                  describeLC( $tistisLine, $tistisColumn ),
+                  $tistisGapLine;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [ $parentLine, $tistisLine ],
+                  };
+            }
+        }
 
     $expectedColumn = $runeColumn;
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
@@ -592,39 +620,51 @@ sub is_1Jogging {
           };
     }
 
-    if ( my $gapMsg = $policy->isOneLineGap($joggingGap, $runeColumn) ) {
-        my $msg = sprintf
-          "1-jogging %s jogging %s; %s",
-          $chessSide,
-          describeLC( $tistisLine, $tistisColumn ),
-	  $gapMsg;
-	my ( $joggingGapLine ) = $instance->nodeLC($joggingGap);
-        push @mistakes,
-          {
-            desc         => $msg,
-            parentLine   => $runeLine,
-            parentColumn => $runeColumn,
-            line         => $joggingLine,
-            column       => $joggingColumn,
-            expectedLine => $joggingGapLine+1,
-          };
+    if ( my @gapMistakes = @{$policy->isOneLineGap( $joggingGap, $runeColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "1-jogging %s jogging %s; %s",
+              $chessSide,
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            my ($joggingGapLine) = $instance->nodeLC($joggingGap);
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$joggingLine],
+              };
+        }
     }
 
-    if ( my $gapMsg = $policy->isOneLineGap($tistisGap, $runeColumn) ) {
-        my $msg = sprintf
-          "1-jogging %s TISTIS %s; %s",
-          $chessSide,
-          describeLC( $tistisLine, $tistisColumn ),
-	  $gapMsg;
-        push @mistakes,
-          {
-            desc         => $msg,
-            parentLine   => $runeLine,
-            parentColumn => $runeColumn,
-            line         => $tistisLine,
-            column       => $tistisColumn,
-            expectedLine => $runeLine,
-          };
+    if ( my @gapMistakes = @{$policy->isOneLineGap( $tistisGap, $runeColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "1-jogging %s TISTIS %s; %s",
+              $chessSide,
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$tistisLine],
+              };
+        }
     }
 
     my $tistisIsMisaligned = $tistisColumn != $runeColumn;
@@ -1063,20 +1103,25 @@ sub checkKingsideJog {
         return \@mistakes;
     }
 
-    if ( my $gapMsg = $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
-        my $msg = sprintf 'Jog %s split body %s; %s',
-          $sideDesc, describeLC( $bodyLine, $bodyColumn ),
-          $gapMsg;
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
-            topicLines     => [$brickLine],
-          };
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $expectedBodyColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Jog %s split body %s; %s',
+              $sideDesc, describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $bodyLine, $brickLine ],
+              };
+        }
     }
     return \@mistakes;
 }
@@ -1187,20 +1232,25 @@ sub checkQueensideJog {
         return \@mistakes;
     }
 
-    if ( my $gapMsg = $policy->isOneLineGap( $gap, $expectedBodyColumn ) ) {
-        my $msg = sprintf 'Jog %s split body %s; %s',
-          $sideDesc, describeLC( $bodyLine, $bodyColumn ),
-          $gapMsg;
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
-            topicLines     => [$brickLine],
-          };
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $expectedBodyColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Jog %s split body %s; %s',
+              $sideDesc, describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $bodyLine, $brickLine ],
+              };
+        }
     }
     return \@mistakes;
 }
