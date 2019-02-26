@@ -379,3 +379,20 @@ hoons/arvo/sys/vane/ames.hoon 1325:21 Test::Whitespace tallCentis Jog kingside h
 hoons/arvo/sys/vane/xmas.hoon 863:7 Test::Whitespace tallCentis 1-jogging kingside head @863:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3854:7 Test::Whitespace tallCentis 1-jogging kingside head @3854:12; overindented by 1
 hoons/arvo/sys/zuse.hoon 4166:7 Test::Whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2
+
+# From Github issue #15
+hoons/arvo/app/hall.hoon 365:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @366:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 365:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @367:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 414:7 Test::Whitespace tallWuthep 1-jogging kingside jogging @415:9; comment overindented by 2
+hoons/arvo/app/talk.hoon 1056:9 Test::Whitespace tallWuthep 1-jogging kingside jogging @1057:11; comment overindented by 2
+hoons/arvo/lib/down-jet/rend.hoon 129:5 Test::Whitespace tallWuthep 1-jogging kingside TISTIS @153:1; missing comment on line 153
+hoons/arvo/mar/txt.hoon 110:7 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @126:9; comment overindented by 2
+hoons/arvo/sys/hoon.hoon 11270:13 Test::Whitespace tallWuthep 1-jogging kingside jogging @11271:9; comment underindented by 4
+hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4059:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4060:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4061:5; comment overindented by 2
+hoons/arvo/sys/vane/gall.hoon 500:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @501:7; comment overindented by 2
+hoons/arvo/sys/vane/xmas.hoon 600:7 Test::Whitespace tallCentis 1-jogging kingside jogging @601:9; comment overindented by 2
+hoons/arvo/sys/zuse.hoon 3438:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3439:11; comment overindented by 4
+hoons/arvo/sys/zuse.hoon 3492:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3493:11; comment overindented by 4
+hoons/arvo/sys/zuse.hoon 3511:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3512:11; comment overindented by 4
