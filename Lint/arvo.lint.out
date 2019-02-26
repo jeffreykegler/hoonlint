@@ -170,9 +170,6 @@ hoons/arvo/sys/zuse.hoon 3292:13 Test::Whitespace tallKethep Child #2 @ line 329
 hoons/arvo/sys/zuse.hoon 3316:13 Test::Whitespace tallKetwut Child #1 @ line 3317; backdent is 2; should be 12
 hoons/arvo/sys/zuse.hoon 3324:9 Test::Whitespace tallKettis Child #2 @ line 3325; backdent is 6; should be 8
 hoons/arvo/sys/zuse.hoon 3372:13 Test::Whitespace tallKetwut Child #1 @ line 3373; backdent is 4; should be 12
-hoons/arvo/sys/zuse.hoon 3438:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3439:11; comment overindented by 4
-hoons/arvo/sys/zuse.hoon 3492:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3493:11; comment overindented by 4
-hoons/arvo/sys/zuse.hoon 3511:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3512:11; comment overindented by 4
 hoons/arvo/sys/zuse.hoon 3562:15 Test::Whitespace tallKethep Child #2 @ line 3563; backdent is 10; should be 6
 hoons/arvo/sys/zuse.hoon 3737:15 Test::Whitespace tallKethep Child #2 @ line 3738; backdent is 10; should be 6
 hoons/arvo/sys/zuse.hoon 3762:13 Test::Whitespace tallKetwut Child #1 @ line 3763; backdent is 2; should be 12
@@ -552,7 +549,6 @@ hoons/arvo/sys/hoon.hoon 11108:23 Test::Whitespace tallKetlus Child #2 @ line 11
 hoons/arvo/sys/hoon.hoon 11135:13 Test::Whitespace tallKethep Child #2 @ line 11136; backdent is 10; should be 8
 hoons/arvo/sys/hoon.hoon 11203:17 Test::Whitespace tallKetlus Child #2 @ line 11206; backdent is 8; should be 16
 hoons/arvo/sys/hoon.hoon 11240:13 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @11240:17; underindented by 2
-hoons/arvo/sys/hoon.hoon 11270:13 Test::Whitespace tallWuthep 1-jogging kingside jogging @11271:9; comment underindented by 4
 hoons/arvo/sys/hoon.hoon 11318:19 Test::Whitespace tallKetlus Child #2 @ line 11319; backdent is 10; should be 18
 hoons/arvo/sys/hoon.hoon 11355:19 Test::Whitespace tallSemsig 1-running runstep #1 @11355:17; missing newline @11355:17
 hoons/arvo/sys/hoon.hoon 11355:19 Test::Whitespace tallSemsig 1-running runstep #1 @11355:19; overindented by 8
@@ -756,7 +752,6 @@ hoons/arvo/sys/vane/gall.hoon 53:1 Test::Whitespace LuslusCell Child #2 @ line 5
 hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tallTissig Child #3 @ line 97; backdent is 3; should be 4
 hoons/arvo/sys/vane/gall.hoon 317:5 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @317:11; underindented by 2
 hoons/arvo/sys/vane/gall.hoon 342:16 Test::Whitespace tallTisdot Child #3 @ line 343; backdent is 14; should be 15
-hoons/arvo/sys/vane/gall.hoon 500:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @501:7; comment overindented by 2
 hoons/arvo/sys/vane/gall.hoon 632:7 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @632:11; underindented by 2
 hoons/arvo/sys/vane/gall.hoon 743:9 Test::Whitespace tallColtar Child #2 @ line 755; backdent is 12; should be 8
 hoons/arvo/sys/vane/gall.hoon 750:13 Test::Whitespace tallColtar Child #2 @ line 755; backdent is 8; should be 12
@@ -847,7 +842,6 @@ hoons/arvo/sys/vane/xmas.hoon 89:1 Test::Whitespace LuslusCell Child #2 @ line 9
 hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tallTissig Child #2 @ line 104; backdent is 0; should be 6
 hoons/arvo/sys/vane/xmas.hoon 434:11 Test::Whitespace tallZapcol Child #1 @ line 435; backdent is 2; should be 10
 hoons/arvo/sys/vane/xmas.hoon 460:13 Test::Whitespace tallColsig Child #2 @ line 462; backdent is 12; should be 8
-hoons/arvo/sys/vane/xmas.hoon 600:7 Test::Whitespace tallCentis 1-jogging kingside jogging @601:9; comment overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 764:11 Test::Whitespace tallKethep Child #2 @ line 769; backdent is 10; should be 6
 hoons/arvo/sys/vane/xmas.hoon 919:5 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @919:9; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1148:13 Test::Whitespace tallKethep Child #2 @ line 1149; backdent is 12; should be 8
@@ -940,9 +934,6 @@ hoons/arvo/sys/vane/clay.hoon 3769:28 Test::Whitespace tallColhep Child #2 @ lin
 hoons/arvo/sys/vane/clay.hoon 3900:9 Test::Whitespace tallKethep Child #2 @ line 3901; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 3931:5 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @3931:11; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 4007:11 Test::Whitespace tallKethep Child #2 @ line 4008; backdent is 10; should be 6
-hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4059:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4060:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 3924:3 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @4061:5; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 4078:9 Test::Whitespace tallKethep Child #2 @ line 4079; backdent is 8; should be 4
 === hoons/arvo/sys/vane/jael.hoon ===
 hoons/arvo/sys/vane/jael.hoon 42:5 Test::Whitespace tallBarcen Child #1 @ line 43; backdent is 0; should be 4
@@ -1119,7 +1110,6 @@ hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol Child #2 @ line 949;
 hoons/arvo/app/talk.hoon 989:7 Test::Whitespace tallWutlus Jogging-2-style queenside child #1 @989:11; underindented by 4
 hoons/arvo/app/talk.hoon 989:7 Test::Whitespace tallWutlus Jogging-2-style queenside child #2 @990:9; underindented by 4
 hoons/arvo/app/talk.hoon 1002:7 Test::Whitespace tallTisket Child #3 @ line 1003; backdent is 10; should be 8
-hoons/arvo/app/talk.hoon 1056:9 Test::Whitespace tallWuthep 1-jogging kingside jogging @1057:11; comment overindented by 2
 hoons/arvo/app/talk.hoon 1769:7 Test::Whitespace tallColhep Child #2 @ line 1770; backdent is 10; should be 6
 hoons/arvo/app/talk.hoon 1810:7 Test::Whitespace tallTisfas Child #2 @ line 1811; backdent is 10; should be 8
 hoons/arvo/app/talk.hoon 1978:3 Test::Whitespace tallBarcab Child #1 @ line 1980; backdent is 6; should be 4
@@ -1147,9 +1137,6 @@ hoons/arvo/app/hall.hoon 58:7 Test::Whitespace tallBuccen Child #1 @ line 59; ba
 hoons/arvo/app/hall.hoon 83:7 Test::Whitespace tallBucwut 82:11 83:7
 hoons/arvo/app/hall.hoon 82:7 Test::Whitespace tallBucwut Child #2 @ line 88; backdent is 10; should be 6
 hoons/arvo/app/hall.hoon 240:3 Test::Whitespace tallBarcab Child #1 @ line 242; backdent is 6; should be 4
-hoons/arvo/app/hall.hoon 365:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @366:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 365:5 Test::Whitespace tallWuthep 1-jogging kingside jogging @367:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 414:7 Test::Whitespace tallWuthep 1-jogging kingside jogging @415:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 659:5 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @659:9; underindented by 2
 hoons/arvo/app/hall.hoon 671:37 Test::Whitespace tallTisgal Child #2 @ line 672; backdent is 4; should be 23
 hoons/arvo/app/hall.hoon 680:37 Test::Whitespace tallTisgal Child #2 @ line 681; backdent is 4; should be 23
@@ -1246,7 +1233,6 @@ hoons/arvo/lib/down-jet/rend.hoon 24:27 Test::Whitespace tallBartis Child #2 @ l
 hoons/arvo/lib/down-jet/rend.hoon 26:7 Test::Whitespace tallWutlus Jogging-2-style kingside child #1 @26:11; underindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 32:1 Test::Whitespace LuslusCell Child #2 @ line 33; backdent is 1; should be 2
 hoons/arvo/lib/down-jet/rend.hoon 62:7 Test::Whitespace tallKethep Child #2 @ line 63; backdent is 6; should be 2
-hoons/arvo/lib/down-jet/rend.hoon 129:5 Test::Whitespace tallWuthep 1-jogging kingside TISTIS @153:1; missing comment on line 153
 hoons/arvo/lib/down-jet/rend.hoon 160:7 Test::Whitespace tallKethep Child #2 @ line 161; backdent is 6; should be 2
 === hoons/arvo/lib/down-jet/parse.hoon ===
 hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tallTissig Child #1 @ line 9; backdent is 0; should be 8
@@ -1583,7 +1569,6 @@ hoons/arvo/mar/front.hoon 18:11 Test::Whitespace wisp5d Child #1 @ line 20; back
 hoons/arvo/mar/txt.hoon 41:5 Test::Whitespace tallBarket Child #1 @ line 42; backdent is 4; should be 6
 hoons/arvo/mar/txt.hoon 102:5 Test::Whitespace tallBarket Child #1 @ line 103; backdent is 4; should be 6
 hoons/arvo/mar/txt.hoon 123:13 Test::Whitespace tallKethep Child #2 @ line 124; backdent is 12; should be 8
-hoons/arvo/mar/txt.hoon 110:7 Test::Whitespace tallWuthep 1-jogging queenside TISTIS @126:9; comment overindented by 2
 hoons/arvo/mar/txt.hoon 132:13 Test::Whitespace tallKethep Child #2 @ line 133; backdent is 12; should be 8
 hoons/arvo/mar/txt.hoon 141:13 Test::Whitespace tallKethep Child #2 @ line 142; backdent is 12; should be 8
 hoons/arvo/mar/txt.hoon 157:11 Test::Whitespace tallColcab Child #2 @ line 158; backdent is 10; should be 6
