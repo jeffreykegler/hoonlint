@@ -267,7 +267,8 @@ would cross each other.
 ## Proper spacing of 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
-The base column for jogs of a 1-jogging hoon is its rune column.
+The base column
+for the jogs of a 1-jogging hoon is its rune column.
 
 "Sidedness" should be consistent:
 
@@ -284,6 +285,52 @@ It should be on the rune line,
 indented 2 stops after the rune.
 
 * The jogging of a queenside 1-jogging hoon should be queenside.
+It should be on a line after the rune line,
+and should consist entirely of queenside jogs.
+
+## Proper spacing of 2-jogging hoons
+
+Every 2-jogging hoon is either kingside or queenside.
+The base column
+for the jogs of a 2-jogging hoon is its rune column.
+
+If the head and subhead of a 2-jogging hoon are on the
+same line, the 2-jogging hoon is called **head-joined**.
+If the head and subhead of a 2-jogging hoon are on
+different lines, the 2-jogging hoon is called **head-split**.
+
+"Sidedness" should be consistent:
+
+* The head of a kingside 2-jogging head-joined hoon should be kingside.
+It should be on the rune line,
+indented 1 stop after the rune.
+
+* The head of a queenside 2-jogging head-joined hoon should be queenside.
+It should be on the rune line,
+indented 2 stops after the rune.
+
+* The head of a head-split 2-jogging has no sidedness.
+It should be on the rune line,
+indented 1 stop after the rune.
+
+* The subhead of a head-joined 2-jogging hoon
+is on the rune line, and
+should be indented one stop after the head.
+
+* The subhead of a head-split 2-jogging hoon
+should be one newline-equivalent after the
+the rune line, and
+should be indented one stop less than the head.
+This style is more indentation-conserving than backdenting.
+It is called the "pseudo-jog" style, because arrangement
+of the head
+and subhead resembles that of a queenside jog.
+
+* The jogging of a kingside 2-jogging hoon should be kingside.
+It should be on a line after the rune line,
+and should consist entirely of kingside jogs.
+
+* The jogging of a queenside 2-jogging hoon should be queenside.
 It should be on a line after the rune line,
 and should consist entirely of queenside jogs.
 
