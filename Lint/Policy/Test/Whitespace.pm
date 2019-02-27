@@ -732,27 +732,27 @@ sub is_2Jogging {
           };
     }
 
-    my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
-    if ( $headColumn != $expectedColumn ) {
-        my $msg = sprintf
-          "2-jogging %s head %s; %s",
-          $chessSide,
-          describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $headLine,
-            column         => $headColumn,
-            expectedColumn => $expectedColumn,
-          };
-    }
-
     if ( $headLine == $subheadLine ) {
+        my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
+        if ( $headColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "2-jogging %s head %s; %s",
+              $chessSide,
+              describeLC( $headLine, $headColumn ),
+              describeMisindent( $headColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+
         if ( $subheadGap->{length} != 2 ) {
-            my ( undef, $subheadGapColumn ) = nodeLC($subheadGap);
+            my ( undef, $subheadGapColumn ) = $instance->nodeLC($subheadGap);
             my $expectedColumn = $subheadGapColumn + 2;
             my $msg            = sprintf
               "2-jogging %s subhead %s; %s",
@@ -772,6 +772,23 @@ sub is_2Jogging {
     }
 
     if ( $headLine != $subheadLine ) {
+
+        my $expectedColumn = $runeColumn + 4;
+        if ( $headColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "2-jogging split head %s; %s",
+              describeLC( $headLine, $headColumn ),
+              describeMisindent( $headColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
 
         # If here, we have "split heads", which should follow the "pseudo-jog"
         # format
@@ -799,7 +816,8 @@ sub is_2Jogging {
                   };
             }
         }
-        my $expectedColumn = $headColumn - 2;
+
+        $expectedColumn = $headColumn - 2;
         if ( $subheadColumn != $expectedColumn ) {
             my $msg = sprintf
               "2-jogging %s subhead %s; %s",
