@@ -497,18 +497,22 @@ sub ancestor {
 
 sub nodeLC {
     my ( $instance, $node ) = @_;
-    return $instance->line_column( $node->{start} )
+    return $instance->line_column( $node->{start} );
+}
+
+sub brickNode {
+    my ( $instance, $node ) = @_;
+    my $thisNode = $node;
+    while ($thisNode) {
+        return $thisNode if $instance->brickName($thisNode);
+        $thisNode = $thisNode->{PARENT};
+    }
+    $instance->internalError("No brick parent");
 }
 
 sub brickLC {
     my ( $instance, $node ) = @_;
-    my $thisNode = $node;
-    while ($thisNode) {
-        return $instance->nodeLC($thisNode)
-          if $instance->brickName($thisNode);
-        $thisNode = $thisNode->{PARENT};
-    }
-    $instance->internalError("No brick parent");
+    return $instance->nodeLC( $instance->brickNode($node) );
 }
 
 sub new {
