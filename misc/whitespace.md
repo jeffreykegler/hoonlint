@@ -344,6 +344,8 @@ for the jogs of a jogging-1 hoon is one stop greater than its rune column.
 should start on the rune line,
 1 stop after the rune line,
 and should consist entirely of kingside jogs.
+This implies that the TISTIS should be indented one stop
+more than the rune column.
 
 * The tail of a jogging-1 hoon should be
 should be one new-line equivalent after the TISTIS,

@@ -543,6 +543,21 @@ sub joggingBodyAlignment {
     return $topBodyColumn;
 }
 
+sub censusJogging1_Hoon {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
+        my $bodyAlignment =
+          $policy->joggingBodyAlignment( $child );
+        return $bodyAlignment;
+    }
+    die "No jogging found for ", symbol($node);
+}
+
 sub censusJoggingHoon {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -921,7 +936,10 @@ sub is_Jogging1 {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $tailLine,  $tailColumn )  = $instance->nodeLC($tail);
 
-    my $jogBodyColumn = $policy->joggingBodyAlignment( $node );
+    my $jogBodyColumn = $policy->censusJogging1_Hoon( $node );
+
+    # say STDERR "Setting jog body column $jogBodyColumn";
+
     $context->{chessSide} = 'kingside';
     $context->{jogBodyColumn} = $jogBodyColumn
       if defined $jogBodyColumn;
@@ -988,7 +1006,7 @@ sub is_Jogging1 {
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
         my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
@@ -996,7 +1014,7 @@ sub is_Jogging1 {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "jogging-1 TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent( $tistisColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1108,6 +1126,9 @@ sub checkKingsideJog {
 
     if ( $headLine == $bodyLine ) {
         my $gapLength = $gap->{length};
+
+	# say STDERR "$gapLength $bodyColumn $jogBodyColumn";
+
         if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
