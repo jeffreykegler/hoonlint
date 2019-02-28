@@ -396,3 +396,61 @@ hoons/arvo/sys/vane/xmas.hoon 600:7 Test::Whitespace tallCentis 1-jogging kingsi
 hoons/arvo/sys/zuse.hoon 3438:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3439:11; comment overindented by 4
 hoons/arvo/sys/zuse.hoon 3492:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3493:11; comment overindented by 4
 hoons/arvo/sys/zuse.hoon 3511:7 Test::Whitespace tallWuthep 1-jogging queenside jogging @3512:11; comment overindented by 4
+
+# From Github issue #14
+# See https://github.com/jeffreykegler/yahc/issues/14#issuecomment-466734347
+hoons/arvo/gen/test.hoon 56:11 Test::Whitespace tallSemcol 1-running runstep #2 @56:11; should be on line 51
+hoons/arvo/lib/hood/drum.hoon 970:9 Test::Whitespace tallSemcol 1-running runstep #1 @970:9; overindented by 2
+hoons/arvo/lib/hood/drum.hoon 971:9 Test::Whitespace tallSemcol 1-running runstep #2 @971:9; overindented by 2
+hoons/arvo/lib/hood/drum.hoon 972:9 Test::Whitespace tallSemcol 1-running runstep #3 @972:9; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 13:13 Test::Whitespace tallSemcol 1-running runstep #1 @13:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 14:13 Test::Whitespace tallSemcol 1-running runstep #2 @14:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 15:13 Test::Whitespace tallSemcol 1-running runstep #3 @15:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 16:13 Test::Whitespace tallSemcol 1-running runstep #4 @16:13; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 15:15 Test::Whitespace tallSemcol 1-running runstep #1 @15:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 16:15 Test::Whitespace tallSemcol 1-running runstep #2 @16:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 17:15 Test::Whitespace tallSemcol 1-running runstep #3 @17:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 18:15 Test::Whitespace tallSemcol 1-running runstep #4 @18:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 19:15 Test::Whitespace tallSemcol 1-running runstep #5 @19:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 20:15 Test::Whitespace tallSemcol 1-running runstep #6 @20:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 21:15 Test::Whitespace tallSemcol 1-running runstep #7 @21:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 26:15 Test::Whitespace tallSemcol 1-running runstep #1 @26:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 27:15 Test::Whitespace tallSemcol 1-running runstep #2 @27:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 28:15 Test::Whitespace tallSemcol 1-running runstep #3 @28:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 29:15 Test::Whitespace tallSemcol 1-running runstep #4 @29:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 30:15 Test::Whitespace tallSemcol 1-running runstep #5 @30:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 31:15 Test::Whitespace tallSemcol 1-running runstep #6 @31:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 32:15 Test::Whitespace tallSemcol 1-running runstep #7 @32:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 37:15 Test::Whitespace tallSemcol 1-running runstep #1 @37:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 38:15 Test::Whitespace tallSemcol 1-running runstep #2 @38:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 39:15 Test::Whitespace tallSemcol 1-running runstep #3 @39:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 40:15 Test::Whitespace tallSemcol 1-running runstep #4 @40:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 41:15 Test::Whitespace tallSemcol 1-running runstep #5 @41:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 42:15 Test::Whitespace tallSemcol 1-running runstep #6 @42:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 43:15 Test::Whitespace tallSemcol 1-running runstep #7 @43:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 48:15 Test::Whitespace tallSemcol 1-running runstep #1 @48:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 49:15 Test::Whitespace tallSemcol 1-running runstep #2 @49:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 50:15 Test::Whitespace tallSemcol 1-running runstep #3 @50:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 51:15 Test::Whitespace tallSemcol 1-running runstep #4 @51:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 52:15 Test::Whitespace tallSemcol 1-running runstep #5 @52:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 53:15 Test::Whitespace tallSemcol 1-running runstep #6 @53:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 54:15 Test::Whitespace tallSemcol 1-running runstep #7 @54:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 59:15 Test::Whitespace tallSemcol 1-running runstep #1 @59:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 60:15 Test::Whitespace tallSemcol 1-running runstep #2 @60:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 61:15 Test::Whitespace tallSemcol 1-running runstep #3 @61:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 62:15 Test::Whitespace tallSemcol 1-running runstep #4 @62:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 67:15 Test::Whitespace tallSemcol 1-running runstep #1 @67:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 68:15 Test::Whitespace tallSemcol 1-running runstep #2 @68:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 69:15 Test::Whitespace tallSemcol 1-running runstep #3 @69:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 70:15 Test::Whitespace tallSemcol 1-running runstep #4 @70:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 75:15 Test::Whitespace tallSemcol 1-running runstep #1 @75:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 76:15 Test::Whitespace tallSemcol 1-running runstep #2 @76:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 77:15 Test::Whitespace tallSemcol 1-running runstep #3 @77:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 78:15 Test::Whitespace tallSemcol 1-running runstep #4 @78:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 202:15 Test::Whitespace tallSemcol 1-running runstep #1 @202:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 204:15 Test::Whitespace tallSemcol 1-running runstep #2 @204:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 205:15 Test::Whitespace tallSemcol 1-running runstep #3 @205:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 206:15 Test::Whitespace tallSemcol 1-running runstep #4 @206:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 207:15 Test::Whitespace tallSemcol 1-running runstep #5 @207:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace tallSemcol 1-running runstep #6 @208:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runstep #7 @209:15; overindented by 2
