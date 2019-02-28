@@ -336,25 +336,17 @@ and should consist entirely of queenside jogs.
 
 ## Proper spacing of jogging-1 hoons
 
-Every jogging-1 hoon is either kingside or queenside.
-Queenside jogs do not actually occur in the `arvo/` corpus,
-so their description here is speculative.
-The base column for jogs of a jogging-1 hoon is one stop greater than its rune column.
+Every jogging-1 hoon is considered kingside.
+The base column
+for the jogs of a jogging-1 hoon is one stop greater than its rune column.
 
-"Sidedness" of a jogging-1 hoon should be consistent:
-
-* The jogging of a kingside jogging-1 hoon should be kingside.
-It should start on the rune line,
+* The jogging of a jogging-1 hoon
+should start on the rune line,
 1 stop after the rune line,
 and should consist entirely of kingside jogs.
 
-* The jogging of a queenside jogging-1 hoon should be queenside.
-It should start on the rune line,
-2 stops after the rune line,
-and should consist entirely of queenside jogs.
-
 * The tail of a jogging-1 hoon should be
-should be on its own line,
+should be one new-line equivalent after the TISTIS,
 and aligned with the rune.
 
 ## Non-standard code
