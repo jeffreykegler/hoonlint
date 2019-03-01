@@ -103,6 +103,7 @@ and the TISTIS.
 Header comments in a running should be aligned with the rune
 of the parent hoon.
 
+
 ### Proper spacing of 1-running hoons
 
 The head of a 1-running hoon should occur on the rune line,
@@ -111,6 +112,18 @@ The running should occur one newline-equivlent gap after the
 head, and should be indented one stop from the rune column.
 Header comments in a running hoon should be aligned with the rune
 of the parent hoon.
+
+As a special case, the running may start on the same line as the
+head of the 1-running hoon.
+In this case
+
+* that first line may contain any number of runsteps;
+
+* the head and the first runstop should be separated by one stop;
+and
+
+* all runstops on that line must be separated from each other by one
+stop.
 
 ### Jogging hoons
 
