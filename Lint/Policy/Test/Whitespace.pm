@@ -318,6 +318,38 @@ sub is_1Running {
     $expectedColumn  = $runeColumn + 2;
     my $expectedLine    = $runeLine + 1;
     my $lastGap         = $runningGap;
+
+    # Initial runsteps may be on a single line,
+    # separated by one stop
+    RUN_STEP: while ( $childIX <= $#$runningChildren ) {
+        my $runStep = $runningChildren->[$childIX];
+        my ( $runStepLine, $runStepColumn ) =
+          $instance->line_column( $runStep->{start} );
+	if ($runStepLine != $runeLine) {
+	  last RUN_STEP;
+	}
+        if ( $lastGap->{length} != 2 ) {
+            my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
+            my $expectedColumn = $lastGapColumn + 2;
+            my $msg            = sprintf
+              "1-running runstep #%d %s; %s",
+	      ( $childIX / 2 ) + 1,
+              describeLC( $lastGapLine, $lastGapColumn ),
+              describeMisindent( $lastGapColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+        $lastGap      = $runningChildren->[ $childIX + 1 ];
+        $childIX += 2;
+    }
+
     while ( $childIX <= $#$runningChildren ) {
         my $runStep = $runningChildren->[$childIX];
         my ( $runStepLine, $runStepColumn ) =
