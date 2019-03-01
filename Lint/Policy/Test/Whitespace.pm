@@ -258,35 +258,29 @@ sub is_1Running {
     my ( $policy, $context, $node ) = @_;
     my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
-    my ( $parentLine, $parentColumn ) =
-      $instance->line_column( $node->{start} );
     my $lineToPos = $instance->{lineToPos};
-    my $start     = $node->{start};
-    my ( $runeLine, $runeColumn ) = $instance->line_column($start);
-    my $head = $gapSeq->[2];
-    my ( $headLine, $headColumn ) = $instance->line_column( $head->{start} );
-    my $runningGap = $gapSeq->[3];
-    my $running = $gapSeq->[4];
-    my ( $runningLine, $runningColumn ) =
-      $instance->line_column( $running->{start} );
-    my $tistisGap = $gapSeq->[5];
-    my ( $tistisGapLine, $tistisGapColumn ) =
-      $instance->line_column( $tistisGap->{start} );
-    my $tistis = $gapSeq->[6];
-    my ( $tistisLine, $tistisColumn ) =
-      $instance->line_column( $tistis->{start} );
+
+    my (
+        $rune,       $headGap, $head,
+        $runningGap, $running, $tistisGap, $tistis
+    ) = @{ $policy->gapSeq($node) };
+
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC( $rune );
+    my ( $headLine, $headColumn ) = $instance->nodeLC( $head );
+    my ( $runningLine, $runningColumn ) = $instance->nodeLC( $running );
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC( $tistis );
 
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
-          "1-jogging s head %s; should be on rune line %d",
+          "1-running s head %s; should be on rune line %d",
           describeLC( $headLine, $headColumn ),
           $runeLine;
         push @mistakes,
           {
             desc         => $msg,
-            parentLine   => $parentLine,
-            parentColumn => $parentColumn,
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
             line         => $headLine,
             column       => $headColumn,
             expectedLine => $runeLine,
@@ -302,8 +296,8 @@ sub is_1Running {
         push @mistakes,
           {
             desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
             expectedColumn => $expectedColumn,
@@ -372,7 +366,7 @@ sub is_1Running {
                     parentColumn => $runStepColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [ $runStepLine, $parentLine ],
+                    topicLines   => [ $runStepLine, $runeLine ],
                   };
             }
         }
@@ -390,7 +384,7 @@ sub is_1Running {
                 line           => $runStepLine,
                 column         => $runStepColumn,
                 expectedColumn => $expectedColumn,
-		topicLines     => [$parentLine, $expectedLine],
+		topicLines     => [$runeLine, $expectedLine],
               };
         }
         $lastGap      = $runningChildren->[ $childIX + 1 ];
@@ -406,16 +400,15 @@ sub is_1Running {
                 my $gapMistakeColumn = $gapMistake->{column};
                 my $msg              = sprintf
                   "1-running TISTIS %s; $gapMistakeMsg",
-                  describeLC( $tistisLine, $tistisColumn ),
-                  $tistisGapLine;
+                  describeLC( $tistisLine, $tistisColumn );
                 push @mistakes,
                   {
                     desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
+                    parentLine   => $runeLine,
+                    parentColumn => $runeColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [ $parentLine, $tistisLine ],
+                    topicLines   => [ $runeLine, $tistisLine ],
                   };
             }
         }
@@ -436,8 +429,8 @@ sub is_1Running {
         push @mistakes,
           {
             desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
             child          => 3,
