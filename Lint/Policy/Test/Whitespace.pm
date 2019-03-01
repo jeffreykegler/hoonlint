@@ -1676,9 +1676,7 @@ sub validate_node {
                             reportColumn => $childColumn
                         },
                         sprintf "%s $indentDesc",
-                        $instance->diagName(
-                            $node, $parentContext->{hoonName}
-                        )
+                        $instance->diagName( $node)
                     ),
                     $parentHoonLine,
                     $childLine,
@@ -1775,7 +1773,7 @@ sub validate_node {
             if ( @{$mistakes} ) {
                 $_->{policy} = $policyShortName for @{$mistakes};
                 $policy->displayMistakes( $mistakes,
-                    $instance->diagName( $node, $parentContext->{hoonName} ) );
+                    $instance->diagName( $node ) );
                 last PRINT;
             }
 
@@ -1791,9 +1789,7 @@ sub validate_node {
                     (
                         $mistake,
                         sprintf "%s %s",
-                        $instance->diagName(
-                            $node, $parentContext->{hoonName}
-                        ),
+                        $instance->diagName( $node),
                         $indentDesc
                     ),
                     $parentLine,

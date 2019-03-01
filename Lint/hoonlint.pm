@@ -367,16 +367,10 @@ sub brickName {
 # The name of a name for diagnostics purposes.  Prefers
 # "brick" symbols over "mortar" symbols.
 sub diagName {
-    my ( $instance, $node, $hoonName ) = @_;
-    my $grammar = $instance->{grammar};
-    my $type    = $node->{type};
-    return symbol($node) if $type ne 'node';
-    my $ruleID = $node->{ruleID};
-    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-    my $lhsName = $grammar->symbol_name($lhs);
-    return $lhsName if not $instance->{mortarLHS}->{$lhsName};
-    $instance->internalError("No hoon name for $lhsName") if not $hoonName;
-    return $hoonName;
+    my ( $instance, $node ) = @_;
+    my $brickNode = $instance->brickNode($node);
+    return $instance->brickName($brickNode) if $brickNode;
+    return $instance->name($node);
 }
 
 # The "name" of a node.  Not necessarily unique
@@ -697,7 +691,6 @@ EOS
         $policy->validate(
             $astValue,
             {
-                hoonName  => '[TOP]',
                 line      => -1,
             }
         );
