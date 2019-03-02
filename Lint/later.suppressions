@@ -32,3 +32,7 @@ hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #
 hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:10; missing newline @19:10
 hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:12; overindented by 5
 hoons/arvo/sys/hoon.hoon 5093:15 Test::Whitespace tallSemcol 1-running TISTIS @5098:14; underindented by 1
+
+# An attempt to use CENTIS as an annotation -- should we allow this?
+hoons/arvo/sys/vane/ames.hoon 1323:27 Test::Whitespace tallCentis 1-jogging TISTIS @1326:19; underindented by 8
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+# A filter -- given a list of warnings in report item format on stdin,
+# return a lint listing with context on stdout.
+TMP=junk.$$.1
+cat > $TMP
+sed -e 's/ .*//' $TMP | sort | uniq |
+while read f
+do
+  echo === $f ===
+  perl -I. -ILint \
+    Lint/hoonlint.pl -C 5 -I $TMP \
+    -S Lint/arvo.suppressions -S Lint/anomaly.suppressions -S Lint/later.suppressions \
+    $f
+done
+rm $TMP

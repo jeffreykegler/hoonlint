@@ -217,7 +217,7 @@ sub checkSplit_0Running {
     my $lastGap      = $runningGap;
 
     my $runStepCount = (scalar @{$runningChildren}+1)/2;
-    if ( $runStepCount >= $minimumRunsteps ) {
+    if ( $runStepCount < $minimumRunsteps ) {
 
         # Untested
 
@@ -391,7 +391,7 @@ sub checkJoined_0Running {
     my $lastGap = $runningGap;;
 
     my $runStepCount = ( scalar @{$runningChildren} + 1 ) / 2;
-    if ( defined $maximumRunsteps and $runStepCount >= $maximumRunsteps ) {
+    if ( defined $maximumRunsteps and $runStepCount > $maximumRunsteps ) {
 
         # Untested
         my $msg = sprintf
@@ -987,10 +987,11 @@ sub is_1Jogging {
         }
     }
 
-    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+    $expectedColumn = $runeColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
         my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
@@ -1203,10 +1204,11 @@ sub is_2Jogging {
         }
     }
 
-    my $tistisIsMisaligned = $tistisColumn != $runeColumn;
+    my $expectedColumn = $runeColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $tistisColumn;
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
         my $tistis = $instance->literal( $tistisPos, 2 );
 
         $tistisIsMisaligned = $tistis ne '==';
