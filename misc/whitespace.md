@@ -103,6 +103,35 @@ and the TISTIS.
 Header comments in a running should be aligned with the rune
 of the parent hoon.
 
+### Horizontal sub-running
+
+A **horizontal sub-running** is a portion of a running which has
+two or more runsteps on one line.
+The runsteps in a horizontal subrunning
+should be separated from each other by one stop.
+
+### Proper spacing of 0-running hoons
+
+0-running hoons may be either split or joined.
+Header comments in a 1-running hoon should be aligned with the rune
+of the parent hoon.
+
+The running of a **joined 0-running hoon** begins on the rune line.
+The runsteps of a joined 0-running hoons should begin on the rune
+line, indented two stops more than the rune.
+
+The running of a **split 0-running hoon** begins after the rune line.
+The runsteps of a split 0-running hoons should begin one newline equivalent
+after the rune
+line, indented one stops more than the rune.
+
+For both joined and split 0-running hoons,
+the TISTIS should align with the rune column.
+
+As a special case, the first line of the running of either a
+joined or split 0-running hoon, may be a horizontal sub-running.
+If a joined 0-running hoon has an initial horizontal sub-running,
+the rune and the sub-running should be separated by one stop.
 
 ### Proper spacing of 1-running hoons
 
@@ -110,20 +139,13 @@ The head of a 1-running hoon should occur on the rune line,
 one stop after the rune.
 The running should occur one newline-equivlent gap after the
 head, and should be indented one stop from the rune column.
-Header comments in a running hoon should be aligned with the rune
+Header comments in a 1-running hoon should be aligned with the rune
 of the parent hoon.
 
 As a special case, the running may start on the same line as the
 head of the 1-running hoon.
-In this case
-
-* that first line may contain any number of runsteps;
-
-* the head and the first runstop should be separated by one stop;
-and
-
-* all runstops on that line must be separated from each other by one
-stop.
+In this case, the first line of the running may be
+a horizontal sub-running.
 
 ### Jogging hoons
 
