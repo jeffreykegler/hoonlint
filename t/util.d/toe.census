@@ -68,8 +68,6 @@ t/ast.d/toe.hoon 51:5 Test::Whitespace wisp5d CAST-STYLE
 t/ast.d/toe.hoon 51:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 51:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 51:13 Test::Whitespace tallWutbar RUNNING-0-STYLE
-t/ast.d/toe.hoon 51:17 Test::Whitespace tallWutbar REGULAR
-t/ast.d/toe.hoon 52:17 Test::Whitespace tallWutbar REGULAR
 t/ast.d/toe.hoon 54:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 54:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 54:13 Test::Whitespace tallKethep CAST-STYLE

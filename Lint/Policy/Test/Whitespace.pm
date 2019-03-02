@@ -196,6 +196,7 @@ sub checkSplit_0Running {
     my $gapSeq    = $policy->gapSeq($node);
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
+    my $minimumRunsteps = $instance->{minSplit_0RunningSteps} // 0;
 
     my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
@@ -214,6 +215,26 @@ sub checkSplit_0Running {
     my $expectedColumn = $runeColumn + 2;
     my $expectedLine = $runeLine + 1;
     my $lastGap      = $runningGap;
+
+    my $runStepCount = (scalar @{$runningChildren}+1)/2;
+    if ( $runStepCount >= $minimumRunsteps ) {
+
+        # Untested
+
+        my $msg =
+          sprintf
+          "joined 0-running %s; too many runsteps; has %d, minimum is %d",
+          describeLC( $runningLine, $runningColumn ),
+          $runStepCount, $minimumRunsteps;
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $runningLine,
+            column       => $runningColumn,
+          };
+    }
 
     # Initial runsteps may be on a single line,
     # separated by one stop
@@ -349,6 +370,7 @@ sub checkJoined_0Running {
     my $gapSeq    = $policy->gapSeq($node);
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
+    my $maximumRunsteps = $instance->{maxJoined_0RunningSteps};
 
     my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
@@ -367,6 +389,24 @@ sub checkJoined_0Running {
     my $expectedColumn = $runeColumn + 4;
     my $expectedLine = $runeLine + 1;
     my $lastGap = $runningGap;;
+
+    my $runStepCount = ( scalar @{$runningChildren} + 1 ) / 2;
+    if ( defined $maximumRunsteps and $runStepCount >= $maximumRunsteps ) {
+
+        # Untested
+        my $msg = sprintf
+          "joined 0-running %s; too many runsteps; has %d, maximum is %d",
+          describeLC( $runningLine, $runningColumn ),
+          $runStepCount, $maximumRunsteps;
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $runningLine,
+            column       => $runningColumn,
+          };
+    }
 
     # Initial runsteps are on the rune line,
     # separated by one stop
@@ -1880,9 +1920,14 @@ sub validate_node {
                     $grandParentName = $grammar->symbol_display_form($lhs);
                 }
 		last TYPE_INDENT if $tall_1RunningRule->{$grandParentName};
+		last TYPE_INDENT if $tall_0RunningRule->{$grandParentName};
 	      }
 
           CHILD: for my $childIX ( 0 .. $#$children ) {
+
+		# TODO: Once all uses of sequences are handled specifically,
+		# eliminate this code.
+
                 my $isProblem  = 0;
                 my $child      = $children->[$childIX];
                 my $childStart = $child->{start};
@@ -1947,9 +1992,7 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-		$DB::single = 1;
             if ( $tall_1RunningRule->{$lhsName} ) {
-		$DB::single = 1;
                 $mistakes =
                   $policy->is_1Running( $parentContext, $node);
                 last TYPE_INDENT if @{$mistakes};
