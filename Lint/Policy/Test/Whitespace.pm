@@ -1775,8 +1775,6 @@ sub displayMistakes {
 sub validate_node {
     my ( $policy, $node, $argContext ) = @_;
 
-# say STDERR join " ", __FILE__, __LINE__, "validate(), hoon =", $argContext->{hoonName};
-
     my $policyShortName = $policy->{shortName};
     my $instance        = $policy->{lint};
     my $fileName        = $instance->{fileName};
@@ -1810,8 +1808,7 @@ sub validate_node {
     my ( $parentLine, $parentColumn ) = $instance->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn + 1;
 
-    my $argLine           = $argContext->{line};
-    my $parentContext = { line => $parentLine, };
+    my $parentContext = {};
 
     my $parentChessSide = $argContext->{chessSide};
     $parentContext->{chessSide} = $parentChessSide
@@ -1821,15 +1818,6 @@ sub validate_node {
     $parentContext->{jogBodyColumn} = $parentJogBodyColumn
       if defined $parentJogBodyColumn;
 
-    my $parentHoonName   = $argContext->{hoonName};
-    my $parentHoonLine   = $argContext->{hoonLine};
-    my $parentHoonColumn = $argContext->{hoonColumn};
-
-    # say STDERR "setting hoonName = $parentHoonName";
-    $parentContext->{hoonName}   = $parentHoonName;
-    $parentContext->{hoonLine}   = $parentHoonLine;
-    $parentContext->{hoonColumn} = $parentHoonColumn;
-
     my $children = $node->{children};
 
     my $nodeType = $node->{type};
@@ -1838,15 +1826,6 @@ sub validate_node {
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName = $grammar->symbol_name($lhs);
-
-    if ( not $mortarLHS->{$lhsName} ) {
-        $parentHoonName = $lhsName;
-
-        # say STDERR "resetting hoonName = $parentHoonName";
-        $parentContext->{hoonName}   = $parentHoonName;
-        $parentContext->{hoonLine}   = $parentLine;
-        $parentContext->{hoonColumn} = $parentColumn;
-    }
 
     if ( $lhsName eq 'optGay4i' ) {
         return $parentContext;
@@ -1938,7 +1917,7 @@ sub validate_node {
                         sprintf "%s $indentDesc",
                         $instance->diagName( $node)
                     ),
-                    $parentHoonLine,
+                    $parentLine,
                     $childLine,
                 ) if $censusWhitespace or $isProblem;
                 $previousLine = $childLine;

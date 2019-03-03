@@ -719,13 +719,8 @@ EOS
         my $constructor    = UNIVERSAL::can( $policyFullName, 'new' );
         my $policy         = $constructor->( $policyFullName, $lintInstance );
         $policy->{shortName} = $policyShortName;
-        $policy->{fullName} = $policyFullName;
-        $policy->validate(
-            $astValue,
-            {
-                line      => -1,
-            }
-        );
+        $policy->{fullName}  = $policyFullName;
+        $policy->validate( $astValue, {} );
     }
 
     print $lintInstance->contextDisplay();
