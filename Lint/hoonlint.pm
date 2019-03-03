@@ -509,6 +509,28 @@ sub brickLC {
     return $instance->nodeLC( $instance->brickNode($node) );
 }
 
+sub anchorNode {
+    my ( $instance, $node ) = @_;
+    my $isTallRuneRule = $instance->{tallRuneRule};
+    my $isTallNoteRule = $instance->{tallNoteRule};
+    my ($currentLine)  = $instance->nodeLC($node);
+    my $brickParent;
+    my $tallRuneParent;
+    my $thisNode = $node;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+        last NODE if $thisLine != $currentLine;
+        my $brickName = $instance->brickName($thisNode);
+        next NODE unless $brickName;
+        $brickParent //= $thisNode;
+        next NODE unless $isTallRuneRule->{$brickName};
+        $tallRuneParent //= $thisNode;
+        next NODE if $isTallNoteRule->{$brickName};
+        return $thisNode;
+    }
+    return $tallRuneParent // $brickParent;
+}
+
 sub new {
     my ($class, $config) = (@_);
     my $fileName = $config->{fileName};
