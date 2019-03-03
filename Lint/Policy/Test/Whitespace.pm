@@ -1703,7 +1703,13 @@ sub isBackdented {
     $baseIndent //= $baseColumn;
     { # TODO: Delete after development
         my $anchorNode = $instance->anchorNode($node);
-	my (undef, $anchorColumn) = $instance->nodeLC( $anchorNode );
+	my ($anchorLine, $anchorColumn) = $instance->nodeLC( $anchorNode );
+	   if ($baseIndent != $anchorColumn or
+	   $baseLine != $anchorLine) {
+        # say STDERR "anchor Line: ", $instance->literalLine($anchorLine);
+	# say STDERR "baseIndent vs. anchorColumn: $baseIndent vs. $anchorColumn";
+	# say STDERR "baseLine vs. anchorLine: $baseLine vs. $anchorLine";
+	   }
     }
     my $currentIndent = $baseIndent + $#$indents * 2;
     my $lastLine      = $baseLine;
