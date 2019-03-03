@@ -1316,9 +1316,9 @@ sub is_Jogging1 {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "jogging-1 TISTIS %s; %s",
@@ -1747,6 +1747,7 @@ sub validate {
         my $child = $children->[$childIX];
         $policy->validate( $child, $parentContext );
     }
+    return;
 }
 
 sub displayMistakes {
@@ -1769,6 +1770,7 @@ sub displayMistakes {
 
         $instance->reportItem( $mistake, "$hoonDesc $desc", \@topicLines, $mistakeLine, );
     }
+    return;
 }
 
 sub validate_node {
@@ -1849,9 +1851,6 @@ sub validate_node {
     # tall node
 
     if ( $gapiness < 0 ) {     # sequence
-        my ( $parentLine, $parentColumn ) = $recce->line_column($parentStart);
-        my $parentLC = join ':', $parentLine, $parentColumn;
-        $parentColumn--;       # 0-based
         my $previousLine = $parentLine;
       TYPE_INDENT: {
 
@@ -1873,8 +1872,8 @@ sub validate_node {
                     $grandParentLC = join ':', $grandParentLine,
                       $grandParentColumn;
                     $grandParentColumn--;    # 0-based
-                    my ($lhs) = $grammar->rule_expand($grandParentRuleID);
-                    $grandParentName = $grammar->symbol_display_form($lhs);
+                    my ($grandParentLhs) = $grammar->rule_expand($grandParentRuleID);
+                    $grandParentName = $grammar->symbol_display_form($grandParentLhs);
                 }
 		last TYPE_INDENT if $tall_1RunningRule->{$grandParentName};
 		last TYPE_INDENT if $tall_0RunningRule->{$grandParentName};
