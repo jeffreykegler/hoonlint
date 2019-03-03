@@ -1692,25 +1692,14 @@ sub isJog {
 }
 
 sub isBackdented {
-    my ( $policy, $node, $baseIndent ) = @_;
+    my ( $policy, $node ) = @_;
     my $indents = $policy->calcGapIndents($node);
     my $instance = $policy->{lint};
     my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
     my @mistakes = ();
 
-    # say Data::Dumper::Dumper($indents);
-    my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
-    $baseIndent //= $baseColumn;
-    { # TODO: Delete after development
-        my $anchorNode = $instance->anchorNode($node);
-	my ($anchorLine, $anchorColumn) = $instance->nodeLC( $anchorNode );
-	   if ($baseIndent != $anchorColumn or
-	   $baseLine != $anchorLine) {
-        # say STDERR "anchor Line: ", $instance->literalLine($anchorLine);
-	# say STDERR "baseIndent vs. anchorColumn: $baseIndent vs. $anchorColumn";
-	# say STDERR "baseLine vs. anchorLine: $baseLine vs. $anchorLine";
-	   }
-    }
+    my $anchorNode = $instance->anchorNode($node);
+    my ( $baseLine, $baseIndent ) = $instance->nodeLC( $anchorNode );
     my $currentIndent = $baseIndent + $#$indents * 2;
     my $lastLine      = $baseLine;
   INDENT: for my $ix ( 1 .. $#$indents ) {

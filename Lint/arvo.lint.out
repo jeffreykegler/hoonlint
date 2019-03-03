@@ -598,6 +598,7 @@ hoons/arvo/sys/vane/ford.hoon 343:11 Test::Whitespace tallTisfas Child #2 @ line
 hoons/arvo/sys/vane/ford.hoon 446:15 Test::Whitespace tallZapdot Child #1 @ line 447; backdent is 6; should be 14
 hoons/arvo/sys/vane/ford.hoon 931:30 Test::Whitespace tallColcab Child #2 @ line 932; backdent is 12; should be 10
 hoons/arvo/sys/vane/ford.hoon 974:30 Test::Whitespace tallColcab Child #2 @ line 975; backdent is 12; should be 10
+hoons/arvo/sys/vane/ford.hoon 1012:17 Test::Whitespace tallKethep Child #2 @ line 1013; backdent is 12; should be 8
 hoons/arvo/sys/vane/ford.hoon 1209:7 Test::Whitespace tallTislus Child #1 @ line 1210; backdent is 10; should be 8
 hoons/arvo/sys/vane/ford.hoon 1245:9 Test::Whitespace tallSigcen Child #4 @ line 1246; backdent is 10; should be 8
 hoons/arvo/sys/vane/ford.hoon 1246:11 Test::Whitespace tallBartis Child #2 @ line 1247; backdent is 8; should be 10
@@ -687,7 +688,7 @@ hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace tallWutlus 2-jogging TIST
 hoons/arvo/sys/vane/eyre.hoon 1378:9 Test::Whitespace tallBarhep Child #1 @ line 1379; backdent is 10; should be 8
 hoons/arvo/sys/vane/eyre.hoon 1506:11 Test::Whitespace tallKethep Child #2 @ line 1507; backdent is 10; should be 6
 hoons/arvo/sys/vane/eyre.hoon 1820:19 Test::Whitespace tallKethep Child #2 @ line 1821; backdent is 6; should be 18
-hoons/arvo/sys/vane/eyre.hoon 1944:11 Test::Whitespace bont5d Child #1 @ line 1945; backdent is 8; should be 10
+hoons/arvo/sys/vane/eyre.hoon 1944:11 Test::Whitespace bont5d Child #1 @ line 1945; backdent is 8; should be 6
 hoons/arvo/sys/vane/eyre.hoon 625:3 Test::Whitespace wisp5d Child #1 @ line 1981; backdent is 4; should be 2
 hoons/arvo/sys/vane/eyre.hoon 1785:5 Test::Whitespace wisp5d Child #1 @ line 1981; backdent is 0; should be 4
 === hoons/arvo/sys/vane/xmas.hoon ===
@@ -803,6 +804,7 @@ hoons/arvo/sys/vane/clay.hoon 3689:5 Test::Whitespace tallColhep Child #2 @ line
 hoons/arvo/sys/vane/clay.hoon 3769:28 Test::Whitespace tallColhep Child #2 @ line 3770; backdent is 8; should be 27
 hoons/arvo/sys/vane/clay.hoon 3900:9 Test::Whitespace tallKethep Child #2 @ line 3901; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 4007:11 Test::Whitespace tallKethep Child #2 @ line 4008; backdent is 10; should be 6
+hoons/arvo/sys/vane/clay.hoon 4022:9 Test::Whitespace bont5d Child #1 @ line 4023; backdent is 8; should be 4
 hoons/arvo/sys/vane/clay.hoon 4078:9 Test::Whitespace tallKethep Child #2 @ line 4079; backdent is 8; should be 4
 === hoons/arvo/sys/vane/jael.hoon ===
 hoons/arvo/sys/vane/jael.hoon 42:5 Test::Whitespace tallBarcen Child #1 @ line 43; backdent is 0; should be 4
@@ -1320,7 +1322,7 @@ hoons/arvo/mar/hall/command.hoon 35:5 Test::Whitespace tallWutlus 2-jogging king
 === hoons/arvo/mar/drum-put.hoon ===
 === hoons/arvo/mar/static/action.hoon ===
 === hoons/arvo/web/unmark/test.hoon ===
-hoons/arvo/web/unmark/test.hoon 2:6 Test::Whitespace tallTopSail Child #1 @ line 3; backdent is 4; should be 5
+hoons/arvo/web/unmark/test.hoon 2:6 Test::Whitespace tallTopSail Child #1 @ line 3; backdent is 4; should be 0
 hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallTailOfTop Child #1 @ line 7; backdent is 4; should be 0
 hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallTailOfTop Child #1 @ line 9; backdent is 0; should be 2
 === hoons/arvo/web/unmark/all.hoon ===
