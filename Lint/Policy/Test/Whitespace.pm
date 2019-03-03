@@ -69,7 +69,7 @@ sub gapSeq {
 
     my $childIX = 1;
     CHILD: while ($childIX < $#$children ) {
-        my $child  = $children->[$childIX];
+        $child  = $children->[$childIX];
         my $symbol = $child->{symbol};
         if ( not defined $symbol
             or not $symbolReverseDB->{$symbol}->{gap} )
@@ -247,7 +247,7 @@ sub checkSplit_0Running {
         }
         if ( $lastGap->{length} != 2 ) {
             my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            my $expectedColumn = $lastGapColumn + 2;
+            $expectedColumn = $lastGapColumn + 2;
             my $msg            = sprintf
               "split 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
@@ -343,9 +343,9 @@ sub checkSplit_0Running {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "split 0-running TISTIS %s; %s",
@@ -419,7 +419,7 @@ sub checkJoined_0Running {
         }
         if ( $lastGap->{length} != 2 ) {
             my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            my $expectedColumn = $lastGapColumn + 2;
+            $expectedColumn = $lastGapColumn + 2;
             my $msg            = sprintf
               "joined 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
@@ -515,9 +515,9 @@ sub checkJoined_0Running {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "joined 0-running TISTIS %s; %s",
@@ -607,7 +607,7 @@ sub is_1Running {
 	}
         if ( $lastGap->{length} != 2 ) {
             my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            my $expectedColumn = $lastGapColumn + 2;
+            $expectedColumn = $lastGapColumn + 2;
             my $msg            = sprintf
               "1-running runstep #%d %s; %s",
 	      ( $childIX / 2 ) + 1,
@@ -701,9 +701,9 @@ sub is_1Running {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "1-running TISTIS %s; %s",
@@ -784,7 +784,6 @@ sub joggingSide {
     my $symbolReverseDB = $instance->{symbolReverseDB};
     my $children        = $node->{children};
     my %sideCount       = ();
-    my $firstSide;
     my %bodyColumnCount = ();
     my $kingsideCount   = 0;
     my $queensideCount  = 0;
@@ -992,9 +991,9 @@ sub is_1Jogging {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "1-jogging TISTIS %s; %s",
@@ -1074,7 +1073,7 @@ sub is_2Jogging {
 
         if ( $subheadGap->{length} != 2 ) {
             my ( undef, $subheadGapColumn ) = $instance->nodeLC($subheadGap);
-            my $expectedColumn = $subheadGapColumn + 2;
+            $expectedColumn = $subheadGapColumn + 2;
             my $msg            = sprintf
               "2-jogging %s subhead %s; %s",
               $chessSide,
@@ -1209,9 +1208,9 @@ sub is_2Jogging {
 
     if ($tistisIsMisaligned) {
         my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistis = $instance->literal( $tistisPos, 2 );
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
 
-        $tistisIsMisaligned = $tistis ne '==';
+        $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
         my $msg = sprintf "2-jogging TISTIS %s; %s",
