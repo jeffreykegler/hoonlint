@@ -520,13 +520,17 @@ sub anchorNode {
   NODE: while ($thisNode) {
         my ($thisLine) = $instance->nodeLC($thisNode);
         last NODE if $thisLine != $currentLine;
-        my $brickName = $instance->brickName($thisNode);
-        next NODE unless $brickName;
-        $brickParent //= $thisNode;
-        next NODE unless $isTallRuneRule->{$brickName};
-        $tallRuneParent //= $thisNode;
-        next NODE if $isTallNoteRule->{$brickName};
-        return $thisNode;
+        # say join " ", __FILE__, __LINE__, $thisLine;
+      SEEK_ANCHOR: {
+            my $brickName = $instance->brickName($thisNode);
+            last SEEK_ANCHOR unless $brickName;
+            $brickParent //= $thisNode;
+            last SEEK_ANCHOR unless $isTallRuneRule->{$brickName};
+            $tallRuneParent //= $thisNode;
+            last SEEK_ANCHOR if $isTallNoteRule->{$brickName};
+            return $thisNode;
+        }
+        $thisNode = $thisNode->{PARENT};
     }
     return $tallRuneParent // $brickParent;
 }

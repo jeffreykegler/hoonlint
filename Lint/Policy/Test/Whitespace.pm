@@ -1701,6 +1701,10 @@ sub isBackdented {
     # say Data::Dumper::Dumper($indents);
     my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
     $baseIndent //= $baseColumn;
+    { # TODO: Delete after development
+        my $anchorNode = $instance->anchorNode($node);
+	my (undef, $anchorColumn) = $instance->nodeLC( $anchorNode );
+    }
     my $currentIndent = $baseIndent + $#$indents * 2;
     my $lastLine      = $baseLine;
   INDENT: for my $ix ( 1 .. $#$indents ) {
