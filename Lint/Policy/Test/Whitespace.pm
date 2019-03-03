@@ -1811,23 +1811,7 @@ sub validate_node {
     my $parentLC = join ':', $parentLine, $parentColumn + 1;
 
     my $argLine           = $argContext->{line};
-    my $argBodyIndent     = $argContext->{bodyIndent};
-    my $argTallRuneIndent = $argContext->{tallRuneIndent};
-    my $parentBodyIndent;
-    $parentBodyIndent = $argBodyIndent if $argLine == $parentLine;
-    my $parentTallRuneIndent;
-    $parentTallRuneIndent = $argTallRuneIndent if $argLine == $parentLine;
     my $parentContext = { line => $parentLine, };
-    $parentContext->{bodyIndent} = $parentBodyIndent
-      if defined $parentBodyIndent;
-    $parentContext->{tallRuneIndent} = $parentTallRuneIndent
-      if defined $parentTallRuneIndent;
-
-    # notes align with body indent from ancestor, if there is one;
-    # otherwise, with the parent tall rune (if one exists);
-    # otherwise with the parent.
-    my $noteIndent = ( $parentBodyIndent // $parentTallRuneIndent )
-      // $parentColumn;
 
     my $parentChessSide = $argContext->{chessSide};
     $parentContext->{chessSide} = $parentChessSide
@@ -1863,12 +1847,6 @@ sub validate_node {
         $parentContext->{hoonLine}   = $parentLine;
         $parentContext->{hoonColumn} = $parentColumn;
     }
-
-    $parentContext->{bodyIndent} = $parentColumn
-      if $instance->{tallBodyRule}->{$lhsName};
-
-    $parentContext->{tallRuneIndent} = $parentColumn
-      if $tallRuneRule->{$lhsName};
 
     if ( $lhsName eq 'optGay4i' ) {
         return $parentContext;
@@ -2027,7 +2005,7 @@ sub validate_node {
 
             if ( $tallNoteRule->{$lhsName} ) {
                 $mistakes =
-                  $policy->isBackdented( $node, $noteIndent );
+                  $policy->isBackdented( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
