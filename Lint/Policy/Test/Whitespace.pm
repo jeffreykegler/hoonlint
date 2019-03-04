@@ -1690,6 +1690,26 @@ sub isJog {
     return $policy->checkKingsideJog( $node, $context );
 }
 
+# not yet implemented
+sub isNYI {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my ( $parentLine, $parentColumn ) =
+      $instance->line_column( $node->{start} );
+    my @mistakes = ();
+
+    my $msg = "NYI " . $instance->describeNodeRange($node);
+    push @mistakes,
+      {
+        desc         => $msg,
+        parentLine   => $parentLine,
+        parentColumn => $parentColumn,
+        line         => $parentLine,
+        column       => $parentColumn,
+      };
+      return \@mistakes;
+}
+
 sub isBackdented {
     my ( $policy, $node ) = @_;
     my $indents = $policy->calcGapIndents($node);
@@ -1783,6 +1803,8 @@ sub validate_node {
     my $recce           = $instance->{recce};
     my $mortarLHS       = $instance->{mortarLHS};
 
+    my $NYI_Rule          = $instance->{NYI_Rule};
+    my $backdentedRule    = $instance->{backdentedRule};
     my $tallRuneRule      = $instance->{tallRuneRule};
     my $tallJogRule       = $instance->{tallJogRule};
     my $tallNoteRule      = $instance->{tallNoteRule};
@@ -1933,6 +1955,14 @@ sub validate_node {
 
       TYPE_INDENT: {
 
+            if ( $NYI_Rule->{$lhsName} ) {
+                $mistakes = $policy->isNYI( $node );
+                last TYPE_INDENT if @{$mistakes};
+		# should never reach here
+                $indentDesc = 'NYI';
+                last TYPE_INDENT;
+            }
+
             if ( $tallJogRule->{$lhsName} ) {
                 $mistakes = $policy->isJog( $node, $parentContext );
                 last TYPE_INDENT if @{$mistakes};
@@ -1995,10 +2025,20 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            # By default, treat as backdented
-            $mistakes = $policy->isBackdented( $node );
-            if ( not @{$mistakes} ) {
+            if ( $backdentedRule->{$lhsName} ) {
+                $mistakes =
+                  $policy->isBackdented( $node );
+                last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BACKDENTED';
+                last TYPE_INDENT;
+            }
+
+            # By default, treat as not yet implemented
+            {
+                $mistakes = $policy->isNYI( $node );
+                last TYPE_INDENT if @{$mistakes};
+		# should never reach here
+                $indentDesc = 'NYI';
                 last TYPE_INDENT;
             }
 

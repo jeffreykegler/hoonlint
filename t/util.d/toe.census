@@ -15,18 +15,18 @@ t/ast.d/toe.hoon 13:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 13:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 14:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 14:5 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 14:15 Test::Whitespace tallBuccen BACKDENTED
+t/ast.d/toe.hoon 14:15 Test::Whitespace SUPPRESSION tallBuccen NYI @14:14-16:16
 t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen REGULAR
 t/ast.d/toe.hoon 15:19 Test::Whitespace tallBuccen REGULAR
 t/ast.d/toe.hoon 17:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 17:5 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 17:15 Test::Whitespace tallBuccen BACKDENTED
+t/ast.d/toe.hoon 17:15 Test::Whitespace SUPPRESSION tallBuccen NYI @17:14-20:16
 t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen REGULAR
 t/ast.d/toe.hoon 18:19 Test::Whitespace tallBuccen REGULAR
 t/ast.d/toe.hoon 19:19 Test::Whitespace tallBuccen REGULAR
 t/ast.d/toe.hoon 21:5 Test::Whitespace whap5d REGULAR
 t/ast.d/toe.hoon 21:5 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 21:15 Test::Whitespace tallBuccol BACKDENTED
+t/ast.d/toe.hoon 21:15 Test::Whitespace SUPPRESSION tallBuccol NYI @21:14-24:16
 t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol REGULAR
 t/ast.d/toe.hoon 22:19 Test::Whitespace tallBuccol REGULAR
 t/ast.d/toe.hoon 23:19 Test::Whitespace tallBuccol REGULAR

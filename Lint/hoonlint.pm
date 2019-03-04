@@ -194,6 +194,24 @@ sub doNode {
     return $node;
 }
 
+
+sub describeRange {
+    my ( $firstLine, $firstColumn, $lastLine, $lastColumn ) = @_;
+    return sprintf "@%d:%d-%d:%d", $firstLine, $firstColumn, $lastLine, $lastColumn if $firstLine != $lastLine; 
+    return sprintf "@%d:%d-%d", $firstLine, $firstColumn, $lastColumn if $firstColumn != $lastColumn; 
+    return sprintf "@%d:%d", $firstLine, $firstColumn;
+}
+
+sub describeNodeRange {
+    my ( $instance, $node ) = @_;
+    my $firstPos = $node->{start};
+    my $length = $node->{length};
+    my $lastPos = $firstPos + $length;
+    my ( $firstLine, $firstColumn ) = $instance->line_column($firstPos);
+    my ( $lastLine, $lastColumn ) = $instance->line_column($lastPos);
+    return describeRange($firstLine, $firstColumn, $lastLine, $lastColumn);
+}
+
 sub literalNode {
     my ( $instance, $node ) = @_;
     my $start = $node->{start};
@@ -588,6 +606,9 @@ EOS
       qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq);
     $lintInstance->{mortarLHS} = \%mortarLHS;
 
+    my %NYI_Rule = ();
+    $lintInstance->{NYI_Rule} = \%NYI_Rule;
+
     my %tallBodyRule =
       map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
     $lintInstance->{tallBodyRule} = \%tallBodyRule;
@@ -598,6 +619,7 @@ EOS
     my %tall_0RunningRule = map { +( $_, 1 ) } qw(tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
+    $NYI_Rule{$_} = 1 for qw(tallCencolMold tallDotket tallTissig);
     # Will include:
     # CencolMold
     # Dotket Semcol Semsig Tissig
@@ -635,17 +657,11 @@ EOS
       tallBarsig
       tallBartar
       tallBartis
-      tallBuccen
-      tallBuccenMold
-      tallBuccol
-      tallBuccolMold
       tallBuchep
       tallBucket
       tallBucketMold
       tallBucpat
       tallBuctisMold
-      tallBucwut
-      tallBucwutMold
       tallCenhep
       tallCenhepMold
       tallCenket
@@ -656,7 +672,6 @@ EOS
       tallColhep
       tallColket
       tallCollus
-      tallColtar
       tallDottar
       tallDottis
       tallKetcen
@@ -685,6 +700,7 @@ EOS
       tallZapdot
       tallZapwut
     );
+    $lintInstance->{backdentedRule} = \%tallBackdentRule;
 
     # say Data::Dumper::Dumper(\%tallBodyRule);
 
