@@ -1881,68 +1881,33 @@ sub validate_node {
             next TYPE_INDENT if $lhsName eq 'rick5d';
             next TYPE_INDENT if $lhsName eq 'ruck5d';
 
+            my $grandParent = $instance->ancestor( $node, 1 );
+            my $grandParentName = $instance->brickName($grandParent);
             if ( $lhsName eq 'tall5dSeq' ) {
-                my $grandParentName = "";
-                my $grandParentLC;
-                my ( $grandParentLine, $grandParentColumn );
-                FIND_GRANDPARENT: {
-                    my $grandParent       = $instance->ancestor($node, 1);
-                    my $grandParentRuleID = $grandParent->{ruleID};
-                    my $grandParentStart  = $grandParent->{start};
-                    ( $grandParentLine, $grandParentColumn ) =
-                      $recce->line_column($grandParentStart);
-                    $grandParentLC = join ':', $grandParentLine,
-                      $grandParentColumn;
-                    $grandParentColumn--;    # 0-based
-                    my ($grandParentLhs) = $grammar->rule_expand($grandParentRuleID);
-                    $grandParentName = $grammar->symbol_display_form($grandParentLhs);
-                }
-		last TYPE_INDENT if $tall_1RunningRule->{$grandParentName};
-		last TYPE_INDENT if $tall_0RunningRule->{$grandParentName};
-	      }
-
-          CHILD: for my $childIX ( 0 .. $#$children ) {
-
-		# TODO: Once all uses of sequences are handled specifically,
-		# eliminate this code.
-
-                my $isProblem  = 0;
-                my $child      = $children->[$childIX];
-                my $childStart = $child->{start};
-                my $symbol     = $child->{symbol};
-                next CHILD
-                  if defined $symbol
-                  and $symbolReverseDB->{$symbol}->{gap};
-                my ( $childLine, $childColumn ) =
-                  $recce->line_column($childStart);
-                my $childLC = join ':', $childLine, $childColumn;
-                $childColumn--;    # 0-based
-
-                my $indentDesc = 'REGULAR';
-              SET_INDENT_DESC: {
-                    if (    $childLine != $previousLine
-                        and $childColumn != $parentColumn )
-                    {
-                        $isProblem = 1;
-                        $indentDesc = join " ", $parentLC, $childLC;
-                    }
-                }
-                $instance->reportItem(
-                    (
-                        {
-                            policy       => $policyShortName,
-                            reportLine   => $childLine,
-                            reportColumn => $childColumn
-                        },
-                        sprintf "%s $indentDesc",
-                        $instance->diagName( $node)
-                    ),
-                    $parentLine,
-                    $childLine,
-                ) if $censusWhitespace or $isProblem;
-                $previousLine = $childLine;
+                last TYPE_INDENT if $tall_1RunningRule->{$grandParentName};
+                last TYPE_INDENT if $tall_0RunningRule->{$grandParentName};
             }
+
+            $instance->reportItem(
+                (
+                    {
+                        policy       => $policyShortName,
+                        reportLine   => $parentLine,
+                        reportColumn => $parentColumn
+                    },
+                    (
+                        sprintf "%s NYI sequence %s %s of %s",
+                        $instance->diagName( $node),
+                        $instance->describeNodeRange($node),
+                        $lhsName,
+                        $grandParentName
+                    ),
+                ),
+                $parentLine,
+                $parentLine,
+            );
         }
+
         return $parentContext;
     }
 

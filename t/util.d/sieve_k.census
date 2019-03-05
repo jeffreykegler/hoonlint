@@ -3,16 +3,14 @@ t/ast.d/sieve_k.hoon 2:1 Test::Whitespace tallKethep CAST-STYLE
 t/ast.d/sieve_k.hoon 3:1 Test::Whitespace tallTislus BACKDENTED
 t/ast.d/sieve_k.hoon 4:1 Test::Whitespace tallTisgal CAST-STYLE
 t/ast.d/sieve_k.hoon 5:1 Test::Whitespace tallBarcen BACKDENTED
-t/ast.d/sieve_k.hoon 6:1 Test::Whitespace wisp5d CAST-STYLE
-t/ast.d/sieve_k.hoon 6:1 Test::Whitespace whap5d REGULAR
-t/ast.d/sieve_k.hoon 6:1 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/sieve_k.hoon 7:1 Test::Whitespace whap5d REGULAR
+t/ast.d/sieve_k.hoon 6:1 Test::Whitespace SUPPRESSION whap5d NYI sequence @6:0-20:47 whap5d of wisp5d
+t/ast.d/sieve_k.hoon 6:1 Test::Whitespace SUPPRESSION whap5d NYI sequence @6:0-20:47 whap5d of wisp5d
+t/ast.d/sieve_k.hoon 6:1 Test::Whitespace SUPPRESSION whap5d NYI sequence @6:0-20:47 whap5d of wisp5d
 t/ast.d/sieve_k.hoon 7:1 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_k.hoon 8:3 Test::Whitespace tallTislus BACKDENTED
 t/ast.d/sieve_k.hoon 9:3 Test::Whitespace tallBarhep CAST-STYLE
 t/ast.d/sieve_k.hoon 9:7 Test::Whitespace tallKetlus CAST-STYLE
 t/ast.d/sieve_k.hoon 10:3 Test::Whitespace tallWutcol BACKDENTED
-t/ast.d/sieve_k.hoon 14:1 Test::Whitespace whap5d REGULAR
 t/ast.d/sieve_k.hoon 14:1 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_k.hoon 15:3 Test::Whitespace tallBartis BACKDENTED
 t/ast.d/sieve_k.hoon 16:3 Test::Whitespace tallTislus BACKDENTED

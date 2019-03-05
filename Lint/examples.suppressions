@@ -3,3 +3,13 @@ t/ast.d/toe.hoon 57:13 Test::Whitespace tallWutcol indentation is one-off
 t/ast.d/toe.hoon 14:15 Test::Whitespace tallBuccen NYI @14:14-16:16
 t/ast.d/toe.hoon 17:15 Test::Whitespace tallBuccen NYI @17:14-20:16
 t/ast.d/toe.hoon 21:15 Test::Whitespace tallBuccol NYI @21:14-24:16
+t/ast.d/sieve_b.hoon 6:1 Test::Whitespace whap5d NYI sequence @6:0-25:4 whap5d of wisp5d
+t/ast.d/sieve_k.hoon 6:1 Test::Whitespace whap5d NYI sequence @6:0-20:47 whap5d of wisp5d
+t/ast.d/toe.hoon 12:5 Test::Whitespace whap5d NYI sequence @12:4-24:16 whap5d of wisp5d
+t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen NYI sequence @14:18-15:31 till5dSeq of tallBuccen
+t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen NYI sequence @17:18-19:25 till5dSeq of tallBuccen
+t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol NYI sequence @21:18-23:24 till5dSeq of tallBuccol
+t/ast.d/toe.hoon 27:1 Test::Whitespace whap5d NYI sequence @27:0-61:4 whap5d of wisp5d
+t/ast.d/toe.hoon 29:3 Test::Whitespace whap5d NYI sequence @29:2-35:36 whap5d of wisp5d
+t/ast.d/toe.hoon 39:3 Test::Whitespace whap5d NYI sequence @39:2-60:6 whap5d of wisp5d
+t/ast.d/toe.hoon 51:5 Test::Whitespace whap5d NYI sequence @51:4-59:49 whap5d of wisp5d
