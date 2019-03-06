@@ -1996,6 +1996,17 @@ sub validate_node {
                     last TYPE_INDENT;
                 }
 
+            # By default, treat as not yet implemented
+            {
+                $mistakes = $policy->isNYI($node);
+                last TYPE_INDENT if @{$mistakes};
+
+                # should never reach here
+                $indentDesc = 'NYI';
+                last TYPE_INDENT;
+            }
+
+
                 $instance->reportItem(
                     (
                         {
