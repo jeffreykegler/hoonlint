@@ -650,10 +650,7 @@ EOS
       fordFasdot
       fordFasket
       fordFassem
-      tallBarcab
-      tallBarcen
       tallBarcol
-      tallBarket
       tallBarsig
       tallBartar
       tallBartis

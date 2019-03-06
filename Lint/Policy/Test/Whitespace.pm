@@ -191,6 +191,79 @@ sub check_0Running {
     return checkJoined_0Running( $policy, $node );
 }
 
+sub checkBoog5d {
+    my ( $policy, $node, $runeNode ) = @_;
+    my $gapSeq    = $policy->gapSeq($node);
+    my $instance  = $policy->{lint};
+    my $censusWhitespace = $instance->{censusWhitespace};
+
+    my @mistakes = ();
+
+    # We deal with the running list here, rather than
+    # in its own node
+
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($runeNode);
+    my $children = $node->{children};
+    my $childIX         = 0;
+    my $expectedColumn = $runeColumn;
+    my $expectedLine = $runeLine+1;
+  CHILD: while ( $childIX <= $#$children ) {
+        my $cell = $children->[$childIX];
+        my ( $cellLine, $cellColumn ) = $instance->nodeLC($cell);
+
+        if ( $cellColumn != $expectedColumn or $censusWhitespace ) {
+            my $msg = sprintf
+              "cell #%d %s; %s",
+              ( $childIX / 2 ) + 1,
+              describeLC( $cellLine, $cellColumn ),
+              describeMisindent( $cellColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $cellLine,
+                parentColumn   => $cellColumn,
+                line           => $cellLine,
+                column         => $cellColumn,
+                expectedColumn => $expectedColumn,
+                topicLines     => [ $runeLine, $expectedLine ],
+              };
+        }
+
+        $childIX++;
+        last CHILD unless $childIX <= $#$children;
+        my $cellGap = $children->[$childIX];
+        my ( $cellGapLine, $cellGapColumn ) = $instance->nodeLC($cellGap);
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $cellGap, $runeColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "cell #%d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $cellGapLine,
+                    parentColumn => $cellGapColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [ $runeLine, $cellGapLine ],
+                  };
+            }
+        }
+
+        $childIX++;
+    }
+
+    return \@mistakes;
+
+}
+
 sub checkSplit_0Running {
     my ( $policy, $node ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
@@ -1872,58 +1945,89 @@ sub validate_node {
 
     # tall node
 
-    if ( $gapiness < 0 ) {     # sequence
-        my $previousLine = $parentLine;
-      TYPE_INDENT: {
+    my $mistakes = [];
+    my $start = $node->{start};
+    my $indentDesc = '???';
 
-            # Jogging problems are detected by the individual jogs --
-            # we do not run diagnostics on the sequence.
-            next TYPE_INDENT if $lhsName eq 'rick5d';
-            next TYPE_INDENT if $lhsName eq 'ruck5d';
+  GATHER_MISTAKES: {
+        if ( $gapiness < 0 ) {    # sequence
+            my $previousLine = $parentLine;
+          TYPE_INDENT: {
 
-            my $grandParent = $instance->ancestor( $node, 1 );
-            my $grandParentName = $instance->brickName($grandParent);
-            if ( $lhsName eq 'tall5dSeq' ) {
-                last TYPE_INDENT if $tall_1RunningRule->{$grandParentName};
-                last TYPE_INDENT if $tall_0RunningRule->{$grandParentName};
+                # Jogging problems are detected by the individual jogs --
+                # we do not run diagnostics on the sequence.
+                if ($lhsName eq 'rick5d') {
+		   $indentDesc = 'JOGGING';
+		   last TYPE_INDENT;
+		};
+                if ($lhsName eq 'ruck5d') {
+		   $indentDesc = 'JOGGING';
+		   last TYPE_INDENT;
+		};
+
+                my $grandParent = $instance->ancestor( $node, 1 );
+                my $grandParentName = $instance->brickName($grandParent);
+                if ( $lhsName eq 'tall5dSeq' ) {
+                    if ($tall_1RunningRule->{$grandParentName}) {
+		      $indentDesc = '1-RUNNING';
+		      last TYPE_INDENT;
+		    }
+                    if ($tall_0RunningRule->{$grandParentName}) {
+		      $indentDesc = '0-RUNNING';
+		      last TYPE_INDENT;
+		    }
+                }
+
+                if ( $lhsName eq 'whap5d' ) {
+                    my $greatGrandParent =
+                      $instance->ancestor( $grandParent, 1 );
+                    my $greatGrandParentName =
+                      $instance->brickName($greatGrandParent);
+
+                    # TODO: remove after development?
+                    die
+                      unless $greatGrandParentName eq 'tallBarcab'
+                      or $greatGrandParentName eq 'tallBarcen'
+                      or $greatGrandParentName eq 'tallBarket';
+                    $mistakes =
+                      $policy->checkBoog5d( $node, $greatGrandParent );
+                    last TYPE_INDENT if @{$mistakes};
+		    $indentDesc = 'CELL';
+                    last TYPE_INDENT;
+                }
+
+                $instance->reportItem(
+                    (
+                        {
+                            policy       => $policyShortName,
+                            reportLine   => $parentLine,
+                            reportColumn => $parentColumn
+                        },
+                        (
+                            sprintf "%s NYI sequence %s %s of %s",
+                            $instance->diagName($node),
+                            $instance->describeNodeRange($node),
+                            $lhsName,
+                            $grandParentName
+                        ),
+                    ),
+                    $parentLine,
+                    $parentLine,
+                );
             }
 
-            $instance->reportItem(
-                (
-                    {
-                        policy       => $policyShortName,
-                        reportLine   => $parentLine,
-                        reportColumn => $parentColumn
-                    },
-                    (
-                        sprintf "%s NYI sequence %s %s of %s",
-                        $instance->diagName( $node),
-                        $instance->describeNodeRange($node),
-                        $lhsName,
-                        $grandParentName
-                    ),
-                ),
-                $parentLine,
-                $parentLine,
-            );
+            last GATHER_MISTAKES;
         }
 
-        return $parentContext;
-    }
-
-    # if here, gapiness > 0
-    {
-        my $mistakes = [];
-        my $start    = $node->{start};
-
-        my $indentDesc = '???';
+        # if here, gapiness > 0
 
       TYPE_INDENT: {
 
             if ( $NYI_Rule->{$lhsName} ) {
-                $mistakes = $policy->isNYI( $node );
+                $mistakes = $policy->isNYI($node);
                 last TYPE_INDENT if @{$mistakes};
-		# should never reach here
+
+                # should never reach here
                 $indentDesc = 'NYI';
                 last TYPE_INDENT;
             }
@@ -1936,63 +2040,56 @@ sub validate_node {
             }
 
             if ( $tall_0RunningRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->check_0Running( $node );
+                $mistakes = $policy->check_0Running($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-0-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1RunningRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->is_1Running( $parentContext, $node);
+                $mistakes = $policy->is_1Running( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->is_1Jogging( $parentContext, $node );
+                $mistakes = $policy->is_1Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOGGING-1-STYLE';
+                $indentDesc = '1-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->is_2Jogging( $parentContext, $node );
+                $mistakes = $policy->is_2Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOGGING-2-STYLE';
+                $indentDesc = '2-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
-                $mistakes =
-                  $policy->is_Jogging1( $parentContext, $node );
+                $mistakes = $policy->is_Jogging1( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallNoteRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->isBackdented( $node );
+                $mistakes = $policy->isBackdented($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallLuslusRule->{$lhsName} ) {
-                $mistakes = $policy->isLuslusStyle( $node );
+                $mistakes = $policy->isLuslusStyle($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUSLUS-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $backdentedRule->{$lhsName} ) {
-                $mistakes =
-                  $policy->isBackdented( $node );
+                $mistakes = $policy->isBackdented($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BACKDENTED';
                 last TYPE_INDENT;
@@ -2000,42 +2097,41 @@ sub validate_node {
 
             # By default, treat as not yet implemented
             {
-                $mistakes = $policy->isNYI( $node );
+                $mistakes = $policy->isNYI($node);
                 last TYPE_INDENT if @{$mistakes};
-		# should never reach here
+
+                # should never reach here
                 $indentDesc = 'NYI';
                 last TYPE_INDENT;
             }
 
         }
+    }
 
-      PRINT: {
-            if ( @{$mistakes} ) {
-                $_->{policy} = $policyShortName for @{$mistakes};
-                $policy->displayMistakes( $mistakes,
-                    $instance->diagName( $node ) );
-                last PRINT;
-            }
+  PRINT: {
+        if ( @{$mistakes} ) {
+            $_->{policy} = $policyShortName for @{$mistakes};
+            $policy->displayMistakes( $mistakes, $instance->diagName($node) );
+            last PRINT;
+        }
 
-            if ($censusWhitespace) {
-                my ( $reportLine, $reportColumn ) =
-                  $instance->line_column($start);
-                my $mistake = {
-                    policy       => $policyShortName,
-                    reportLine   => $reportLine,
-                    reportColumn => $reportColumn
-                };
-                $instance->reportItem(
-                    (
-                        $mistake,
-                        sprintf "%s %s",
-                        $instance->diagName( $node),
-                        $indentDesc
-                    ),
-                    $parentLine,
-                    $parentLine
-                );
-            }
+        if ($censusWhitespace) {
+            my ( $reportLine, $reportColumn ) = $instance->line_column($start);
+            my $mistake = {
+                policy       => $policyShortName,
+                reportLine   => $reportLine,
+                reportColumn => $reportColumn
+            };
+            $instance->reportItem(
+		$mistake,
+                (
+                    sprintf '%s %s',
+                    $instance->diagName($node),
+		    $indentDesc
+                ),
+                $parentLine,
+                $parentLine
+            );
         }
     }
 
