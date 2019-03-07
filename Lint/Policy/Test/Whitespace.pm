@@ -145,35 +145,46 @@ sub isOneLineGap {
     if (    $startLine == $endLine
         and $instance->literal( $start - 2, 2 ) ne '==' )
     {
-        return [{
-            msg  => "missing newline " . describeLC( $startLine, $startColumn ),
-            line => $startLine,
-            column => $startColumn,
-        }];
+        return [
+            {
+                msg => "missing newline "
+                  . describeLC( $startLine, $startColumn ),
+                line   => $startLine,
+                column => $startColumn,
+            }
+        ];
     }
   LINE: for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
         my $literalLine = $instance->literalLine($lineNum);
-        my $commentOffset = index $literalLine, ':';
+        if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
+            my $commentOffset = $LAST_MATCH_START[1];
+            if ( $commentOffset != $expectedColumn ) {
+                push @mistakes,
+                  {
+                    msg => "comment "
+                      . describeMisindent( $commentOffset, $expectedColumn ),
+                    line   => $lineNum,
+                    column => $commentOffset,
+                  };
+            }
+            next LINE;
+        }
 
-        if ( $commentOffset < 0 ) {
-            push @mistakes,
-              {
-                msg    => "missing comment on line $lineNum",
-                line   => $lineNum,
-                column => 0,
-              };
-            next LINE;
-        }
-        if ( $commentOffset != $expectedColumn ) {
-            push @mistakes,
-              {
-                msg => "comment "
-                  . describeMisindent( $commentOffset, $expectedColumn ),
-                line   => $lineNum,
-                column => $commentOffset,
-              };
-            next LINE;
-        }
+	# TODO: These are hacks to work around the way
+	# triple quoting deals with its trailer -- the parser throws
+	# it away before even this whitespace-reading version
+	# of the parser gets to see it.  Probably, hoonlint
+	# should fork the parser and deal with this situation
+	# in a less hack-ish way.
+	next LINE if $literalLine =~ m/^ *'''$/; 
+	next LINE if $literalLine =~ m/^ *"""$/; 
+
+        push @mistakes,
+          {
+            msg    => "missing comment on line $lineNum",
+            line   => $lineNum,
+            column => 0,
+          };
 
     }
     return \@mistakes;
@@ -202,11 +213,18 @@ sub checkBoog5d {
     # We deal with the running list here, rather than
     # in its own node
 
-    my ( $runeLine, $runeColumn ) = $instance->nodeLC($runeNode);
+    my $anchorNode = $instance->firstBrickOfLine($node);
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    my ( $startLine, $startColumn ) = $instance->nodeLC($node);
+
+    # The battery is "joined" iff it starts on the same line as the anchor,
+    # but at a different column.  "Different column" to catch the case where
+    # the anchor rune *is* the battery rune.
+    my $joined = ($anchorLine == $startLine and $anchorColumn != $startColumn);
     my $children = $node->{children};
     my $childIX         = 0;
-    my $expectedColumn = $runeColumn;
-    my $expectedLine = $runeLine+1;
+    my $expectedColumn = $joined ? $startColumn : $anchorColumn;
+    my $expectedLine = $joined ? $startLine : $anchorLine+1;
   CHILD: while ( $childIX <= $#$children ) {
         my $cell = $children->[$childIX];
         my ( $cellLine, $cellColumn ) = $instance->nodeLC($cell);
@@ -225,7 +243,7 @@ sub checkBoog5d {
                 line           => $cellLine,
                 column         => $cellColumn,
                 expectedColumn => $expectedColumn,
-                topicLines     => [ $runeLine, $expectedLine ],
+                topicLines     => [ $startLine, $expectedLine ],
               };
         }
 
@@ -234,7 +252,7 @@ sub checkBoog5d {
         my $cellGap = $children->[$childIX];
         my ( $cellGapLine, $cellGapColumn ) = $instance->nodeLC($cellGap);
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $cellGap, $runeColumn ) } )
+            @{ $policy->isOneLineGap( $cellGap, $expectedColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -252,7 +270,7 @@ sub checkBoog5d {
                     parentColumn => $cellGapColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [ $runeLine, $cellGapLine ],
+                    topicLines   => [ $startLine, $cellGapLine ],
                   };
             }
         }

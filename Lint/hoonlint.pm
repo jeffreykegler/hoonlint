@@ -527,6 +527,22 @@ sub brickLC {
     return $instance->nodeLC( $instance->brickNode($node) );
 }
 
+# first brick node in $node's line --
+# $node if there is no prior brick node
+sub firstBrickOfLine {
+    my ( $instance, $node ) = @_;
+    my ($currentLine) = $instance->nodeLC($node);
+    my $thisNode = $node;
+    my $firstBrickNode;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+        last NODE if $thisLine != $currentLine;
+        $firstBrickNode = $thisNode if $instance->brickName($thisNode);
+        $thisNode = $thisNode->{PARENT};
+    }
+    return $firstBrickNode // $node;
+}
+
 sub anchorNode {
     my ( $instance, $node ) = @_;
     # say STDERR join " ", __FILE__, __LINE__, "calling anchorNode()";
