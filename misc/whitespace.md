@@ -56,10 +56,58 @@ A **newline-equivalent gap** is a gap containing which contains only one
 newline, not counting those newlines which termination properly aligned
 header commments.
 
+### Types of hoons
+
+Hoons may be backdented, running, jogging, battery or irregular.
+
+* A hoon is a **battery hoon** if it contains an element that
+uses the battery syntax.
+
+* A hoon is a **running hoon** if it contains an element that
+uses the running syntax.
+
+* A hoon is a **jogging hoon** if it contains an element that
+uses the jogging syntax.
+
+* A hoon is a **backdented hoon** if it and contains a fixed number
+of gap-separated elements, and none of them follow the running, jogging or
+battery syntax.
+
+* A hoon is an **irregular hoon** if it is not a backdented,
+running, jogging or backdented hoon.
+Most irregular hoons do not contain a gap.
+
+TODO: Corner cases, including BARCAB, lutes and (possibly)
+other tall irregular hoons.
+
+### Backdented hoons
+
+The archetypal Hoon whitespace pattern is backdenting.
+A backdented hoon of 3 or more elements should be joined.
+A backdented hoon of 3 or more elements should be split.
+
+The first element of a joined backdented hoon should be
+on the same line as the rune, separated by a gap.
+Subsequent elements of a joined backdented hoon should be
+separated by a newline-equivalent.
+
+The first element of a joined backdented hoon should be
+separated from the rune by a newline-equivalent.
+Subsequent elements of a joined backdented hoon should also be
+separated by a newline-equivalents.
+
+The last element of a backdented hoon should be aligned with
+the rune.
+All other elements of a backdented hoon should be aligned one
+stop more than element that follow them.
+
+This means that, in an *n*-element hoon,
+the first element should be indented `n-1` stops more than the rune;
+a second element should be indented `n-2` stops more than the rune;
+etc.
+
 ### Running hoons
 
-A hoon is a **running hoon** if it contains an element that
-uses the running syntax.
 A running element is more often called simply a **running**.
 (Currently all hoons contains at most one running.)
 
@@ -149,8 +197,6 @@ a horizontal sub-running.
 
 ### Jogging hoons
 
-A hoon is a **jogging hoon** if it contains an element that
-uses the jogging syntax.
 A jogging element is more often called simply a **jogging**.
 (Currently all hoons contains at most one jogging.)
 
@@ -282,7 +328,7 @@ from the start of its jogging.
 The TISTIS of a queenside jogging should be outdented two stops
 from the start of its jogging.
 
-## Criss-cross TISTIS lines
+## Criss-cross lines
 
 Successive TISTIS's may occur on the same line,
 as part of a **criss-cross TISTIS line**.
@@ -298,6 +344,8 @@ to alignment,
 rather than following the logic of the syntax,
 the boundaries at the criss-cross TISTIS line
 would cross each other.
+
+HEPHEP's may also be joined into criss-cross lines.
 
 ## Proper spacing of 1-jogging hoons
 
@@ -386,7 +434,20 @@ more than the rune column.
 should be one new-line equivalent after the TISTIS,
 and aligned with the rune.
 
-## Non-standard code
+### Batteries
+
+The cells of a battery should be aligned with the first brick
+rune on the same line as the rune of the battery hoon which contains
+them.
+They should be separated by newline-equivalents,
+and the base column for header comments should be the rune column.
+
+### Battery hoons
+
+The battery hoons are BARCAB, BARCEN and BARKET.
+
+
+## Appendix: Non-standard code
 
 For linting purposes, it is necessary to decide the intended
 chess-sidedness of misindented jogging hoons, joggings and jogs
