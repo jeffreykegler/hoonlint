@@ -1847,6 +1847,33 @@ sub isBackdented {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
 
+  ENFORCE_ELEMENT1_JOINEDNESS: {
+        my $firstGap = $gapSeq[0];
+        my ($gapLine) = $instance->nodeLC($firstGap);
+        last ENFORCE_ELEMENT1_JOINEDNESS if $gapLine == $parentLine;
+        my $gapLiteral = $instance->literalNode($firstGap);
+        $gapLiteral = substr( $gapLiteral, 2 )
+          if $instance->runeGapNode($firstGap);
+
+        # Only enforce if 1st line is spaces --
+        # comments, etc., are caught by the logic to follow
+        last ENFORCE_ELEMENT1_JOINEDNESS unless $gapLiteral =~ /^[ ]*\n/;
+        my $element = $gapSeq[1];
+        my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
+        my $msg = sprintf
+          '%d-element backdent must be joined %s',
+          $elementCount,
+          describeLC( $elementLine, $elementColumn );
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $elementLine,
+            column       => $elementColumn,
+          };
+    }
+
     my $anchorNode = $instance->anchorNode($node);
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
   ELEMENT:

@@ -2,8 +2,8 @@ t/ast.d/sieve_k.hoon 1:1 Test::Whitespace tallBartis BACKDENTED
 t/ast.d/sieve_k.hoon 2:1 Test::Whitespace tallKethep CAST-STYLE
 t/ast.d/sieve_k.hoon 3:1 Test::Whitespace tallTislus BACKDENTED
 t/ast.d/sieve_k.hoon 4:1 Test::Whitespace tallTisgal CAST-STYLE
-t/ast.d/sieve_k.hoon 5:1 Test::Whitespace SUPPRESSION tallBarcen NYI @5:0-21:2
-t/ast.d/sieve_k.hoon 6:1 Test::Whitespace wisp5d CAST-STYLE
+t/ast.d/sieve_k.hoon 5:1 Test::Whitespace tallBarcen NYI @5:0-21:2
+t/ast.d/sieve_k.hoon 6:1 Test::Whitespace wisp5d NYI @6:0-21:2
 t/ast.d/sieve_k.hoon 6:1 Test::Whitespace whap5d cell #1 @6:1; correctly indented
 t/ast.d/sieve_k.hoon 6:1 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_k.hoon 7:1 Test::Whitespace whap5d cell #2 @7:1; correctly indented

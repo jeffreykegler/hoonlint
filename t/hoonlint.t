@@ -29,10 +29,10 @@ my @tests = (
     ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
     ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
     ['t/ast.d/toe.hoon', 't/util.d/toe.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/fizzbuzz.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/sieve_b.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/sieve_k.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/toe.hoon', q{}, '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
+    ['t/ast.d/toe.hoon', 't/util.d/toe.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
 );
 
 local $Data::Dumper::Deepcopy    = 1;

@@ -616,6 +616,11 @@ EOS
     $MarpaX::YAHC::Lint::grammar = $parser->rawGrammar();
     $lintInstance->{grammar} = $MarpaX::YAHC::Lint::grammar;
 
+    # TODO: wisp5d needs study -- may depend on parent
+    my %NYI_Rule = ();
+    $NYI_Rule{$_} = 1 for qw(wisp5d);
+    $lintInstance->{NYI_Rule} = \%NYI_Rule;
+
     my %tallRuneRule = map { +( $_, 1 ) } grep {
              /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
           or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
@@ -623,7 +628,6 @@ EOS
       $MarpaX::YAHC::Lint::grammar->symbol_ids();
     $lintInstance->{tallRuneRule} = \%tallRuneRule;
 
-    # TODO: wisp5d needs study -- may depend on parent
     my %tallNoteRule = map { +( $_, 1 ) } qw(
       tallBarhep tallBardot
       tallCendot tallColcab tallColsig
@@ -631,7 +635,7 @@ EOS
       tallSigbar tallSigcab tallSigfas tallSiglus
       tallTisbar tallTiscom tallTisgal
       tallWutgal tallWutgar tallWuttis
-      tallZapgar wisp5d
+      tallZapgar
       tallTailOfElem tallTailOfTop
     );
     $lintInstance->{tallNoteRule} = \%tallNoteRule;
@@ -639,9 +643,6 @@ EOS
     my %mortarLHS = map { +( $_, 1 ) }
       qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq);
     $lintInstance->{mortarLHS} = \%mortarLHS;
-
-    my %NYI_Rule = ();
-    $lintInstance->{NYI_Rule} = \%NYI_Rule;
 
     my %tallBodyRule =
       map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
