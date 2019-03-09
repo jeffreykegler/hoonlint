@@ -489,6 +489,22 @@ sub testStyleCensus {
 
 }
 
+sub gapNode {
+    my ( $instance, $node ) = @_;
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $symbol = $node->{symbol};
+    return if not defined $symbol;
+    return $symbolReverseDB->{$symbol}->{gap};
+}
+
+sub runeGapNode {
+    my ( $instance, $node ) = @_;
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $symbol = $node->{symbol};
+    return if not defined $symbol;
+    return $symbolReverseDB->{$symbol}->{runeGap};
+}
+
 sub line_column {
     my ( $instance, $pos ) = @_;
     $Data::Dumper::Maxdepth = 3;

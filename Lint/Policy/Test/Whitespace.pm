@@ -161,10 +161,20 @@ sub pseudoJoinColumn {
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
     my ( $policy, $gap, $expectedColumn ) = @_;
+    my $instance = $policy->{lint};
+    my $start  = $gap->{start};
+    my $length = $gap->{length};
+    return i_isOneLineGap( $policy, $start + 2, $length - 2, $expectedColumn )
+      if $instance->runeGapNode($gap);
+    return i_isOneLineGap( $policy, $start, $length, $expectedColumn );
+}
+
+# Internal version of isOneLineGap()
+sub i_isOneLineGap {
+    my ( $policy, $start, $length, $expectedColumn ) = @_;
     my @mistakes = ();
     my $instance = $policy->{lint};
-    my $start    = $gap->{start};
-    my $end      = $start + $gap->{length};
+    my $end      = $start + $length;
     my ( $startLine, $startColumn ) = $instance->line_column($start);
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
     $expectedColumn //= -1;    # -1 will never match
@@ -1855,11 +1865,11 @@ sub isBackdented {
 
         if ( $elementLine == $parentLine ) {
             my $gapLiteral = $instance->literalNode($gap);
-            if ( $gapLiteral =~ m/[^ ]/ ) {
+	    # say STDERR join " ", __LINE__, '[' . $gapLiteral . ']';
+	    # Remove the rune, if present
+	    $gapLiteral = substr($gapLiteral, 2) if $instance->runeGapNode($gap);
+	    # say STDERR join " ", __LINE__, '[' . $gapLiteral . ']';
 
-                # Remove the longest prefix ending in a non-space
-                $gapLiteral =~ s/^.*[^ ]//g;
-            }
 	    # OK if final space are exactly one stop
             next ELEMENT if length $gapLiteral == 2;
 	    # OK if at proper alignment for backdent
