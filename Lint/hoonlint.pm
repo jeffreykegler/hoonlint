@@ -454,8 +454,10 @@ sub testStyleCensus {
         $data->{id}     = $symbolID;
         $data->{lexeme} = 1;                     # default to lexeme
         $data->{gap}    = 1 if $name eq 'GAP';
-        $data->{gap}    = 1
-          if $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/;
+        if ($name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
+            $data->{gap}    = 1;
+            $data->{runeGap} = 1;
+        }
         $symbolDB->[$symbolID] = $data;
         $symbolReverseDB->{$name} = $data;
     }

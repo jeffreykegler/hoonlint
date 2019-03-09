@@ -55,7 +55,7 @@ sub calcGapIndents {
 # pairs of nodes, where each pair is a gap and it post-gap
 # symbol.  It is assumed that the first child is not a gap,
 # and no post-gap child is a gap.  The sequence will always
-# be off odd length.
+# be of odd length.
 #
 # Intuitively, this is usually the subset of the children with
 # information useful for parsing.
@@ -70,6 +70,34 @@ sub gapSeq {
     my $childIX = 1;
     CHILD: while ($childIX < $#$children ) {
         $child  = $children->[$childIX];
+        my $symbol = $child->{symbol};
+        if ( not defined $symbol
+            or not $symbolReverseDB->{$symbol}->{gap} )
+        {
+	  $childIX++;
+	  next CHILD;
+	}
+	my $nextChild = $children->[ $childIX + 1 ];
+	push @gapSeq, $child, $nextChild;
+	$childIX += 2;
+    }
+    return \@gapSeq;
+}
+
+# A variant of "gapSeq" which relaxes the assumption that
+# the first child is not a gap, and which returns an
+# alternating sequence of gap and post-gap.  It assumes
+# that a gap does not follow another gap.
+sub gapSeq0 {
+    my ( $policy, $node ) = @_;
+    my $instance        = $policy->{lint};
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $children        = $node->{children};
+    my @gapSeq      = ();
+
+    my $childIX = 0;
+    CHILD: while ($childIX < $#$children ) {
+        my $child  = $children->[$childIX];
         my $symbol = $child->{symbol};
         if ( not defined $symbol
             or not $symbolReverseDB->{$symbol}->{gap} )
@@ -1803,38 +1831,106 @@ sub isNYI {
 
 sub isBackdented {
     my ( $policy, $node ) = @_;
-    my $indents = $policy->calcGapIndents($node);
-    my $instance = $policy->{lint};
-    my ($parentLine, $parentColumn) = $instance->line_column( $node->{start} );
+    my @gapSeq       = @{ $policy->gapSeq0($node) };
+    my $elementCount = ( scalar @gapSeq ) / 2;
+    my $instance     = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
 
     my $anchorNode = $instance->anchorNode($node);
-    my ( $baseLine, $baseIndent ) = $instance->nodeLC( $anchorNode );
-    my $currentIndent = $baseIndent + $#$indents * 2;
-    my $lastLine      = $baseLine;
-  INDENT: for my $ix ( 1 .. $#$indents ) {
-        my $indent = $indents->[$ix];
-        my ( $thisLine, $thisColumn ) = @{$indent};
-        $currentIndent -= 2;
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+  ELEMENT:
+    for (
+        my $elementNumber = 1 ;
+        $elementNumber <= $elementCount ;
+        $elementNumber++
+      )
+    {
 
-        # say "$currentIndent vs. $thisColumn";
-        next INDENT if $thisLine == $lastLine;
-        if ( $currentIndent != $thisColumn ) {
+        my $element = $gapSeq[ $elementNumber * 2 - 1 ];
+        my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
+        my $gap = $gapSeq[ $elementNumber * 2 - 2 ];
+        my $expectedColumn =
+          $anchorColumn + ( $elementCount - $elementNumber ) * 2;
+
+        if ( $elementLine == $parentLine ) {
+            my $gapLiteral = $instance->literalNode($gap);
+            if ( $gapLiteral =~ m/[^ ]/ ) {
+
+                # Remove the longest prefix ending in a non-space
+                $gapLiteral =~ s/^.*[^ ]//g;
+            }
+	    # OK if final space are exactly one stop
+            next ELEMENT if length $gapLiteral == 2;
+	    # OK if at proper alignment for backdent
+	    next ELEMENT if $expectedColumn == $elementColumn;
+
+            my $gapLength = $gap->{length};
+	    my ( undef, $gapColumn ) = $instance->nodeLC($gap);
+
+            # expected length is the length if the spaces at the end
+            # of the gap-equivalent were exactly one stop.
+            my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+
+            $expectedColumn = $gapColumn + $expectedLength;
             my $msg = sprintf
-              "Child #%d @ line %d; backdent is %d; should be %d",
-              $ix, $thisLine, $thisColumn, $currentIndent;
+              "joined backdent element #%d %s; %s",
+              $elementNumber,
+              describeLC( $elementLine, $elementColumn ),
+              describeMisindent( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
-	    parentLine => $parentLine,
-	    parentColumn => $parentColumn,
-                line           => $thisLine,
-                column         => $thisColumn,
-                child          => $ix,
-                backdentColumn => $currentIndent,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $elementLine,
+                column         => $elementColumn,
+                expectedColumn => $expectedColumn,
+              };
+            next ELEMENT;
+        }
+
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $gap, $anchorColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf 'backdented element #%d, %s; %s',
+                  $elementNumber,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                  };
+            }
+        }
+
+
+# say STDERR join " ", __FILE__, __LINE__, "element $elementNumber", '[' . $instance->literalNode($element) . ']';
+
+        if ( $expectedColumn != $elementColumn ) {
+            my $msg = sprintf
+              'backdented element #%d %s; %s',
+              $elementNumber,
+              describeLC( $elementLine, $elementColumn ),
+              describeMisindent( $elementColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $elementLine,
+                column         => $elementColumn,
+                expectedColumn => $expectedColumn,
               };
         }
-        $lastLine = $thisLine;
     }
     return \@mistakes;
 }
