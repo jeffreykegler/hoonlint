@@ -616,9 +616,8 @@ EOS
     $MarpaX::YAHC::Lint::grammar = $parser->rawGrammar();
     $lintInstance->{grammar} = $MarpaX::YAHC::Lint::grammar;
 
-    # TODO: wisp5d needs study -- may depend on parent
     my %NYI_Rule = ();
-    $NYI_Rule{$_} = 1 for qw(wisp5d);
+    $NYI_Rule{$_} = 1 for qw();
     $lintInstance->{NYI_Rule} = \%NYI_Rule;
 
     my %tallRuneRule = map { +( $_, 1 ) } grep {
@@ -628,6 +627,8 @@ EOS
       $MarpaX::YAHC::Lint::grammar->symbol_ids();
     $lintInstance->{tallRuneRule} = \%tallRuneRule;
 
+    # TODO: Check that these are all backdented,
+    # especially check tallTailOfElem tallTailOfTop
     my %tallNoteRule = map { +( $_, 1 ) } qw(
       tallBarhep tallBardot
       tallCendot tallColcab tallColsig

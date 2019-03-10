@@ -1,5 +1,4 @@
 t/ast.d/toe.hoon 11:5 Test::Whitespace tallBarcen NYI @11:4-25:6
-t/ast.d/toe.hoon 12:5 Test::Whitespace wisp5d NYI @12:4-25:6
 t/ast.d/toe.hoon 14:15 Test::Whitespace tallBuccen NYI @14:14-16:16
 t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen NYI @14:18-15:31
 t/ast.d/toe.hoon 17:15 Test::Whitespace tallBuccen NYI @17:14-20:16
@@ -7,10 +6,6 @@ t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen NYI @17:18-19:25
 t/ast.d/toe.hoon 21:15 Test::Whitespace tallBuccol NYI @21:14-24:16
 t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol NYI @21:18-23:24
 t/ast.d/toe.hoon 26:1 Test::Whitespace tallBarcen NYI @26:0-62:2
-t/ast.d/toe.hoon 27:1 Test::Whitespace wisp5d NYI @27:0-62:2
 t/ast.d/toe.hoon 28:3 Test::Whitespace tallBarcab NYI @28:2-36:4
-t/ast.d/toe.hoon 29:3 Test::Whitespace wisp5d NYI @29:2-36:4
 t/ast.d/toe.hoon 38:3 Test::Whitespace tallBarcab NYI @38:2-61:4
-t/ast.d/toe.hoon 39:3 Test::Whitespace wisp5d NYI @39:2-61:4
 t/ast.d/toe.hoon 50:5 Test::Whitespace tallBarcab NYI @50:4-60:6
-t/ast.d/toe.hoon 51:5 Test::Whitespace wisp5d NYI @51:4-60:6

@@ -3,7 +3,7 @@ t/ast.d/sieve_b.hoon 2:1 Test::Whitespace tallKethep CAST-STYLE
 t/ast.d/sieve_b.hoon 3:1 Test::Whitespace tallTisfas BACKDENTED
 t/ast.d/sieve_b.hoon 4:1 Test::Whitespace tallTisgal CAST-STYLE
 t/ast.d/sieve_b.hoon 5:1 Test::Whitespace tallBarcen NYI @5:0-26:2
-t/ast.d/sieve_b.hoon 6:1 Test::Whitespace wisp5d NYI @6:0-26:2
+t/ast.d/sieve_b.hoon 6:1 Test::Whitespace wisp5d WISP5D
 t/ast.d/sieve_b.hoon 6:1 Test::Whitespace whap5d cell #1 @6:1; correctly indented
 t/ast.d/sieve_b.hoon 6:1 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/sieve_b.hoon 9:1 Test::Whitespace whap5d cell #2 @9:1; correctly indented

@@ -320,6 +320,52 @@ sub checkBoog5d {
 
 }
 
+sub checkWisp5d {
+    my ( $policy, $node ) = @_;
+    my @mistakes = ();
+    my $instance  = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC( $node );
+    my $gapSeq    = $policy->gapSeq0($node);
+    my ($gap, $hephep) = @{$gapSeq};
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $parentColumn ) } ) {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'battery, %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+              };
+        }
+    }
+
+    my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
+    my $expectedColumn = $parentColumn;
+    if ( $expectedColumn != $hephepColumn ) {
+        my $msg = sprintf
+          'battery hephep %s; %s',
+          describeLC( $hephepLine, $hephepColumn ),
+          describeMisindent( $hephepColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $hephepLine,
+            column         => $hephepColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+    return \@mistakes;
+}
+
 sub checkSplit_0Running {
     my ( $policy, $node ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
@@ -2184,6 +2230,13 @@ sub validate_node {
         # if here, gapiness > 0
 
       TYPE_INDENT: {
+
+            if ( $lhsName eq "wisp5d" ) {
+                $mistakes = $policy->checkWisp5d($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'WISP5D';
+                last TYPE_INDENT;
+	    }
 
             if ( $NYI_Rule->{$lhsName} ) {
                 $mistakes = $policy->isNYI($node);
