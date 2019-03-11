@@ -2473,43 +2473,26 @@ hoons/arvo/sys/vane/eyre.hoon 167:3 Test::Whitespace tallBuccenMold NYI @167:2-1
 hoons/arvo/sys/vane/eyre.hoon 167:7 Test::Whitespace tallBuccenMold NYI @167:6-173:20
 hoons/arvo/sys/vane/eyre.hoon 176:1 Test::Whitespace tallBarcen NYI @176:0-609:2
 hoons/arvo/sys/vane/eyre.hoon 212:15 Test::Whitespace tallColhep backdented element #2 @213:3; underindented by 12
-hoons/arvo/sys/vane/eyre.hoon 269:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @272:5
-hoons/arvo/sys/vane/eyre.hoon 269:10 Test::Whitespace tallTailOfElem backdented element #1 @272:5; underindented by 5
-hoons/arvo/sys/vane/eyre.hoon 268:8 Test::Whitespace tallTailOfElem 1-element backdent must be joined @275:3
-hoons/arvo/sys/vane/eyre.hoon 268:8 Test::Whitespace tallTailOfElem backdented element #1 @275:3; underindented by 5
+hoons/arvo/sys/vane/eyre.hoon 268:8 Test::Whitespace tallTailOfElem NYI @268:7-275:4
+hoons/arvo/sys/vane/eyre.hoon 269:10 Test::Whitespace tallTailOfElem NYI @269:9-272:6
 hoons/arvo/sys/vane/eyre.hoon 392:3 Test::Whitespace tallBarcen NYI @392:2-496:4
 hoons/arvo/sys/vane/eyre.hoon 498:3 Test::Whitespace tallBarcen NYI @498:2-608:4
-hoons/arvo/sys/vane/eyre.hoon 500:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @503:5
-hoons/arvo/sys/vane/eyre.hoon 500:10 Test::Whitespace tallTailOfElem backdented element #1 @503:5; underindented by 5
-hoons/arvo/sys/vane/eyre.hoon 509:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @512:7
-hoons/arvo/sys/vane/eyre.hoon 509:12 Test::Whitespace tallTailOfElem backdented element #1 @512:7; underindented by 5
-hoons/arvo/sys/vane/eyre.hoon 507:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @513:5
-hoons/arvo/sys/vane/eyre.hoon 507:10 Test::Whitespace tallTailOfElem backdented element #1 @513:5; underindented by 5
-hoons/arvo/sys/vane/eyre.hoon 519:26 Test::Whitespace tallTailOfElem 1-element backdent must be joined @521:13
-hoons/arvo/sys/vane/eyre.hoon 519:26 Test::Whitespace tallTailOfElem backdented element #1 @521:13; underindented by 13
-hoons/arvo/sys/vane/eyre.hoon 523:22 Test::Whitespace tallTailOfElem 1-element backdent must be joined @526:15
-hoons/arvo/sys/vane/eyre.hoon 523:22 Test::Whitespace tallTailOfElem backdented element #1 @526:15; underindented by 7
-hoons/arvo/sys/vane/eyre.hoon 522:26 Test::Whitespace tallTailOfElem 1-element backdent must be joined @530:13
-hoons/arvo/sys/vane/eyre.hoon 522:26 Test::Whitespace tallTailOfElem backdented element #1 @530:13; underindented by 13
-hoons/arvo/sys/vane/eyre.hoon 518:19 Test::Whitespace tallTailOfElem 1-element backdent must be joined @531:11
-hoons/arvo/sys/vane/eyre.hoon 518:19 Test::Whitespace tallTailOfElem backdented element #1 @531:11; underindented by 8
-hoons/arvo/sys/vane/eyre.hoon 517:27 Test::Whitespace tallTailOfElem 1-element backdent must be joined @532:9
-hoons/arvo/sys/vane/eyre.hoon 517:27 Test::Whitespace tallTailOfElem backdented element #1 @532:9; underindented by 18
-hoons/arvo/sys/vane/eyre.hoon 517:7 Test::Whitespace tallTailOfTop 1-element backdent must be joined @563:5
-hoons/arvo/sys/vane/eyre.hoon 517:7 Test::Whitespace tallTailOfTop backdented element #1 @563:5; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 569:27 Test::Whitespace tallTailOfElem 1-element backdent must be joined @574:13
-hoons/arvo/sys/vane/eyre.hoon 569:27 Test::Whitespace tallTailOfElem backdented element #1 @574:13; underindented by 14
-hoons/arvo/sys/vane/eyre.hoon 568:19 Test::Whitespace tallTailOfElem 1-element backdent must be joined @575:11
-hoons/arvo/sys/vane/eyre.hoon 568:19 Test::Whitespace tallTailOfElem backdented element #1 @575:11; underindented by 8
-hoons/arvo/sys/vane/eyre.hoon 567:27 Test::Whitespace tallTailOfElem 1-element backdent must be joined @576:9
-hoons/arvo/sys/vane/eyre.hoon 567:27 Test::Whitespace tallTailOfElem backdented element #1 @576:9; underindented by 18
-hoons/arvo/sys/vane/eyre.hoon 567:7 Test::Whitespace tallTailOfTop 1-element backdent must be joined @577:7
-hoons/arvo/sys/vane/eyre.hoon 581:7 Test::Whitespace tallTailOfTop 1-element backdent must be joined @591:5
-hoons/arvo/sys/vane/eyre.hoon 581:7 Test::Whitespace tallTailOfTop backdented element #1 @591:5; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 595:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @605:7
-hoons/arvo/sys/vane/eyre.hoon 595:12 Test::Whitespace tallTailOfElem backdented element #1 @605:7; underindented by 5
-hoons/arvo/sys/vane/eyre.hoon 594:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @607:5
-hoons/arvo/sys/vane/eyre.hoon 594:10 Test::Whitespace tallTailOfElem backdented element #1 @607:5; underindented by 5
+hoons/arvo/sys/vane/eyre.hoon 500:10 Test::Whitespace tallTailOfElem NYI @500:9-503:6
+hoons/arvo/sys/vane/eyre.hoon 507:10 Test::Whitespace tallTailOfElem NYI @507:9-513:6
+hoons/arvo/sys/vane/eyre.hoon 509:12 Test::Whitespace tallTailOfElem NYI @509:11-512:8
+hoons/arvo/sys/vane/eyre.hoon 517:7 Test::Whitespace tallTailOfTop NYI @517:6-563:6
+hoons/arvo/sys/vane/eyre.hoon 517:27 Test::Whitespace tallTailOfElem NYI @517:26-532:10
+hoons/arvo/sys/vane/eyre.hoon 518:19 Test::Whitespace tallTailOfElem NYI @518:18-531:12
+hoons/arvo/sys/vane/eyre.hoon 519:26 Test::Whitespace tallTailOfElem NYI @519:25-521:14
+hoons/arvo/sys/vane/eyre.hoon 522:26 Test::Whitespace tallTailOfElem NYI @522:25-530:14
+hoons/arvo/sys/vane/eyre.hoon 523:22 Test::Whitespace tallTailOfElem NYI @523:21-526:16
+hoons/arvo/sys/vane/eyre.hoon 567:7 Test::Whitespace tallTailOfTop NYI @567:6-577:8
+hoons/arvo/sys/vane/eyre.hoon 567:27 Test::Whitespace tallTailOfElem NYI @567:26-576:10
+hoons/arvo/sys/vane/eyre.hoon 568:19 Test::Whitespace tallTailOfElem NYI @568:18-575:12
+hoons/arvo/sys/vane/eyre.hoon 569:27 Test::Whitespace tallTailOfElem NYI @569:26-574:14
+hoons/arvo/sys/vane/eyre.hoon 581:7 Test::Whitespace tallTailOfTop NYI @581:6-591:6
+hoons/arvo/sys/vane/eyre.hoon 594:10 Test::Whitespace tallTailOfElem NYI @594:9-607:6
+hoons/arvo/sys/vane/eyre.hoon 595:12 Test::Whitespace tallTailOfElem NYI @595:11-605:8
 hoons/arvo/sys/vane/eyre.hoon 610:1 Test::Whitespace tallBarcen NYI @610:0-1982:2
 hoons/arvo/sys/vane/eyre.hoon 612:7 Test::Whitespace tallBuccolMold NYI @612:6-621:8
 hoons/arvo/sys/vane/eyre.hoon 612:11 Test::Whitespace tallBuccolMold NYI @612:10-620:14
@@ -4457,19 +4440,15 @@ hoons/arvo/mar/urb.hoon 5:1 Test::Whitespace fordHoopSeq NYI @5:0-44:2
 hoons/arvo/mar/urb.hoon 5:25 Test::Whitespace fordFascol NYI @5:24-50
 hoons/arvo/mar/urb.hoon 10:1 Test::Whitespace tallBarcab NYI @10:0-44:2
 hoons/arvo/mar/urb.hoon 12:3 Test::Whitespace tallBarcen NYI @12:2-39:4
+hoons/arvo/mar/urb.hoon 17:10 Test::Whitespace tallTailOfElem NYI @17:9-38:6
+hoons/arvo/mar/urb.hoon 18:12 Test::Whitespace tallTailOfElem NYI @18:11-21:8
 hoons/arvo/mar/urb.hoon 20:10 Test::Whitespace tallTopSail NYI @20:9-15
-hoons/arvo/mar/urb.hoon 18:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @21:7
-hoons/arvo/mar/urb.hoon 18:12 Test::Whitespace tallTailOfElem backdented element #1 @21:7; underindented by 5
+hoons/arvo/mar/urb.hoon 22:12 Test::Whitespace tallTailOfElem NYI @22:11-37:8
 hoons/arvo/mar/urb.hoon 23:10 Test::Whitespace tallTopSail NYI @23:9-15
 hoons/arvo/mar/urb.hoon 24:10 Test::Whitespace tallTopSail NYI @24:9-36:14
 hoons/arvo/mar/urb.hoon 25:17 Test::Whitespace tallColsig NYI @25:16-35:18
+hoons/arvo/mar/urb.hoon 26:41 Test::Whitespace tallTailOfElem NYI @26:40-35:18
 hoons/arvo/mar/urb.hoon 27:20 Test::Whitespace tallTopSail NYI @27:19-45
-hoons/arvo/mar/urb.hoon 26:41 Test::Whitespace tallTailOfElem 1-element backdent must be joined @35:17
-hoons/arvo/mar/urb.hoon 26:41 Test::Whitespace tallTailOfElem backdented element #1 @35:17; underindented by 24
-hoons/arvo/mar/urb.hoon 22:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @37:7
-hoons/arvo/mar/urb.hoon 22:12 Test::Whitespace tallTailOfElem backdented element #1 @37:7; underindented by 5
-hoons/arvo/mar/urb.hoon 17:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @38:5
-hoons/arvo/mar/urb.hoon 17:10 Test::Whitespace tallTailOfElem backdented element #1 @38:5; underindented by 5
 hoons/arvo/mar/urb.hoon 41:3 Test::Whitespace tallBarcen NYI @41:2-43:4
 === hoons/arvo/mar/mime.hoon ===
 hoons/arvo/mar/mime.hoon 6:1 Test::Whitespace tallBarcab NYI @6:0-25:2
@@ -4556,12 +4535,9 @@ hoons/arvo/mar/hoon.hoon 13:60 Test::Whitespace whap5d cell #2 @20:5; comment ov
 hoons/arvo/mar/hoon.hoon 13:60 Test::Whitespace whap5d cell #2 @21:5; comment overindented by 2
 hoons/arvo/mar/hoon.hoon 13:60 Test::Whitespace whap5d cell #2 @22:5; comment overindented by 2
 hoons/arvo/mar/hoon.hoon 13:60 Test::Whitespace whap5d cell #2 @23:5; comment overindented by 2
-hoons/arvo/mar/hoon.hoon 27:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @34:7
-hoons/arvo/mar/hoon.hoon 27:12 Test::Whitespace tallTailOfElem backdented element #1 @34:7; underindented by 5
-hoons/arvo/mar/hoon.hoon 35:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @38:7
-hoons/arvo/mar/hoon.hoon 35:12 Test::Whitespace tallTailOfElem backdented element #1 @38:7; underindented by 5
-hoons/arvo/mar/hoon.hoon 26:10 Test::Whitespace tallTailOfElem 1-element backdent must be joined @39:5
-hoons/arvo/mar/hoon.hoon 26:10 Test::Whitespace tallTailOfElem backdented element #1 @39:5; underindented by 5
+hoons/arvo/mar/hoon.hoon 26:10 Test::Whitespace tallTailOfElem NYI @26:9-39:6
+hoons/arvo/mar/hoon.hoon 27:12 Test::Whitespace tallTailOfElem NYI @27:11-34:8
+hoons/arvo/mar/hoon.hoon 35:12 Test::Whitespace tallTailOfElem NYI @35:11-38:8
 hoons/arvo/mar/hoon.hoon 44:3 Test::Whitespace tallBarcen NYI @44:2-48:4
 === hoons/arvo/mar/lens/command.hoon ===
 hoons/arvo/mar/lens/command.hoon 5:1 Test::Whitespace tallBarcab NYI @5:0-63:2
@@ -4718,14 +4694,11 @@ hoons/arvo/mar/down.hoon 12:1 Test::Whitespace tallBarcab NYI @12:0-38:2
 hoons/arvo/mar/down.hoon 14:3 Test::Whitespace tallBarcen NYI @14:2-20:4
 hoons/arvo/mar/down.hoon 23:3 Test::Whitespace tallBarcen NYI @23:2-37:4
 hoons/arvo/mar/down.hoon 25:3 Test::Whitespace LuslusCell Child #2 @ line 26; backdent is 6; should be 4
+hoons/arvo/mar/down.hoon 26:12 Test::Whitespace tallTailOfElem NYI @26:11-31:8
+hoons/arvo/mar/down.hoon 28:14 Test::Whitespace tallTailOfElem NYI @28:13-30:10
 hoons/arvo/mar/down.hoon 29:12 Test::Whitespace tallTopSail NYI @29:11-34
-hoons/arvo/mar/down.hoon 28:14 Test::Whitespace tallTailOfElem 1-element backdent must be joined @30:9
-hoons/arvo/mar/down.hoon 28:14 Test::Whitespace tallTailOfElem backdented element #1 @30:9; underindented by 5
-hoons/arvo/mar/down.hoon 26:12 Test::Whitespace tallTailOfElem 1-element backdent must be joined @31:7
-hoons/arvo/mar/down.hoon 26:12 Test::Whitespace tallTailOfElem backdented element #1 @31:7; underindented by 5
+hoons/arvo/mar/down.hoon 33:9 Test::Whitespace tallTailOfElem NYI @33:8-35:6
 hoons/arvo/mar/down.hoon 34:8 Test::Whitespace tallTopSail NYI @34:7-30
-hoons/arvo/mar/down.hoon 33:9 Test::Whitespace tallTailOfElem 1-element backdent must be joined @35:5
-hoons/arvo/mar/down.hoon 33:9 Test::Whitespace tallTailOfElem backdented element #1 @35:5; underindented by 4
 === hoons/arvo/mar/httr.hoon ===
 hoons/arvo/mar/httr.hoon 9:1 Test::Whitespace tallBarcab NYI @9:0-23:2
 hoons/arvo/mar/httr.hoon 10:11 Test::Whitespace tallBarcen NYI @10:10-18:12
@@ -4787,9 +4760,8 @@ hoons/arvo/mar/twit/req.hoon 13:3 Test::Whitespace tallBarcen NYI @13:2-15:4
 === hoons/arvo/mar/css.hoon ===
 hoons/arvo/mar/css.hoon 7:1 Test::Whitespace tallBarcab NYI @7:0-21:2
 hoons/arvo/mar/css.hoon 9:3 Test::Whitespace tallBarcen NYI @9:2-14:4
+hoons/arvo/mar/css.hoon 10:23 Test::Whitespace tallTailOfElem NYI @10:22-12:18
 hoons/arvo/mar/css.hoon 11:20 Test::Whitespace tallTopSail NYI @11:19-32
-hoons/arvo/mar/css.hoon 10:23 Test::Whitespace tallTailOfElem 1-element backdent must be joined @12:17
-hoons/arvo/mar/css.hoon 10:23 Test::Whitespace tallTailOfElem backdented element #1 @12:17; underindented by 6
 hoons/arvo/mar/css.hoon 9:7 Test::Whitespace wisp5d battery hephep @14:3; underindented by 4
 hoons/arvo/mar/css.hoon 16:3 Test::Whitespace tallBarcen NYI @16:2-19:4
 === hoons/arvo/mar/hymn.hoon ===
@@ -4854,9 +4826,8 @@ hoons/arvo/mar/sole/effect.hoon 72:5 Test::Whitespace tallWutlus 2-jogging queen
 === hoons/arvo/mar/js.hoon ===
 hoons/arvo/mar/js.hoon 7:1 Test::Whitespace tallBarcab NYI @7:0-22:2
 hoons/arvo/mar/js.hoon 9:3 Test::Whitespace tallBarcen NYI @9:2-15:4
+hoons/arvo/mar/js.hoon 11:20 Test::Whitespace tallTailOfElem NYI @11:19-13:14
 hoons/arvo/mar/js.hoon 12:16 Test::Whitespace tallTopSail NYI @12:15-33
-hoons/arvo/mar/js.hoon 11:20 Test::Whitespace tallTailOfElem 1-element backdent must be joined @13:13
-hoons/arvo/mar/js.hoon 11:20 Test::Whitespace tallTailOfElem backdented element #1 @13:13; underindented by 7
 hoons/arvo/mar/js.hoon 17:3 Test::Whitespace tallBarcen NYI @17:2-20:4
 === hoons/arvo/mar/markdown.hoon ===
 hoons/arvo/mar/markdown.hoon 8:1 Test::Whitespace tallBarcab NYI @8:0-24:2
@@ -4962,28 +4933,23 @@ hoons/arvo/mar/static/action.hoon 6:1 Test::Whitespace tallBarcab NYI @6:0-11:2
 hoons/arvo/mar/static/action.hoon 8:3 Test::Whitespace tallBarcen NYI @8:2-10:4
 === hoons/arvo/web/unmark/test.hoon ===
 hoons/arvo/web/unmark/test.hoon 2:6 Test::Whitespace tallTopSail NYI @2:5-6:4
+hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallTailOfTop NYI @6:6-7:6
 hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallKidsOfTop NYI @6:6-7:2
-hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallTailOfTop backdented element #1 @7:5; overindented by 4
+hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallTailOfTop NYI @8:2-9:2
 hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallKidsOfTop NYI @8:2-9:2
-hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallTailOfTop backdented element #1 @9:1; underindented by 2
 === hoons/arvo/web/unmark/all.hoon ===
 hoons/arvo/web/unmark/all.hoon 7:1 Test::Whitespace fordHoopSeq NYI @7:0-65:2
 hoons/arvo/web/unmark/all.hoon 9:3 Test::Whitespace fordFascol NYI @9:2-16:11
 hoons/arvo/web/unmark/all.hoon 16:3 Test::Whitespace fordFascab NYI @16:2-11
 hoons/arvo/web/unmark/all.hoon 18:1 Test::Whitespace tallBarcen NYI @18:0-53:2
 hoons/arvo/web/unmark/all.hoon 25:3 Test::Whitespace tallTiscom joined backdent element #1 @25:9; overindented by 2
-hoons/arvo/web/unmark/all.hoon 32:13 Test::Whitespace tallTailOfElem 1-element backdent must be joined @35:3
-hoons/arvo/web/unmark/all.hoon 32:13 Test::Whitespace tallTailOfElem backdented element #1 @35:3; underindented by 10
+hoons/arvo/web/unmark/all.hoon 32:13 Test::Whitespace tallTailOfElem NYI @32:12-35:4
+hoons/arvo/web/unmark/all.hoon 56:4 Test::Whitespace tallTailOfElem NYI @56:3-65:2
+hoons/arvo/web/unmark/all.hoon 57:6 Test::Whitespace tallTailOfElem NYI @57:5-64:4
+hoons/arvo/web/unmark/all.hoon 58:8 Test::Whitespace tallTailOfElem NYI @58:7-63:6
 hoons/arvo/web/unmark/all.hoon 59:8 Test::Whitespace tallTopSail NYI @59:7-62:48
-hoons/arvo/web/unmark/all.hoon 58:8 Test::Whitespace tallTailOfElem 1-element backdent must be joined @63:5
-hoons/arvo/web/unmark/all.hoon 58:8 Test::Whitespace tallTailOfElem backdented element #1 @63:5; underindented by 3
-hoons/arvo/web/unmark/all.hoon 57:6 Test::Whitespace tallTailOfElem 1-element backdent must be joined @64:3
-hoons/arvo/web/unmark/all.hoon 57:6 Test::Whitespace tallTailOfElem backdented element #1 @64:3; underindented by 3
-hoons/arvo/web/unmark/all.hoon 56:4 Test::Whitespace tallTailOfElem 1-element backdent must be joined @65:1
-hoons/arvo/web/unmark/all.hoon 56:4 Test::Whitespace tallTailOfElem backdented element #1 @65:1; underindented by 3
 === hoons/arvo/web/listen.hoon ===
-hoons/arvo/web/listen.hoon 5:17 Test::Whitespace tallTailOfElem 1-element backdent must be joined @13:1
-hoons/arvo/web/listen.hoon 5:17 Test::Whitespace tallTailOfElem backdented element #1 @13:1; underindented by 16
+hoons/arvo/web/listen.hoon 5:17 Test::Whitespace tallTailOfElem NYI @5:16-13:2
 === hoons/arvo/web/404.hoon ===
 === hoons/arvo/web/pack/js/tree-urb.hoon ===
 hoons/arvo/web/pack/js/tree-urb.hoon 5:1 Test::Whitespace fordHoopSeq NYI @5:0-9:11
@@ -5001,14 +4967,11 @@ hoons/arvo/web/dojo.hoon 6:1 Test::Whitespace tallBarcen NYI @6:0-8:2
 hoons/arvo/web/dojo.hoon 13:8 Test::Whitespace tallAttribute NYI @13:7-14:23
 hoons/arvo/web/dojo.hoon 14:24 Test::Whitespace tallAttribute NYI @14:23-15:20
 hoons/arvo/web/dojo.hoon 15:21 Test::Whitespace tallAttribute NYI @15:20-16:20
-hoons/arvo/web/dojo.hoon 16:21 Test::Whitespace tallTailOfElem 1-element backdent must be joined @27:1
-hoons/arvo/web/dojo.hoon 16:21 Test::Whitespace tallTailOfElem backdented element #1 @27:1; underindented by 20
+hoons/arvo/web/dojo.hoon 16:21 Test::Whitespace tallTailOfElem NYI @16:20-27:2
 === hoons/arvo/web/talk.hoon ===
-hoons/arvo/web/talk.hoon 5:85 Test::Whitespace tallTailOfElem 1-element backdent must be joined @13:1
-hoons/arvo/web/talk.hoon 5:85 Test::Whitespace tallTailOfElem backdented element #1 @13:1; underindented by 84
+hoons/arvo/web/talk.hoon 5:85 Test::Whitespace tallTailOfElem NYI @5:84-13:2
 === hoons/arvo/web/womb.hoon ===
-hoons/arvo/web/womb.hoon 5:59 Test::Whitespace tallTailOfElem 1-element backdent must be joined @16:1
-hoons/arvo/web/womb.hoon 5:59 Test::Whitespace tallTailOfElem backdented element #1 @16:1; underindented by 58
+hoons/arvo/web/womb.hoon 5:59 Test::Whitespace tallTailOfElem NYI @5:58-16:2
 === hoons/arvo/ren/urb.hoon ===
 hoons/arvo/ren/urb.hoon 6:1 Test::Whitespace fordHoopSeq NYI @6:0-26:3
 hoons/arvo/ren/urb.hoon 6:1 Test::Whitespace fordFascen NYI @6:0-25:8
@@ -5025,13 +4988,10 @@ hoons/arvo/ren/rss-xml.hoon 6:1 Test::Whitespace fordHoopSeq NYI @6:0-36:2
 hoons/arvo/ren/rss-xml.hoon 8:10 Test::Whitespace fordFascab NYI @8:9-26
 hoons/arvo/ren/rss-xml.hoon 9:1 Test::Whitespace fordFasbuc NYI @9:0-60
 hoons/arvo/ren/rss-xml.hoon 22:11 Test::Whitespace tallCenhep backdented element #2 @23:1; underindented by 10
+hoons/arvo/ren/rss-xml.hoon 23:20 Test::Whitespace tallTailOfElem NYI @23:19-36:2
+hoons/arvo/ren/rss-xml.hoon 24:11 Test::Whitespace tallTailOfElem NYI @24:10-35:4
 hoons/arvo/ren/rss-xml.hoon 28:6 Test::Whitespace tallTopSail NYI @28:5-34:10
-hoons/arvo/ren/rss-xml.hoon 30:14 Test::Whitespace tallTailOfElem 1-element backdent must be joined @34:9
-hoons/arvo/ren/rss-xml.hoon 30:14 Test::Whitespace tallTailOfElem backdented element #1 @34:9; underindented by 5
-hoons/arvo/ren/rss-xml.hoon 24:11 Test::Whitespace tallTailOfElem 1-element backdent must be joined @35:3
-hoons/arvo/ren/rss-xml.hoon 24:11 Test::Whitespace tallTailOfElem backdented element #1 @35:3; underindented by 8
-hoons/arvo/ren/rss-xml.hoon 23:20 Test::Whitespace tallTailOfElem 1-element backdent must be joined @36:1
-hoons/arvo/ren/rss-xml.hoon 23:20 Test::Whitespace tallTailOfElem backdented element #1 @36:1; underindented by 19
+hoons/arvo/ren/rss-xml.hoon 30:14 Test::Whitespace tallTailOfElem NYI @30:13-34:10
 === hoons/arvo/ren/tree/body.hoon ===
 hoons/arvo/ren/tree/body.hoon 5:1 Test::Whitespace fordHoopSeq NYI @5:0-25:2
 hoons/arvo/ren/tree/body.hoon 5:14 Test::Whitespace fordFascen NYI @5:13-28
@@ -5041,8 +5001,7 @@ hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace fordFascol NYI @6:20-45
 hoons/arvo/ren/tree/body.hoon 6:31 Test::Whitespace fordFascen NYI @6:30-45
 hoons/arvo/ren/tree/body.hoon 7:21 Test::Whitespace fordFassig NYI @7:20-25
 hoons/arvo/ren/tree/body.hoon 12:1 Test::Whitespace tallBarcen NYI @12:0-19:2
-hoons/arvo/ren/tree/body.hoon 23:3 Test::Whitespace tallTailOfTop 1-element backdent must be joined @25:1
-hoons/arvo/ren/tree/body.hoon 23:3 Test::Whitespace tallTailOfTop backdented element #1 @25:1; underindented by 2
+hoons/arvo/ren/tree/body.hoon 23:3 Test::Whitespace tallTailOfTop NYI @23:2-25:2
 === hoons/arvo/ren/tree/json.hoon ===
 hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordHoopSeq NYI @7:0-89:40
 hoons/arvo/ren/tree/json.hoon 7:14 Test::Whitespace fordFasbuc NYI @7:13-28
@@ -5089,16 +5048,13 @@ hoons/arvo/ren/tree/head.hoon 19:17 Test::Whitespace fordFascol NYI @19:16-20:47
 hoons/arvo/ren/tree/head.hoon 20:17 Test::Whitespace fordFasket joined backdent element #2 @20:40; overindented by 2
 hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fordFascab NYI @20:39-47
 hoons/arvo/ren/tree/head.hoon 22:1 Test::Whitespace tallBarcen NYI @22:0-27:2
+hoons/arvo/ren/tree/head.hoon 32:3 Test::Whitespace tallTailOfTop NYI @32:2-66:2
 hoons/arvo/ren/tree/head.hoon 35:6 Test::Whitespace tallTopSail NYI @35:5-43:10
-hoons/arvo/ren/tree/head.hoon 38:11 Test::Whitespace tallTailOfTop 1-element backdent must be joined @43:9
-hoons/arvo/ren/tree/head.hoon 38:11 Test::Whitespace tallTailOfTop backdented element #1 @43:9; underindented by 2
+hoons/arvo/ren/tree/head.hoon 38:11 Test::Whitespace tallTailOfTop NYI @38:10-43:10
 hoons/arvo/ren/tree/head.hoon 50:6 Test::Whitespace tallTopSail NYI @50:5-89
 hoons/arvo/ren/tree/head.hoon 54:6 Test::Whitespace tallTopSail NYI @54:5-64:10
 hoons/arvo/ren/tree/head.hoon 54:9 Test::Whitespace tallWutdot backdented element #3, @58:1; comment underindented by 8
-hoons/arvo/ren/tree/head.hoon 59:11 Test::Whitespace tallTailOfTop 1-element backdent must be joined @64:9
-hoons/arvo/ren/tree/head.hoon 59:11 Test::Whitespace tallTailOfTop backdented element #1 @64:9; underindented by 2
-hoons/arvo/ren/tree/head.hoon 32:3 Test::Whitespace tallTailOfTop 1-element backdent must be joined @66:1
-hoons/arvo/ren/tree/head.hoon 32:3 Test::Whitespace tallTailOfTop backdented element #1 @66:1; underindented by 2
+hoons/arvo/ren/tree/head.hoon 59:11 Test::Whitespace tallTailOfTop NYI @59:10-64:10
 === hoons/arvo/ren/tree/combine.hoon ===
 hoons/arvo/ren/tree/combine.hoon 7:1 Test::Whitespace fordHoopSeq NYI @7:0-28:2
 hoons/arvo/ren/tree/combine.hoon 17:1 Test::Whitespace tallKethep joined backdent element #1 @17:7; overindented by 2

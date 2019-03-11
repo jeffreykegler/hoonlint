@@ -627,8 +627,8 @@ EOS
       $MarpaX::YAHC::Lint::grammar->symbol_ids();
     $lintInstance->{tallRuneRule} = \%tallRuneRule;
 
+    $NYI_Rule{$_} = 1 for qw(tallTailOfElem tallTailOfTop);
     # TODO: Check that these are all backdented,
-    # especially check tallTailOfElem tallTailOfTop
     my %tallNoteRule = map { +( $_, 1 ) } qw(
       tallBarhep tallBardot
       tallCendot tallColcab tallColsig
@@ -637,7 +637,6 @@ EOS
       tallTisbar tallTiscom tallTisgal
       tallWutgal tallWutgar tallWuttis
       tallZapgar
-      tallTailOfElem tallTailOfTop
     );
     $lintInstance->{tallNoteRule} = \%tallNoteRule;
 
