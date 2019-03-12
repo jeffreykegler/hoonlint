@@ -671,8 +671,10 @@ EOS
     my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
     $lintInstance->{tallJogging1_Rule} = \%tallJogging1_Rule;
 
+    $NYI_Rule{$_} = 1 for qw(optFordFashep optFordFaslus fordFaswut);
+    # TODO: if Luslus right for fordFastis?
     my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
-      optFordFashep optFordFaslus fordFaswut fordFastis);
+      fordFastis);
     $lintInstance->{tallLuslusRule} = \%tallLuslusRule;
 
     my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);

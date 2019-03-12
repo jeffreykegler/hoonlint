@@ -898,44 +898,6 @@ sub is_1Running {
     return \@mistakes;
 }
 
-sub isLuslusStyle {
-    my ( $policy, $node ) = @_;
-    my $indents = $policy->calcGapIndents($node);
-    my $instance = $policy->{lint};
-    my ( $parentLine, $parentColumn ) =
-      $instance->line_column( $node->{start} );
-    my @mistakes = ();
-    my ( $baseLine, $baseColumn ) = @{ $indents->[0] };
-
-    my $indentCount = scalar @{$indents};
-    my $indentIX    = 1;
-  INDENT: while ( $indentIX < $indentCount ) {
-        my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-        last INDENT if $thisLine != $baseLine;
-        $indentIX++;
-    }
-  INDENT: while ( $indentIX < $indentCount ) {
-        my ( $thisLine, $thisColumn ) = @{ $indents->[$indentIX] };
-        if ( $thisColumn != $baseColumn + 2 ) {
-            my $msg = sprintf
-              "Child #%d @ line %d; backdent is %d; should be %d",
-              $indentIX, $thisLine, $thisColumn, $baseColumn + 2;
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $thisLine,
-                column         => $thisColumn,
-                child          => $indentIX,
-                expectedColumn => $baseColumn + 2
-              };
-        }
-        $indentIX++;
-    }
-    return \@mistakes;
-}
-
 # Format line and 0-based column as string
 sub describeLC {
     my ( $line, $column ) = @_;
@@ -2018,6 +1980,109 @@ sub isBackdented {
     return \@mistakes;
 }
 
+sub checkLuslusStyle {
+    my ( $policy, $node ) = @_;
+    my ( $symbolGap, $symbol, $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+    my $instance     = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $symbolLine, $symbolColumn ) = $instance->nodeLC($symbol);
+    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+    my @mistakes = ();
+
+    if ( $symbolLine != $parentLine ) {
+	my $msg = sprintf
+	  'cell symbol must be joined %s',
+	  describeLC( $symbolLine, $symbolColumn );
+	push @mistakes,
+	  {
+	    desc         => $msg,
+	    parentLine   => $parentLine,
+	    parentColumn => $parentColumn,
+	    line         => $symbolLine,
+	    column       => $symbolColumn,
+	  };
+    }
+
+    my $expectedColumn = $parentColumn + 4;
+    if ( $expectedColumn != $symbolColumn ) {
+        my $msg = sprintf
+          "cell symbol %s; %s",
+          describeLC( $symbolLine, $symbolColumn ),
+          describeMisindent( $symbolColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $symbolLine,
+            column         => $symbolColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+
+  CHECK_BODY: {
+        if ( $symbolLine == $bodyLine ) {
+            my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+            $expectedColumn = $bodyGapColumn + 2;
+            if ( $expectedColumn != $bodyColumn ) {
+                my $msg = sprintf
+                  "joined cell body %s; %s",
+                  describeLC( $symbolLine, $symbolColumn ),
+                  describeMisindent( $bodyColumn, $expectedColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $bodyLine,
+                    column         => $bodyColumn,
+                    expectedColumn => $expectedColumn,
+                  };
+            }
+            last CHECK_BODY;
+        }
+
+        # If here, body is split
+        $expectedColumn = $parentColumn + 2;
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $bodyGap, $expectedColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf 'cell body %s; %s',
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                  };
+            }
+        }
+        if ( $expectedColumn != $bodyColumn ) {
+            my $msg = sprintf
+              "split cell body %s; %s",
+              describeLC( $symbolLine, $symbolColumn ),
+              describeMisindent( $bodyColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
 sub isFlat {
     my ($indents)   = @_;
     my ($firstLine) = @{ $indents->[0] };
@@ -2297,7 +2362,7 @@ sub validate_node {
             }
 
             if ( $tallLuslusRule->{$lhsName} ) {
-                $mistakes = $policy->isLuslusStyle($node);
+                $mistakes = $policy->checkLuslusStyle($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUSLUS-STYLE';
                 last TYPE_INDENT;
