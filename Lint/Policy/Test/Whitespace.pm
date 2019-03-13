@@ -1835,7 +1835,8 @@ sub isNYI {
       $instance->line_column( $node->{start} );
     my @mistakes = ();
 
-    my $msg = "NYI " . $instance->describeNodeRange($node);
+    my $msg = join q{ }, 'NYI', '[' . $instance->symbol($node) . ']',
+      $instance->describeNodeRange($node);
     push @mistakes,
       {
         desc         => $msg,
@@ -1844,7 +1845,7 @@ sub isNYI {
         line         => $parentLine,
         column       => $parentColumn,
       };
-      return \@mistakes;
+    return \@mistakes;
 }
 
 sub isBackdented {
@@ -2136,7 +2137,6 @@ sub validate_node {
     my $fileName        = $instance->{fileName};
     my $grammar         = $instance->{grammar};
     my $recce           = $instance->{recce};
-    my $mortarLHS       = $instance->{mortarLHS};
 
     my $NYI_Rule          = $instance->{NYI_Rule};
     my $backdentedRule    = $instance->{backdentedRule};
@@ -2218,26 +2218,26 @@ sub validate_node {
 
                 # Jogging problems are detected by the individual jogs --
                 # we do not run diagnostics on the sequence.
-                if ($lhsName eq 'rick5d') {
-		   $indentDesc = 'JOGGING';
-		   last TYPE_INDENT;
-		};
-                if ($lhsName eq 'ruck5d') {
-		   $indentDesc = 'JOGGING';
-		   last TYPE_INDENT;
-		};
+                if ( $lhsName eq 'rick5d' ) {
+                    $indentDesc = 'JOGGING';
+                    last TYPE_INDENT;
+                }
+                if ( $lhsName eq 'ruck5d' ) {
+                    $indentDesc = 'JOGGING';
+                    last TYPE_INDENT;
+                }
 
                 my $grandParent = $instance->ancestor( $node, 1 );
                 my $grandParentName = $instance->brickName($grandParent);
                 if ( $lhsName eq 'tall5dSeq' ) {
-                    if ($tall_1RunningRule->{$grandParentName}) {
-		      $indentDesc = '1-RUNNING';
-		      last TYPE_INDENT;
-		    }
-                    if ($tall_0RunningRule->{$grandParentName}) {
-		      $indentDesc = '0-RUNNING';
-		      last TYPE_INDENT;
-		    }
+                    if ( $tall_1RunningRule->{$grandParentName} ) {
+                        $indentDesc = '1-RUNNING';
+                        last TYPE_INDENT;
+                    }
+                    if ( $tall_0RunningRule->{$grandParentName} ) {
+                        $indentDesc = '0-RUNNING';
+                        last TYPE_INDENT;
+                    }
                 }
 
                 if ( $lhsName eq 'whap5d' ) {
@@ -2254,39 +2254,16 @@ sub validate_node {
                     $mistakes =
                       $policy->checkBoog5d( $node, $greatGrandParent );
                     last TYPE_INDENT if @{$mistakes};
-		    $indentDesc = 'CELL';
+                    $indentDesc = 'CELL';
                     last TYPE_INDENT;
                 }
 
-            # By default, treat as not yet implemented
-            {
+                # By default, treat as not yet implemented
                 $mistakes = $policy->isNYI($node);
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
-                $indentDesc = 'NYI';
-                last TYPE_INDENT;
-            }
-
-
-                $instance->reportItem(
-                    (
-                        {
-                            policy       => $policyShortName,
-                            reportLine   => $parentLine,
-                            reportColumn => $parentColumn
-                        },
-                        (
-                            sprintf "%s NYI sequence %s %s of %s",
-                            $instance->diagName($node),
-                            $instance->describeNodeRange($node),
-                            $lhsName,
-                            $grandParentName
-                        ),
-                    ),
-                    $parentLine,
-                    $parentLine,
-                );
+                die "NYI";
             }
 
             last GATHER_MISTAKES;
@@ -2308,8 +2285,7 @@ sub validate_node {
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
-                $indentDesc = 'NYI';
-                last TYPE_INDENT;
+                die 'NYI failure';
             }
 
             if ( $tallJogRule->{$lhsName} ) {
@@ -2381,8 +2357,7 @@ sub validate_node {
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
-                $indentDesc = 'NYI';
-                last TYPE_INDENT;
+                die 'NYI failure';
             }
 
         }
