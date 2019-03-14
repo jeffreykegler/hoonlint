@@ -23,33 +23,6 @@ sub new {
     return bless $policy, $class;
 }
 
-sub calcGapIndents {
-    my ( $policy, $node ) = @_;
-    my $instance        = $policy->{lint};
-    my $symbolReverseDB = $instance->{symbolReverseDB};
-    my $recce           = $instance->{recce};
-    my $children        = $node->{children};
-    my @gapIndents      = ();
-    my $child           = $children->[0];
-    my $childStart      = $child->{start};
-    my ( $childLine, $childColumn ) = $recce->line_column($childStart);
-    push @gapIndents, [ $childLine, $childColumn - 1 ];
-
-    for my $childIX ( 0 .. ( $#$children - 1 ) ) {
-        my $child  = $children->[$childIX];
-        my $symbol = $child->{symbol};
-        if ( defined $symbol
-            and $symbolReverseDB->{$symbol}->{gap} )
-        {
-            my $nextChild = $children->[ $childIX + 1 ];
-            my $nextStart = $nextChild->{start};
-            my ( $nextLine, $nextColumn ) = $recce->line_column($nextStart);
-            push @gapIndents, [ $nextLine, $nextColumn - 1 ];
-        }
-    }
-    return \@gapIndents;
-}
-
 # A "gapSeq" is an ordered subset of a node's children.
 # It consists of the first child, followed by zero or more
 # pairs of nodes, where each pair is a gap and it post-gap
@@ -363,6 +336,87 @@ sub checkWisp5d {
             expectedColumn => $expectedColumn,
           };
     }
+    return \@mistakes;
+}
+
+sub checkBarcen {
+    my ( $policy, $node ) = @_;
+    my ( $gap,         $battery )       = @{$policy->gapSeq0($node)};
+    my $instance = $policy->{lint};
+    my ( $parentLine,  $parentColumn )  = $instance->nodeLC($node);
+    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+
+    my @mistakes = ();
+
+    my $gapLiteral = $instance->literalNode($gap);
+    my $expectedColumn;
+
+    if ( $parentLine == $batteryLine and length $gapLiteral != 2) {
+        my $gapLength = $gap->{length};
+        my ( undef, $gapColumn ) = $instance->nodeLC($gap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+
+        $expectedColumn = $gapColumn + $expectedLength;
+
+        if ( $expectedColumn != $batteryColumn ) {
+            my $msg = sprintf 'joined Barcen battery %s; %s',
+              describeLC( $batteryLine, $batteryColumn ),
+              describeMisindent( $batteryColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $batteryLine,
+                column         => $batteryColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+        return \@mistakes;
+    }
+
+    # If here head line != battery line
+    $expectedColumn = $parentColumn;
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'split Barcen battery %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $batteryLine ],
+              };
+        }
+    }
+
+    if ( $batteryColumn != $expectedColumn ) {
+        my $msg = sprintf 'split Barcen battery %s; %s',
+          describeLC( $batteryLine, $batteryColumn ),
+          describeMisindent( $batteryColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $batteryLine,
+            column         => $batteryColumn,
+            expectedColumn => $expectedColumn,
+          };
+        return \@mistakes;
+    }
+
     return \@mistakes;
 }
 
@@ -2272,6 +2326,13 @@ sub validate_node {
         # if here, gapiness > 0
 
       TYPE_INDENT: {
+
+            if ( $lhsName eq "tallBarcen" ) {
+                $mistakes = $policy->checkBarcen($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARCEN';
+                last TYPE_INDENT;
+	    }
 
             if ( $lhsName eq "wisp5d" ) {
                 $mistakes = $policy->checkWisp5d($node);
