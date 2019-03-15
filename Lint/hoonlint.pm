@@ -232,6 +232,7 @@ sub literalLine {
 sub literal {
     my ( $instance, $start, $length ) = @_;
     my $pSource = $instance->{pHoonSource};
+    return '' if $start >= length ${$pSource};
     return substr ${$pSource}, $start, $length;
 }
 

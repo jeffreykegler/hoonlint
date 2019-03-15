@@ -154,7 +154,8 @@ sub i_isOneLineGap {
 
     # Criss-cross TISTIS lines are a special case
     if (    $startLine == $endLine
-        and $instance->literal( $start - 2, 2 ) ne '==' )
+        and $instance->literal( $start - 2, 2 ) ne '=='
+        and $instance->literal( $start - 2, 2 ) ne '--' )
     {
         return [
             {
@@ -321,7 +322,15 @@ sub checkWisp5d {
 
     my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
     my $expectedColumn = $parentColumn;
-    if ( $expectedColumn != $hephepColumn ) {
+    my $hephepIsMisaligned = $hephepColumn != $expectedColumn;
+
+    if ($hephepIsMisaligned) {
+	my $lineToPos        = $instance->{lineToPos};
+        my $hephepPos = $lineToPos->[$hephepLine] + $expectedColumn;
+        my $hephepLiteral = $instance->literal( $hephepPos, 2 );
+        $hephepIsMisaligned = $hephepLiteral ne '--'
+    }
+    if ($hephepIsMisaligned) {
         my $msg = sprintf
           'battery hephep %s; %s',
           describeLC( $hephepLine, $hephepColumn ),
