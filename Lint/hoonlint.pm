@@ -537,7 +537,7 @@ sub brickNode {
         return $thisNode if $instance->brickName($thisNode);
         $thisNode = $thisNode->{PARENT};
     }
-    $instance->internalError("No brick parent");
+    return;
 }
 
 sub brickLC {
@@ -559,6 +559,36 @@ sub firstBrickOfLine {
         $thisNode = $thisNode->{PARENT};
     }
     return $firstBrickNode // $node;
+}
+
+# first brick node in $node's line,
+# with exclusions.
+# $node if there is no prior unexcluded brick node
+sub firstBrickOfLineExc {
+    my ( $instance, $node, $exclusions ) = @_;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($exclusions);
+    my ($currentLine)  = $instance->nodeLC($node);
+    my $thisNode       = $node;
+    my $firstBrickNode = $node;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+        # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+        # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+        last NODE if $thisLine != $currentLine;
+      PICK_NODE: {
+            my $brickName = $instance->brickName($thisNode);
+            # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+            last PICK_NODE if not defined $brickName;
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            last PICK_NODE if $exclusions->{$brickName};
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            $firstBrickNode = $thisNode;
+        }
+        $thisNode = $thisNode->{PARENT};
+    }
+            # say STDERR join " ", __FILE__, __LINE__, "returning from firstBrickOfLine";
+
+    return $firstBrickNode;
 }
 
 sub anchorNode {
@@ -641,7 +671,9 @@ EOS
     $lintInstance->{tallNoteRule} = \%tallNoteRule;
 
     my %mortarLHS = map { +( $_, 1 ) }
-      qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq);
+      qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq
+            fordFile fordHoop fordHoopSeq norm5d tall5d
+            boog5d wisp5d whap5d);
     $lintInstance->{mortarLHS} = \%mortarLHS;
 
     my %tallBodyRule =
@@ -676,6 +708,11 @@ EOS
     my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
       fordFastis);
     $lintInstance->{tallLuslusRule} = \%tallLuslusRule;
+
+    my %barcenAnchorExceptions = ();
+    $barcenAnchorExceptions{$_} = 1
+      for qw(tallTisgar tallTisgal LuslusCell LushepCell LustisCell);
+    $lintInstance->{barcenAnchorExceptions} = \%barcenAnchorExceptions;
 
     my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
     $lintInstance->{tallJogRule} = \%tallJogRule;

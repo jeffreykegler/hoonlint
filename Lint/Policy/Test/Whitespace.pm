@@ -343,7 +343,9 @@ sub checkBarcen {
     my ( $policy, $node ) = @_;
     my ( $gap,         $battery )       = @{$policy->gapSeq0($node)};
     my $instance = $policy->{lint};
-    my ( $parentLine,  $parentColumn )  = $instance->nodeLC($node);
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
 
     my @mistakes = ();
@@ -351,7 +353,8 @@ sub checkBarcen {
     my $gapLiteral = $instance->literalNode($gap);
     my $expectedColumn;
 
-    if ( $parentLine == $batteryLine and length $gapLiteral != 2) {
+    if ( $anchorLine == $batteryLine) {
+        return [] if length $gapLiteral == 2;
         my $gapLength = $gap->{length};
         my ( undef, $gapColumn ) = $instance->nodeLC($gap);
 
@@ -379,7 +382,7 @@ sub checkBarcen {
     }
 
     # If here head line != battery line
-    $expectedColumn = $parentColumn;
+    $expectedColumn = $anchorColumn;
     if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $expectedColumn ) } )
     {
         for my $gapMistake (@gapMistakes) {
