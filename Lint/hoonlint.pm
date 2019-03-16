@@ -684,7 +684,7 @@ EOS
     # Will include:
     # BuccenMold BuccolMold BucwutMold
     # Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
-    my %tall_0RunningRule = map { +( $_, 1 ) } qw(tallBuccolMold tallWutbar tallWutpam);
+    my %tall_0RunningRule = map { +( $_, 1 ) } qw(tallBuccol tallBuccolMold tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
     $NYI_Rule{$_} = 1 for qw(tallCencolMold tallDotket tallTissig);
