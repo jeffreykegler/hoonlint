@@ -436,16 +436,31 @@ and aligned with the rune.
 
 ### Batteries
 
-The cells of a battery should be aligned with the first brick
-rune on the same line as the rune of the battery hoon which contains
-them.
-They should be separated by newline-equivalents,
-and the base column for header comments should be the rune column.
+The cells of a battery should all align at the
+same column, called the **cell alignment column**.
+The cells should be separated by newline-equivalents,
+where the base column for header comments is the cell
+alignment column.
+The "cell alignment column" is specified below, for each
+battery hoon.
 
 ### Battery hoons
 
 The battery hoons are BARCAB, BARCEN and BARKET.
 
+### BARCEN
+
+With one exception,
+the *cell alignment column* of a BARCEN battery is the column
+of the first rune on the same line as the rune of the hoon
+of the battery that contains those cells.
+The exception is that
+BARCEN cells should not align with a parent TISGAL or TISGAR rune.
+
+Note that BARCEN Cells
+also do not align with a parent LUSLUS, LUSHEP or LUSTIS.
+Technically, this is not an exception because, pedantically,
+LUSLUS, LUSHEP and LUSTIS are not runes.
 
 ## Appendix: Non-standard code
 
