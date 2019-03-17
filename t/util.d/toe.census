@@ -70,4 +70,4 @@ t/ast.d/toe.hoon 54:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 54:13 Test::Whitespace tallKethep CAST-STYLE
 t/ast.d/toe.hoon 55:13 Test::Whitespace tallWutgal CAST-STYLE
 t/ast.d/toe.hoon 56:13 Test::Whitespace tallTisfas BACKDENTED
-t/ast.d/toe.hoon 57:13 Test::Whitespace SUPPRESSION tallWutcol indentation is one-off
+t/ast.d/toe.hoon 57:13 Test::Whitespace tallWutcol SUPPRESSION indentation is one-off

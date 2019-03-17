@@ -321,20 +321,21 @@ sub reportItem {
     my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) =
       @_;
 
-    my $inclusions   = $instance->{inclusions};
-    my $suppressions = $instance->{suppressions};
-    my $reportPolicy = $mistake->{policy};
-    my $reportLine   = $mistake->{reportLine} // $mistake->{line};
-    my $reportColumn = $mistake->{reportColumn} // $mistake->{column};
-    my $reportLC     = join ':', $reportLine, $reportColumn + 1;
+    my $inclusions       = $instance->{inclusions};
+    my $suppressions     = $instance->{suppressions};
+    my $reportPolicy     = $mistake->{policy};
+    my $reportSubpolicy  = $mistake->{subpolicy};
+    my $reportLine       = $mistake->{reportLine} // $mistake->{line};
+    my $reportColumn     = $mistake->{reportColumn} // $mistake->{column};
+    my $reportLC         = join ':', $reportLine, $reportColumn + 1;
     my $suppressThisItem = 0;
-    my $excludeThisItem = 0;
+    my $excludeThisItem  = 0;
 
-    $excludeThisItem = 1 if $inclusions and not $inclusions->{$reportPolicy}{$reportLC};
-    my $suppression = $suppressions->{$reportPolicy}{$reportLC};
+    $excludeThisItem = 1 if $inclusions and not $inclusions->{$reportLC}{$reportPolicy}{$reportSubpolicy};
+    my $suppression = $suppressions->{$reportLC}->{$reportPolicy}->{$reportSubpolicy};
     if ( defined $suppression ) {
         $suppressThisItem = 1;
-        $instance->{unusedSuppressions}->{$reportPolicy}{$reportLC} = undef;
+        $instance->{unusedSuppressions}->{$reportLC}->{$reportPolicy}->{$reportSubpolicy} = undef;
     }
 
     return if $excludeThisItem;
@@ -349,7 +350,7 @@ sub reportItem {
     push @{$topicLines}, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, "$fileName $reportLC $reportPolicy $mistakeDesc";
+    push @{$thisMistakeDescs}, "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc";
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
@@ -814,13 +815,21 @@ EOS
     print $lintInstance->contextDisplay();
 
     my $unusedSuppressions = $lintInstance->{unusedSuppressions};
-    for my $type ( keys %{$unusedSuppressions} ) {
-        for my $tag (
-            grep { $unusedSuppressions->{$type}{$_} }
-            keys %{ $unusedSuppressions->{$type} }
+    for my $lc ( keys %{$unusedSuppressions} ) {
+        my $perLCSuppressions = $unusedSuppressions->{$lc};
+        for my $policy (
+            grep { $perLCSuppressions->{$_} }
+            keys %{ $perLCSuppressions }
           )
         {
-            say "Unused suppression: $fileName $type $tag";
+            my $perPolicySuppressions = $perLCSuppressions->{$policy};
+            for my $subpolicy (
+                grep { $perPolicySuppressions->{$_} }
+                keys %{ $perPolicySuppressions }
+              )
+            {
+                say "Unused suppression: $fileName $lc $policy $subpolicy";
+            }
         }
     }
 

@@ -37,7 +37,7 @@ sub parseReportItems {
         $itemLine =~ s/^\s*//;        # remove leading whitespace
         $itemLine =~ s/\s*$//;        # remove trailing whitespace
         next ITEM unless $itemLine;
-        my ( $thisFileName, $lc, $type, $message ) = split /\s+/, $itemLine, 4;
+        my ( $thisFileName, $lc, $policy, $subpolicy, $message ) = split /\s+/, $itemLine, 5;
         return undef, $itemError->( "Problem in report line", $rawItemLine )
           if not $thisFileName;
 
@@ -53,9 +53,9 @@ sub parseReportItems {
 
         # We reassemble line:column to "normalize" it -- be indifferent to
         # leading zeros, etc.
-        my $tag = join ':', $line, $column;
-        $itemHash{$type}{$tag}       = $message;
-        $unusedItemHash{$type}{$tag} = 1;
+        my $lcTag = join ':', $line, $column;
+        $itemHash{$lcTag}{$policy}{$subpolicy}       = $message;
+        $unusedItemHash{$lcTag}{$policy}{$subpolicy} = 1;
     }
     return \%itemHash, \%unusedItemHash;
 }

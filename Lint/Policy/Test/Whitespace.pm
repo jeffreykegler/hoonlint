@@ -2173,8 +2173,7 @@ sub validate {
 }
 
 sub displayMistakes {
-    my ( $policy, $mistakes, $hoonDesc ) = @_;
-    # TODO: Delete hoonDesc
+    my ( $policy, $mistakes ) = @_;
     my $instance = $policy->{lint};
     my $fileName = $instance->{fileName};
 
@@ -2191,9 +2190,7 @@ sub displayMistakes {
         my @topicLines        = ($parentLine);
         push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
 
-	my $subpolicy = $mistake->{subpolicy};
-	$subpolicy //= $hoonDesc;
-        $instance->reportItem( $mistake, "$subpolicy $desc", \@topicLines, $mistakeLine, );
+        $instance->reportItem( $mistake, $desc, \@topicLines, $mistakeLine, );
     }
     return;
 }
@@ -2442,7 +2439,8 @@ sub validate_node {
   PRINT: {
         if ( @{$mistakes} ) {
             $_->{policy} = $policyShortName for @{$mistakes};
-            $policy->displayMistakes( $mistakes, $instance->diagName($node) );
+            $_->{subpolicy} = $instance->diagName($node) for @{$mistakes};
+            $policy->displayMistakes( $mistakes );
             last PRINT;
         }
 
@@ -2450,16 +2448,13 @@ sub validate_node {
             my ( $reportLine, $reportColumn ) = $instance->line_column($start);
             my $mistake = {
                 policy       => $policyShortName,
+                subpolicy    => $instance->diagName($node),
                 reportLine   => $reportLine,
                 reportColumn => $reportColumn
             };
             $instance->reportItem(
 		$mistake,
-                (
-                    sprintf '%s %s',
-                    $mistake->{subpolicy} // $instance->diagName($node),
-		    $indentDesc
-                ),
+		$indentDesc,
                 $parentLine,
                 $parentLine
             );
