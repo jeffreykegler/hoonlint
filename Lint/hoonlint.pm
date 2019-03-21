@@ -593,6 +593,74 @@ sub firstBrickOfLineExc {
     return $firstBrickNode;
 }
 
+# nearest (in syntax tree) brick node in $node's line,
+# from inclusion list
+# $node if there is no nearest included brick node on same line
+sub nearestBrickOfLineInc {
+    my ( $instance, $node, $inclusions ) = @_;
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
+    my ($currentLine) = $instance->nodeLC($node);
+    my $thisNode = $node;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+
+  # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+  # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+        last NODE if $thisLine != $currentLine;
+      PICK_NODE: {
+            my $brickName = $instance->brickName($thisNode);
+
+           # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+            last PICK_NODE if not defined $brickName;
+
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            return $thisNode if $inclusions->{$brickName};
+        }
+        $thisNode = $thisNode->{PARENT};
+    }
+
+ # say STDERR join " ", __FILE__, __LINE__, "returning from nearestBrickOfLineInc";
+
+    return $node;
+}
+
+# nearest (in syntax tree) brick node in $node's line --
+# with exclusions.
+# $node if there is no nearest unexcluded brick node on same line
+sub nearestBrickOfLineExc {
+    my ( $instance, $node, $exclusions ) = @_;
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($exclusions);
+    my ($currentLine) = $instance->nodeLC($node);
+    my $thisNode = $node;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+
+  # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+  # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+        last NODE if $thisLine != $currentLine;
+      PICK_NODE: {
+            my $brickName = $instance->brickName($thisNode);
+
+           # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+            last PICK_NODE if not defined $brickName;
+
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            last PICK_NODE if $exclusions->{$brickName};
+
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+            return $thisNode;
+        }
+        $thisNode = $thisNode->{PARENT};
+    }
+
+ # say STDERR join " ", __FILE__, __LINE__, "returning from nearestBrickOfLine";
+
+    return $node;
+}
+
 sub anchorNode {
     my ( $instance, $node ) = @_;
     # say STDERR join " ", __FILE__, __LINE__, "calling anchorNode()";
@@ -663,7 +731,7 @@ EOS
     # TODO: Check that these are all backdented,
     my %tallNoteRule = map { +( $_, 1 ) } qw(
       tallBarhep tallBardot
-      tallCendot tallColcab tallColsig
+      tallCendot tallColcab
       tallKethep tallKetlus tallKetwut
       tallSigbar tallSigcab tallSigfas tallSiglus
       tallTisbar tallTiscom tallTisgal
@@ -688,6 +756,8 @@ EOS
     my %tall_0RunningRule = map { +( $_, 1 ) } qw(
     tallBuccen tallBuccenMold
     tallBuccol tallBuccolMold
+    tallBucwut tallBucwutMold
+    tallColsig tallColtar
     tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 

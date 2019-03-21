@@ -16,20 +16,20 @@ t/ast.d/toe.hoon 13:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 14:5 Test::Whitespace tallBarcen cell #3 @14:5; correctly indented
 t/ast.d/toe.hoon 14:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 14:15 Test::Whitespace tallBuccen RUNNING-0-STYLE
-t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen NYI [till5dSeq] @14:18-15:31
+t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen 0-RUNNING
 t/ast.d/toe.hoon 17:5 Test::Whitespace tallBarcen cell #4 @17:5; correctly indented
 t/ast.d/toe.hoon 17:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 17:15 Test::Whitespace tallBuccen RUNNING-0-STYLE
-t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen NYI [till5dSeq] @17:18-19:25
+t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen 0-RUNNING
 t/ast.d/toe.hoon 21:5 Test::Whitespace tallBarcen cell #5 @21:5; correctly indented
 t/ast.d/toe.hoon 21:5 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 21:15 Test::Whitespace tallBuccol RUNNING-0-STYLE
-t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol NYI [till5dSeq] @21:18-23:24
+t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol 0-RUNNING
 t/ast.d/toe.hoon 26:1 Test::Whitespace tallBarcen BARCEN
 t/ast.d/toe.hoon 27:1 Test::Whitespace tallBarcen WISP5D
 t/ast.d/toe.hoon 27:1 Test::Whitespace tallBarcen cell #1 @27:1; correctly indented
 t/ast.d/toe.hoon 27:1 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 28:3 Test::Whitespace tallBarcab NYI [tallBarcab] @28:2-36:4
+t/ast.d/toe.hoon 28:3 Test::Whitespace tallBarcab BARCAB
 t/ast.d/toe.hoon 29:3 Test::Whitespace tallBarcab WISP5D
 t/ast.d/toe.hoon 29:3 Test::Whitespace tallBarcab cell #1 @29:3; correctly indented
 t/ast.d/toe.hoon 29:3 Test::Whitespace LuslusCell LUSLUS-STYLE
@@ -44,7 +44,7 @@ t/ast.d/toe.hoon 33:3 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 33:12 Test::Whitespace tallCenlus BACKDENTED
 t/ast.d/toe.hoon 37:1 Test::Whitespace tallBarcen cell #2 @37:1; correctly indented
 t/ast.d/toe.hoon 37:1 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 38:3 Test::Whitespace tallBarcab NYI [tallBarcab] @38:2-61:4
+t/ast.d/toe.hoon 38:3 Test::Whitespace tallBarcab BARCAB
 t/ast.d/toe.hoon 39:3 Test::Whitespace tallBarcab WISP5D
 t/ast.d/toe.hoon 39:3 Test::Whitespace tallBarcab cell #1 @39:3; correctly indented
 t/ast.d/toe.hoon 39:3 Test::Whitespace LuslusCell LUSLUS-STYLE
@@ -59,7 +59,7 @@ t/ast.d/toe.hoon 48:3 Test::Whitespace tallBarcab cell #2 @48:3; correctly inden
 t/ast.d/toe.hoon 48:3 Test::Whitespace LuslusCell LUSLUS-STYLE
 t/ast.d/toe.hoon 49:3 Test::Whitespace tallBarcab cell #3 @49:3; correctly indented
 t/ast.d/toe.hoon 49:3 Test::Whitespace LuslusCell LUSLUS-STYLE
-t/ast.d/toe.hoon 50:5 Test::Whitespace tallBarcab NYI [tallBarcab] @50:4-60:6
+t/ast.d/toe.hoon 50:5 Test::Whitespace tallBarcab BARCAB
 t/ast.d/toe.hoon 51:5 Test::Whitespace tallBarcab WISP5D
 t/ast.d/toe.hoon 51:5 Test::Whitespace tallBarcab cell #1 @51:5; correctly indented
 t/ast.d/toe.hoon 51:5 Test::Whitespace LuslusCell LUSLUS-STYLE

@@ -1,6 +1,0 @@
-t/ast.d/toe.hoon 14:19 Test::Whitespace tallBuccen NYI [till5dSeq] @14:18-15:31
-t/ast.d/toe.hoon 17:19 Test::Whitespace tallBuccen NYI [till5dSeq] @17:18-19:25
-t/ast.d/toe.hoon 21:19 Test::Whitespace tallBuccol NYI [till5dSeq] @21:18-23:24
-t/ast.d/toe.hoon 28:3 Test::Whitespace tallBarcab NYI [tallBarcab] @28:2-36:4
-t/ast.d/toe.hoon 38:3 Test::Whitespace tallBarcab NYI [tallBarcab] @38:2-61:4
-t/ast.d/toe.hoon 50:5 Test::Whitespace tallBarcab NYI [tallBarcab] @50:4-60:6

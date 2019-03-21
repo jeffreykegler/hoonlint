@@ -348,6 +348,128 @@ sub checkWisp5d {
     return \@mistakes;
 }
 
+sub checkBarcab {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # BARCAB is special, so we need to find the components using low-level
+    # techniques.
+    # tallBarcab ::= (- BAR CAB GAP -) till5d (- GAP -) wasp5d wisp5d
+    my ( undef, undef, $headGap, $head, $batteryGap, undef, $battery ) =
+      @{$node->{children}};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my $anchorNode = $node;
+    my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
+    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  HEAD_ISSUES: {
+        if ( $parentLine != $headLine ) {
+            my $pseudoJoinColumn = $policy->pseudoJoinColumn($headGap);
+            if ( $pseudoJoinColumn <= 0 ) {
+                my $msg = sprintf 'Barcab head %s; must be on rune line',
+                  describeLC( $headLine, $headColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $headLine,
+                    column         => $headColumn,
+                    expectedColumn => $expectedColumn,
+                  };
+                last HEAD_ISSUES;
+            }
+            my $expectedHeadColumn = $pseudoJoinColumn;
+            if ( $headColumn != $expectedHeadColumn ) {
+                my $msg =
+                  sprintf
+'Pseudo-joined BARCEN head; head/comment mismatch; head is %s',
+                  describeLC( $headLine, $headColumn ),
+                  describeMisindent( $headColumn, $expectedHeadColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $headLine,
+                    column         => $headColumn,
+                    expectedColumn => $expectedHeadColumn,
+                  };
+            }
+            last HEAD_ISSUES;
+        }
+
+        # If here, headLine == runeLine
+        my $gapLiteral = $instance->literalNode($headGap);
+        my $gapLength  = $headGap->{length};
+        last HEAD_ISSUES if $gapLength == 2;
+        my ( undef, $headGapColumn ) = $instance->nodeLC($headGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $headGapColumn + $expectedLength;
+        my $msg = sprintf 'Barcab head %s; %s',
+          describeLC( $headLine, $headColumn ),
+          describeMisindent( $headColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $headLine,
+            column         => $headColumn,
+            expectedColumn => $expectedColumn,
+          };
+
+    }
+
+    $expectedColumn = $anchorColumn;
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $batteryGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Barceb battery %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $batteryLine ],
+              };
+        }
+    }
+
+    if ( $batteryColumn != $expectedColumn ) {
+        my $msg = sprintf 'Barcab battery %s; %s',
+          describeLC( $batteryLine, $batteryColumn ),
+          describeMisindent( $batteryColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $batteryLine,
+            column         => $batteryColumn,
+            expectedColumn => $expectedColumn,
+          };
+        return \@mistakes;
+    }
+
+    return \@mistakes;
+}
+
 sub checkBarcen {
     my ( $policy, $node ) = @_;
     my ( $gap,         $battery )       = @{$policy->gapSeq0($node)};
@@ -446,6 +568,16 @@ sub checkSplit_0Running {
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
+    my ( $anchorLine,  $anchorColumn ) = ($runeLine, $runeColumn);
+    my $lhsName = $instance->symbol($node);
+    if ( $lhsName eq 'tallColsig' ) {
+        # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
+        my $anchor =
+          $instance->nearestBrickOfLineInc( $node, { 'tallCenhep' => 1 } );
+        ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
+        # say join " ", __FILE__, __LINE__, $anchorLine, $anchorColumn;
+    }
+
     my @mistakes = ();
 
     # We deal with the running list here, rather than
@@ -453,7 +585,7 @@ sub checkSplit_0Running {
 
     my $runningChildren = $running->{children};
     my $childIX         = 0;
-    my $expectedColumn = $runeColumn + 2;
+    my $expectedColumn = $anchorColumn + 2;
     my $expectedLine = $runeLine + 1;
     my $lastGap      = $runningGap;
 
@@ -513,7 +645,7 @@ sub checkSplit_0Running {
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $lastGap, $runeColumn ) } )
+            @{ $policy->isOneLineGap( $lastGap, $anchorColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -558,7 +690,7 @@ sub checkSplit_0Running {
     }
 
     if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $tistisGap, $runeColumn ) } )
+        @{ $policy->isOneLineGap( $tistisGap, $anchorColumn ) } )
     {
         for my $gapMistake (@gapMistakes) {
             my $gapMistakeMsg    = $gapMistake->{msg};
@@ -574,12 +706,12 @@ sub checkSplit_0Running {
                 parentColumn => $runeColumn,
                 line         => $gapMistakeLine,
                 column       => $gapMistakeColumn,
-                topicLines   => [ $runeLine, $tistisLine ],
+                topicLines   => [ $anchorLine, $tistisLine ],
               };
         }
     }
 
-    $expectedColumn = $runeColumn;
+    $expectedColumn = $anchorColumn;
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
     if ($tistisIsMisaligned) {
@@ -591,7 +723,7 @@ sub checkSplit_0Running {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "split 0-running TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent( $tistisColumn, $anchorColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -600,7 +732,7 @@ sub checkSplit_0Running {
             line           => $tistisLine,
             column         => $tistisColumn,
             child          => 3,
-            expectedColumn => $runeColumn,
+            expectedColumn => $anchorColumn,
           };
     }
     return \@mistakes;
@@ -2295,7 +2427,7 @@ sub validate_node {
 
                 my $grandParent = $instance->ancestor( $node, 1 );
                 my $grandParentName = $instance->brickName($grandParent);
-                if ( $lhsName eq 'tall5dSeq' ) {
+                if ( $lhsName eq 'tall5dSeq' or $lhsName eq 'till5dSeq' ) {
                     if ( $tall_1RunningRule->{$grandParentName} ) {
                         $indentDesc = '1-RUNNING';
                         last TYPE_INDENT;
@@ -2338,6 +2470,13 @@ sub validate_node {
         # if here, gapiness > 0
 
       TYPE_INDENT: {
+
+            if ( $lhsName eq "tallBarcab" ) {
+                $mistakes = $policy->checkBarcab($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARCAB';
+                last TYPE_INDENT;
+	    }
 
             if ( $lhsName eq "tallBarcen" ) {
                 $mistakes = $policy->checkBarcen($node);
