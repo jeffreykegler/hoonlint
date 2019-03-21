@@ -672,6 +672,166 @@ sub checkBarket {
     return \@mistakes;
 }
 
+sub checkFashep {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # FASWUT is very similar to FASHEP.  Combine them?
+
+    # FASHEP is special, so we need to find the components using low-level
+    # techniques.
+    # optFordFashep ::= (- FAS HEP GAP -) fordHoofSeq (- GAP -)
+    my ( undef, undef, $leaderGap, $body, $trailerGap ) =
+      @{ $node->{children} };
+
+    # TODO: Should we require that parent column be 0?
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Fashep body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+              };
+            last BODY_ISSUES;
+        }
+        my $expectedBodyColumn = $parentColumn + 6;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'Fashep body %s is %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+              };
+        }
+        last BODY_ISSUES;
+
+    }
+
+    $expectedColumn = $parentColumn;
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $trailerGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Fashep suffix %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
+sub checkFaslus {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # FASWUT is very similar to FASLUS.  Combine them?
+
+    # FASWUT is special, so we need to find the components using low-level
+    # techniques.
+    # optFordFaslus ::= (- FAS LUS GAP -) fordHoofSeq (- GAP -)
+    my ( undef, undef, $leaderGap, $body, $trailerGap ) =
+      @{ $node->{children} };
+
+    # TODO: Should we require that parent column be 0?
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Faslus body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+              };
+            last BODY_ISSUES;
+        }
+        my $expectedBodyColumn = $parentColumn + 6;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'Faslus body %s is %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+              };
+        }
+        last BODY_ISSUES;
+
+    }
+
+    $expectedColumn = $parentColumn;
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $trailerGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Faslus suffix %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
 sub checkFaswut {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -2685,6 +2845,20 @@ sub validate_node {
                 $mistakes = $policy->checkBarket($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BARKET';
+                last TYPE_INDENT;
+	    }
+
+            if ( $lhsName eq "optFordFashep" ) {
+                $mistakes = $policy->checkFashep($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASHEP';
+                last TYPE_INDENT;
+	    }
+
+            if ( $lhsName eq "optFordFaslus" ) {
+                $mistakes = $policy->checkFaslus($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASLUS';
                 last TYPE_INDENT;
 	    }
 
