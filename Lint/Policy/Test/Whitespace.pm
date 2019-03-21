@@ -554,6 +554,124 @@ sub checkBarcen {
     return \@mistakes;
 }
 
+sub checkBarket {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ( $headGap, $head, $batteryGap, $battery ) = @{$policy->gapSeq0($node)};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my $anchorNode = $node;
+    my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
+    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  HEAD_ISSUES: {
+        if ( $parentLine != $headLine ) {
+            my $pseudoJoinColumn = $policy->pseudoJoinColumn($headGap);
+            if ( $pseudoJoinColumn <= 0 ) {
+                my $msg = sprintf 'Barket head %s; must be on rune line',
+                  describeLC( $headLine, $headColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $headLine,
+                    column         => $headColumn,
+                    expectedColumn => $expectedColumn,
+                  };
+                last HEAD_ISSUES;
+            }
+            my $expectedHeadColumn = $pseudoJoinColumn;
+            if ( $headColumn != $expectedHeadColumn ) {
+                my $msg =
+                  sprintf
+'Pseudo-joined Barket head; head/comment mismatch; head is %s',
+                  describeLC( $headLine, $headColumn ),
+                  describeMisindent( $headColumn, $expectedHeadColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $headLine,
+                    column         => $headColumn,
+                    expectedColumn => $expectedHeadColumn,
+                  };
+            }
+            last HEAD_ISSUES;
+        }
+
+        # If here, headLine == runeLine
+        my $gapLiteral = $instance->literalNode($headGap);
+        my $gapLength  = $headGap->{length};
+        last HEAD_ISSUES if $gapLength == 2;
+        my ( undef, $headGapColumn ) = $instance->nodeLC($headGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $headGapColumn + $expectedLength;
+        my $msg = sprintf 'Barket head %s; %s',
+          describeLC( $headLine, $headColumn ),
+          describeMisindent( $headColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $headLine,
+            column         => $headColumn,
+            expectedColumn => $expectedColumn,
+          };
+
+    }
+
+    $expectedColumn = $anchorColumn;
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $batteryGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Barket battery %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $batteryLine ],
+              };
+        }
+    }
+
+    if ( $batteryColumn != $expectedColumn ) {
+        my $msg = sprintf 'Barket battery %s; %s',
+          describeLC( $batteryLine, $batteryColumn ),
+          describeMisindent( $batteryColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $batteryLine,
+            column         => $batteryColumn,
+            expectedColumn => $expectedColumn,
+          };
+        return \@mistakes;
+    }
+
+    return \@mistakes;
+}
+
 sub checkSplit_0Running {
     my ( $policy, $node ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
@@ -2482,6 +2600,13 @@ sub validate_node {
                 $mistakes = $policy->checkBarcen($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BARCEN';
+                last TYPE_INDENT;
+	    }
+
+            if ( $lhsName eq "tallBarket" ) {
+                $mistakes = $policy->checkBarket($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARKET';
                 last TYPE_INDENT;
 	    }
 
