@@ -672,6 +672,84 @@ sub checkBarket {
     return \@mistakes;
 }
 
+sub checkFaswut {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # FASWUT is special, so we need to find the components using low-level
+    # techniques.
+    # fordFaswut ::= (- FAS WUT GAP -) DIT4K_SEQ (- GAP -)
+    my ( undef, undef, $leaderGap, $body, $trailerGap ) =
+      @{ $node->{children} };
+
+    # TODO: Should we require that parent column be 0?
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Faswut body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+              };
+            last BODY_ISSUES;
+        }
+        my $expectedBodyColumn = $parentColumn + 6;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'FASWUT; body %s is %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+              };
+        }
+        last BODY_ISSUES;
+
+    }
+
+    $expectedColumn = $parentColumn;
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $trailerGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'FASWUT suffix %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
 sub checkSplit_0Running {
     my ( $policy, $node ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
@@ -2607,6 +2685,13 @@ sub validate_node {
                 $mistakes = $policy->checkBarket($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BARKET';
+                last TYPE_INDENT;
+	    }
+
+            if ( $lhsName eq "fordFaswut" ) {
+                $mistakes = $policy->checkFaswut($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
 	    }
 
