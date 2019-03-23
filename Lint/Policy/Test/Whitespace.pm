@@ -202,6 +202,130 @@ sub i_isOneLineGap {
     return \@mistakes;
 }
 
+# For rules whose checkable parts consist only of
+# a gap followed by a TISTIS
+sub checkTallTailOfElem {
+    my ( $policy, $node ) = @_;
+    my $instance  = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
+
+    my ( $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+
+    my $tallTopSail = $instance->ancestor($node, 2);
+    my ( $tallTopSailLine, $tallTopSailColumn ) = $instance->nodeLC($tallTopSail);
+    my ( $parentLine,      $parentColumn )      = $instance->nodeLC($node);
+    my ( $tistisLine,      $tistisColumn )      = $instance->nodeLC($tistis);
+
+    # There is always a SEM before <tallTopSail> and this is our
+    # anchor column
+    my $expectedColumn = $tallTopSailColumn - 1;
+
+    my @mistakes = ();
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $tistisGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "TISTIS %s; $gapMistakeMsg",
+              describeLC( $tistisLine, $tistisColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $tistisLine ],
+              };
+        }
+    }
+
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+    return \@mistakes;
+}
+
+sub checkBonzElement {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # bonzElement ::= CEN SYM4K (- GAP -) tall5d
+    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Bonz element body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+              };
+            last BODY_ISSUES;
+        }
+
+        # If here, bodyLine == parentLine
+        my $gapLiteral = $instance->literalNode($bodyGap);
+        my $gapLength  = $bodyGap->{length};
+        last BODY_ISSUES if $gapLength == 2;
+        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $bodyGapColumn + $expectedLength;
+        my $msg = sprintf 'Bonz element body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+
+    return \@mistakes;
+}
+
 sub check_0Running {
     my ( $policy, $node )    = @_;
     my $instance  = $policy->{lint};
@@ -346,6 +470,73 @@ sub checkWisp5d {
           };
     }
     return \@mistakes;
+}
+
+sub checkFordHoopSeq {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+
+    my @mistakes = ();
+
+    my $childIX        = 0;
+    my $expectedColumn = $parentColumn;
+  CHILD: while ( $childIX <= $#$children ) {
+        my $hoop = $children->[$childIX];
+        my ( $hoopLine, $hoopColumn ) = $instance->nodeLC($hoop);
+
+        if ( $hoopColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "hoop %d %s; %s",
+              ( $childIX / 2 ) + 1,
+              describeLC( $hoopLine, $hoopColumn ),
+              describeMisindent( $hoopColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $hoopLine,
+                column         => $hoopColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+
+        $childIX++;
+        last CHILD unless $childIX <= $#$children;
+        my $hoopGap = $children->[$childIX];
+        my ( $hoopGapLine, $hoopGapColumn ) = $instance->nodeLC($hoopGap);
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $hoopGap, $expectedColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "hoop %d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [$hoopGapLine],
+                  };
+            }
+        }
+
+        $childIX++;
+    }
+
+    return \@mistakes;
+
 }
 
 sub checkBarcab {
@@ -2535,6 +2726,140 @@ sub isBackdented {
     return \@mistakes;
 }
 
+# Ketdot is slightly different form other backdented hoons
+sub checkKetdot {
+    my ( $policy, $node ) = @_;
+    my @gapSeq   = @{ $policy->gapSeq0($node) };
+    my $instance = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my @mistakes = ();
+
+    my $anchorNode =
+      $instance->firstBrickOfLineInc( $node, { tallKetdot => 1 } );
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    # say STDERR join " ", __FILE__, __LINE__, "parent", $parentLine, $parentColumn ;
+    # say STDERR join " ", __FILE__, __LINE__, "anchor", $anchorLine, $anchorColumn ;
+
+    my $gap1     = $gapSeq[0];
+    my $element1 = $gapSeq[1];
+    my ( $element1Line, $element1Column ) = $instance->nodeLC($element1);
+
+  ELEMENT: {    # Element 1
+
+        my $expectedColumn = $parentColumn + 4;
+
+        if ( $element1Line != $parentLine ) {
+            my $msg = sprintf
+              "Ketdot element 1 %s; element 1 expected to be on rune line",
+              describeLC( $element1Line, $element1Column );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $element1Line,
+                column       => $element1Column,
+              };
+            last ELEMENT;
+        }
+
+        if ( $expectedColumn != $element1Column ) {
+            my $msg = sprintf
+              'Ketdot element 1 %s; %s',
+              describeLC( $element1Line, $element1Column ),
+              describeMisindent( $element1Column, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $element1Line,
+                column         => $element1Column,
+                expectedColumn => $expectedColumn,
+              };
+        }
+    }
+
+    my $gap2     = $gapSeq[2];
+    my $element2 = $gapSeq[3];
+    my ( $element2Line, $element2Column ) = $instance->nodeLC($element2);
+
+  ELEMENT2: {
+        if ( $element1Line != $element2Line ) {    # Element 2 split
+
+            my $expectedColumn = $anchorColumn;
+
+            if ( my @gapMistakes =
+                @{ $policy->isOneLineGap( $gap2, $anchorColumn ) } )
+            {
+                for my $gapMistake (@gapMistakes) {
+                    my $gapMistakeMsg    = $gapMistake->{msg};
+                    my $gapMistakeLine   = $gapMistake->{line};
+                    my $gapMistakeColumn = $gapMistake->{column};
+                    my $msg              = sprintf 'Ketdot element 2 %s; %s',
+                      describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                      $gapMistakeMsg;
+                    push @mistakes,
+                      {
+                        desc         => $msg,
+                        parentLine   => $parentLine,
+                        parentColumn => $parentColumn,
+                        line         => $gapMistakeLine,
+                        column       => $gapMistakeColumn,
+                      };
+                }
+            }
+
+            if ( $expectedColumn != $element2Column ) {
+                my $msg = sprintf
+                  'Ketdot element 2 %s; %s',
+                  describeLC( $element2Line, $element2Column ),
+                  describeMisindent( $element2Column, $expectedColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $element2Line,
+                    column         => $element2Column,
+                    expectedColumn => $expectedColumn,
+                  };
+            }
+            last ELEMENT2;
+        }
+
+        # If here, joined element 2
+
+        my $gapLiteral = $instance->literalNode($gap2);
+        my $gapLength  = $gap2->{length};
+        last ELEMENT2 if $gapLength == 2;
+        my ( undef, $gap2Column ) = $instance->nodeLC($gap2);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        my $expectedColumn = $gap2Column + $expectedLength;
+
+        if ( $expectedColumn != $element2Column ) {
+            my $msg = sprintf
+              'Ketdot element 2 %s; %s',
+              describeLC( $element2Line, $element2Column ),
+              describeMisindent( $element2Column, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $element2Line,
+                column         => $element2Column,
+                expectedColumn => $expectedColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
 sub checkLuslusStyle {
     my ( $policy, $node ) = @_;
     my ( $symbolGap, $symbol, $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
@@ -2781,6 +3106,13 @@ sub validate_node {
                     last TYPE_INDENT;
                 }
 
+                if ( $lhsName eq "fordHoopSeq" ) {
+                    $mistakes = $policy->checkFordHoopSeq($node);
+                    last TYPE_INDENT if @{$mistakes};
+                    $indentDesc = 'FORD_HOOP_SEQ';
+                    last TYPE_INDENT;
+                }
+
                 my $grandParent = $instance->ancestor( $node, 1 );
                 my $grandParentName = $instance->brickName($grandParent);
                 if ( $lhsName eq 'tall5dSeq' or $lhsName eq 'till5dSeq' ) {
@@ -2827,54 +3159,75 @@ sub validate_node {
 
       TYPE_INDENT: {
 
-            if ( $lhsName eq "tallBarcab" ) {
-                $mistakes = $policy->checkBarcab($node);
+            if ( $lhsName eq "bonzElement" ) {
+                $mistakes = $policy->checkBonzElement($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BARCAB';
                 last TYPE_INDENT;
-	    }
-
-            if ( $lhsName eq "tallBarcen" ) {
-                $mistakes = $policy->checkBarcen($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARCEN';
-                last TYPE_INDENT;
-	    }
-
-            if ( $lhsName eq "tallBarket" ) {
-                $mistakes = $policy->checkBarket($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARKET';
-                last TYPE_INDENT;
-	    }
-
-            if ( $lhsName eq "optFordFashep" ) {
-                $mistakes = $policy->checkFashep($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASHEP';
-                last TYPE_INDENT;
-	    }
-
-            if ( $lhsName eq "optFordFaslus" ) {
-                $mistakes = $policy->checkFaslus($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASLUS';
-                last TYPE_INDENT;
-	    }
+            }
 
             if ( $lhsName eq "fordFaswut" ) {
                 $mistakes = $policy->checkFaswut($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
-	    }
+            }
+
+            if ( $lhsName eq "optFordFashep" ) {
+                $mistakes = $policy->checkFashep($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASHEP';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "optFordFaslus" ) {
+                $mistakes = $policy->checkFaslus($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASLUS';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallBarcab" ) {
+                $mistakes = $policy->checkBarcab($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARCAB';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallBarcen" ) {
+                $mistakes = $policy->checkBarcen($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARCEN';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallBarket" ) {
+                $mistakes = $policy->checkBarket($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BARKET';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallKetdot" ) {
+                $mistakes = $policy->checkKetdot($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'KETDOT';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallTailOfElem" ) {
+                $mistakes = $policy->checkTallTailOfElem($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = $lhsName;
+                last TYPE_INDENT;
+            }
 
             if ( $lhsName eq "wisp5d" ) {
                 $mistakes = $policy->checkWisp5d($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'WISP5D';
                 last TYPE_INDENT;
-	    }
+            }
 
             if ( $NYI_Rule->{$lhsName} ) {
                 $mistakes = $policy->isNYI($node);

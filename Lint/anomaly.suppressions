@@ -44,7 +44,6 @@ hoons/arvo/sys/hoon.hoon 5299:28 Test::Whitespace tallCendot backdented element 
 # In hoon.hoon, a lot of COLHEP's are luslus-style, but this is rarely
 # the case in the rest of arvo
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-16#l14
-hoons/arvo/sys/hoon.hoon 11684:7 Test::Whitespace tallColsig NYI [tall5dSeq] @11684:6-11748:10
 hoons/arvo/sys/hoon.hoon 11684:7 Test::Whitespace tallColhep backdented element #2 @11685:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11686:7 Test::Whitespace tallColhep backdented element #2 @11687:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11688:7 Test::Whitespace tallColhep backdented element #2 @11689:9; overindented by 2
@@ -59,7 +58,6 @@ hoons/arvo/sys/hoon.hoon 11731:7 Test::Whitespace tallColhep backdented element 
 hoons/arvo/sys/hoon.hoon 11733:7 Test::Whitespace tallColhep backdented element #2 @11734:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11738:7 Test::Whitespace tallColhep backdented element #2 @11739:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11744:7 Test::Whitespace tallColhep backdented element #2 @11745:9; overindented by 2
-hoons/arvo/sys/hoon.hoon 11756:7 Test::Whitespace tallColsig NYI [tall5dSeq] @11756:6-11919:53
 hoons/arvo/sys/hoon.hoon 11756:7 Test::Whitespace tallColhep backdented element #2 @11757:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11761:7 Test::Whitespace tallColhep backdented element #2 @11762:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11766:7 Test::Whitespace tallColhep backdented element #2 @11767:9; overindented by 2
@@ -88,10 +86,8 @@ hoons/arvo/sys/hoon.hoon 11895:7 Test::Whitespace tallColhep backdented element 
 hoons/arvo/sys/hoon.hoon 11914:7 Test::Whitespace tallColhep backdented element #2 @11915:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11916:7 Test::Whitespace tallColhep backdented element #2 @11917:9; overindented by 2
 hoons/arvo/sys/hoon.hoon 11918:7 Test::Whitespace tallColhep backdented element #2 @11919:9; overindented by 2
-hoons/arvo/sys/hoon.hoon 11949:15 Test::Whitespace tallColsig NYI [tall5dSeq] @11949:14-11973:16
 hoons/arvo/sys/hoon.hoon 11949:15 Test::Whitespace tallColhep backdented element #2 @11950:17; overindented by 2
 hoons/arvo/sys/hoon.hoon 11964:13 Test::Whitespace tallColhep backdented element #2 @11965:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 11977:13 Test::Whitespace tallColsig NYI [tall5dSeq] @11977:12-12140:16
 hoons/arvo/sys/hoon.hoon 11977:13 Test::Whitespace tallColhep backdented element #2 @11978:15; overindented by 2
 hoons/arvo/sys/hoon.hoon 11993:13 Test::Whitespace tallColhep backdented element #2 @11994:15; overindented by 2
 hoons/arvo/sys/hoon.hoon 12008:13 Test::Whitespace tallColhep backdented element #2 @12009:15; overindented by 2

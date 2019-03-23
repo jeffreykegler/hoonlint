@@ -402,7 +402,7 @@ sub name {
     return $symbol if $type ne 'node';
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-    return $symbol . '#' . ( scalar @rhs );
+    return $symbol;
 }
 
 # Determine how many spaces we need.
@@ -561,6 +561,32 @@ sub firstBrickOfLine {
         $thisNode = $thisNode->{PARENT};
     }
     return $firstBrickNode // $node;
+}
+
+# first brick node in $node's line,
+# by inclusion list.
+# $node if there is no prior included brick node
+sub firstBrickOfLineInc {
+    my ( $instance, $node, $inclusions ) = @_;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
+    my ($currentLine)  = $instance->nodeLC($node);
+    my $thisNode       = $node;
+    my $firstBrickNode = $node;
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+        # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+        # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+        last NODE if $thisLine != $currentLine;
+      PICK_NODE: {
+            my $brickName = $instance->brickName($thisNode);
+            # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+            last PICK_NODE if not defined $brickName;
+            $firstBrickNode = $thisNode if $inclusions->{$brickName};
+            # say STDERR join " ", __FILE__, __LINE__, $brickName;
+        }
+        $thisNode = $thisNode->{PARENT};
+    }
+    return $firstBrickNode;
 }
 
 # first brick node in $node's line,
