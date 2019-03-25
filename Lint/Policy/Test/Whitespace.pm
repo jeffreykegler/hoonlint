@@ -326,6 +326,70 @@ sub checkBonzElement {
     return \@mistakes;
 }
 
+sub checkTopSail {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $grammar  = $instance->{grammar};
+    my $ruleID   = $node->{ruleID};
+
+    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            last BODY_ISSUES if $instance->symbol($body) eq 'CRAM';
+            my $msg = join " ",
+              (
+                sprintf 'Top sail body %s; must be on rune line',
+                describeLC( $bodyLine, $bodyColumn )
+              ),
+              ( map { $grammar->symbol_display_form($_) }
+                  $grammar->rule_expand($ruleID) );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+              };
+            last BODY_ISSUES;
+        }
+
+        # If here, bodyLine == parentLine
+        my $gapLiteral = $instance->literalNode($bodyGap);
+        my $gapLength  = $bodyGap->{length};
+        last BODY_ISSUES if $gapLength == 2;
+        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $bodyGapColumn + $expectedLength;
+        my $msg = sprintf 'Top Sail body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedColumn );
+	  ;
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+
+    return \@mistakes;
+}
+
 sub check_0Running {
     my ( $policy, $node )    = @_;
     my $instance  = $policy->{lint};
@@ -2576,12 +2640,16 @@ sub isJog {
 sub isNYI {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
+    my $grammar         = $instance->{grammar};
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
+    my $ruleID   = $node->{ruleID};
     my @mistakes = ();
 
     my $msg = join q{ }, 'NYI', '[' . $instance->symbol($node) . ']',
-      $instance->describeNodeRange($node);
+      $instance->describeNodeRange($node),
+      ( map { $grammar->symbol_display_form($_) }
+          $grammar->rule_expand($ruleID) );
     push @mistakes,
       {
         desc         => $msg,
@@ -3217,6 +3285,13 @@ sub validate_node {
 
             if ( $lhsName eq "tallTailOfElem" ) {
                 $mistakes = $policy->checkTallTailOfElem($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = $lhsName;
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallTopSail" ) {
+                $mistakes = $policy->checkTopSail($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = $lhsName;
                 last TYPE_INDENT;

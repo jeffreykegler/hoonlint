@@ -191,6 +191,10 @@ sub doNode {
         }
     }
 
+    my $nodeCount = $instance->{nodeCount};
+    $node->{IX} = $nodeCount;
+    $instance->{nodeCount} = $nodeCount+1;
+
     return $node;
 }
 
@@ -253,7 +257,11 @@ sub contextDisplay {
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_ + 0; } keys %tag;
 
-# say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
+    # say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@sortedLines);
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($pMistakeLines);
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($lineToPos);
+
     if ( $contextSize <= 0 ) {
         for my $lineNum (@sortedLines) {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
@@ -880,13 +888,24 @@ EOS
 
     $MarpaX::YAHC::Lint::recce = $parser->rawRecce();
     $lintInstance->{recce} = $MarpaX::YAHC::Lint::recce;
+    $lintInstance->{nodeCount} = 0;
 
     $parser = undef;    # free up memory
     my $astRef = $MarpaX::YAHC::Lint::recce->value($lintInstance);
 
     my @lineToPos = ( -1, 0 );
-    while ( ${$pSource} =~ m/\n/g ) { push @lineToPos, pos ${$pSource} }
+    {
+    my $lastPos = 0;
+    LINE: while (1) {
+        my $newPos = index ${$pSource}, "\n", $lastPos;
+        # say $newPos;
+        last LINE if $newPos < 0;
+        $lastPos = $newPos+1;
+        push @lineToPos, $lastPos;
+    }
+    }
     $lintInstance->{lineToPos} = \@lineToPos;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@lineToPos);
 
     die "Parse failed" if not $astRef;
 
@@ -908,6 +927,7 @@ EOS
         my $policy         = $constructor->( $policyFullName, $lintInstance );
         $policy->{shortName} = $policyShortName;
         $policy->{fullName}  = $policyFullName;
+        $policy->{per}  = {};
         $policy->validate( $astValue, {} );
     }
 
