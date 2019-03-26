@@ -1782,18 +1782,21 @@ sub chessSideOfJogging {
       : 'queenside';
 }
 
-sub bodyColumnOfJoggingHoon {
+# Find the body column, based on alignment within
+# a parent hoon.
+sub bodyColumn {
     my ( $policy, $node ) = @_;
     my $nodeIX = $node->{IX};
     my $jogBodyColumn = $policy->{perNode}->{$nodeIX}->{jogBodyColumn};
     return $jogBodyColumn if defined $jogBodyColumn;
 
     my $instance = $policy->{lint};
+    my $joggingRules = $instance->{joggingRule};
     my $joggingRule = $instance->{joggingRule};
     my $nodeName = $instance->brickName($node);
     if (not $nodeName or not $joggingRule->{$nodeName}) {
       # say STDERR join " ", $node->{IX}, $instance->symbol($node);
-      my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node->{PARENT});
+      my $jogBodyColumn = $policy->bodyColumn($node->{PARENT}, $joggingRules);
       $policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
       return $jogBodyColumn;
     }
@@ -1870,7 +1873,8 @@ sub is_1Jogging {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my $chessSide = $policy->chessSideOfJoggingHoon($node);
-    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
+    my $joggingRules = $instance->{joggingRule};
+    my $jogBodyColumn = $policy->bodyColumn($node, $joggingRules);
 
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
@@ -1999,7 +2003,8 @@ sub is_2Jogging {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my $chessSide = $policy->chessSideOfJoggingHoon($node);
-    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
+    my $joggingRules = $instance->{joggingRule};
+    my $jogBodyColumn = $policy->bodyColumn($node, $joggingRules);
 
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
@@ -2347,7 +2352,8 @@ sub checkKingsideJog {
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
 
-    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
+    my $joggingRules = $instance->{joggingRule};
+    my $jogBodyColumn = $policy->bodyColumn($node, $joggingRules);
 
     my @mistakes = ();
 
@@ -2515,7 +2521,8 @@ sub checkQueensideJog {
 
     my @mistakes = ();
 
-    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
+    my $joggingRules = $instance->{joggingRule};
+    my $jogBodyColumn = $policy->bodyColumn($node, $joggingRules);
 
     # Replace inherited attribute rune LC with brick LC
     my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
