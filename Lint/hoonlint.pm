@@ -812,6 +812,13 @@ EOS
     my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
     $lintInstance->{tallJogging1_Rule} = \%tallJogging1_Rule;
 
+    my %joggingRule = map { +( $_, 1 ) } (
+        keys %tall_1JoggingRule,
+        keys %tall_2JoggingRule,
+        keys %tallJogging1_Rule
+    );
+    $lintInstance->{joggingRule} = \%joggingRule;
+
     $NYI_Rule{$_} = 1 for qw(optFordFashep optFordFaslus fordFaswut);
     # TODO: if Luslus right for fordFastis?
     my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
@@ -927,7 +934,7 @@ EOS
         my $policy         = $constructor->( $policyFullName, $lintInstance );
         $policy->{shortName} = $policyShortName;
         $policy->{fullName}  = $policyFullName;
-        $policy->{per}  = {};
+        $policy->{perNode}  = {};
         $policy->validate( $astValue, {} );
     }
 

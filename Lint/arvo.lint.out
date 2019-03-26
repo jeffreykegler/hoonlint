@@ -1523,7 +1523,7 @@ hoons/arvo/sys/vane/dill.hoon 351:64 Test::Whitespace tallColtar joined 0-runnin
 hoons/arvo/sys/vane/dill.hoon 475:9 Test::Whitespace tallWutcol backdented element #2, @476:11; comment overindented by 2
 hoons/arvo/sys/vane/dill.hoon 484:3 Test::Whitespace tallWutcol backdented element #2, @485:5; comment overindented by 2
 hoons/arvo/sys/vane/dill.hoon 493:3 Test::Whitespace tallWutcol backdented element #2, @494:5; comment overindented by 2
-hoons/arvo/sys/vane/dill.hoon 498:9 Test::Whitespace tallTiscol Jog kingside body @498:19; overindented by 1
+hoons/arvo/sys/vane/dill.hoon 498:9 Test::Whitespace tallTiscol Jog queenside body @498:19; overindented by 1
 hoons/arvo/sys/vane/dill.hoon 517:16 Test::Whitespace tallBarcen cell #3 @518:3; comment overindented by 2
 hoons/arvo/sys/vane/dill.hoon 517:16 Test::Whitespace tallBarcen cell #3 @519:3; comment overindented by 2
 hoons/arvo/sys/vane/dill.hoon 534:5 Test::Whitespace tallWutcol backdented element #2, @535:7; comment overindented by 2
@@ -3958,7 +3958,6 @@ hoons/arvo/mar/unicode-data.hoon 1:1 Test::Whitespace optFordFashep Fashep body 
 hoons/arvo/mar/static/action.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:5 is underindented by 2
 hoons/arvo/mar/static/action.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:5 is underindented by 2
 === hoons/arvo/web/unmark/test.hoon ===
-hoons/arvo/web/unmark/test.hoon 2:6 Test::Whitespace tallTopSail Top sail body @3:5; must be on rune line
 hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @6:6-7:6 tallTailOfTop tallKidsOfTop GAP TIS TIS
 hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallKidsOfTop NYI [tallKidsOfTop] @6:6-7:2 tallKidsOfTop GAP CRAM
 hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @8:2-9:2 tallTailOfTop tallKidsOfTop GAP TIS TIS

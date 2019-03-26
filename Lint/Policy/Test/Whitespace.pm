@@ -1724,9 +1724,39 @@ sub describeMisindent {
     return "correctly indented";
 }
 
-sub joggingSide {
+sub chessSideOfJoggingHoon {
+    my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
+    my $chessSide = $policy->{perNode}->{$nodeIX}->{chessSide};
+    return $chessSide if defined $chessSide;
+
+    my $instance = $policy->{lint};
+    my $joggingRule = $instance->{joggingRule};
+    my $nodeName = $instance->brickName($node);
+    if (not $nodeName or not $joggingRule->{$nodeName}) {
+      # say STDERR join " ", $node->{IX}, $instance->symbol($node);
+      my $chessSide = $policy->chessSideOfJoggingHoon($node->{PARENT});
+      $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
+      return $chessSide;
+    }
+
+    my ( undef, $baseColumn ) = $instance->nodeLC( $node );
+    my $children = $node->{children};
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
+        my $chessSide = $policy->chessSideOfJogging( $child, $baseColumn );
+	$policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
+	return $chessSide;
+    }
+    die "No jogging found for ", symbol($node);
+}
+
+sub chessSideOfJogging {
     my ( $policy, $node, $runeColumn ) = @_;
     my $instance        = $policy->{lint};
+
     my $symbolReverseDB = $instance->{symbolReverseDB};
     my $children        = $node->{children};
     my %sideCount       = ();
@@ -1750,6 +1780,34 @@ sub joggingSide {
     return $kingsideCount > $queensideCount
       ? 'kingside'
       : 'queenside';
+}
+
+sub bodyColumnOfJoggingHoon {
+    my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
+    my $jogBodyColumn = $policy->{perNode}->{$nodeIX}->{jogBodyColumn};
+    return $jogBodyColumn if defined $jogBodyColumn;
+
+    my $instance = $policy->{lint};
+    my $joggingRule = $instance->{joggingRule};
+    my $nodeName = $instance->brickName($node);
+    if (not $nodeName or not $joggingRule->{$nodeName}) {
+      # say STDERR join " ", $node->{IX}, $instance->symbol($node);
+      my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node->{PARENT});
+      $policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
+      return $jogBodyColumn;
+    }
+
+    my $children = $node->{children};
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
+        my $jogBodyColumn = $policy->joggingBodyAlignment($child);
+	$policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
+        return $jogBodyColumn;
+    }
+    die "No jogging found for ", symbol($node);
 }
 
 sub joggingBodyAlignment {
@@ -1796,38 +1854,6 @@ sub joggingBodyAlignment {
     return $topBodyColumn;
 }
 
-sub censusJogging1_Hoon {
-    my ( $policy, $node ) = @_;
-    my $instance = $policy->{lint};
-    my $children = $node->{children};
-  CHILD: for my $childIX ( 0 .. $#$children ) {
-        my $child  = $children->[$childIX];
-        my $symbol = $instance->symbol($child);
-        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $bodyAlignment =
-          $policy->joggingBodyAlignment( $child );
-        return $bodyAlignment;
-    }
-    die "No jogging found for ", symbol($node);
-}
-
-sub censusJoggingHoon {
-    my ( $policy, $node ) = @_;
-    my $instance = $policy->{lint};
-    my ( undef, $baseColumn ) = $instance->nodeLC( $node );
-    my $children = $node->{children};
-  CHILD: for my $childIX ( 0 .. $#$children ) {
-        my $child  = $children->[$childIX];
-        my $symbol = $instance->symbol($child);
-        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $side = $policy->joggingSide( $child, $baseColumn );
-        my $bodyAlignment =
-          $policy->joggingBodyAlignment( $child );
-        return $side, $bodyAlignment;
-    }
-    die "No jogging found for ", symbol($node);
-}
-
 sub is_1Jogging {
     my ( $policy, $context, $node ) = @_;
     my $instance   = $policy->{lint};
@@ -1843,10 +1869,8 @@ sub is_1Jogging {
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
-    my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
-    $context->{chessSide} = $chessSide;
-    $context->{jogBodyColumn} = $jogBodyColumn
-      if defined $jogBodyColumn;
+    my $chessSide = $policy->chessSideOfJoggingHoon($node);
+    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
 
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
@@ -1974,10 +1998,8 @@ sub is_2Jogging {
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
-    my ( $chessSide, $jogBodyColumn ) = $policy->censusJoggingHoon($node);
-    $context->{chessSide} = $chessSide;
-    $context->{jogBodyColumn} = $jogBodyColumn
-      if defined $jogBodyColumn;
+    my $chessSide = $policy->chessSideOfJoggingHoon($node);
+    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
 
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
@@ -2191,14 +2213,6 @@ sub is_Jogging1 {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $tailLine,  $tailColumn )  = $instance->nodeLC($tail);
 
-    my $jogBodyColumn = $policy->censusJogging1_Hoon( $node );
-
-    # say STDERR "Setting jog body column $jogBodyColumn";
-
-    $context->{chessSide} = 'kingside';
-    $context->{jogBodyColumn} = $jogBodyColumn
-      if defined $jogBodyColumn;
-
     my @mistakes = ();
 
     if ( $joggingLine != $runeLine ) {
@@ -2333,12 +2347,7 @@ sub checkKingsideJog {
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
 
-    my $chessSide     = $context->{chessSide};
-    my $jogBodyColumn = $context->{jogBodyColumn};
-
-    # do not pass these attributes on to child nodes
-    delete $context->{jogBodyColumn};
-    delete $context->{chessSide};
+    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
 
     my @mistakes = ();
 
@@ -2504,24 +2513,9 @@ sub checkQueensideJog {
     my $fileName = $instance->{fileName};
     my $grammar  = $instance->{grammar};
 
-    my $chessSide = $context->{chessSide};
-    die Data::Dumper::Dumper(
-        [
-            $fileName,
-            ( $instance->line_column( $node->{start} ) ),
-            map { $grammar->symbol_display_form($_) }
-              $grammar->rule_expand($ruleID)
-        ]
-    ) unless $chessSide;    # TODO: Delete after development
-    $instance->internalError("Chess side undefined") unless $chessSide;
-
     my @mistakes = ();
 
-    my $jogBodyColumn = $context->{jogBodyColumn};
-
-    # do not pass these attributes on to child nodes
-    delete $context->{jogBodyColumn};
-    delete $context->{chessSide};
+    my $jogBodyColumn = $policy->bodyColumnOfJoggingHoon($node);
 
     # Replace inherited attribute rune LC with brick LC
     my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
@@ -2630,7 +2624,7 @@ sub isJog {
     my ( $policy, $node, $context ) = @_;
     my $instance = $policy->{lint};
 
-    my $chessSide = $context->{chessSide};
+    my $chessSide = $policy->chessSideOfJoggingHoon($node);
     return $policy->checkQueensideJog( $node, $context )
       if $chessSide eq 'queenside';
     return $policy->checkKingsideJog( $node, $context );
@@ -3114,14 +3108,6 @@ sub validate_node {
     my $parentLC = join ':', $parentLine, $parentColumn + 1;
 
     my $parentContext = {};
-
-    my $parentChessSide = $argContext->{chessSide};
-    $parentContext->{chessSide} = $parentChessSide
-      if defined $parentChessSide;
-
-    my $parentJogBodyColumn = $argContext->{jogBodyColumn};
-    $parentContext->{jogBodyColumn} = $parentJogBodyColumn
-      if defined $parentJogBodyColumn;
 
     my $children = $node->{children};
 
