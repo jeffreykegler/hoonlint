@@ -1521,7 +1521,7 @@ sub checkJoined_0Running {
     return \@mistakes;
 }
 
-sub is_1Running {
+sub check_1Running {
     my ( $policy, $context, $node ) = @_;
     my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
@@ -1857,7 +1857,7 @@ sub joggingBodyAlignment {
     return $topBodyColumn;
 }
 
-sub is_1Jogging {
+sub check_1Jogging {
     my ( $policy, $context, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -1986,7 +1986,7 @@ sub is_1Jogging {
     return \@mistakes;
 }
 
-sub is_2Jogging {
+sub check_2Jogging {
     my ( $policy, $context, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -2202,7 +2202,7 @@ sub is_2Jogging {
     return \@mistakes;
 }
 
-sub is_Jogging1 {
+sub check_Jogging1 {
     my ( $policy, $context, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -2627,7 +2627,7 @@ sub checkQueensideJog {
 
 # TODO: Add a check (optional?) for queenside joggings with no
 # split jogs.
-sub isJog {
+sub checkJog {
     my ( $policy, $node, $context ) = @_;
     my $instance = $policy->{lint};
 
@@ -2638,7 +2638,7 @@ sub isJog {
 }
 
 # not yet implemented
-sub isNYI {
+sub checkNYI {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $grammar         = $instance->{grammar};
@@ -2662,7 +2662,7 @@ sub isNYI {
     return \@mistakes;
 }
 
-sub isBackdented {
+sub checkBackdented {
     my ( $policy, $node ) = @_;
     my @gapSeq       = @{ $policy->gapSeq0($node) };
     my $elementCount = ( scalar @gapSeq ) / 2;
@@ -3032,12 +3032,6 @@ sub checkLuslusStyle {
 
     return \@mistakes;
 }
-sub isFlat {
-    my ($indents)   = @_;
-    my ($firstLine) = @{ $indents->[0] };
-    my ($lastLine)  = @{ $indents->[$#$indents] };
-    return $firstLine == $lastLine;
-}
 
 sub validate {
   my ($policy, $node, $context) = @_;
@@ -3206,7 +3200,7 @@ sub validate_node {
                 }
 
                 # By default, treat as not yet implemented
-                $mistakes = $policy->isNYI($node);
+                $mistakes = $policy->checkNYI($node);
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
@@ -3298,7 +3292,7 @@ sub validate_node {
             }
 
             if ( $NYI_Rule->{$lhsName} ) {
-                $mistakes = $policy->isNYI($node);
+                $mistakes = $policy->checkNYI($node);
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
@@ -3306,7 +3300,7 @@ sub validate_node {
             }
 
             if ( $tallJogRule->{$lhsName} ) {
-                $mistakes = $policy->isJog( $node, $parentContext );
+                $mistakes = $policy->checkJog( $node, $parentContext );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOG-STYLE';
                 last TYPE_INDENT;
@@ -3320,35 +3314,35 @@ sub validate_node {
             }
 
             if ( $tall_1RunningRule->{$lhsName} ) {
-                $mistakes = $policy->is_1Running( $parentContext, $node );
+                $mistakes = $policy->check_1Running( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->is_1Jogging( $parentContext, $node );
+                $mistakes = $policy->check_1Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '1-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->is_2Jogging( $parentContext, $node );
+                $mistakes = $policy->check_2Jogging( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '2-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
-                $mistakes = $policy->is_Jogging1( $parentContext, $node );
+                $mistakes = $policy->check_Jogging1( $parentContext, $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallNoteRule->{$lhsName} ) {
-                $mistakes = $policy->isBackdented($node);
+                $mistakes = $policy->checkBackdented($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
@@ -3362,7 +3356,7 @@ sub validate_node {
             }
 
             if ( $backdentedRule->{$lhsName} ) {
-                $mistakes = $policy->isBackdented($node);
+                $mistakes = $policy->checkBackdented($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BACKDENTED';
                 last TYPE_INDENT;
@@ -3370,7 +3364,7 @@ sub validate_node {
 
             # By default, treat as not yet implemented
             {
-                $mistakes = $policy->isNYI($node);
+                $mistakes = $policy->checkNYI($node);
                 last TYPE_INDENT if @{$mistakes};
 
                 # should never reach here
