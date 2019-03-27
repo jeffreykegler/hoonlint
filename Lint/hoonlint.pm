@@ -946,7 +946,7 @@ EOS
         $policy->{shortName} = $policyShortName;
         $policy->{fullName}  = $policyFullName;
         $policy->{perNode}  = {};
-        $policy->validate( $astValue, {} );
+        $policy->validate( $astValue );
     }
 
     print $lintInstance->contextDisplay();

@@ -1522,7 +1522,7 @@ sub checkJoined_0Running {
 }
 
 sub check_1Running {
-    my ( $policy, $context, $node ) = @_;
+    my ( $policy, $node ) = @_;
     my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -1858,7 +1858,7 @@ sub joggingBodyAlignment {
 }
 
 sub check_1Jogging {
-    my ( $policy, $context, $node ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
@@ -1987,7 +1987,7 @@ sub check_1Jogging {
 }
 
 sub check_2Jogging {
-    my ( $policy, $context, $node ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
@@ -2203,7 +2203,7 @@ sub check_2Jogging {
 }
 
 sub check_Jogging1 {
-    my ( $policy, $context, $node ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance   = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
@@ -2563,7 +2563,7 @@ sub checkFascomElement {
 }
 
 sub checkKingsideJog {
-    my ( $policy, $node, $context ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $tall_Jogging1Rule = $instance->{tallJogging1_Rule};
     my $fileName = $instance->{fileName};
@@ -2731,7 +2731,7 @@ sub checkKingsideJog {
 }
 
 sub checkQueensideJog {
-    my ( $policy, $node, $context ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
@@ -2848,13 +2848,13 @@ sub checkQueensideJog {
 # TODO: Add a check (optional?) for queenside joggings with no
 # split jogs.
 sub checkJog {
-    my ( $policy, $node, $context ) = @_;
+    my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
     my $chessSide = $policy->chessSideOfJoggingHoon($node);
-    return $policy->checkQueensideJog( $node, $context )
+    return $policy->checkQueensideJog( $node )
       if $chessSide eq 'queenside';
-    return $policy->checkKingsideJog( $node, $context );
+    return $policy->checkKingsideJog( $node );
 }
 
 # not yet implemented
@@ -3254,16 +3254,16 @@ sub checkLuslusStyle {
 }
 
 sub validate {
-  my ($policy, $node, $context) = @_;
+  my ($policy, $node ) = @_;
   my $instance = $policy->{lint};
 
-  my $parentContext = $policy->validate_node($node, $context);
+  $policy->validate_node($node);
   return if $node->{type} ne 'node';
   my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
           # say STDERR join " ", __FILE__, __LINE__, "child $childIX of ", (scalar @{$children});
         my $child = $children->[$childIX];
-        $policy->validate( $child, $parentContext );
+        $policy->validate( $child );
     }
     return;
 }
@@ -3292,7 +3292,7 @@ sub displayMistakes {
 }
 
 sub validate_node {
-    my ( $policy, $node, $argContext ) = @_;
+    my ( $policy, $node ) = @_;
 
     my $policyShortName = $policy->{shortName};
     my $instance        = $policy->{lint};
@@ -3328,8 +3328,6 @@ sub validate_node {
     my ( $parentLine, $parentColumn ) = $instance->line_column($parentStart);
     my $parentLC = join ':', $parentLine, $parentColumn + 1;
 
-    my $parentContext = {};
-
     my $children = $node->{children};
 
     my $nodeType = $node->{type};
@@ -3340,12 +3338,12 @@ sub validate_node {
     my $lhsName = $grammar->symbol_name($lhs);
 
     if ( $lhsName eq 'optGay4i' ) {
-        return $parentContext;
+        return;
     }
 
     my $childCount = scalar @{$children};
     if ( $childCount <= 1 ) {
-        return $parentContext;
+        return;
     }
 
     my $firstChildIndent = $instance->column( $children->[0]->{start} ) - 1;
@@ -3356,7 +3354,7 @@ sub validate_node {
 
     # TODO: In another policy, warn on tall children of wide nodes
     if ( $gapiness == 0 ) {    # wide node
-        return $parentContext;
+        return;
     }
 
     # tall node
@@ -3527,7 +3525,7 @@ sub validate_node {
             }
 
             if ( $tallJogRule->{$lhsName} ) {
-                $mistakes = $policy->checkJog( $node, $parentContext );
+                $mistakes = $policy->checkJog( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOG-STYLE';
                 last TYPE_INDENT;
@@ -3541,28 +3539,28 @@ sub validate_node {
             }
 
             if ( $tall_1RunningRule->{$lhsName} ) {
-                $mistakes = $policy->check_1Running( $parentContext, $node );
+                $mistakes = $policy->check_1Running( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->check_1Jogging( $parentContext, $node );
+                $mistakes = $policy->check_1Jogging( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '1-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->check_2Jogging( $parentContext, $node );
+                $mistakes = $policy->check_2Jogging( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '2-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
-                $mistakes = $policy->check_Jogging1( $parentContext, $node );
+                $mistakes = $policy->check_Jogging1( $node );
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
@@ -3626,7 +3624,7 @@ sub validate_node {
         }
     }
 
-    return $parentContext;
+    return;
 }
 
 1;

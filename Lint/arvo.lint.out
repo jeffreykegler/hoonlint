@@ -3988,12 +3988,15 @@ hoons/arvo/web/dojo.hoon 15:21 Test::Whitespace tallAttribute NYI [tallAttribute
 hoons/arvo/ren/urb.hoon 6:1 Test::Whitespace fordFascen NYI [fordFascen] @6:0-25:8 fordFascen FAS CEN GAP horn
 hoons/arvo/ren/urb.hoon 7:7 Test::Whitespace fordFascom joined backdent element #1 @7:15; overindented by 4
 hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fordFascomElements NYI [fordFascomElements] @7:14-24:20 fordFascomElements fordFascomElement
-hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fordFascomElement NYI [fordFascomElement] @7:14-8:36 fordFascomElement FAS fordHith GAP horn
+hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fordFascomElement Fascom element head @7:15; overindented by 4
+hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fordFascomElement Fascom element body @8:11; underindented by 2
 hoons/arvo/ren/urb.hoon 8:26 Test::Whitespace fordFashax NYI [fordFashax] @8:25-36 fordFashax FAS HAX GAP horn
-hoons/arvo/ren/urb.hoon 9:15 Test::Whitespace fordFascomElement NYI [fordFascomElement] @9:14-21:23 fordFascomElement FAS fordHith GAP horn
+hoons/arvo/ren/urb.hoon 9:15 Test::Whitespace fordFascomElement Fascom element head @9:15; overindented by 4
+hoons/arvo/ren/urb.hoon 9:15 Test::Whitespace fordFascomElement Fascom element body @13:11; underindented by 2
 hoons/arvo/ren/urb.hoon 17:17 Test::Whitespace tallColhep backdented element #2 @18:21; overindented by 4
 hoons/arvo/ren/urb.hoon 19:15 Test::Whitespace tallColhep backdented element #2 @20:19; overindented by 4
-hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement NYI [fordFascomElement] @23:14-24:20 fordFascomElement FAS fordHith GAP horn
+hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement Fascom element head @23:15; overindented by 4
+hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement Fascom element body @24:11; underindented by 2
 === hoons/arvo/ren/rss-xml.hoon ===
 hoons/arvo/ren/rss-xml.hoon 8:10 Test::Whitespace fordFascab NYI [fordFascab] @8:9-26 fordFascab FAS CAB GAP horn
 hoons/arvo/ren/rss-xml.hoon 9:1 Test::Whitespace fordFasbuc NYI [fordFasbuc] @9:0-60 fordFasbuc FAS BUC GAP tall5d
@@ -4029,8 +4032,10 @@ hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordHoopSeq hoop 4 @80:3; com
 === hoons/arvo/ren/tree/index.hoon ===
 hoons/arvo/ren/tree/index.hoon 6:1 Test::Whitespace fordFascom joined backdent element #1 @6:11; overindented by 6
 hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElements NYI [fordFascomElements] @6:10-14:2 fordFascomElements fordFascomElement
-hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElement NYI [fordFascomElement] @6:10-7:53 fordFascomElement FAS fordHith GAP horn
-hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fordFascomElement NYI [fordFascomElement] @9:10-14:2 fordFascomElement FAS fordHith GAP horn
+hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElement Fascom element head @6:11; overindented by 6
+hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElement Fascom element body @7:5; underindented by 4
+hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fordFascomElement Fascom element head @9:11; overindented by 6
+hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fordFascomElement Fascom element body @10:5; underindented by 4
 hoons/arvo/ren/tree/index.hoon 12:5 Test::Whitespace fordFasdot joined backdent element #1 @12:11; overindented by 2
 hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace hornSeq NYI [hornSeq] @12:10-13:56 hornSeq horn
 hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fordFassem joined backdent element #1 @12:17; overindented by 2
@@ -4048,8 +4053,8 @@ hoons/arvo/ren/tree/include.hoon 6:7 Test::Whitespace hornSeq NYI [hornSeq] @6:6
 hoons/arvo/ren/tree/elem.hoon 5:1 Test::Whitespace fordFascen NYI [fordFascen] @5:0-8:8 fordFascen FAS CEN GAP horn
 hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fordFascom backdented element #1 @6:5; underindented by 4
 hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fordFascomElements NYI [fordFascomElements] @6:4-7:17 fordFascomElements fordFascomElement
-hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @6:4-29 fordFascomElement FAS fordHith GAP horn
-hoons/arvo/ren/tree/elem.hoon 7:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @7:4-17 fordFascomElement FAS fordHith GAP horn
+hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fordFascomElement Fascom element head @6:5; underindented by 6
+hoons/arvo/ren/tree/elem.hoon 7:5 Test::Whitespace fordFascomElement Fascom element head @7:5; underindented by 6
 === hoons/arvo/ren/tree/head.hoon ===
 hoons/arvo/ren/tree/head.hoon 6:1 Test::Whitespace fordFastis cell symbol @6:7; overindented by 2
 hoons/arvo/ren/tree/head.hoon 6:1 Test::Whitespace fordFastis joined cell body @6:7; overindented by 2
@@ -4102,9 +4107,7 @@ hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFashax NYI [fordFashax] @
 hoons/arvo/ren/urb/tree.hoon 7:19 Test::Whitespace fordFascen NYI [fordFascen] @7:18-34 fordFascen FAS CEN GAP horn
 === hoons/arvo/ren/css.hoon ===
 hoons/arvo/ren/css.hoon 6:5 Test::Whitespace fordFascomElements NYI [fordFascomElements] @6:4-7:25 fordFascomElements fordFascomElement
-hoons/arvo/ren/css.hoon 6:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @6:4-30 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/css.hoon 6:20 Test::Whitespace fordFascen NYI [fordFascen] @6:19-30 fordFascen FAS CEN GAP horn
-hoons/arvo/ren/css.hoon 7:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @7:4-25 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/css.hoon 7:20 Test::Whitespace fordFassig NYI [fordFassig] @7:19-25 fordFassig FAS SIG GAP tall5d
 === hoons/arvo/ren/test-tree.hoon ===
 hoons/arvo/ren/test-tree.hoon 1:1 Test::Whitespace optFordFaslus Faslus body @1:5 is underindented by 2
@@ -4116,15 +4119,11 @@ hoons/arvo/ren/test-tree.hoon 6:16 Test::Whitespace fordFascab NYI [fordFascab] 
 hoons/arvo/ren/test-tree.hoon 7:16 Test::Whitespace fordFassig NYI [fordFassig] @7:15-20 fordFassig FAS SIG GAP tall5d
 === hoons/arvo/ren/run.hoon ===
 hoons/arvo/ren/run.hoon 6:5 Test::Whitespace fordFascomElements NYI [fordFascomElements] @6:4-7:27 fordFascomElements fordFascomElement
-hoons/arvo/ren/run.hoon 6:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @6:4-30 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/run.hoon 6:15 Test::Whitespace fordFassig NYI [fordFassig] @6:14-30 fordFassig FAS SIG GAP tall5d
-hoons/arvo/ren/run.hoon 7:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @7:4-27 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/run.hoon 7:15 Test::Whitespace fordFascen NYI [fordFascen] @7:14-27 fordFascen FAS CEN GAP horn
 === hoons/arvo/ren/js.hoon ===
 hoons/arvo/ren/js.hoon 6:5 Test::Whitespace fordFascomElements NYI [fordFascomElements] @6:4-7:24 fordFascomElements fordFascomElement
-hoons/arvo/ren/js.hoon 6:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @6:4-28 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/js.hoon 6:19 Test::Whitespace fordFascen NYI [fordFascen] @6:18-28 fordFascen FAS CEN GAP horn
-hoons/arvo/ren/js.hoon 7:5 Test::Whitespace fordFascomElement NYI [fordFascomElement] @7:4-24 fordFascomElement FAS fordHith GAP horn
 hoons/arvo/ren/js.hoon 7:19 Test::Whitespace fordFassig NYI [fordFassig] @7:18-24 fordFassig FAS SIG GAP tall5d
 === hoons/arvo/gen/pipe/cancel.hoon ===
 === hoons/arvo/gen/pipe/connect.hoon ===
