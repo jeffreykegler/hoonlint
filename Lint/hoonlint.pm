@@ -524,7 +524,7 @@ sub line_column {
     return $line, $column;
 }
 
-sub ancestorByBrickname {
+sub ancestorByBrickName {
     my ( $instance, $node, $name ) = @_;
     my $thisNode = $node;
   PARENT: while ($thisNode) {

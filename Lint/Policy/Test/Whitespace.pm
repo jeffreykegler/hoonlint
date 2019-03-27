@@ -1750,7 +1750,7 @@ sub chessSideOfJoggingHoon {
 	$policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
 	return $chessSide;
     }
-    die "No jogging found for ", symbol($node);
+    die "No jogging found for ", $instance->symbol($node);
 }
 
 sub chessSideOfJogging {
@@ -1810,7 +1810,7 @@ sub bodyColumn {
 	$policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
         return $jogBodyColumn;
     }
-    die "No jogging found for ", symbol($node);
+    die "No jogging found for ", $instance->symbol($node);
 }
 
 sub joggingBodyAlignment {
@@ -2355,7 +2355,7 @@ sub fascomBodyAlignment {
   CHILD:
     for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
         my $jog = $children->[$childIX];
-        my ( $gap,      $body )       = @{ $instance->gapSeq0($jog) };
+        my ( $gap,      $body )       = @{ $policy->gapSeq0($jog) };
         my ( $headLine, $headColumn ) = $instance->nodeLC($jog);
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
         my $gapLength = $gap->{length};
@@ -2404,18 +2404,18 @@ sub fascomBodyColumn {
         my $child  = $children->[$childIX];
         my $symbol = $instance->symbol($child);
         next CHILD if $symbol ne 'fordFascomBody';
-        my $children2 = $node->{children};
+        my $children2 = $child->{children};
       CHILD2: for my $childIX2 ( 0 .. $#$children2 ) {
             my $child2 = $children2->[$childIX2];
-            my $symbol = $instance->symbol($child2);
-            next CHILD2 if $symbol ne 'fordFascomElements';
+            my $symbol2 = $instance->symbol($child2);
+            next CHILD2 if $symbol2 ne 'fordFascomElements';
             my $fascomBodyColumn = $policy->fascomBodyAlignment($child2);
             $policy->{perNode}->{$nodeIX}->{fascomBodyColumn} =
               $fascomBodyColumn;
             return $fascomBodyColumn;
         }
     }
-    die "No jogging found for ", symbol($node);
+    die "No jogging found for ", $instance->symbol($node);
 }
 
 # TODO: Add a check (optional?) for queenside joggings with no
@@ -2428,7 +2428,7 @@ sub checkFascomElement {
     my ( $runeLine,   $runeColumn )   = $instance->nodeLC($runeNode);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $headLine,   $headColumn )   = ( $parentLine, $parentColumn );
-    my ( $gap,        $body )         = @{ $policy->gapSeq0() };
+    my ( $gap,        $body )         = @{ $policy->gapSeq0($node) };
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my $fascomBodyColumn =
