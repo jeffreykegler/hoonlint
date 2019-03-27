@@ -524,6 +524,17 @@ sub line_column {
     return $line, $column;
 }
 
+sub ancestorByBrickname {
+    my ( $instance, $node, $name ) = @_;
+    my $thisNode = $node;
+  PARENT: while ($thisNode) {
+        my $thisName = $instance->brickName($thisNode);
+        return $thisNode if defined $thisName and $thisName eq $name;
+        $thisNode = $thisNode->{PARENT};
+    }
+    return;
+}
+
 sub ancestor {
     my ( $instance, $node, $generations ) = @_;
     my $thisNode = $node;

@@ -2342,6 +2342,226 @@ sub check_Jogging1 {
     return \@mistakes;
 }
 
+sub fascomBodyAlignment {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+    my $firstBodyColumn;
+    my %firstLine       = ();
+    my %bodyColumnCount = ();
+
+    # Traverse first to last to make it easy to record
+    # first line of occurrence of each body column
+  CHILD:
+    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+        my $jog = $children->[$childIX];
+        my ( $gap,      $body )       = @{ $instance->gapSeq0($jog) };
+        my ( $headLine, $headColumn ) = $instance->nodeLC($jog);
+        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+        my $gapLength = $gap->{length};
+        $firstBodyColumn = $bodyColumn
+          if not defined $firstBodyColumn;
+        next CHILD unless $headLine == $bodyLine;
+        next CHILD unless $gap > 2;
+        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
+        $firstLine{$bodyColumn}       = $bodyLine;
+    }
+    my @bodyColumns = keys %bodyColumnCount;
+
+    # If no aligned columns, simply return first
+    return $firstBodyColumn if not @bodyColumns;
+
+    my @sortedBodyColumns =
+      sort {
+             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
+          or $firstLine{$b} <=> $firstLine{$a}
+      }
+      keys %bodyColumnCount;
+    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
+    return $topBodyColumn;
+}
+
+# Find the body column, based on alignment within
+# a parent hoon.
+sub fascomBodyColumn {
+    my ( $policy, $node ) = @_;
+    my $nodeIX           = $node->{IX};
+    my $fascomBodyColumn = $policy->{perNode}->{$nodeIX}->{fascomBodyColumn};
+    return $fascomBodyColumn if defined $fascomBodyColumn;
+
+    my $instance = $policy->{lint};
+    my $nodeName = $instance->brickName($node);
+    if ( not $nodeName or not $nodeName eq 'fordFascom' ) {
+
+        # say STDERR join " ", $node->{IX}, $instance->symbol($node);
+        my $fascomBodyColumn = $policy->fascomBodyColumn( $node->{PARENT} );
+        $policy->{perNode}->{$nodeIX}->{fascomBodyColumn} = $fascomBodyColumn;
+        return $fascomBodyColumn;
+    }
+
+    my $children = $node->{children};
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        next CHILD if $symbol ne 'fordFascomBody';
+        my $children2 = $node->{children};
+      CHILD2: for my $childIX2 ( 0 .. $#$children2 ) {
+            my $child2 = $children2->[$childIX2];
+            my $symbol = $instance->symbol($child2);
+            next CHILD2 if $symbol ne 'fordFascomElements';
+            my $fascomBodyColumn = $policy->fascomBodyAlignment($child2);
+            $policy->{perNode}->{$nodeIX}->{fascomBodyColumn} =
+              $fascomBodyColumn;
+            return $fascomBodyColumn;
+        }
+    }
+    die "No jogging found for ", symbol($node);
+}
+
+# TODO: Add a check (optional?) for queenside joggings with no
+# split jogs.
+sub checkFascomElement {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my $runeNode = $instance->ancestorByBrickName( $node, 'fordFascom' );
+    my ( $runeLine,   $runeColumn )   = $instance->nodeLC($runeNode);
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $headLine,   $headColumn )   = ( $parentLine, $parentColumn );
+    my ( $gap,        $body )         = @{ $policy->gapSeq0() };
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my $fascomBodyColumn =
+      $policy->fascomBodyColumn( $node, { fordFascom => 1 } );
+
+    my @mistakes = ();
+
+    my $baseColumn = $runeColumn + 4;
+
+    my $expectedHeadColumn = $baseColumn;
+    if ( $headColumn != $expectedHeadColumn ) {
+        my $msg = sprintf 'Fascom element head %s; %s',
+          describeLC( $headLine, $headColumn ),
+          describeMisindent( $headColumn, $expectedHeadColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $headLine,
+            column         => $headColumn,
+            expectedColumn => $expectedHeadColumn,
+            topicLines     => [$runeLine],
+          };
+    }
+
+    if ( $headLine == $bodyLine ) {
+        my $gapLength = $gap->{length};
+
+        if ( $gapLength != 2 and $bodyColumn != $fascomBodyColumn ) {
+            my $msg = sprintf 'Fascom element body %s; %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $fascomBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $fascomBodyColumn,
+                topicLines     => [$runeLine],
+              };
+        }
+        return \@mistakes;
+    }
+
+    # If here head line != body line
+    my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
+    if ( $pseudoJoinColumn >= 0 ) {
+        my $expectedBodyColumn = $pseudoJoinColumn;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf
+'Pseudo-joined Fascom element %s; body/comment mismatch; body is %s',
+              describeLC( $parentLine, $parentColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+                topicLines     => [$runeLine],
+              };
+        }
+
+        # Treat the fascom body alignment as the "expected one"
+        my $expectedColumn = $fascomBodyColumn;
+        if ( $bodyColumn != $expectedColumn ) {
+            my $msg = sprintf 'Pseudo-joined Fascom element %s; body %s',
+              describeLC( $parentLine, $parentColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedColumn,
+                topicLines     => [$runeLine],
+              };
+        }
+        return \@mistakes;
+    }
+
+    # If here, this is (or should be) a split jog
+    my $expectedBodyColumn = $headColumn - 2;
+
+    if ( $bodyColumn != $expectedBodyColumn ) {
+        my $msg = sprintf 'Fascom element body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedBodyColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedBodyColumn,
+            topicLines     => [$runeLine],
+          };
+        return \@mistakes;
+    }
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $gap, $expectedBodyColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'Fascom element split body %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$runeLine],
+              };
+        }
+    }
+    return \@mistakes;
+}
+
 sub checkKingsideJog {
     my ( $policy, $node, $context ) = @_;
     my $instance = $policy->{lint};
@@ -3227,6 +3447,13 @@ sub validate_node {
                 $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
             }
+
+            if ( $lhsName eq "fordFascomElement" ) {
+                $mistakes = $policy->checkFascomElement($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASCOM Element';
+                last TYPE_INDENT;
+	    }
 
             if ( $lhsName eq "optFordFashep" ) {
                 $mistakes = $policy->checkFashep($node);
