@@ -536,6 +536,301 @@ sub checkWisp5d {
     return \@mistakes;
 }
 
+sub checkSplitFascom {
+    my ( $policy, $node ) = @_;
+    my $instance  = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
+
+    my ( $bodyGap, $body, $tistisGap, $tistis ) =
+      @{ $policy->gapSeq0($node) };
+
+    my ( $runeLine,   $runeColumn )   = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+
+    my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
+
+    my @mistakes = ();
+
+    # We deal with the elements list itself,
+    # in its own node
+
+    my $expectedColumn = $anchorColumn + 2;
+    my $expectedLine   = $runeLine + 1;
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $bodyGap, $anchorColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "split Fascom %s; %s",
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $bodyLine ],
+              };
+        }
+    }
+
+    if ( $bodyColumn != $expectedColumn ) {
+        my $msg = sprintf
+          "split Fascom %s; %s",
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedColumn,
+            topicLines     => [ $runeLine, $expectedLine ],
+          };
+    }
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $tistisGap, $anchorColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "split Fascom TISTIS %s; $gapMistakeMsg",
+              describeLC( $tistisLine, $tistisColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $anchorLine, $tistisLine ],
+              };
+        }
+    }
+
+    $expectedColumn = $anchorColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "split Fascom TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $anchorColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $anchorColumn,
+          };
+    }
+    return \@mistakes;
+}
+
+sub checkJoinedFascom {
+    my ( $policy, $node ) = @_;
+    my $instance  = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
+
+    my ( $bodyGap, $body, $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+
+    my ( $runeLine,   $runeColumn )   = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+
+    my @mistakes = ();
+
+    # We deal with the elements list in its own node
+
+    my $expectedColumn = $runeColumn + 4;
+    my $expectedLine   = $runeLine + 1;
+
+    # Initial runsteps are on the rune line,
+    # separated by one stop
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $bodyGap, $runeColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "joined Fascom %s; %s",
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $bodyLine, $runeLine ],
+              };
+        }
+    }
+
+    if ( $bodyColumn != $expectedColumn ) {
+        my $msg = sprintf
+          "joined Fascom %s; %s",
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedColumn,
+            topicLines     => [ $runeLine, $expectedLine ],
+          };
+    }
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $tistisGap, $runeColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "joined Fascom TISTIS %s; $gapMistakeMsg",
+              describeLC( $tistisLine, $tistisColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $runeLine, $tistisLine ],
+              };
+        }
+    }
+
+    $expectedColumn = $runeColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "joined Fascom TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $runeColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $runeColumn,
+          };
+    }
+    return \@mistakes;
+}
+
+sub checkFascom {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my ( undef, $elements ) = @{ $policy->gapSeq0($node) };
+
+    my ($runeLine)     = $instance->nodeLC($node);
+    my ($elementsLine) = $instance->nodeLC($elements);
+    return checkSplitFascom( $policy, $node )
+      if $elementsLine != $runeLine;
+    return checkJoinedFascom( $policy, $node );
+}
+
+sub checkFascomElements {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+
+    my @mistakes = ();
+
+    my $childIX        = 0;
+    my $expectedColumn = $parentColumn;
+  CHILD: while ( $childIX <= $#$children ) {
+        my $element = $children->[$childIX];
+        my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
+
+        if ( $elementColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "element %d %s; %s",
+              ( $childIX / 2 ) + 1,
+              describeLC( $elementLine, $elementColumn ),
+              describeMisindent( $elementColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $elementLine,
+                column         => $elementColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+
+        $childIX++;
+        last CHILD unless $childIX <= $#$children;
+        my $elementGap = $children->[$childIX];
+        my ( $elementGapLine, $elementGapColumn ) = $instance->nodeLC($elementGap);
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $elementGap, $expectedColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "element %d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [$elementGapLine],
+                  };
+            }
+        }
+
+        $childIX++;
+    }
+
+    return \@mistakes;
+}
+
 sub checkFordHoopSeq {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -3379,7 +3674,14 @@ sub validate_node {
                     last TYPE_INDENT;
                 }
 
-                if ( $lhsName eq "fordHoopSeq" ) {
+                if ( $lhsName eq 'fordFascomElements' ) {
+                    $mistakes = $policy->checkFascomElements($node);
+                    last TYPE_INDENT if @{$mistakes};
+                    $indentDesc = 'FASCOM ELEMENTS';
+                    last TYPE_INDENT;
+                }
+
+                if ( $lhsName eq 'fordHoopSeq' ) {
                     $mistakes = $policy->checkFordHoopSeq($node);
                     last TYPE_INDENT if @{$mistakes};
                     $indentDesc = 'FORD_HOOP_SEQ';
@@ -3436,6 +3738,13 @@ sub validate_node {
                 $mistakes = $policy->checkBonzElement($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'BARCAB';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "fordFascom" ) {
+                $mistakes = $policy->checkFascom($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
             }
 
