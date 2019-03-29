@@ -664,30 +664,6 @@ sub checkJoinedFascom {
     my $expectedColumn = $runeColumn + 4;
     my $expectedLine   = $runeLine + 1;
 
-    # Initial runsteps are on the rune line,
-    # separated by one stop
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $bodyGap, $runeColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "joined Fascom %s; %s",
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $runeLine,
-                parentColumn => $runeColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [ $bodyLine, $runeLine ],
-              };
-        }
-    }
-
     if ( $bodyColumn != $expectedColumn ) {
         my $msg = sprintf
           "joined Fascom %s; %s",
@@ -770,6 +746,8 @@ sub checkFascomElements {
     my $instance = $policy->{lint};
     my $children = $node->{children};
 
+    my $rune = $instance->ancestorByBrickName( $node, 'fordFascom' );
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
     my @mistakes = ();
@@ -794,6 +772,7 @@ sub checkFascomElements {
                 line           => $elementLine,
                 column         => $elementColumn,
                 expectedColumn => $expectedColumn,
+		topicLines => [ $runeLine ],
               };
         }
 
@@ -802,7 +781,7 @@ sub checkFascomElements {
         my $elementGap = $children->[$childIX];
         my ( $elementGapLine, $elementGapColumn ) = $instance->nodeLC($elementGap);
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $elementGap, $expectedColumn ) } )
+            @{ $policy->isOneLineGap( $elementGap, $runeColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -820,7 +799,7 @@ sub checkFascomElements {
                     parentColumn => $parentColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [$elementGapLine],
+		    topicLines => [ $runeLine ],
                   };
             }
         }
