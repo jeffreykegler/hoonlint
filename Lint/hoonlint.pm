@@ -806,11 +806,11 @@ EOS
     tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
-    $NYI_Rule{$_} = 1 for qw(tallCencolMold tallDotket tallTissig);
+    $NYI_Rule{$_} = 1 for qw(tallCencolMold tallDotket);
     # Will include:
     # CencolMold
     # Dotket Semcol Semsig Tissig
-    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallSemcol tallSemsig );
+    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallSemcol tallSemsig tallTissig);
     $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
 
     my %tall_1JoggingRule =

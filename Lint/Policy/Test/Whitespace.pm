@@ -166,19 +166,60 @@ sub i_isOneLineGap {
             }
         ];
     }
+
+  my $stairTread; # boolean, initially FALSE
+
   LINE: for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
         my $literalLine = $instance->literalLine($lineNum);
-        if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
-            my $commentOffset = $LAST_MATCH_START[1];
-            if ( $commentOffset != $expectedColumn ) {
-                push @mistakes,
-                  {
-                    msg => "comment "
-                      . describeMisindent( $commentOffset, $expectedColumn ),
-                    line   => $lineNum,
-                    column => $commentOffset,
-                  };
+	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
+
+	my $commentOffset;
+
+      CHECK_FOR_STAIRCASE: {
+            last CHECK_FOR_STAIRCASE if $stairTread;
+            last CHECK_FOR_STAIRCASE
+              unless $literalLine =~ m/^ [ ]* ([:][:][:][:]) /x;
+	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
+            $commentOffset = $LAST_MATCH_START[1];
+	    # say STDERR join " ", __FILE__, __LINE__, $commentOffset, $expectedColumn;
+            last CHECK_FOR_STAIRCASE if $commentOffset != $expectedColumn;
+	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
+	    # say STDERR join " ", __FILE__, __LINE__, 'length literal line', length $literalLine;
+	    # say STDERR join " ", __FILE__, __LINE__, 'comment offset', $commentOffset;
+            if ( length $literalLine > $commentOffset + 4 ) {
+                my $nextChar = substr $literalLine, $commentOffset + 4, 1;
+	    # say STDERR join "!", __FILE__, __LINE__, $nextChar, $literalLine;
+                last CHECK_FOR_STAIRCASE if $nextChar !~ m/[ \n]/xms;
             }
+	    # say STDERR join " ", __FILE__, __LINE__, $expectedColumn;
+
+	    # Peek ahead to make sure this really is a staircase
+	    my $nextLiteralLine = $instance->literalLine($lineNum+1);
+	    # say STDERR join "!", __FILE__, __LINE__, '[' . $nextLiteralLine . ']';
+	    my $wantedPrefix = (q{ } x ($commentOffset + 2)) . q{::};
+	    my $actualPrefix = substr $nextLiteralLine, 0, length $wantedPrefix;
+	    # say STDERR join "!", __FILE__, __LINE__, '[' . $wantedPrefix . ']';
+	    # say STDERR join "!", __FILE__, __LINE__, '[' . $actualPrefix . ']';
+	    last CHECK_FOR_STAIRCASE if $wantedPrefix ne $actualPrefix;
+            $stairTread = $lineNum;
+            $expectedColumn += 2;
+            next LINE;
+        }
+
+        if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
+            $commentOffset = $LAST_MATCH_START[1];
+            next LINE if $commentOffset == $expectedColumn;
+        }
+
+        if ( defined $commentOffset and $commentOffset != $expectedColumn ) {
+	    my $desc = $stairTread ? "staircase comment" : "comment";
+            push @mistakes,
+              {
+                msg => "$desc "
+                  . describeMisindent( $commentOffset, $expectedColumn ),
+                line   => $lineNum,
+                column => $commentOffset,
+              };
             next LINE;
         }
 
@@ -199,6 +240,7 @@ sub i_isOneLineGap {
           };
 
     }
+
     return \@mistakes;
 }
 
