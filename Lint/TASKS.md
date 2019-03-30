@@ -54,7 +54,7 @@ be manually reviewed before being submitted.
 
 ## Move on to hoonfmt
 
-What has been learned from the `hoonlint` effort
+With what has been learned from the `hoonlint` effort,
 creation of a spec for `hoonfmt` should be straightforward.
 I hope the implementation of `hoonfmt` will,
 if tedious at some points,
