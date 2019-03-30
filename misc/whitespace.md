@@ -72,6 +72,47 @@ A rightside comment is an **inline comment** if it is not a margin comment.
 Inline comments must be aligned according to a scheme yet to be
 investigated.
 
+### Staircase comments
+
+Informally, staircase comments take the form
+
+```
+::
+::
+::::
+  ::
+  ::
+```
+
+More formally, a staircase comment consists of an
+**upper riser**,
+a **tread**,
+and a **lower riser**.
+The upper riser is a sequence of normal comment lines,
+aligned at the anchor column.
+The tread is four colons, aligned at the anchor
+column and followed by a whitespace character.
+The lower riser is a sequence of normal comment lines,
+aligned at the column
+one stop greater than the anchor column.
+
+For `hoonlint` purposes, it is useful to distinquish
+between malintended staircase comments,
+and malindented normal comments.
+Informally, a comment is a staircase comment
+if it contains a tread and the first line of the
+lower riser.
+More formally,
+a sequence of comment lines is consider a staircase comment
+if
+
+* it contains a tread, properly aligned and followed by
+a whitespace character; and
+
+* the line immediately after the tread is 
+a comment aligned at the column one stop greater
+than the anchor column.
+
 ### Gaps
 
 A **newline-equivalent gap** is a gap containing which contains only one
