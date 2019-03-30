@@ -49,7 +49,8 @@ corpus.
 At this point, we want to settle which sections
 of the corpus to target initially.
 I think that the listings in the PR should,
-for the sake among other reasons,
+for the sake of courtesy
+among other reasons,
 be manually reviewed before being submitted.
 
 ## Move on to hoonfmt
