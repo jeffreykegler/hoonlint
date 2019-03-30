@@ -36,7 +36,7 @@ the whitespace conventions enforced by `hoonlint`,
 but I've allowed it to fall behind in some respects.
 For example, the concepts behind re-anchoring have
 yet to be fully discovered,
-and therefore the definitionn of anchor column
+and therefore the definition of anchor column
 is not complete.
 
 ## Prepare for PRs
