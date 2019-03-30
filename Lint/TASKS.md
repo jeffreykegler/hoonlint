@@ -1,9 +1,9 @@
-= HOONLINT TASKS
+# HOONLINT TASKS
 
 This is a (subject to revision) plan for work on `hoonlint` and
 `hoonfmt`.
 
-== Eliminate "not yet implemented" syntax.
+## Eliminate "not yet implemented" syntax.
 
 Finish implementing all the hoon syntax represented in
 the `arvo/` corpus.
@@ -11,7 +11,7 @@ At this point the unsettled issues are
 down to cases where the count of instances in the corpus is
 in the single digits.
 
-== Eliminate spurious warnings
+## Eliminate spurious warnings
 
 With the full implementation of the hoon syntax,
 remaining problems should be mostly spurious warnings,
@@ -21,7 +21,7 @@ We can perhaps reduce this to about 1000.
 The corpus is 62205 lines, so this is
 less than one per printed page of code.
 
-== Packaging: Make hoonlint a Perl module
+## Packaging: Make hoonlint a Perl module
 
 At this point, `hoonlint` should be converted to
 a Perl module,
@@ -29,7 +29,7 @@ with its own Github repo
 and its own test suite.
 It should also be documented.
 
-== Packaging: Document whitespace conventions
+## Packaging: Document whitespace conventions
 
 I have been updating a document formally describing
 the whitespace conventions enforced by `hoonlint`,
@@ -39,7 +39,7 @@ yet to be fully discovered,
 and therefore the definitionn of anchor column
 is not complete.
 
-== Prepare for PRs
+## Prepare for PRs
 
 Once packaging is ready,
 we are ready to create PRs containing `hoonlint`
