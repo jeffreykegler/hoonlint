@@ -3712,6 +3712,10 @@ sub validate_node {
                 my $grandParent = $instance->ancestor( $node, 1 );
                 my $grandParentName = $instance->brickName($grandParent);
                 if ( $lhsName eq 'tall5dSeq' or $lhsName eq 'till5dSeq' ) {
+                    if ( $grandParentName eq 'lute5d' ) {
+                        $indentDesc = 'LUTE';
+                        last TYPE_INDENT;
+                    }
                     if ( $tall_1RunningRule->{$grandParentName} ) {
                         $indentDesc = '1-RUNNING';
                         last TYPE_INDENT;
