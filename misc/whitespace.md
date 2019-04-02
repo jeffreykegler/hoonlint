@@ -510,6 +510,14 @@ as their anchor column.
 Technically, this is not an exception because, pedantically,
 LUSLUS, LUSHEP and LUSTIS are not runes.
 
+### Lutes
+
+Only one-line lutes occur in the `arvo/` corpus.
+One-line lutes are free-form -- `hoonlint` never generates
+a warning for them.
+If `hoonlint` encounters a multi-line lute,
+it issues a "not yet implemented" warning.
+
 ## Appendix: Non-standard code
 
 For linting purposes, it is necessary to decide the intended
