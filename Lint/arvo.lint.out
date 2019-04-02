@@ -3630,8 +3630,6 @@ hoons/arvo/mar/unicode-data.hoon 1:1 Test::Whitespace optFordFashep Fashep body 
 hoons/arvo/mar/static/action.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:5 is underindented by 2
 hoons/arvo/mar/static/action.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:5 is underindented by 2
 === hoons/arvo/web/unmark/test.hoon ===
-hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallKidsOfTop NYI [tallKidsOfTop] @6:6-7:2 tallKidsOfTop GAP CRAM
-hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallKidsOfTop NYI [tallKidsOfTop] @8:2-9:2 tallKidsOfTop GAP CRAM
 === hoons/arvo/web/unmark/all.hoon ===
 hoons/arvo/web/unmark/all.hoon 7:1 Test::Whitespace fordFastis cell symbol @7:7; overindented by 2
 hoons/arvo/web/unmark/all.hoon 9:3 Test::Whitespace fordFascol NYI [fordFascol] @9:2-16:11 fordFascol FAS COL GAP fordHive GAP horn

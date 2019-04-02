@@ -244,6 +244,76 @@ sub i_isOneLineGap {
     return \@mistakes;
 }
 
+# assumes this is a <tallAttributes> node
+sub sailAttributeBodyAlignment {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+    my $firstBodyColumn;
+    my %firstLine       = ();
+    my %bodyColumnCount = ();
+
+    # Traverse first to last to make it easy to record
+    # first line of occurrence of each body column
+  CHILD:
+    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+        my $attribute = $children->[$childIX];
+        my ( undef, $head, $gap,      $body )       = @{ $policy->gapSeq0($attribute) };
+        my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+        my $gapLength = $gap->{length};
+        $firstBodyColumn = $bodyColumn
+          if not defined $firstBodyColumn;
+        next CHILD unless $headLine == $bodyLine;
+        next CHILD unless $gap > 2;
+        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
+        $firstLine{$bodyColumn}       = $bodyLine;
+    }
+    my @bodyColumns = keys %bodyColumnCount;
+
+    # If no aligned columns, simply return first
+    return $firstBodyColumn if not @bodyColumns;
+
+    my @sortedBodyColumns =
+      sort {
+             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
+          or $firstLine{$b} <=> $firstLine{$a}
+      }
+      keys %bodyColumnCount;
+    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
+    return $topBodyColumn;
+}
+
+sub sailAttributeBodyColumn {
+    my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
+    my $attributeBodyColumn =
+      $policy->{perNode}->{$nodeIX}->{attributeBodyColumn};
+    return $attributeBodyColumn if defined $attributeBodyColumn;
+
+    my $instance = $policy->{lint};
+    my $nodeName = $instance->brickName($node);
+    if ( not $nodeName or not $nodeName eq 'optTallAttrs' ) {
+        my $attributeBodyColumn =
+          $policy->attributeBodyColumn( $node->{PARENT} );
+        $policy->{perNode}->{$nodeIX}->{attributeBodyColumn} =
+          $attributeBodyColumn;
+        return $attributeBodyColumn;
+    }
+
+    my $children = $node->{children};
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        next CHILD if $symbol ne 'tallAttributes';
+        my $attributeBodyColumn = $policy->attributeBodyAlignment($child);
+        $policy->{perNode}->{$nodeIX}->{attributeBodyColumn} =
+          $attributeBodyColumn;
+        return $attributeBodyColumn;
+    }
+    die "No jogging found for ", $instance->symbol($node);
+}
+
 sub checkTailOfElem {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
@@ -476,6 +546,70 @@ sub checkTopSail {
         my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
         $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'Top Sail body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedColumn );
+	  ;
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+
+    return \@mistakes;
+}
+
+sub checkTopKids {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $grammar  = $instance->{grammar};
+    my $ruleID   = $node->{ruleID};
+
+    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            last BODY_ISSUES if $instance->symbol($body) eq 'CRAM';
+            my $msg = join " ",
+              (
+                sprintf 'Sail kids body %s; must be on rune line',
+                describeLC( $bodyLine, $bodyColumn )
+              ),
+              ( map { $grammar->symbol_display_form($_) }
+                  $grammar->rule_expand($ruleID) );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+              };
+            last BODY_ISSUES;
+        }
+
+        # If here, bodyLine == parentLine
+        my $gapLiteral = $instance->literalNode($bodyGap);
+        my $gapLength  = $bodyGap->{length};
+        last BODY_ISSUES if $gapLength == 2;
+        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $bodyGapColumn + $expectedLength;
+        my $msg = sprintf 'Sail kids body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
           describeMisindent( $bodyColumn, $expectedColumn );
 	  ;
@@ -3926,6 +4060,13 @@ sub validate_node {
 
             if ( $lhsName eq 'tallTailOfTop' ) {
                 $mistakes = $policy->checkTailOfTop($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = $lhsName;
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallKidsOfTop" ) {
+                $mistakes = $policy->checkTopKids($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = $lhsName;
                 last TYPE_INDENT;

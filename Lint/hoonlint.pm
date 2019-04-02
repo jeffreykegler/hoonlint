@@ -363,31 +363,33 @@ sub reportItem {
 
 }
 
+sub lhsName {
+    my ( $instance, $node ) = @_;
+    my $grammar = $instance->{grammar};
+    my $type = $node->{type};
+    return if $type ne 'node';
+    my $ruleID = $node->{ruleID};
+    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
+    return $grammar->symbol_name($lhs);
+}
+
 # The "symbol" of a node.  Not necessarily unique.
 sub symbol {
     my ( $instance, $node ) = @_;
-    my $grammar = $instance->{grammar};
     my $name    = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
     die Data::Dumper::Dumper($node) if not $type;
-    if ( $type eq 'node' ) {
-        my $ruleID = $node->{ruleID};
-        my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-        return $grammar->symbol_name($lhs);
-    }
+    return $instance->lhsName($node) if $type eq 'node';
     return "[$type]";
 }
 
 # Can be used as test of "brick-ness"
 sub brickName {
     my ( $instance, $node ) = @_;
-    my $grammar = $instance->{grammar};
     my $type    = $node->{type};
     return symbol($node) if $type ne 'node';
-    my $ruleID = $node->{ruleID};
-    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-    my $lhsName = $grammar->symbol_name($lhs);
+    my $lhsName = $instance->lhsName($node);
     return $lhsName if not $instance->{mortarLHS}->{$lhsName};
     return;
 }
@@ -404,13 +406,10 @@ sub diagName {
 # The "name" of a node.  Not necessarily unique
 sub name {
     my ( $instance, $node ) = @_;
-    my $grammar = $instance->{grammar};
     my $type    = $node->{type};
     my $symbol  = $instance->symbol($node);
     return $symbol if $type ne 'node';
-    my $ruleID = $node->{ruleID};
-    my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
-    return $symbol;
+    return $instance->lhsName($node);
 }
 
 # Determine how many spaces we need.
@@ -529,6 +528,17 @@ sub ancestorByBrickName {
     my $thisNode = $node;
   PARENT: while ($thisNode) {
         my $thisName = $instance->brickName($thisNode);
+        return $thisNode if defined $thisName and $thisName eq $name;
+        $thisNode = $thisNode->{PARENT};
+    }
+    return;
+}
+
+sub ancestorByLHS {
+    my ( $instance, $node, $name ) = @_;
+    my $thisNode = $node;
+  PARENT: while ($thisNode) {
+        my $thisName = $instance->lhsName($thisNode);
         return $thisNode if defined $thisName and $thisName eq $name;
         $thisNode = $thisNode->{PARENT};
     }
