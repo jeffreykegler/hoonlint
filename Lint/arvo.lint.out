@@ -60,188 +60,6 @@ hoons/arvo/sur/twitter.hoon 34:53 Test::Whitespace tallBucwut joined 0-running r
 hoons/arvo/sur/twitter.hoon 34:53 Test::Whitespace tallBucwut joined 0-running runstep #22 @34:53; overindented by 40
 hoons/arvo/sur/twitter.hoon 36:5 Test::Whitespace tallBarcen split Barcen battery @37:7; overindented by 2
 hoons/arvo/sur/twitter.hoon 37:7 Test::Whitespace tallBarcen battery hephep @59:5; underindented by 2
-hoons/arvo/sur/twitter.hoon 85:7 Test::Whitespace lute5d NYI [lute5d] @85:6-76 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 85:10 Test::Whitespace lute5d NYI [tall5dSeq] @85:9-73 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 86:7 Test::Whitespace lute5d NYI [lute5d] @86:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 86:10 Test::Whitespace lute5d NYI [tall5dSeq] @86:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 87:7 Test::Whitespace lute5d NYI [lute5d] @87:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 87:10 Test::Whitespace lute5d NYI [tall5dSeq] @87:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 88:7 Test::Whitespace lute5d NYI [lute5d] @88:6-73 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 88:10 Test::Whitespace lute5d NYI [tall5dSeq] @88:9-70 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 89:7 Test::Whitespace lute5d NYI [lute5d] @89:6-73 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 89:10 Test::Whitespace lute5d NYI [tall5dSeq] @89:9-70 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 90:7 Test::Whitespace lute5d NYI [lute5d] @90:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 90:10 Test::Whitespace lute5d NYI [tall5dSeq] @90:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 91:7 Test::Whitespace lute5d NYI [lute5d] @91:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 91:10 Test::Whitespace lute5d NYI [tall5dSeq] @91:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 92:7 Test::Whitespace lute5d NYI [lute5d] @92:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 92:10 Test::Whitespace lute5d NYI [tall5dSeq] @92:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 93:7 Test::Whitespace lute5d NYI [lute5d] @93:6-65 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 93:10 Test::Whitespace lute5d NYI [tall5dSeq] @93:9-62 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 94:7 Test::Whitespace lute5d NYI [lute5d] @94:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 94:10 Test::Whitespace lute5d NYI [tall5dSeq] @94:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 95:7 Test::Whitespace lute5d NYI [lute5d] @95:6-74 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 95:10 Test::Whitespace lute5d NYI [tall5dSeq] @95:9-71 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 97:7 Test::Whitespace lute5d NYI [lute5d] @97:6-65 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 97:10 Test::Whitespace lute5d NYI [tall5dSeq] @97:9-62 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 98:7 Test::Whitespace lute5d NYI [lute5d] @98:6-65 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 98:10 Test::Whitespace lute5d NYI [tall5dSeq] @98:9-62 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 99:7 Test::Whitespace lute5d NYI [lute5d] @99:6-73 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 99:10 Test::Whitespace lute5d NYI [tall5dSeq] @99:9-70 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 100:7 Test::Whitespace lute5d NYI [lute5d] @100:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 100:10 Test::Whitespace lute5d NYI [tall5dSeq] @100:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 101:7 Test::Whitespace lute5d NYI [lute5d] @101:6-65 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 101:10 Test::Whitespace lute5d NYI [tall5dSeq] @101:9-62 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 102:7 Test::Whitespace lute5d NYI [lute5d] @102:6-70 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 102:10 Test::Whitespace lute5d NYI [tall5dSeq] @102:9-67 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 103:7 Test::Whitespace lute5d NYI [lute5d] @103:6-70 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 103:10 Test::Whitespace lute5d NYI [tall5dSeq] @103:9-67 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 104:7 Test::Whitespace lute5d NYI [lute5d] @104:6-73 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 104:10 Test::Whitespace lute5d NYI [tall5dSeq] @104:9-70 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 105:7 Test::Whitespace lute5d NYI [lute5d] @105:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 105:10 Test::Whitespace lute5d NYI [tall5dSeq] @105:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 107:7 Test::Whitespace lute5d NYI [lute5d] @107:6-77 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 107:10 Test::Whitespace lute5d NYI [tall5dSeq] @107:9-74 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 108:7 Test::Whitespace lute5d NYI [lute5d] @108:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 108:10 Test::Whitespace lute5d NYI [tall5dSeq] @108:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 109:7 Test::Whitespace lute5d NYI [lute5d] @109:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 109:10 Test::Whitespace lute5d NYI [tall5dSeq] @109:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 110:7 Test::Whitespace lute5d NYI [lute5d] @110:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 110:10 Test::Whitespace lute5d NYI [tall5dSeq] @110:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 111:7 Test::Whitespace lute5d NYI [lute5d] @111:6-61 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 111:10 Test::Whitespace lute5d NYI [tall5dSeq] @111:9-58 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 112:7 Test::Whitespace lute5d NYI [lute5d] @112:6-70 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 112:10 Test::Whitespace lute5d NYI [tall5dSeq] @112:9-67 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 113:7 Test::Whitespace lute5d NYI [lute5d] @113:6-70 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 113:10 Test::Whitespace lute5d NYI [tall5dSeq] @113:9-67 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 114:7 Test::Whitespace lute5d NYI [lute5d] @114:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 114:10 Test::Whitespace lute5d NYI [tall5dSeq] @114:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 115:7 Test::Whitespace lute5d NYI [lute5d] @115:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 115:10 Test::Whitespace lute5d NYI [tall5dSeq] @115:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 116:7 Test::Whitespace lute5d NYI [lute5d] @116:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 116:10 Test::Whitespace lute5d NYI [tall5dSeq] @116:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 117:7 Test::Whitespace lute5d NYI [lute5d] @117:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 117:10 Test::Whitespace lute5d NYI [tall5dSeq] @117:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 121:7 Test::Whitespace lute5d NYI [lute5d] @121:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 121:10 Test::Whitespace lute5d NYI [tall5dSeq] @121:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 122:7 Test::Whitespace lute5d NYI [lute5d] @122:6-76 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 122:10 Test::Whitespace lute5d NYI [tall5dSeq] @122:9-73 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 123:7 Test::Whitespace lute5d NYI [lute5d] @123:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 123:10 Test::Whitespace lute5d NYI [tall5dSeq] @123:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 124:7 Test::Whitespace lute5d NYI [lute5d] @124:6-80 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 124:10 Test::Whitespace lute5d NYI [tall5dSeq] @124:9-77 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 125:7 Test::Whitespace lute5d NYI [lute5d] @125:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 125:10 Test::Whitespace lute5d NYI [tall5dSeq] @125:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 126:7 Test::Whitespace lute5d NYI [lute5d] @126:6-79 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 126:10 Test::Whitespace lute5d NYI [tall5dSeq] @126:9-76 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 127:7 Test::Whitespace lute5d NYI [lute5d] @127:6-79 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 127:10 Test::Whitespace lute5d NYI [tall5dSeq] @127:9-76 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 131:7 Test::Whitespace lute5d NYI [lute5d] @131:6-61 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 131:10 Test::Whitespace lute5d NYI [tall5dSeq] @131:9-58 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 132:7 Test::Whitespace lute5d NYI [lute5d] @132:6-60 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 132:10 Test::Whitespace lute5d NYI [tall5dSeq] @132:9-57 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 133:7 Test::Whitespace lute5d NYI [lute5d] @133:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 133:10 Test::Whitespace lute5d NYI [tall5dSeq] @133:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 134:7 Test::Whitespace lute5d NYI [lute5d] @134:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 134:10 Test::Whitespace lute5d NYI [tall5dSeq] @134:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 136:7 Test::Whitespace lute5d NYI [lute5d] @136:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 136:10 Test::Whitespace lute5d NYI [tall5dSeq] @136:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 137:7 Test::Whitespace lute5d NYI [lute5d] @137:6-60 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 137:10 Test::Whitespace lute5d NYI [tall5dSeq] @137:9-57 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 138:7 Test::Whitespace lute5d NYI [lute5d] @138:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 138:10 Test::Whitespace lute5d NYI [tall5dSeq] @138:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 139:7 Test::Whitespace lute5d NYI [lute5d] @139:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 139:10 Test::Whitespace lute5d NYI [tall5dSeq] @139:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 140:7 Test::Whitespace lute5d NYI [lute5d] @140:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 140:10 Test::Whitespace lute5d NYI [tall5dSeq] @140:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 141:7 Test::Whitespace lute5d NYI [lute5d] @141:6-70 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 141:10 Test::Whitespace lute5d NYI [tall5dSeq] @141:9-67 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 143:7 Test::Whitespace lute5d NYI [lute5d] @143:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 143:10 Test::Whitespace lute5d NYI [tall5dSeq] @143:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 144:7 Test::Whitespace lute5d NYI [lute5d] @144:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 144:10 Test::Whitespace lute5d NYI [tall5dSeq] @144:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 145:7 Test::Whitespace lute5d NYI [lute5d] @145:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 145:10 Test::Whitespace lute5d NYI [tall5dSeq] @145:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 146:7 Test::Whitespace lute5d NYI [lute5d] @146:6-65 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 146:10 Test::Whitespace lute5d NYI [tall5dSeq] @146:9-62 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 148:7 Test::Whitespace lute5d NYI [lute5d] @148:6-67 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 148:10 Test::Whitespace lute5d NYI [tall5dSeq] @148:9-64 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 149:7 Test::Whitespace lute5d NYI [lute5d] @149:6-75 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 149:10 Test::Whitespace lute5d NYI [tall5dSeq] @149:9-72 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 153:7 Test::Whitespace lute5d NYI [lute5d] @153:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 153:10 Test::Whitespace lute5d NYI [tall5dSeq] @153:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 154:7 Test::Whitespace lute5d NYI [lute5d] @154:6-67 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 154:10 Test::Whitespace lute5d NYI [tall5dSeq] @154:9-64 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 155:7 Test::Whitespace lute5d NYI [lute5d] @155:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 155:10 Test::Whitespace lute5d NYI [tall5dSeq] @155:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 157:7 Test::Whitespace lute5d NYI [lute5d] @157:6-60 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 157:10 Test::Whitespace lute5d NYI [tall5dSeq] @157:9-57 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 158:7 Test::Whitespace lute5d NYI [lute5d] @158:6-67 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 158:10 Test::Whitespace lute5d NYI [tall5dSeq] @158:9-64 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 159:7 Test::Whitespace lute5d NYI [lute5d] @159:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 159:10 Test::Whitespace lute5d NYI [tall5dSeq] @159:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 160:7 Test::Whitespace lute5d NYI [lute5d] @160:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 160:10 Test::Whitespace lute5d NYI [tall5dSeq] @160:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 161:7 Test::Whitespace lute5d NYI [lute5d] @161:6-60 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 161:10 Test::Whitespace lute5d NYI [tall5dSeq] @161:9-57 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 162:7 Test::Whitespace lute5d NYI [lute5d] @162:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 162:10 Test::Whitespace lute5d NYI [tall5dSeq] @162:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 163:7 Test::Whitespace lute5d NYI [lute5d] @163:6-75 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 163:10 Test::Whitespace lute5d NYI [tall5dSeq] @163:9-72 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 164:7 Test::Whitespace lute5d NYI [lute5d] @164:6-67 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 164:10 Test::Whitespace lute5d NYI [tall5dSeq] @164:9-64 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 165:7 Test::Whitespace lute5d NYI [lute5d] @165:6-74 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 165:10 Test::Whitespace lute5d NYI [tall5dSeq] @165:9-71 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 166:7 Test::Whitespace lute5d NYI [lute5d] @166:6-75 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 166:10 Test::Whitespace lute5d NYI [tall5dSeq] @166:9-72 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 167:7 Test::Whitespace lute5d NYI [lute5d] @167:6-72 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 167:10 Test::Whitespace lute5d NYI [tall5dSeq] @167:9-69 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 168:7 Test::Whitespace lute5d NYI [lute5d] @168:6-74 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 168:10 Test::Whitespace lute5d NYI [tall5dSeq] @168:9-71 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 169:7 Test::Whitespace lute5d NYI [lute5d] @169:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 169:10 Test::Whitespace lute5d NYI [tall5dSeq] @169:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 170:7 Test::Whitespace lute5d NYI [lute5d] @170:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 170:10 Test::Whitespace lute5d NYI [tall5dSeq] @170:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 171:7 Test::Whitespace lute5d NYI [lute5d] @171:6-63 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 171:10 Test::Whitespace lute5d NYI [tall5dSeq] @171:9-60 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 172:7 Test::Whitespace lute5d NYI [lute5d] @172:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 172:10 Test::Whitespace lute5d NYI [tall5dSeq] @172:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 173:7 Test::Whitespace lute5d NYI [lute5d] @173:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 173:10 Test::Whitespace lute5d NYI [tall5dSeq] @173:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 175:7 Test::Whitespace lute5d NYI [lute5d] @175:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 175:10 Test::Whitespace lute5d NYI [tall5dSeq] @175:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 176:7 Test::Whitespace lute5d NYI [lute5d] @176:6-75 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 176:10 Test::Whitespace lute5d NYI [tall5dSeq] @176:9-72 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 177:7 Test::Whitespace lute5d NYI [lute5d] @177:6-71 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 177:10 Test::Whitespace lute5d NYI [tall5dSeq] @177:9-68 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 178:7 Test::Whitespace lute5d NYI [lute5d] @178:6-78 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 178:10 Test::Whitespace lute5d NYI [tall5dSeq] @178:9-75 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 180:7 Test::Whitespace lute5d NYI [lute5d] @180:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 180:10 Test::Whitespace lute5d NYI [tall5dSeq] @180:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 181:7 Test::Whitespace lute5d NYI [lute5d] @181:6-69 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 181:10 Test::Whitespace lute5d NYI [tall5dSeq] @181:9-66 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 182:7 Test::Whitespace lute5d NYI [lute5d] @182:6-60 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 182:10 Test::Whitespace lute5d NYI [tall5dSeq] @182:9-57 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 183:7 Test::Whitespace lute5d NYI [lute5d] @183:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 183:10 Test::Whitespace lute5d NYI [tall5dSeq] @183:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 184:7 Test::Whitespace lute5d NYI [lute5d] @184:6-66 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 184:10 Test::Whitespace lute5d NYI [tall5dSeq] @184:9-63 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 185:7 Test::Whitespace lute5d NYI [lute5d] @185:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 185:10 Test::Whitespace lute5d NYI [tall5dSeq] @185:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 186:7 Test::Whitespace lute5d NYI [lute5d] @186:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 186:10 Test::Whitespace lute5d NYI [tall5dSeq] @186:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 188:7 Test::Whitespace lute5d NYI [lute5d] @188:6-67 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 188:10 Test::Whitespace lute5d NYI [tall5dSeq] @188:9-64 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 189:7 Test::Whitespace lute5d NYI [lute5d] @189:6-68 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 189:10 Test::Whitespace lute5d NYI [tall5dSeq] @189:9-65 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 190:7 Test::Whitespace lute5d NYI [lute5d] @190:6-64 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 190:10 Test::Whitespace lute5d NYI [tall5dSeq] @190:9-61 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 191:7 Test::Whitespace lute5d NYI [lute5d] @191:6-62 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 191:10 Test::Whitespace lute5d NYI [tall5dSeq] @191:9-59 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 192:7 Test::Whitespace lute5d NYI [lute5d] @192:6-58 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 192:10 Test::Whitespace lute5d NYI [tall5dSeq] @192:9-55 tall5dSeq tall5d
-hoons/arvo/sur/twitter.hoon 193:7 Test::Whitespace lute5d NYI [lute5d] @193:6-79 lute5d SEL GAP tall5dSeq GAP SER
-hoons/arvo/sur/twitter.hoon 193:10 Test::Whitespace lute5d NYI [tall5dSeq] @193:9-76 tall5dSeq tall5d
 === hoons/arvo/sur/rfc.hoon ===
 === hoons/arvo/sur/markdown.hoon ===
 === hoons/arvo/sur/unicode-data.hoon ===
@@ -1580,9 +1398,7 @@ hoons/arvo/sys/vane/eyre.hoon 57:11 Test::Whitespace tallBuccolMold joined 0-run
 hoons/arvo/sys/vane/eyre.hoon 86:1 Test::Whitespace tallTissig 1-running runstep #1 @86:1; underindented by 6
 hoons/arvo/sys/vane/eyre.hoon 176:1 Test::Whitespace tallTissig 1-running runstep #2 @176:1; underindented by 6
 hoons/arvo/sys/vane/eyre.hoon 212:15 Test::Whitespace tallColhep backdented element #2 @213:3; underindented by 12
-hoons/arvo/sys/vane/eyre.hoon 517:7 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @517:6-563:6 tallTailOfTop tallKidsOfTop GAP TIS TIS
-hoons/arvo/sys/vane/eyre.hoon 567:7 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @567:6-577:8 tallTailOfTop tallKidsOfTop GAP TIS TIS
-hoons/arvo/sys/vane/eyre.hoon 581:7 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @581:6-591:6 tallTailOfTop tallKidsOfTop GAP TIS TIS
+hoons/arvo/sys/vane/eyre.hoon 567:7 Test::Whitespace tallTailOfTop TISTIS @577:7; overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 610:1 Test::Whitespace tallTissig 1-running runstep #3 @610:1; underindented by 6
 hoons/arvo/sys/vane/eyre.hoon 720:9 Test::Whitespace tallWutdot backdented element #2 @721:10; underindented by 1
 hoons/arvo/sys/vane/eyre.hoon 797:7 Test::Whitespace tallWutlus 2-jogging kingside head @797:13; overindented by 2
@@ -3814,9 +3630,7 @@ hoons/arvo/mar/unicode-data.hoon 1:1 Test::Whitespace optFordFashep Fashep body 
 hoons/arvo/mar/static/action.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:5 is underindented by 2
 hoons/arvo/mar/static/action.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:5 is underindented by 2
 === hoons/arvo/web/unmark/test.hoon ===
-hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @6:6-7:6 tallTailOfTop tallKidsOfTop GAP TIS TIS
 hoons/arvo/web/unmark/test.hoon 6:7 Test::Whitespace tallKidsOfTop NYI [tallKidsOfTop] @6:6-7:2 tallKidsOfTop GAP CRAM
-hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @8:2-9:2 tallTailOfTop tallKidsOfTop GAP TIS TIS
 hoons/arvo/web/unmark/test.hoon 8:3 Test::Whitespace tallKidsOfTop NYI [tallKidsOfTop] @8:2-9:2 tallKidsOfTop GAP CRAM
 === hoons/arvo/web/unmark/all.hoon ===
 hoons/arvo/web/unmark/all.hoon 7:1 Test::Whitespace fordFastis cell symbol @7:7; overindented by 2
@@ -3868,7 +3682,6 @@ hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace hornSeq NYI [hornSeq] @6:20-
 hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace fordFascol NYI [fordFascol] @6:20-45 fordFascol FAS COL GAP fordHive GAP horn
 hoons/arvo/ren/tree/body.hoon 6:31 Test::Whitespace fordFascen NYI [fordFascen] @6:30-45 fordFascen FAS CEN GAP horn
 hoons/arvo/ren/tree/body.hoon 7:21 Test::Whitespace fordFassig NYI [fordFassig] @7:20-25 fordFassig FAS SIG GAP tall5d
-hoons/arvo/ren/tree/body.hoon 23:3 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @23:2-25:2 tallTailOfTop tallKidsOfTop GAP TIS TIS
 === hoons/arvo/ren/tree/json.hoon ===
 hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordFastis cell symbol @7:7; overindented by 2
 hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordFastis joined cell body @7:7; overindented by 2
@@ -3918,10 +3731,7 @@ hoons/arvo/ren/tree/head.hoon 19:1 Test::Whitespace fordFastis joined cell body 
 hoons/arvo/ren/tree/head.hoon 19:17 Test::Whitespace fordFascol NYI [fordFascol] @19:16-20:47 fordFascol FAS COL GAP fordHive GAP horn
 hoons/arvo/ren/tree/head.hoon 20:17 Test::Whitespace fordFasket joined backdent element #2 @20:40; overindented by 2
 hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fordFascab NYI [fordFascab] @20:39-47 fordFascab FAS CAB GAP horn
-hoons/arvo/ren/tree/head.hoon 32:3 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @32:2-66:2 tallTailOfTop tallKidsOfTop GAP TIS TIS
-hoons/arvo/ren/tree/head.hoon 38:11 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @38:10-43:10 tallTailOfTop tallKidsOfTop GAP TIS TIS
 hoons/arvo/ren/tree/head.hoon 54:9 Test::Whitespace tallWutdot backdented element #3, @58:1; comment underindented by 8
-hoons/arvo/ren/tree/head.hoon 59:11 Test::Whitespace tallTailOfTop NYI [tallTailOfTop] @59:10-64:10 tallTailOfTop tallKidsOfTop GAP TIS TIS
 === hoons/arvo/ren/tree/combine.hoon ===
 hoons/arvo/ren/tree/combine.hoon 7:1 Test::Whitespace fordFastis cell symbol @7:7; overindented by 2
 hoons/arvo/ren/tree/combine.hoon 7:1 Test::Whitespace fordFastis joined cell body @7:7; overindented by 2

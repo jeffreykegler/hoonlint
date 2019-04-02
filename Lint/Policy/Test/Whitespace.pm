@@ -244,9 +244,7 @@ sub i_isOneLineGap {
     return \@mistakes;
 }
 
-# For rules whose checkable parts consist only of
-# a gap followed by a TISTIS
-sub checkTallTailOfElem {
+sub checkTailOfElem {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -261,6 +259,69 @@ sub checkTallTailOfElem {
     # There is always a SEM before <tallTopSail> and this is our
     # anchor column
     my $expectedColumn = $tallTopSailColumn - 1;
+
+    my @mistakes = ();
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $tistisGap, $expectedColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "TISTIS %s; $gapMistakeMsg",
+              describeLC( $tistisLine, $tistisColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $tistisLine ],
+              };
+        }
+    }
+
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $expectedColumn,
+          };
+    }
+    return \@mistakes;
+}
+
+sub checkTailOfTop {
+    my ( $policy, $node ) = @_;
+    my $instance  = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
+
+    my ( $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+
+    my $tallTopSail = $instance->ancestor($node, 2);
+    my ( $tallTopSailLine, $tallTopSailColumn ) = $instance->nodeLC($tallTopSail);
+    my ( $parentLine,      $parentColumn )      = $instance->nodeLC($node);
+    my ( $tistisLine,      $tistisColumn )      = $instance->nodeLC($tistis);
+
+    my $expectedColumn = $tallTopSailColumn;
 
     my @mistakes = ();
 
@@ -1479,6 +1540,26 @@ sub checkFaswut {
     }
 
     return \@mistakes;
+}
+
+# The only lutes in the arvo/ corpus are one-liners.
+# We treat one-line lutes as free-form -- never any errors.
+# We report "not yet implemented" for multi-line lutes.
+sub checkLute {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # lutes are special, so we need to find the components using low-level
+    # techniques.
+    # lute5d ::= (- SEL GAP -) tall5dSeq (- GAP SER -)
+    my $children = $node->{children};
+    my $sel = $children->[0];
+    my $ser = $children->[-1];
+    my ( $selLine ) = $instance->nodeLC($sel);
+    my ( $serLine ) = $instance->nodeLC($ser);
+    
+    return $instance->isNYI($node) if $selLine != $serLine;
+    return [];
 }
 
 sub checkSplit_0Running {
@@ -3787,6 +3868,13 @@ sub validate_node {
                 last TYPE_INDENT;
 	    }
 
+            if ( $lhsName eq "lute5d" ) {
+                $mistakes = $policy->checkLute($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'LUTE';
+                last TYPE_INDENT;
+	    }
+
             if ( $lhsName eq "optFordFashep" ) {
                 $mistakes = $policy->checkFashep($node);
                 last TYPE_INDENT if @{$mistakes};
@@ -3829,8 +3917,15 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq "tallTailOfElem" ) {
-                $mistakes = $policy->checkTallTailOfElem($node);
+            if ( $lhsName eq 'tallTailOfElem') {
+                $mistakes = $policy->checkTailOfElem($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = $lhsName;
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq 'tallTailOfTop' ) {
+                $mistakes = $policy->checkTailOfTop($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = $lhsName;
                 last TYPE_INDENT;
