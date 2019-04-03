@@ -1144,8 +1144,9 @@ sub checkFascomElements {
     return \@mistakes;
 }
 
-sub checkFordHoopSeq {
-    my ( $policy, $node ) = @_;
+# Check "vanilla" sequence
+sub checkSeq {
+    my ( $policy, $node, $tag ) = @_;
     my $instance = $policy->{lint};
     my $children = $node->{children};
 
@@ -1156,39 +1157,41 @@ sub checkFordHoopSeq {
     my $childIX        = 0;
     my $expectedColumn = $parentColumn;
   CHILD: while ( $childIX <= $#$children ) {
-        my $hoop = $children->[$childIX];
-        my ( $hoopLine, $hoopColumn ) = $instance->nodeLC($hoop);
+        my $element = $children->[$childIX];
+        my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
 
-        if ( $hoopColumn != $expectedColumn ) {
+        if ( $elementColumn != $expectedColumn ) {
             my $msg = sprintf
-              "hoop %d %s; %s",
+              '%s %d %s; %s',
+	      $tag,
               ( $childIX / 2 ) + 1,
-              describeLC( $hoopLine, $hoopColumn ),
-              describeMisindent( $hoopColumn, $expectedColumn );
+              describeLC( $elementLine, $elementColumn ),
+              describeMisindent( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
-                line           => $hoopLine,
-                column         => $hoopColumn,
+                line           => $elementLine,
+                column         => $elementColumn,
                 expectedColumn => $expectedColumn,
               };
         }
 
         $childIX++;
         last CHILD unless $childIX <= $#$children;
-        my $hoopGap = $children->[$childIX];
-        my ( $hoopGapLine, $hoopGapColumn ) = $instance->nodeLC($hoopGap);
+        my $elementGap = $children->[$childIX];
+        my ( $elementGapLine, $elementGapColumn ) = $instance->nodeLC($elementGap);
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $hoopGap, $expectedColumn ) } )
+            @{ $policy->isOneLineGap( $elementGap, $expectedColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
                 my $gapMistakeLine   = $gapMistake->{line};
                 my $gapMistakeColumn = $gapMistake->{column};
                 my $msg              = sprintf
-                  "hoop %d %s; %s",
+                  '%s %d %s; %s',
+		  $tag,
                   ( $childIX / 2 ) + 1,
                   describeLC( $gapMistakeLine, $gapMistakeColumn ),
                   $gapMistakeMsg;
@@ -1199,7 +1202,7 @@ sub checkFordHoopSeq {
                     parentColumn => $parentColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [$hoopGapLine],
+                    topicLines   => [$elementGapLine],
                   };
             }
         }
@@ -1695,6 +1698,57 @@ sub checkFaslus {
     return \@mistakes;
 }
 
+sub checkFassig {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # fordFassig ::= (- FAS SIG GAP -) tall5d
+    my ( undef,      $body )       = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Fassig body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+              };
+            last BODY_ISSUES;
+        }
+        my $expectedBodyColumn = $parentColumn + 4;
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'Fassig body %s is %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+              };
+        }
+        last BODY_ISSUES;
+
+    }
+
+    return \@mistakes;
+}
+
 sub checkFaswut {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -1789,7 +1843,7 @@ sub checkLute {
     my ( $selLine ) = $instance->nodeLC($sel);
     my ( $serLine ) = $instance->nodeLC($ser);
     
-    return $instance->isNYI($node) if $selLine != $serLine;
+    return $instance->checkNYI($node) if $selLine != $serLine;
     return [];
 }
 
@@ -4015,9 +4069,16 @@ sub validate_node {
                 }
 
                 if ( $lhsName eq 'fordHoopSeq' ) {
-                    $mistakes = $policy->checkFordHoopSeq($node);
+                    $mistakes = $policy->checkSeq($node, 'hoop');
                     last TYPE_INDENT if @{$mistakes};
                     $indentDesc = 'FORD_HOOP_SEQ';
+                    last TYPE_INDENT;
+                }
+
+                if ( $lhsName eq 'optBonzElements' ) {
+                    $mistakes = $policy->checkSeq($node, 'bonz element');
+                    last TYPE_INDENT if @{$mistakes};
+                    $indentDesc = 'BONZ_ELEMENTS';
                     last TYPE_INDENT;
                 }
 
@@ -4082,6 +4143,13 @@ sub validate_node {
                 $mistakes = $policy->checkFascom($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASWUT';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "fordFassig" ) {
+                $mistakes = $policy->checkFassig($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASSIG';
                 last TYPE_INDENT;
             }
 
