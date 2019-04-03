@@ -314,6 +314,103 @@ sub sailAttributeBodyColumn {
     die "No jogging found for ", $instance->symbol($node);
 }
 
+sub checkSailAttribute {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ( $headGap, $head, $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+
+    my $sailApex = $instance->ancestorByLHS( $node, 'sailApex5d' );
+    my ( $sailApexLine, $sailApexColumn ) = $instance->nodeLC($sailApex);
+    my $attributes = $instance->ancestorByLHS( $node, 'tallAttributes' );
+    my $expectedHeadColumn = $sailApexColumn + 4;
+    my $expectedBodyColumn = $policy->sailAttributeBodyAlignment($attributes);
+
+    my @mistakes = ();
+
+    # We deal with the elements list in its own node
+
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $headGap, $expectedHeadColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "Sail attribute head %s; $gapMistakeMsg",
+              describeLC( $headLine, $headColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $sailApexLine,
+                parentColumn => $sailApexColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [$headLine],
+              };
+        }
+    }
+
+    if ( $headColumn != $expectedHeadColumn ) {
+        my $msg = sprintf
+          "Sail attribute head %s; %s",
+          describeLC( $headLine, $headColumn ),
+          describeMisindent( $headColumn, $expectedHeadColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $sailApexLine,
+            parentColumn   => $sailApexColumn,
+            line           => $headLine,
+            column         => $headColumn,
+            expectedColumn => $expectedHeadColumn,
+            topicLines     => [$headLine],
+          };
+    }
+
+  CHECK_BODY: {
+        if ( $headLine != $bodyLine ) {
+            my $msg = sprintf
+              "Sail split attribute NYI %s",
+              describeLC( $headLine, $headColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $sailApexLine,
+                parentColumn => $sailApexColumn,
+                line         => $headLine,
+                column       => $headColumn,
+                topicLines   => [$headLine],
+              };
+            last CHECK_BODY;
+        }
+
+        my $bodyGapLength = $bodyGap->{length};
+        if ( $bodyColumn != $expectedBodyColumn and $bodyGapLength != 2 ) {
+            my $msg = sprintf
+              "Sail attribute body %s; %s",
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $sailApexLine,
+                parentColumn   => $sailApexColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+                topicLines     => [$bodyLine],
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
 sub checkTailOfElem {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
@@ -4020,6 +4117,13 @@ sub validate_node {
                 $mistakes = $policy->checkFaslus($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASLUS';
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "tallAttribute" ) {
+                $mistakes = $policy->checkSailAttribute($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'Sail attribute';
                 last TYPE_INDENT;
             }
 

@@ -3646,9 +3646,6 @@ hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 5:1 Test::Whitespac
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:3 Test::Whitespace fordFasdot joined backdent element #1 @6:9; overindented by 2
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace hornSeq NYI [hornSeq] @6:8-9:34 hornSeq horn
 === hoons/arvo/web/dojo.hoon ===
-hoons/arvo/web/dojo.hoon 13:8 Test::Whitespace tallAttribute NYI [tallAttribute] @13:7-14:23 tallAttribute GAP TIS aMane GAP hopefullyQuote
-hoons/arvo/web/dojo.hoon 14:24 Test::Whitespace tallAttribute NYI [tallAttribute] @14:23-15:20 tallAttribute GAP TIS aMane GAP hopefullyQuote
-hoons/arvo/web/dojo.hoon 15:21 Test::Whitespace tallAttribute NYI [tallAttribute] @15:20-16:20 tallAttribute GAP TIS aMane GAP hopefullyQuote
 === hoons/arvo/web/talk.hoon ===
 === hoons/arvo/web/womb.hoon ===
 === hoons/arvo/ren/urb.hoon ===
