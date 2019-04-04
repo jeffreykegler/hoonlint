@@ -2054,7 +2054,6 @@ sub checkSplit_0Running {
             parentColumn   => $runeColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            child          => 3,
             expectedColumn => $anchorColumn,
           };
     }
@@ -2226,7 +2225,6 @@ sub checkJoined_0Running {
             parentColumn   => $runeColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            child          => 3,
             expectedColumn => $runeColumn,
           };
     }
@@ -2412,7 +2410,6 @@ sub check_1Running {
             parentColumn   => $runeColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            child          => 3,
             expectedColumn => $runeColumn,
           };
     }
@@ -3370,7 +3367,6 @@ sub checkKingsideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                child          => 2,
                 expectedColumn => $expectedBodyColumn,
                 topicLines     => [$brickLine],
               };
@@ -3482,7 +3478,6 @@ sub checkQueensideJog {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            child          => 1,
             expectedColumn => $expectedHeadColumn,
             topicLines     => [$brickLine],
           };
@@ -3504,7 +3499,6 @@ sub checkQueensideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                child          => 2,
                 expectedColumn => $jogBodyColumn,
                 topicLines     => [$brickLine],
               };
@@ -3527,7 +3521,6 @@ sub checkQueensideJog {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            child          => 2,
             expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
           };
@@ -3603,6 +3596,7 @@ sub checkBackdented {
     my @mistakes = ();
 
   ENFORCE_ELEMENT1_JOINEDNESS: {
+	# TODO: Is this right?
         my $firstGap = $gapSeq[0];
         my ($gapLine) = $instance->nodeLC($firstGap);
         last ENFORCE_ELEMENT1_JOINEDNESS if $gapLine == $parentLine;
@@ -3642,6 +3636,7 @@ sub checkBackdented {
         my $element = $gapSeq[ $elementNumber * 2 - 1 ];
         my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
         my $gap = $gapSeq[ $elementNumber * 2 - 2 ];
+        my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
         my $expectedColumn =
           $anchorColumn + ( $elementCount - $elementNumber ) * 2;
 
@@ -3682,6 +3677,36 @@ sub checkBackdented {
             next ELEMENT;
         }
 
+      CHECK_FOR_PSEUDOJOIN: {
+            last CHECK_FOR_PSEUDOJOIN if $gapLine != $parentLine;
+            my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
+
+            last CHECK_FOR_PSEUDOJOIN if $pseudoJoinColumn < 0;
+
+            last CHECK_FOR_PSEUDOJOIN if $pseudoJoinColumn != $expectedColumn
+                and $pseudoJoinColumn != $parentColumn + 4;
+
+            if ( $elementColumn != $pseudoJoinColumn ) {
+                my $msg =
+                  sprintf
+'Pseudo-joined backdented element %d; element/comment mismatch; element is %s',
+		  $elementNumber,
+                  describeLC( $elementLine, $elementColumn ),
+                  describeMisindent( $elementColumn, $pseudoJoinColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $elementLine,
+                    column         => $elementColumn,
+                    expectedColumn => $pseudoJoinColumn,
+                  };
+            }
+
+            next ELEMENT;
+        }
+
         if ( my @gapMistakes =
             @{ $policy->isOneLineGap( $gap, $anchorColumn ) } )
         {
@@ -3703,9 +3728,6 @@ sub checkBackdented {
                   };
             }
         }
-
-
-# say STDERR join " ", __FILE__, __LINE__, "element $elementNumber", '[' . $instance->literalNode($element) . ']';
 
         if ( $expectedColumn != $elementColumn ) {
             my $msg = sprintf

@@ -905,6 +905,7 @@ EOS
       tallWutsig
       tallZapcol
       tallZapdot
+      tallZaptis
       tallZapwut
     );
     $lintInstance->{backdentedRule} = \%tallBackdentRule;
