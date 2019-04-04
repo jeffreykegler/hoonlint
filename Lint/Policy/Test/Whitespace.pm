@@ -1698,38 +1698,70 @@ sub checkFaslus {
     return \@mistakes;
 }
 
-sub checkFassig {
-    my ( $policy, $node ) = @_;
+sub checkFord_1Gap {
+    my ( $policy, $node, $tag ) = @_;
     my $instance = $policy->{lint};
 
     # fordFassig ::= (- FAS SIG GAP -) tall5d
-    my ( undef,      $body )       = @{ $policy->gapSeq0($node) };
+    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
 
-    my $expectedColumn;
+    my $expectedBodyColumn;
 
   BODY_ISSUES: {
-        if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf 'Fassig body %s; must be on rune line',
-              describeLC( $bodyLine, $bodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-              };
+        if ( $parentLine == $bodyLine ) {
+            my $expectedBodyColumn = $parentColumn + 4;
+            if ( $bodyColumn != $expectedBodyColumn ) {
+                my $msg =
+                  sprintf 'joined %s body %s is %s',
+                  $tag,
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent( $bodyColumn, $expectedBodyColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $bodyLine,
+                    column         => $bodyColumn,
+                    expectedColumn => $expectedBodyColumn,
+                  };
+            }
             last BODY_ISSUES;
         }
-        my $expectedBodyColumn = $parentColumn + 4;
+
+        # If here parent line != body line
+        $expectedBodyColumn = $parentColumn;
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $gap, $expectedBodyColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf 'split %s body %s; %s',
+                  $tag,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                  };
+            }
+        }
+
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
-              sprintf 'Fassig body %s is %s',
+              sprintf 'split %s body %s is %s',
+              $tag,
               describeLC( $bodyLine, $bodyColumn ),
               describeMisindent( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
@@ -1742,8 +1774,6 @@ sub checkFassig {
                 expectedColumn => $expectedBodyColumn,
               };
         }
-        last BODY_ISSUES;
-
     }
 
     return \@mistakes;
@@ -4075,6 +4105,13 @@ sub validate_node {
                     last TYPE_INDENT;
                 }
 
+                if ( $lhsName eq 'hornSeq' ) {
+                    $mistakes = $policy->checkSeq($node, 'horn');
+                    last TYPE_INDENT if @{$mistakes};
+                    $indentDesc = 'HORN_SEQ';
+                    last TYPE_INDENT;
+                }
+
                 if ( $lhsName eq 'optBonzElements' ) {
                     $mistakes = $policy->checkSeq($node, 'bonz element');
                     last TYPE_INDENT if @{$mistakes};
@@ -4146,11 +4183,15 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq "fordFassig" ) {
-                $mistakes = $policy->checkFassig($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASSIG';
-                last TYPE_INDENT;
+            for my $tag (
+                qw(fordFassig fordFasbuc fordFascab fordFascen fordFashax))
+            {
+                if ( $lhsName eq $tag ) {
+                    $mistakes = $policy->checkFord_1Gap( $node, $tag );
+                    last TYPE_INDENT if @{$mistakes};
+                    $indentDesc = 'FAS' . uc $tag;
+                    last TYPE_INDENT;
+                }
             }
 
             if ( $lhsName eq "fordFaswut" ) {
@@ -4165,14 +4206,14 @@ sub validate_node {
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASCOM Element';
                 last TYPE_INDENT;
-	    }
+            }
 
             if ( $lhsName eq "lute5d" ) {
                 $mistakes = $policy->checkLute($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUTE';
                 last TYPE_INDENT;
-	    }
+            }
 
             if ( $lhsName eq "optFordFashep" ) {
                 $mistakes = $policy->checkFashep($node);
@@ -4223,7 +4264,7 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq 'tallTailOfElem') {
+            if ( $lhsName eq 'tallTailOfElem' ) {
                 $mistakes = $policy->checkTailOfElem($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = $lhsName;
@@ -4267,7 +4308,7 @@ sub validate_node {
             }
 
             if ( $tallJogRule->{$lhsName} ) {
-                $mistakes = $policy->checkJog( $node );
+                $mistakes = $policy->checkJog($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOG-STYLE';
                 last TYPE_INDENT;
@@ -4281,28 +4322,28 @@ sub validate_node {
             }
 
             if ( $tall_1RunningRule->{$lhsName} ) {
-                $mistakes = $policy->check_1Running( $node );
+                $mistakes = $policy->check_1Running($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->check_1Jogging( $node );
+                $mistakes = $policy->check_1Jogging($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '1-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
-                $mistakes = $policy->check_2Jogging( $node );
+                $mistakes = $policy->check_2Jogging($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = '2-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
-                $mistakes = $policy->check_Jogging1( $node );
+                $mistakes = $policy->check_Jogging1($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
