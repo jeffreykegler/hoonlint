@@ -819,7 +819,7 @@ EOS
     # Will include:
     # CencolMold
     # Dotket Semcol Semsig Tissig
-    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallSemcol tallSemsig tallTissig);
+    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig tallTissig);
     $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
 
     my %tall_1JoggingRule =
@@ -855,6 +855,7 @@ EOS
     my %tallBackdentRule = map { +( $_, 1 ) } qw(
       bonz5d
       fordFasbar
+      fordFascol
       fordFasdot
       fordFasket
       fordFassem
