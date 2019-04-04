@@ -782,12 +782,12 @@ EOS
       $MarpaX::YAHC::Lint::grammar->symbol_ids();
     $lintInstance->{tallRuneRule} = \%tallRuneRule;
 
-    $NYI_Rule{$_} = 1 for qw(tallTailOfElem tallTailOfTop);
     # TODO: Check that these are all backdented,
     my %tallNoteRule = map { +( $_, 1 ) } qw(
       tallBarhep tallBardot
+      tallBuccab
       tallCendot tallColcab
-      tallKethep tallKetlus tallKetwut
+      tallKetbar tallKethep tallKetlus tallKetsig tallKetwut
       tallSigbar tallSigcab tallSigfas tallSiglus
       tallTisbar tallTiscom tallTisgal
       tallWutgal tallWutgar tallWuttis
@@ -816,7 +816,6 @@ EOS
     tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
-    $NYI_Rule{$_} = 1 for qw(tallCencolMold tallDotket);
     # Will include:
     # CencolMold
     # Dotket Semcol Semsig Tissig
@@ -840,7 +839,6 @@ EOS
     );
     $lintInstance->{joggingRule} = \%joggingRule;
 
-    $NYI_Rule{$_} = 1 for qw(optFordFashep optFordFaslus fordFaswut);
     # TODO: if Luslus right for fordFastis?
     my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
       fordFastis);

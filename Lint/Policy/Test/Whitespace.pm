@@ -4184,7 +4184,9 @@ sub validate_node {
             }
 
             for my $tag (
-                qw(fordFassig fordFasbuc fordFascab fordFascen fordFashax))
+                qw(fordFassig fordFasbuc fordFascab fordFascen fordFashax
+		fordHoop
+		))
             {
                 if ( $lhsName eq $tag ) {
                     $mistakes = $policy->checkFord_1Gap( $node, $tag );
