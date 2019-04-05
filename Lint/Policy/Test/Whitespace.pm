@@ -3382,6 +3382,114 @@ sub checkFascomElement {
     return \@mistakes;
 }
 
+sub checkFastis {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # fordFastis ::= (- FASTISGAP -) SYM4K (- GAP -) horn
+    my ( $headGap, $symbol, $hornGap, $horn ) = @{ $policy->gapSeq0($node) };
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $symbolLine, $symbolColumn ) = $instance->nodeLC($symbol);
+    my ( $hornLine,   $hornColumn )   = $instance->nodeLC($horn);
+
+    my @mistakes = ();
+
+  CHECK_SYMBOL: {
+        if ( $symbolLine != $parentLine ) {
+            my $msg = sprintf 'Fastis symbol %s; symbol must be on rune line',
+              describeLC( $symbolLine, $symbolColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $symbolLine,
+                column       => $symbolColumn,
+              };
+            last CHECK_SYMBOL;
+        }
+
+        my $expectedSymbolColumn = $parentColumn + 4;
+        if ( $symbolColumn != $expectedSymbolColumn ) {
+            my $msg = sprintf 'Fastis symbol %s; %s',
+              describeLC( $symbolLine, $symbolColumn ),
+              describeMisindent( $symbolColumn, $expectedSymbolColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $symbolLine,
+                column         => $symbolColumn,
+                expectedColumn => $expectedSymbolColumn,
+              };
+        }
+    }
+
+  CHECK_HORN: {
+        if ( $hornLine == $symbolLine ) {
+	    my $symbolLength = $symbol->{length};
+	    my $expectedHornColumn = $symbolColumn + $symbolLength + 2;
+            if ( $hornColumn != $expectedHornColumn ) {
+                my $msg = sprintf 'Fastis horn %s; %s',
+                  describeLC( $hornLine, $hornColumn ),
+                  describeMisindent( $hornColumn, $expectedHornColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $hornLine,
+                    column         => $hornColumn,
+                    expectedColumn => $expectedHornColumn,
+                  };
+            }
+            last CHECK_HORN;
+        }
+
+        # if here, horn Line != symbol line
+	my $expectedHornColumn = $parentColumn + 2;
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $hornGap, $expectedHornColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf 'Fastis split horn %s; %s',
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                  };
+            }
+        }
+
+        if ( $hornColumn != $expectedHornColumn ) {
+            my $msg = sprintf 'Fastis split horn %s; %s',
+              describeLC( $hornLine, $hornColumn ),
+              describeMisindent( $hornColumn, $expectedHornColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $hornLine,
+                column         => $hornColumn,
+                expectedColumn => $expectedHornColumn,
+              };
+        }
+
+    }
+
+    return \@mistakes;
+}
+
 sub checkKingsideJog {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -4353,6 +4461,13 @@ sub validate_node {
                     $indentDesc = 'FAS' . uc $tag;
                     last TYPE_INDENT;
                 }
+            }
+
+            if ( $lhsName eq "fordFastis" ) {
+                $mistakes = $policy->checkFastis($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'FASTIS';
+                last TYPE_INDENT;
             }
 
             if ( $lhsName eq "fordFaswut" ) {
