@@ -323,9 +323,9 @@ sub checkSailAttribute {
     my ( $headLine, $headColumn ) = $instance->nodeLC($head);
     my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
 
-    my $sailApex = $instance->ancestorByLHS( $node, 'sailApex5d' );
+    my $sailApex = $instance->ancestorByLHS( $node, { sailApex5d => 1 } );
     my ( $sailApexLine, $sailApexColumn ) = $instance->nodeLC($sailApex);
-    my $attributes = $instance->ancestorByLHS( $node, 'tallAttributes' );
+    my $attributes = $instance->ancestorByLHS( $node, { tallAttributes => 1 } );
     my $expectedHeadColumn = $sailApexColumn + 4;
     my $expectedBodyColumn = $policy->sailAttributeBodyAlignment($attributes);
 
@@ -536,6 +536,84 @@ sub checkTailOfTop {
             expectedColumn => $expectedColumn,
           };
     }
+    return \@mistakes;
+}
+
+
+sub checkBont {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    # Bont's are an integral part of SIGGAR/SIGGAL which follow a
+    # basically standard backdenting scheme, so this is not really
+    # "re-anchoring".
+    my $anchor =
+      $instance->ancestorByLHS( $node, { tallSiggar => 1, tallSiggal => 1 } );
+    my ( $anchorLine,   $anchorColumn )   = $instance->nodeLC($anchor);
+
+    my @mistakes = ();
+
+  BODY_ISSUES: {
+        if ( $parentLine == $bodyLine ) {
+                my $msg =
+                  sprintf 'SIGGAR/SIGGAL element 2 %s; element must not be on rune line',
+                  describeLC( $bodyLine, $bodyColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $parentLine,
+                    parentColumn   => $parentColumn,
+                    line           => $bodyLine,
+                    column         => $bodyColumn,
+                  };
+            last BODY_ISSUES;
+        }
+
+        # If here parent line != body line
+        my $expectedBodyColumn = $anchorColumn + 2;
+        if ( my @gapMistakes =
+            @{ $policy->isOneLineGap( $gap, $expectedBodyColumn ) } )
+        {
+            for my $gapMistake (@gapMistakes) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                  };
+            }
+        }
+
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $expectedBodyColumn,
+              };
+        }
+    }
+
     return \@mistakes;
 }
 
@@ -4190,6 +4268,13 @@ sub validate_node {
         # if here, gapiness > 0
 
       TYPE_INDENT: {
+
+            if ( $lhsName eq "bont5d" ) {
+                $mistakes = $policy->checkBont($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = 'BONT';
+                last TYPE_INDENT;
+            }
 
             if ( $lhsName eq "bonzElement" ) {
                 $mistakes = $policy->checkBonzElement($node);

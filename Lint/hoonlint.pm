@@ -535,11 +535,11 @@ sub ancestorByBrickName {
 }
 
 sub ancestorByLHS {
-    my ( $instance, $node, $name ) = @_;
+    my ( $instance, $node, $names ) = @_;
     my $thisNode = $node;
   PARENT: while ($thisNode) {
         my $thisName = $instance->lhsName($thisNode);
-        return $thisNode if defined $thisName and $thisName eq $name;
+        return $thisNode if defined $thisName and $names->{$thisName};
         $thisNode = $thisNode->{PARENT};
     }
     return;
