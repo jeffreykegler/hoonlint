@@ -784,6 +784,27 @@ sub check_0Running {
     return checkJoined_0Running( $policy, $node );
 }
 
+# Find the cell body column, based on alignment within
+# a parent hoon.
+sub cellBodyColumn {
+    my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
+    my $cellBodyColumn = $policy->{perNode}->{$nodeIX}->{cellBodyColumn};
+    return $cellBodyColumn if defined $cellBodyColumn;
+
+  FIND_CELL_BODY_COLUMN: {
+	my $instance = $policy->{lint};
+        my $nodeName = $instance->brickName($node);
+        if ( $nodeName and $nodeName ne 'whap5d' ) {
+            $cellBodyColumn = $policy->whapCellBodyAlignment($node);
+	    last FIND_CELL_BODY_COLUMN;
+        }
+        $cellBodyColumn = $policy->cellBodyColumn( $node->{PARENT} );
+    }
+    $policy->{perNode}->{$nodeIX}->{cellBodyColumn} = $cellBodyColumn;
+    return $cellBodyColumn;
+}
+
 # assumes this is a <whap5d> node
 sub whapCellBodyAlignment {
     my ( $policy, $node ) = @_;
@@ -848,8 +869,6 @@ sub checkWhap5d {
     my $childIX         = 0;
     my $expectedColumn = $joined ? $parentColumn : $anchorColumn;
     my $expectedLine = $joined ? $parentLine : $anchorLine+1;
-
-    my $bodyAlignmentColumn = $policy->whapCellBodyAlignment($node);
 
   CHILD: while ( $childIX <= $#$children ) {
         my $boog = $children->[$childIX];
@@ -3975,95 +3994,46 @@ sub checkKetdot {
     return \@mistakes;
 }
 
-sub checkLuslusStyle {
-    my ( $policy, $node ) = @_;
-    my ( $symbolGap, $symbol, $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
-    my $instance     = $policy->{lint};
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my ( $symbolLine, $symbolColumn ) = $instance->nodeLC($symbol);
-    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+sub checkLuslus {
+    my ( $policy, $node, $cellLHS ) = @_;
+    my $instance = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC( $node );
+
+    my $battery = $instance->ancestorByLHS( $node, { whap5d => 1 } );
+    die "battery not found" if not defined $battery;
+    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+    my $cellBodyColumn = $policy->cellBodyColumn($battery);
+
     my @mistakes = ();
 
-    if ( $symbolLine != $parentLine ) {
-	my $msg = sprintf
-	  'cell symbol must be joined %s',
-	  describeLC( $symbolLine, $symbolColumn );
-	push @mistakes,
-	  {
-	    desc         => $msg,
-	    parentLine   => $parentLine,
-	    parentColumn => $parentColumn,
-	    line         => $symbolLine,
-	    column       => $symbolColumn,
-	  };
+    my ( $headGap, $head, $bodyGap, $body)       = @{ $policy->gapSeq0($node) };
+    my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+
+    my $headGapLength = $headGap->{length};
+    if ($headGapLength != 2) {
+	    my $expectedColumn = $parentColumn+4 ;
+            my $msg = sprintf 'Cell head %s; %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $headColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
     }
 
-    my $expectedColumn = $parentColumn + 4;
-    if ( $expectedColumn != $symbolColumn ) {
-        my $msg = sprintf
-          "cell symbol %s; %s",
-          describeLC( $symbolLine, $symbolColumn ),
-          describeMisindent( $symbolColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $symbolLine,
-            column         => $symbolColumn,
-            expectedColumn => $expectedColumn,
-          };
-    }
+    if ( $headLine == $bodyLine ) {
+        my $bodyGapLength = $bodyGap->{length};
 
-  CHECK_BODY: {
-        if ( $symbolLine == $bodyLine ) {
-            my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
-            $expectedColumn = $bodyGapColumn + 2;
-            if ( $expectedColumn != $bodyColumn ) {
-                my $msg = sprintf
-                  "joined cell body %s; %s",
-                  describeLC( $symbolLine, $symbolColumn ),
-                  describeMisindent( $bodyColumn, $expectedColumn );
-                push @mistakes,
-                  {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $bodyLine,
-                    column         => $bodyColumn,
-                    expectedColumn => $expectedColumn,
-                  };
-            }
-            last CHECK_BODY;
-        }
-
-        # If here, body is split
-        $expectedColumn = $parentColumn + 2;
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $bodyGap, $expectedColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf 'cell body %s; %s',
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                  };
-            }
-        }
-        if ( $expectedColumn != $bodyColumn ) {
-            my $msg = sprintf
-              "split cell body %s; %s",
-              describeLC( $symbolLine, $symbolColumn ),
-              describeMisindent( $bodyColumn, $expectedColumn );
+        if ( $bodyGapLength != 2 and $bodyColumn != $cellBodyColumn ) {
+            my $msg = sprintf 'Cell body %s; %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent( $bodyColumn, $cellBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4071,11 +4041,79 @@ sub checkLuslusStyle {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
+                expectedColumn => $cellBodyColumn,
+                topicLines     => [$batteryLine],
+              };
+        }
+        return \@mistakes;
+    }
+
+    # If here head line != body line
+  CHECK_FOR_PSEUDOJOIN: {
+        my $pseudoJoinColumn = $policy->pseudoJoinColumn($bodyGap);
+        last CHECK_FOR_PSEUDOJOIN if $pseudoJoinColumn < 0;
+	my $headLength = $head->{length};
+        my $raggedColumn = $headColumn + $headLength + 2;
+        last CHECK_FOR_PSEUDOJOIN
+          if $pseudoJoinColumn != $raggedColumn
+          and $pseudoJoinColumn != $cellBodyColumn;
+        my $msg =
+          sprintf 'Pseudo-joined cell %s; body/comment mismatch; body is %s',
+          describeLC( $parentLine, $parentColumn ),
+          describeMisindent( $bodyColumn, $pseudoJoinColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $pseudoJoinColumn,
+            topicLines     => [$batteryLine],
+          };
+	return \@mistakes;
+    }
+
+    # If here, this is (or should be) a split cell
+    my $expectedBodyColumn = $parentColumn + 2;
+
+    if ( $bodyColumn != $expectedBodyColumn ) {
+        my $msg = sprintf 'cell body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent( $bodyColumn, $expectedBodyColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+            expectedColumn => $expectedBodyColumn,
+            topicLines     => [$batteryLine],
+          };
+        return \@mistakes;
+    }
+
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $bodyGap, $expectedBodyColumn )} )
+    {
+        for my $gapMistake ( @gapMistakes ) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf 'cell split body %s; %s',
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => [ $bodyLine, $batteryLine ],
               };
         }
     }
-
     return \@mistakes;
 }
 
@@ -4480,7 +4518,7 @@ sub validate_node {
             }
 
             if ( $tallLuslusRule->{$lhsName} ) {
-                $mistakes = $policy->checkLuslusStyle($node);
+                $mistakes = $policy->checkLuslus($node, $lhsName);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'LUSLUS-STYLE';
                 last TYPE_INDENT;

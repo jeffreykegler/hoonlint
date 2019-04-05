@@ -839,9 +839,7 @@ EOS
     );
     $lintInstance->{joggingRule} = \%joggingRule;
 
-    # TODO: if Luslus right for fordFastis?
-    my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell
-      fordFastis);
+    my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell);
     $lintInstance->{tallLuslusRule} = \%tallLuslusRule;
 
     my %barcenAnchorExceptions = ();
