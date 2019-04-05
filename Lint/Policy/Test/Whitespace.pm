@@ -814,8 +814,19 @@ sub check_0Running {
     return checkJoined_0Running( $policy, $node );
 }
 
-sub checkBoog5d {
-    my ( $policy, $node, $runeNode ) = @_;
+sub boogBodyColumn {
+    my ( $policy, $node ) = @_;
+    my $cellNode = $node->{children}->[0];
+    my ( $symbolGap, $symbol, $bodyGap, $body ) = @{ $policy->gapSeq0($cellNode) };
+    my $instance     = $policy->{lint};
+    my ( $symbolLine, $symbolColumn ) = $instance->nodeLC($symbol);
+    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+    return if $symbolLine != $bodyLine;
+    return $bodyColumn;
+}
+
+sub checkWhap5d {
+    my ( $policy, $node ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
     my $instance  = $policy->{lint};
     my $censusWhitespace = $instance->{censusWhitespace};
@@ -827,44 +838,53 @@ sub checkBoog5d {
 
     my $anchorNode = $instance->firstBrickOfLine($node);
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
-    my ( $startLine, $startColumn ) = $instance->nodeLC($node);
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
     # The battery is "joined" iff it starts on the same line as the anchor,
     # but at a different column.  "Different column" to catch the case where
     # the anchor rune *is* the battery rune.
-    my $joined = ($anchorLine == $startLine and $anchorColumn != $startColumn);
+    my $joined = ($anchorLine == $parentLine and $anchorColumn != $parentColumn);
     my $children = $node->{children};
     my $childIX         = 0;
-    my $expectedColumn = $joined ? $startColumn : $anchorColumn;
-    my $expectedLine = $joined ? $startLine : $anchorLine+1;
-  CHILD: while ( $childIX <= $#$children ) {
-        my $cell = $children->[$childIX];
-        my ( $cellLine, $cellColumn ) = $instance->nodeLC($cell);
+    my $expectedColumn = $joined ? $parentColumn : $anchorColumn;
+    my $expectedLine = $joined ? $parentLine : $anchorLine+1;
 
-        if ( $cellColumn != $expectedColumn or $censusWhitespace ) {
+    my $bodyAlignmentColumn;
+  CHILD: while ( $childIX <= $#$children ) {
+        my $boog = $children->[$childIX];
+        my ( $boogLine, $boogColumn ) = $instance->nodeLC($boog);
+	my $boogBodyColumn = $policy->boogBodyColumn($boog);
+        if ( defined $boogBodyColumn ) {
+            $bodyAlignmentColumn = $boogBodyColumn
+              if not defined $bodyAlignmentColumn;
+            $bodyAlignmentColumn = -1
+              if $bodyAlignmentColumn != $boogBodyColumn;
+        }
+
+        if ( $boogColumn != $expectedColumn or $censusWhitespace ) {
             my $msg = sprintf
               "cell #%d %s; %s",
               ( $childIX / 2 ) + 1,
-              describeLC( $cellLine, $cellColumn ),
-              describeMisindent( $cellColumn, $expectedColumn );
+              describeLC( $boogLine, $boogColumn ),
+              describeMisindent( $boogColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
-                parentLine     => $cellLine,
-                parentColumn   => $cellColumn,
-                line           => $cellLine,
-                column         => $cellColumn,
+                parentLine     => $boogLine,
+                parentColumn   => $boogColumn,
+                line           => $boogLine,
+                column         => $boogColumn,
                 expectedColumn => $expectedColumn,
-                topicLines     => [ $startLine, $expectedLine ],
+                topicLines     => [ $parentLine, $expectedLine ],
               };
         }
 
         $childIX++;
         last CHILD unless $childIX <= $#$children;
-        my $cellGap = $children->[$childIX];
-        my ( $cellGapLine, $cellGapColumn ) = $instance->nodeLC($cellGap);
+        my $boogGap = $children->[$childIX];
+        my ( $boogGapLine, $boogGapColumn ) = $instance->nodeLC($boogGap);
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $cellGap, $expectedColumn ) } )
+            @{ $policy->isOneLineGap( $boogGap, $expectedColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -878,16 +898,41 @@ sub checkBoog5d {
                 push @mistakes,
                   {
                     desc         => $msg,
-                    parentLine   => $cellGapLine,
-                    parentColumn => $cellGapColumn,
+                    parentLine   => $boogGapLine,
+                    parentColumn => $boogGapColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [ $startLine, $cellGapLine ],
+                    topicLines   => [ $parentLine, $boogGapLine ],
                   };
             }
         }
 
         $childIX++;
+    }
+
+    {
+        my $desc;
+      CENSUS_CELL_BODY_ALIGNMENT: {    # TODO: Delete
+            if ( not defined $bodyAlignmentColumn ) {
+                $desc = "whap5d alignment not defined";
+                last CENSUS_CELL_BODY_ALIGNMENT;
+            }
+            if ( $bodyAlignmentColumn < 0 ) {
+                $desc = "whap5d unaligned";
+                last CENSUS_CELL_BODY_ALIGNMENT;
+            }
+            $desc = sprintf 'whap5d aligned at %d', ($bodyAlignmentColumn+1);
+        }
+        my $msg = sprintf "%s; %s",
+          describeLC( $parentLine, $parentColumn ), $desc;
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $parentLine,
+            column       => $parentColumn,
+          } if 0;
     }
 
     return \@mistakes;
@@ -4248,7 +4293,7 @@ sub validate_node {
                       or $greatGrandParentName eq 'tallBarcen'
                       or $greatGrandParentName eq 'tallBarket';
                     $mistakes =
-                      $policy->checkBoog5d( $node, $greatGrandParent );
+                      $policy->checkWhap5d( $node );
                     last TYPE_INDENT if @{$mistakes};
                     $indentDesc = 'CELL';
                     last TYPE_INDENT;
