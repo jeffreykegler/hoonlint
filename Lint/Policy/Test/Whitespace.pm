@@ -284,36 +284,6 @@ sub sailAttributeBodyAlignment {
     return $topBodyColumn;
 }
 
-sub sailAttributeBodyColumn {
-    my ( $policy, $node ) = @_;
-    my $nodeIX = $node->{IX};
-    my $attributeBodyColumn =
-      $policy->{perNode}->{$nodeIX}->{attributeBodyColumn};
-    return $attributeBodyColumn if defined $attributeBodyColumn;
-
-    my $instance = $policy->{lint};
-    my $nodeName = $instance->brickName($node);
-    if ( not $nodeName or not $nodeName eq 'optTallAttrs' ) {
-        my $attributeBodyColumn =
-          $policy->attributeBodyColumn( $node->{PARENT} );
-        $policy->{perNode}->{$nodeIX}->{attributeBodyColumn} =
-          $attributeBodyColumn;
-        return $attributeBodyColumn;
-    }
-
-    my $children = $node->{children};
-  CHILD: for my $childIX ( 0 .. $#$children ) {
-        my $child  = $children->[$childIX];
-        my $symbol = $instance->symbol($child);
-        next CHILD if $symbol ne 'tallAttributes';
-        my $attributeBodyColumn = $policy->attributeBodyAlignment($child);
-        $policy->{perNode}->{$nodeIX}->{attributeBodyColumn} =
-          $attributeBodyColumn;
-        return $attributeBodyColumn;
-    }
-    die "No jogging found for ", $instance->symbol($node);
-}
-
 sub checkSailAttribute {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -814,15 +784,45 @@ sub check_0Running {
     return checkJoined_0Running( $policy, $node );
 }
 
-sub boogBodyColumn {
+# assumes this is a <whap5d> node
+sub whapCellBodyAlignment {
     my ( $policy, $node ) = @_;
-    my $cellNode = $node->{children}->[0];
-    my ( $symbolGap, $symbol, $bodyGap, $body ) = @{ $policy->gapSeq0($cellNode) };
-    my $instance     = $policy->{lint};
-    my ( $symbolLine, $symbolColumn ) = $instance->nodeLC($symbol);
-    my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
-    return if $symbolLine != $bodyLine;
-    return $bodyColumn;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+    my $firstBodyColumn;
+    my %firstLine       = ();
+    my %bodyColumnCount = ();
+
+    # Traverse first to last to make it easy to record
+    # first line of occurrence of each body column
+  CHILD:
+    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+        my $boog = $children->[$childIX];
+        my $cell = $boog->{children}->[0];
+        my ( undef, $head, $gap,      $body )       = @{ $policy->gapSeq0($cell) };
+        my ( $headLine, $headColumn ) = $instance->nodeLC($head);
+        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+        my $gapLength = $gap->{length};
+        $firstBodyColumn = $bodyColumn
+          if not defined $firstBodyColumn;
+        next CHILD unless $headLine == $bodyLine;
+        next CHILD unless $gap > 2;
+        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
+        $firstLine{$bodyColumn}       = $bodyLine;
+    }
+    my @bodyColumns = keys %bodyColumnCount;
+
+    # If no aligned columns, simply return first
+    return $firstBodyColumn if not @bodyColumns;
+
+    my @sortedBodyColumns =
+      sort {
+             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
+          or $firstLine{$b} <=> $firstLine{$a}
+      }
+      keys %bodyColumnCount;
+    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
+    return $topBodyColumn;
 }
 
 sub checkWhap5d {
@@ -849,17 +849,11 @@ sub checkWhap5d {
     my $expectedColumn = $joined ? $parentColumn : $anchorColumn;
     my $expectedLine = $joined ? $parentLine : $anchorLine+1;
 
-    my $bodyAlignmentColumn;
+    my $bodyAlignmentColumn = $policy->whapCellBodyAlignment($node);
+
   CHILD: while ( $childIX <= $#$children ) {
         my $boog = $children->[$childIX];
         my ( $boogLine, $boogColumn ) = $instance->nodeLC($boog);
-	my $boogBodyColumn = $policy->boogBodyColumn($boog);
-        if ( defined $boogBodyColumn ) {
-            $bodyAlignmentColumn = $boogBodyColumn
-              if not defined $bodyAlignmentColumn;
-            $bodyAlignmentColumn = -1
-              if $bodyAlignmentColumn != $boogBodyColumn;
-        }
 
         if ( $boogColumn != $expectedColumn or $censusWhitespace ) {
             my $msg = sprintf
@@ -908,31 +902,6 @@ sub checkWhap5d {
         }
 
         $childIX++;
-    }
-
-    {
-        my $desc;
-      CENSUS_CELL_BODY_ALIGNMENT: {    # TODO: Delete
-            if ( not defined $bodyAlignmentColumn ) {
-                $desc = "whap5d alignment not defined";
-                last CENSUS_CELL_BODY_ALIGNMENT;
-            }
-            if ( $bodyAlignmentColumn < 0 ) {
-                $desc = "whap5d unaligned";
-                last CENSUS_CELL_BODY_ALIGNMENT;
-            }
-            $desc = sprintf 'whap5d aligned at %d', ($bodyAlignmentColumn+1);
-        }
-        my $msg = sprintf "%s; %s",
-          describeLC( $parentLine, $parentColumn ), $desc;
-        push @mistakes,
-          {
-            desc         => $msg,
-            parentLine   => $parentLine,
-            parentColumn => $parentColumn,
-            line         => $parentLine,
-            column       => $parentColumn,
-          } if 0;
     }
 
     return \@mistakes;
