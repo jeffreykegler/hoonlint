@@ -788,14 +788,15 @@ sub check_0Running {
 # a parent hoon.
 sub cellBodyColumn {
     my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
     my $nodeIX = $node->{IX};
     my $cellBodyColumn = $policy->{perNode}->{$nodeIX}->{cellBodyColumn};
     return $cellBodyColumn if defined $cellBodyColumn;
 
   FIND_CELL_BODY_COLUMN: {
 	my $instance = $policy->{lint};
-        my $nodeName = $instance->brickName($node);
-        if ( $nodeName and $nodeName ne 'whap5d' ) {
+        my $lhsName = $instance->lhsName($node);
+        if ( $lhsName and $lhsName eq 'whap5d' ) {
             $cellBodyColumn = $policy->whapCellBodyAlignment($node);
 	    last FIND_CELL_BODY_COLUMN;
         }
@@ -817,7 +818,7 @@ sub whapCellBodyAlignment {
     # Traverse first to last to make it easy to record
     # first line of occurrence of each body column
   CHILD:
-    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-=2 ) {
         my $boog = $children->[$childIX];
         my $cell = $boog->{children}->[0];
         my ( undef, $head, $gap,      $body )       = @{ $policy->gapSeq0($cell) };
@@ -4113,7 +4114,7 @@ sub checkLuslus {
     my $cellBodyColumn = $policy->cellBodyColumn($battery);
 
     my @mistakes = ();
-
+    # LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
     my ( $headGap, $head, $bodyGap, $body)       = @{ $policy->gapSeq0($node) };
     my ( $headLine, $headColumn ) = $instance->nodeLC($head);
     my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
