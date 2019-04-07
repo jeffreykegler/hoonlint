@@ -6,9 +6,13 @@ This is a (subject to revision) plan for work on `hoonlint` and
 ## Classify or eliminate unclassified warnings
 
 As of this writing (Sun Apr  7 12:41:30 EDT 2019),
-3804 "unclassified warnings" remain
-3779 in `Lint/arvo.lint.out`
-and 25 in `Lint/later.suppressions`.
+3804 "unclassified warnings" remain:
+
+* 3779 in `Lint/arvo.lint.out`
+and
+
+* 25 in `Lint/later.suppressions`.
+
 I plan, as the next phase, to "classify"
 this into "spurious warinings"
 and "anomalies".
