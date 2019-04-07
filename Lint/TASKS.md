@@ -3,12 +3,24 @@
 This is a (subject to revision) plan for work on `hoonlint` and
 `hoonfmt`.
 
-## Eliminate spurious warnings
+## Classify or eliminate unclassified warnings
 
-With the full implementation of the hoon syntax, remaining problems
-should be mostly spurious warnings, and absent warnings should be few.
-As of this writing there are about 4081 warnings.  We can perhaps reduce
-this to about 1000.  The corpus is 62205 lines, so this would be less than
+As of this writing (Sun Apr  7 12:41:30 EDT 2019),
+3804 "unclassified warnings" remain
+3779 in `Lint/arvo.lint.out`
+and 25 in `Lint/later.suppressions`.
+I plan, as the next phase, to "classify"
+this into "spurious warinings"
+and "anomalies".
+Spurious warnings will be silenced.
+Anomalies will be added to
+`Lint/anomaly.suppressions`.
+
+At the end of this phase, I hope to have under 2000 remaining
+warnings, all of them in 
+`Lint/anomaly.suppressions`.
+`Lint/anomaly.suppressions` currently contains 338 warnings.
+The corpus is 62205 lines, so this would be less than
 one per printed page of code.
 
 ## Packaging: Make hoonlint a Perl module
