@@ -3,18 +3,19 @@
 This is a (subject to revision) plan for work on `hoonlint` and
 `hoonfmt`.
 
-## Classify or eliminate unclassified warnings
+## Classify unclassified warnings
 
 As of this writing (Sun Apr  7 12:41:30 EDT 2019),
-3804 "unclassified warnings" remain:
+these "unclassified warnings" remain:
 
 * 3779 in `Lint/arvo.lint.out`
 and
 
 * 25 in `Lint/later.suppressions`.
 
+The total is 3804.
 I plan, as the next phase, to "classify"
-this into "spurious warinings"
+these into "spurious warinings"
 and "anomalies".
 Spurious warnings will be silenced.
 Anomalies will be added to
