@@ -455,3 +455,9 @@ hoons/arvo/sys/vane/dill.hoon 206:15 Test::Whitespace tallSemcol 1-running runst
 hoons/arvo/sys/vane/dill.hoon 207:15 Test::Whitespace tallSemcol 1-running runstep #5 @207:15; overindented by 2
 hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace tallSemcol 1-running runstep #6 @208:15; overindented by 2
 hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runstep #7 @209:15; overindented by 2
+
+# Misc TISTIS anomalies from Github issue #20
+hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace tallCentis 1-jogging TISTIS @2331:9; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace tallWutlus 2-jogging TISTIS @1307:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3891:13; underindented by 1
+hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3895:13; underindented by 1
