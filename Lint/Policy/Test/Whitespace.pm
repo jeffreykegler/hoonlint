@@ -2362,7 +2362,7 @@ sub check_1Running {
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
-          "1-running s head %s; should be on rune line %d",
+          "1-running head %s; should be on rune line %d",
           describeLC( $headLine, $headColumn ),
           $runeLine;
         push @mistakes,
@@ -2523,6 +2523,168 @@ sub check_1Running {
             line           => $tistisLine,
             column         => $tistisColumn,
             expectedColumn => $runeColumn,
+          };
+    }
+    return \@mistakes;
+}
+
+# In the Hoon grammar, some 0 runnings are "punned" as 1-runnings.
+# Indentation is *not* the same however, and `hoonlint` must
+# treat them separately.
+sub check_0_as_1Running {
+    my ( $policy, $node ) = @_;
+    my $gapSeq   = $policy->gapSeq($node);
+    my $instance = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
+
+    my (
+        $rune,       $headGap, $head,
+        $runningGap, $running, $tistisGap, $tistis
+    ) = @{ $policy->gapSeq($node) };
+
+    my $anchorNode = $instance->firstBrickOfLine($node);
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC( $rune );
+    my ( $headLine, $headColumn ) = $instance->nodeLC( $head );
+    my ( $runningLine, $runningColumn ) = $instance->nodeLC( $running );
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC( $tistis );
+
+    my @mistakes = ();
+
+    # We deal with the running list here, rather that
+    # in its own node
+
+    # "De-pun" the 0-running by prepending the
+    # fake head to the list of running children
+    my @runningChildren = ($head);
+    push @runningChildren,  @{$running->{children}};
+
+    my $childIX         = 0;
+    my $expectedColumn  = $anchorColumn + 2;
+    my $expectedLine    = $anchorLine + 1;
+    my $lastGap         = $runningGap;
+
+    # Initial runsteps may be on a single line,
+    # separated by one stop
+    RUN_STEP: while ( $childIX <= $#runningChildren ) {
+        my $runStep = $runningChildren[$childIX];
+        my ( $runStepLine, $runStepColumn ) =
+          $instance->line_column( $runStep->{start} );
+	if ($runStepLine != $anchorLine) {
+	  last RUN_STEP;
+	}
+        if ( $lastGap->{length} != 2 ) {
+            my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
+            $expectedColumn = $lastGapColumn + 2;
+            my $msg            = sprintf
+              "1-running runstep #%d %s; %s",
+	      ( $childIX / 2 ) + 1,
+              describeLC( $lastGapLine, $lastGapColumn ),
+              describeMisindent( $lastGapColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $headLine,
+                column         => $headColumn,
+                expectedColumn => $expectedColumn,
+              };
+        }
+        $lastGap      = $runningChildren[ $childIX + 1 ];
+        $childIX += 2;
+    }
+
+    while ( $childIX <= $#runningChildren ) {
+        my $runStep = $runningChildren[$childIX];
+        my ( $runStepLine, $runStepColumn ) =
+          $instance->line_column( $runStep->{start} );
+        if ( my @gapMistakes = @{ $policy->isOneLineGap( $lastGap, $anchorColumn )} )
+        {
+            for my $gapMistake ( @gapMistakes ) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "1-running runstep #%d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
+                  $gapMistakeMsg;
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $runStepLine,
+                    parentColumn => $runStepColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [ $runStepLine, $anchorLine ],
+                  };
+            }
+        }
+        if ( $runStepColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "1-running runstep #%d %s; %s",
+              ( $childIX / 2 ) + 1,
+              describeLC( $runStepLine, $runStepColumn ),
+              describeMisindent( $runStepColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runStepLine,
+                parentColumn   => $runStepColumn,
+                line           => $runStepLine,
+                column         => $runStepColumn,
+                expectedColumn => $expectedColumn,
+		topicLines     => [$anchorLine, $expectedLine],
+              };
+        }
+        $lastGap      = $runningChildren[ $childIX + 1 ];
+        $expectedLine = $runStepLine + 1;
+        $childIX += 2;
+    }
+
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $anchorColumn )} )
+        {
+            for my $gapMistake ( @gapMistakes ) {
+                my $gapMistakeMsg    = $gapMistake->{msg};
+                my $gapMistakeLine   = $gapMistake->{line};
+                my $gapMistakeColumn = $gapMistake->{column};
+                my $msg              = sprintf
+                  "1-running TISTIS %s; $gapMistakeMsg",
+                  describeLC( $tistisLine, $tistisColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $runeLine,
+                    parentColumn => $runeColumn,
+                    line         => $gapMistakeLine,
+                    column       => $gapMistakeColumn,
+                    topicLines   => [ $anchorLine, $tistisLine ],
+                  };
+            }
+        }
+
+    $expectedColumn = $anchorColumn;
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf "1-running TISTIS %s; %s",
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent( $tistisColumn, $anchorColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $runeLine,
+            parentColumn   => $runeColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $anchorColumn,
           };
     }
     return \@mistakes;
@@ -4280,6 +4442,7 @@ sub validate_node {
     my $tallNoteRule      = $instance->{tallNoteRule};
     my $tallLuslusRule    = $instance->{tallLuslusRule};
     my $tall_0RunningRule = $instance->{tall_0RunningRule};
+    my $tall_0_as_1RunningRule = $instance->{tall_0_as_1RunningRule};
     my $tall_1RunningRule = $instance->{tall_1RunningRule};
     my $tall_1JoggingRule = $instance->{tall_1JoggingRule};
     my $tall_2JoggingRule = $instance->{tall_2JoggingRule};
@@ -4393,6 +4556,10 @@ sub validate_node {
                     }
                     if ( $tall_0RunningRule->{$grandParentName} ) {
                         $indentDesc = '0-RUNNING';
+                        last TYPE_INDENT;
+                    }
+                    if ( $tall_0_as_1RunningRule->{$grandParentName} ) {
+                        $indentDesc = '0_AS_1-RUNNING';
                         last TYPE_INDENT;
                     }
                 }
@@ -4595,6 +4762,13 @@ sub validate_node {
                 $mistakes = $policy->check_0Running($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'RUNNING-0-STYLE';
+                last TYPE_INDENT;
+            }
+
+            if ( $tall_0_as_1RunningRule->{$lhsName} ) {
+                $mistakes = $policy->check_0_as_1Running($node);
+                last TYPE_INDENT if @{$mistakes};
+                $indentDesc = '1_AS_0-RUNNING-STYLE';
                 last TYPE_INDENT;
             }
 
