@@ -197,9 +197,12 @@ WUTPAM (`?&`).
 CENCOL (`%:`),
 DOTKET (`.^`),
 SEMCOL (`;:`),
-SEMSIG (`;~`),
-and
+SEMSIG (`;~`).
+
+* The current 0-as-1-running rule is
 TISSIG (`=~`).
+
+[ TODO: More on TISSIG. ]
 
 ### Proper spacing of Runnings
 

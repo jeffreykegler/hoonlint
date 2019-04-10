@@ -2556,31 +2556,31 @@ sub check_0_as_1Running {
 
     # "De-pun" the 0-running by prepending the
     # fake head to the list of running children
-    my @runningChildren = ($head);
+    my @runningChildren = ($headGap, $head, $runningGap);
     push @runningChildren,  @{$running->{children}};
 
     my $childIX         = 0;
-    my $expectedColumn  = $anchorColumn + 2;
+    my $expectedColumn  = $anchorColumn;
     my $expectedLine    = $anchorLine + 1;
-    my $lastGap         = $runningGap;
 
     # Initial runsteps may be on a single line,
     # separated by one stop
     RUN_STEP: while ( $childIX <= $#runningChildren ) {
-        my $runStep = $runningChildren[$childIX];
+	my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
 	if ($runStepLine != $anchorLine) {
 	  last RUN_STEP;
 	}
-        if ( $lastGap->{length} != 2 ) {
-            my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            $expectedColumn = $lastGapColumn + 2;
+        if ( $gap->{length} != 2 ) {
+            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+            $expectedColumn = $gapColumn + 2;
             my $msg            = sprintf
-              "1-running runstep #%d %s; %s",
+              "0-running runstep #%d %s; %s",
 	      ( $childIX / 2 ) + 1,
-              describeLC( $lastGapLine, $lastGapColumn ),
-              describeMisindent( $lastGapColumn, $expectedColumn );
+              describeLC( $gapLine, $gapColumn ),
+              describeMisindent( $gapColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2591,22 +2591,22 @@ sub check_0_as_1Running {
                 expectedColumn => $expectedColumn,
               };
         }
-        $lastGap      = $runningChildren[ $childIX + 1 ];
         $childIX += 2;
     }
 
     while ( $childIX <= $#runningChildren ) {
-        my $runStep = $runningChildren[$childIX];
+	my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
-        if ( my @gapMistakes = @{ $policy->isOneLineGap( $lastGap, $anchorColumn )} )
+        if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $anchorColumn )} )
         {
             for my $gapMistake ( @gapMistakes ) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
                 my $gapMistakeLine   = $gapMistake->{line};
                 my $gapMistakeColumn = $gapMistake->{column};
                 my $msg              = sprintf
-                  "1-running runstep #%d %s; %s",
+                  "0-running runstep #%d %s; %s",
                   ( $childIX / 2 ) + 1,
                   describeLC( $gapMistakeLine, $gapMistakeColumn ),
                   $gapMistakeMsg;
@@ -2623,7 +2623,7 @@ sub check_0_as_1Running {
         }
         if ( $runStepColumn != $expectedColumn ) {
             my $msg = sprintf
-              "1-running runstep #%d %s; %s",
+              "0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $runStepLine, $runStepColumn ),
               describeMisindent( $runStepColumn, $expectedColumn );
@@ -2638,7 +2638,6 @@ sub check_0_as_1Running {
 		topicLines     => [$anchorLine, $expectedLine],
               };
         }
-        $lastGap      = $runningChildren[ $childIX + 1 ];
         $expectedLine = $runStepLine + 1;
         $childIX += 2;
     }
@@ -2650,7 +2649,7 @@ sub check_0_as_1Running {
                 my $gapMistakeLine   = $gapMistake->{line};
                 my $gapMistakeColumn = $gapMistake->{column};
                 my $msg              = sprintf
-                  "1-running TISTIS %s; $gapMistakeMsg",
+                  "0-running TISTIS %s; $gapMistakeMsg",
                   describeLC( $tistisLine, $tistisColumn );
                 push @mistakes,
                   {
@@ -2674,7 +2673,7 @@ sub check_0_as_1Running {
         $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf "1-running TISTIS %s; %s",
+        my $msg = sprintf "0-running TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
           describeMisindent( $tistisColumn, $anchorColumn );
         push @mistakes,
