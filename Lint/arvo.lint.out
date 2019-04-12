@@ -704,9 +704,6 @@ hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1958:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1 @1959:1; underindented by 6
 hoons/arvo/sys/hoon.hoon 2056:12 Test::Whitespace tallWutcol backdented element #3 @2062:11; underindented by 1
-hoons/arvo/sys/hoon.hoon 2072:1 Test::Whitespace LuslusCell Pseudo-joined cell @2072:1; body/comment mismatch; body is correctly indented
-hoons/arvo/sys/hoon.hoon 2080:1 Test::Whitespace LuslusCell Pseudo-joined cell @2080:1; body/comment mismatch; body is correctly indented
-hoons/arvo/sys/hoon.hoon 2087:1 Test::Whitespace LuslusCell Pseudo-joined cell @2087:1; body/comment mismatch; body is correctly indented
 hoons/arvo/sys/hoon.hoon 2122:11 Test::Whitespace tallWutdot backdented element #3 @2123:7; underindented by 4
 hoons/arvo/sys/hoon.hoon 2126:35 Test::Whitespace tallCenhep backdented element #2 @2127:9; underindented by 26
 hoons/arvo/sys/hoon.hoon 2140:11 Test::Whitespace tallWutdot backdented element #2 @2141:9; underindented by 4
@@ -2471,10 +2468,6 @@ hoons/arvo/sec/com/slack.hoon 20:1 Test::Whitespace LuslusCell Cell body @20:32;
 === hoons/arvo/lib/hep-to-cab.hoon ===
 === hoons/arvo/lib/old-phon.hoon ===
 hoons/arvo/lib/old-phon.hoon 12:11 Test::Whitespace tallKettis backdented element #2 @13:7; underindented by 4
-hoons/arvo/lib/old-phon.hoon 47:3 Test::Whitespace LuslusCell Pseudo-joined cell @47:3; body/comment mismatch; body is correctly indented
-hoons/arvo/lib/old-phon.hoon 52:3 Test::Whitespace LuslusCell Pseudo-joined cell @52:3; body/comment mismatch; body is correctly indented
-hoons/arvo/lib/old-phon.hoon 57:3 Test::Whitespace LuslusCell Pseudo-joined cell @57:3; body/comment mismatch; body is correctly indented
-hoons/arvo/lib/old-phon.hoon 59:3 Test::Whitespace LuslusCell Pseudo-joined cell @59:3; body/comment mismatch; body is correctly indented
 === hoons/arvo/lib/interpolate.hoon ===
 hoons/arvo/lib/interpolate.hoon 41:1 Test::Whitespace LuslusCell Pseudo-joined cell @41:1; body/comment mismatch; body is underindented by 21
 === hoons/arvo/lib/http.hoon ===
@@ -2977,7 +2970,6 @@ hoons/arvo/lib/hood/kiln.hoon 452:39 Test::Whitespace tallColtar joined 0-runnin
 hoons/arvo/lib/hood/kiln.hoon 452:47 Test::Whitespace tallColtar joined 0-running runstep #10 @452:45; missing newline @452:45
 hoons/arvo/lib/hood/kiln.hoon 452:47 Test::Whitespace tallColtar joined 0-running runstep #10 @452:47; overindented by 38
 hoons/arvo/lib/hood/kiln.hoon 458:7 Test::Whitespace tallKethep backdented element #2 @459:7; overindented by 4
-hoons/arvo/lib/hood/kiln.hoon 520:3 Test::Whitespace LuslusCell Pseudo-joined cell @520:3; body/comment mismatch; body is correctly indented
 hoons/arvo/lib/hood/kiln.hoon 557:18 Test::Whitespace tallColtar joined 0-running runstep #5 @557:16; missing newline @557:16
 hoons/arvo/lib/hood/kiln.hoon 557:18 Test::Whitespace tallColtar joined 0-running runstep #5 @557:18; overindented by 5
 hoons/arvo/lib/hood/kiln.hoon 557:21 Test::Whitespace tallColtar joined 0-running runstep #6 @557:19; missing newline @557:19

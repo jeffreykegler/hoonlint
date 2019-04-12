@@ -4322,26 +4322,29 @@ sub checkLuslus {
   CHECK_FOR_PSEUDOJOIN: {
         my $pseudoJoinColumn = $policy->pseudoJoinColumn($bodyGap);
         last CHECK_FOR_PSEUDOJOIN if $pseudoJoinColumn < 0;
-	my $headLength = $head->{length};
+        my $headLength   = $head->{length};
         my $raggedColumn = $headColumn + $headLength + 2;
         last CHECK_FOR_PSEUDOJOIN
           if $pseudoJoinColumn != $raggedColumn
           and $pseudoJoinColumn != $cellBodyColumn;
-        my $msg =
-          sprintf 'Pseudo-joined cell %s; body/comment mismatch; body is %s',
-          describeLC( $parentLine, $parentColumn ),
-          describeMisindent( $bodyColumn, $pseudoJoinColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            expectedColumn => $pseudoJoinColumn,
-            topicLines     => [$batteryLine],
-          };
-	return \@mistakes;
+        if ( $pseudoJoinColumn != $bodyColumn ) {
+            my $msg =
+              sprintf
+              'Pseudo-joined cell %s; body/comment mismatch; body is %s',
+              describeLC( $parentLine, $parentColumn ),
+              describeMisindent( $bodyColumn, $pseudoJoinColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                expectedColumn => $pseudoJoinColumn,
+                topicLines     => [$batteryLine],
+              };
+        }
+        return \@mistakes;
     }
 
     # If here, this is (or should be) a split cell
