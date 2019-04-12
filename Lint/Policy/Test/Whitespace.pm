@@ -824,11 +824,14 @@ sub whapCellBodyAlignment {
         my ( undef, $head, $gap,      $body )       = @{ $policy->gapSeq0($cell) };
         my ( $headLine, $headColumn ) = $instance->nodeLC($head);
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
+	# say STDERR join " ", __FILE__, __LINE__, $bodyColumn;
         my $gapLength = $gap->{length};
         $firstBodyColumn = $bodyColumn
           if not defined $firstBodyColumn;
         next CHILD unless $headLine == $bodyLine;
-        next CHILD unless $gap > 2;
+	# say STDERR join " ", __FILE__, __LINE__, $bodyColumn;
+        next CHILD unless $gapLength > 2;
+	# say STDERR join " ", __FILE__, __LINE__, $bodyLine, $bodyColumn;
         $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
         $firstLine{$bodyColumn}       = $bodyLine;
     }
