@@ -461,3 +461,31 @@ hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace tallCentis 1-jogging TISTIS @2
 hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace tallWutlus 2-jogging TISTIS @1307:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3891:13; underindented by 1
 hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3895:13; underindented by 1
+
+# Misc TISSIG anomalies from Github issue 28
+hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tallTissig 0-running TISTIS @96:5; overindented by 4
+hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tallTissig 0-running runstep #1 @98:1; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @445:1; comment underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @446:1; comment underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @448:1; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 830:7 Test::Whitespace tallTissig 0-running runstep #2 @830:7; overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 831:7 Test::Whitespace tallTissig 0-running runstep #3 @831:7; overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 832:7 Test::Whitespace tallTissig 0-running runstep #4 @832:7; overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 833:7 Test::Whitespace tallTissig 0-running runstep #5 @833:7; overindented by 2
+hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @5:1; comment underindented by 2
+hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @6:1; underindented by 2
+hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tallTissig 0-running TISTIS @1512:6; missing newline @1512:4
+hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tallTissig 0-running TISTIS @1512:6; overindented by 3
+hoons/arvo/sys/vane/behn.hoon 6:5 Test::Whitespace tallTissig 0-running TISTIS @145:4; missing newline @145:2
+hoons/arvo/sys/vane/behn.hoon 6:5 Test::Whitespace tallTissig 0-running TISTIS @145:4; overindented by 3
+hoons/arvo/sys/vane/eyre.hoon 12:5 Test::Whitespace tallTissig 0-running TISTIS @1983:5; missing newline @1983:2
+hoons/arvo/sys/vane/eyre.hoon 12:5 Test::Whitespace tallTissig 0-running TISTIS @1983:5; overindented by 4
+hoons/arvo/sys/vane/ford.hoon 8:5 Test::Whitespace tallTissig 0-running TISTIS @1882:4; missing newline @1882:2
+hoons/arvo/sys/vane/ford.hoon 8:5 Test::Whitespace tallTissig 0-running TISTIS @1882:4; overindented by 3
+hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig 0-running runstep #4 @95:5; comment overindented by 4
+hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig 0-running runstep #4 @96:5; comment overindented by 4
+hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tallTissig 0-running TISTIS @97:4; missing newline @97:2
+hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tallTissig 0-running TISTIS @97:4; overindented by 3
+hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runstep #3 @1162:3; overindented by 2
+hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tallTissig 0-running TISTIS @1162:6; missing newline @1162:4
+hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tallTissig 0-running TISTIS @1162:6; overindented by 5
