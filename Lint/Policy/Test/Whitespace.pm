@@ -2170,7 +2170,7 @@ sub checkSplit_0Running {
     }
 
     if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $tistisGap, $anchorColumn ) } )
+        @{ $policy->isOneLineGap( $tistisGap, $anchorColumn, $expectedColumn ) } )
     {
         for my $gapMistake (@gapMistakes) {
             my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2341,7 +2341,7 @@ sub checkJoined_0Running {
     }
 
     if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $tistisGap, $runeColumn ) } )
+        @{ $policy->isOneLineGap( $tistisGap, $runeColumn, $expectedColumn ) } )
     {
         for my $gapMistake (@gapMistakes) {
             my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2482,7 +2482,7 @@ sub check_1Running {
         my $runStep = $runningChildren->[$childIX];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
-        if ( my @gapMistakes = @{ $policy->isOneLineGap( $lastGap, $runeColumn )} )
+        if ( my @gapMistakes = @{ $policy->isOneLineGap( $lastGap, $runeColumn, $runStepColumn )} )
         {
             for my $gapMistake ( @gapMistakes ) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2526,7 +2526,7 @@ sub check_1Running {
         $childIX += 2;
     }
 
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $runeColumn )} )
+    if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $runeColumn, $expectedColumn )} )
         {
             for my $gapMistake ( @gapMistakes ) {
                 my $gapMistakeMsg    = $gapMistake->{msg};

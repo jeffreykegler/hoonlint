@@ -400,7 +400,6 @@ hoons/arvo/sys/zuse.hoon 3511:7 Test::Whitespace tallWuthep 1-jogging queenside 
 
 # From Github issue #14
 # See https://github.com/jeffreykegler/yahc/issues/14#issuecomment-466734347
-hoons/arvo/gen/test.hoon 56:11 Test::Whitespace tallSemcol 1-running runstep #2 @56:11; should be on line 51
 hoons/arvo/lib/hood/drum.hoon 970:9 Test::Whitespace tallSemcol 1-running runstep #1 @970:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 971:9 Test::Whitespace tallSemcol 1-running runstep #2 @971:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 972:9 Test::Whitespace tallSemcol 1-running runstep #3 @972:9; overindented by 2
