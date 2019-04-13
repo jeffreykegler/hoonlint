@@ -521,6 +521,13 @@ a warning for them.
 If `hoonlint` encounters a multi-line lute,
 it issues a "not yet implemented" warning.
 
+### Special cases
+
+#### TISSIG
+
+As a special case,
+the runsteps in TISSIG should be aligned with the rune.
+
 ## Appendix: Non-standard code
 
 For linting purposes, it is necessary to decide the intended
