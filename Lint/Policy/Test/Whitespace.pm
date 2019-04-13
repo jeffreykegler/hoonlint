@@ -133,18 +133,18 @@ sub pseudoJoinColumn {
 
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
-    my ( $policy, $gap, $expectedColumn ) = @_;
+    my ( $policy, $gap, $expectedColumn, $expectedColumn2 ) = @_;
     my $instance = $policy->{lint};
     my $start  = $gap->{start};
     my $length = $gap->{length};
-    return i_isOneLineGap( $policy, $start + 2, $length - 2, $expectedColumn )
+    return i_isOneLineGap( $policy, $start + 2, $length - 2, $expectedColumn, $expectedColumn2 )
       if $instance->runeGapNode($gap);
-    return i_isOneLineGap( $policy, $start, $length, $expectedColumn );
+    return i_isOneLineGap( $policy, $start, $length, $expectedColumn, $expectedColumn2 );
 }
 
 # Internal version of isOneLineGap()
 sub i_isOneLineGap {
-    my ( $policy, $start, $length, $expectedColumn ) = @_;
+    my ( $policy, $start, $length, $expectedColumn, $expectedColumn2 ) = @_;
     my @mistakes = ();
     my $instance = $policy->{lint};
     my $end      = $start + $length;
@@ -167,52 +167,57 @@ sub i_isOneLineGap {
         ];
     }
 
-  my $stairTread; # boolean, initially FALSE
+    my $stairTread;    # boolean, initially FALSE
+    my $commentOffset;
 
-  LINE: for my $lineNum ( $startLine + 1 .. $endLine - 1 ) {
+    my $lineNum = $startLine;
+  COMMENT1: while ( 1 ) {
+	$lineNum++;
+	last COMMENT1 if $lineNum >= $endLine;
         my $literalLine = $instance->literalLine($lineNum);
-	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
 
-	my $commentOffset;
+        if ( $literalLine =~ /^ [ ]* $/xms ) {
+            push @mistakes,
+              {
+                msg    => "empty line in comment",
+                line   => $lineNum,
+                column => 0,
+              };
+            next COMMENT1;
+        }
+
 
       CHECK_FOR_STAIRCASE: {
             last CHECK_FOR_STAIRCASE if $stairTread;
             last CHECK_FOR_STAIRCASE
               unless $literalLine =~ m/^ [ ]* ([:][:][:][:]) /x;
-	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
             $commentOffset = $LAST_MATCH_START[1];
-	    # say STDERR join " ", __FILE__, __LINE__, $commentOffset, $expectedColumn;
             last CHECK_FOR_STAIRCASE if $commentOffset != $expectedColumn;
-	    # say STDERR join " ", __FILE__, __LINE__, $literalLine;
-	    # say STDERR join " ", __FILE__, __LINE__, 'length literal line', length $literalLine;
-	    # say STDERR join " ", __FILE__, __LINE__, 'comment offset', $commentOffset;
             if ( length $literalLine > $commentOffset + 4 ) {
                 my $nextChar = substr $literalLine, $commentOffset + 4, 1;
-	    # say STDERR join "!", __FILE__, __LINE__, $nextChar, $literalLine;
                 last CHECK_FOR_STAIRCASE if $nextChar !~ m/[ \n]/xms;
             }
-	    # say STDERR join " ", __FILE__, __LINE__, $expectedColumn;
 
-	    # Peek ahead to make sure this really is a staircase
-	    my $nextLiteralLine = $instance->literalLine($lineNum+1);
-	    # say STDERR join "!", __FILE__, __LINE__, '[' . $nextLiteralLine . ']';
-	    my $wantedPrefix = (q{ } x ($commentOffset + 2)) . q{::};
-	    my $actualPrefix = substr $nextLiteralLine, 0, length $wantedPrefix;
-	    # say STDERR join "!", __FILE__, __LINE__, '[' . $wantedPrefix . ']';
-	    # say STDERR join "!", __FILE__, __LINE__, '[' . $actualPrefix . ']';
-	    last CHECK_FOR_STAIRCASE if $wantedPrefix ne $actualPrefix;
+            # Peek ahead to make sure this really is a staircase
+            my $nextLiteralLine = $instance->literalLine( $lineNum + 1 );
+            my $wantedPrefix = ( q{ } x ( $commentOffset + 2 ) ) . q{::};
+            my $actualPrefix = substr $nextLiteralLine, 0, length $wantedPrefix;
+            last CHECK_FOR_STAIRCASE if $wantedPrefix ne $actualPrefix;
             $stairTread = $lineNum;
             $expectedColumn += 2;
-            next LINE;
+            next COMMENT1;
         }
 
         if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
             $commentOffset = $LAST_MATCH_START[1];
-            next LINE if $commentOffset == $expectedColumn;
+            next COMMENT1 if $commentOffset == $expectedColumn;
+            last COMMENT1
+              if defined $expectedColumn2
+              and $commentOffset >= $expectedColumn2;
         }
 
         if ( defined $commentOffset and $commentOffset != $expectedColumn ) {
-	    my $desc = $stairTread ? "staircase comment" : "comment";
+            my $desc = $stairTread ? "staircase comment" : "comment";
             push @mistakes,
               {
                 msg => "$desc "
@@ -220,25 +225,62 @@ sub i_isOneLineGap {
                 line   => $lineNum,
                 column => $commentOffset,
               };
-            next LINE;
+            next COMMENT1;
         }
 
-	# TODO: These are hacks to work around the way
-	# triple quoting deals with its trailer -- the parser throws
-	# it away before even this whitespace-reading version
-	# of the parser gets to see it.  Probably, hoonlint
-	# should fork the parser and deal with this situation
-	# in a less hack-ish way.
-	next LINE if $literalLine =~ m/^ *'''$/; 
-	next LINE if $literalLine =~ m/^ *"""$/; 
+        # TODO: These are hacks to work around the way
+        # triple quoting deals with its trailer -- the parser throws
+        # it away before even this whitespace-reading version
+        # of the parser gets to see it.  Probably, hoonlint
+        # should fork the parser and deal with this situation
+        # in a less hack-ish way.
+        die unless $literalLine =~ m/^ *'''$/ or $literalLine =~ m/^ *"""$/;
 
-        push @mistakes,
-          {
-            msg    => "missing comment on line $lineNum",
-            line   => $lineNum,
-            column => 0,
-          };
+    }
 
+    if (    defined $expectedColumn2
+        and defined $commentOffset
+        and $commentOffset >= $expectedColumn2 )
+    {
+      COMMENT2: while (1) {
+            $lineNum++;
+            last COMMENT2 if $lineNum >= $endLine;
+            my $literalLine = $instance->literalLine($lineNum);
+
+            if ( $literalLine =~ /^ [ ]* $/xms ) {
+                push @mistakes,
+                  {
+                    msg    => "empty line ($lineNum) in comment",
+                    line   => $lineNum,
+                    column => 0,
+                  };
+                next COMMENT2;
+            }
+
+            my $commentOffset;
+            if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
+                $commentOffset = $LAST_MATCH_START[1];
+                next COMMENT2 if $commentOffset == $expectedColumn2;
+            }
+
+            if ( defined $commentOffset and $commentOffset != $expectedColumn2 )
+            {
+                my $desc = "comment";
+                push @mistakes,
+                  {
+                    msg => "$desc "
+                      . describeMisindent( $commentOffset, $expectedColumn2 ),
+                    line   => $lineNum,
+                    column => $commentOffset,
+                  };
+                next COMMENT2;
+            }
+
+            # TODO: These are hacks to work around the way
+            # triple quoting deals with its trailer
+            die unless $literalLine =~ m/^ *'''$/ or $literalLine =~ m/^ *"""$/;
+
+        }
     }
 
     return \@mistakes;
@@ -2083,7 +2125,7 @@ sub checkSplit_0Running {
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $lastGap, $anchorColumn ) } )
+            @{ $policy->isOneLineGap( $lastGap, $anchorColumn, $runStepColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2254,7 +2296,7 @@ sub checkJoined_0Running {
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $lastGap, $runeColumn ) } )
+            @{ $policy->isOneLineGap( $lastGap, $runeColumn, $runStepColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
