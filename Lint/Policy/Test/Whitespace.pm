@@ -2053,7 +2053,11 @@ sub checkSplit_0Running {
     if ( $lhsName eq 'tallColsig' ) {
         # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
         my $anchor =
-          $instance->nearestBrickOfLineInc( $node, { 'tallCenhep' => 1 } );
+          $instance->firstBrickOfLineInc( $node, {
+	  'tallCendot' => 1,
+	  'tallCenhep' => 1,
+	  'tallKethep' => 1,
+	  } );
         ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
         # say join " ", __FILE__, __LINE__, $anchorLine, $anchorColumn;
     }
