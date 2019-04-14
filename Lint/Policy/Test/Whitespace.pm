@@ -2067,13 +2067,12 @@ sub checkSplit_0Running {
     # We deal with the running list here, rather than
     # in its own node
 
-    my $runningChildren = $running->{children};
+    my @runningChildren = ($runningGap, @{$running->{children}});
     my $childIX         = 0;
     my $expectedColumn = $anchorColumn + 2;
     my $expectedLine = $runeLine + 1;
-    my $lastGap      = $runningGap;
 
-    my $runStepCount = (scalar @{$runningChildren}+1)/2;
+    my $runStepCount = (scalar @runningChildren)/2;
     if ( $runStepCount < $minimumRunsteps ) {
 
         # Untested
@@ -2095,21 +2094,23 @@ sub checkSplit_0Running {
 
     # Initial runsteps may be on a single line,
     # separated by one stop
-  RUN_STEP: while ( $childIX <= $#$runningChildren ) {
-        my $runStep = $runningChildren->[$childIX];
+  RUN_STEP: while ( $childIX <= $#runningChildren ) {
+        my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( $runStepLine != $runeLine ) {
             last RUN_STEP;
         }
-        if ( $lastGap->{length} != 2 ) {
-            my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            $expectedColumn = $lastGapColumn + 2;
+        if ( $gap->{length} != 2 ) {
+            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+            $expectedColumn = $gapColumn + 2;
+	    # say STDERR join " ", __FILE__, __LINE__, $gapColumn, $expectedColumn, $gap->{length};
             my $msg            = sprintf
               "split 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
-              describeLC( $lastGapLine, $lastGapColumn ),
-              describeMisindent( $lastGapColumn, $expectedColumn );
+              describeLC( $gapLine, $gapColumn ),
+              describeMisindent( $gapColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2120,16 +2121,16 @@ sub checkSplit_0Running {
                 expectedColumn => $expectedColumn,
               };
         }
-        $lastGap = $runningChildren->[ $childIX + 1 ];
         $childIX += 2;
     }
 
-    while ( $childIX <= $#$runningChildren ) {
-        my $runStep = $runningChildren->[$childIX];
+    while ( $childIX <= $#runningChildren ) {
+        my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $lastGap, $anchorColumn, $runStepColumn ) } )
+            @{ $policy->isOneLineGap( $gap, $anchorColumn, $runStepColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2168,7 +2169,6 @@ sub checkSplit_0Running {
                 topicLines     => [ $runeLine, $expectedLine ],
               };
         }
-        $lastGap      = $runningChildren->[ $childIX + 1 ];
         $expectedLine = $runStepLine + 1;
         $childIX += 2;
     }
@@ -2240,13 +2240,12 @@ sub checkJoined_0Running {
     # We deal with the running list here, rather than
     # in its own node
 
-    my $runningChildren = $running->{children};
+    my @runningChildren = ($runningGap, @{$running->{children}});
     my $childIX         = 0;
     my $expectedColumn = $runeColumn + 4;
     my $expectedLine = $runeLine + 1;
-    my $lastGap = $runningGap;;
 
-    my $runStepCount = ( scalar @{$runningChildren} + 1 ) / 2;
+    my $runStepCount = ( scalar @runningChildren) / 2;
     if ( defined $maximumRunsteps and $runStepCount > $maximumRunsteps ) {
 
         # Untested
@@ -2266,21 +2265,22 @@ sub checkJoined_0Running {
 
     # Initial runsteps are on the rune line,
     # separated by one stop
-  RUN_STEP: while ( $childIX <= $#$runningChildren ) {
-        my $runStep = $runningChildren->[$childIX];
+  RUN_STEP: while ( $childIX <= $#runningChildren ) {
+        my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( $runStepLine != $runeLine ) {
             last RUN_STEP;
         }
-        if ( $lastGap->{length} != 2 ) {
-            my ( $lastGapLine, $lastGapColumn ) = $instance->nodeLC($lastGap);
-            $expectedColumn = $lastGapColumn + 2;
+        if ( $gap->{length} != 2 ) {
+            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+            $expectedColumn = $gapColumn + 2;
             my $msg            = sprintf
               "joined 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
-              describeLC( $lastGapLine, $lastGapColumn ),
-              describeMisindent( $lastGapColumn, $expectedColumn );
+              describeLC( $gapLine, $gapColumn ),
+              describeMisindent( $gapColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2291,16 +2291,16 @@ sub checkJoined_0Running {
                 expectedColumn => $expectedColumn,
               };
         }
-        $lastGap = $runningChildren->[ $childIX + 1 ];
         $childIX += 2;
     }
 
-    while ( $childIX <= $#$runningChildren ) {
-        my $runStep = $runningChildren->[$childIX];
+    while ( $childIX <= $#runningChildren ) {
+        my $gap = $runningChildren[$childIX];
+        my $runStep = $runningChildren[$childIX+1];
         my ( $runStepLine, $runStepColumn ) =
           $instance->line_column( $runStep->{start} );
         if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $lastGap, $runeColumn, $runStepColumn ) } )
+            @{ $policy->isOneLineGap( $gap, $runeColumn, $runStepColumn ) } )
         {
             for my $gapMistake (@gapMistakes) {
                 my $gapMistakeMsg    = $gapMistake->{msg};
@@ -2339,7 +2339,6 @@ sub checkJoined_0Running {
                 topicLines     => [ $runeLine, $expectedLine ],
               };
         }
-        $lastGap      = $runningChildren->[ $childIX + 1 ];
         $expectedLine = $runStepLine + 1;
         $childIX += 2;
     }
