@@ -2110,7 +2110,7 @@ sub checkSplit_0Running {
               "split 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $gapLine, $gapColumn ),
-              describeMisindent( $gapColumn, $expectedColumn );
+              describeMisindent( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2280,7 +2280,7 @@ sub checkJoined_0Running {
               "joined 0-running runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $gapLine, $gapColumn ),
-              describeMisindent( $gapColumn, $expectedColumn );
+              describeMisindent( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2466,7 +2466,7 @@ sub check_1Running {
               "1-running runstep #%d %s; %s",
 	      ( $childIX / 2 ) + 1,
               describeLC( $lastGapLine, $lastGapColumn ),
-              describeMisindent( $lastGapColumn, $expectedColumn );
+              describeMisindent( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2628,7 +2628,7 @@ sub check_0_as_1Running {
               "0-running runstep #%d %s; %s",
 	      ( $childIX / 2 ) + 1,
               describeLC( $gapLine, $gapColumn ),
-              describeMisindent( $gapColumn, $expectedColumn );
+              describeMisindent( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
