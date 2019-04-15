@@ -232,12 +232,14 @@ column of the parent hoon.
 
 The running of a **joined 0-running hoon** begins on the rune line.
 The runsteps of a joined 0-running hoons should begin on the rune
-line, indented two stops more than the anchor column.
+line, indented two stops more than the anchor column.  This has the
+effect of aligning all subsequent runesteps with the runstep on the
+rune line.
 
 The running of a **split 0-running hoon** begins after the rune line.
 The runsteps of a split 0-running hoons should begin one newline equivalent
 after the rune
-line, indented one stops more than the anchor column.
+line, indented one stop more than the anchor column.
 
 For both joined and split 0-running hoons,
 the TISTIS should align at the anchor column.
