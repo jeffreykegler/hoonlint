@@ -4018,11 +4018,14 @@ sub checkNYI {
 
 sub checkBackdented {
     my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
     my @gapSeq       = @{ $policy->gapSeq0($node) };
     my $elementCount = ( scalar @gapSeq ) / 2;
     my $instance     = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
+
+    my $reanchorOffset; # for re-anchoring logic
 
   ENFORCE_ELEMENT1_JOINEDNESS: {
 	# TODO: Is this right?
@@ -4134,6 +4137,13 @@ sub checkBackdented {
             }
 
             next ELEMENT;
+        }
+
+	# For the use of re-anchoring logic, determine the additional offset
+	# reguired for the next line after the rune line
+        if ( not defined $reanchorOffset ) {
+            $reanchorOffset = $elementColumn - $parentColumn;
+            $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
         if ( my @gapMistakes =
