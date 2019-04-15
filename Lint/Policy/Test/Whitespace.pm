@@ -23,6 +23,52 @@ sub new {
     return bless $policy, $class;
 }
 
+# first brick node in $node's line,
+# by inclusion list.
+# $node if there is no prior included brick node
+sub reanchorInc {
+    my ( $policy, $node, $inclusions ) = @_;
+    my $instance        = $policy->{lint};
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
+    my ($currentLine)  = $instance->nodeLC($node);
+    my $thisNode       = $node;
+    my $firstBrickNode = $node;
+    my @nodes          = ();
+
+    # Accumulate a list of the nodes on the same line as
+    # the argument node
+  NODE: while ($thisNode) {
+        my ($thisLine) = $instance->nodeLC($thisNode);
+        last NODE if $thisLine != $currentLine;
+        push @nodes, $thisNode;
+        $thisNode = $thisNode->{PARENT};
+    }
+    my $topNodeIX;
+  PICK_NODE: for ( my $nodeIX = $#nodes ; $nodeIX >= 0 ; $nodeIX-- ) {
+        my $thisNode  = $nodes[$nodeIX];
+        my $brickName = $instance->brickName($thisNode);
+        if ( defined $brickName and $inclusions->{$brickName} ) {
+            $topNodeIX = $nodeIX;
+            last PICK_NODE;
+        }
+        last PICK_NODE if not defined $brickName;
+    }
+    return $node, 0 if not defined $topNodeIX;
+    my $reanchorOffset = 0;
+    for (
+        my $nodeIX = 1 ;    # do not include first node
+        $nodeIX <= $topNodeIX ; $nodeIX++
+      )
+    {
+        my $thisNode = $nodes[$nodeIX];
+        my $thisReanchorOffset =
+          $policy->{perNode}->{$nodeIX}->{reanchorOffset} // 0;
+        $reanchorOffset += $thisReanchorOffset;
+    }
+    return $firstBrickNode, $reanchorOffset;
+}
+
 # A "gapSeq" is an ordered subset of a node's children.
 # It consists of the first child, followed by zero or more
 # pairs of nodes, where each pair is a gap and it post-gap
