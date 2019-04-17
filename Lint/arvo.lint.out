@@ -1177,10 +1177,6 @@ hoons/arvo/sys/vane/ford.hoon 1750:11 Test::Whitespace tallWutcol backdented ele
 hoons/arvo/sys/vane/ford.hoon 1764:9 Test::Whitespace tallTisdot backdented element #2 @1765:13; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 1864:21 Test::Whitespace tallBartis backdented element #2 @1865:11; underindented by 10
 hoons/arvo/sys/vane/ford.hoon 1910:11 Test::Whitespace tallCenhep backdented element #2 @1911:9; underindented by 2
-hoons/arvo/sys/vane/ford.hoon 1916:11 Test::Whitespace tallColsig split 0-running runstep #1 @1916:11; underindented by 18
-hoons/arvo/sys/vane/ford.hoon 1917:11 Test::Whitespace tallColsig split 0-running runstep #2 @1917:11; underindented by 18
-hoons/arvo/sys/vane/ford.hoon 1918:11 Test::Whitespace tallColsig split 0-running runstep #3 @1918:11; underindented by 18
-hoons/arvo/sys/vane/ford.hoon 1915:27 Test::Whitespace tallColsig split 0-running TISTIS @1919:9; underindented by 18
 hoons/arvo/sys/vane/ford.hoon 1957:3 Test::Whitespace tallWutsig backdented element #2 @1958:4; underindented by 1
 === hoons/arvo/sys/vane/ames.hoon ===
 hoons/arvo/sys/vane/ames.hoon 71:13 Test::Whitespace tallZapcol backdented element #1 @72:5; underindented by 8
