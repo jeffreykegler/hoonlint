@@ -57,13 +57,14 @@ See below.
 
 If the rune line contains other bricks,
 it may **reanchor**, that is the anchor column
-may be somewhere else other than rune column.
+may be somewhere other than the rune column.
 Not all runes participate in reanchoring.
 Which do, and which do not, is described in the
 individual cases.
 
 We will first give a definition of reanchoring.
-The definitions are, frankly, opaque, but they will be followed by
+The definitions are difficult to follow without illustrations,
+and they are followed by
 a number of examples which hopefully will make the concept
 clear.
 
@@ -94,7 +95,8 @@ and the number of those elements joined on the rune line,
 each brick on the rune line has a **per-brick anchor offset**.
 If `n` elements of a parent brick are on the rune line,
 the per-brick anchor offset is the indentation that would
-apply if the `n`th element were split onto the next line.
+apply to the `n`th element,
+if the `n`th element were split onto the next line.
 (Note that every proper parent brick must have at least one
 element on the rune line.)
 
