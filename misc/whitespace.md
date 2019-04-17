@@ -66,12 +66,14 @@ We will first give a definition of reanchoring.
 This is, frankly, opaque, but it will be followed by
 a number of example which hopefully will make the concept
 clearer.
+
 Informally, reanchoring is a method of conserving indentation.
 Reanchoring moves the anchor column left
 on the rune line, so that it becomes based at a parent brick earlier in the
 rune line.
 The column of the parent brick becomes the **anchor brick column**.
-All parent bricks contribute to the backdenting, so that there is
+All parent bricks contribute to the backdenting, so that all the per-brick
+offsets are added together to produce
 an **reanchor offset**.
 The anchor column is the anchor brick column,
 plus the reanchor offset.
@@ -84,15 +86,24 @@ Which one will depend on the individual bricks involved, but typically
 it is the first brick on the rune line.
 
 Each rune line has the rune itself and zero or more parent bricks.
-Each brick on the rune line has a its own **reanchor offset**, which depends
-on the brick and the number of elements of that rune which 
+Here parent means "proper parent", so that a rune is not considered
+to be its own parent brick.
 Depending on the number of elements required by the brick,
 and the number of those elements joined on the rune line,
-each brick on the rune line has a **per-brick reanchor offset**.
-The total of all the per-brick reanchor offsets of parent bricks
+each brick on the rune line has a **per-brick anchor offset**.
+If `n` elements of a parent brick are on the rune line,
+the per-brick anchor offset is the indentation that would
+apply if the `n`th element were split onto the next line.
+(Note that every proper parent brick must have at least one
+element on the rune line.)
+The total of all the per-brick anchor offsets of parent bricks
 is the **reanchor offset** of the rune line.
-The **anchor column* of the rune line is the anchor brick column,
+The **anchor column** of the rune line is the anchor brick column,
 plus the reanchor offset.
+
+Note that when a rune is the only brick on a line,
+the above definition of reanchoring is equivalent to the statement
+that the rune column is the anchor column.
 
 Here is a first example:
 
@@ -110,15 +121,14 @@ The rune line is line 1916, and the rune is
 COLSIG (`:~`).
 The reanchor base is the COLLUS (`:+`).
 COLLUS is 3-fixed, but all three of its elements are
-on the rune line, so the per-brick reanchor offset is 0.
+on the rune line, so the per-brick anchor offset is 0.
 The anchor column is the anchor brick column plus the reanchor
-offset, and in this case,
+offset, so that in this case,
 the anchor column is the same as the anchor brick column.
-COLSIG is 1-running, and normal indentation indent the runsteps
+COLSIG is 1-running, and normal COLSIG indentation indents the runsteps
 one stop past the anchor column,
-and the final TISTIS at the anchor column,
-which is what we see.
-
+and the final TISTIS at the anchor column.
+This is what we see.
 
 The second example is 
 lines 346-356 of
@@ -141,7 +151,7 @@ lines 346-356 of
 Here the rune line is line 346, the rune is again COLSIG,
 and it reanchors at TISFAS (`/=`).
 TISFAS is 3-fixed, and 2 of its elements are on the rune line,
-so the the per-brick reanchor offset of the TISFAS is that of
+so the the per-brick anchor offset of the TISFAS is that of
 its 2nd element -- one stop.
 The anchor column is therefore one stop after the anchor brick
 column.
