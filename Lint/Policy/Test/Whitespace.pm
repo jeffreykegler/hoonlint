@@ -2104,6 +2104,7 @@ sub checkSplit_0Running {
 	  'tallCendot' => 1,
 	  'tallCenhep' => 1,
 	  'tallCenlus' => 1,
+	  'tallCollus' => 1,
 	  'tallKethep' => 1,
 	  'tallTisfas' => 1,
 	  } );
