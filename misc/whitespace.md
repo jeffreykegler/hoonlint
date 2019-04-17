@@ -57,7 +57,7 @@ See below.
 
 If the rune line contains other bricks,
 it may **reanchor**, that is the anchor column
-may be somewhere else than than rune column.
+may be somewhere else other than rune column.
 Not all runes participate in reanchoring.
 Which do, and which do not, is described in the
 individual cases.
@@ -65,7 +65,7 @@ individual cases.
 We will first give a definition of reanchoring.
 The definitions are, frankly, opaque, but they will be followed by
 a number of examples which hopefully will make the concept
-clearer.
+clear.
 
 Informally, reanchoring is a method of conserving indentation.
 Reanchoring moves the anchor column left
@@ -82,12 +82,13 @@ More formally, then,
 the **anchor column** is the **anchor brick column**,
 plus the **reanchor offset**.
 The anchor brick column is the column of a brick on the rune line.
-Which one will depend on the individual bricks involved, but typically
+Which one will depend on the individual bricks involved, but often
 it is the first brick on the rune line.
 
 Each rune line has the rune itself and zero or more parent bricks.
 Here parent means "proper parent", so that a rune is not considered
 to be its own parent brick.
+
 Depending on the number of elements required by the brick,
 and the number of those elements joined on the rune line,
 each brick on the rune line has a **per-brick anchor offset**.
@@ -96,6 +97,7 @@ the per-brick anchor offset is the indentation that would
 apply if the `n`th element were split onto the next line.
 (Note that every proper parent brick must have at least one
 element on the rune line.)
+
 The total of all the per-brick anchor offsets of parent bricks
 is the **reanchor offset** of the rune line.
 The **anchor column** of the rune line is the anchor brick column,
@@ -151,7 +153,7 @@ lines 346-356 of
 Here the rune line is line 346, the rune is again COLSIG,
 and it reanchors at TISFAS (`/=`).
 TISFAS is 3-fixed, and 2 of its elements are on the rune line,
-so the the per-brick anchor offset of the TISFAS is that of
+so that the per-brick anchor offset of the TISFAS is that of
 its 2nd element -- one stop.
 The anchor column is therefore one stop after the anchor brick
 column.
