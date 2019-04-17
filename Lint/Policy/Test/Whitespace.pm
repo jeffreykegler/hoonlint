@@ -61,10 +61,11 @@ sub reanchorInc {
       )
     {
         my $thisNode = $nodes[$nodeIX];
+	my $nodeID = $thisNode->{IX};
         my $thisReanchorOffset =
-          $policy->{perNode}->{$nodeIX}->{reanchorOffset} // 0;
+          $policy->{perNode}->{$nodeID}->{reanchorOffset} // 0;
         $reanchorOffset += $thisReanchorOffset;
-	# say STDERR join " ", __FILE__, __LINE__, $currentLine, $reanchorOffset, $thisReanchorOffset;
+	# say STDERR join " ", __FILE__, __LINE__, $instance->symbol($thisNode), $currentLine, $reanchorOffset, $thisReanchorOffset;
     }
     return $nodes[$topNodeIX], $reanchorOffset;
 }
@@ -2104,6 +2105,7 @@ sub checkSplit_0Running {
 	  'tallCenhep' => 1,
 	  'tallCenlus' => 1,
 	  'tallKethep' => 1,
+	  'tallTisfas' => 1,
 	  } );
 
         ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
@@ -4191,7 +4193,8 @@ sub checkBackdented {
 	# For the use of re-anchoring logic, determine the additional offset
 	# reguired for the next line after the rune line
         if ( not defined $reanchorOffset ) {
-            $reanchorOffset = $elementColumn - $parentColumn;
+            $reanchorOffset = 2 + ( $elementCount - $elementNumber ) * 2;
+	    # say STDERR join " ", __FILE__, __LINE__, $nodeIX, $parentLine, $instance->symbol($node), $reanchorOffset;
             $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
