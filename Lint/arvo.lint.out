@@ -1981,19 +1981,19 @@ hoons/arvo/app/ask.hoon 8:3 Test::Whitespace tallBarcen battery hephep @14:1; un
 hoons/arvo/app/ask.hoon 59:1 Test::Whitespace LuslusCell Pseudo-joined cell @59:1; body/comment mismatch; body is underindented by 13
 === hoons/arvo/app/pipe.hoon ===
 hoons/arvo/app/pipe.hoon 1:1 Test::Whitespace optFordFaslus Faslus body @1:5 is underindented by 2
-hoons/arvo/app/pipe.hoon 38:11 Test::Whitespace tallColsig split 0-running runstep #1 @38:11; overindented by 4
-hoons/arvo/app/pipe.hoon 39:11 Test::Whitespace tallColsig split 0-running runstep #2 @39:11; overindented by 4
-hoons/arvo/app/pipe.hoon 37:19 Test::Whitespace tallColsig split 0-running TISTIS @40:9; overindented by 4
-hoons/arvo/app/pipe.hoon 43:9 Test::Whitespace tallColsig split 0-running runstep #1 @43:9; overindented by 4
-hoons/arvo/app/pipe.hoon 44:9 Test::Whitespace tallColsig split 0-running runstep #2 @44:9; overindented by 4
-hoons/arvo/app/pipe.hoon 42:17 Test::Whitespace tallColsig split 0-running TISTIS @45:7; overindented by 4
+hoons/arvo/app/pipe.hoon 38:11 Test::Whitespace tallColsig split 0-running runstep #1 @38:11; overindented by 2
+hoons/arvo/app/pipe.hoon 39:11 Test::Whitespace tallColsig split 0-running runstep #2 @39:11; overindented by 2
+hoons/arvo/app/pipe.hoon 37:19 Test::Whitespace tallColsig split 0-running TISTIS @40:9; overindented by 2
+hoons/arvo/app/pipe.hoon 43:9 Test::Whitespace tallColsig split 0-running runstep #1 @43:9; overindented by 2
+hoons/arvo/app/pipe.hoon 44:9 Test::Whitespace tallColsig split 0-running runstep #2 @44:9; overindented by 2
+hoons/arvo/app/pipe.hoon 42:17 Test::Whitespace tallColsig split 0-running TISTIS @45:7; overindented by 2
 hoons/arvo/app/pipe.hoon 55:22 Test::Whitespace tallColtar joined 0-running runstep #5 @55:20; missing newline @55:20
 hoons/arvo/app/pipe.hoon 55:22 Test::Whitespace tallColtar joined 0-running runstep #5 @55:22; overindented by 15
 hoons/arvo/app/pipe.hoon 55:38 Test::Whitespace tallColtar joined 0-running runstep #6 @55:36; missing newline @55:36
 hoons/arvo/app/pipe.hoon 55:38 Test::Whitespace tallColtar joined 0-running runstep #6 @55:38; overindented by 31
-hoons/arvo/app/pipe.hoon 67:11 Test::Whitespace tallColsig split 0-running runstep #1 @67:11; overindented by 4
-hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace tallColsig split 0-running runstep #2 @68:11; overindented by 4
-hoons/arvo/app/pipe.hoon 66:19 Test::Whitespace tallColsig split 0-running TISTIS @69:9; overindented by 4
+hoons/arvo/app/pipe.hoon 67:11 Test::Whitespace tallColsig split 0-running runstep #1 @67:11; overindented by 2
+hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace tallColsig split 0-running runstep #2 @68:11; overindented by 2
+hoons/arvo/app/pipe.hoon 66:19 Test::Whitespace tallColsig split 0-running TISTIS @69:9; overindented by 2
 hoons/arvo/app/pipe.hoon 73:24 Test::Whitespace tallColtar joined 0-running runstep #5 @73:22; missing newline @73:22
 hoons/arvo/app/pipe.hoon 73:24 Test::Whitespace tallColtar joined 0-running runstep #5 @73:24; overindented by 17
 hoons/arvo/app/pipe.hoon 81:20 Test::Whitespace tallColtar joined 0-running runstep #4 @81:18; missing newline @81:18
@@ -2082,14 +2082,14 @@ hoons/arvo/app/talk.hoon 2506:9 Test::Whitespace tallCenlus backdented element #
 hoons/arvo/app/curl.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:5 is underindented by 2
 === hoons/arvo/app/github.hoon ===
 hoons/arvo/app/github.hoon 7:1 Test::Whitespace optFordFashep Fashep body @7:5 is underindented by 2
-hoons/arvo/app/github.hoon 24:9 Test::Whitespace tallColsig split 0-running runstep #1 @24:9; overindented by 4
-hoons/arvo/app/github.hoon 25:9 Test::Whitespace tallColsig split 0-running runstep #2 @25:9; overindented by 4
-hoons/arvo/app/github.hoon 26:9 Test::Whitespace tallColsig split 0-running runstep #3 @26:9; overindented by 4
-hoons/arvo/app/github.hoon 23:17 Test::Whitespace tallColsig split 0-running TISTIS @32:7; overindented by 4
-hoons/arvo/app/github.hoon 37:9 Test::Whitespace tallColsig split 0-running runstep #1 @37:9; overindented by 4
-hoons/arvo/app/github.hoon 38:9 Test::Whitespace tallColsig split 0-running runstep #2 @38:9; overindented by 4
-hoons/arvo/app/github.hoon 39:9 Test::Whitespace tallColsig split 0-running runstep #3 @39:9; overindented by 4
-hoons/arvo/app/github.hoon 36:17 Test::Whitespace tallColsig split 0-running TISTIS @40:7; overindented by 4
+hoons/arvo/app/github.hoon 24:9 Test::Whitespace tallColsig split 0-running runstep #1 @24:9; overindented by 2
+hoons/arvo/app/github.hoon 25:9 Test::Whitespace tallColsig split 0-running runstep #2 @25:9; overindented by 2
+hoons/arvo/app/github.hoon 26:9 Test::Whitespace tallColsig split 0-running runstep #3 @26:9; overindented by 2
+hoons/arvo/app/github.hoon 23:17 Test::Whitespace tallColsig split 0-running TISTIS @32:7; overindented by 2
+hoons/arvo/app/github.hoon 37:9 Test::Whitespace tallColsig split 0-running runstep #1 @37:9; overindented by 2
+hoons/arvo/app/github.hoon 38:9 Test::Whitespace tallColsig split 0-running runstep #2 @38:9; overindented by 2
+hoons/arvo/app/github.hoon 39:9 Test::Whitespace tallColsig split 0-running runstep #3 @39:9; overindented by 2
+hoons/arvo/app/github.hoon 36:17 Test::Whitespace tallColsig split 0-running TISTIS @40:7; overindented by 2
 === hoons/arvo/app/hall.hoon ===
 hoons/arvo/app/hall.hoon 13:1 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
 hoons/arvo/app/hall.hoon 14:1 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
@@ -2642,12 +2642,6 @@ hoons/arvo/lib/hood/kiln.hoon 233:28 Test::Whitespace tallColtar joined 0-runnin
 hoons/arvo/lib/hood/kiln.hoon 242:5 Test::Whitespace tallWutcol backdented element #3, @247:7; comment overindented by 2
 hoons/arvo/lib/hood/kiln.hoon 317:7 Test::Whitespace tallKethep backdented element #2 @318:7; overindented by 4
 hoons/arvo/lib/hood/kiln.hoon 327:7 Test::Whitespace tallKethep backdented element #2 @328:7; overindented by 4
-hoons/arvo/lib/hood/kiln.hoon 347:9 Test::Whitespace tallColsig split 0-running runstep #1 @347:9; underindented by 16
-hoons/arvo/lib/hood/kiln.hoon 349:9 Test::Whitespace tallColsig split 0-running runstep #2 @349:9; underindented by 16
-hoons/arvo/lib/hood/kiln.hoon 350:9 Test::Whitespace tallColsig split 0-running runstep #3 @350:9; underindented by 16
-hoons/arvo/lib/hood/kiln.hoon 351:9 Test::Whitespace tallColsig split 0-running runstep #4 @351:9; underindented by 16
-hoons/arvo/lib/hood/kiln.hoon 352:9 Test::Whitespace tallColsig split 0-running runstep #5 @352:9; underindented by 16
-hoons/arvo/lib/hood/kiln.hoon 346:23 Test::Whitespace tallColsig split 0-running TISTIS @353:7; underindented by 16
 hoons/arvo/lib/hood/kiln.hoon 387:20 Test::Whitespace tallColtar joined 0-running runstep #5 @387:18; missing newline @387:18
 hoons/arvo/lib/hood/kiln.hoon 387:20 Test::Whitespace tallColtar joined 0-running runstep #5 @387:20; overindented by 11
 hoons/arvo/lib/hood/kiln.hoon 387:25 Test::Whitespace tallColtar joined 0-running runstep #6 @387:23; missing newline @387:23
