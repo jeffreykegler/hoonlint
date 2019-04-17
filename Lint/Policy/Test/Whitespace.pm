@@ -52,7 +52,6 @@ sub reanchorInc {
             $topNodeIX = $nodeIX;
             last PICK_NODE;
         }
-        last PICK_NODE if not defined $brickName;
     }
     return $node, 0 if not defined $topNodeIX;
     my $reanchorOffset = 0;
@@ -65,8 +64,9 @@ sub reanchorInc {
         my $thisReanchorOffset =
           $policy->{perNode}->{$nodeIX}->{reanchorOffset} // 0;
         $reanchorOffset += $thisReanchorOffset;
+	# say STDERR join " ", __FILE__, __LINE__, $currentLine, $reanchorOffset, $thisReanchorOffset;
     }
-    return $firstBrickNode, $reanchorOffset;
+    return $nodes[$topNodeIX], $reanchorOffset;
 }
 
 # A "gapSeq" is an ordered subset of a node's children.
@@ -2098,14 +2098,17 @@ sub checkSplit_0Running {
     my $lhsName = $instance->symbol($node);
     if ( $lhsName eq 'tallColsig' ) {
         # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
-        my $anchor =
-          $instance->firstBrickOfLineInc( $node, {
+	# TODO: Cleanup after development
+	my ( $anchor, $offset ) = $policy->reanchorInc( $node, {
 	  'tallCendot' => 1,
 	  'tallCenhep' => 1,
+	  'tallCenlus' => 1,
 	  'tallKethep' => 1,
 	  } );
+
         ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
-        # say join " ", __FILE__, __LINE__, $anchorLine, $anchorColumn;
+	$anchorColumn += $offset;
+        # say STDERR join " ", __FILE__, __LINE__, $anchorLine, $anchorColumn, $offset;
     }
 
     my @mistakes = ();
