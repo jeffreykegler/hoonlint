@@ -63,8 +63,8 @@ Which do, and which do not, is described in the
 individual cases.
 
 We will first give a definition of reanchoring.
-This is, frankly, opaque, but it will be followed by
-a number of example which hopefully will make the concept
+The definitions are, frankly, opaque, but they will be followed by
+a number of examples which hopefully will make the concept
 clearer.
 
 Informally, reanchoring is a method of conserving indentation.
