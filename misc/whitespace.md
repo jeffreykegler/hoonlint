@@ -39,14 +39,119 @@ of text `Y` if text `X` begins at column `Column(Y)+N*2`.
 We say the indentation of text `X` is `N` stops **less than the indentation**
 of text `Y` if text `X` begins at column `Column(Y)-N*2`.
 
+A **brick** is a Hoon lexeme with semantics.
+A Hoon lexeme without semantics is a **mortar** lexeme.
+All rune are bricks, but not all bricks are runes.
+
 The **rune line** of a hoon is the line on which the hoon's rune occurs,
 and the **rune column** of a hoon
 is the column at which the hoon's rune begins.
 
 Many alignments are with respect to an **anchor column**.
-By default, the anchor column is the rune column,
-but there are many important exceptions.
-Exceptions are described below.
+Usually, the anchor column is the rune column,
+but there are many exceptions, and they
+are important.
+See below.
+
+### Reanchoring
+
+If the rune line contains other bricks,
+it may **reanchor**, that is the anchor column
+may be somewhere else than than rune column.
+Not all runes participate in reanchoring.
+Which do, and which do not, is described in the
+individual cases.
+
+We will first give a definition of reanchoring.
+This is, frankly, opaque, but it will be followed by
+a number of example which hopefully will make the concept
+clearer.
+Informally, reanchoring is a method of conserving indentation.
+Reanchoring moves the anchor column left
+on the rune line, so that it becomes based at a parent brick earlier in the
+rune line.
+The column of the parent brick becomes the **anchor brick column**.
+All parent bricks contribute to the backdenting, so that there is
+an **reanchor offset**.
+The anchor column is the anchor brick column,
+plus the reanchor offset.
+
+More formally, then,
+the **anchor column** is the **anchor brick column**,
+plus the **reanchor offset**.
+The anchor brick column is the column of a brick on the rune line.
+Which one will depend on the individual bricks involved, but typically
+it is the first brick on the rune line.
+
+Each rune line has the rune itself and zero or more parent bricks.
+Each brick on the rune line has a its own **reanchor offset**, which depends
+on the brick and the number of elements of that rune which 
+Depending on the number of elements required by the brick,
+and the number of those elements joined on the rune line,
+each brick on the rune line has a **per-brick reanchor offset**.
+The total of all the per-brick reanchor offsets of parent bricks
+is the **reanchor offset** of the rune line.
+The **anchor column* of the rune line is the anchor brick column,
+plus the reanchor offset.
+
+Here is a first example:
+
+```
+        :+  %depends  %|  :~
+          definitions+[%& deh]
+          listeners+[%& sup]
+          waiting+[%& out]
+        ==
+```
+
+This is lines 1916-1920 of
+`arvo/sys/vane/ford.hoon`.
+The rune line is line 1916, and the rune is
+COLSIG (`:~`).
+The reanchor base is the COLLUS (`:+`).
+COLLUS is 3-fixed, but all three of its elements are
+on the rune line, so the per-brick reanchor offset is 0.
+The anchor column is the anchor brick column plus the reanchor
+offset, and in this case,
+the anchor column is the same as the anchor brick column.
+COLSIG is 1-running, and normal indentation indent the runsteps
+one stop past the anchor column,
+and the final TISTIS at the anchor column,
+which is what we see.
+
+
+The second example is 
+lines 346-356 of
+`arvo/lib/hood/kiln.hoon`:
+
+```
+    =/  request-data  :~
+        [0 [0 8.080] 0 'localhost' ~]
+        ::  associate 0 as the anonymous ship, which is the ++add result.
+        [[0 (scot %p (add our ^~((bex 64))))] ~ ~]
+        'not-yet-implemented'
+        `'en-US,en;q=0.9'
+        `.127.0.0.1
+      ==
+    =/  monies/coin  [%many ~[[%blob request-data] [%$ ~.n 0]]]
+    =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
+    (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])
+```
+
+Here the rune line is line 346, the rune is again COLSIG,
+and it reanchors at TISFAS (`/=`).
+TISFAS is 3-fixed, and 2 of its elements are on the rune line,
+so the the per-brick reanchor offset of the TISFAS is that of
+its 2nd element -- one stop.
+The anchor column is therefore one stop after the anchor brick
+column.
+COLSIG again is 1-running, so that its runsteps are indented
+one stop past the anchor column,
+which in this case means two stops past the anchor brick column.
+By the same logic, the TISTIS is indented at the anchor column,
+whicb is one stop past the anchor brick column.
+The last three lines of the example are the last element of the
+TISFAS.
 
 ### Comments
 
