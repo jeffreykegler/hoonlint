@@ -1024,6 +1024,9 @@ sub checkWisp5d {
     my ( $policy, $node ) = @_;
     my @mistakes = ();
     my $instance  = $policy->{lint};
+    my $battery =
+      $instance->ancestorByLHS( $node, { tallBarcab => 1, tallBarcen => 1, tallBarket => 1 } );
+    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC( $battery );
     my ( $parentLine, $parentColumn ) = $instance->nodeLC( $node );
     my $gapSeq    = $policy->gapSeq0($node);
     my ($gap, $hephep) = @{$gapSeq};
@@ -1042,12 +1045,13 @@ sub checkWisp5d {
                 parentColumn => $parentColumn,
                 line         => $gapMistakeLine,
                 column       => $gapMistakeColumn,
+                topicLines   => [ $batteryLine ],
               };
         }
     }
 
     my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
-    my $expectedColumn = $parentColumn;
+    my $expectedColumn = $batteryColumn;
     my $hephepIsMisaligned = $hephepColumn != $expectedColumn;
 
     if ($hephepIsMisaligned) {
@@ -1069,6 +1073,7 @@ sub checkWisp5d {
             line           => $hephepLine,
             column         => $hephepColumn,
             expectedColumn => $expectedColumn,
+                topicLines   => [ $batteryLine ],
           };
     }
     return \@mistakes;
@@ -1545,8 +1550,19 @@ sub checkBarcen {
     my ( $gap,         $battery )       = @{$policy->gapSeq0($node)};
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
+    # my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
+    my ( $anchorNode, $reanchorOffset ) = $policy->reanchorInc(
+        $node,
+        {
+            # LustisCell => 1, # should NOT reanchor at Lustis
+            # LushepCell => 1, # should NOT reanchor at Lushep
+            # LuslusCell => 1, # should NOT reanchor at Luslus, per experiment
+            tallKetbar => 1,
+            tallKetwut => 1
+        }
+    );
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    $anchorColumn += $reanchorOffset;
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
 
     my @mistakes = ();
