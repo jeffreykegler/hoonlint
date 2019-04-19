@@ -2563,6 +2563,7 @@ sub check_0_as_1Running {
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC( $tistis );
 
     my @mistakes = ();
+    my $tag = '0-running';
 
     # We deal with the running list here, rather that
     # in its own node
@@ -2572,88 +2573,14 @@ sub check_0_as_1Running {
     my @runningChildren = ($headGap, $head, $runningGap);
     push @runningChildren,  @{$running->{children}};
 
-    my $childIX         = 0;
-    my $expectedColumn  = $anchorColumn;
-    my $expectedLine    = $anchorLine + 1;
+    my $expectedColumn = $anchorColumn;
 
-    # Initial runsteps may be on a single line,
-    # separated by one stop
-    RUN_STEP: while ( $childIX <= $#runningChildren ) {
-	my $gap = $runningChildren[$childIX];
-        my $runStep = $runningChildren[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
-	if ($runStepLine != $anchorLine) {
-	  last RUN_STEP;
-	}
-        if ( $gap->{length} != 2 ) {
-            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-            $expectedColumn = $gapColumn + 2;
-            my $msg            = sprintf
-              "0-running runstep #%d %s; %s",
-	      ( $childIX / 2 ) + 1,
-              describeLC( $gapLine, $gapColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runeLine,
-                parentColumn   => $runeColumn,
-                line           => $headLine,
-                column         => $headColumn,
-                expectedColumn => $expectedColumn,
-              };
-        }
-        $childIX += 2;
-    }
-
-    while ( $childIX <= $#runningChildren ) {
-	my $gap = $runningChildren[$childIX];
-        my $runStep = $runningChildren[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
-        if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $anchorColumn )} )
-        {
-            for my $gapMistake ( @gapMistakes ) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
-                  "0-running runstep #%d %s; %s",
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $runStepLine,
-                    parentColumn => $runStepColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                    topicLines   => [ $runStepLine, $anchorLine ],
-                  };
-            }
-        }
-        if ( $runStepColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "0-running runstep #%d %s; %s",
-              ( $childIX / 2 ) + 1,
-              describeLC( $runStepLine, $runStepColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runStepLine,
-                parentColumn   => $runStepColumn,
-                line           => $runStepLine,
-                column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
-		topicLines     => [$anchorLine, $expectedLine],
-              };
-        }
-        $expectedLine = $runStepLine + 1;
-        $childIX += 2;
-    }
+    push @mistakes,
+      @{
+        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+	$node, $running, \@runningChildren
+        )
+      };
 
     if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $anchorColumn )} )
         {
