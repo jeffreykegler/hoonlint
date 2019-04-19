@@ -863,14 +863,16 @@ sub checkTopKids {
 
 # Common logic for checking the running element of a hoon.
 # returns a (possibly empty) list of mistakes.
+#
+# TODO: Some of these arguments can (should?) be computed from others.
+#
 sub checkRunning {
-    my ($policy, $tag, $anchorColumn, $parent, $running, $runningChildren) = @_;
+    my ($policy, $tag, $anchorColumn, $expectedColumn, $parent, $running, $runningChildren) = @_;
     my $instance  = $policy->{lint};
 
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my $childIX         = 0;
-    my $expectedColumn = $anchorColumn + 2;
     my $expectedLine = $runeLine + 1;
 
     my @mistakes = ();
@@ -2258,7 +2260,7 @@ sub checkSplit_0Running {
 
         my $msg =
           sprintf
-          '%s %s; too many runsteps; has %d, minimum is %d',
+          '%s %s; too few runsteps; has %d, minimum is %d',
 	  $tag,
           describeLC( $runningLine, $runningColumn ),
           $runStepCount, $minimumRunsteps;
@@ -2274,7 +2276,7 @@ sub checkSplit_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( $tag, $anchorColumn,
+        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
 	$node, $running, $runningChildren
         )
       };
@@ -2341,25 +2343,25 @@ sub checkJoined_0Running {
       @{ $policy->gapSeq($node) };
 
     my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
+    my ( $anchorLine, $anchorColumn ) = ( $runeLine,    $runeColumn );
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my @mistakes = ();
+    my $tag = 'joined 0-running';
+    my $expectedColumn = $runeColumn + 4;
 
     # We deal with the running list here, rather than
     # in its own node
 
     my @runningChildren = ($runningGap, @{$running->{children}});
-    my $childIX         = 0;
-    my $expectedColumn = $runeColumn + 4;
-    my $expectedLine = $runeLine + 1;
-
     my $runStepCount = ( scalar @runningChildren) / 2;
     if ( defined $maximumRunsteps and $runStepCount > $maximumRunsteps ) {
 
         # Untested
         my $msg = sprintf
-          "joined 0-running %s; too many runsteps; has %d, maximum is %d",
+          '%s %s; too many runsteps; has %d, maximum is %d',
+	  $tag,
           describeLC( $runningLine, $runningColumn ),
           $runStepCount, $maximumRunsteps;
         push @mistakes,
@@ -2372,85 +2374,12 @@ sub checkJoined_0Running {
           };
     }
 
-    # Initial runsteps are on the rune line,
-    # separated by one stop
-  RUN_STEP: while ( $childIX <= $#runningChildren ) {
-        my $gap = $runningChildren[$childIX];
-        my $runStep = $runningChildren[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
-        if ( $runStepLine != $runeLine ) {
-            last RUN_STEP;
-        }
-        if ( $gap->{length} != 2 ) {
-            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-            $expectedColumn = $gapColumn + 2;
-            my $msg            = sprintf
-              "joined 0-running runstep #%d %s; %s",
-              ( $childIX / 2 ) + 1,
-              describeLC( $gapLine, $gapColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runeLine,
-                parentColumn   => $runeColumn,
-                line           => $runStepLine,
-                column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
-              };
-        }
-        $childIX += 2;
-    }
-
-    while ( $childIX <= $#runningChildren ) {
-        my $gap = $runningChildren[$childIX];
-        my $runStep = $runningChildren[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $gap, $runeColumn, $runStepColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
-                  "joined 0-running runstep #%d %s; %s",
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $runStepLine,
-                    parentColumn => $runStepColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                    topicLines   => [ $runStepLine, $runeLine ],
-                  };
-            }
-        }
-        if ( $runStepColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "joined 0-running runstep #%d %s; %s",
-              ( $childIX / 2 ) + 1,
-              describeLC( $runStepLine, $runStepColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runStepLine,
-                parentColumn   => $runStepColumn,
-                line           => $runStepLine,
-                column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
-                topicLines     => [ $runeLine, $expectedLine ],
-              };
-        }
-        $expectedLine = $runStepLine + 1;
-        $childIX += 2;
-    }
+    push @mistakes,
+      @{
+        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+	$node, $running, \@runningChildren
+        )
+      };
 
     if ( my @gapMistakes =
         @{ $policy->isOneLineGap( $tistisGap, $runeColumn, $expectedColumn ) } )
