@@ -1024,10 +1024,15 @@ sub checkWisp5d {
     my ( $policy, $node ) = @_;
     my @mistakes = ();
     my $instance  = $policy->{lint};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC( $node );
+
     my $battery =
       $instance->ancestorByLHS( $node, { tallBarcab => 1, tallBarcen => 1, tallBarket => 1 } );
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC( $battery );
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC( $node );
+    my $batteryNodeIX = $battery->{IX};
+    my $anchorColumn = $policy->{perNode}->{$batteryNodeIX}->{anchorColumn};
+    $anchorColumn //= $batteryColumn;
+
     my $gapSeq    = $policy->gapSeq0($node);
     my ($gap, $hephep) = @{$gapSeq};
     if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, $parentColumn ) } ) {
@@ -1051,7 +1056,7 @@ sub checkWisp5d {
     }
 
     my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
-    my $expectedColumn = $batteryColumn;
+    my $expectedColumn = $anchorColumn;
     my $hephepIsMisaligned = $hephepColumn != $expectedColumn;
 
     if ($hephepIsMisaligned) {
@@ -1427,6 +1432,8 @@ sub checkBarcab {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
+    # TODO: reanchoring logic, memoize anchorColumn for checkWisp5d()
+
     # BARCAB is special, so we need to find the components using low-level
     # techniques.
     # tallBarcab ::= (- BAR CAB GAP -) till5d (- GAP -) wasp5d wisp5d
@@ -1557,12 +1564,17 @@ sub checkBarcen {
             # LustisCell => 1, # should NOT reanchor at Lustis
             # LushepCell => 1, # should NOT reanchor at Lushep
             # LuslusCell => 1, # should NOT reanchor at Luslus, per experiment
+            # tallTisgar => 1, # should NOT reanchor at TISGAR, per experiment
             tallKetbar => 1,
-            tallKetwut => 1
+            tallKetwut => 1,
         }
     );
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
     $anchorColumn += $reanchorOffset;
+
+    my $batteryNodeIX = $battery->{IX};
+    $policy->{perNode}->{$batteryNodeIX}->{anchorColumn} = $anchorColumn;
+
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
 
     my @mistakes = ();
@@ -1643,6 +1655,8 @@ sub checkBarcen {
 sub checkBarket {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
+
+    # TODO: reanchoring logic, memoize anchorColumn for checkWisp5d()
 
     my ( $headGap, $head, $batteryGap, $battery ) = @{$policy->gapSeq0($node)};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
