@@ -866,7 +866,6 @@ sub checkTopKids {
 sub checkRunning {
     my ($policy, $tag, $anchorColumn, $parent, $running, $runningChildren) = @_;
     my $instance  = $policy->{lint};
-    my $minimumRunsteps = $instance->{minSplit_0RunningSteps} // 0;
 
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
@@ -875,26 +874,6 @@ sub checkRunning {
     my $expectedLine = $runeLine + 1;
 
     my @mistakes = ();
-
-    my $runStepCount = (scalar @{$runningChildren})/2;
-    if ( $runStepCount < $minimumRunsteps ) {
-
-        # Untested
-
-        my $msg =
-          sprintf
-          "joined 0-running %s; too many runsteps; has %d, minimum is %d",
-          describeLC( $runningLine, $runningColumn ),
-          $runStepCount, $minimumRunsteps;
-        push @mistakes,
-          {
-            desc         => $msg,
-            parentLine   => $runeLine,
-            parentColumn => $runeColumn,
-            line         => $runningLine,
-            column       => $runningColumn,
-          };
-    }
 
     # Initial runsteps may be on a single line,
     # separated by one stop
@@ -2271,11 +2250,32 @@ sub checkSplit_0Running {
     # We deal with the running list here, rather than
     # in its own node
 
+    my $runningChildren = [ $runningGap, @{ $running->{children} } ];
+    my $runStepCount = (scalar @{$runningChildren})/2;
+    if ( $runStepCount < $minimumRunsteps ) {
+
+        # Untested
+
+        my $msg =
+          sprintf
+          '%s %s; too many runsteps; has %d, minimum is %d',
+	  $tag,
+          describeLC( $runningLine, $runningColumn ),
+          $runStepCount, $minimumRunsteps;
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $runningLine,
+            column       => $runningColumn,
+          };
+    }
+
     push @mistakes,
       @{
         $policy->checkRunning( $tag, $anchorColumn,
-	$node, $running,
-            [ $runningGap, @{ $running->{children} } ]
+	$node, $running, $runningChildren
         )
       };
 
