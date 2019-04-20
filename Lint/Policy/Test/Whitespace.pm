@@ -873,47 +873,90 @@ sub checkRunning {
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my $childIX         = 0;
-    my $expectedLine = $runeLine + 1;
+    my $firstSingletonLine;
 
     my @mistakes = ();
 
     # Initial runsteps may be on a single line,
     # separated by one stop
-  RUN_STEP: while ( $childIX <= $#$runningChildren ) {
-        my $gap = $runningChildren->[$childIX];
-        my $runStep = $runningChildren->[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
-        if ( $runStepLine != $runeLine ) {
-            last RUN_STEP;
-        }
-        if ( $gap->{length} != 2 ) {
-            my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-            $expectedColumn = $gapColumn + 2;
-            my $msg            = sprintf
-              '%s runstep #%d %s; %s',
-	      $tag,
+  RUN_STEP: while ( $childIX < $#$runningChildren ) {
+        my $runStepCount         = 0;
+	my $gap     = $runningChildren->[$childIX];
+	my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+	my $runStep = $runningChildren->[ $childIX + 1 ];
+	my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
+
+        my ($workingRunStepLine) = $instance->nodeLC($runStep);
+
+        if ( $runStepColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "%s runstep #%d %s; %s",
+              $tag,
               ( $childIX / 2 ) + 1,
-              describeLC( $gapLine, $gapColumn ),
+              describeLC( $thisRunStepLine, $runStepColumn ),
               describeMisindent( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
-                parentLine     => $runeLine,
-                parentColumn   => $runeColumn,
-                line           => $runStepLine,
+                parentLine     => $thisRunStepLine,
+                parentColumn   => $runStepColumn,
+                line           => $thisRunStepLine,
                 column         => $runStepColumn,
                 expectedColumn => $expectedColumn,
+                topicLines     => [$runeLine],
               };
         }
-        $childIX += 2;
-    }
 
-    while ( $childIX <= $#$runningChildren ) {
-        my $gap = $runningChildren->[$childIX];
-        my $runStep = $runningChildren->[$childIX+1];
-        my ( $runStepLine, $runStepColumn ) =
-          $instance->line_column( $runStep->{start} );
+      INLINE_RUN_STEP: while ( 1 ) {
+            $childIX += 2;
+	    last RUN_STEP unless $childIX < $#$runningChildren;
+            $gap     = $runningChildren->[$childIX];
+	    ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+            $runStep = $runningChildren->[ $childIX + 1 ];
+            ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
+            if ( $thisRunStepLine != $workingRunStepLine ) {
+                last INLINE_RUN_STEP;
+            }
+            $runStepCount++;
+            if ( $gap->{length} != 2 ) {
+                my $nextExpectedColumn = $gapColumn + 2;
+                my $msg = sprintf
+                  '%s runstep #%d %s; %s',
+                  $tag,
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $gapLine, $gapColumn ),
+                  describeMisindent( $runStepColumn, $nextExpectedColumn );
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $runeLine,
+                    parentColumn   => $runeColumn,
+                    line           => $thisRunStepLine,
+                    column         => $runStepColumn,
+                    expectedColumn => $nextExpectedColumn,
+                  };
+            }
+        }
+
+	$firstSingletonLine = $workingRunStepLine if $runStepCount <= 1 and not defined $firstSingletonLine;
+        if ($runStepCount > 1 and defined $firstSingletonLine ) {
+                my $msg = sprintf
+                  '%s runstep %s; multi-step line not allowed after singleton (%d)',
+                  $tag,
+                  describeLC( $gapLine, $gapColumn ),
+		  $firstSingletonLine;
+                push @mistakes,
+                  {
+                    desc           => $msg,
+                    parentLine     => $runeLine,
+                    parentColumn   => $runeColumn,
+                    line           => $thisRunStepLine,
+                    column         => $runStepColumn,
+		    topicLines => [ $firstSingletonLine ]
+                  };
+	}
+
+	# say STDERR join " ", __FILE__, __LINE__, $childIX, $#$runningChildren;
         if ( my @gapMistakes =
             @{ $policy->isOneLineGap( $gap, $anchorColumn, $runStepColumn ) } )
         {
@@ -930,35 +973,17 @@ sub checkRunning {
                 push @mistakes,
                   {
                     desc         => $msg,
-                    parentLine   => $runStepLine,
+                    parentLine   => $thisRunStepLine,
                     parentColumn => $runStepColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
-                    topicLines   => [ $runStepLine, $runeLine ],
+                    topicLines   => [ $thisRunStepLine, $runeLine ],
                   };
             }
         }
-        if ( $runStepColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "%s runstep #%d %s; %s",
-	      $tag,
-              ( $childIX / 2 ) + 1,
-              describeLC( $runStepLine, $runStepColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runStepLine,
-                parentColumn   => $runStepColumn,
-                line           => $runStepLine,
-                column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
-                topicLines     => [ $runeLine, $expectedLine ],
-              };
-        }
-        $expectedLine = $runStepLine + 1;
-        $childIX += 2;
     }
+
+    # say join " ", __FILE__, __LINE__, 'childIX', $childIX, $#$runningChildren;
 
     return \@mistakes;
 
@@ -1016,14 +1041,11 @@ sub whapCellBodyAlignment {
         my ( undef, $head, $gap,      $body )       = @{ $policy->gapSeq0($cell) };
         my ( $headLine, $headColumn ) = $instance->nodeLC($head);
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
-	# say STDERR join " ", __FILE__, __LINE__, $bodyColumn;
         my $gapLength = $gap->{length};
         $firstBodyColumn = $bodyColumn
           if not defined $firstBodyColumn;
         next CHILD unless $headLine == $bodyLine;
-	# say STDERR join " ", __FILE__, __LINE__, $bodyColumn;
         next CHILD unless $gapLength > 2;
-	# say STDERR join " ", __FILE__, __LINE__, $bodyLine, $bodyColumn;
         $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
         $firstLine{$bodyColumn}       = $bodyLine;
     }
