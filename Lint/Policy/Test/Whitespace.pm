@@ -268,7 +268,7 @@ sub i_isOneLineGap {
             push @mistakes,
               {
                 msg => "$desc "
-                  . describeMisindent( $commentOffset, $expectedColumn ),
+                  . describeMisindent2( $commentOffset, $expectedColumn ),
                 line   => $lineNum,
                 column => $commentOffset,
               };
@@ -316,7 +316,7 @@ sub i_isOneLineGap {
                 push @mistakes,
                   {
                     msg => "$desc "
-                      . describeMisindent( $commentOffset, $expectedColumn2 ),
+                      . describeMisindent2( $commentOffset, $expectedColumn2 ),
                     line   => $lineNum,
                     column => $commentOffset,
                   };
@@ -418,7 +418,7 @@ sub checkSailAttribute {
         my $msg = sprintf
           "Sail attribute head %s; %s",
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedHeadColumn );
+          describeMisindent2( $headColumn, $expectedHeadColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -453,7 +453,7 @@ sub checkSailAttribute {
             my $msg = sprintf
               "Sail attribute body %s; %s",
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -521,7 +521,7 @@ sub checkTailOfElem {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $expectedColumn );
+          describeMisindent2( $tistisColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -584,7 +584,7 @@ sub checkTailOfTop {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $expectedColumn );
+          describeMisindent2( $tistisColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -660,7 +660,7 @@ sub checkBont {
             my $msg =
               sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -718,7 +718,7 @@ sub checkBonzElement {
         $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'Bonz element body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedColumn );
+          describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -781,7 +781,7 @@ sub checkTopSail {
         $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'Top Sail body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedColumn );
+          describeMisindent2( $bodyColumn, $expectedColumn );
 	  ;
         push @mistakes,
           {
@@ -845,7 +845,7 @@ sub checkTopKids {
         $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'Sail kids body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedColumn );
+          describeMisindent2( $bodyColumn, $expectedColumn );
 	  ;
         push @mistakes,
           {
@@ -867,7 +867,7 @@ sub checkTopKids {
 # TODO: Some of these arguments can (should?) be computed from others.
 #
 sub checkRunning {
-    my ($policy, $tag, $anchorColumn, $expectedColumn, $parent, $running, $runningChildren) = @_;
+    my ($policy, $options, $tag, $anchorColumn, $expectedColumn, $parent, $running, $runningChildren) = @_;
     my $instance  = $policy->{lint};
 
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
@@ -894,7 +894,7 @@ sub checkRunning {
               $tag,
               ( $childIX / 2 ) + 1,
               describeLC( $thisRunStepLine, $runStepColumn ),
-              describeMisindent( $runStepColumn, $expectedColumn );
+              describeMisindent2( $runStepColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -925,7 +925,7 @@ sub checkRunning {
                   $tag,
                   ( $childIX / 2 ) + 1,
                   describeLC( $gapLine, $gapColumn ),
-                  describeMisindent( $runStepColumn, $nextExpectedColumn );
+                  describeMisindent2( $runStepColumn, $nextExpectedColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -1094,7 +1094,7 @@ sub checkWhap5d {
               "cell #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $boogLine, $boogColumn ),
-              describeMisindent( $boogColumn, $expectedColumn );
+              describeMisindent2( $boogColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -1191,7 +1191,7 @@ sub checkWisp5d {
         my $msg = sprintf
           'battery hephep %s; %s',
           describeLC( $hephepLine, $hephepColumn ),
-          describeMisindent( $hephepColumn, $expectedColumn );
+          describeMisindent2( $hephepColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1255,7 +1255,7 @@ sub checkSplitFascom {
         my $msg = sprintf
           "split Fascom %s; %s",
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedColumn );
+          describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1302,7 +1302,7 @@ sub checkSplitFascom {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "split Fascom TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $anchorColumn );
+          describeMisindent2( $tistisColumn, $anchorColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1338,7 +1338,7 @@ sub checkJoinedFascom {
         my $msg = sprintf
           "joined Fascom %s; %s",
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedColumn );
+          describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1385,7 +1385,7 @@ sub checkJoinedFascom {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "joined Fascom TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent2( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1433,7 +1433,7 @@ sub checkFascomElements {
               "element %d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $elementLine, $elementColumn ),
-              describeMisindent( $elementColumn, $expectedColumn );
+              describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -1502,7 +1502,7 @@ sub checkSeq {
 	      $tag,
               ( $childIX / 2 ) + 1,
               describeLC( $elementLine, $elementColumn ),
-              describeMisindent( $elementColumn, $expectedColumn );
+              describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -1594,7 +1594,7 @@ sub checkBarcab {
                   sprintf
 'Pseudo-joined BARCEN head; head/comment mismatch; head is %s',
                   describeLC( $headLine, $headColumn ),
-                  describeMisindent( $headColumn, $expectedHeadColumn );
+                  describeMisindent2( $headColumn, $expectedHeadColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -1620,7 +1620,7 @@ sub checkBarcab {
         $expectedColumn = $headGapColumn + $expectedLength;
         my $msg = sprintf 'Barcab head %s; %s',
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedColumn );
+          describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1658,7 +1658,7 @@ sub checkBarcab {
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'Barcab battery %s; %s',
           describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent( $batteryColumn, $expectedColumn );
+          describeMisindent2( $batteryColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1718,7 +1718,7 @@ sub checkBarcen {
         if ( $expectedColumn != $batteryColumn ) {
             my $msg = sprintf 'joined Barcen battery %s; %s',
               describeLC( $batteryLine, $batteryColumn ),
-              describeMisindent( $batteryColumn, $expectedColumn );
+              describeMisindent2( $batteryColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -1758,7 +1758,7 @@ sub checkBarcen {
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'split Barcen battery %s; %s',
           describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent( $batteryColumn, $expectedColumn );
+          describeMisindent2( $batteryColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1814,7 +1814,7 @@ sub checkBarket {
                   sprintf
 'Pseudo-joined Barket head; head/comment mismatch; head is %s',
                   describeLC( $headLine, $headColumn ),
-                  describeMisindent( $headColumn, $expectedHeadColumn );
+                  describeMisindent2( $headColumn, $expectedHeadColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -1840,7 +1840,7 @@ sub checkBarket {
         $expectedColumn = $headGapColumn + $expectedLength;
         my $msg = sprintf 'Barket head %s; %s',
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedColumn );
+          describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1878,7 +1878,7 @@ sub checkBarket {
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'Barket battery %s; %s',
           describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent( $batteryColumn, $expectedColumn );
+          describeMisindent2( $batteryColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -1934,7 +1934,7 @@ sub checkFashep {
             my $msg =
               sprintf 'Fashep body %s is %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2014,7 +2014,7 @@ sub checkFaslus {
             my $msg =
               sprintf 'Faslus body %s is %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2076,7 +2076,7 @@ sub checkFord_1Gap {
                   sprintf 'joined %s body %s is %s',
                   $tag,
                   describeLC( $bodyLine, $bodyColumn ),
-                  describeMisindent( $bodyColumn, $expectedBodyColumn );
+                  describeMisindent2( $bodyColumn, $expectedBodyColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -2119,7 +2119,7 @@ sub checkFord_1Gap {
               sprintf 'split %s body %s is %s',
               $tag,
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2173,7 +2173,7 @@ sub checkFaswut {
             my $msg =
               sprintf 'FASWUT; body %s is %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2298,7 +2298,7 @@ sub checkSplit_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
 	$node, $running, $runningChildren
         )
       };
@@ -2340,7 +2340,7 @@ sub checkSplit_0Running {
         my $msg = sprintf '%s TISTIS %s; %s',
 	  $tag,
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $anchorColumn );
+          describeMisindent2( $tistisColumn, $anchorColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2398,7 +2398,7 @@ sub checkJoined_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
 	$node, $running, \@runningChildren
         )
       };
@@ -2437,7 +2437,7 @@ sub checkJoined_0Running {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "joined 0-running TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent2( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2490,7 +2490,7 @@ sub check_1Running {
         my $msg = sprintf
           "1-running head %s; %s",
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedColumn );
+          describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2511,7 +2511,7 @@ sub check_1Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
 	$node, $running, \@runningChildren
         )
       };
@@ -2549,7 +2549,7 @@ sub check_1Running {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "1-running TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent2( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2599,7 +2599,7 @@ sub check_0_as_1Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( $tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
 	$node, $running, \@runningChildren
         )
       };
@@ -2637,7 +2637,7 @@ sub check_0_as_1Running {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "0-running TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $anchorColumn );
+          describeMisindent2( $tistisColumn, $anchorColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2657,7 +2657,7 @@ sub describeLC {
     return '@' . $line . ':' . ( $column + 1 );
 }
 
-sub describeMisindent {
+sub describeMisindent2 {
     my ( $got, $sought ) = @_;
     if ( $got > $sought ) {
         return "overindented by " . ( $got - $sought );
@@ -2845,7 +2845,7 @@ sub check_1Jogging {
           "1-jogging %s head %s; %s",
           $chessSide,
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedColumn );
+          describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2916,7 +2916,7 @@ sub check_1Jogging {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "1-jogging TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent2( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -2976,7 +2976,7 @@ sub check_2Jogging {
               "2-jogging %s head %s; %s",
               $chessSide,
               describeLC( $headLine, $headColumn ),
-              describeMisindent( $headColumn, $expectedColumn );
+              describeMisindent2( $headColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2995,7 +2995,7 @@ sub check_2Jogging {
               "2-jogging %s subhead %s; %s",
               $chessSide,
               describeLC( $subheadLine, $subheadColumn ),
-              describeMisindent( $subheadColumn, $expectedColumn );
+              describeMisindent2( $subheadColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3015,7 +3015,7 @@ sub check_2Jogging {
             my $msg = sprintf
               "2-jogging split head %s; %s",
               describeLC( $headLine, $headColumn ),
-              describeMisindent( $headColumn, $expectedColumn );
+              describeMisindent2( $headColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3060,7 +3060,7 @@ sub check_2Jogging {
               "2-jogging %s subhead %s; %s",
               $chessSide,
               describeLC( $subheadLine, $subheadColumn ),
-              describeMisindent( $subheadColumn, $expectedColumn );
+              describeMisindent2( $subheadColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3132,7 +3132,7 @@ sub check_2Jogging {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "2-jogging TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $runeColumn );
+          describeMisindent2( $tistisColumn, $runeColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3186,7 +3186,7 @@ sub check_Jogging1 {
         my $msg = sprintf
           "1-jogging jogging %s; %s",
           describeLC( $joggingLine, $joggingColumn ),
-          describeMisindent( $joggingColumn, $expectedColumn );
+          describeMisindent2( $joggingColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3232,7 +3232,7 @@ sub check_Jogging1 {
     if ($tistisIsMisaligned) {
         my $msg = sprintf "jogging-1 TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent( $tistisColumn, $expectedColumn );
+          describeMisindent2( $tistisColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3271,7 +3271,7 @@ sub check_Jogging1 {
         my $msg = sprintf
           "1-jogging tail %s; %s",
           describeLC( $tailLine, $tailColumn ),
-          describeMisindent( $tailColumn, $expectedColumn );
+          describeMisindent2( $tailColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3386,7 +3386,7 @@ sub checkFascomElement {
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Fascom element head %s; %s',
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedHeadColumn );
+          describeMisindent2( $headColumn, $expectedHeadColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3405,7 +3405,7 @@ sub checkFascomElement {
         if ( $gapLength != 2 and $bodyColumn != $fascomBodyColumn ) {
             my $msg = sprintf 'Fascom element body %s; %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $fascomBodyColumn );
+              describeMisindent2( $bodyColumn, $fascomBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3429,7 +3429,7 @@ sub checkFascomElement {
               sprintf
 'Pseudo-joined Fascom element %s; body/comment mismatch; body is %s',
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3447,7 +3447,7 @@ sub checkFascomElement {
         if ( $bodyColumn != $expectedColumn ) {
             my $msg = sprintf 'Pseudo-joined Fascom element %s; body %s',
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3468,7 +3468,7 @@ sub checkFascomElement {
     if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'Fascom element body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
+          describeMisindent2( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3537,7 +3537,7 @@ sub checkFastis {
         if ( $symbolColumn != $expectedSymbolColumn ) {
             my $msg = sprintf 'Fastis symbol %s; %s',
               describeLC( $symbolLine, $symbolColumn ),
-              describeMisindent( $symbolColumn, $expectedSymbolColumn );
+              describeMisindent2( $symbolColumn, $expectedSymbolColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3557,7 +3557,7 @@ sub checkFastis {
             if ( $hornColumn != $expectedHornColumn ) {
                 my $msg = sprintf 'Fastis horn %s; %s',
                   describeLC( $hornLine, $hornColumn ),
-                  describeMisindent( $hornColumn, $expectedHornColumn );
+                  describeMisindent2( $hornColumn, $expectedHornColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -3597,7 +3597,7 @@ sub checkFastis {
         if ( $hornColumn != $expectedHornColumn ) {
             my $msg = sprintf 'Fastis split horn %s; %s',
               describeLC( $hornLine, $hornColumn ),
-              describeMisindent( $hornColumn, $expectedHornColumn );
+              describeMisindent2( $hornColumn, $expectedHornColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3653,7 +3653,7 @@ sub checkKingsideJog {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedHeadColumn );
+          describeMisindent2( $headColumn, $expectedHeadColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3675,7 +3675,7 @@ sub checkKingsideJog {
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $jogBodyColumn );
+              describeMisindent2( $bodyColumn, $jogBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3702,7 +3702,7 @@ sub checkKingsideJog {
               'Pseudo-joined %s Jog %s; body/comment mismatch; body is %s',
               $sideDesc,
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3722,7 +3722,7 @@ sub checkKingsideJog {
         if ( $bodyColumn != $raggedColumn and $bodyColumn != $expectedColumn ) {
             my $msg = sprintf 'Pseudo-joined %s Jog %s; body %s',
               $sideDesc, describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $bodyColumn, $expectedBodyColumn );
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3744,7 +3744,7 @@ sub checkKingsideJog {
         my $msg = sprintf 'Jog %s body %s; %s',
           $sideDesc,
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
+          describeMisindent2( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3813,7 +3813,7 @@ sub checkQueensideJog {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
           describeLC( $headLine, $headColumn ),
-          describeMisindent( $headColumn, $expectedHeadColumn );
+          describeMisindent2( $headColumn, $expectedHeadColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3834,7 +3834,7 @@ sub checkQueensideJog {
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $jogBodyColumn );
+              describeMisindent2( $bodyColumn, $jogBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -3856,7 +3856,7 @@ sub checkQueensideJog {
         my $msg = sprintf 'Jog %s body %s; %s',
           $sideDesc,
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
+          describeMisindent2( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -4010,7 +4010,7 @@ sub checkBackdented {
               "joined backdent element #%d %s; %s",
               $elementNumber,
               describeLC( $elementLine, $elementColumn ),
-              describeMisindent( $elementColumn, $expectedColumn );
+              describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4038,7 +4038,7 @@ sub checkBackdented {
 'Pseudo-joined backdented element %d; element/comment mismatch; element is %s',
 		  $elementNumber,
                   describeLC( $elementLine, $elementColumn ),
-                  describeMisindent( $elementColumn, $pseudoJoinColumn );
+                  describeMisindent2( $elementColumn, $pseudoJoinColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -4088,7 +4088,7 @@ sub checkBackdented {
               'backdented element #%d %s; %s',
               $elementNumber,
               describeLC( $elementLine, $elementColumn ),
-              describeMisindent( $elementColumn, $expectedColumn );
+              describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4144,7 +4144,7 @@ sub checkKetdot {
             my $msg = sprintf
               'Ketdot element 1 %s; %s',
               describeLC( $element1Line, $element1Column ),
-              describeMisindent( $element1Column, $expectedColumn );
+              describeMisindent2( $element1Column, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4191,7 +4191,7 @@ sub checkKetdot {
                 my $msg = sprintf
                   'Ketdot element 2 %s; %s',
                   describeLC( $element2Line, $element2Column ),
-                  describeMisindent( $element2Column, $expectedColumn );
+                  describeMisindent2( $element2Column, $expectedColumn );
                 push @mistakes,
                   {
                     desc           => $msg,
@@ -4221,7 +4221,7 @@ sub checkKetdot {
             my $msg = sprintf
               'Ketdot element 2 %s; %s',
               describeLC( $element2Line, $element2Column ),
-              describeMisindent( $element2Column, $expectedColumn );
+              describeMisindent2( $element2Column, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4258,7 +4258,7 @@ sub checkLuslus {
 	    my $expectedColumn = $parentColumn+4 ;
             my $msg = sprintf 'Cell head %s; %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $headColumn, $expectedColumn );
+              describeMisindent2( $headColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4276,7 +4276,7 @@ sub checkLuslus {
         if ( $bodyGapLength != 2 and $bodyColumn != $cellBodyColumn ) {
             my $msg = sprintf 'Cell body %s; %s',
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent( $bodyColumn, $cellBodyColumn );
+              describeMisindent2( $bodyColumn, $cellBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4305,7 +4305,7 @@ sub checkLuslus {
               sprintf
               'Pseudo-joined cell %s; body/comment mismatch; body is %s',
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent( $bodyColumn, $pseudoJoinColumn );
+              describeMisindent2( $bodyColumn, $pseudoJoinColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4326,7 +4326,7 @@ sub checkLuslus {
     if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'cell body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent( $bodyColumn, $expectedBodyColumn );
+          describeMisindent2( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
             desc           => $msg,
