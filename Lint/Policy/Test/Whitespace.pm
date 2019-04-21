@@ -333,6 +333,44 @@ sub i_isOneLineGap {
     return \@mistakes;
 }
 
+sub checkOneLineGap {
+    my ( $policy, $gap, $options ) = @_;
+    my $instance = $policy->{lint};
+    my @mistakes    = ();
+    my $tag         = $options->{tag} or die "No tag";
+    my $interColumn = $options->{interColumn};
+    my $preColumn   = $options->{preColumn};
+    my $parent      = $options->{parent} // $gap->{PARENT};
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
+    my $topicLines = $options->{topicLines} // [];
+
+    # say STDERR join " ", __FILE__, __LINE__, $childIX, $#$runningChildren;
+    if ( my @gapMistakes =
+        @{ $policy->isOneLineGap( $gap, $interColumn, $preColumn ) } )
+    {
+        for my $gapMistake (@gapMistakes) {
+            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeLine   = $gapMistake->{line};
+            my $gapMistakeColumn = $gapMistake->{column};
+            my $msg              = sprintf
+              "%s %s; %s",
+              $tag,
+              describeLC( $gapMistakeLine, $gapMistakeColumn ),
+              $gapMistakeMsg;
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $gapMistakeLine,
+                column       => $gapMistakeColumn,
+                topicLines   => $topicLines,
+              };
+        }
+    }
+    return \@mistakes;
+}
+
 # assumes this is a <tallAttributes> node
 sub sailAttributeBodyAlignment {
     my ( $policy, $node ) = @_;
@@ -968,31 +1006,23 @@ sub checkRunning {
 	$workingRunStepLine = $thisRunStepLine;
 	$runStepCount = 1;
 
-	# say STDERR join " ", __FILE__, __LINE__, $childIX, $#$runningChildren;
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $gap, $anchorColumn, $runStepColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
-                  "%s runstep #%d %s; %s",
-		  $tag,
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $thisRunStepLine,
-                    parentColumn => $runStepColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                    topicLines   => [ $thisRunStepLine, $runeLine ],
-                  };
-            }
-        }
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $gap,
+                {
+                    interColumn => $anchorColumn,
+                    preColumn   => $runStepColumn,
+                    tag         => (
+                        sprintf '%s runstep #%d',
+                        $tag,
+                        int( 1 + $childIX / 2 )
+                    ),
+                    parent     => $runStep,
+                    topicLines => [$runeLine],
+                }
+            )
+          };
 
         if ( $runStepColumn != $expectedColumn ) {
 	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $expectedColumn ;
@@ -2897,29 +2927,21 @@ sub check_1Jogging {
           };
     }
 
-    if ( my @gapMistakes = @{$policy->isOneLineGap( $joggingGap, $runeColumn )} )
-    {
-        for my $gapMistake ( @gapMistakes ) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "1-jogging %s jogging %s; %s",
-              $chessSide,
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            my ($joggingGapLine) = $instance->nodeLC($joggingGap);
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $runeLine,
-                parentColumn => $runeColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [$joggingLine],
-              };
-        }
-    }
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $joggingGap,
+                {
+                    interColumn => $runeColumn,
+                    tag         => (
+                        sprintf '1-jogging %s jogging',
+                        $chessSide
+                    ),
+                    parent     => $rune,
+                    topicLines => [$joggingLine],
+                }
+            )
+          };
 
     if ( my @gapMistakes = @{$policy->isOneLineGap( $tistisGap, $runeColumn )} )
     {
