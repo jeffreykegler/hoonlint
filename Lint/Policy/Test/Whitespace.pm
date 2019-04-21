@@ -874,19 +874,14 @@ sub checkRunning {
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my $childIX         = 0;
     my $firstSingletonLine;
-
     my @mistakes = ();
 
-    # Initial runsteps may be on a single line,
-    # separated by one stop
-  RUN_STEP: while ( $childIX < $#$runningChildren ) {
-        my $runStepCount         = 0;
-	my $gap     = $runningChildren->[$childIX];
-	my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-	my $runStep = $runningChildren->[ $childIX + 1 ];
-	my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
-
-        my ($workingRunStepLine) = $instance->nodeLC($runStep);
+    # Do the first run step
+    my $runStepCount         = 1;
+    my $gap     = $runningChildren->[$childIX];
+    my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+    my $runStep = $runningChildren->[ $childIX + 1 ];
+    my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
 
         if ( $runStepColumn != $expectedColumn ) {
             my $msg = sprintf
@@ -907,19 +902,31 @@ sub checkRunning {
               };
         }
 
+    my $workingRunStepLine = $thisRunStepLine;
+
+    # Initial runsteps may be on a single line,
+    # separated by one stop
+    $childIX = 2;
+  RUN_STEP: while ( $childIX < $#$runningChildren ) {
+
       INLINE_RUN_STEP: while ( 1 ) {
-            $childIX += 2;
-	    last RUN_STEP unless $childIX < $#$runningChildren;
+	    if ($childIX >= $#$runningChildren) {
+	        last RUN_STEP;
+	    }
             $gap     = $runningChildren->[$childIX];
 	    ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
             $runStep = $runningChildren->[ $childIX + 1 ];
             ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
+        # say STDERR join ' ', __FILE__, __LINE__, '[' . $instance->literalNode($gap) . ']';
             if ( $thisRunStepLine != $workingRunStepLine ) {
+        # say STDERR join ' ', __FILE__, __LINE__;
                 last INLINE_RUN_STEP;
             }
+        # say STDERR join ' ', __FILE__, __LINE__;
             $runStepCount++;
             if ( $gap->{length} != 2 ) {
                 my $nextExpectedColumn = $gapColumn + 2;
+	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $nextExpectedColumn ;
                 my $msg = sprintf
                   '%s runstep #%d %s; %s',
                   $tag,
@@ -936,9 +943,11 @@ sub checkRunning {
                     expectedColumn => $nextExpectedColumn,
                   };
             }
+	    $childIX += 2;
         }
 
 	$firstSingletonLine = $workingRunStepLine if $runStepCount <= 1 and not defined $firstSingletonLine;
+
         if ($runStepCount > 1 and defined $firstSingletonLine ) {
                 my $msg = sprintf
                   '%s runstep %s; multi-step line not allowed after singleton (%d)',
@@ -950,11 +959,14 @@ sub checkRunning {
                     desc           => $msg,
                     parentLine     => $runeLine,
                     parentColumn   => $runeColumn,
-                    line           => $thisRunStepLine,
+                    line           => $workingRunStepLine,
                     column         => $runStepColumn,
 		    topicLines => [ $firstSingletonLine ]
                   };
 	}
+
+	$workingRunStepLine = $thisRunStepLine;
+	$runStepCount = 1;
 
 	# say STDERR join " ", __FILE__, __LINE__, $childIX, $#$runningChildren;
         if ( my @gapMistakes =
@@ -981,6 +993,29 @@ sub checkRunning {
                   };
             }
         }
+
+        if ( $runStepColumn != $expectedColumn ) {
+	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $expectedColumn ;
+            my $msg = sprintf
+              "%s runstep #%d %s; %s",
+              $tag,
+              ( $childIX / 2 ) + 1,
+              describeLC( $thisRunStepLine, $runStepColumn ),
+              describeMisindent2( $runStepColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $thisRunStepLine,
+                parentColumn   => $runStepColumn,
+                line           => $thisRunStepLine,
+                column         => $runStepColumn,
+                expectedColumn => $expectedColumn,
+                topicLines     => [$runeLine],
+              };
+        }
+
+	$childIX += 2;
+
     }
 
     # say join " ", __FILE__, __LINE__, 'childIX', $childIX, $#$runningChildren;
