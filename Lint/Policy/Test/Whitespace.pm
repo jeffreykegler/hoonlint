@@ -2692,15 +2692,20 @@ sub describeLC {
     return '@' . $line . ':' . ( $column + 1 );
 }
 
-sub describeMisindent2 {
-    my ( $got, $sought ) = @_;
-    if ( $got > $sought ) {
-        return "overindented by " . ( $got - $sought );
+sub describeMisindent {
+    my ( $difference ) = @_;
+    if ( $difference > 0 ) {
+        return "overindented by $difference";
     }
-    if ( $got < $sought ) {
-        return "underindented by " . ( $sought - $got );
+    if ( $difference < 0 ) {
+        return "underindented by " . (-$difference);
     }
     return "correctly indented";
+}
+
+sub describeMisindent2 {
+    my ( $got, $sought ) = @_;
+    return describeMisindent($got-$sought);
 }
 
 sub chessSideOfJoggingHoon {
