@@ -178,6 +178,23 @@ sub pseudoJoinColumn {
     return $commentColumn;
 }
 
+# Is this a valid join gap?
+# Return undef if not.
+# Return -1 if flat join.
+# Return pseudo-join column if pseudo-join.
+sub checkJoinGap {
+    my ( $policy, $gap ) = @_;
+    my $instance = $policy->{lint};
+    my $gapLiteral = $instance->literalNode($gap);
+    # say join ' ', __FILE__, __LINE__;
+    # say join q{}, '[', $gapLiteral, ']';
+    return -1 if $gapLiteral =~ m/^ *$/;
+    # say join ' ', __FILE__, __LINE__;
+    my $column = $policy->pseudoJoinColumn($gap);
+    return $column if defined $column and $column >= 0;
+    return;
+}
+
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
     my ( $policy, $gap, $expectedColumn, $expectedColumn2 ) = @_;
@@ -1055,15 +1072,17 @@ sub checkRunning {
 }
 
 sub check_0Running {
-    my ( $policy, $node )    = @_;
-    my $instance  = $policy->{lint};
-    my ( $rune,   undef,    $running ) = @{ $policy->gapSeq($node) };
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my ( $rune, $runningGap, $running ) = @{ $policy->gapSeq($node) };
 
-    my ($runeLine)    = $instance->nodeLC($rune);
-    my ($runningLine) = $instance->nodeLC($running);
-    return checkSplit_0Running( $policy, $node )
-      if $runningLine != $runeLine;
-    return checkJoined_0Running( $policy, $node );
+    my $column = $policy->checkJoinGap($runningGap);
+   # say join ' ', __FILE__, __LINE__, 'column ', Data::Dumper::Dumper($column);
+    return checkSplit_0Running( $policy, $node ) if not defined $column;
+    return checkJoined_0Running( $policy, $node, $column ) if $column == -1;
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+    return checkJoined_0Running( $policy, $node, $column ) if $column == $runeColumn + 4;
+    return checkSplit_0Running( $policy, $node );
 }
 
 # Find the cell body column, based on alignment within
@@ -2361,6 +2380,18 @@ sub checkSplit_0Running {
           };
     }
 
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $runningGap,
+                {
+                    interColumn => $runeColumn,
+		    preColumn => $expectedColumn,
+                    tag         => $tag,
+                }
+            )
+          };
+
     push @mistakes,
       @{
         $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
@@ -2420,7 +2451,7 @@ sub checkSplit_0Running {
 }
 
 sub checkJoined_0Running {
-    my ( $policy, $node ) = @_;
+    my ( $policy, $node, $joinColumn ) = @_;
     my $gapSeq    = $policy->gapSeq($node);
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -2436,7 +2467,7 @@ sub checkJoined_0Running {
 
     my @mistakes = ();
     my $tag = 'joined 0-running';
-    my $expectedColumn = $runeColumn + 4;
+    my $expectedColumn = $joinColumn >= 0 ? $joinColumn : $runeColumn + 4;
 
     # We deal with the running list here, rather than
     # in its own node
