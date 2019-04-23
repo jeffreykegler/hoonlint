@@ -938,24 +938,26 @@ sub checkRunning {
     my $runStep = $runningChildren->[ $childIX + 1 ];
     my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
 
-        if ( $runStepColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "%s runstep #%d %s; %s",
-              $tag,
-              ( $childIX / 2 ) + 1,
-              describeLC( $thisRunStepLine, $runStepColumn ),
-              describeMisindent2( $runStepColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $thisRunStepLine,
-                parentColumn   => $runStepColumn,
-                line           => $thisRunStepLine,
-                column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
-                topicLines     => [$runeLine],
-              };
-        }
+  CHECK_FIRST_RUNNING: {
+        last CHECK_FIRST_RUNNING if $options->{skipFirst};
+        last CHECK_FIRST_RUNNING if $runStepColumn == $expectedColumn;
+        my $msg = sprintf
+          "%s runstep #%d %s; %s",
+          $tag,
+          ( $childIX / 2 ) + 1,
+          describeLC( $thisRunStepLine, $runStepColumn ),
+          describeMisindent2( $runStepColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $thisRunStepLine,
+            parentColumn   => $runStepColumn,
+            line           => $thisRunStepLine,
+            column         => $runStepColumn,
+            expectedColumn => $expectedColumn,
+            topicLines     => [$runeLine],
+          };
+    }
 
     my $workingRunStepLine = $thisRunStepLine;
 
@@ -972,16 +974,12 @@ sub checkRunning {
 	    ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
             $runStep = $runningChildren->[ $childIX + 1 ];
             ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
-        # say STDERR join ' ', __FILE__, __LINE__, '[' . $instance->literalNode($gap) . ']';
             if ( $thisRunStepLine != $workingRunStepLine ) {
-        # say STDERR join ' ', __FILE__, __LINE__;
                 last INLINE_RUN_STEP;
             }
-        # say STDERR join ' ', __FILE__, __LINE__;
             $runStepCount++;
             if ( $gap->{length} != 2 ) {
                 my $nextExpectedColumn = $gapColumn + 2;
-	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $nextExpectedColumn ;
                 my $msg = sprintf
                   '%s runstep #%d %s; %s',
                   $tag,
@@ -2552,6 +2550,7 @@ sub check_1Running {
     my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
+    my $tag = '1-running';
 
     my (
         $rune,       $headGap, $head,
@@ -2567,7 +2566,7 @@ sub check_1Running {
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
-          "1-running head %s; should be on rune line %d",
+          "$tag head %s; should be on rune line %d",
           describeLC( $headLine, $headColumn ),
           $runeLine;
         push @mistakes,
@@ -2584,7 +2583,7 @@ sub check_1Running {
     my $expectedColumn = $runeColumn + 4;
     if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
-          "1-running head %s; %s",
+          "$tag head %s; %s",
           describeLC( $headLine, $headColumn ),
           describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
@@ -2598,19 +2597,67 @@ sub check_1Running {
           };
     }
 
+    $expectedColumn  = $anchorColumn + 2;
+
+    # Note: runnings are never pseudo-joined, at
+    # least not in the corpus.
+    if ($headLine != $runningLine) {
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $runningGap,
+                {
+                    interColumn => $anchorColumn,
+		    preColumn => $expectedColumn,
+                    tag         => $tag,
+                }
+            )
+          };
+
+	my @runningChildren = ( $runningGap, @{$running->{children}});
+
+	push @mistakes,
+	  @{
+	    $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
+	    $node, $running, \@runningChildren
+	    )
+	  };
+
+    } else {
+      # joined, that is, $headLine != $runningLine
+	my $gapLength = $runningGap->{length};
+	my ( $runningGapLine, $runningGapColumn ) = $instance->nodeLC($runningGap);
+	my $nextExpectedColumn = $runningGapColumn + 2;
+
+	if ($nextExpectedColumn != $runningColumn) {
+            my $msg            = sprintf
+              "1-jogging running 1 %s; %s",
+              describeLC( $runningLine, $runningColumn ),
+              describeMisindent( $runningColumn - $nextExpectedColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $runningLine,
+                column         => $runningColumn,
+                expectedColumn => $nextExpectedColumn,
+              };
+	}
+
+	my @runningChildren = ( $runningGap, @{$running->{children}});
+
+	push @mistakes,
+	  @{
+	    $policy->checkRunning( { skipFirst =>  1 }, $tag, $anchorColumn, $expectedColumn,
+	    $node, $running, \@runningChildren
+	    )
+	  };
+
+    }
+
     # We deal with the running list here, rather that
     # in its own node
-
-    my @runningChildren = ( $runningGap, @{$running->{children}});
-    $expectedColumn  = $anchorColumn + 2;
-    my $tag = '1-running';
-
-    push @mistakes,
-      @{
-        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
-	$node, $running, \@runningChildren
-        )
-      };
 
     if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, $runeColumn, $expectedColumn )} )
         {
