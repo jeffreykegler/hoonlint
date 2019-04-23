@@ -2728,7 +2728,20 @@ sub check_0_as_1Running {
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC( $tistis );
 
     my @mistakes = ();
-    my $tag = '0-running';
+    my $tag = '0as1-running';
+    my $expectedColumn = $anchorColumn;
+
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $runningGap,
+                {
+                    interColumn => $runeColumn,
+		    preColumn => $expectedColumn,
+                    tag         => $tag,
+                }
+            )
+          };
 
     # We deal with the running list here, rather that
     # in its own node
@@ -2737,8 +2750,6 @@ sub check_0_as_1Running {
     # fake head to the list of running children
     my @runningChildren = ($headGap, $head, $runningGap);
     push @runningChildren,  @{$running->{children}};
-
-    my $expectedColumn = $anchorColumn;
 
     push @mistakes,
       @{
@@ -2754,7 +2765,7 @@ sub check_0_as_1Running {
                 my $gapMistakeLine   = $gapMistake->{line};
                 my $gapMistakeColumn = $gapMistake->{column};
                 my $msg              = sprintf
-                  "0-running TISTIS %s; $gapMistakeMsg",
+                  "$tag TISTIS %s; $gapMistakeMsg",
                   describeLC( $tistisLine, $tistisColumn );
                 push @mistakes,
                   {
@@ -2778,7 +2789,7 @@ sub check_0_as_1Running {
         $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf "0-running TISTIS %s; %s",
+        my $msg = sprintf "$tag TISTIS %s; %s",
           describeLC( $tistisLine, $tistisColumn ),
           describeMisindent2( $tistisColumn, $anchorColumn );
         push @mistakes,

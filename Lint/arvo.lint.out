@@ -1610,6 +1610,8 @@ hoons/arvo/lib/down-jet/parse.hoon 190:13 Test::Whitespace tallKethep backdented
 hoons/arvo/lib/down-jet/parse.hoon 291:7 Test::Whitespace tallSemsig 1-running runstep #1 @291:7; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 360:9 Test::Whitespace tallKethep backdented element #2 @361:9; overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam joined 0-running runstep #2 @414:9; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @445:1; comment underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @446:1; comment underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 465:1 Test::Whitespace LuslusCell cell body @466:2; underindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 475:1 Test::Whitespace LuslusCell cell body @476:4; overindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace tallColsig joined 0-running runstep #2 @493:17; overindented by 1
@@ -1634,7 +1636,7 @@ hoons/arvo/lib/down-jet/parse.hoon 809:5 Test::Whitespace tallSigwut backdented 
 hoons/arvo/lib/down-jet/parse.hoon 809:5 Test::Whitespace tallSigwut backdented element #4, @811:6; comment overindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 809:5 Test::Whitespace tallSigwut backdented element #4, @812:6; comment overindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 809:5 Test::Whitespace tallSigwut backdented element #4, @813:6; comment overindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 829:9 Test::Whitespace tallTissig 0-running runstep #1 @829:9; overindented by 4
+hoons/arvo/lib/down-jet/parse.hoon 829:9 Test::Whitespace tallTissig 0as1-running runstep #1 @829:9; overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 853:7 Test::Whitespace tallWutlus 2-jogging kingside head @853:13; overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 881:9 Test::Whitespace tallWutsig backdented element #3, @882:11; comment overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 914:11 Test::Whitespace tallBarcen cell #5 @915:9; comment overindented by 4
