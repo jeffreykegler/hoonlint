@@ -8,31 +8,6 @@
 # So I'm temporarily suppressing the "weld" related SEMCOL problems, until
 # I have gotten running hoons OK in all other respects.
 # Then I will un-suppress these issues.
-hoons/arvo/app/dojo.hoon 1005:17 Test::Whitespace tallSemcol 1-running runstep #1 @1005:17; underindented by 8
-hoons/arvo/app/dojo.hoon 1006:17 Test::Whitespace tallSemcol 1-running runstep #2 @1006:17; underindented by 8
-hoons/arvo/app/dojo.hoon 1009:17 Test::Whitespace tallSemcol 1-running runstep #3 @1009:17; underindented by 8
-hoons/arvo/app/dojo.hoon 1012:17 Test::Whitespace tallSemcol 1-running runstep #4 @1012:17; underindented by 8
-hoons/arvo/app/dojo.hoon 1004:23 Test::Whitespace tallSemcol 1-running TISTIS @1013:15; underindented by 8
-hoons/arvo/app/dojo.hoon 1067:11 Test::Whitespace tallSemcol 1-running runstep #1 @1067:11; underindented by 12
-hoons/arvo/app/dojo.hoon 1068:11 Test::Whitespace tallSemcol 1-running runstep #2 @1068:11; underindented by 12
-hoons/arvo/app/dojo.hoon 1069:11 Test::Whitespace tallSemcol 1-running runstep #3 @1069:11; underindented by 12
-hoons/arvo/app/dojo.hoon 1066:21 Test::Whitespace tallSemcol 1-running TISTIS @1070:9; underindented by 12
-hoons/arvo/app/dojo.hoon 1475:14 Test::Whitespace tallSemcol 1-running runstep #2 @1475:12; missing newline @1475:12
-hoons/arvo/app/dojo.hoon 1475:14 Test::Whitespace tallSemcol 1-running runstep #2 @1475:14; overindented by 5
-hoons/arvo/app/dojo.hoon 1476:14 Test::Whitespace tallSemcol 1-running runstep #4 @1476:12; missing newline @1476:12
-hoons/arvo/app/dojo.hoon 1476:14 Test::Whitespace tallSemcol 1-running runstep #4 @1476:14; overindented by 5
-hoons/arvo/app/dojo.hoon 1477:14 Test::Whitespace tallSemcol 1-running runstep #6 @1477:12; missing newline @1477:12
-hoons/arvo/app/dojo.hoon 1477:14 Test::Whitespace tallSemcol 1-running runstep #6 @1477:14; overindented by 5
-hoons/arvo/app/talk.hoon 2249:16 Test::Whitespace tallSemcol 1-running runstep #2 @2249:14; missing newline @2249:14
-hoons/arvo/app/talk.hoon 2249:16 Test::Whitespace tallSemcol 1-running runstep #2 @2249:16; overindented by 5
-hoons/arvo/app/talk.hoon 2250:16 Test::Whitespace tallSemcol 1-running runstep #4 @2250:14; missing newline @2250:14
-hoons/arvo/app/talk.hoon 2250:16 Test::Whitespace tallSemcol 1-running runstep #4 @2250:16; overindented by 5
-hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #6 @2251:14; missing newline @2251:14
-hoons/arvo/app/talk.hoon 2251:16 Test::Whitespace tallSemcol 1-running runstep #6 @2251:16; overindented by 5
-hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:10; missing newline @19:10
-hoons/arvo/lib/hall-json.hoon 19:12 Test::Whitespace tallSemcol 1-running runstep #2 @19:12; overindented by 5
-hoons/arvo/sys/hoon.hoon 5093:15 Test::Whitespace tallSemcol 1-running TISTIS @5098:14; underindented by 1
 
-# An attempt to use CENTIS as an annotation -- should we allow this?
-hoons/arvo/sys/vane/ames.hoon 1323:27 Test::Whitespace tallCentis 1-jogging TISTIS @1326:19; underindented by 8
-
+# Emptied Tue Apr 23 19:14:41 EDT 2019 --
+# we are now ready to tackle all these issues.
