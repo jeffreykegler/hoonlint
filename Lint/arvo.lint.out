@@ -136,36 +136,6 @@ hoons/arvo/sys/zuse.hoon 1406:5 Test::Whitespace tallWutcol backdented element #
 hoons/arvo/sys/zuse.hoon 1505:13 Test::Whitespace tallKetwut backdented element #1 @1506:3; underindented by 10
 hoons/arvo/sys/zuse.hoon 1512:14 Test::Whitespace tallZapdot backdented element #1 @1513:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 1522:27 Test::Whitespace tallKetwut backdented element #1 @1523:15; underindented by 8
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol 1-jogging jogging @1732:11; should be on rune line 1731
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol 1-jogging jogging @1732:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tallTiscol Jog kingside head @1732:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1733:11 Test::Whitespace tallTiscol Jog kingside head @1733:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1734:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol 1-jogging jogging @1743:11; should be on rune line 1742
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol 1-jogging jogging @1743:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tallTiscol Jog kingside head @1743:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1744:11 Test::Whitespace tallTiscol Jog kingside head @1744:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1745:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol 1-jogging jogging @1759:11; should be on rune line 1758
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol 1-jogging jogging @1759:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tallTiscol Jog kingside head @1759:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1760:11 Test::Whitespace tallTiscol Jog kingside head @1760:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1761:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol 1-jogging jogging @1770:11; should be on rune line 1769
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol 1-jogging jogging @1770:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tallTiscol Jog kingside head @1770:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1771:11 Test::Whitespace tallTiscol Jog kingside head @1771:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1772:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol 1-jogging jogging @1786:11; should be on rune line 1785
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol 1-jogging jogging @1786:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tallTiscol Jog kingside head @1786:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1787:11 Test::Whitespace tallTiscol Jog kingside head @1787:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1788:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol 1-jogging jogging @1797:11; should be on rune line 1796
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol 1-jogging jogging @1797:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tallTiscol Jog kingside head @1797:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1798:11 Test::Whitespace tallTiscol Jog kingside head @1798:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1799:9; underindented by 2
 hoons/arvo/sys/zuse.hoon 1946:9 Test::Whitespace tallColhep backdented element #2 @1947:13; overindented by 4
 hoons/arvo/sys/zuse.hoon 1970:9 Test::Whitespace tallColhep backdented element #2 @1971:13; overindented by 4
 hoons/arvo/sys/zuse.hoon 1994:9 Test::Whitespace tallColhep backdented element #2 @1995:13; overindented by 4
