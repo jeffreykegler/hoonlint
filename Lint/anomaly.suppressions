@@ -570,24 +570,3 @@ hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5
 hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; missing newline @5347:45
 hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; overindented by 34
 
-# Battery comments -- Github issue #22
-hoons/arvo/app/gmail.hoon 124:5 Test::Whitespace whap5d cell #5 @129:1; missing comment on line 129
-hoons/arvo/app/gmail/split.hoon 35:5 Test::Whitespace whap5d cell #2 @36:1; missing comment on line 36
-hoons/arvo/app/gmail/split.hoon 52:5 Test::Whitespace whap5d cell #3 @53:1; missing comment on line 53
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @297:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @298:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @299:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @300:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @301:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @302:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @303:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @304:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @305:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @306:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @307:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @308:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @309:1; comment underindented by 2
-hoons/arvo/lib/new-hoon.hoon 295:51 Test::Whitespace whap5d cell #10 @310:1; missing comment on line 310
-hoons/arvo/sur/gmail-label.hoon 20:79 Test::Whitespace whap5d cell #1 @21:1; missing comment on line 21
-hoons/arvo/sur/gmail-label.hoon 23:13 Test::Whitespace whap5d cell #2 @24:1; missing comment on line 24
-hoons/arvo/sur/sole.hoon 80:35 Test::Whitespace whap5d cell #14 @81:1; missing comment on line 81
