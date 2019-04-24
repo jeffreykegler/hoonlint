@@ -153,7 +153,7 @@ lines 346-356 of
 ```
 
 Here the rune line is line 346, the rune is again COLSIG,
-and it reanchors at TISFAS (`/=`).
+and it reanchors at TISFAS (`=/`).
 TISFAS is 3-fixed, and 2 of its elements are on the rune line,
 so that the per-brick anchor offset of the TISFAS is that of
 its 2nd element -- one stop.
@@ -259,14 +259,19 @@ battery syntax.
 running, jogging or backdented hoon.
 Most irregular hoons do not contain a gap.
 
-TODO: Corner cases, including BARCAB, lutes and (possibly)
+TODO: Corner cases, including BARCAB,
+CELACE and (possibly)
 other tall irregular hoons.
+
+Re BARCAB,
+ohAitch asks,
+"Is this not just a battery hoon + single "backdented" same-line child?"
 
 ### Backdented hoons
 
 The archetypal Hoon whitespace pattern is backdenting.
 A backdented hoon of 3 or more elements should be joined.
-A backdented hoon of 3 or more elements should be split.
+A backdented hoon of 2 or fewer elements should be split.
 
 The first element of a joined backdented hoon should be
 on the same line as the rune, separated by a gap.
@@ -634,12 +639,12 @@ as their anchor column.
 Technically, this is not an exception because, pedantically,
 LUSLUS, LUSHEP and LUSTIS are not runes.
 
-### Lutes
+### CELACE
 
-Only one-line lutes occur in the `arvo/` corpus.
-One-line lutes are free-form -- `hoonlint` never generates
+Only one-line CELACE's occur in the `arvo/` corpus.
+One-line CELACE's are free-form -- `hoonlint` never generates
 a warning for them.
-If `hoonlint` encounters a multi-line lute,
+If `hoonlint` encounters a multi-line CELACE,
 it issues a "not yet implemented" warning.
 
 ### Special cases
