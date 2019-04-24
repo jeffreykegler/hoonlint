@@ -260,7 +260,7 @@ running, jogging or backdented hoon.
 Most irregular hoons do not contain a gap.
 
 TODO: Corner cases, including BARCAB,
-CELACE and (possibly)
+SELACE and (possibly)
 other tall irregular hoons.
 
 Re BARCAB,
@@ -639,12 +639,12 @@ as their anchor column.
 Technically, this is not an exception because, pedantically,
 LUSLUS, LUSHEP and LUSTIS are not runes.
 
-### CELACE
+### SELACE
 
-Only one-line CELACE's occur in the `arvo/` corpus.
-One-line CELACE's are free-form -- `hoonlint` never generates
+Only one-line SELACE's occur in the `arvo/` corpus.
+One-line SELACE's are free-form -- `hoonlint` never generates
 a warning for them.
-If `hoonlint` encounters a multi-line CELACE,
+If `hoonlint` encounters a multi-line SELACE,
 it issues a "not yet implemented" warning.
 
 ### Special cases
