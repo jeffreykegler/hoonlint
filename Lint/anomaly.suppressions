@@ -563,3 +563,10 @@ hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-runnin
 hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @753:11; comment overindented by 4
 hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @754:11; comment overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace tallWutbar joined 0-running runstep #2 @2421:11; comment overindented by 2
+
+# "One-line" runnings in hoon.hoon -- Github issue #32
+hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; missing newline @5329:43
+hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; overindented by 34
+hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; missing newline @5347:45
+hoons/arvo/sys/hoon.hoon 5347:13 Test::Whitespace tallSemsig 1-running TISTIS @5347:47; overindented by 34
+
