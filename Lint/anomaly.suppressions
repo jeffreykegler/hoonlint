@@ -544,3 +544,40 @@ hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/sys/zuse.hoon 3965:7 Test::Whitespace tallSemsig 1-running TISTIS @3971:8; overindented by 1
 hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #1 @4264:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
+
+# WUTBAR, WUTPAM anomalies from Github issue #19
+hoons/arvo/app/hall.hoon 1145:15 Test::Whitespace tallWutbar joined 0-running runstep #2 @1144:13; comment overindented by 2
+hoons/arvo/app/hall.hoon 1149:19 Test::Whitespace tallWutpam joined 0-running runstep #2 @1148:17; comment overindented by 2
+hoons/arvo/app/hall.hoon 1147:15 Test::Whitespace tallWutpam joined 0-running TISTIS @1152:15; comment overindented by 4
+hoons/arvo/app/hall.hoon 1328:15 Test::Whitespace tallWutpam joined 0-running runstep #3 @1327:13; comment overindented by 2
+hoons/arvo/app/hall.hoon 2497:9 Test::Whitespace tallWutbar joined 0-running runstep #2 @2496:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 2543:13 Test::Whitespace tallWutbar joined 0-running runstep #2 @2542:11; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam joined 0-running runstep #2 @414:9; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @711:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @712:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @713:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @729:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @730:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @731:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @732:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @752:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @753:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @754:11; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace tallWutbar joined 0-running runstep #2 @2421:11; comment overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1851:17 Test::Whitespace tallWutbar split 0-running runstep #1 @1849:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1851:17 Test::Whitespace tallWutbar split 0-running runstep #1 @1850:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1851:17 Test::Whitespace tallWutbar split 0-running runstep #1 @1851:17; overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1858:17 Test::Whitespace tallWutbar split 0-running runstep #2 @1855:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1858:17 Test::Whitespace tallWutbar split 0-running runstep #2 @1856:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1858:17 Test::Whitespace tallWutbar split 0-running runstep #2 @1857:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1858:17 Test::Whitespace tallWutbar split 0-running runstep #2 @1858:17; overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1864:17 Test::Whitespace tallWutbar split 0-running runstep #3 @1861:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1864:17 Test::Whitespace tallWutbar split 0-running runstep #3 @1862:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1864:17 Test::Whitespace tallWutbar split 0-running runstep #3 @1863:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1864:17 Test::Whitespace tallWutbar split 0-running runstep #3 @1864:17; overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1868:17 Test::Whitespace tallWutbar split 0-running runstep #4 @1865:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1868:17 Test::Whitespace tallWutbar split 0-running runstep #4 @1866:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1868:17 Test::Whitespace tallWutbar split 0-running runstep #4 @1867:17; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1868:17 Test::Whitespace tallWutbar split 0-running runstep #4 @1868:17; overindented by 2
+hoons/arvo/sys/zuse.hoon 2617:24 Test::Whitespace tallWutpam joined 0-running runstep #3 @2617:22; missing newline @2617:22
+hoons/arvo/sys/zuse.hoon 2617:24 Test::Whitespace tallWutpam joined 0-running runstep #3 @2617:24; overindented by 9
