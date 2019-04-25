@@ -388,6 +388,44 @@ sub checkOneLineGap {
     return \@mistakes;
 }
 
+sub checkTistis {
+    my ( $policy, $tistis, $options ) = @_;
+    my $expectedColumn = $options->{expectedColumn};
+    my $tag = $options->{tag};
+    my $instance  = $policy->{lint};
+    my $parent = $tistis->{PARENT};
+    my @mistakes = ();
+
+    my ( $parentLine,      $parentColumn )      = $instance->nodeLC($parent);
+    my ( $tistisLine,      $tistisColumn )      = $instance->nodeLC($tistis);
+
+    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+
+    if ($tistisIsMisaligned) {
+	my $lineToPos = $instance->{lineToPos};
+        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
+        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+
+        $tistisIsMisaligned = $tistisLiteral ne '==';
+    }
+    if ($tistisIsMisaligned) {
+        my $msg = sprintf '%s TISTIS %s; %s',
+          $tag,
+          describeLC( $tistisLine, $tistisColumn ),
+          describeMisindent2( $tistisColumn, $parentColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+            expectedColumn => $parentColumn,
+          };
+    }
+    return \@mistakes;
+}
+
 # assumes this is a <tallAttributes> node
 sub sailAttributeBodyAlignment {
     my ( $policy, $node ) = @_;
@@ -2519,29 +2557,16 @@ sub checkJoined_0Running {
         }
     }
 
-    $expectedColumn = $runeColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
-
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "joined 0-running TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $runeColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $runeColumn,
-          };
-    }
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
     return \@mistakes;
 }
 
