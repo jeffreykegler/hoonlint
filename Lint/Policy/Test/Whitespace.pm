@@ -23,6 +23,23 @@ sub new {
     return bless $policy, $class;
 }
 
+# Return the node tag for the subpolicy field.
+# Archetypally, this is the 6-character form of
+# rune for the node's brick.
+sub nodeSubpolicy {
+    my ( $policy, $node ) = @_;
+    my $instance        = $policy->{lint};
+    my $name = $instance->brickName($node);
+    if ( my ($tag) = $name =~ /^tall([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
+        return $tag;
+    }
+    if ( my ($tag) = $name =~ /^tall([B-Z][aeoiu][b-z][b-z][aeiou][b-z])Mold$/ )
+    {
+        return lc $tag;
+    }
+    return lc $name;
+}
+
 # first brick node in $node's line,
 # by inclusion list.
 # $node if there is no prior included brick node
@@ -195,6 +212,13 @@ sub checkJoinGap {
     return;
 }
 
+
+sub deComment {
+   my ($policy, $string) = @_;
+   $string =~ s/ ([+][|]|[:][:]|[:][<]|[:][>]) .* \z//xms;
+   return $string;
+}
+
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
     my ( $policy, $gap, $expectedColumn, $expectedColumn2 ) = @_;
@@ -225,6 +249,7 @@ sub i_isOneLineGap {
             {
                 msg => "missing newline "
                   . describeLC( $startLine, $startColumn ),
+		subpolicy => 'missing-newline',
                 line   => $startLine,
                 column => $startColumn,
             }
@@ -398,6 +423,26 @@ sub checkTistis {
 
     my ( $parentLine,      $parentColumn )      = $instance->nodeLC($parent);
     my ( $tistisLine,      $tistisColumn )      = $instance->nodeLC($tistis);
+    my $literalLine = $instance->literalLine($tistisLine);
+    # say STDERR join ' ', __FILE__, __LINE__, '[' . $literalLine . ']';
+    $literalLine = $policy->deComment($literalLine);
+    $literalLine =~ s/\n//g;
+    $literalLine =~ s/==//g;
+    # say STDERR join ' ', __FILE__, __LINE__, '[' . $literalLine . ']';
+    if ($literalLine =~ m/[^ ]/) {
+        my $msg = sprintf q{%s TISTIS %s; TISTIS should only share line with other TISTIS's},
+          $tag,
+          describeLC( $tistisLine, $tistisColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $tistisLine,
+            column         => $tistisColumn,
+          };
+	  return \@mistakes;
+    }
 
     my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
@@ -2789,12 +2834,22 @@ sub check_0_as_1Running {
                 my $gapMistakeMsg    = $gapMistake->{msg};
                 my $gapMistakeLine   = $gapMistake->{line};
                 my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
+                my $gapSubpolicy = $gapMistake->{subpolicy} // q{};
+		my $msg;
+		if ($gapSubpolicy eq 'missing-newline') {
+                $msg              = sprintf
+                  '%s TISTIS %s; vertical gap must precede TISTIS',
+		  $tag,
+                  describeLC( $gapMistakeLine, $gapMistakeColumn );
+		} else {
+                $msg              = sprintf
                   "$tag TISTIS %s; $gapMistakeMsg",
                   describeLC( $tistisLine, $tistisColumn );
+		  }
                 push @mistakes,
                   {
                     desc         => $msg,
+		    subpolicy => $policy->nodeSubpolicy($node) . ':' . $gapSubpolicy,
                     parentLine   => $runeLine,
                     parentColumn => $runeColumn,
                     line         => $gapMistakeLine,
@@ -2804,29 +2859,16 @@ sub check_0_as_1Running {
             }
         }
 
-    $expectedColumn = $anchorColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
-
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "$tag TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $anchorColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $anchorColumn,
-          };
-    }
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $anchorColumn,
+            }
+        )
+      };
     return \@mistakes;
 }
 
