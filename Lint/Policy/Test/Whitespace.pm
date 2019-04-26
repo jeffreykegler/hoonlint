@@ -31,7 +31,7 @@ sub nodeSubpolicy {
     my $instance        = $policy->{lint};
     my $name = $instance->brickName($node);
     if ( my ($tag) = $name =~ /^tall([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
-        return $tag;
+        return lc $tag;
     }
     if ( my ($tag) = $name =~ /^tall([B-Z][aeoiu][b-z][b-z][aeiou][b-z])Mold$/ )
     {
@@ -2846,10 +2846,12 @@ sub check_0_as_1Running {
                   "$tag TISTIS %s; $gapMistakeMsg",
                   describeLC( $tistisLine, $tistisColumn );
 		  }
+		 my $mistakeSubpolicy = $policy->nodeSubpolicy($node);
+		 $mistakeSubpolicy .= ':' . $gapSubpolicy if $gapSubpolicy;
                 push @mistakes,
                   {
                     desc         => $msg,
-		    subpolicy => $policy->nodeSubpolicy($node) . ':' . $gapSubpolicy,
+		    subpolicy => $mistakeSubpolicy,
                     parentLine   => $runeLine,
                     parentColumn => $runeColumn,
                     line         => $gapMistakeLine,
@@ -5028,8 +5030,10 @@ sub validate_node {
 
   PRINT: {
         if ( @{$mistakes} ) {
-            $_->{policy} = $policyShortName for @{$mistakes};
-            $_->{subpolicy} = $instance->diagName($node) for @{$mistakes};
+	    for my $mistake (@{$mistakes}) {
+	      $mistake->{policy} = $policyShortName;
+	      $mistake->{subpolicy} = $mistake->{subpolicy} // $instance->diagName($node);
+	    }
             $policy->displayMistakes( $mistakes );
             last PRINT;
         }

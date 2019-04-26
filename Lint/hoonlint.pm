@@ -251,6 +251,7 @@ sub contextDisplay {
     my $pTopicLines   = $instance->{topicLines};
     my $pMistakeLines = $instance->{mistakeLines};
     my $contextSize   = $instance->{contextSize};
+    my $displayDetails   = $instance->{displayDetails};
     my $lineToPos     = $instance->{lineToPos};
     my @pieces        = ();
     my %tag = map { $_ => q{>} } @{$pTopicLines};
@@ -266,7 +267,8 @@ sub contextDisplay {
         for my $lineNum (@sortedLines) {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
-                push @pieces, $mistakeDesc, "\n";
+                my ($mistake, $desc) = @{$mistakeDesc};
+                push @pieces, $desc, "\n";
             }
         }
         return join q{}, @pieces;
@@ -286,7 +288,8 @@ sub contextDisplay {
             my $tag          = $tag{$lineNum} // q{ };
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
-                push @pieces, '[ ', $mistakeDesc, " ]\n";
+                my ($mistake, $desc) = @{$mistakeDesc};
+                push @pieces, '[ ', $desc, " ]\n";
             }
             push @pieces, ( sprintf $lineNumFormat, $lineNum ), $tag, q{ },
               $line;
@@ -358,7 +361,7 @@ sub reportItem {
     push @{$topicLines}, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc";
+    push @{$thisMistakeDescs}, [$mistake, "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc"];
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
