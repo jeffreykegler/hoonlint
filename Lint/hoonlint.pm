@@ -289,7 +289,20 @@ sub contextDisplay {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
                 my ($mistake, $desc) = @{$mistakeDesc};
-                push @pieces, '[ ', $desc, " ]\n";
+                my $details = $mistake->{details};
+                if ($details and $displayDetails > 0) {
+                    push @pieces, '[ ', $desc;
+                    # detail levels are not currently used, but are for future
+                    # extensions.
+                    for my $detailLevel (@{$details}) {
+                       for my $detail (@{$detailLevel}) {
+                           push @pieces, q{  }, $detail, "\n";
+                       }
+                    }
+                    push @pieces, " ]\n";
+                } else {
+                    push @pieces, '[ ', $desc, " ]\n";
+                }
             }
             push @pieces, ( sprintf $lineNumFormat, $lineNum ), $tag, q{ },
               $line;

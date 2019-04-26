@@ -417,6 +417,7 @@ sub checkTistis {
     my ( $policy, $tistis, $options ) = @_;
     my $expectedColumn = $options->{expectedColumn};
     my $tag = $options->{tag};
+    my $subpolicyTag = $options->{subpolicyTag};
     my $instance  = $policy->{lint};
     my $parent = $tistis->{PARENT};
     my @mistakes = ();
@@ -430,16 +431,17 @@ sub checkTistis {
     $literalLine =~ s/==//g;
     # say STDERR join ' ', __FILE__, __LINE__, '[' . $literalLine . ']';
     if ($literalLine =~ m/[^ ]/) {
-        my $msg = sprintf q{%s TISTIS %s; TISTIS should only share line with other TISTIS's},
-          $tag,
+        my $msg = sprintf q{TISTIS %s should only share line with other TISTIS's},
           describeLC( $tistisLine, $tistisColumn );
         push @mistakes,
           {
             desc           => $msg,
+	    subpolicy => $subpolicyTag . ':tistis-alone',
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
+	    details => [ [ $tag ] ],
           };
 	  return \@mistakes;
     }
@@ -454,18 +456,19 @@ sub checkTistis {
         $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
-        my $msg = sprintf '%s TISTIS %s; %s',
-          $tag,
+        my $msg = sprintf 'TISTIS %s; %s',
           describeLC( $tistisLine, $tistisColumn ),
           describeMisindent2( $tistisColumn, $parentColumn );
         push @mistakes,
           {
             desc           => $msg,
+	    subpolicy => $subpolicyTag . ':tistis-indent',
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
             expectedColumn => $parentColumn,
+	    details => [ [ $tag ] ],
           };
     }
     return \@mistakes;
@@ -2607,6 +2610,7 @@ sub checkJoined_0Running {
         $policy->checkTistis(
             $tistis,
             {
+		subpolicyTag => $policy->nodeSubpolicy($node),
                 tag            => $tag,
                 expectedColumn => $runeColumn,
             }
@@ -2838,8 +2842,7 @@ sub check_0_as_1Running {
 		my $msg;
 		if ($gapSubpolicy eq 'missing-newline') {
                 $msg              = sprintf
-                  '%s TISTIS %s; vertical gap must precede TISTIS',
-		  $tag,
+                  'gap %s; vertical gap must precede TISTIS',
                   describeLC( $gapMistakeLine, $gapMistakeColumn );
 		} else {
                 $msg              = sprintf
@@ -2856,6 +2859,7 @@ sub check_0_as_1Running {
                     parentColumn => $runeColumn,
                     line         => $gapMistakeLine,
                     column       => $gapMistakeColumn,
+		    details => [ [ $tag ] ],
                     topicLines   => [ $anchorLine, $tistisLine ],
                   };
             }
@@ -2866,6 +2870,7 @@ sub check_0_as_1Running {
         $policy->checkTistis(
             $tistis,
             {
+		subpolicyTag => $policy->nodeSubpolicy($node),
                 tag            => $tag,
                 expectedColumn => $anchorColumn,
             }

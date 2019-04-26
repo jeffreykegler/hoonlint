@@ -66,10 +66,12 @@ my $inclusionsFileName;
 my @suppressionsFileNames;
 my @policiesArg;
 my $contextSize = 0;
+my $displayDetails;
 
 GetOptions(
     "verbose"               => \$verbose,
     "context|C=i"           => \$contextSize,
+    "displayDetails|details=i"           => \$displayDetails,
     "census-whitespace"     => \$censusWhitespace,
     "inclusions-file|I=s"   => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
@@ -155,6 +157,13 @@ my $pHoonSource = slurp($fileName);
 
 $config{pHoonSource} = $pHoonSource;
 $config{contextSize} = $contextSize;
+SET_DISPLAY_DETAILS: {
+    if (not defined $displayDetails) {
+         $config{displayDetails} = $contextSize >= 1 ? 1 : 0;
+         last SET_DISPLAY_DETAILS;
+    }
+    $config{displayDetails} = $displayDetails;
+}
 
 MarpaX::YAHC::Lint->new(\%config);
 

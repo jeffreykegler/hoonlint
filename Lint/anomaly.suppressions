@@ -462,7 +462,6 @@ hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3
 hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3895:13; underindented by 1
 
 # Misc TISSIG anomalies from Github issue 28
-hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tallTissig 0-running TISTIS @96:5; overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tallTissig 0-running runstep #1 @98:1; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @445:1; comment underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @446:1; comment underindented by 2
