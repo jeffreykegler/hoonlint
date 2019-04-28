@@ -290,8 +290,8 @@ sub contextDisplay {
             for my $mistakeDesc ( @{$mistakeDescs} ) {
                 my ($mistake, $desc) = @{$mistakeDesc};
                 my $details = $mistake->{details};
-                if ($details and $displayDetails > 0) {
-                    push @pieces, '[ ', $desc;
+                if ($details and scalar @{$details} and $displayDetails > 0) {
+                    push @pieces, '[ ', $desc, "\n";
                     # detail levels are not currently used, but are for future
                     # extensions.
                     for my $detailLevel (@{$details}) {
@@ -299,7 +299,7 @@ sub contextDisplay {
                            push @pieces, q{  }, $detail, "\n";
                        }
                     }
-                    push @pieces, " ]\n";
+                    push @pieces, "]\n";
                 } else {
                     push @pieces, '[ ', $desc, " ]\n";
                 }

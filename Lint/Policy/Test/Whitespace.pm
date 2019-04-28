@@ -413,6 +413,7 @@ sub checkOneLineGap {
     return \@mistakes;
 }
 
+# Replace all TISTIS logic with this
 sub checkTistis {
     my ( $policy, $tistis, $options ) = @_;
     my $expectedColumn = $options->{expectedColumn};
@@ -1008,7 +1009,8 @@ sub checkTopKids {
 # TODO: Some of these arguments can (should?) be computed from others.
 #
 sub checkRunning {
-    my ($policy, $options, $tag, $anchorColumn, $expectedColumn, $parent, $running, $runningChildren) = @_;
+    my ($policy, $options, $tag, $anchorColumn, $expectedColumn, $parent, $running) = @_;
+    my $runningChildren = $options->{children};
     my $instance  = $policy->{lint};
 
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
@@ -2478,9 +2480,8 @@ sub checkSplit_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
-	$node, $running, $runningChildren
-        )
+        $policy->checkRunning( { children => $runningChildren },
+            $tag, $anchorColumn, $expectedColumn, $node, $running )
       };
 
     if ( my @gapMistakes =
@@ -2578,8 +2579,9 @@ sub checkJoined_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
-	$node, $running, \@runningChildren
+        $policy->checkRunning( { children => \@runningChildren },
+	$tag, $anchorColumn, $expectedColumn,
+	$node, $running
         )
       };
 
@@ -2692,7 +2694,8 @@ sub check_1Running {
 
 	push @mistakes,
 	  @{
-	    $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( { children => \@runningChildren },
+	    $tag, $anchorColumn, $expectedColumn,
 	    $node, $running, \@runningChildren
 	    )
 	  };
@@ -2722,11 +2725,18 @@ sub check_1Running {
 	my @runningChildren = ( $runningGap, @{$running->{children}});
 
 	push @mistakes,
-	  @{
-	    $policy->checkRunning( { skipFirst =>  1 }, $tag, $anchorColumn, $expectedColumn,
-	    $node, $running, \@runningChildren
-	    )
-	  };
+        @{
+            $policy->checkRunning(
+                {
+                    skipFirst => 1,
+                    children  => \@runningChildren
+                },
+                $tag,
+                $anchorColumn,
+                $expectedColumn,
+                $node, $running
+            )
+        };
 
     }
 
@@ -2827,8 +2837,9 @@ sub check_0_as_1Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( {}, $tag, $anchorColumn, $expectedColumn,
-	$node, $running, \@runningChildren
+        $policy->checkRunning( { children => \@runningChildren },
+	$tag, $anchorColumn, $expectedColumn,
+	$node, $running
         )
       };
 
