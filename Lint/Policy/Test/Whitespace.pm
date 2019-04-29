@@ -1009,9 +1009,12 @@ sub checkTopKids {
 # TODO: Some of these arguments can (should?) be computed from others.
 #
 sub checkRunning {
-    my ($policy, $options, $tag, $anchorColumn, $expectedColumn ) = @_;
+    my ($policy, $options ) = @_;
     my $instance  = $policy->{lint};
     my $runningChildren = $options->{children};
+    my $tag = $options->{tag} or die "No tag";
+    my $anchorColumn = $options->{anchorColumn};
+    my $expectedColumn = $options->{expectedColumn};
 
     # by default, in fact always at this point, the running can be
     # found as the parent of the last running child, and the parent
@@ -1037,8 +1040,7 @@ sub checkRunning {
         last CHECK_FIRST_RUNNING if $options->{skipFirst};
         last CHECK_FIRST_RUNNING if $runStepColumn == $expectedColumn;
         my $msg = sprintf
-          "%s runstep #%d %s; %s",
-          $tag,
+          "runstep #%d %s; %s",
           ( $childIX / 2 ) + 1,
           describeLC( $thisRunStepLine, $runStepColumn ),
           describeMisindent2( $runStepColumn, $expectedColumn );
@@ -1051,6 +1053,7 @@ sub checkRunning {
             column         => $runStepColumn,
             expectedColumn => $expectedColumn,
             topicLines     => [$runeLine],
+	    details => [ [ $tag ] ],
           };
     }
 
@@ -1076,8 +1079,7 @@ sub checkRunning {
             if ( $gap->{length} != 2 ) {
                 my $nextExpectedColumn = $gapColumn + 2;
                 my $msg = sprintf
-                  '%s runstep #%d %s; %s',
-                  $tag,
+                  'runstep #%d %s; %s',
                   ( $childIX / 2 ) + 1,
                   describeLC( $gapLine, $gapColumn ),
                   describeMisindent2( $runStepColumn, $nextExpectedColumn );
@@ -1089,6 +1091,7 @@ sub checkRunning {
                     line           => $thisRunStepLine,
                     column         => $runStepColumn,
                     expectedColumn => $nextExpectedColumn,
+		    details => [ [ $tag ] ],
                   };
             }
 	    $childIX += 2;
@@ -1098,8 +1101,7 @@ sub checkRunning {
 
         if ($runStepCount > 1 and defined $firstSingletonLine ) {
                 my $msg = sprintf
-                  '%s runstep %s; multi-step line not allowed after singleton (%d)',
-                  $tag,
+                  'runstep %s; multi-step line not allowed after singleton (%d)',
                   describeLC( $gapLine, $gapColumn ),
 		  $firstSingletonLine;
                 push @mistakes,
@@ -1109,7 +1111,8 @@ sub checkRunning {
                     parentColumn   => $runeColumn,
                     line           => $workingRunStepLine,
                     column         => $runStepColumn,
-		    topicLines => [ $firstSingletonLine ]
+		    topicLines => [ $firstSingletonLine ],
+		    details => [ [ $tag ] ],
                   };
 	}
 
@@ -1137,8 +1140,7 @@ sub checkRunning {
         if ( $runStepColumn != $expectedColumn ) {
 	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $expectedColumn ;
             my $msg = sprintf
-              "%s runstep #%d %s; %s",
-              $tag,
+              "runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $thisRunStepLine, $runStepColumn ),
               describeMisindent2( $runStepColumn, $expectedColumn );
@@ -1151,6 +1153,7 @@ sub checkRunning {
                 column         => $runStepColumn,
                 expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
+		details => [ [ $tag ] ],
               };
         }
 
@@ -2487,8 +2490,9 @@ sub checkSplit_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( { children => $runningChildren },
-            $tag, $anchorColumn, $expectedColumn )
+        $policy->checkRunning( { children => $runningChildren,
+           tag => $tag, anchorColumn => $anchorColumn, expectedColumn => $expectedColumn,
+	})
       };
 
     if ( my @gapMistakes =
@@ -2586,8 +2590,9 @@ sub checkJoined_0Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( { children => \@runningChildren },
-	$tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning( { children => \@runningChildren,
+           tag => $tag, anchorColumn => $anchorColumn, expectedColumn => $expectedColumn,
+	}
         )
       };
 
@@ -2697,12 +2702,17 @@ sub check_1Running {
 
 	my @runningChildren = ( $runningGap, @{$running->{children}});
 
-	push @mistakes,
-	  @{
-        $policy->checkRunning( { children => \@runningChildren },
-	    $tag, $anchorColumn, $expectedColumn,
-	    )
-	  };
+        push @mistakes,
+          @{
+            $policy->checkRunning(
+                {
+                    children       => \@runningChildren,
+                    tag            => $tag,
+                    anchorColumn   => $anchorColumn,
+                    expectedColumn => $expectedColumn,
+                }
+            )
+          };
 
     } else {
       # joined, that is, $headLine != $runningLine
@@ -2728,19 +2738,18 @@ sub check_1Running {
 
 	my @runningChildren = ( $runningGap, @{$running->{children}});
 
-	push @mistakes,
-        @{
+        push @mistakes,
+          @{
             $policy->checkRunning(
                 {
-                    skipFirst => 1,
-                    children  => \@runningChildren
-                },
-                $tag,
-                $anchorColumn,
-                $expectedColumn,
-                $node,
+                    skipFirst      => 1,
+                    children       => \@runningChildren,
+                    tag            => $tag,
+                    anchorColumn   => $anchorColumn,
+                    expectedColumn => $expectedColumn
+                }
             )
-        };
+          };
 
     }
 
@@ -2841,8 +2850,13 @@ sub check_0_as_1Running {
 
     push @mistakes,
       @{
-        $policy->checkRunning( { children => \@runningChildren },
-	$tag, $anchorColumn, $expectedColumn,
+        $policy->checkRunning(
+            {
+                children       => \@runningChildren,
+                tag            => $tag,
+                anchorColumn   => $anchorColumn,
+                expectedColumn => $expectedColumn
+            }
         )
       };
 
