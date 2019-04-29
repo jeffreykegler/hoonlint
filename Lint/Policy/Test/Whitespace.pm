@@ -1009,9 +1009,16 @@ sub checkTopKids {
 # TODO: Some of these arguments can (should?) be computed from others.
 #
 sub checkRunning {
-    my ($policy, $options, $tag, $anchorColumn, $expectedColumn, $parent, $running) = @_;
-    my $runningChildren = $options->{children};
+    my ($policy, $options, $tag, $anchorColumn, $expectedColumn ) = @_;
     my $instance  = $policy->{lint};
+    my $runningChildren = $options->{children};
+
+    # by default, in fact always at this point, the running can be
+    # found as the parent of the last running child, and the parent
+    # can be found as the parent
+    my $running = $runningChildren->[-1]->{PARENT};
+    my $parent = $running->{PARENT};
+
 
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
@@ -2481,7 +2488,7 @@ sub checkSplit_0Running {
     push @mistakes,
       @{
         $policy->checkRunning( { children => $runningChildren },
-            $tag, $anchorColumn, $expectedColumn, $node, $running )
+            $tag, $anchorColumn, $expectedColumn )
       };
 
     if ( my @gapMistakes =
@@ -2581,7 +2588,6 @@ sub checkJoined_0Running {
       @{
         $policy->checkRunning( { children => \@runningChildren },
 	$tag, $anchorColumn, $expectedColumn,
-	$node, $running
         )
       };
 
@@ -2623,7 +2629,6 @@ sub checkJoined_0Running {
 
 sub check_1Running {
     my ( $policy, $node ) = @_;
-    my $gapSeq   = $policy->gapSeq($node);
     my $instance = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
     my $tag = '1-running';
@@ -2696,7 +2701,6 @@ sub check_1Running {
 	  @{
         $policy->checkRunning( { children => \@runningChildren },
 	    $tag, $anchorColumn, $expectedColumn,
-	    $node, $running, \@runningChildren
 	    )
 	  };
 
@@ -2734,7 +2738,7 @@ sub check_1Running {
                 $tag,
                 $anchorColumn,
                 $expectedColumn,
-                $node, $running
+                $node,
             )
         };
 
@@ -2839,7 +2843,6 @@ sub check_0_as_1Running {
       @{
         $policy->checkRunning( { children => \@runningChildren },
 	$tag, $anchorColumn, $expectedColumn,
-	$node, $running
         )
       };
 
