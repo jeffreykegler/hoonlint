@@ -56,31 +56,31 @@ hoons/arvo/tests/new-hoon/myb.hoon 1:1 Test::Whitespace optFordFaslus Faslus bod
 === hoons/arvo/tests/zuse/crypto/keccak.hoon ===
 hoons/arvo/tests/zuse/crypto/keccak.hoon 19:1 Test::Whitespace optFordFaslus Faslus body @19:5 is underindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 56:5 Test::Whitespace tallColhep backdented element #2 @57:7; overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 102:7 Test::Whitespace tallColsig joined 0-running runstep #2 @101:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 106:7 Test::Whitespace tallColsig joined 0-running runstep #3 @105:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 110:7 Test::Whitespace tallColsig joined 0-running runstep #4 @109:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 114:7 Test::Whitespace tallColsig joined 0-running runstep #5 @113:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 118:7 Test::Whitespace tallColsig joined 0-running runstep #6 @117:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 122:7 Test::Whitespace tallColsig joined 0-running runstep #7 @121:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 133:7 Test::Whitespace tallColsig joined 0-running runstep #2 @132:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 137:7 Test::Whitespace tallColsig joined 0-running runstep #3 @136:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 141:7 Test::Whitespace tallColsig joined 0-running runstep #4 @140:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 145:7 Test::Whitespace tallColsig joined 0-running runstep #5 @144:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 149:7 Test::Whitespace tallColsig joined 0-running runstep #6 @148:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 153:7 Test::Whitespace tallColsig joined 0-running runstep #7 @152:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 165:7 Test::Whitespace tallColsig joined 0-running runstep #2 @164:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 170:7 Test::Whitespace tallColsig joined 0-running runstep #3 @169:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 175:7 Test::Whitespace tallColsig joined 0-running runstep #4 @174:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 180:7 Test::Whitespace tallColsig joined 0-running runstep #5 @179:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 185:7 Test::Whitespace tallColsig joined 0-running runstep #6 @184:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 190:7 Test::Whitespace tallColsig joined 0-running runstep #7 @189:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 102:7 Test::Whitespace colsig:comment-indent runstep #2 @101:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 106:7 Test::Whitespace colsig:comment-indent runstep #3 @105:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 110:7 Test::Whitespace colsig:comment-indent runstep #4 @109:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 114:7 Test::Whitespace colsig:comment-indent runstep #5 @113:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 118:7 Test::Whitespace colsig:comment-indent runstep #6 @117:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 122:7 Test::Whitespace colsig:comment-indent runstep #7 @121:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 133:7 Test::Whitespace colsig:comment-indent runstep #2 @132:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 137:7 Test::Whitespace colsig:comment-indent runstep #3 @136:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 141:7 Test::Whitespace colsig:comment-indent runstep #4 @140:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 145:7 Test::Whitespace colsig:comment-indent runstep #5 @144:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 149:7 Test::Whitespace colsig:comment-indent runstep #6 @148:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 153:7 Test::Whitespace colsig:comment-indent runstep #7 @152:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 165:7 Test::Whitespace colsig:comment-indent runstep #2 @164:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 170:7 Test::Whitespace colsig:comment-indent runstep #3 @169:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 175:7 Test::Whitespace colsig:comment-indent runstep #4 @174:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 180:7 Test::Whitespace colsig:comment-indent runstep #5 @179:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 185:7 Test::Whitespace colsig:comment-indent runstep #6 @184:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 190:7 Test::Whitespace colsig:comment-indent runstep #7 @189:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 198:7 Test::Whitespace tallColhep backdented element #2 @199:8; overindented by 1
-hoons/arvo/tests/zuse/crypto/keccak.hoon 204:7 Test::Whitespace tallColsig joined 0-running runstep #2 @203:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 210:7 Test::Whitespace tallColsig joined 0-running runstep #3 @209:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 216:7 Test::Whitespace tallColsig joined 0-running runstep #4 @215:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 222:7 Test::Whitespace tallColsig joined 0-running runstep #5 @221:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 228:7 Test::Whitespace tallColsig joined 0-running runstep #6 @227:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 234:7 Test::Whitespace tallColsig joined 0-running runstep #7 @233:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 204:7 Test::Whitespace colsig:comment-indent runstep #2 @203:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 210:7 Test::Whitespace colsig:comment-indent runstep #3 @209:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 216:7 Test::Whitespace colsig:comment-indent runstep #4 @215:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 222:7 Test::Whitespace colsig:comment-indent runstep #5 @221:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 228:7 Test::Whitespace colsig:comment-indent runstep #6 @227:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 234:7 Test::Whitespace colsig:comment-indent runstep #7 @233:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 264:3 Test::Whitespace tallColhep backdented element #2 @268:5; overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 268:22 Test::Whitespace tallBarcab cell #9 @269:3; comment overindented by 2
 === hoons/arvo/sys/zuse.hoon ===
@@ -162,9 +162,9 @@ hoons/arvo/sys/zuse.hoon 2323:9 Test::Whitespace tallDottis backdented element #
 hoons/arvo/sys/zuse.hoon 2443:11 Test::Whitespace tallKettis backdented element #2 @2444:9; underindented by 2
 hoons/arvo/sys/zuse.hoon 2446:11 Test::Whitespace tallKettis backdented element #2 @2447:9; underindented by 2
 hoons/arvo/sys/zuse.hoon 2465:27 Test::Whitespace tallColsig split 0-running TISTIS @2469:43; missing newline @2469:41
-hoons/arvo/sys/zuse.hoon 2465:27 Test::Whitespace tallColsig split 0-running TISTIS @2469:43; overindented by 30
+hoons/arvo/sys/zuse.hoon 2465:27 Test::Whitespace colsig:tistis-alone TISTIS @2469:43 should only share line with other TISTIS's
 hoons/arvo/sys/zuse.hoon 2477:27 Test::Whitespace tallColsig split 0-running TISTIS @2481:43; missing newline @2481:41
-hoons/arvo/sys/zuse.hoon 2477:27 Test::Whitespace tallColsig split 0-running TISTIS @2481:43; overindented by 30
+hoons/arvo/sys/zuse.hoon 2477:27 Test::Whitespace colsig:tistis-alone TISTIS @2481:43 should only share line with other TISTIS's
 hoons/arvo/sys/zuse.hoon 2490:23 Test::Whitespace tallWutsig backdented element #3 @2491:13; underindented by 10
 hoons/arvo/sys/zuse.hoon 2494:23 Test::Whitespace tallKethep backdented element #2 @2495:19; overindented by 8
 hoons/arvo/sys/zuse.hoon 2550:22 Test::Whitespace tallKethep backdented element #2 @2551:18; overindented by 7
@@ -828,6 +828,7 @@ hoons/arvo/sys/vane/gall.hoon 32:1 Test::Whitespace tallBarcen split Barcen batt
 hoons/arvo/sys/vane/gall.hoon 34:20 Test::Whitespace tallBarcen cell #1 @35:5; comment overindented by 4
 hoons/arvo/sys/vane/gall.hoon 34:20 Test::Whitespace tallBarcen cell #1 @36:5; comment overindented by 4
 hoons/arvo/sys/vane/gall.hoon 53:1 Test::Whitespace LuslusCell cell body @54:5; overindented by 2
+hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tissig:comment-indent runstep #4 @96:5; comment overindented by 4
 hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:missing-newline gap @97:2; vertical gap must precede TISTIS
 hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:tistis-alone TISTIS @97:4 should only share line with other TISTIS's
 hoons/arvo/sys/vane/gall.hoon 104:1 Test::Whitespace tallBarcen split Barcen battery @105:5; comment overindented by 4
@@ -854,6 +855,7 @@ hoons/arvo/sys/vane/gall.hoon 1088:7 Test::Whitespace tallTisket backdented elem
 hoons/arvo/sys/vane/gall.hoon 1125:7 Test::Whitespace tallWutsig backdented element #2, @1126:9; comment overindented by 2
 hoons/arvo/sys/vane/gall.hoon 1179:30 Test::Whitespace tallBardot backdented element #1 @1180:11; underindented by 9
 hoons/arvo/sys/vane/gall.hoon 1235:3 Test::Whitespace tallSigcen joined backdent element #3 @1235:24; overindented by 1
+Unused suppression: hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig
 === hoons/arvo/sys/vane/eyre.hoon ===
 hoons/arvo/sys/vane/eyre.hoon 15:1 Test::Whitespace LuslusCell cell body @16:11; overindented by 8
 hoons/arvo/sys/vane/eyre.hoon 17:11 Test::Whitespace tallBuccolMold runstep #2 @17:11; underindented by 8
@@ -882,8 +884,8 @@ hoons/arvo/sys/vane/eyre.hoon 1251:15 Test::Whitespace tallKethep backdented ele
 hoons/arvo/sys/vane/eyre.hoon 1287:15 Test::Whitespace tallWutlus Jog queenside body @1287:27; overindented by 1
 hoons/arvo/sys/vane/eyre.hoon 1378:9 Test::Whitespace tallBarhep backdented element #1 @1379:11; overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1506:11 Test::Whitespace tallKethep backdented element #2 @1507:11; overindented by 4
-hoons/arvo/sys/vane/eyre.hoon 1512:15 Test::Whitespace tallColtar joined 0-running runstep #4 @1511:11; comment underindented by 4
-hoons/arvo/sys/vane/eyre.hoon 1506:7 Test::Whitespace tallColtar joined 0-running TISTIS @1526:7; comment overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1512:15 Test::Whitespace coltar:comment-indent runstep #4 @1511:11; comment underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 1506:7 Test::Whitespace tallColtar TISTIS @1526:7; comment overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1820:19 Test::Whitespace tallKethep backdented element #2 @1821:7; underindented by 12
 hoons/arvo/sys/vane/eyre.hoon 625:3 Test::Whitespace tallBarcen battery hephep @1981:5; overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 12:5 Test::Whitespace tissig:missing-newline gap @1983:2; vertical gap must precede TISTIS
@@ -1025,6 +1027,9 @@ hoons/arvo/sys/vane/clay.hoon 364:5 Test::Whitespace tallTisgar backdented eleme
 hoons/arvo/sys/vane/clay.hoon 419:7 Test::Whitespace tallKethep backdented element #2 @420:7; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 542:5 Test::Whitespace tallWutsig joined backdent element #2 @542:15; overindented by 1
 hoons/arvo/sys/vane/clay.hoon 673:18 Test::Whitespace tallKethep backdented element #2 @674:7; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace wutpam:comment-indent runstep #3 @711:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace wutpam:comment-indent runstep #3 @729:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace wutpam:comment-indent runstep #3 @752:9; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 903:7 Test::Whitespace tallBarket Barket head @904:7; must be on rune line
 hoons/arvo/sys/vane/clay.hoon 932:7 Test::Whitespace tallWutsig backdented element #2 @933:8; underindented by 1
 hoons/arvo/sys/vane/clay.hoon 1106:11 Test::Whitespace tallColtar runstep @1108:58; multi-step line not allowed after singleton (1107)
@@ -1054,11 +1059,12 @@ hoons/arvo/sys/vane/clay.hoon 1875:7 Test::Whitespace tallTissem backdented elem
 hoons/arvo/sys/vane/clay.hoon 1914:7 Test::Whitespace tallWutsig backdented element #2 @1915:8; underindented by 1
 hoons/arvo/sys/vane/clay.hoon 1990:7 Test::Whitespace tallColtar runstep #1 @1990:7; underindented by 27
 hoons/arvo/sys/vane/clay.hoon 1991:7 Test::Whitespace tallColtar runstep #6 @1991:7; underindented by 27
-hoons/arvo/sys/vane/clay.hoon 1989:32 Test::Whitespace tallColtar split 0-running TISTIS @1992:5; underindented by 27
+hoons/arvo/sys/vane/clay.hoon 1989:32 Test::Whitespace coltar:tistis-indent TISTIS @1992:5; underindented by 27
 hoons/arvo/sys/vane/clay.hoon 2049:11 Test::Whitespace tallKethep backdented element #2 @2050:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2236:9 Test::Whitespace tallWutsig backdented element #3, @2241:57; comment overindented by 48
 hoons/arvo/sys/vane/clay.hoon 2295:11 Test::Whitespace tallWutgar backdented element #2 @2296:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2316:11 Test::Whitespace tallKethep backdented element #2 @2317:11; overindented by 4
+hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace wutbar:comment-indent runstep #2 @2421:11; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 2560:11 Test::Whitespace tallKethep backdented element #2, @2561:11; comment overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2560:11 Test::Whitespace tallKethep backdented element #2, @2562:11; comment overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2560:11 Test::Whitespace tallKethep backdented element #2 @2563:11; overindented by 4
@@ -1116,6 +1122,10 @@ hoons/arvo/sys/vane/clay.hoon 3900:9 Test::Whitespace tallKethep backdented elem
 hoons/arvo/sys/vane/clay.hoon 4007:11 Test::Whitespace tallKethep backdented element #2 @4008:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 4022:9 Test::Whitespace bont5d SIGGAL/SIGGAR element 2 @4023:9; overindented by 2
 hoons/arvo/sys/vane/clay.hoon 4078:9 Test::Whitespace tallKethep backdented element #2 @4079:9; overindented by 4
+Unused suppression: hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam
+Unused suppression: hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam
+Unused suppression: hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam
+Unused suppression: hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace tallWutbar
 === hoons/arvo/sys/vane/jael.hoon ===
 hoons/arvo/sys/vane/jael.hoon 25:1 Test::Whitespace tallTiscom backdented element #2, @29:1; staircase comment underindented by 2
 hoons/arvo/sys/vane/jael.hoon 25:1 Test::Whitespace tallTiscom backdented element #2, @30:1; staircase comment underindented by 2
@@ -1219,12 +1229,12 @@ hoons/arvo/app/gmail.hoon 90:5 Test::Whitespace tallColtar runstep #1 @90:5; und
 hoons/arvo/app/gmail.hoon 91:5 Test::Whitespace tallColtar runstep #2 @91:5; underindented by 20
 hoons/arvo/app/gmail.hoon 92:5 Test::Whitespace tallColtar runstep #3 @92:5; underindented by 20
 hoons/arvo/app/gmail.hoon 93:5 Test::Whitespace tallColtar runstep #4 @93:5; underindented by 20
-hoons/arvo/app/gmail.hoon 95:5 Test::Whitespace tallColtar split 0-running runstep #5 @94:3; comment underindented by 20
+hoons/arvo/app/gmail.hoon 95:5 Test::Whitespace coltar:comment-indent runstep #5 @94:3; comment underindented by 20
 hoons/arvo/app/gmail.hoon 95:5 Test::Whitespace tallColtar runstep #5 @95:5; underindented by 20
-hoons/arvo/app/gmail.hoon 98:5 Test::Whitespace tallColtar split 0-running runstep #6 @97:3; comment underindented by 20
+hoons/arvo/app/gmail.hoon 98:5 Test::Whitespace coltar:comment-indent runstep #6 @97:3; comment underindented by 20
 hoons/arvo/app/gmail.hoon 98:5 Test::Whitespace tallColtar runstep #6 @98:5; underindented by 20
 hoons/arvo/app/gmail.hoon 99:5 Test::Whitespace tallColtar runstep #7 @99:5; underindented by 20
-hoons/arvo/app/gmail.hoon 89:23 Test::Whitespace tallColtar split 0-running TISTIS @100:3; underindented by 20
+hoons/arvo/app/gmail.hoon 89:23 Test::Whitespace coltar:tistis-indent TISTIS @100:3; underindented by 20
 hoons/arvo/app/gmail.hoon 124:5 Test::Whitespace tallBarcab cell #5 @129:1; empty line in comment
 hoons/arvo/app/gmail.hoon 134:3 Test::Whitespace tallWutdot backdented element #2, @135:5; comment overindented by 2
 hoons/arvo/app/gmail.hoon 142:3 Test::Whitespace tallWutlus 2-jogging queenside head @142:7; underindented by 2
@@ -1292,9 +1302,9 @@ hoons/arvo/app/twit.hoon 179:3 Test::Whitespace tallWutlus 2-jogging kingside he
 === hoons/arvo/app/fora.hoon ===
 hoons/arvo/app/fora.hoon 6:1 Test::Whitespace optFordFashep Fashep body @6:5 is underindented by 2
 hoons/arvo/app/fora.hoon 7:1 Test::Whitespace optFordFaslus Faslus body @7:5 is underindented by 2
-hoons/arvo/app/fora.hoon 65:7 Test::Whitespace tallColsig joined 0-running runstep #2 @64:5; comment overindented by 2
+hoons/arvo/app/fora.hoon 65:7 Test::Whitespace colsig:comment-indent runstep #2 @64:5; comment overindented by 2
 hoons/arvo/app/fora.hoon 84:7 Test::Whitespace tallKethep backdented element #2 @85:7; overindented by 4
-hoons/arvo/app/fora.hoon 98:7 Test::Whitespace tallColsig joined 0-running runstep #2 @97:5; comment overindented by 2
+hoons/arvo/app/fora.hoon 98:7 Test::Whitespace colsig:comment-indent runstep #2 @97:5; comment overindented by 2
 === hoons/arvo/app/static.hoon ===
 hoons/arvo/app/static.hoon 19:1 Test::Whitespace fordFaswut FASWUT; body @19:5 is underindented by 2
 hoons/arvo/app/static.hoon 20:1 Test::Whitespace optFordFashep Fashep body @20:5 is underindented by 2
@@ -1320,7 +1330,7 @@ hoons/arvo/app/dojo.hoon 513:11 Test::Whitespace tallColtar runstep #1 @513:11; 
 hoons/arvo/app/dojo.hoon 514:11 Test::Whitespace tallColtar runstep #2 @514:11; underindented by 20
 hoons/arvo/app/dojo.hoon 515:11 Test::Whitespace tallColtar runstep #3 @515:11; underindented by 20
 hoons/arvo/app/dojo.hoon 516:11 Test::Whitespace tallColtar runstep #4 @516:11; underindented by 20
-hoons/arvo/app/dojo.hoon 512:29 Test::Whitespace tallColtar split 0-running TISTIS @517:9; underindented by 20
+hoons/arvo/app/dojo.hoon 512:29 Test::Whitespace coltar:tistis-indent TISTIS @517:9; underindented by 20
 hoons/arvo/app/dojo.hoon 563:11 Test::Whitespace tallKethep backdented element #2 @564:11; overindented by 4
 hoons/arvo/app/dojo.hoon 632:9 Test::Whitespace tallWutsig backdented element #2, @633:11; comment overindented by 2
 hoons/arvo/app/dojo.hoon 646:11 Test::Whitespace tallWutsig backdented element #2, @647:13; comment overindented by 2
@@ -1370,9 +1380,9 @@ hoons/arvo/app/gh.hoon 17:1 Test::Whitespace optFordFashep Fashep body @17:5 is 
 hoons/arvo/app/gh.hoon 18:1 Test::Whitespace optFordFaslus Faslus body @18:5 is underindented by 2
 hoons/arvo/app/gh.hoon 83:7 Test::Whitespace tallKethep backdented element #2 @84:7; overindented by 4
 hoons/arvo/app/gh.hoon 117:11 Test::Whitespace tallTislus backdented element #2, @118:9; comment underindented by 2
-hoons/arvo/app/gh.hoon 146:11 Test::Whitespace tallColtar joined 0-running runstep #3 @145:9; comment overindented by 2
-hoons/arvo/app/gh.hoon 153:11 Test::Whitespace tallColtar joined 0-running runstep #4 @152:9; comment overindented by 2
-hoons/arvo/app/gh.hoon 159:11 Test::Whitespace tallColtar joined 0-running runstep #5 @158:9; comment overindented by 2
+hoons/arvo/app/gh.hoon 146:11 Test::Whitespace coltar:comment-indent runstep #3 @145:9; comment overindented by 2
+hoons/arvo/app/gh.hoon 153:11 Test::Whitespace coltar:comment-indent runstep #4 @152:9; comment overindented by 2
+hoons/arvo/app/gh.hoon 159:11 Test::Whitespace coltar:comment-indent runstep #5 @158:9; comment overindented by 2
 hoons/arvo/app/gh.hoon 279:5 Test::Whitespace tallColtar runstep @283:20; multi-step line not allowed after singleton (279)
 === hoons/arvo/app/ask.hoon ===
 hoons/arvo/app/ask.hoon 7:1 Test::Whitespace tallBarcen split Barcen battery @8:3; overindented by 2
@@ -1381,25 +1391,25 @@ hoons/arvo/app/ask.hoon 59:1 Test::Whitespace LuslusCell Pseudo-joined cell @59:
 hoons/arvo/app/pipe.hoon 1:1 Test::Whitespace optFordFaslus Faslus body @1:5 is underindented by 2
 hoons/arvo/app/pipe.hoon 38:11 Test::Whitespace tallColsig runstep #1 @38:11; overindented by 2
 hoons/arvo/app/pipe.hoon 39:11 Test::Whitespace tallColsig runstep #2 @39:11; overindented by 2
-hoons/arvo/app/pipe.hoon 37:19 Test::Whitespace tallColsig split 0-running TISTIS @40:9; overindented by 2
+hoons/arvo/app/pipe.hoon 37:19 Test::Whitespace colsig:tistis-indent TISTIS @40:9; underindented by 10
 hoons/arvo/app/pipe.hoon 43:9 Test::Whitespace tallColsig runstep #1 @43:9; overindented by 2
 hoons/arvo/app/pipe.hoon 44:9 Test::Whitespace tallColsig runstep #2 @44:9; overindented by 2
-hoons/arvo/app/pipe.hoon 42:17 Test::Whitespace tallColsig split 0-running TISTIS @45:7; overindented by 2
+hoons/arvo/app/pipe.hoon 42:17 Test::Whitespace colsig:tistis-indent TISTIS @45:7; underindented by 10
 hoons/arvo/app/pipe.hoon 67:11 Test::Whitespace tallColsig runstep #1 @67:11; overindented by 2
 hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace tallColsig runstep #2 @68:11; overindented by 2
-hoons/arvo/app/pipe.hoon 66:19 Test::Whitespace tallColsig split 0-running TISTIS @69:9; overindented by 2
+hoons/arvo/app/pipe.hoon 66:19 Test::Whitespace colsig:tistis-indent TISTIS @69:9; underindented by 10
 === hoons/arvo/app/talk.hoon ===
 hoons/arvo/app/talk.hoon 18:1 Test::Whitespace fordFastis Fastis symbol @18:7; overindented by 2
 hoons/arvo/app/talk.hoon 158:5 Test::Whitespace tallBarket Barket head @159:7; must be on rune line
-hoons/arvo/app/talk.hoon 284:7 Test::Whitespace tallColtar joined 0-running runstep #5 @283:5; comment overindented by 2
+hoons/arvo/app/talk.hoon 284:7 Test::Whitespace coltar:comment-indent runstep #5 @283:5; comment overindented by 2
 hoons/arvo/app/talk.hoon 384:5 Test::Whitespace tallWutlus 2-jogging queenside head @384:9; underindented by 2
 hoons/arvo/app/talk.hoon 406:5 Test::Whitespace tallWutlus 2-jogging queenside head @406:9; underindented by 2
 hoons/arvo/app/talk.hoon 425:5 Test::Whitespace tallWutlus 2-jogging queenside subhead @426:9; overindented by 2
 hoons/arvo/app/talk.hoon 446:9 Test::Whitespace tallTisfas backdented element #2, @447:11; comment overindented by 2
 hoons/arvo/app/talk.hoon 558:7 Test::Whitespace tallCenlus backdented element #2 @559:7; underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace tallSemsig 1-running runstep #11 @861:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace tallSemsig 1-running runstep #11 @862:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace tallSemsig 1-running runstep #11 @863:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @861:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @862:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @863:9; comment underindented by 2
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #2 @949:15; underindented by 2
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #3, @949:17; missing newline @949:17
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #3 @949:19; overindented by 4
@@ -1422,11 +1432,11 @@ hoons/arvo/app/github.hoon 7:1 Test::Whitespace optFordFashep Fashep body @7:5 i
 hoons/arvo/app/github.hoon 24:9 Test::Whitespace tallColsig runstep #1 @24:9; overindented by 2
 hoons/arvo/app/github.hoon 25:9 Test::Whitespace tallColsig runstep #2 @25:9; overindented by 2
 hoons/arvo/app/github.hoon 26:9 Test::Whitespace tallColsig runstep #3 @26:9; overindented by 2
-hoons/arvo/app/github.hoon 23:17 Test::Whitespace tallColsig split 0-running TISTIS @32:7; overindented by 2
+hoons/arvo/app/github.hoon 23:17 Test::Whitespace colsig:tistis-indent TISTIS @32:7; underindented by 10
 hoons/arvo/app/github.hoon 37:9 Test::Whitespace tallColsig runstep #1 @37:9; overindented by 2
 hoons/arvo/app/github.hoon 38:9 Test::Whitespace tallColsig runstep #2 @38:9; overindented by 2
 hoons/arvo/app/github.hoon 39:9 Test::Whitespace tallColsig runstep #3 @39:9; overindented by 2
-hoons/arvo/app/github.hoon 36:17 Test::Whitespace tallColsig split 0-running TISTIS @40:7; overindented by 2
+hoons/arvo/app/github.hoon 36:17 Test::Whitespace colsig:tistis-indent TISTIS @40:7; underindented by 10
 === hoons/arvo/app/hall.hoon ===
 hoons/arvo/app/hall.hoon 13:1 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
 hoons/arvo/app/hall.hoon 14:1 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
@@ -1450,18 +1460,21 @@ hoons/arvo/app/hall.hoon 958:7 Test::Whitespace tallTisdot backdented element #3
 hoons/arvo/app/hall.hoon 958:7 Test::Whitespace tallTisdot backdented element #3, @968:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1124:57 Test::Whitespace tallBarcab cell #11 @1125:7; comment overindented by 2
 hoons/arvo/app/hall.hoon 1124:57 Test::Whitespace tallBarcab cell #11 @1126:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 1145:15 Test::Whitespace wutbar:comment-indent runstep #2 @1144:13; comment overindented by 2
+hoons/arvo/app/hall.hoon 1149:19 Test::Whitespace wutpam:comment-indent runstep #2 @1148:17; comment overindented by 2
 hoons/arvo/app/hall.hoon 1174:7 Test::Whitespace tallWutsig backdented element #2, @1175:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1189:11 Test::Whitespace tallColsig joined 0-running runstep #2 @1188:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1193:11 Test::Whitespace tallColsig joined 0-running runstep #3 @1192:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1197:11 Test::Whitespace tallColsig joined 0-running runstep #4 @1196:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1200:11 Test::Whitespace tallColsig joined 0-running runstep #5 @1199:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1203:11 Test::Whitespace tallColsig joined 0-running runstep #6 @1202:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1207:11 Test::Whitespace tallColsig joined 0-running runstep #7 @1206:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1189:11 Test::Whitespace colsig:comment-indent runstep #2 @1188:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1193:11 Test::Whitespace colsig:comment-indent runstep #3 @1192:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1197:11 Test::Whitespace colsig:comment-indent runstep #4 @1196:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1200:11 Test::Whitespace colsig:comment-indent runstep #5 @1199:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1203:11 Test::Whitespace colsig:comment-indent runstep #6 @1202:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1207:11 Test::Whitespace colsig:comment-indent runstep #7 @1206:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1226:7 Test::Whitespace tallTiswut backdented element #4, @1232:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1226:7 Test::Whitespace tallTiswut backdented element #4, @1233:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1226:7 Test::Whitespace tallTiswut backdented element #4, @1234:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1226:7 Test::Whitespace tallTiswut backdented element #4, @1235:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1226:7 Test::Whitespace tallTiswut backdented element #4, @1236:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1328:15 Test::Whitespace wutpam:comment-indent runstep #3 @1327:13; comment overindented by 2
 hoons/arvo/app/hall.hoon 1361:7 Test::Whitespace tallWutcol backdented element #2, @1365:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1367:7 Test::Whitespace tallWutcol backdented element #2, @1371:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1414:7 Test::Whitespace tallWutlus 2-jogging queenside head @1414:11; underindented by 2
@@ -1479,7 +1492,7 @@ hoons/arvo/app/hall.hoon 2164:3 Test::Whitespace tallWutlus 2-jogging queenside 
 hoons/arvo/app/hall.hoon 2188:7 Test::Whitespace tallWutlus Jog queenside split body @2189:7; comment overindented by 2
 hoons/arvo/app/hall.hoon 2209:11 Test::Whitespace tallBuchepMold backdented element #2 @2210:15; overindented by 4
 hoons/arvo/app/hall.hoon 2220:11 Test::Whitespace tallBuchepMold backdented element #2 @2221:15; overindented by 4
-hoons/arvo/app/hall.hoon 2254:7 Test::Whitespace tallColsig joined 0-running runstep #2 @2253:5; comment overindented by 2
+hoons/arvo/app/hall.hoon 2254:7 Test::Whitespace colsig:comment-indent runstep #2 @2253:5; comment overindented by 2
 hoons/arvo/app/hall.hoon 2283:54 Test::Whitespace tallBarcab cell #12 @2284:3; comment overindented by 2
 hoons/arvo/app/hall.hoon 2283:54 Test::Whitespace tallBarcab cell #12 @2285:3; comment overindented by 2
 hoons/arvo/app/hall.hoon 2283:54 Test::Whitespace tallBarcab cell #12 @2286:3; comment overindented by 2
@@ -1499,6 +1512,7 @@ hoons/arvo/app/hall.hoon 2449:17 Test::Whitespace tallWutcol backdented element 
 hoons/arvo/app/hall.hoon 2451:17 Test::Whitespace tallWutcol backdented element #2 @2452:17; underindented by 2
 hoons/arvo/app/hall.hoon 2451:17 Test::Whitespace tallWutcol backdented element #3, @2452:25; missing newline @2452:25
 hoons/arvo/app/hall.hoon 2451:17 Test::Whitespace tallWutcol backdented element #3 @2452:27; overindented by 10
+hoons/arvo/app/hall.hoon 2497:9 Test::Whitespace wutbar:comment-indent runstep #2 @2496:7; comment overindented by 2
 hoons/arvo/app/hall.hoon 2531:5 Test::Whitespace tallWutdot joined backdent element #2 @2531:31; overindented by 4
 hoons/arvo/app/hall.hoon 2532:5 Test::Whitespace tallWutdot joined backdent element #2 @2532:31; overindented by 2
 hoons/arvo/app/hall.hoon 2533:5 Test::Whitespace tallWutdot joined backdent element #2 @2533:31; overindented by 1
@@ -1506,6 +1520,7 @@ hoons/arvo/app/hall.hoon 2537:5 Test::Whitespace tallWutdot joined backdent elem
 hoons/arvo/app/hall.hoon 2538:5 Test::Whitespace tallWutdot joined backdent element #2 @2538:55; overindented by 26
 hoons/arvo/app/hall.hoon 2539:5 Test::Whitespace tallWutdot backdented element #2, @2540:42; missing newline @2540:42
 hoons/arvo/app/hall.hoon 2539:5 Test::Whitespace tallWutdot backdented element #2 @2540:55; overindented by 48
+hoons/arvo/app/hall.hoon 2543:13 Test::Whitespace wutbar:comment-indent runstep #2 @2542:11; comment overindented by 2
 hoons/arvo/app/hall.hoon 2549:5 Test::Whitespace tallWutdot joined backdent element #2 @2549:29; overindented by 1
 hoons/arvo/app/hall.hoon 2551:5 Test::Whitespace tallWutlus 2-jogging queenside head @2551:9; underindented by 2
 hoons/arvo/app/hall.hoon 2602:7 Test::Whitespace tallKethep backdented element #2 @2603:5; overindented by 2
@@ -1527,6 +1542,11 @@ hoons/arvo/app/hall.hoon 2973:7 Test::Whitespace tallKethep backdented element #
 hoons/arvo/app/hall.hoon 2995:9 Test::Whitespace tallCenhep backdented element #2 @2996:7; underindented by 2
 hoons/arvo/app/hall.hoon 3012:9 Test::Whitespace tallKethep backdented element #2 @3013:9; overindented by 4
 hoons/arvo/app/hall.hoon 3024:9 Test::Whitespace tallCenlus backdented element #3 @3025:7; underindented by 2
+Unused suppression: hoons/arvo/app/hall.hoon 1149:19 Test::Whitespace tallWutpam
+Unused suppression: hoons/arvo/app/hall.hoon 1328:15 Test::Whitespace tallWutpam
+Unused suppression: hoons/arvo/app/hall.hoon 2497:9 Test::Whitespace tallWutbar
+Unused suppression: hoons/arvo/app/hall.hoon 1145:15 Test::Whitespace tallWutbar
+Unused suppression: hoons/arvo/app/hall.hoon 2543:13 Test::Whitespace tallWutbar
 === hoons/arvo/sec/com/digitalocean.hoon ===
 === hoons/arvo/sec/com/asana.hoon ===
 === hoons/arvo/sec/com/dropboxapi.hoon ===
@@ -1573,6 +1593,7 @@ hoons/arvo/lib/down-jet/parse.hoon 190:13 Test::Whitespace tallKethep backdented
 hoons/arvo/lib/down-jet/parse.hoon 360:9 Test::Whitespace tallKethep backdented element #2 @361:9; overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @445:1; comment underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @446:1; comment underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tissig:comment-indent runstep #2 @447:3; comment overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 465:1 Test::Whitespace LuslusCell cell body @466:2; underindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 475:1 Test::Whitespace LuslusCell cell body @476:4; overindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace tallColsig runstep #2 @493:17; overindented by 1
@@ -1752,8 +1773,8 @@ hoons/arvo/lib/gh-parse.hoon 184:7 Test::Whitespace tallColsig runstep #5 @184:7
 hoons/arvo/lib/gh-parse.hoon 185:7 Test::Whitespace tallColsig runstep #6 @185:7; overindented by 2
 hoons/arvo/lib/gh-parse.hoon 186:7 Test::Whitespace tallColsig runstep #7 @186:7; overindented by 2
 hoons/arvo/lib/gh-parse.hoon 187:7 Test::Whitespace tallColsig runstep #8 @187:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 201:7 Test::Whitespace tallColtar joined 0-running runstep #6 @200:5; comment overindented by 2
-hoons/arvo/lib/gh-parse.hoon 207:7 Test::Whitespace tallColtar joined 0-running runstep #7 @206:5; comment overindented by 2
+hoons/arvo/lib/gh-parse.hoon 201:7 Test::Whitespace coltar:comment-indent runstep #6 @200:5; comment overindented by 2
+hoons/arvo/lib/gh-parse.hoon 207:7 Test::Whitespace coltar:comment-indent runstep #7 @206:5; comment overindented by 2
 === hoons/arvo/lib/oauth1.hoon ===
 hoons/arvo/lib/oauth1.hoon 61:16 Test::Whitespace tallZapdot backdented element #1 @62:3; underindented by 13
 hoons/arvo/lib/oauth1.hoon 68:1 Test::Whitespace LuslusCell Pseudo-joined cell @68:1; body/comment mismatch; body is underindented by 13
@@ -1848,9 +1869,9 @@ hoons/arvo/lib/hood/helm.hoon 153:5 Test::Whitespace tallTisdot backdented eleme
 hoons/arvo/lib/hood/helm.hoon 156:9 Test::Whitespace tallKethep backdented element #2 @157:9; overindented by 4
 hoons/arvo/lib/hood/helm.hoon 153:5 Test::Whitespace tallTisdot backdented element #3 @160:3; underindented by 2
 hoons/arvo/lib/hood/helm.hoon 250:7 Test::Whitespace tallKethep backdented element #2 @251:7; overindented by 4
-hoons/arvo/lib/hood/helm.hoon 256:7 Test::Whitespace tallColsig joined 0-running runstep #2 @255:5; comment overindented by 2
-hoons/arvo/lib/hood/helm.hoon 261:7 Test::Whitespace tallColsig joined 0-running runstep #3 @260:5; comment overindented by 2
-hoons/arvo/lib/hood/helm.hoon 277:7 Test::Whitespace tallColsig joined 0-running runstep #2 @276:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 256:7 Test::Whitespace colsig:comment-indent runstep #2 @255:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 261:7 Test::Whitespace colsig:comment-indent runstep #3 @260:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 277:7 Test::Whitespace colsig:comment-indent runstep #2 @276:5; comment overindented by 2
 === hoons/arvo/lib/hood/drum.hoon ===
 hoons/arvo/lib/hood/drum.hoon 62:7 Test::Whitespace tallBuctisMold backdented element #2 @63:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 436:25 Test::Whitespace tallBarcab cell #38 @437:3; comment overindented by 2
@@ -2235,7 +2256,7 @@ hoons/arvo/gen/al.hoon 346:7 Test::Whitespace tallWutcol backdented element #2, 
 === hoons/arvo/gen/solid.hoon ===
 hoons/arvo/gen/solid.hoon 11:3 Test::Whitespace tallZapcol backdented element #1 @12:1; underindented by 2
 hoons/arvo/gen/solid.hoon 26:24 Test::Whitespace tallBardot backdented element #1 @27:5; underindented by 9
-hoons/arvo/gen/solid.hoon 57:5 Test::Whitespace tallColsig joined 0-running TISTIS @66:5; empty line in comment
+hoons/arvo/gen/solid.hoon 57:5 Test::Whitespace tallColsig TISTIS @66:5; empty line in comment
 === hoons/arvo/gen/ticket.hoon ===
 hoons/arvo/gen/ticket.hoon 8:3 Test::Whitespace tallZapdot backdented element #1 @9:1; underindented by 2
 === hoons/arvo/gen/ivory.hoon ===
