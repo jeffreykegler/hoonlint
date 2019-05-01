@@ -1373,9 +1373,6 @@ hoons/arvo/app/talk.hoon 406:5 Test::Whitespace tallWutlus 2-jogging queenside h
 hoons/arvo/app/talk.hoon 425:5 Test::Whitespace tallWutlus 2-jogging queenside subhead @426:9; overindented by 2
 hoons/arvo/app/talk.hoon 446:9 Test::Whitespace tallTisfas backdented element #2, @447:11; comment overindented by 2
 hoons/arvo/app/talk.hoon 558:7 Test::Whitespace tallCenlus backdented element #2 @559:7; underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @861:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @862:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @863:9; comment underindented by 2
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #2 @949:15; underindented by 2
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #3, @949:17; missing newline @949:17
 hoons/arvo/app/talk.hoon 948:15 Test::Whitespace tallWutcol backdented element #3 @949:19; overindented by 4

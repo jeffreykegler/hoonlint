@@ -609,3 +609,8 @@ hoons/arvo/tests/zuse/crypto/keccak.hoon 216:7 Test::Whitespace colsig:comment-i
 hoons/arvo/tests/zuse/crypto/keccak.hoon 222:7 Test::Whitespace colsig:comment-indent runstep #5 @221:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 228:7 Test::Whitespace colsig:comment-indent runstep #6 @227:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 234:7 Test::Whitespace colsig:comment-indent runstep #7 @233:5; comment overindented by 2
+
+# Github issue #36
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @861:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @862:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @863:9; comment underindented by 2
