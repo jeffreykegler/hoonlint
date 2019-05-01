@@ -238,6 +238,19 @@ A **newline-equivalent gap** is a gap containing which contains only one
 newline, not counting those newlines which termination properly aligned
 header commments.
 
+If it is before a step of a sequence,
+a newline-equivalent gap may contain zero or more
+**inter-comments**
+followed by zero or more **pre-comments**.
+Both inter-comments and pre-comments can contain any content,
+but in concept,
+inter-comments separate the sequence steps from other lexemese,
+and from each other;
+while pre-comments preceed sequence steps.
+
+The correct indentation of inter-comments and pre-comments is specified,
+for each type of sequence, below.
+
 ### Types of hoons
 
 Hoons may be backdented, running, jogging, battery or irregular.
@@ -338,8 +351,9 @@ TISTIS line.
 A newline-equivalent gap should occur between every pair of runsteps.
 A newline-equivalent gap should also occur between the last
 and the TISTIS.
-Header comments in a running should be aligned at the anchor column
+Inter-comments in a running should be at the anchor column
 of the parent hoon.
+Pre-comments in a running should be aligned with the runstep.
 
 ### Horizontal sub-running
 
