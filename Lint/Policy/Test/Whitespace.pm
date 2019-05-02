@@ -42,7 +42,7 @@ sub nodeSubpolicy {
 }
 
 # return standard anchor "detail" line
-sub anchorDetail {
+sub anchorDetailsBasic {
     my ( $policy, $rune, $anchorColumn ) = @_;
     my $instance        = $policy->{lint};
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
@@ -50,7 +50,7 @@ sub anchorDetail {
     my $anchorLexeme = substr $anchorLiteral, $anchorColumn;
     $anchorLexeme =~ s/[\s].*\z//xms;
     my $typeVerb = ($anchorColumn == $runeColumn) ? "anchor" : "re-anchor";
-    return qq{$typeVerb column is } . describeLC($runeLine, $anchorColumn) . qq{ "$anchorLexeme"};
+    return [qq{$typeVerb column is } . describeLC($runeLine, $anchorColumn) . qq{ "$anchorLexeme"}];
 }
 
 # first brick node in $node's line,
@@ -1068,7 +1068,8 @@ sub checkRunning {
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
 
-    my $anchorDetail = $policy->anchorDetail($parent, $anchorColumn);
+    my $anchorDetails = $options->{anchorDetails}
+      // $policy->anchorDetailsBasic( $parent, $anchorColumn );
 
     my $childIX         = 0;
     my $firstSingletonLine;
@@ -1099,7 +1100,7 @@ sub checkRunning {
             column         => $runStepColumn,
             expectedColumn => $expectedColumn,
             topicLines     => [$runeLine],
-	    details => [ [ $tag, $anchorDetail ] ],
+	    details => [ [ $tag, @{$anchorDetails} ] ],
           };
     }
 
@@ -1183,7 +1184,7 @@ sub checkRunning {
                             $tag,
                             'inter-comment indent should be ' . ( $anchorColumn + 1 ),
                             'pre-comment indent should be ' . ( $expectedColumn + 1 ),
-			    $anchorDetail,
+			    @{$anchorDetails},
                         ]
                     ],
                 }
@@ -1206,7 +1207,7 @@ sub checkRunning {
                 column         => $runStepColumn,
                 expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
-		details => [ [ $tag, $anchorDetail ] ],
+		details => [ [ $tag, @{$anchorDetails} ] ],
               };
         }
 
