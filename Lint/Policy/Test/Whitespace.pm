@@ -53,6 +53,30 @@ sub anchorDetailsBasic {
     return [qq{$typeVerb column is } . describeLC($runeLine, $anchorColumn) . qq{ "$anchorLexeme"}];
 }
 
+sub anchorDetails {
+    my ( $policy, $rune, $anchorData ) = @_;
+    my @desc = ();
+    my $instance        = $policy->{lint};
+    my $brick = $anchorData->{brick};
+
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+    my ( $brickLine, $brickColumn ) = $instance->nodeLC($brick);
+    my $anchorColumn = $anchorData->{column};
+    my $offset = $anchorData->{offset};
+    my $brickLiteral = $instance->literalLine($runeLine);
+    my $brickLexeme = substr $brickLiteral, $brickColumn;
+    $brickLexeme =~ s/[\s].*\z//xms;
+
+    $DB::single = 1 if not defined $anchorColumn;
+    if ($anchorColumn == $runeColumn) {
+      return [ qq{anchor column is } . describeLC($runeLine, $anchorColumn) . qq{ "$brickLexeme"} ];
+    }
+    push @desc, qq{re-anchor column is } . describeLC($runeLine, $anchorColumn) . qq{ "$brickLexeme"};
+    push @desc, sprintf 're-anchor column (%d) = anchor brick column (%d) + re-anchor offset (%d)',
+         $anchorColumn+1, $brickColumn+1, $offset;
+    return \@desc;
+}
+
 # first brick node in $node's line,
 # by inclusion list.
 # $node if there is no prior included brick node
@@ -60,7 +84,6 @@ sub reanchorInc {
     my ( $policy, $node, $inclusions ) = @_;
     my $instance = $policy->{lint};
 
-   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
     my ($currentLine)  = $instance->nodeLC($node);
     my $thisNode       = $node;
     my $firstBrickNode = $node;
@@ -197,7 +220,6 @@ sub pseudoJoinColumn {
           $instance->line_column( $gapStart + $firstColon );
     }
 
-    # say STDERR join " ", __FILE__, __LINE__, "commentColumn", $commentColumn;
     return -1 if not $commentColumn;
 
     # If the last line of the gap does not end in a newline,
@@ -212,7 +234,6 @@ sub pseudoJoinColumn {
         my $literalLine = $instance->literalLine($lineNum);
         my $commentOffset = index $literalLine, ':';
 
-        # say STDERR "comment offset $commentOffset vs. $commentColumn";
         return -1 if $commentOffset < 0;
         return -1 if $commentOffset != $commentColumn;
     }
@@ -413,7 +434,6 @@ sub checkOneLineGap {
     my $details = $options->{details};
     my $subpolicy = $options->{subpolicy};
 
-    # say STDERR join " ", __FILE__, __LINE__, $childIX, $#$runningChildren;
     if ( my @gapMistakes =
         @{ $policy->isOneLineGap( $gap, { tag => $tag}, $interColumn, $preColumn ) } )
     {
@@ -455,11 +475,9 @@ sub checkTistis {
     my ( $parentLine,      $parentColumn )      = $instance->nodeLC($parent);
     my ( $tistisLine,      $tistisColumn )      = $instance->nodeLC($tistis);
     my $literalLine = $instance->literalLine($tistisLine);
-    # say STDERR join ' ', __FILE__, __LINE__, '[' . $literalLine . ']';
     $literalLine = $policy->deComment($literalLine);
     $literalLine =~ s/\n//g;
     $literalLine =~ s/==//g;
-    # say STDERR join ' ', __FILE__, __LINE__, '[' . $literalLine . ']';
     if ($literalLine =~ m/[^ ]/) {
         my $msg = sprintf q{TISTIS %s should only share line with other TISTIS's},
           describeLC( $tistisLine, $tistisColumn );
@@ -1070,6 +1088,8 @@ sub checkRunning {
 
     my $anchorDetails = $options->{anchorDetails}
       // $policy->anchorDetailsBasic( $parent, $anchorColumn );
+    # say STDERR Data::Dumper::Dumper($options->{anchorDetails});
+    # say STDERR Data::Dumper::Dumper($anchorDetails);
 
     my $childIX         = 0;
     my $firstSingletonLine;
@@ -1192,7 +1212,6 @@ sub checkRunning {
           };
 
         if ( $runStepColumn != $expectedColumn ) {
-	# say STDERR join ' ', __FILE__, __LINE__, $runStepColumn, $expectedColumn ;
             my $msg = sprintf
               "runstep #%d %s; %s",
               ( $childIX / 2 ) + 1,
@@ -1227,7 +1246,6 @@ sub check_0Running {
     my ( $rune, $runningGap, $running ) = @{ $policy->gapSeq($node) };
 
     my $column = $policy->checkJoinGap($runningGap);
-   # say join ' ', __FILE__, __LINE__, 'column ', Data::Dumper::Dumper($column);
     return checkSplit_0Running( $policy, $node ) if not defined $column;
     return checkJoined_0Running( $policy, $node, $column ) if $column == -1;
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
@@ -1930,7 +1948,7 @@ sub checkBarcen {
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     # my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
-    my ( $anchorColumn ) = $policy->reanchorInc(
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
         $node,
         {
             # LustisCell => 1, # should NOT reanchor at Lustis
@@ -1941,6 +1959,7 @@ sub checkBarcen {
             tallKetwut => 1,
         }
     );
+    my $anchorDetails = $policy->anchorDetails($node, $anchorData );
 
     my $batteryNodeIX = $battery->{IX};
     $policy->{perNode}->{$batteryNodeIX}->{anchorColumn} = $anchorColumn;
@@ -1999,6 +2018,7 @@ sub checkBarcen {
                 parentColumn => $parentColumn,
                 line         => $gapMistakeLine,
                 column       => $gapMistakeColumn,
+		anchorDetails => $policy->anchorDetails($node, $anchorData),
                 topicLines   => [ $batteryLine ],
               };
         }
@@ -2015,6 +2035,7 @@ sub checkBarcen {
             parentColumn   => $parentColumn,
             line           => $batteryLine,
             column         => $batteryColumn,
+	    anchorDetails => $policy->anchorDetails($node, $anchorData),
             expectedColumn => $expectedColumn,
           };
         return \@mistakes;
@@ -2510,10 +2531,11 @@ sub checkSplit_0Running {
 
     my ( $anchorLine,  $anchorColumn ) = ($runeLine, $runeColumn);
     my $lhsName = $instance->symbol($node);
+    my $anchorData;
     if ( $lhsName eq 'tallColsig' ) {
         # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
 	# TODO: Cleanup after development
-	($anchorColumn) = $policy->reanchorInc( $node, {
+	($anchorColumn, $anchorData) = $policy->reanchorInc( $node, {
 	  'tallCendot' => 1,
 	  'tallCenhep' => 1,
 	  'tallCenlus' => 1,
@@ -2522,6 +2544,9 @@ sub checkSplit_0Running {
 	  'tallTisfas' => 1,
 	  } );
     }
+    my $anchorDetails;
+    $anchorDetails = $policy->anchorDetails($node, $anchorData ) if $anchorData;
+    # say join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($anchorDetails);
 
     my $expectedColumn = $anchorColumn + 2;
     my $tag = 'split 0-running';
@@ -2569,6 +2594,7 @@ sub checkSplit_0Running {
       @{
         $policy->checkRunning( { children => $runningChildren,
            tag => $tag, anchorColumn => $anchorColumn, expectedColumn => $expectedColumn,
+	   anchorDetails => $anchorDetails,
 	})
       };
 
@@ -3004,7 +3030,6 @@ sub chessSideOfJoggingHoon {
     my $joggingRule = $instance->{joggingRule};
     my $nodeName = $instance->brickName($node);
     if (not $nodeName or not $joggingRule->{$nodeName}) {
-      # say STDERR join " ", $node->{IX}, $instance->symbol($node);
       my $chessSide = $policy->chessSideOfJoggingHoon($node->{PARENT});
       $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
       return $chessSide;
@@ -3065,7 +3090,6 @@ sub bodyColumn {
     my $joggingRule = $instance->{joggingRule};
     my $nodeName = $instance->brickName($node);
     if (not $nodeName or not $joggingRule->{$nodeName}) {
-      # say STDERR join " ", $node->{IX}, $instance->symbol($node);
       my $jogBodyColumn = $policy->bodyColumn($node->{PARENT}, $joggingRules);
       $policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
       return $jogBodyColumn;
@@ -3150,7 +3174,6 @@ sub check_1Jogging {
     my $tag = '1-jogging';
 
     if ( $headLine != $runeLine ) {
-        # say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "1-jogging %s head %s; should be on rune line %d",
           $chessSide,
@@ -3274,7 +3297,6 @@ sub check_2Jogging {
     my $tag = '2-jogging';
 
     if ( $headLine != $runeLine ) {
-        # say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "2-jogging %s head %s; should be on rune line %d",
           $chessSide,
@@ -3488,7 +3510,6 @@ sub check_Jogging1 {
     my $tag = 'jogging-1';
 
     if ( $joggingLine != $runeLine ) {
-        # say STDERR join " ", __FILE__, __LINE__;
         my $msg = sprintf
           "jogging %s; should be on rune line %d",
           describeLC( $joggingLine, $joggingColumn ),
@@ -3663,7 +3684,6 @@ sub fascomBodyColumn {
     my $nodeName = $instance->brickName($node);
     if ( not $nodeName or not $nodeName eq 'fordFascom' ) {
 
-        # say STDERR join " ", $node->{IX}, $instance->symbol($node);
         my $fascomBodyColumn = $policy->fascomBodyColumn( $node->{PARENT} );
         $policy->{perNode}->{$nodeIX}->{fascomBodyColumn} = $fascomBodyColumn;
         return $fascomBodyColumn;
@@ -3965,8 +3985,6 @@ sub checkKingsideJog {
     my $baseColumn =
       $tall_Jogging1Rule->{$brickName} ? $brickColumn + 4 : $brickColumn + 2;
 
-      # say STDERR "$brickName $baseColumn";
-
     my $children = $node->{children};
     my $head     = $children->[0];
     my $gap      = $children->[1];
@@ -3998,8 +4016,6 @@ sub checkKingsideJog {
     if ( $headLine == $bodyLine ) {
         my $gapLength = $gap->{length};
 
-	# say STDERR "$gapLength $bodyColumn $jogBodyColumn";
-
         if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
@@ -4021,10 +4037,8 @@ sub checkKingsideJog {
 
     # If here head line != body line
     my $pseudoJoinColumn = $policy->pseudoJoinColumn($gap);
-    # say STDERR join " ", __FILE__, __LINE__, "pseudo join column", $pseudoJoinColumn;
     if ( $pseudoJoinColumn >= 0 ) {
         my $expectedBodyColumn = $pseudoJoinColumn;
-	# say STDERR join " ", __FILE__, __LINE__, "body column", $bodyColumn;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
               sprintf
@@ -4319,10 +4333,8 @@ sub checkBackdented {
 
         if ( $elementLine == $parentLine ) {
             my $gapLiteral = $instance->literalNode($gap);
-	    # say STDERR join " ", __LINE__, '[' . $gapLiteral . ']';
 	    # Remove the rune, if present
 	    $gapLiteral = substr($gapLiteral, 2) if $instance->runeGapNode($gap);
-	    # say STDERR join " ", __LINE__, '[' . $gapLiteral . ']';
 
 	    # OK if final space are exactly one stop
             next ELEMENT if length $gapLiteral == 2;
@@ -4388,7 +4400,6 @@ sub checkBackdented {
 	# reguired for the next line after the rune line
         if ( not defined $reanchorOffset ) {
             $reanchorOffset = 2 + ( $elementCount - $elementNumber ) * 2;
-	    # say STDERR join " ", __FILE__, __LINE__, $nodeIX, $parentLine, $instance->symbol($node), $reanchorOffset;
             $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
@@ -4446,8 +4457,6 @@ sub checkKetdot {
     my $anchorNode =
       $instance->firstBrickOfLineInc( $node, { tallKetdot => 1 } );
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
-    # say STDERR join " ", __FILE__, __LINE__, "parent", $parentLine, $parentColumn ;
-    # say STDERR join " ", __FILE__, __LINE__, "anchor", $anchorLine, $anchorColumn ;
 
     my $gap1     = $gapSeq[0];
     my $element1 = $gapSeq[1];
@@ -4705,7 +4714,6 @@ sub validate {
   return if $node->{type} ne 'node';
   my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
-          # say STDERR join " ", __FILE__, __LINE__, "child $childIX of ", (scalar @{$children});
         my $child = $children->[$childIX];
         $policy->validate( $child );
     }
