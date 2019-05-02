@@ -41,12 +41,24 @@ sub nodeSubpolicy {
     return lc $name;
 }
 
+# return standard anchor "detail" line
+sub anchorDetail {
+    my ( $policy, $rune, $anchorColumn ) = @_;
+    my $instance        = $policy->{lint};
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+    my $anchorLiteral = $instance->literalLine($runeLine);
+    my $anchorLexeme = substr $anchorLiteral, $anchorColumn;
+    $anchorLexeme =~ s/[\s].*\z//xms;
+    my $typeVerb = ($anchorColumn == $runeColumn) ? "anchor" : "re-anchor";
+    return qq{$typeVerb column is } . describeLC($runeLine, $anchorColumn) . qq{ "$anchorLexeme"};
+}
+
 # first brick node in $node's line,
 # by inclusion list.
 # $node if there is no prior included brick node
 sub reanchorInc {
     my ( $policy, $node, $inclusions ) = @_;
-    my $instance        = $policy->{lint};
+    my $instance = $policy->{lint};
 
    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
     my ($currentLine)  = $instance->nodeLC($node);
@@ -63,29 +75,40 @@ sub reanchorInc {
         $thisNode = $thisNode->{PARENT};
     }
     my $topNodeIX;
-  PICK_NODE: for ( my $nodeIX = $#nodes ; $nodeIX >= 0 ; $nodeIX-- ) {
-        my $thisNode  = $nodes[$nodeIX];
-        my $brickName = $instance->brickName($thisNode);
-        if ( defined $brickName and $inclusions->{$brickName} ) {
-            $topNodeIX = $nodeIX;
-            last PICK_NODE;
-        }
-    }
-    return $node, 0 if not defined $topNodeIX;
+    my $brick          = $node;
     my $reanchorOffset = 0;
-    for (
-        my $nodeIX = 1 ;    # do not include first node
-        $nodeIX <= $topNodeIX ; $nodeIX++
-      )
-    {
-        my $thisNode = $nodes[$nodeIX];
-	my $nodeID = $thisNode->{IX};
-        my $thisReanchorOffset =
-          $policy->{perNode}->{$nodeID}->{reanchorOffset} // 0;
-        $reanchorOffset += $thisReanchorOffset;
-	# say STDERR join " ", __FILE__, __LINE__, $instance->symbol($thisNode), $currentLine, $reanchorOffset, $thisReanchorOffset;
+  SET_DATA: {
+      PICK_NODE: for ( my $nodeIX = $#nodes ; $nodeIX >= 0 ; $nodeIX-- ) {
+            my $thisNode  = $nodes[$nodeIX];
+            my $brickName = $instance->brickName($thisNode);
+            if ( defined $brickName and $inclusions->{$brickName} ) {
+                $topNodeIX = $nodeIX;
+                last PICK_NODE;
+            }
+        }
+        last SET_DATA if not defined $topNodeIX;
+        for (
+            my $nodeIX = 1 ;    # do not include first node
+            $nodeIX <= $topNodeIX ; $nodeIX++
+          )
+        {
+            my $thisNode = $nodes[$nodeIX];
+            my $nodeID   = $thisNode->{IX};
+            my $thisReanchorOffset =
+              $policy->{perNode}->{$nodeID}->{reanchorOffset} // 0;
+            $reanchorOffset += $thisReanchorOffset;
+        }
+        $brick = $nodes[$topNodeIX];
     }
-    return $nodes[$topNodeIX], $reanchorOffset;
+    my ( $brickLine, $brickColumn ) = $instance->nodeLC($brick);
+    my $column  = $brickColumn + $reanchorOffset;
+    my %results = (
+        brick  => $brick,
+        offset => $reanchorOffset,
+        column => $column,
+        line   => $brickLine
+    );
+    return $column, \%results;
 }
 
 # A "gapSeq" is an ordered subset of a node's children.
@@ -1045,14 +1068,7 @@ sub checkRunning {
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($parent);
     my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
 
-    my $anchorDetail;
-    SET_ANCHOR_DETAIL: {
-	my $anchorLiteral = $instance->literalLine($runeLine);
-	my $anchorLexeme = substr $anchorLiteral, $anchorColumn;
-	$anchorLexeme =~ s/[\s].*\z//xms;
-        my $typeVerb = ($anchorColumn == $runeColumn) ? "anchor" : "re-anchor";
-	$anchorDetail = qq{$typeVerb column is } . describeLC($runeLine, $anchorColumn) . qq{ "$anchorLexeme"};
-    }
+    my $anchorDetail = $policy->anchorDetail($parent, $anchorColumn);
 
     my $childIX         = 0;
     my $firstSingletonLine;
@@ -1083,7 +1099,7 @@ sub checkRunning {
             column         => $runStepColumn,
             expectedColumn => $expectedColumn,
             topicLines     => [$runeLine],
-	    details => [ [ $tag ] ],
+	    details => [ [ $tag, $anchorDetail ] ],
           };
     }
 
@@ -1121,6 +1137,7 @@ sub checkRunning {
                     line           => $thisRunStepLine,
                     column         => $runStepColumn,
                     expectedColumn => $nextExpectedColumn,
+		    subpolicy => $mistakeSubpolicy . ':running-hgap',
 		    details => [ [ $tag ] ],
                   };
             }
@@ -1142,6 +1159,7 @@ sub checkRunning {
                     line           => $workingRunStepLine,
                     column         => $runStepColumn,
 		    topicLines => [ $firstSingletonLine ],
+		    subpolicy => $mistakeSubpolicy . ':running-bad-multistep',
 		    details => [ [ $tag ] ],
                   };
 	}
@@ -1188,7 +1206,7 @@ sub checkRunning {
                 column         => $runStepColumn,
                 expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
-		details => [ [ $tag ] ],
+		details => [ [ $tag, $anchorDetail ] ],
               };
         }
 
@@ -1911,7 +1929,7 @@ sub checkBarcen {
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     # my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
-    my ( $anchorNode, $reanchorOffset ) = $policy->reanchorInc(
+    my ( $anchorColumn ) = $policy->reanchorInc(
         $node,
         {
             # LustisCell => 1, # should NOT reanchor at Lustis
@@ -1922,8 +1940,6 @@ sub checkBarcen {
             tallKetwut => 1,
         }
     );
-    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
-    $anchorColumn += $reanchorOffset;
 
     my $batteryNodeIX = $battery->{IX};
     $policy->{perNode}->{$batteryNodeIX}->{anchorColumn} = $anchorColumn;
@@ -1936,7 +1952,7 @@ sub checkBarcen {
     my $gapLiteral = $instance->literalNode($gap);
     my $expectedColumn;
 
-    if ( $anchorLine == $batteryLine) {
+    if ( $parentLine == $batteryLine) {
         return [] if length $gapLiteral == 2;
         my $gapLength = $gap->{length};
         my ( undef, $gapColumn ) = $instance->nodeLC($gap);
@@ -2496,7 +2512,7 @@ sub checkSplit_0Running {
     if ( $lhsName eq 'tallColsig' ) {
         # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
 	# TODO: Cleanup after development
-	my ( $anchor, $offset ) = $policy->reanchorInc( $node, {
+	($anchorColumn) = $policy->reanchorInc( $node, {
 	  'tallCendot' => 1,
 	  'tallCenhep' => 1,
 	  'tallCenlus' => 1,
@@ -2504,10 +2520,6 @@ sub checkSplit_0Running {
 	  'tallKethep' => 1,
 	  'tallTisfas' => 1,
 	  } );
-
-        ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
-	$anchorColumn += $offset;
-        # say STDERR join " ", __FILE__, __LINE__, $anchorLine, $anchorColumn, $offset;
     }
 
     my $expectedColumn = $anchorColumn + 2;
