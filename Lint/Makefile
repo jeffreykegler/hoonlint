@@ -6,6 +6,7 @@ all:
 	echo empty default target
 
 arvo_lint: 
+	(cd ..; sh edit_later.sh)
 	(cd ..; find hoons -name '*.hoon') | \
 	while read f; do \
 	  echo === $$f ===; \
