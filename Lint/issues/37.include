@@ -1,33 +1,3 @@
-# This file is for postponing various issues.
-# When we file the PR's, it should be empty.
-
-### Pending issue below.  These are copied in automatically.
-
-### DO NOT EDIT AFTER THIS LINE!
-
-### PENDING ISSUES AFTER HERE
-
-#  === issues/27.include ===
-hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tissig:tistis-alone TISTIS @96:5 should only share line with other TISTIS's
-hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tissig:missing-newline gap @1512:4; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tissig:tistis-alone TISTIS @1512:6 should only share line with other TISTIS's
-hoons/arvo/sys/vane/behn.hoon 6:5 Test::Whitespace tissig:missing-newline gap @145:2; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/behn.hoon 6:5 Test::Whitespace tissig:tistis-alone TISTIS @145:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/eyre.hoon 12:5 Test::Whitespace tissig:missing-newline gap @1983:2; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/eyre.hoon 12:5 Test::Whitespace tissig:tistis-alone TISTIS @1983:5 should only share line with other TISTIS's
-hoons/arvo/sys/vane/ford.hoon 8:5 Test::Whitespace tissig:missing-newline gap @1882:2; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/ford.hoon 8:5 Test::Whitespace tissig:tistis-alone TISTIS @1882:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:missing-newline gap @97:2; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:tistis-alone TISTIS @97:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:missing-newline gap @1162:4; vertical gap must precede TISTIS
-hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:tistis-alone TISTIS @1162:6 should only share line with other TISTIS's
-
-#  === issues/35.include ===
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @445:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @446:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tissig:comment-indent runstep #2 @447:3; comment overindented by 2
-
-#  === issues/37.include ===
 hoons/arvo/lib/gh-parse.hoon 14:7 Test::Whitespace tallColsig runstep #1 @14:7; overindented by 2
 hoons/arvo/lib/gh-parse.hoon 15:7 Test::Whitespace tallColsig runstep #2 @15:7; overindented by 2
 hoons/arvo/lib/gh-parse.hoon 16:7 Test::Whitespace tallColsig runstep #3 @16:7; overindented by 2

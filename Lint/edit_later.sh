@@ -5,7 +5,7 @@ sed -e '/### PENDING ISSUES AFTER HERE$/q' $TARGET > $TMP
 for f in issues/*.include
 do
 echo >> $TMP
-echo === $f === >> $TMP
+echo '#  ===' $f === >> $TMP
 cat $f >> $TMP
 done
 mv $TMP $TARGET
