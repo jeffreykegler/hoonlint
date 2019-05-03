@@ -338,8 +338,6 @@ sub i_isOneLineGap {
             last CHECK_FOR_STAIRCASE
               unless $literalLine =~ m/^ [ ]* ([:][:][:][:]) /x;
             $commentOffset = $LAST_MATCH_START[1];
-	    # Staircase only allowed at left margin
-            last CHECK_FOR_STAIRCASE if $commentOffset != 0;
             last CHECK_FOR_STAIRCASE if $commentOffset != $expectedColumn;
             if ( length $literalLine > $commentOffset + 4 ) {
                 my $nextChar = substr $literalLine, $commentOffset + 4, 1;
@@ -363,6 +361,9 @@ sub i_isOneLineGap {
               if defined $expectedColumn2
               and $commentOffset >= $expectedColumn2;
         }
+
+	# Column 0 comments are always 0
+        next COMMENT1 if defined $commentOffset and $commentOffset == 0;
 
         if ( defined $commentOffset and $commentOffset != $expectedColumn ) {
             my $desc = $stairTread ? "staircase comment" : "comment";
