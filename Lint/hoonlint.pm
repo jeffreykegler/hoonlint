@@ -246,6 +246,11 @@ sub column {
     return $pos - ( rindex ${$pSource}, "\n", $pos - 1 );
 }
 
+sub maxNumWidth {
+    my ($instance)    = @_;
+    return length q{} . $#{ $instance->{lineToPos} };
+}
+
 sub contextDisplay {
     my ($instance)    = @_;
     my $pTopicLines   = $instance->{topicLines};
@@ -274,7 +279,7 @@ sub contextDisplay {
         return join q{}, @pieces;
     }
 
-    my $maxNumWidth   = length q{} . $#{ $instance->{lineToPos} };
+    my $maxNumWidth   = $instance->maxNumWidth();
     my $lineNumFormat = q{%} . $maxNumWidth . 'd';
 
     # Add to @pieces a set of lines to be displayed consecutively

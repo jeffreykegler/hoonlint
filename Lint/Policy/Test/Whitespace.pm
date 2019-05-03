@@ -63,17 +63,28 @@ sub anchorDetails {
     my ( $brickLine, $brickColumn ) = $instance->nodeLC($brick);
     my $anchorColumn = $anchorData->{column};
     my $offset = $anchorData->{offset};
-    my $brickLiteral = $instance->literalLine($runeLine);
-    my $brickLexeme = substr $brickLiteral, $brickColumn;
-    $brickLexeme =~ s/[\s].*\z//xms;
+    my $runeLineLiteral = $instance->literalLine($runeLine);
+    $runeLineLiteral =~ s/\n\z//xms;
 
     $DB::single = 1 if not defined $anchorColumn;
     if ($anchorColumn == $runeColumn) {
-      return [ qq{anchor column is } . describeLC($runeLine, $anchorColumn) . qq{ "$brickLexeme"} ];
+      my $brickLiteral = $instance->literalLine($runeLine);
+      my $brickLexeme = substr $brickLiteral, $brickColumn;
+      $brickLexeme =~ s/[\s].*\z//xms;
+      return [ qq{rune/anchor column is } . describeLC($runeLine, $anchorColumn) . qq{ "$brickLexeme"} ];
     }
-    push @desc, qq{re-anchor column is } . describeLC($runeLine, $anchorColumn) . qq{ "$brickLexeme"};
-    push @desc, sprintf 're-anchor column (%d) = anchor brick column (%d) + re-anchor offset (%d)',
-         $anchorColumn+1, $brickColumn+1, $offset;
+    push @desc,
+      sprintf
+'re-anchor column (%d) = anchor brick column (%d) + re-anchor offset (%d)',
+      $anchorColumn + 1, $brickColumn + 1, $offset;
+    my $maxNumWidth = $instance->maxNumWidth();
+    my $pointersPrefix = (' ' x $maxNumWidth);
+    my $prefixLength   = length $pointersPrefix;
+    push @desc, sprintf '%s%s', $pointersPrefix, $runeLineLiteral;
+    my $pointerLine = ( ' ' x ( $runeColumn + $prefixLength ) ) . q{^};
+    substr( $pointerLine, ( $brickColumn + $prefixLength ),  1 ) = q{^};
+    substr( $pointerLine, ( $anchorColumn + $prefixLength ), 1 ) = q{!};
+    push @desc, $pointerLine;
     return \@desc;
 }
 
@@ -1947,7 +1958,6 @@ sub checkBarcen {
     my ( $gap,         $battery )       = @{$policy->gapSeq0($node)};
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    # my $anchorNode = $instance->firstBrickOfLineExc($node, $instance->{barcenAnchorExceptions});
     my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
         $node,
         {
