@@ -1,6 +1,6 @@
 #!/bin/sh
 TMP=junk.$$.1
-TARGET=Lint/later.suppressions
+TARGET=later.suppressions
 sed -e '/### PENDING ISSUES AFTER HERE$/q' $TARGET > $TMP
 for f in issues/*.include
 do
