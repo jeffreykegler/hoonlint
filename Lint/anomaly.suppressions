@@ -472,8 +472,6 @@ hoons/arvo/lib/down-jet/parse.hoon 832:7 Test::Whitespace tallTissig 0-running r
 hoons/arvo/lib/down-jet/parse.hoon 833:7 Test::Whitespace tallTissig 0-running runstep #5 @833:7; overindented by 2
 hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @5:1; comment underindented by 2
 hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @6:1; underindented by 2
-hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig 0-running runstep #4 @95:5; comment overindented by 4
-hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig 0-running runstep #4 @96:5; comment overindented by 4
 hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runstep #3 @1162:3; overindented by 2
 
 # Misc TISCOL anomalies from Github issue #17
@@ -533,23 +531,7 @@ hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
 
 # WUTBAR, WUTPAM anomalies from Github issue #19
-hoons/arvo/app/hall.hoon 1145:15 Test::Whitespace tallWutbar joined 0-running runstep #2 @1144:13; comment overindented by 2
-hoons/arvo/app/hall.hoon 1149:19 Test::Whitespace tallWutpam joined 0-running runstep #2 @1148:17; comment overindented by 2
-hoons/arvo/app/hall.hoon 1328:15 Test::Whitespace tallWutpam joined 0-running runstep #3 @1327:13; comment overindented by 2
-hoons/arvo/app/hall.hoon 2497:9 Test::Whitespace tallWutbar joined 0-running runstep #2 @2496:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 2543:13 Test::Whitespace tallWutbar joined 0-running runstep #2 @2542:11; comment overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam joined 0-running runstep #2 @414:9; underindented by 2
-hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @711:9; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @712:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @713:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @729:9; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @730:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @731:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @732:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @752:9; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @753:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace tallWutpam joined 0-running runstep #3 @754:11; comment overindented by 4
-hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace tallWutbar joined 0-running runstep #2 @2421:11; comment overindented by 2
 
 # "One-line" runnings in hoon.hoon -- Github issue #32
 hoons/arvo/sys/hoon.hoon 5329:11 Test::Whitespace tallSemsig 1-running TISTIS @5329:45; missing newline @5329:43
@@ -563,28 +545,20 @@ hoons/arvo/app/fora.hoon 98:7 Test::Whitespace colsig:comment-indent runstep #2 
 hoons/arvo/app/gh.hoon 146:11 Test::Whitespace coltar:comment-indent runstep #3 @145:9; comment overindented by 2
 hoons/arvo/app/gh.hoon 153:11 Test::Whitespace coltar:comment-indent runstep #4 @152:9; comment overindented by 2
 hoons/arvo/app/gh.hoon 159:11 Test::Whitespace coltar:comment-indent runstep #5 @158:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1145:15 Test::Whitespace wutbar:comment-indent runstep #2 @1144:13; comment overindented by 2
-hoons/arvo/app/hall.hoon 1149:19 Test::Whitespace wutpam:comment-indent runstep #2 @1148:17; comment overindented by 2
 hoons/arvo/app/hall.hoon 1189:11 Test::Whitespace colsig:comment-indent runstep #2 @1188:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1193:11 Test::Whitespace colsig:comment-indent runstep #3 @1192:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1197:11 Test::Whitespace colsig:comment-indent runstep #4 @1196:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1200:11 Test::Whitespace colsig:comment-indent runstep #5 @1199:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1203:11 Test::Whitespace colsig:comment-indent runstep #6 @1202:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1207:11 Test::Whitespace colsig:comment-indent runstep #7 @1206:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1328:15 Test::Whitespace wutpam:comment-indent runstep #3 @1327:13; comment overindented by 2
 hoons/arvo/app/hall.hoon 2254:7 Test::Whitespace colsig:comment-indent runstep #2 @2253:5; comment overindented by 2
-hoons/arvo/app/hall.hoon 2497:9 Test::Whitespace wutbar:comment-indent runstep #2 @2496:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 2543:13 Test::Whitespace wutbar:comment-indent runstep #2 @2542:11; comment overindented by 2
 hoons/arvo/app/talk.hoon 284:7 Test::Whitespace coltar:comment-indent runstep #5 @283:5; comment overindented by 2
 hoons/arvo/lib/gh-parse.hoon 201:7 Test::Whitespace coltar:comment-indent runstep #6 @200:5; comment overindented by 2
 hoons/arvo/lib/gh-parse.hoon 207:7 Test::Whitespace coltar:comment-indent runstep #7 @206:5; comment overindented by 2
 hoons/arvo/lib/hood/helm.hoon 256:7 Test::Whitespace colsig:comment-indent runstep #2 @255:5; comment overindented by 2
 hoons/arvo/lib/hood/helm.hoon 261:7 Test::Whitespace colsig:comment-indent runstep #3 @260:5; comment overindented by 2
 hoons/arvo/lib/hood/helm.hoon 277:7 Test::Whitespace colsig:comment-indent runstep #2 @276:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace wutpam:comment-indent runstep #3 @711:9; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace wutpam:comment-indent runstep #3 @729:9; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 755:11 Test::Whitespace wutpam:comment-indent runstep #3 @752:9; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace wutbar:comment-indent runstep #2 @2421:11; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 102:7 Test::Whitespace colsig:comment-indent runstep #2 @101:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 106:7 Test::Whitespace colsig:comment-indent runstep #3 @105:5; comment overindented by 2
 hoons/arvo/tests/zuse/crypto/keccak.hoon 110:7 Test::Whitespace colsig:comment-indent runstep #4 @109:5; comment overindented by 2
