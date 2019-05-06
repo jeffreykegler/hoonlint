@@ -363,7 +363,7 @@ sub i_isOneLineGap {
         }
 
 	# Column 1 comments are always OK
-        next COMMENT1 if defined $commentOffset and $commentOffset == 0;
+        # next COMMENT1 if defined $commentOffset and $commentOffset == 0;
 
         if ( defined $commentOffset and $commentOffset != $expectedColumn ) {
             my $desc = $stairTread ? "staircase comment" : "comment";
@@ -413,7 +413,7 @@ sub i_isOneLineGap {
             }
 
 	    # Column 1 is always OK
-            next COMMENT2 if defined $commentOffset and $commentOffset == 0;
+            # next COMMENT2 if defined $commentOffset and $commentOffset == 0;
 
             if ( defined $commentOffset and $commentOffset != $expectedColumn2 )
             {
