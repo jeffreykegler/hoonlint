@@ -60,28 +60,25 @@ sub literalLine {
 }
 
 my $rules = <<'END_OF_GRAMMAR';
-:start ::= gap
-gap ::= InterPart PrePart
+:start ::= gapComments
+gapComments ::= InterPart PrePart
 InterPart ::=
-InterPart ::= Staircase OptInterComponents
-InterPart ::= InterComment OptInterComponents
+InterPart ::= ProperInterComponent OptInterComponents
 OptInterComponents ::= InterComponent*
-InterComponent ::= InterComment
-InterComponent ::= Staircase
+InterComponent ::= ProperInterComponent
 InterComponent ::= OtherStuff
+ProperInterComponent ::= InterComment
+ProperInterComponent ::= Staircase
 
-Staircase ::= UpperRiser Tread LowerRiser XLowerRisers
-Staircase ::= UpperRiser XUpperRisers UpperRiser Tread LowerRiser XLowerRisers
-XUpperRisers ::= XUpperRiser+
-XLowerRisers ::= XLowerRiser+
-
-XUpperRiser ::= UpperRiser | OtherStuff
-XLowerRiser ::= LowerRiser | OtherStuff
+Staircase ::= UpperRisers Tread LowerRisers
+UpperRisers ::= UpperRiser+
+LowerRisers ::= LowerRiser+
 
 PrePart ::=
-PrePart ::= PreComment OptPreComponents
+PrePart ::= ProperPreComponent OptPreComponents
+ProperPreComponent ::= PreComment
 OptPreComponents ::= PreComponent*
-PreComponent ::= PreComment
+PreComponent ::= ProperPreComponent
 PreComponent ::= OtherStuff
 
 OtherStuff ::= MetaComment

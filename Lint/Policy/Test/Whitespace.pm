@@ -16,11 +16,51 @@ use Scalar::Util qw(looks_like_number weaken);
 
 # TODO: delete indents in favor of tree traversal
 
+my $gapCommentDSL = <<'END_OF_DSL';
+:start ::= gapComments
+gapComments ::= InterPart PrePart
+InterPart ::=
+InterPart ::= ProperInterComponent OptInterComponents
+OptInterComponents ::= InterComponent*
+InterComponent ::= ProperInterComponent
+InterComponent ::= OtherStuff
+ProperInterComponent ::= InterComment
+ProperInterComponent ::= Staircase
+
+Staircase ::= UpperRisers Tread LowerRisers
+UpperRisers ::= UpperRiser+
+LowerRisers ::= LowerRiser+
+
+PrePart ::=
+PrePart ::= ProperPreComponent OptPreComponents
+ProperPreComponent ::= PreComment
+OptPreComponents ::= PreComponent*
+PreComponent ::= ProperPreComponent
+PreComponent ::= OtherStuff
+
+OtherStuff ::= MetaComment
+OtherStuff ::= BadComment
+OtherStuff ::= BlankLine
+
+unicorn ~ [^\d\D]
+BadComment ~ unicorn
+BlankLine ~ unicorn
+InterComment ~ unicorn
+LowerRiser ~ unicorn
+MetaComment ~ unicorn
+PreComment ~ unicorn
+Tread ~ unicorn
+UpperRiser ~ unicorn
+
+END_OF_DSL
+
+
 sub new {
     my ( $class, $lintInstance ) = @_;
     my $policy = {};
     $policy->{lint} = $lintInstance;
     Scalar::Util::weaken( $policy->{lint} );
+    $policy->{gapGrammar} = Marpa::R2::Scanless::G->new( {   source => \$gapCommentDSL });
     return bless $policy, $class;
 }
 
@@ -286,8 +326,211 @@ sub isOneLineGap {
     return i_isOneLineGap( $policy, $options, $start, $length, $expectedColumn, $expectedColumn2 );
 }
 
-# Internal version of isOneLineGap()
+sub checkGapComments {
+    my ( $policy, $firstLine, $lastLine, $interOffset, $preOffset ) = @_;
+    my $instance = $policy->{lint};
+    my $pSource = $instance->{pHoonSource};
+    my $lineToPos = $instance->{lineToPos};
+    my @mistakes = ();
+
+    my $grammar = $policy->{gapGrammar};
+    my $recce = Marpa::R2::Scanless::R->new( { grammar => $grammar } );
+    my $startPos = $lineToPos->[$firstLine];
+    my $input = $instance->literal( $startPos,
+        ( $lineToPos->[ $lastLine + 1 ] - $startPos ) );
+    if ( not defined eval { $recce->read( $pSource, $startPos, 0 ); 1 } ) {
+
+	# Add last expression found, and rethrow
+	my $eval_error = $EVAL_ERROR;
+	chomp $eval_error;
+	die $eval_error, "\n";
+    }
+
+    my $lineNum = 0;
+  LINE: for (my $lineNum = $firstLine; $lineNum <= $lastLine; $lineNum++) {
+        my $line = $instance->literalLine($lineNum);
+        # say STDERR join ' ', __FILE__, __LINE__, $lineNum, qq{"$line"};
+
+      FIND_ALTERNATIVES: {
+            my $expected = $recce->terminals_expected();
+            # say Data::Dumper::Dumper($expected);
+            my $tier1_ok;
+            my @tier2 = ();
+          TIER1: for my $terminal ( @{$expected} ) {
+                # say STDERR join ' ', __FILE__, __LINE__, $terminal;
+                if ( $terminal eq 'InterComment' ) {
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'PreComment' ) {
+                    next TIER1 if not defined $preOffset;
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $preOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'Tread' ) {
+                    $line =~ m/^ [ ]* ([:][:][:][:][ \n]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'UpperRiser' ) {
+                    $line =~ m/^ [ ]* ([:][:]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'LowerRiser' ) {
+                    $line =~ m/^ [ ]* ([:][:]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset + 2 ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                push @tier2, $terminal;
+            }
+
+            # If we found a tier 1 lexeme, do not look for the "backup"
+            # lexemes on the other tiers
+            last FIND_ALTERNATIVES if $tier1_ok;
+
+            my @tier3 = ();
+          TIER2: for my $terminal (@tier2) {
+                if ( $terminal eq 'MetaComment' ) {
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    next TIER2 if not defined $commentOffset;
+                    if ( $commentOffset == 0 ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+
+                  # anything in this tier terminates the finding of alternatives
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+                push @tier3, $terminal;
+            }
+
+          TIER3: for my $terminal (@tier3) {
+                if ( $terminal eq 'BlankLine' ) {
+                    say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
+                    if ( $line =~ m/\A [\n ]* \z/xms ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+
+                  # anything in this tier terminates the finding of alternatives
+                        push @mistakes, [ 'vgap-blank-line', $lineNum ];
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+                if ( $terminal eq 'BadComment' ) {
+                    if ( $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+                        my $commentOffset = $LAST_MATCH_START[1];
+
+                        push @mistakes,
+                          [ 'vgap-bad-comment', $lineNum, $commentOffset ];
+                  # anything in this tier terminates the finding of alternatives
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+            }
+
+        }
+        my $startPos = $lineToPos->[$lineNum];
+        # say STDERR join ' ', __FILE__, __LINE__;
+        $recce->lexeme_complete( $startPos,
+            ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
+    }
+    return \@mistakes;
+}
+
 sub i_isOneLineGap {
+    my ( $policy, $options, $start, $length, $interColumn, $preColumn ) = @_;
+    my $tag = $options->{tag};
+    my @mistakes = ();
+    my $instance = $policy->{lint};
+    my $end      = $start + $length;
+    my ( $startLine, $startColumn ) = $instance->line_column($start);
+    my ( $endLine,   $endColumn )   = $instance->line_column($end);
+    $interColumn //= -1;    # -1 will never match
+
+    # Criss-cross TISTIS lines are a special case
+    if (    $startLine == $endLine
+        and $instance->literal( $start - 2, 2 ) ne '=='
+        and $instance->literal( $start - 2, 2 ) ne '--' )
+    {
+        return [
+            {
+                msg => "missing newline "
+                  . describeLC( $startLine, $startColumn ),
+		subpolicy => 'missing-newline',
+                line   => $startLine,
+                column => $startColumn,
+            }
+        ];
+    }
+
+    my $results = $policy->checkGapComments( $startLine+1, $endLine-1, $interColumn, $preColumn);
+  RESULT: for my $result ( @{$results} ) {
+        my ( $type, $lineNum, $offset ) = @{$result};
+        if ( $type eq 'vgap-blank-line' ) {
+            push @mistakes,
+              {
+                msg    => "empty line in comment",
+                line   => $lineNum,
+                column => 0,
+              };
+            next RESULT;
+        }
+        if ( $type eq 'vgap-bad-comment' ) {
+            my $desc = "comment";
+            push @mistakes,
+              {
+                msg => "$desc "
+                  . describeMisindent2( $offset, $interColumn ),
+                line   => $lineNum,
+                column => $offset,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
+# Internal version of isOneLineGap()
+sub old_i_isOneLineGap {
     my ( $policy, $options, $start, $length, $expectedColumn, $expectedColumn2 ) = @_;
     my $tag = $options->{tag};
     my @mistakes = ();
