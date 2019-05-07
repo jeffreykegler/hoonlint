@@ -2,9 +2,9 @@ use 5.010;
 use strict;
 use warnings;
 use English qw( -no_match_vars );
-use GetOpt::Long;
+use Getopt::Long;
 
-use Marpa::R2 2.040000;
+use Marpa::R2 8.000000;
 
 sub usage {
 
@@ -16,49 +16,86 @@ By default, runs a test.
 END_OF_USAGE_MESSAGE
 } ## end sub usage
 
-my $stdin_flag = 0;
-my $getopt_result = Getopt::Long::GetOptions( 'stdin!' => \$stdin_flag, );
+my $stdin_flag = 1;
+my $interOffset;
+my $preOffset;
+my $getopt_result = Getopt::Long::GetOptions(
+    'stdin!' => \$stdin_flag,
+    'inter:i' => \$interOffset,
+    'pre:i' => \$preOffset,
+);
+
 usage() if not $getopt_result;
+die "interOffset required" if not defined $interOffset;
+# convert to 1-based
+$interOffset -= 1;
+$preOffset -= 1 if defined $preOffset;
 
 my $input;
 if ($stdin_flag) {
     $input = do { local $INPUT_RECORD_SEPARATOR = undef; <> };
 }
 
+my @lineToPos = ( -1, 0 );
+{
+    my $lastPos = 0;
+  LINE: while (1) {
+        my $newPos = index $input, "\n", $lastPos;
+
+        # say $newPos;
+        last LINE if $newPos < 0;
+        $lastPos = $newPos + 1;
+        push @lineToPos, $lastPos;
+    }
+}
+# say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@lineToPos);
+
+sub literalLine {
+    my ( $lineNum ) = @_;
+    my $startPos = $lineToPos[$lineNum];
+    my $line =
+      substr $input, $startPos,
+        ( $lineToPos[ $lineNum + 1 ] - $startPos ) ;
+    return $line;
+}
+
 my $rules = <<'END_OF_GRAMMAR';
 :start ::= gap
 gap ::= InterPart PrePart
 InterPart ::=
-InterPart ::= Staircase InterComponents
-InterPart ::= Intercomment OptInterComponents
-OptInterComponents ::= Intercomponent*
+InterPart ::= Staircase OptInterComponents
+InterPart ::= InterComment OptInterComponents
+OptInterComponents ::= InterComponent*
 InterComponent ::= InterComment
 InterComponent ::= Staircase
 InterComponent ::= OtherStuff
 
-Staircase ::= LooseUpperRisers UpperRiser Tread LowerRiser LooseLowerRisers
-LooseUpperRisers ::= LooseUpperRiser*
-LooseLowerRisers ::= LooseLowerRiser*
+Staircase ::= UpperRiser Tread LowerRiser XLowerRisers
+Staircase ::= UpperRiser XUpperRisers UpperRiser Tread LowerRiser XLowerRisers
+XUpperRisers ::= XUpperRiser+
+XLowerRisers ::= XLowerRiser+
+
+XUpperRiser ::= UpperRiser | OtherStuff
+XLowerRiser ::= LowerRiser | OtherStuff
 
 PrePart ::=
 PrePart ::= PreComment OptPreComponents
-OptPreComponents ::= Precomponent*
+OptPreComponents ::= PreComponent*
 PreComponent ::= PreComment
-PreComponent ::= Otherstuff
+PreComponent ::= OtherStuff
 
-Otherstuff ::= MetaComment
-Otherstuff ::= BadComment
-Otherstuff ::= BlankLine
+OtherStuff ::= MetaComment
+OtherStuff ::= BadComment
+OtherStuff ::= BlankLine
 
 unicorn ~ [^\d\D]
 BadComment ~ unicorn
-Blankline ~ unicorn
+BlankLine ~ unicorn
 InterComment ~ unicorn
-LooseLowerRiser ~ unicorn
-LooseUpperRiser ~ unicorn
 LowerRiser ~ unicorn
 MetaComment ~ unicorn
 PreComment ~ unicorn
+Tread ~ unicorn
 UpperRiser ~ unicorn
 
 END_OF_GRAMMAR
@@ -72,49 +109,170 @@ my $grammar = Marpa::R2::Scanless::G->new(
     }
 );
 
-sub calculate {
-    my ($p_string) = @_;
+my $recce = Marpa::R2::Scanless::R->new( { grammar => $grammar } );
 
-    my $recce = Marpa::R2::Scanless::R->new( { grammar => $grammar } );
+my $self = bless { grammar => $grammar }, 'My_Actions';
+$self->{recce}        = $recce;
+$self->{symbol_table} = {};
+local $My_Actions::SELF = $self;
 
-    my $self = bless { grammar => $grammar }, 'My_Actions';
-    $self->{recce}        = $recce;
-    $self->{symbol_table} = {};
-    local $My_Actions::SELF = $self;
+if ( not defined eval { $recce->read( \$input, 0, 0 ); 1 } ) {
 
-    if ( not defined eval { $recce->read($p_string); 1 } ) {
+    # Add last expression found, and rethrow
+    my $eval_error = $EVAL_ERROR;
+    chomp $eval_error;
+    die $eval_error, "\n";
+} ## end if ( not defined eval { $recce->read($p_string); 1 })
 
-        # Add last expression found, and rethrow
-        my $eval_error = $EVAL_ERROR;
-        chomp $eval_error;
-        die $self->show_last_expression(), "\n", $eval_error, "\n";
-    } ## end if ( not defined eval { $recce->read($p_string); 1 })
-    my $value_ref = $recce->value();
-    if ( not defined $value_ref ) {
-        die $self->show_last_expression(), "\n",
-            "No parse was found, after reading the entire input\n";
+my $mistakes = checkGapComments($input, $interOffset, $preOffset);
+say Data::Dumper::Dumper($mistakes);
+
+sub checkGapComments {
+    my ( $input, $interOffset, $preOffset ) = @_;
+    my @mistakes = ();
+
+    my $lineNum = 0;
+  LINE: while (1) {
+        $lineNum++;
+        last LINE if $lineNum >= $#lineToPos;
+        my $line = literalLine($lineNum);
+        say STDERR join ' ', __FILE__, __LINE__, $lineNum, qq{"$line"};
+
+      FIND_ALTERNATIVES: {
+            my $expected = $recce->terminals_expected();
+            say Data::Dumper::Dumper($expected);
+            my $tier1_ok;
+            my @tier2 = ();
+          TIER1: for my $terminal ( @{$expected} ) {
+                # say STDERR join ' ', __FILE__, __LINE__, $terminal;
+                if ( $terminal eq 'InterComment' ) {
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'PreComment' ) {
+                    next TIER1 if not defined $preOffset;
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $preOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'Tread' ) {
+                    $line =~ m/^ [ ]* ([:][:][:][:][ \n]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'UpperRiser' ) {
+                    $line =~ m/^ [ ]* ([:][:]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                if ( $terminal eq 'LowerRiser' ) {
+                    $line =~ m/^ [ ]* ([:][:]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $interOffset + 2 ) {
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier1_ok = 1;
+                    }
+                    next TIER1;
+                }
+                push @tier2, $terminal;
+            }
+
+            # If we found a tier 1 lexeme, do not look for the "backup"
+            # lexemes on the other tiers
+            last FIND_ALTERNATIVES if $tier1_ok;
+
+            my @tier3 = ();
+          TIER2: for my $terminal (@tier2) {
+                if ( $terminal eq 'MetaComment' ) {
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    next TIER2 if not defined $commentOffset;
+                    if ( $commentOffset == 0 ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+
+                  # anything in this tier terminates the finding of alternatives
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+                push @tier3, $terminal;
+            }
+
+          TIER3: for my $terminal (@tier3) {
+                if ( $terminal eq 'BlankLine' ) {
+                    say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
+                    if ( $line =~ m/\A [\n ]* \z/xms ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+
+                  # anything in this tier terminates the finding of alternatives
+                        push @mistakes, [ 'vgap-blank-line', $lineNum ];
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+                if ( $terminal eq 'BadComment' ) {
+                    if ( $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
+                        $recce->lexeme_alternative( $terminal, $line );
+                        my $commentOffset = $LAST_MATCH_START[1];
+
+                        push @mistakes,
+                          [ 'vgap-bad-comment', $lineNum, $commentOffset ];
+                  # anything in this tier terminates the finding of alternatives
+                        last FIND_ALTERNATIVES;
+                    }
+                }
+            }
+
+        }
+        my $startPos = $lineToPos[$lineNum];
+        say STDERR join ' ', __FILE__, __LINE__;
+        $recce->lexeme_complete( $startPos,
+            ( $lineToPos[ $lineNum + 1 ] - $startPos ) );
     }
-    return ${$value_ref}, $self->{symbol_table};
+    return \@mistakes;
+}
 
-} ## end sub calculate
-
+# my $value_ref = $recce->value();
+# if ( not defined $value_ref ) {
+# die $self->show_last_expression(), "\n",
+# "No parse was found, after reading the entire input\n";
+# }
+# return ${$value_ref}, $self->{symbol_table};
 
 package My_Actions;
 our $SELF;
 sub new { return $SELF }
-
-sub do_is_var {
-    my ( $self, $var ) = @_;
-    my $value = $self->{symbol_table}->{$var};
-    Marpa::R2::Context::bail(qq{Undefined variable "$var"})
-        if not defined $value;
-    return $value;
-} ## end sub do_is_var
-
-sub do_set_var {
-    my ( $self, $var, undef, $value ) = @_;
-    return $self->{symbol_table}->{$var} = $value;
-}
 
 sub do_negate {
     return -$_[2];
@@ -123,102 +281,5 @@ sub do_negate {
 sub do_arg0 { return $_[1]; }
 sub do_arg1 { return $_[2]; }
 sub do_arg2 { return $_[3]; }
-
-sub do_array {
-    my ( undef, $left, undef, $right ) = @_;
-    my @value = ();
-    my $ref;
-    if ( $ref = ref $left ) {
-        Marpa::R2::Context::bail("Bad ref type for array operand: $ref")
-            if $ref ne 'ARRAY';
-        push @value, @{$left};
-    }
-    else {
-        push @value, $left;
-    }
-    if ( $ref = ref $right ) {
-        Marpa::R2::Context::bail("Bad ref type for array operand: $ref")
-            if $ref ne 'ARRAY';
-        push @value, @{$right};
-    }
-    else {
-        push @value, $right;
-    }
-    return \@value;
-} ## end sub do_array
-
-our %BINOP_CLOSURE;
-
-BEGIN {
-    %BINOP_CLOSURE = (
-        '*' => sub { $_[0] * $_[1] },
-        '/' => sub {
-            Marpa::R2::Context::bail('Division by zero') if not $_[1];
-            $_[0] / $_[1];
-        },
-        '+' => sub { $_[0] + $_[1] },
-        '-' => sub { $_[0] - $_[1] },
-        '^' => sub { $_[0]**$_[1] },
-    );
-} ## end BEGIN
-
-sub do_binop {
-    my ( $op, $left, $right ) = @_;
-    my $closure = $BINOP_CLOSURE{$op};
-    Marpa::R2::Context::bail(
-        qq{Do not know how to perform binary operation "$op"})
-        if not defined $closure;
-    return $closure->( $left, $right );
-} ## end sub do_binop
-
-sub do_caret {
-    my ( undef, $left, undef, $right ) = @_;
-    return do_binop( '^', $left, $right );
-}
-
-sub do_star {
-    my ( undef, $left, undef, $right ) = @_;
-    return do_binop( '*', $left, $right );
-}
-
-sub do_slash {
-    my ( undef, $left, undef, $right ) = @_;
-    return do_binop( '/', $left, $right );
-}
-
-sub do_plus {
-    my ( undef, $left, undef, $right ) = @_;
-    return do_binop( '+', $left, $right );
-}
-
-sub do_minus {
-    my ( undef, $left, undef, $right ) = @_;
-    return do_binop( '-', $left, $right );
-}
-
-sub do_reduce {
-    my ( undef, $op, undef, $args ) = @_;
-    my $closure = $BINOP_CLOSURE{$op};
-    Marpa::R2::Context::bail(
-        qq{Do not know how to perform binary operation "$op"})
-        if not defined $closure;
-    $args = [$args] if ref $args eq '';
-    my @stack = @{$args};
-    OP: while (1) {
-        return $stack[0] if scalar @stack <= 1;
-        my $result = $closure->( $stack[-2], $stack[-1] );
-        splice @stack, -2, 2, $result;
-    }
-    Marpa::R2::Context::bail('Should not get here');
-} ## end sub do_reduce
-
-sub show_last_expression {
-    my ($self) = @_;
-    my $recce = $self->{recce};
-    my ( $start, $end ) = $recce->last_completed_range('expression');
-    return 'No expression was successfully parsed' if not defined $start;
-    my $last_expression = $recce->range_to_string( $start, $end );
-    return "Last expression successfully parsed was: $last_expression";
-} ## end sub show_last_expression
 
 # vim: expandtab shiftwidth=4:
