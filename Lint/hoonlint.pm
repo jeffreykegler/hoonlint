@@ -227,6 +227,7 @@ sub literalLine {
     my ( $instance, $lineNum ) = @_;
     my $lineToPos     = $instance->{lineToPos};
     my $startPos = $lineToPos->[$lineNum];
+    $DB::single = 1 if not defined    $lineToPos->[ $lineNum + 1 ] ;
     my $line =
       $instance->literal( $startPos,
         ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );

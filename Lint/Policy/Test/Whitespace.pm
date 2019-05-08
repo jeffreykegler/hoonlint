@@ -19,28 +19,36 @@ use Scalar::Util qw(looks_like_number weaken);
 my $gapCommentDSL = <<'END_OF_DSL';
 :start ::= gapComments
 gapComments ::= InterPart PrePart
-InterPart ::=
-InterPart ::= ProperInterComponent OptInterComponents
-OptInterComponents ::= InterComponent*
-InterComponent ::= ProperInterComponent
-InterComponent ::= OtherStuff
-ProperInterComponent ::= InterComment
-ProperInterComponent ::= Staircase
+gapComments ::= InterPart
+gapComments ::= PrePart
+InterPart ::= InterruptedInterComponents
+InterPart ::= OtherThings InterruptedInterComponents
+InterPart ::= InterruptedInterComponents InterComponent
+InterPart ::= OtherThings InterruptedInterComponents InterComponent
 
+InterruptedInterComponents ::= InterruptedInterComponent+
+InterruptedInterComponent ::= InterComponent OtherThings
+InterComponent ::= Staircases
+InterComponent ::= Staircases InterComments
+InterComponent ::= InterComments
+
+InterComments ::= InterComment+
+
+Staircases ::= Staircase+
 Staircase ::= UpperRisers Tread LowerRisers
 UpperRisers ::= UpperRiser+
 LowerRisers ::= LowerRiser+
 
-PrePart ::=
 PrePart ::= ProperPreComponent OptPreComponents
 ProperPreComponent ::= PreComment
 OptPreComponents ::= PreComponent*
 PreComponent ::= ProperPreComponent
-PreComponent ::= OtherStuff
+PreComponent ::= OtherThing
 
-OtherStuff ::= MetaComment
-OtherStuff ::= BadComment
-OtherStuff ::= BlankLine
+OtherThings ::= OtherThing+
+OtherThing ::= MetaComment
+OtherThing ::= BadComment
+OtherThing ::= BlankLine
 
 unicorn ~ [^\d\D]
 BadComment ~ unicorn
@@ -328,6 +336,8 @@ sub isOneLineGap {
 
 sub checkGapComments {
     my ( $policy, $firstLine, $lastLine, $interOffset, $preOffset ) = @_;
+    # say STDERR join " ", __FILE__, __LINE__,  $policy, $firstLine, $lastLine, $interOffset, $preOffset;
+    return if $lastLine < $firstLine;
     my $instance = $policy->{lint};
     my $pSource = $instance->{pHoonSource};
     my $lineToPos = $instance->{lineToPos};
@@ -338,33 +348,42 @@ sub checkGapComments {
     my $startPos = $lineToPos->[$firstLine];
     my $input = $instance->literal( $startPos,
         ( $lineToPos->[ $lastLine + 1 ] - $startPos ) );
+
+        # say STDERR join ' ', __FILE__, __LINE__, "$firstLine-$lastLine", qq{"$input"};
+
     if ( not defined eval { $recce->read( $pSource, $startPos, 0 ); 1 } ) {
 
-	# Add last expression found, and rethrow
 	my $eval_error = $EVAL_ERROR;
 	chomp $eval_error;
+	say STDERR join ' ', __FILE__, __LINE__, "$firstLine-$lastLine", qq{"$input"};
 	die $eval_error, "\n";
     }
 
     my $lineNum = 0;
-  LINE: for (my $lineNum = $firstLine; $lineNum <= $lastLine; $lineNum++) {
+  LINE:
+    for ( my $lineNum = $firstLine ; $lineNum <= $lastLine ; $lineNum++ ) {
         my $line = $instance->literalLine($lineNum);
+
         # say STDERR join ' ', __FILE__, __LINE__, $lineNum, qq{"$line"};
 
       FIND_ALTERNATIVES: {
             my $expected = $recce->terminals_expected();
+
             # say Data::Dumper::Dumper($expected);
             my $tier1_ok;
             my @tier2 = ();
           TIER1: for my $terminal ( @{$expected} ) {
+
                 # say STDERR join ' ', __FILE__, __LINE__, $terminal;
                 if ( $terminal eq 'InterComment' ) {
                     $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
                     $commentOffset //= -1;
+
                     # say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
                     # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
                     if ( $commentOffset == $interOffset ) {
+
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
@@ -376,8 +395,10 @@ sub checkGapComments {
                     $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
                     $commentOffset //= -1;
+
                     # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
                     if ( $commentOffset == $preOffset ) {
+
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
@@ -388,8 +409,10 @@ sub checkGapComments {
                     $line =~ m/^ [ ]* ([:][:][:][:][ \n]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
                     $commentOffset //= -1;
+
                     # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
                     if ( $commentOffset == $interOffset ) {
+
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
@@ -400,8 +423,10 @@ sub checkGapComments {
                     $line =~ m/^ [ ]* ([:][:]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
                     $commentOffset //= -1;
+
                     # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
                     if ( $commentOffset == $interOffset ) {
+
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
@@ -412,8 +437,10 @@ sub checkGapComments {
                     $line =~ m/^ [ ]* ([:][:]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
                     $commentOffset //= -1;
+
                     # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
                     if ( $commentOffset == $interOffset + 2 ) {
+
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
@@ -445,7 +472,7 @@ sub checkGapComments {
 
           TIER3: for my $terminal (@tier3) {
                 if ( $terminal eq 'BlankLine' ) {
-                    say STDERR join ' ', __FILE__, __LINE__, qq{"$line"};
+                    # say STDERR join ' ', __FILE__, __LINE__, $lineNum, qq{"$line"};
                     if ( $line =~ m/\A [\n ]* \z/xms ) {
                         $recce->lexeme_alternative( $terminal, $line );
 
@@ -461,6 +488,7 @@ sub checkGapComments {
 
                         push @mistakes,
                           [ 'vgap-bad-comment', $lineNum, $commentOffset ];
+
                   # anything in this tier terminates the finding of alternatives
                         last FIND_ALTERNATIVES;
                     }
@@ -469,9 +497,21 @@ sub checkGapComments {
 
         }
         my $startPos = $lineToPos->[$lineNum];
+
         # say STDERR join ' ', __FILE__, __LINE__;
-        $recce->lexeme_complete( $startPos,
-            ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
+        my $eval_ok = eval {
+            $recce->lexeme_complete( $startPos,
+                ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
+            1;
+        };
+        if ( not $eval_ok ) {
+
+            my $eval_error = $EVAL_ERROR;
+            chomp $eval_error;
+            # say STDERR join ' ', __FILE__, __LINE__, "$firstLine-$lastLine",
+              # qq{"$input"};
+            die $eval_error, "\n";
+        }
     }
     return \@mistakes;
 }
@@ -481,6 +521,7 @@ sub i_isOneLineGap {
     my $tag = $options->{tag};
     my @mistakes = ();
     my $instance = $policy->{lint};
+    my $lineToPos = $instance->{lineToPos};
     my $end      = $start + $length;
     my ( $startLine, $startColumn ) = $instance->line_column($start);
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
@@ -502,6 +543,19 @@ sub i_isOneLineGap {
         ];
     }
 
+    if ( $startLine+1 < $#$lineToPos ) {
+        my $literalFirstLine = $instance->literalLine( $startLine + 1 );
+        if ( $literalFirstLine =~ /'''/ ) {
+
+            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
+            $startLine++;
+        }
+        if ( $literalFirstLine =~ /"""/ ) {
+
+            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
+            $startLine++;
+        }
+    }
     my $results = $policy->checkGapComments( $startLine+1, $endLine-1, $interColumn, $preColumn);
   RESULT: for my $result ( @{$results} ) {
         my ( $type, $lineNum, $offset ) = @{$result};
@@ -530,6 +584,7 @@ sub i_isOneLineGap {
 }
 
 # Internal version of isOneLineGap()
+# TODO: Previous version. Delete this.
 sub old_i_isOneLineGap {
     my ( $policy, $options, $start, $length, $expectedColumn, $expectedColumn2 ) = @_;
     my $tag = $options->{tag};

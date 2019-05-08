@@ -15,7 +15,7 @@ arvo_lint:
 	    -S Lint/anomaly.suppressions \
 	    -S Lint/later.suppressions \
 	  $$f); \
-	done > arvo.lint.out
+	done 2>&1 | tee arvo.lint.out
 
 dev:
 	echo empty dev target
