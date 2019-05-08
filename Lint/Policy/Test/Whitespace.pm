@@ -18,16 +18,17 @@ use Scalar::Util qw(looks_like_number weaken);
 
 my $gapCommentDSL = <<'END_OF_DSL';
 :start ::= gapComments
-gapComments ::= InterPart PrePart
-gapComments ::= InterPart
-gapComments ::= PrePart
+gapComments ::= OptExceptions Body
+gapComments ::= OptExceptions
+Body ::= InterPart PrePart
+Body ::= InterPart
+Body ::= PrePart
+InterPart ::= InterComponent
 InterPart ::= InterruptedInterComponents
-InterPart ::= OtherThings InterruptedInterComponents
 InterPart ::= InterruptedInterComponents InterComponent
-InterPart ::= OtherThings InterruptedInterComponents InterComponent
 
 InterruptedInterComponents ::= InterruptedInterComponent+
-InterruptedInterComponent ::= InterComponent OtherThings
+InterruptedInterComponent ::= InterComponent Exceptions
 InterComponent ::= Staircases
 InterComponent ::= Staircases InterComments
 InterComponent ::= InterComments
@@ -43,12 +44,13 @@ PrePart ::= ProperPreComponent OptPreComponents
 ProperPreComponent ::= PreComment
 OptPreComponents ::= PreComponent*
 PreComponent ::= ProperPreComponent
-PreComponent ::= OtherThing
+PreComponent ::= Exception
 
-OtherThings ::= OtherThing+
-OtherThing ::= MetaComment
-OtherThing ::= BadComment
-OtherThing ::= BlankLine
+OptExceptions ::= Exception*
+Exceptions ::= Exception+
+Exception ::= MetaComment
+Exception ::= BadComment
+Exception ::= BlankLine
 
 unicorn ~ [^\d\D]
 BadComment ~ unicorn
@@ -341,6 +343,9 @@ sub checkGapComments {
     my $instance = $policy->{lint};
     my $pSource = $instance->{pHoonSource};
     my $lineToPos = $instance->{lineToPos};
+    if (defined $preOffset and $preOffset == $interOffset) {
+      $preOffset = undef; # Do not allow pre-offset to be equal to inter-offset
+    }
     my @mistakes = ();
 
     my $grammar = $policy->{gapGrammar};
@@ -512,6 +517,14 @@ sub checkGapComments {
               # qq{"$input"};
             die $eval_error, "\n";
         }
+    }
+    my $metric = $recce->ambiguity_metric();
+    if ($metric != 1) {
+       my $issue = $metric ? "ambiguous" : "no parse";
+	say STDERR $recce->show_progress(0, -1);
+	say STDERR $input;
+    # say STDERR join " ", __FILE__, __LINE__,  $policy, $firstLine, $lastLine, $interOffset, $preOffset;
+	die "Bad gap combinator parse: $issue\n";
     }
     return \@mistakes;
 }
