@@ -377,6 +377,7 @@ sub checkGapComments {
             # say Data::Dumper::Dumper($expected);
             my $tier1_ok;
             my @tier2 = ();
+	    my @failedOffsets = ();
           TIER1: for my $terminal ( @{$expected} ) {
 
                 # say STDERR join ' ', __FILE__, __LINE__, $terminal;
@@ -392,7 +393,9 @@ sub checkGapComments {
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
+			next TIER1;
                     }
+		    push @failedOffsets, $interOffset;
                     next TIER1;
                 }
                 if ( $terminal eq 'PreComment' ) {
@@ -407,8 +410,10 @@ sub checkGapComments {
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
+			next TIER1;
                     }
-                    next TIER1;
+		    push @failedOffsets, $preOffset;
+		    next TIER1;
                 }
                 if ( $terminal eq 'Tread' ) {
                     $line =~ m/^ [ ]* ([:][:][:][:][ \n]) /x;
@@ -421,7 +426,9 @@ sub checkGapComments {
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
+			next TIER1;
                     }
+		    push @failedOffsets, $interOffset;
                     next TIER1;
                 }
                 if ( $terminal eq 'UpperRiser' ) {
@@ -435,7 +442,9 @@ sub checkGapComments {
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
+			next TIER1;
                     }
+		    push @failedOffsets, $interOffset;
                     next TIER1;
                 }
                 if ( $terminal eq 'LowerRiser' ) {
@@ -449,7 +458,9 @@ sub checkGapComments {
                         # say STDERR join ' ', __FILE__, __LINE__;
                         $recce->lexeme_alternative( $terminal, $line );
                         $tier1_ok = 1;
+			next TIER1;
                     }
+		    push @failedOffsets, $interOffset;
                     next TIER1;
                 }
                 push @tier2, $terminal;
@@ -471,6 +482,7 @@ sub checkGapComments {
                   # anything in this tier terminates the finding of alternatives
                         last FIND_ALTERNATIVES;
                     }
+		    push @failedOffsets, $interOffset;
                 }
                 push @tier3, $terminal;
             }
@@ -491,8 +503,25 @@ sub checkGapComments {
                         $recce->lexeme_alternative( $terminal, $line );
                         my $commentOffset = $LAST_MATCH_START[1];
 
+			my $closestHiOffset;
+			my $closestLoOffset;
+			# say STDERR Data::Dumper::Dumper(\@failedOffsets);
+			for my $failedOffset (@failedOffsets) {
+			    if ($failedOffset > $commentOffset) {
+			        if (not defined $closestHiOffset or $failedOffset < $closestHiOffset) {
+				    $closestHiOffset = $failedOffset;
+				}
+			    }
+			    if ($failedOffset < $commentOffset) {
+			        if (not defined $closestLoOffset or $failedOffset > $closestLoOffset) {
+				    $closestLoOffset = $failedOffset;
+				}
+			    }
+			}
+			my $closestOffset = ($closestLoOffset // $closestHiOffset);
+			# say STDERR join ' ', __LINE__, 'vgap-bad-comment', $lineNum, $commentOffset, $closestOffset ;
                         push @mistakes,
-                          [ 'vgap-bad-comment', $lineNum, $commentOffset ];
+                          [ 'vgap-bad-comment', $lineNum, $commentOffset, $closestOffset ];
 
                   # anything in this tier terminates the finding of alternatives
                         last FIND_ALTERNATIVES;
@@ -571,8 +600,9 @@ sub i_isOneLineGap {
     }
     my $results = $policy->checkGapComments( $startLine+1, $endLine-1, $interColumn, $preColumn);
   RESULT: for my $result ( @{$results} ) {
-        my ( $type, $lineNum, $offset ) = @{$result};
+        my $type = $result->[0];
         if ( $type eq 'vgap-blank-line' ) {
+	    my ( undef, $lineNum, $offset ) = @{$result};
             push @mistakes,
               {
                 msg    => "empty line in comment",
@@ -582,11 +612,13 @@ sub i_isOneLineGap {
             next RESULT;
         }
         if ( $type eq 'vgap-bad-comment' ) {
+	    my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
+			# say STDERR join ' ', __LINE__, 'vgap-bad-comment', $lineNum, $offset, $expectedOffset;
             my $desc = "comment";
             push @mistakes,
               {
                 msg => "$desc "
-                  . describeMisindent2( $offset, $interColumn ),
+                  . describeMisindent2( $offset, $expectedOffset ),
                 line   => $lineNum,
                 column => $offset,
               };
@@ -1531,7 +1563,7 @@ sub checkRunning {
                         [
                             $tag,
                             'inter-comment indent should be ' . ( $anchorColumn + 1 ),
-                            'pre-comment indent should be ' . ( $expectedColumn + 1 ),
+                            'pre-comment indent should be ' . ( $runStepColumn + 1 ),
 			    @{$anchorDetails},
                         ]
                     ],
@@ -3344,6 +3376,7 @@ sub describeMisindent {
 
 sub describeMisindent2 {
     my ( $got, $sought ) = @_;
+    $DB::single = 1 if not defined $sought;
     return describeMisindent($got-$sought);
 }
 
