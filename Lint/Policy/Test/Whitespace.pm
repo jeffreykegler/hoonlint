@@ -4763,27 +4763,16 @@ sub checkBackdented {
             $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $gap, { tag => $tag }, $anchorColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf 'backdented element #%d, %s; %s',
-                  $elementNumber,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                  };
-            }
-        }
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $gap,
+                {
+                    interColumn => $anchorColumn,
+                    tag => ( sprintf 'backdented element #%d,', $elementNumber ),
+                }
+            )
+          };
 
         if ( $expectedColumn != $elementColumn ) {
             my $msg = sprintf
