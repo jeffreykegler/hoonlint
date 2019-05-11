@@ -4676,6 +4676,8 @@ sub checkBackdented {
 
     my $anchorNode = $instance->anchorNode($node);
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    my $anchorDetails = $policy->anchorDetailsBasic( $anchorNode, $anchorColumn );
+    # say Data::Dumper::Dumper($anchorDetails);
   ELEMENT:
     for (
         my $elementNumber = 1 ;
@@ -4763,16 +4765,26 @@ sub checkBackdented {
             $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
-        push @mistakes,
-          @{
+        push @mistakes, @{
             $policy->checkOneLineGap(
                 $gap,
                 {
                     interColumn => $anchorColumn,
-                    tag => ( sprintf 'backdented element #%d,', $elementNumber ),
+                    tag =>
+                      ( sprintf 'backdented element #%d,', $elementNumber ),
+                    details => [
+                        [
+                            $tag,
+			    @{$anchorDetails},
+                            'inter-comment indent should be '
+                              . ( $anchorColumn + 1 ),
+
+                     # 'pre-comment indent should be ' . ( $runStepColumn + 1 ),
+                        ]
+                    ],
                 }
             )
-          };
+        };
 
         if ( $expectedColumn != $elementColumn ) {
             my $msg = sprintf
@@ -4788,6 +4800,12 @@ sub checkBackdented {
                 line           => $elementLine,
                 column         => $elementColumn,
                 expectedColumn => $expectedColumn,
+		details => [
+                        [
+                            $tag,
+			    @{$anchorDetails},
+                        ]
+                    ],
               };
         }
     }
