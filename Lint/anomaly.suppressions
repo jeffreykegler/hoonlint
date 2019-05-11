@@ -588,3 +588,77 @@ hoons/arvo/tests/zuse/crypto/keccak.hoon 234:7 Test::Whitespace colsig:comment-i
 hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @861:9; comment underindented by 2
 hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @862:9; comment underindented by 2
 hoons/arvo/app/talk.hoon 864:11 Test::Whitespace semsig:comment-indent runstep #11 @863:9; comment underindented by 2
+
+# Github issue #40
+hoons/arvo/lib/down-jet/parse.hoon 53:1 Test::Whitespace barcen:hephep-alone HEPHEP @96:1 should only share line with other HEPHEP's
+hoons/arvo/mar/recoverable-error.hoon 29:15 Test::Whitespace barcen:hephep-alone HEPHEP @29:33 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 11:1 Test::Whitespace barcen:hephep-alone HEPHEP @12:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 12:5 Test::Whitespace tallTisgar backdented element #1 @13:1; underindented by 6
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1950:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1951:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1952:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1953:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1954:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1955:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1956:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1957:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1958:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1 @1959:1; underindented by 6
+hoons/arvo/sys/hoon.hoon 1965:1 Test::Whitespace barcen:hephep-alone HEPHEP @3664:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 21:1 Test::Whitespace barcen:hephep-alone HEPHEP @360:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @363:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @364:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @365:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @366:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @367:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @368:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @369:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @370:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @371:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @372:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @373:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @374:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @375:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @376:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @377:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @378:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @379:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @380:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @381:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1 @382:1; underindented by 6
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3667:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3668:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3669:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3670:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3671:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3672:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3673:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3674:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3675:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3676:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3677:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3678:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3679:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3680:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3681:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3682:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1, @3683:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #1 @3684:1; underindented by 6
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6237:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6238:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6239:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6240:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6241:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6242:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6243:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6244:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6245:3; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2 @6246:1; underindented by 4
+hoons/arvo/sys/hoon.hoon 390:1 Test::Whitespace barcen:hephep-alone HEPHEP @1947:1 should only share line with other HEPHEP's
+hoons/arvo/sys/vane/clay.hoon 14:1 Test::Whitespace tallTisgar backdented element #2 @321:5; overindented by 4
+hoons/arvo/sys/vane/clay.hoon 15:1 Test::Whitespace barcen:hephep-alone HEPHEP @321:1 should only share line with other HEPHEP's
+hoons/arvo/sys/vane/clay.hoon 321:5 Test::Whitespace tallTisgar backdented element #1 @322:1; underindented by 6
+hoons/arvo/sys/vane/clay.hoon 323:1 Test::Whitespace barcen:hephep-alone HEPHEP @364:1 should only share line with other HEPHEP's
+hoons/arvo/sys/vane/clay.hoon 364:5 Test::Whitespace tallTisgar backdented element #1 @414:1; underindented by 6
+hoons/arvo/sys/vane/clay.hoon 364:5 Test::Whitespace tallTisgar backdented element #2 @3522:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 10:1 Test::Whitespace barcen:hephep-alone HEPHEP @32:1 should only share line with other HEPHEP's
