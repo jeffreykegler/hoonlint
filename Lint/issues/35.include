@@ -1,3 +1,0 @@
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @445:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @446:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tissig:comment-indent runstep #2 @447:3; comment overindented by 2

@@ -989,9 +989,7 @@ hoons/arvo/app/gmail.hoon 90:5 Test::Whitespace tallColtar runstep #1 @90:5; und
 hoons/arvo/app/gmail.hoon 91:5 Test::Whitespace tallColtar runstep #2 @91:5; underindented by 20
 hoons/arvo/app/gmail.hoon 92:5 Test::Whitespace tallColtar runstep #3 @92:5; underindented by 20
 hoons/arvo/app/gmail.hoon 93:5 Test::Whitespace tallColtar runstep #4 @93:5; underindented by 20
-hoons/arvo/app/gmail.hoon 95:5 Test::Whitespace coltar:comment-indent runstep #5 @94:3; comment underindented by 2
 hoons/arvo/app/gmail.hoon 95:5 Test::Whitespace tallColtar runstep #5 @95:5; underindented by 20
-hoons/arvo/app/gmail.hoon 98:5 Test::Whitespace coltar:comment-indent runstep #6 @97:3; comment underindented by 2
 hoons/arvo/app/gmail.hoon 98:5 Test::Whitespace tallColtar runstep #6 @98:5; underindented by 20
 hoons/arvo/app/gmail.hoon 99:5 Test::Whitespace tallColtar runstep #7 @99:5; underindented by 20
 hoons/arvo/app/gmail.hoon 89:23 Test::Whitespace coltar:tistis-indent TISTIS @100:3; underindented by 20
@@ -1349,7 +1347,6 @@ hoons/arvo/lib/down-jet/parse.hoon 914:11 Test::Whitespace tallBarcen cell #5 @9
 hoons/arvo/lib/down-jet/parse.hoon 914:11 Test::Whitespace tallBarcen cell #5 @921:9; comment overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 840:5 Test::Whitespace tallBarcen battery hephep @1006:3; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 611:3 Test::Whitespace tallBarket battery hephep @1007:1; underindented by 2
-Unused suppression: hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig
 === hoons/arvo/lib/time-to-id.hoon ===
 === hoons/arvo/lib/httr-to-json.hoon ===
 hoons/arvo/lib/httr-to-json.hoon 1:1 Test::Whitespace optFordFaslus Faslus body @1:5 is underindented by 2

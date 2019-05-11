@@ -21,8 +21,3 @@ hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:missing-newline gap @9
 hoons/arvo/sys/vane/gall.hoon 6:5 Test::Whitespace tissig:tistis-alone TISTIS @97:4 should only share line with other TISTIS's
 hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:missing-newline gap @1162:4; vertical gap must precede TISTIS
 hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:tistis-alone TISTIS @1162:6 should only share line with other TISTIS's
-
-#  === issues/35.include ===
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @445:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 97:3 Test::Whitespace tallTissig 0as1-running @446:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tissig:comment-indent runstep #2 @447:3; comment overindented by 2

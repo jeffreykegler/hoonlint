@@ -1548,6 +1548,10 @@ sub checkRunning {
 	$workingRunStepLine = $thisRunStepLine;
 	$runStepCount = 1;
 
+	# If the run step is mis-indented, complaints about the comments are
+	# misleading and confusing.  Skip them.
+	# TODO: Complain about blank lines anyway ?
+        if ( $runStepColumn == $expectedColumn ) {
         push @mistakes,
           @{
             $policy->checkOneLineGap(
@@ -1563,13 +1567,14 @@ sub checkRunning {
                         [
                             $tag,
                             'inter-comment indent should be ' . ( $anchorColumn + 1 ),
-                            'pre-comment indent should be ' . ( $runStepColumn + 1 ),
+                            'pre-comment indent should be ' . ( $expectedColumn + 1 ),
 			    @{$anchorDetails},
                         ]
                     ],
                 }
             )
           };
+	}
 
         if ( $runStepColumn != $expectedColumn ) {
             my $msg = sprintf
