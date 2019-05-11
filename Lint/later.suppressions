@@ -7,7 +7,7 @@
 
 ### PENDING ISSUES AFTER HERE
 
-#  === issues/27.include ===
+#  === issues/33.include ===
 hoons/arvo/lib/down-jet/parse.hoon 8:5 Test::Whitespace tissig:tistis-alone TISTIS @96:5 should only share line with other TISTIS's
 hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tissig:missing-newline gap @1512:4; vertical gap must precede TISTIS
 hoons/arvo/sys/vane/ames.hoon 4:7 Test::Whitespace tissig:tistis-alone TISTIS @1512:6 should only share line with other TISTIS's
