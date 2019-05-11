@@ -475,9 +475,9 @@ hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep 
 hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runstep #3 @1162:3; overindented by 2
 
 # Misc TISCOL anomalies from Github issue #17
-hoons/arvo/app/talk.hoon 544:5 Test::Whitespace tallTiscol jogging-1 TISTIS @547:5; underindented by 2
-hoons/arvo/app/talk.hoon 1122:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1124:9; underindented by 2
-hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tallTiscol jogging-1 TISTIS @2171:12; underindented by 2
+hoons/arvo/app/talk.hoon 544:5 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @547:5; underindented by 2
+hoons/arvo/app/talk.hoon 1122:9 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @1124:9; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @2171:12; underindented by 2
 hoons/arvo/sys/vane/dill.hoon 498:9 Test::Whitespace tallTiscol Jog kingside body @498:19; overindented by 1
 
 # "split" TISCOL anomalies from Github issue #31

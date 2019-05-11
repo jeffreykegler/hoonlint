@@ -827,9 +827,9 @@ sub checkTistis {
     my ( $policy, $tistis, $options ) = @_;
     my $expectedColumn = $options->{expectedColumn};
     my $tag = $options->{tag};
-    my $subpolicyTag = $options->{subpolicyTag};
     my $instance  = $policy->{lint};
     my $parent = $tistis->{PARENT};
+    my $subpolicyTag = $options->{subpolicyTag} // $policy->nodeSubpolicy($parent),
     my @mistakes = ();
 
     my ( $parentLine,      $parentColumn )      = $instance->nodeLC($parent);
@@ -866,7 +866,7 @@ sub checkTistis {
     if ($tistisIsMisaligned) {
         my $msg = sprintf 'TISTIS %s; %s',
           describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $parentColumn );
+          describeMisindent2( $tistisColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
@@ -3955,29 +3955,16 @@ sub check_Jogging1 {
         }
     }
 
-    $expectedColumn = $runeColumn+2;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
-
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "jogging-1 TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $expectedColumn,
-          };
-    }
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn+2,
+            }
+        )
+      };
 
     if ( my @gapMistakes = @{$policy->isOneLineGap( $tailGap, { tag => $tag }, $runeColumn )} )
     {
