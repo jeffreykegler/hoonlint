@@ -1795,6 +1795,29 @@ sub checkWisp5d {
     }
 
     my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
+
+    {
+        my $literalLine = $instance->literalLine($hephepLine);
+        $literalLine = $policy->deComment($literalLine);
+        $literalLine =~ s/\n//g;
+        $literalLine =~ s/--//g;
+        if ( $literalLine =~ m/[^ ]/ ) {
+            my $msg =
+              sprintf q{HEPHEP %s should only share line with other HEPHEP's},
+              describeLC( $hephepLine, $hephepColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => $policy->nodeSubpolicy($battery) . ':hephep-alone',
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $hephepLine,
+                column       => $hephepColumn,
+                details      => [ [$tag] ],
+              };
+        }
+    }
+
     my $expectedColumn = $anchorColumn;
     my $hephepIsMisaligned = $hephepColumn != $expectedColumn;
 
