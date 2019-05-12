@@ -456,10 +456,10 @@ hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace tallSemcol 1-running runst
 hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runstep #7 @209:15; overindented by 2
 
 # Misc TISTIS anomalies from Github issue #20
-hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace tallCentis 1-jogging TISTIS @2331:9; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace tallWutlus 2-jogging TISTIS @1307:13; overindented by 2
-hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3891:13; underindented by 1
-hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace tallWuthep 1-jogging TISTIS @3895:13; underindented by 1
+hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace centis:tistis-indent 1-jogging TISTIS @2331:9; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace wutlus:tistis-indent 2-jogging TISTIS @1307:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace wuthep:tistis-indent 1-jogging TISTIS @3891:13; underindented by 1
+hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace wuthep:tistis-indent 1-jogging TISTIS @3895:13; underindented by 1
 
 # Misc TISSIG anomalies from Github issue 28
 hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tallTissig 0-running runstep #1 @98:1; underindented by 2
@@ -526,7 +526,7 @@ hoons/arvo/sys/zuse.hoon 3967:10 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/sys/zuse.hoon 3968:10 Test::Whitespace tallSemsig 1-running runstep #3 @3968:10; overindented by 1
 hoons/arvo/sys/zuse.hoon 3969:10 Test::Whitespace tallSemsig 1-running runstep #4 @3969:10; overindented by 1
 hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace tallSemsig 1-running runstep #5 @3970:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3965:7 Test::Whitespace tallSemsig 1-running TISTIS @3971:8; overindented by 1
+hoons/arvo/sys/zuse.hoon 3965:7 Test::Whitespace semsig:tistis-indent 1-running TISTIS @3971:8; overindented by 1
 hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #1 @4264:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
 

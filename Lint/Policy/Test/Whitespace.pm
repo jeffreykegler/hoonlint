@@ -3256,28 +3256,18 @@ sub check_1Running {
         }
 
     $expectedColumn = $runeColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
 
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "1-running TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $runeColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $runeColumn,
-          };
-    }
     return \@mistakes;
 }
 
@@ -3635,29 +3625,17 @@ sub check_1Jogging {
         }
     }
 
-    $expectedColumn = $runeColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "1-jogging TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $runeColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $runeColumn,
-          };
-    }
     return \@mistakes;
 }
 
@@ -3852,29 +3830,17 @@ sub check_2Jogging {
         }
     }
 
-    my $expectedColumn = $runeColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "2-jogging TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $runeColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $runeColumn,
-          };
-    }
     return \@mistakes;
 }
 
