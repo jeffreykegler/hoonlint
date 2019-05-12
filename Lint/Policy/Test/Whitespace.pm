@@ -879,6 +879,7 @@ sub checkTistis {
 	    details => [ [ $tag ] ],
           };
     }
+
     return \@mistakes;
 }
 
@@ -1061,28 +1062,18 @@ sub checkTailOfElem {
         }
     }
 
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $expectedColumn,
+            }
+        )
+      };
 
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $expectedColumn,
-          };
-    }
     return \@mistakes;
 }
 
@@ -1129,28 +1120,18 @@ sub checkTailOfTop {
         }
     }
 
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $expectedColumn,
+            }
+        )
+      };
 
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $expectedColumn,
-          };
-    }
     return \@mistakes;
 }
 
@@ -1940,29 +1921,17 @@ sub checkSplitFascom {
         }
     }
 
-    $expectedColumn = $anchorColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $anchorColumn,
+            }
+        )
+      };
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "split Fascom TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $anchorColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $anchorColumn,
-          };
-    }
     return \@mistakes;
 }
 
@@ -2026,29 +1995,17 @@ sub checkJoinedFascom {
         }
     }
 
-    $expectedColumn = $runeColumn;
-    my $tistisIsMisaligned = $tistisColumn != $expectedColumn;
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
 
-    if ($tistisIsMisaligned) {
-        my $tistisPos = $lineToPos->[$tistisLine] + $expectedColumn;
-        my $tistisLiteral = $instance->literal( $tistisPos, 2 );
-
-        $tistisIsMisaligned = $tistisLiteral ne '==';
-    }
-    if ($tistisIsMisaligned) {
-        my $msg = sprintf "joined Fascom TISTIS %s; %s",
-          describeLC( $tistisLine, $tistisColumn ),
-          describeMisindent2( $tistisColumn, $runeColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tistisLine,
-            column         => $tistisColumn,
-            expectedColumn => $runeColumn,
-          };
-    }
     return \@mistakes;
 }
 
