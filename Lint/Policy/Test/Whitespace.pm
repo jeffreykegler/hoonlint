@@ -1138,27 +1138,17 @@ sub checkBont {
 
         # If here parent line != body line
         my $expectedBodyColumn = $anchorColumn + 2;
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $gap, { tag => $tag }, $expectedBodyColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-		    details => [ [ $tag ] ],
-                  };
-            }
-        }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
@@ -1723,26 +1713,19 @@ sub checkWisp5d {
 
     my $gapSeq    = $policy->gapSeq0($node);
     my ($gap, $hephep) = @{$gapSeq};
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, { tag => $tag}, $parentColumn ) } ) {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'battery, %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $parentColumn,
+		tag         => $tag,
                 topicLines   => [ $batteryLine ],
 		details => [ [ $tag ] ],
-              };
-        }
-    }
+	    }
+	)
+      };
 
     my ( $hephepLine, $hephepColumn ) = $instance->nodeLC( $hephep );
 
@@ -2291,27 +2274,19 @@ sub checkBarcen {
 
     # If here head line != battery line
     $expectedColumn = $anchorColumn;
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, { tag => $tag}, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'split Barcen battery %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-		anchorDetails => $policy->anchorDetails($node, $anchorData),
-                topicLines   => [ $batteryLine ],
-              };
-        }
-    }
+    push @mistakes,
+      @{
+        $policy->checkOneLineGap(
+            $gap,
+            {
+                mainColumn => $expectedColumn,
+                tag        => $tag,
+                details    => [
+                    [ $tag, @{ $policy->anchorDetails( $node, $anchorData ) } ]
+                ],
+            }
+        )
+      };
 
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'split Barcen battery %s; %s',
@@ -2419,8 +2394,7 @@ sub checkBarket {
     $expectedColumn = $anchorColumn;
     if (
         my @gapMistakes = @{
-            $policy->isOneLineGap( $batteryGap, { tag => $tag },
-                $expectedColumn )
+            $policy->isOneLineGap( $batteryGap, { tag => $tag }, $expectedColumn )
         }
       )
     {
