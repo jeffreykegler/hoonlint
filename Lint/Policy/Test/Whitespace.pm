@@ -943,27 +943,17 @@ sub checkSailAttribute {
 
     # We deal with the elements list in its own node
 
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $headGap, {tag => $tag}, $expectedHeadColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "Sail attribute head %s; $gapMistakeMsg",
-              describeLC( $headLine, $headColumn );
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $sailApexLine,
-                parentColumn => $sailApexColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [$headLine],
-              };
-        }
-    }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $headGap,
+	    {
+		mainColumn => $expectedHeadColumn,
+		tag         => $tag,
+		topicLines   => [$headLine],
+	    }
+	)
+      };
 
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf
