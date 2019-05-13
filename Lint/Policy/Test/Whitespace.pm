@@ -1989,30 +1989,19 @@ sub checkFascomElements {
         last CHILD unless $childIX <= $#$children;
         my $elementGap = $children->[$childIX];
         my ( $elementGapLine, $elementGapColumn ) = $instance->nodeLC($elementGap);
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $elementGap, { tag => $tag }, $runeColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
-                  "element %d %s; %s",
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
+
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $elementGap,
+	    {
+		mainColumn => $runeColumn,
+		tag         => $tag,
 		    topicLines => [ $runeLine ],
-		    details => [ [ $tag ] ],
-                  };
-            }
-        }
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
         $childIX++;
     }
@@ -2058,30 +2047,19 @@ sub checkSeq {
         last CHILD unless $childIX <= $#$children;
         my $elementGap = $children->[$childIX];
         my ( $elementGapLine, $elementGapColumn ) = $instance->nodeLC($elementGap);
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $elementGap, { tag => $tag}, $expectedColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf
-                  '%s %d %s; %s',
-		  $tag,
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
+
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $elementGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                     topicLines   => [$elementGapLine],
-                  };
-            }
-        }
+	    }
+	)
+      };
 
         $childIX++;
     }
@@ -2493,26 +2471,17 @@ sub checkFashep {
     }
 
     $expectedColumn = $parentColumn;
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $trailerGap, { tag => $tag }, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Fashep suffix %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-              };
-        }
-    }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $trailerGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
     return \@mistakes;
 }
@@ -2574,26 +2543,17 @@ sub checkFaslus {
     }
 
     $expectedColumn = $parentColumn;
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $trailerGap, { tag => $tag }, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Faslus suffix %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-              };
-        }
-    }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $trailerGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
     return \@mistakes;
 }
@@ -2724,26 +2684,17 @@ sub checkFaswut {
     }
 
     $expectedColumn = $parentColumn;
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $trailerGap, { tag => $tag }, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'FASWUT suffix %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-              };
-        }
-    }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $trailerGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
     return \@mistakes;
 }
