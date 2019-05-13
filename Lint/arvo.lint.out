@@ -1228,7 +1228,7 @@ hoons/arvo/app/hall.hoon 2025:7 Test::Whitespace tallWutlus 2-jogging @2027:9; c
 hoons/arvo/app/hall.hoon 2025:7 Test::Whitespace tallWutlus 2-jogging @2028:9; comment overindented by 2
 hoons/arvo/app/hall.hoon 1580:3 Test::Whitespace tallBarcab battery hephep @2124:1; underindented by 2
 hoons/arvo/app/hall.hoon 2164:3 Test::Whitespace tallWutlus 2-jogging queenside head @2164:7; underindented by 2
-hoons/arvo/app/hall.hoon 2188:7 Test::Whitespace tallWutlus Jog queenside split body @2189:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 2188:7 Test::Whitespace tallWutlus queenside jog @2189:7; comment overindented by 2
 hoons/arvo/app/hall.hoon 2209:11 Test::Whitespace tallBuchepMold backdented element #2 @2210:15; overindented by 4
 hoons/arvo/app/hall.hoon 2220:11 Test::Whitespace tallBuchepMold backdented element #2 @2221:15; overindented by 4
 hoons/arvo/app/hall.hoon 2283:54 Test::Whitespace tallBarcab cell #12 @2284:3; comment overindented by 2

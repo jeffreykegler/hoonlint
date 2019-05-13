@@ -2636,27 +2636,17 @@ sub checkFord_1Gap {
 
         # If here parent line != body line
         $expectedBodyColumn = $parentColumn;
-        if ( my @gapMistakes =
-            @{ $policy->isOneLineGap( $gap, { tag => $tag }, $expectedBodyColumn ) } )
-        {
-            for my $gapMistake (@gapMistakes) {
-                my $gapMistakeMsg    = $gapMistake->{msg};
-                my $gapMistakeLine   = $gapMistake->{line};
-                my $gapMistakeColumn = $gapMistake->{column};
-                my $msg              = sprintf 'split %s body %s; %s',
-                  $tag,
-                  describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                  $gapMistakeMsg;
-                push @mistakes,
-                  {
-                    desc         => $msg,
-                    parentLine   => $parentLine,
-                    parentColumn => $parentColumn,
-                    line         => $gapMistakeLine,
-                    column       => $gapMistakeColumn,
-                  };
-            }
-        }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
@@ -3987,27 +3977,19 @@ sub checkFascomElement {
         return \@mistakes;
     }
 
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $gap, { tag => $tag }, $expectedBodyColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Fascom element split body %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                 topicLines   => [$runeLine],
-              };
-        }
-    }
+	    }
+	)
+      };
+
     return \@mistakes;
 }
 
@@ -4259,26 +4241,19 @@ sub checkKingsideJog {
         return \@mistakes;
     }
 
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, { tag => $tag }, $expectedBodyColumn )} )
-    {
-        for my $gapMistake ( @gapMistakes ) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Jog %s split body %s; %s',
-              $sideDesc, describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                 topicLines   => [ $bodyLine, $brickLine ],
-              };
-        }
-    }
+	    }
+	)
+      };
+
     return \@mistakes;
 }
 
@@ -4372,26 +4347,19 @@ sub checkQueensideJog {
         return \@mistakes;
     }
 
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $gap, { tag => $tag }, $expectedBodyColumn )} )
-    {
-        for my $gapMistake ( @gapMistakes ) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Jog %s split body %s; %s',
-              $sideDesc, describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                 topicLines   => [ $bodyLine, $brickLine ],
-              };
-        }
-    }
+	    }
+	)
+      };
+
     return \@mistakes;
 }
 
@@ -4672,26 +4640,17 @@ sub checkKetdot {
 
             my $expectedColumn = $anchorColumn;
 
-            if ( my @gapMistakes =
-                @{ $policy->isOneLineGap( $gap2, { tag => $tag }, $anchorColumn ) } )
-            {
-                for my $gapMistake (@gapMistakes) {
-                    my $gapMistakeMsg    = $gapMistake->{msg};
-                    my $gapMistakeLine   = $gapMistake->{line};
-                    my $gapMistakeColumn = $gapMistake->{column};
-                    my $msg              = sprintf 'Ketdot element 2 %s; %s',
-                      describeLC( $gapMistakeLine, $gapMistakeColumn ),
-                      $gapMistakeMsg;
-                    push @mistakes,
-                      {
-                        desc         => $msg,
-                        parentLine   => $parentLine,
-                        parentColumn => $parentColumn,
-                        line         => $gapMistakeLine,
-                        column       => $gapMistakeColumn,
-                      };
-                }
-            }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $gap2,
+	    {
+		mainColumn => $anchorColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+	    }
+	)
+      };
 
             if ( $expectedColumn != $element2Column ) {
                 my $msg = sprintf
