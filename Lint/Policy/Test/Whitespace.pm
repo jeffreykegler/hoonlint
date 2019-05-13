@@ -1803,29 +1803,18 @@ sub checkSplitFascom {
     my $expectedColumn = $anchorColumn + 2;
     my $expectedLine   = $runeLine + 1;
 
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $bodyGap, { tag => $tag}, $anchorColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "split Fascom %s; %s",
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $runeLine,
-                parentColumn => $runeColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [ $bodyLine ],
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $bodyGap,
+	    {
+		mainColumn => $anchorColumn,
+		tag         => $tag,
 		details => [ [ $tag ] ],
-              };
-        }
-    }
+                topicLines   => [ $bodyLine ],
+	    }
+	)
+      };
 
     if ( $bodyColumn != $expectedColumn ) {
         my $msg = sprintf
@@ -2153,26 +2142,18 @@ sub checkBarcab {
     }
 
     $expectedColumn = $anchorColumn;
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $batteryGap, { tag => $tag}, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Barceb battery %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [ $batteryLine ],
-              };
-        }
-    }
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $batteryGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
+                topicLines   => [$batteryLine],
+	    }
+	)
+      };
 
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'Barcab battery %s; %s',
@@ -2370,30 +2351,18 @@ sub checkBarket {
     }
 
     $expectedColumn = $anchorColumn;
-    if (
-        my @gapMistakes = @{
-            $policy->isOneLineGap( $batteryGap, { tag => $tag }, $expectedColumn )
-        }
-      )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'Barket battery %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $batteryGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                 topicLines   => [$batteryLine],
-              };
-        }
-    }
+	    }
+	)
+      };
 
     if ( $batteryColumn != $expectedColumn ) {
         my $msg = sprintf 'Barket battery %s; %s',
@@ -4758,26 +4727,19 @@ sub checkLuslus {
         return \@mistakes;
     }
 
-    if ( my @gapMistakes = @{ $policy->isOneLineGap( $bodyGap, { tag => $tag }, $expectedBodyColumn )} )
-    {
-        for my $gapMistake ( @gapMistakes ) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf 'cell split body %s; %s',
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $bodyGap,
+	    {
+		mainColumn => $expectedBodyColumn,
+		tag         => $tag,
+		details => [ [ $tag ] ],
                 topicLines   => [ $bodyLine, $batteryLine ],
-              };
-        }
-    }
+	    }
+	)
+      };
+
     return \@mistakes;
 }
 
