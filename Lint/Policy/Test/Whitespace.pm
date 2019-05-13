@@ -1030,28 +1030,17 @@ sub checkTailOfElem {
     my @mistakes = ();
     my $tag = 'tail of elem';
 
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $tistisGap, { tag => $tag}, $expectedColumn ) } )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "TISTIS %s; $gapMistakeMsg",
-              describeLC( $tistisLine, $tistisColumn );
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [ $tistisLine ],
-              };
-        }
-    }
-
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $tistisGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		topicLines   => [$tistisLine],
+	    }
+	)
+      };
 
     push @mistakes,
       @{
@@ -1084,32 +1073,17 @@ sub checkTailOfTop {
     my @mistakes = ();
     my $tag = 'tail of top';
 
-    if (
-        my @gapMistakes = @{
-            $policy->isOneLineGap( $tistisGap, { tag => $tag },
-                $expectedColumn )
-        }
-      )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $msg              = sprintf
-              "TISTIS %s; $gapMistakeMsg",
-              describeLC( $tistisLine, $tistisColumn );
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => [$tistisLine],
-              };
-        }
-    }
-
+    push @mistakes,
+      @{
+	$policy->checkOneLineGap(
+	    $tistisGap,
+	    {
+		mainColumn => $expectedColumn,
+		tag         => $tag,
+		topicLines   => [$tistisLine],
+	    }
+	)
+      };
 
     push @mistakes,
       @{
@@ -3275,6 +3249,7 @@ sub check_0_as_1Running {
         )
       };
 
+    # Needs to use lower level isOneLineGap() call
     if ( my @gapMistakes = @{ $policy->isOneLineGap( $tistisGap, { tag => $tag }, $anchorColumn )} )
         {
             for my $gapMistake ( @gapMistakes ) {
