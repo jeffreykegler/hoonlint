@@ -559,7 +559,7 @@ sub checkGapComments {
 }
 
 sub i_isOneLineGap {
-    my ( $policy, $options, $start, $length, $interColumn, $preColumn ) = @_;
+    my ( $policy, $options, $start, $length, $mainColumn, $preColumn ) = @_;
     my $tag = $options->{tag};
     my @mistakes = ();
     my $instance = $policy->{lint};
@@ -567,7 +567,7 @@ sub i_isOneLineGap {
     my $end      = $start + $length;
     my ( $startLine, $startColumn ) = $instance->line_column($start);
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
-    $interColumn //= -1;    # -1 will never match
+    $mainColumn //= -1;    # -1 will never match
 
     # Criss-cross TISTIS lines are a special case
     if (    $startLine == $endLine
@@ -598,7 +598,7 @@ sub i_isOneLineGap {
             $startLine++;
         }
     }
-    my $results = $policy->checkGapComments( $startLine+1, $endLine-1, $interColumn, $preColumn);
+    my $results = $policy->checkGapComments( $startLine+1, $endLine-1, $mainColumn, $preColumn);
   RESULT: for my $result ( @{$results} ) {
         my $type = $result->[0];
         if ( $type eq 'vgap-blank-line' ) {
@@ -786,7 +786,7 @@ sub checkOneLineGap {
     my $instance = $policy->{lint};
     my @mistakes    = ();
     my $tag         = $options->{tag} or die "No tag";
-    my $interColumn = $options->{interColumn};
+    my $mainColumn = $options->{mainColumn};
     my $preColumn   = $options->{preColumn};
     my $parent      = $options->{parent} // $gap->{PARENT};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
@@ -795,7 +795,7 @@ sub checkOneLineGap {
     my $subpolicy = $options->{subpolicy};
 
     if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $gap, { tag => $tag}, $interColumn, $preColumn ) } )
+        @{ $policy->isOneLineGap( $gap, { tag => $tag}, $mainColumn, $preColumn ) } )
     {
         for my $gapMistake (@gapMistakes) {
             my $gapMistakeMsg    = $gapMistake->{msg};
@@ -1538,7 +1538,7 @@ sub checkRunning {
             $policy->checkOneLineGap(
                 $gap,
                 {
-                    interColumn => $anchorColumn,
+                    mainColumn => $anchorColumn,
                     preColumn   => $runStepColumn,
                     tag => ( sprintf 'runstep #%d', int( 1 + $childIX / 2 ) ),
                     parent     => $runStep,
@@ -2927,7 +2927,7 @@ sub checkSplit_0Running {
             $policy->checkOneLineGap(
                 $runningGap,
                 {
-                    interColumn => $runeColumn,
+                    mainColumn => $runeColumn,
 		    preColumn => $expectedColumn,
                     tag         => $tag,
                 }
@@ -3128,7 +3128,7 @@ sub check_1Running {
             $policy->checkOneLineGap(
                 $runningGap,
                 {
-                    interColumn => $anchorColumn,
+                    mainColumn => $anchorColumn,
 		    preColumn => $expectedColumn,
                     tag         => $tag,
                 }
@@ -3258,7 +3258,7 @@ sub check_0_as_1Running {
             $policy->checkOneLineGap(
                 $runningGap,
                 {
-                    interColumn => $runeColumn,
+                    mainColumn => $runeColumn,
 		    preColumn => $expectedColumn,
                     tag         => $tag,
                 }
@@ -3548,7 +3548,7 @@ sub check_1Jogging {
             $policy->checkOneLineGap(
                 $joggingGap,
                 {
-                    interColumn => $runeColumn,
+                    mainColumn => $runeColumn,
                     tag         => (
                         sprintf '1-jogging %s jogging',
                         $chessSide
@@ -4707,7 +4707,7 @@ sub checkBackdented {
             $policy->checkOneLineGap(
                 $gap,
                 {
-                    interColumn => $anchorColumn,
+                    mainColumn => $anchorColumn,
                     tag =>
                       ( sprintf 'backdented element #%d,', $elementNumber ),
                     details => [
