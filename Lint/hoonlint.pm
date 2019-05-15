@@ -347,6 +347,7 @@ sub contextDisplay {
     return join q{}, @pieces;
 }
 
+# Set lists of topic and mistake lines in instance
 sub reportItem {
     my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) =
       @_;

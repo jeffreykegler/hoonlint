@@ -4707,7 +4707,7 @@ sub validate {
     return;
 }
 
-sub displayMistakes {
+sub reportMistakes {
     my ( $policy, $mistakes ) = @_;
     my $instance = $policy->{lint};
     my $fileName = $instance->{fileName};
@@ -4715,12 +4715,14 @@ sub displayMistakes {
     my @pieces = ();
   MISTAKE: for my $mistake ( @{$mistakes} ) {
 
-        my $parentLine = $mistake->{parentLine};
+        my $parentLine   = $mistake->{parentLine};
         my $parentColumn = $mistake->{parentColumn};
-        my $desc              = $mistake->{desc};
-        my $mistakeLine       = $mistake->{line};
-        $mistake->{reportLine}       = $parentLine;
-        $mistake->{reportColumn}       = $parentColumn;
+        my $desc         = $mistake->{desc};
+        my $mistakeLine  = $mistake->{line};
+        # The default report location should be line, column
+        # instead of parentLine, parentColumn
+        $mistake->{reportLine}   //= $parentLine;
+        $mistake->{reportColumn} //= $parentColumn;
         my $mistakeTopicLines = $mistake->{topicLines};
         my @topicLines        = ($parentLine);
         push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
@@ -5143,7 +5145,7 @@ sub validate_node {
           $mistake->{policy} = $policyShortName;
           $mistake->{subpolicy} = $mistake->{subpolicy} // $instance->diagName($node);
         }
-            $policy->displayMistakes( $mistakes );
+            $policy->reportMistakes( $mistakes );
             last PRINT;
         }
 
