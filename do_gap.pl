@@ -50,13 +50,21 @@ my @lineToPos = ( -1, 0 );
 }
 # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@lineToPos);
 
-sub literalLine {
-    my ( $lineNum ) = @_;
-    my $startPos = $lineToPos[$lineNum];
+sub FakeInstance::literalLine {
+    my ( $instance, $lineNum ) = @_;
+    my $lineToPos     = $instance->{lineToPos};
+    my $startPos = $lineToPos->[$lineNum];
     my $line =
-      substr $input, $startPos,
-        ( $lineToPos[ $lineNum + 1 ] - $startPos ) ;
+      $instance->literal( $startPos,
+        ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
     return $line;
+}
+
+sub FakeInstance::literal {
+    my ( $instance, $start, $length ) = @_;
+    my $pSource = $instance->{pHoonSource};
+    return '' if $start >= length ${$pSource};
+    return substr ${$pSource}, $start, $length;
 }
 
 my $gapCommentDSL = <<'END_OF_DSL';
@@ -139,7 +147,7 @@ my $fakedPolicy = bless {
     gapGrammar => $gapGrammar,
 }, 'FakePolicy';
 
-my $mistakes = checkGapComments($fakedPolicy, 1, $#lineToPos, $interOffset, $preOffset);
+my $mistakes = checkGapComments($fakedPolicy, 1, ($#lineToPos-1), $interOffset, $preOffset);
 say Data::Dumper::Dumper($mistakes);
 
 sub checkGapComments {
