@@ -4723,11 +4723,8 @@ sub reportMistakes {
         # instead of parentLine, parentColumn
         $mistake->{reportLine}   //= $parentLine;
         $mistake->{reportColumn} //= $parentColumn;
-        my $mistakeTopicLines = $mistake->{topicLines};
-        my @topicLines        = ($parentLine);
-        push @topicLines, @{$mistakeTopicLines} if $mistakeTopicLines;
 
-        $instance->reportItem( $mistake, $desc, \@topicLines, $mistakeLine, );
+        $instance->reportItem( $mistake, $desc, ($mistake->{topicLines} // []), $mistakeLine, );
     }
     return;
 }

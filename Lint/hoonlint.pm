@@ -260,7 +260,7 @@ sub contextDisplay {
     my $displayDetails   = $instance->{displayDetails};
     my $lineToPos     = $instance->{lineToPos};
     my @pieces        = ();
-    my %tag = map { $_ => q{>} } @{$pTopicLines};
+    my %tag = map { $_ => q{>} } keys %{$pTopicLines};
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_ + 0; } keys %tag;
 
@@ -356,6 +356,8 @@ sub reportItem {
     my $suppressions     = $instance->{suppressions};
     my $reportPolicy     = $mistake->{policy};
     my $reportSubpolicy  = $mistake->{subpolicy};
+    # TODO: Usually a default of parentLine, parentColumn has already
+    # been enforced.  This is a mistake and should change.
     my $reportLine       = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn     = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC         = join ':', $reportLine, $reportColumn + 1;
@@ -376,9 +378,17 @@ sub reportItem {
     }
 
     my $fileName     = $instance->{fileName};
-    my $topicLines   = $instance->{topicLines};
     my $mistakeLines = $instance->{mistakeLines};
-    push @{$topicLines}, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
+
+    my $topicLines   = $instance->{topicLines};
+    my @topicLines = ();
+    push @topicLines, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
+    push @topicLines, grep { defined $_ } ($mistakeLineArg, $mistake->{line},
+      $mistake->{parentLine}, $reportLine);
+    for my $topicLine (@topicLines) {
+       $topicLines->{$topicLine} = 1;
+    }
+
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
     push @{$thisMistakeDescs}, [$mistake, "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc"];

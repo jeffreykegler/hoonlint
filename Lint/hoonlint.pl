@@ -101,7 +101,7 @@ my %config = ();
 $config{fileName} = $fileName;
 
 $config{censusWhitespace} = $censusWhitespace;
-$config{topicLines}       = [];
+$config{topicLines}       = {};
 $config{mistakeLines}     = {};
 
 my @policies = ();
