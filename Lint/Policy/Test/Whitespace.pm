@@ -4348,9 +4348,10 @@ sub checkBackdented {
 
             $expectedColumn = $gapColumn + $expectedLength;
             my $msg = sprintf
-              "joined backdent element #%d %s; %s",
-              $elementNumber,
+              "joined backdent %s element #%d of %s; %s",
               describeLC( $elementLine, $elementColumn ),
+              $elementNumber,
+              describeLC( $parentLine, $parentColumn ),
               describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
@@ -4359,6 +4360,9 @@ sub checkBackdented {
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
+                reportLine           => $elementLine,
+                reportColumn         => $elementColumn,
+                subpolicy => $policy->nodeSubpolicy($node) . ':hgap',
                 expectedColumn => $expectedColumn,
               };
             next ELEMENT;
