@@ -1,6 +1,5 @@
 === hoons/arvo/sur/gmail-message.hoon ===
 === hoons/arvo/sur/kyev.hoon ===
-hoons/arvo/sur/kyev.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #4 @8:24; overindented by 1
 hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #5 @8:32; overindented by 1
 hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #11 @9:17; overindented by 1
@@ -12,12 +11,10 @@ hoons/arvo/sur/plan/diff.hoon 1:1 Test::Whitespace optFordFashep Fashep body @1:
 === hoons/arvo/sur/plan/acct.hoon ===
 === hoons/arvo/sur/static.hoon ===
 === hoons/arvo/sur/down.hoon ===
-hoons/arvo/sur/down.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/sur/sole.hoon ===
 hoons/arvo/sur/sole.hoon 5:1 Test::Whitespace tallBarcen whap @81:1; empty line in comment
 === hoons/arvo/sur/gh.hoon ===
 === hoons/arvo/sur/tree-include.hoon ===
-hoons/arvo/sur/tree-include.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/sur/recoverable-error.hoon ===
 hoons/arvo/sur/recoverable-error.hoon 7:3 Test::Whitespace tallBuccen runstep #1 @7:3; underindented by 2
 === hoons/arvo/sur/twitter.hoon ===
@@ -25,7 +22,6 @@ hoons/arvo/sur/twitter.hoon 36:5 Test::Whitespace tallBarcen split Barcen batter
 hoons/arvo/sur/twitter.hoon 70:3 Test::Whitespace LuslusCell Pseudo-joined cell @70:3; body/comment mismatch; body is underindented by 13
 === hoons/arvo/sur/rfc.hoon ===
 === hoons/arvo/sur/markdown.hoon ===
-hoons/arvo/sur/markdown.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/sur/unicode-data.hoon ===
 === hoons/arvo/sur/hall.hoon ===
 hoons/arvo/sur/hall.hoon 108:3 Test::Whitespace tallBucwut runstep #2 @108:3; underindented by 4
@@ -997,7 +993,6 @@ hoons/arvo/app/static.hoon 152:3 Test::Whitespace tallColhep backdented element 
 hoons/arvo/app/static.hoon 174:3 Test::Whitespace tallTisfas backdented element #2 @175:3; underindented by 2
 hoons/arvo/app/static.hoon 258:3 Test::Whitespace tallTisfas backdented element #2 @259:3; underindented by 2
 === hoons/arvo/app/hood.hoon ===
-hoons/arvo/app/hood.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/app/dojo.hoon ===
 hoons/arvo/app/dojo.hoon 371:14 Test::Whitespace tallTisket backdented element #3 @372:18; overindented by 2
 hoons/arvo/app/dojo.hoon 477:9 Test::Whitespace tallWutlus 2-jogging queenside head @477:13; underindented by 2
@@ -1047,13 +1042,11 @@ hoons/arvo/app/dojo.hoon 1594:9 Test::Whitespace tallKethep backdented element #
 hoons/arvo/app/dojo.hoon 1618:11 Test::Whitespace coltar:tistis-indent TISTIS @1624:12; overindented by 1
 hoons/arvo/app/dojo.hoon 1663:13 Test::Whitespace tallKethep backdented element #2 @1664:9; overindented by 4
 === hoons/arvo/app/time.hoon ===
-hoons/arvo/app/time.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/app/gh.hoon ===
 hoons/arvo/app/gh.hoon 83:7 Test::Whitespace tallKethep backdented element #2 @84:7; overindented by 4
 hoons/arvo/app/gh.hoon 117:11 Test::Whitespace tallTislus backdented element #2, @118:9; comment underindented by 2
 hoons/arvo/app/gh.hoon 279:5 Test::Whitespace coltar:running-bad-multistep runstep @283:20; multi-step line not allowed after singleton (279)
 === hoons/arvo/app/ask.hoon ===
-hoons/arvo/app/ask.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/app/ask.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/app/ask.hoon 7:1 Test::Whitespace tallBarcen split Barcen battery @8:3; overindented by 2
 hoons/arvo/app/ask.hoon 59:1 Test::Whitespace LuslusCell Pseudo-joined cell @59:1; body/comment mismatch; body is underindented by 13
@@ -1093,7 +1086,6 @@ hoons/arvo/app/talk.hoon 2299:17 Test::Whitespace tallCenlus backdented element 
 hoons/arvo/app/talk.hoon 2498:9 Test::Whitespace tallCenhep backdented element #2 @2499:7; underindented by 2
 hoons/arvo/app/talk.hoon 2506:9 Test::Whitespace tallCenlus backdented element #3 @2507:7; underindented by 2
 === hoons/arvo/app/curl.hoon ===
-hoons/arvo/app/curl.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/app/github.hoon ===
 hoons/arvo/app/github.hoon 24:9 Test::Whitespace tallColsig runstep #1 @24:9; overindented by 2
 hoons/arvo/app/github.hoon 25:9 Test::Whitespace tallColsig runstep #2 @25:9; overindented by 2
@@ -1216,22 +1208,16 @@ hoons/arvo/sec/com/github.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5
 === hoons/arvo/sec/com/facebook.hoon ===
 hoons/arvo/sec/com/facebook.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/lib/elem-to-react-json.hoon ===
-hoons/arvo/lib/elem-to-react-json.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/hep-to-cab.hoon ===
-hoons/arvo/lib/hep-to-cab.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/old-phon.hoon ===
 hoons/arvo/lib/old-phon.hoon 12:11 Test::Whitespace tallKettis backdented element #2 @13:7; underindented by 4
 === hoons/arvo/lib/interpolate.hoon ===
-hoons/arvo/lib/interpolate.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/lib/interpolate.hoon 41:1 Test::Whitespace LuslusCell Pseudo-joined cell @41:1; body/comment mismatch; body is underindented by 21
 === hoons/arvo/lib/http.hoon ===
-hoons/arvo/lib/http.hoon 6:1 Test::Whitespace fordFaswut FASWUT; body @6:7 is overindented by 2
 hoons/arvo/lib/http.hoon 26:7 Test::Whitespace tallKethep backdented element #2 @27:7; overindented by 4
 === hoons/arvo/lib/urb-split.hoon ===
-hoons/arvo/lib/urb-split.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/lib/connector.hoon ===
 === hoons/arvo/lib/frontmatter.hoon ===
-hoons/arvo/lib/frontmatter.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/lib/old-zuse.hoon ===
 === hoons/arvo/lib/tester.hoon ===
 === hoons/arvo/lib/hall-json.hoon ===
@@ -1239,7 +1225,6 @@ hoons/arvo/lib/hall-json.hoon 4:1 Test::Whitespace optFordFashep Fashep body @4:
 hoons/arvo/lib/hall-json.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/lib/prey.hoon ===
 === hoons/arvo/lib/down-jet/rend.hoon ===
-hoons/arvo/lib/down-jet/rend.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 24:27 Test::Whitespace tallBartis backdented element #2 @25:7; underindented by 20
 hoons/arvo/lib/down-jet/rend.hoon 32:1 Test::Whitespace LuslusCell cell body @33:2; underindented by 1
 hoons/arvo/lib/down-jet/rend.hoon 62:7 Test::Whitespace tallKethep backdented element #2 @63:7; overindented by 4
@@ -1247,7 +1232,6 @@ hoons/arvo/lib/down-jet/rend.hoon 68:3 Test::Whitespace tallBarket whap @97:5; c
 hoons/arvo/lib/down-jet/rend.hoon 160:7 Test::Whitespace tallKethep backdented element #2 @161:7; overindented by 4
 hoons/arvo/lib/down-jet/rend.hoon 230:7 Test::Whitespace tallTislus backdented element #2, @231:9; comment overindented by 2
 === hoons/arvo/lib/down-jet/parse.hoon ===
-hoons/arvo/lib/down-jet/parse.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 27:19 Test::Whitespace tallKethep backdented element #2, @28:3; comment underindented by 12
 hoons/arvo/lib/down-jet/parse.hoon 27:19 Test::Whitespace tallKethep backdented element #2 @29:3; underindented by 12
 hoons/arvo/lib/down-jet/parse.hoon 8:1 Test::Whitespace tallTislus backdented element #2 @97:3; overindented by 2
@@ -1286,18 +1270,14 @@ hoons/arvo/lib/down-jet/parse.hoon 840:5 Test::Whitespace tallBarcen whap @921:9
 hoons/arvo/lib/down-jet/parse.hoon 840:5 Test::Whitespace tallBarcen battery hephep @1006:3; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 611:3 Test::Whitespace tallBarket battery hephep @1007:1; underindented by 2
 === hoons/arvo/lib/time-to-id.hoon ===
-hoons/arvo/lib/time-to-id.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/httr-to-json.hoon ===
 === hoons/arvo/lib/sole.hoon ===
-hoons/arvo/lib/sole.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/lib/sole.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 === hoons/arvo/lib/cram.hoon ===
 hoons/arvo/lib/cram.hoon 4:3 Test::Whitespace tallWutlus 2-jogging split head @4:9; overindented by 2
 hoons/arvo/lib/cram.hoon 10:5 Test::Whitespace tallWutlus Jog kingside body @10:11; underindented by 1
 === hoons/arvo/lib/map-to-json.hoon ===
-hoons/arvo/lib/map-to-json.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/tree.hoon ===
-hoons/arvo/lib/tree.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/lib/gh-parse.hoon ===
 === hoons/arvo/lib/oauth1.hoon ===
 hoons/arvo/lib/oauth1.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
@@ -1307,14 +1287,11 @@ hoons/arvo/lib/oauth1.hoon 70:7 Test::Whitespace tallSigbar backdented element #
 hoons/arvo/lib/oauth1.hoon 109:17 Test::Whitespace tallCenhep backdented element #2 @110:3; underindented by 14
 hoons/arvo/lib/oauth1.hoon 166:9 Test::Whitespace tallKethep backdented element #2 @167:9; overindented by 4
 === hoons/arvo/lib/pretty-file.hoon ===
-hoons/arvo/lib/pretty-file.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/twitter.hoon ===
-hoons/arvo/lib/twitter.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/lib/twitter.hoon 6:1 Test::Whitespace optFordFashep Fashep body @6:7 is overindented by 2
 hoons/arvo/lib/twitter.hoon 7:1 Test::Whitespace optFordFaslus Faslus body @7:7 is overindented by 2
 hoons/arvo/lib/twitter.hoon 72:12 Test::Whitespace tallKetwut backdented element #1 @73:3; underindented by 9
 === hoons/arvo/lib/down-jet.hoon ===
-hoons/arvo/lib/down-jet.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/lib/down-jet.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/lib/down-jet.hoon 10:1 Test::Whitespace fordHoop joined fordHoop body @10:7 is overindented by 2
 hoons/arvo/lib/down-jet.hoon 11:1 Test::Whitespace fordHoop joined fordHoop body @11:7 is overindented by 2
@@ -1328,7 +1305,6 @@ hoons/arvo/lib/oauth2.hoon 101:15 Test::Whitespace tallColhep backdented element
 hoons/arvo/lib/oauth2.hoon 106:17 Test::Whitespace tallCenhep backdented element #2 @107:3; underindented by 14
 === hoons/arvo/lib/basic-auth.hoon ===
 === hoons/arvo/lib/hall-legacy.hoon ===
-hoons/arvo/lib/hall-legacy.hoon 2:1 Test::Whitespace fordFaswut FASWUT; body @2:7 is overindented by 2
 hoons/arvo/lib/hall-legacy.hoon 6:1 Test::Whitespace tallTisgar backdented element #1 @7:1; underindented by 2
 hoons/arvo/lib/hall-legacy.hoon 70:5 Test::Whitespace tallWutlus 2-jogging queenside head @70:9; underindented by 2
 === hoons/arvo/lib/new-hoon.hoon ===
@@ -1345,9 +1321,7 @@ hoons/arvo/lib/new-hoon.hoon 1344:5 Test::Whitespace tallCenket backdented eleme
 hoons/arvo/lib/new-hoon.hoon 1352:5 Test::Whitespace tallCenket backdented element #3 @1353:5; underindented by 2
 hoons/arvo/lib/new-hoon.hoon 1542:3 Test::Whitespace tallBarcen battery hephep @1556:3; underindented by 4
 === hoons/arvo/lib/show-dir.hoon ===
-hoons/arvo/lib/show-dir.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/lib/hood/helm.hoon ===
-hoons/arvo/lib/hood/helm.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/lib/hood/helm.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/lib/hood/helm.hoon 152:3 Test::Whitespace tallBartis backdented element #2 @153:5; overindented by 2
 hoons/arvo/lib/hood/helm.hoon 153:5 Test::Whitespace tallTisdot backdented element #2 @154:5; underindented by 2
@@ -1355,7 +1329,6 @@ hoons/arvo/lib/hood/helm.hoon 156:9 Test::Whitespace tallKethep backdented eleme
 hoons/arvo/lib/hood/helm.hoon 153:5 Test::Whitespace tallTisdot backdented element #3 @160:3; underindented by 2
 hoons/arvo/lib/hood/helm.hoon 250:7 Test::Whitespace tallKethep backdented element #2 @251:7; overindented by 4
 === hoons/arvo/lib/hood/drum.hoon ===
-hoons/arvo/lib/hood/drum.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/lib/hood/drum.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/lib/hood/drum.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/lib/hood/drum.hoon 62:7 Test::Whitespace tallBuctisMold backdented element #2 @63:9; overindented by 2
@@ -1396,10 +1369,8 @@ hoons/arvo/lib/hood/kiln.hoon 656:13 Test::Whitespace tallCenket backdented elem
 hoons/arvo/lib/hood/kiln.hoon 656:13 Test::Whitespace tallCenket backdented element #3, @657:42; missing newline @657:42
 hoons/arvo/lib/hood/kiln.hoon 656:13 Test::Whitespace tallCenket backdented element #3 @657:44; overindented by 29
 === hoons/arvo/lib/hood/write.hoon ===
-hoons/arvo/lib/hood/write.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/lib/hood/write.hoon 6:1 Test::Whitespace optFordFashep Fashep body @6:7 is overindented by 2
 === hoons/arvo/lib/hood/womb.hoon ===
-hoons/arvo/lib/hood/womb.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/lib/hood/womb.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/lib/hood/womb.hoon 570:3 Test::Whitespace tallWutlus 2-jogging queenside head @570:11; overindented by 2
 hoons/arvo/lib/hood/womb.hoon 571:9 Test::Whitespace tallWutlus Jog queenside head @571:9; overindented by 2
@@ -1412,49 +1383,38 @@ hoons/arvo/lib/hall.hoon 4:1 Test::Whitespace optFordFashep Fashep body @4:7 is 
 hoons/arvo/lib/hall.hoon 52:7 Test::Whitespace tallKethep backdented element #2 @53:5; overindented by 2
 hoons/arvo/lib/hall.hoon 177:11 Test::Whitespace tallDottis backdented element #2 @178:15; overindented by 4
 === hoons/arvo/mar/coffee.hoon ===
-hoons/arvo/mar/coffee.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/urb.hoon ===
-hoons/arvo/mar/urb.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/urb.hoon 5:1 Test::Whitespace fordFastis Fastis horn @5:25; overindented by 2
+hoons/arvo/mar/urb.hoon 5:31 Test::Whitespace fascol:hgap joined backdent @5:31 element #1 of @5:25; overindented by 2
+hoons/arvo/mar/urb.hoon 5:47 Test::Whitespace fascol:hgap joined backdent @5:47 element #2 of @5:25; overindented by 2
+Unused suppression: hoons/arvo/mar/urb.hoon 5:31 Test::Whitespace fordfascol:hgap
+Unused suppression: hoons/arvo/mar/urb.hoon 5:47 Test::Whitespace fordfascol:hgap
 === hoons/arvo/mar/mime.hoon ===
-hoons/arvo/mar/mime.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/quri.hoon ===
-hoons/arvo/mar/quri.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/quri.hoon 10:11 Test::Whitespace tallBarcen joined Barcen battery @10:17; overindented by 2
 === hoons/arvo/mar/plan-diff.hoon ===
-hoons/arvo/mar/plan-diff.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/plan-diff.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 === hoons/arvo/mar/noun.hoon ===
-hoons/arvo/mar/noun.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/gmail/req.hoon ===
 hoons/arvo/mar/gmail/req.hoon 2:1 Test::Whitespace optFordFaslus Faslus body @2:7 is overindented by 2
 hoons/arvo/mar/gmail/req.hoon 2:1 Test::Whitespace optFordFaslus faslus @3:1; empty line in comment
 === hoons/arvo/mar/rss-xml.hoon ===
 === hoons/arvo/mar/tree/json.hoon ===
-hoons/arvo/mar/tree/json.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tree/json.hoon 4:1 Test::Whitespace fordFaswut faswut @5:3; comment overindented by 2
 hoons/arvo/mar/tree/json.hoon 4:1 Test::Whitespace fordFaswut faswut @7:3; comment overindented by 2
 === hoons/arvo/mar/tree/index.hoon ===
-hoons/arvo/mar/tree/index.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tree/index.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/tree/include.hoon ===
-hoons/arvo/mar/tree/include.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tree/include.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 === hoons/arvo/mar/tree/hymn.hoon ===
-hoons/arvo/mar/tree/hymn.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tree/hymn.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/tree/elem.hoon ===
-hoons/arvo/mar/tree/elem.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/tree/comments.hoon ===
-hoons/arvo/mar/tree/comments.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tree/comments.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/ships.hoon ===
-hoons/arvo/mar/ships.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/purl.hoon ===
-hoons/arvo/mar/purl.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/purl.hoon 8:11 Test::Whitespace tallBarcen joined Barcen battery @8:17; overindented by 2
 === hoons/arvo/mar/hoon.hoon ===
-hoons/arvo/mar/hoon.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/hoon.hoon 11:3 Test::Whitespace tallBarcen whap @14:5; comment overindented by 2
 hoons/arvo/mar/hoon.hoon 11:3 Test::Whitespace tallBarcen whap @15:5; comment overindented by 2
 hoons/arvo/mar/hoon.hoon 11:3 Test::Whitespace tallBarcen whap @16:5; comment overindented by 2
@@ -1468,22 +1428,15 @@ hoons/arvo/mar/hoon.hoon 11:3 Test::Whitespace tallBarcen whap @23:5; comment ov
 === hoons/arvo/mar/lens/command.hoon ===
 hoons/arvo/mar/lens/command.hoon 2:1 Test::Whitespace optFordFaslus Faslus body @2:7 is overindented by 2
 === hoons/arvo/mar/lens/json.hoon ===
-hoons/arvo/mar/lens/json.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/helm-hi.hoon ===
-hoons/arvo/mar/helm-hi.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/write/wipe.hoon ===
-hoons/arvo/mar/write/wipe.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/write/wipe.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/write/plan-info.hoon ===
-hoons/arvo/mar/write/plan-info.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/write/plan-info.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/write/paste.hoon ===
-hoons/arvo/mar/write/paste.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/write/paste.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/write/tree.hoon ===
-hoons/arvo/mar/write/tree.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/plan.hoon ===
-hoons/arvo/mar/plan.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/plan.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 === hoons/arvo/mar/gh/list-issues.hoon ===
 === hoons/arvo/mar/gh/commit.hoon ===
@@ -1494,87 +1447,61 @@ hoons/arvo/mar/gh/issues.hoon 82:5 Test::Whitespace coltar:running-bad-multistep
 === hoons/arvo/mar/gh/issue.hoon ===
 === hoons/arvo/mar/gh/repository.hoon ===
 === hoons/arvo/mar/json.hoon ===
-hoons/arvo/mar/json.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/json.hoon 4:1 Test::Whitespace fordFaswut faswut @5:3; comment overindented by 2
 hoons/arvo/mar/json.hoon 4:1 Test::Whitespace fordFaswut faswut @7:3; comment overindented by 2
 === hoons/arvo/mar/email.hoon ===
-hoons/arvo/mar/email.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/womb/part.hoon ===
-hoons/arvo/mar/womb/part.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/part.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/invite.hoon ===
-hoons/arvo/mar/womb/invite.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/invite.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/claim.hoon ===
-hoons/arvo/mar/womb/claim.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/claim.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/bonus.hoon ===
-hoons/arvo/mar/womb/bonus.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/bonus.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/do-claim.hoon ===
-hoons/arvo/mar/womb/do-claim.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/womb/ticket-info.hoon ===
-hoons/arvo/mar/womb/ticket-info.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/ticket-info.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/balance.hoon ===
-hoons/arvo/mar/womb/balance.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/balance.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/replay-log.hoon ===
-hoons/arvo/mar/womb/replay-log.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/replay-log.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/stat-all.hoon ===
-hoons/arvo/mar/womb/stat-all.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/stat-all.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/womb/do-ticket.hoon ===
-hoons/arvo/mar/womb/do-ticket.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/womb/recycle.hoon ===
-hoons/arvo/mar/womb/recycle.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/womb/recycle.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/dill/belt.hoon ===
-hoons/arvo/mar/dill/belt.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/dill/belt.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/dill/belt.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/mar/dill/belt.hoon 54:7 Test::Whitespace tallWutlus Jog kingside body @54:15; overindented by 1
 hoons/arvo/mar/dill/belt.hoon 55:7 Test::Whitespace tallWutlus Jog kingside body @55:15; overindented by 1
 hoons/arvo/mar/dill/belt.hoon 56:7 Test::Whitespace tallWutlus Jog kingside body @56:15; overindented by 1
 === hoons/arvo/mar/dill/blit.hoon ===
-hoons/arvo/mar/dill/blit.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/dill/blit.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/dill/blit.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/mar/down.hoon ===
-hoons/arvo/mar/down.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/down.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/down.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/mar/down.hoon 25:3 Test::Whitespace LuslusCell cell body @26:7; overindented by 2
 === hoons/arvo/mar/httr.hoon ===
-hoons/arvo/mar/httr.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/tang.hoon ===
-hoons/arvo/mar/tang.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/tang.hoon 13:25 Test::Whitespace tallKethep backdented element #2 @14:5; underindented by 10
 === hoons/arvo/mar/atom.hoon ===
-hoons/arvo/mar/atom.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/path.hoon ===
 === hoons/arvo/mar/snip.hoon ===
-hoons/arvo/mar/snip.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/snip.hoon 6:1 Test::Whitespace tallBarcen split Barcen battery @7:3; overindented by 2
 hoons/arvo/mar/snip.hoon 26:9 Test::Whitespace tallKethep backdented element #2 @27:7; overindented by 2
 === hoons/arvo/mar/urbit.hoon ===
-hoons/arvo/mar/urbit.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/md.hoon ===
-hoons/arvo/mar/md.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/twit/cred.hoon ===
 === hoons/arvo/mar/twit/feed.hoon ===
 === hoons/arvo/mar/twit/post.hoon ===
 === hoons/arvo/mar/twit/usel.hoon ===
 === hoons/arvo/mar/twit/req.hoon ===
 === hoons/arvo/mar/css.hoon ===
-hoons/arvo/mar/css.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/hymn.hoon ===
-hoons/arvo/mar/hymn.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/ask-mail.hoon ===
-hoons/arvo/mar/ask-mail.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/xml.hoon ===
-hoons/arvo/mar/xml.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/xml.hoon 4:1 Test::Whitespace fordFaswut faswut @5:3; comment overindented by 2
 hoons/arvo/mar/xml.hoon 4:1 Test::Whitespace fordFaswut faswut @7:3; comment overindented by 2
 === hoons/arvo/mar/recoverable-error.hoon ===
@@ -1583,21 +1510,15 @@ hoons/arvo/mar/recoverable-error.hoon 12:1 Test::Whitespace tallBarcab Barcab he
 hoons/arvo/mar/recoverable-error.hoon 29:15 Test::Whitespace tallBarcen wisp @29:31; missing newline @29:31
 hoons/arvo/mar/recoverable-error.hoon 29:15 Test::Whitespace tallBarcen battery hephep @29:33; overindented by 22
 === hoons/arvo/mar/jam.hoon ===
-hoons/arvo/mar/jam.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/txt-diff.hoon ===
-hoons/arvo/mar/txt-diff.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/umd.hoon ===
-hoons/arvo/mar/umd.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/umd.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/mar/umd.hoon 16:3 Test::Whitespace LuslusCell Pseudo-joined cell @16:3; body/comment mismatch; body is underindented by 9
 === hoons/arvo/mar/elem.hoon ===
-hoons/arvo/mar/elem.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/sole/action.hoon ===
-hoons/arvo/mar/sole/action.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/sole/action.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/sole/action.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/mar/sole/effect.hoon ===
-hoons/arvo/mar/sole/effect.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/sole/effect.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/sole/effect.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/mar/sole/effect.hoon 18:9 Test::Whitespace LuslusCell cell body @19:7; underindented by 4
@@ -1605,27 +1526,18 @@ hoons/arvo/mar/sole/effect.hoon 40:13 Test::Whitespace tallCenlus backdented ele
 hoons/arvo/mar/sole/effect.hoon 72:5 Test::Whitespace tallWutlus 2-jogging split head @72:11; overindented by 2
 hoons/arvo/mar/sole/effect.hoon 72:5 Test::Whitespace tallWutlus 2-jogging queenside subhead @73:15; overindented by 6
 === hoons/arvo/mar/js.hoon ===
-hoons/arvo/mar/js.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/markdown.hoon ===
-hoons/arvo/mar/markdown.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/front.hoon ===
-hoons/arvo/mar/front.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/fora/post.hoon ===
-hoons/arvo/mar/fora/post.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/fora/post.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/fora/comment.hoon ===
-hoons/arvo/mar/fora/comment.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/fora/comment.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/will.hoon ===
-hoons/arvo/mar/will.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/jam-crub.hoon ===
-hoons/arvo/mar/jam-crub.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/html.hoon ===
-hoons/arvo/mar/html.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/html.hoon 4:1 Test::Whitespace fordFaswut faswut @5:3; comment overindented by 2
 hoons/arvo/mar/html.hoon 4:1 Test::Whitespace fordFaswut faswut @7:3; comment overindented by 2
 === hoons/arvo/mar/txt.hoon ===
-hoons/arvo/mar/txt.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/txt.hoon 41:5 Test::Whitespace tallBarket Barket head @42:5; must be on rune line
 hoons/arvo/mar/txt.hoon 102:5 Test::Whitespace tallBarket Barket head @103:5; must be on rune line
 hoons/arvo/mar/txt.hoon 123:13 Test::Whitespace tallKethep backdented element #2 @124:13; overindented by 4
@@ -1644,9 +1556,7 @@ hoons/arvo/mar/hall/rumor.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5
 hoons/arvo/mar/hall/telegrams.hoon 4:1 Test::Whitespace optFordFashep Fashep body @4:7 is overindented by 2
 hoons/arvo/mar/hall/telegrams.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/hall/speeches.hoon ===
-hoons/arvo/mar/hall/speeches.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/hall/command.hoon ===
-hoons/arvo/mar/hall/command.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/mar/hall/command.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/mar/hall/command.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/mar/hall/command.hoon 35:5 Test::Whitespace tallWutlus 2-jogging @37:7; comment overindented by 2
@@ -1655,28 +1565,25 @@ hoons/arvo/mar/hall/prize.hoon 4:1 Test::Whitespace optFordFashep Fashep body @4
 hoons/arvo/mar/hall/prize.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/mar/unicode-data.hoon ===
 === hoons/arvo/mar/drum-put.hoon ===
-hoons/arvo/mar/drum-put.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/mar/static/action.hoon ===
 === hoons/arvo/web/unmark/test.hoon ===
 === hoons/arvo/web/unmark/all.hoon ===
 hoons/arvo/web/unmark/all.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/web/unmark/all.hoon 7:1 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
 === hoons/arvo/web/listen.hoon ===
-hoons/arvo/web/listen.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/web/404.hoon ===
-hoons/arvo/web/404.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/web/pack/js/tree-urb.hoon ===
 hoons/arvo/web/pack/js/tree-urb.hoon 5:1 Test::Whitespace fordFasket backdented element #2 @6:3; overindented by 2
+hoons/arvo/web/pack/js/tree-urb.hoon 6:9 Test::Whitespace fasdot:hgap joined backdent @6:9 element #1 of @6:3; overindented by 2
+Unused suppression: hoons/arvo/web/pack/js/tree-urb.hoon 6:9 Test::Whitespace fordfasdot:hgap
 === hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon ===
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 5:1 Test::Whitespace fordFasket backdented element #2 @6:3; overindented by 2
+hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace fasdot:hgap joined backdent @6:9 element #1 of @6:3; overindented by 2
+Unused suppression: hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace fordfasdot:hgap
 === hoons/arvo/web/dojo.hoon ===
-hoons/arvo/web/dojo.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/web/talk.hoon ===
-hoons/arvo/web/talk.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/web/womb.hoon ===
-hoons/arvo/web/womb.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/ren/urb.hoon ===
-hoons/arvo/ren/urb.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/urb.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/ren/urb.hoon 6:1 Test::Whitespace fordFascen joined fordFascen body @6:7 is overindented by 2
 hoons/arvo/ren/urb.hoon 7:7 Test::Whitespace fordFascom joined Fascom @7:15; overindented by 4
@@ -1690,16 +1597,15 @@ hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fordFascomElements fascom elements
 hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement Fascom element head @23:15; overindented by 4
 hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement Fascom element body @24:11; underindented by 2
 === hoons/arvo/ren/rss-xml.hoon ===
-hoons/arvo/ren/rss-xml.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/rss-xml.hoon 9:1 Test::Whitespace fordFasbuc joined fordFasbuc body @9:7 is overindented by 2
 hoons/arvo/ren/rss-xml.hoon 22:11 Test::Whitespace tallCenhep backdented element #2 @23:1; underindented by 10
 === hoons/arvo/ren/tree/body.hoon ===
-hoons/arvo/ren/tree/body.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/body.hoon 5:1 Test::Whitespace fordFastis Fastis symbol @5:7; overindented by 2
 hoons/arvo/ren/tree/body.hoon 5:1 Test::Whitespace fordFastis Fastis horn @5:14; overindented by 2
 hoons/arvo/ren/tree/body.hoon 6:1 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
+hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace fasbar:hgap joined backdent @6:21 element #1 of @6:16; overindented by 1
+Unused suppression: hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace fordfasbar:hgap
 === hoons/arvo/ren/tree/json.hoon ===
-hoons/arvo/ren/tree/json.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/json.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/ren/tree/json.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
@@ -1707,38 +1613,53 @@ hoons/arvo/ren/tree/json.hoon 7:1 Test::Whitespace fordFastis Fastis horn @7:14;
 hoons/arvo/ren/tree/json.hoon 7:14 Test::Whitespace fordFasbuc joined fordFasbuc body @7:20 is overindented by 2
 hoons/arvo/ren/tree/json.hoon 8:1 Test::Whitespace fordFastis Fastis symbol @8:7; overindented by 2
 hoons/arvo/ren/tree/json.hoon 8:1 Test::Whitespace fordFastis Fastis horn @8:14; overindented by 2
+hoons/arvo/ren/tree/json.hoon 8:20 Test::Whitespace fasket:hgap joined backdent @8:20 element #1 of @8:14; overindented by 2
+hoons/arvo/ren/tree/json.hoon 8:36 Test::Whitespace fasket:hgap joined backdent @8:36 element #2 of @8:14; overindented by 2
 hoons/arvo/ren/tree/json.hoon 9:1 Test::Whitespace fordFastis Fastis symbol @9:7; overindented by 2
 hoons/arvo/ren/tree/json.hoon 9:1 Test::Whitespace fordFastis Fastis horn @9:14; overindented by 2
+hoons/arvo/ren/tree/json.hoon 9:20 Test::Whitespace fasket:hgap joined backdent @9:20 element #1 of @9:14; overindented by 2
 hoons/arvo/ren/tree/json.hoon 10:14 Test::Whitespace fordFascab joined fordFascab body @10:20 is overindented by 2
+Unused suppression: hoons/arvo/ren/tree/json.hoon 8:20 Test::Whitespace fordfasket:hgap
+Unused suppression: hoons/arvo/ren/tree/json.hoon 9:20 Test::Whitespace fordfasket:hgap
+Unused suppression: hoons/arvo/ren/tree/json.hoon 8:36 Test::Whitespace fordfasket:hgap
 === hoons/arvo/ren/tree/index.hoon ===
-hoons/arvo/ren/tree/index.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/index.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/ren/tree/index.hoon 6:1 Test::Whitespace fordFascom joined Fascom @6:11; overindented by 6
 hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElement Fascom element head @6:11; overindented by 6
 hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fordFascomElement Fascom element body @7:5; underindented by 4
 hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fordFascomElement Fascom element head @9:11; overindented by 6
 hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fordFascomElement Fascom element body @10:5; underindented by 4
+hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fasdot:hgap joined backdent @12:11 element #1 of @12:5; overindented by 2
+hoons/arvo/ren/tree/index.hoon 12:17 Test::Whitespace fassem:hgap joined backdent @12:17 element #1 of @12:11; overindented by 2
+hoons/arvo/ren/tree/index.hoon 12:40 Test::Whitespace fassem:hgap joined backdent @12:40 element #2 of @12:11; overindented by 2
 hoons/arvo/ren/tree/index.hoon 13:11 Test::Whitespace fordFascab joined fordFascab body @13:17 is overindented by 2
+hoons/arvo/ren/tree/index.hoon 13:23 Test::Whitespace fassem:hgap joined backdent @13:23 element #1 of @13:17; overindented by 2
+hoons/arvo/ren/tree/index.hoon 13:46 Test::Whitespace fassem:hgap joined backdent @13:46 element #2 of @13:17; overindented by 2
 hoons/arvo/ren/tree/index.hoon 12:5 Test::Whitespace fordFasdot backdented element #2 @14:1; underindented by 4
+Unused suppression: hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fordfasdot:hgap
+Unused suppression: hoons/arvo/ren/tree/index.hoon 13:23 Test::Whitespace fordfassem:hgap
+Unused suppression: hoons/arvo/ren/tree/index.hoon 12:17 Test::Whitespace fordfassem:hgap
+Unused suppression: hoons/arvo/ren/tree/index.hoon 13:46 Test::Whitespace fordfassem:hgap
+Unused suppression: hoons/arvo/ren/tree/index.hoon 12:40 Test::Whitespace fordfassem:hgap
 === hoons/arvo/ren/tree/include.hoon ===
-hoons/arvo/ren/tree/include.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/include.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
+hoons/arvo/ren/tree/include.hoon 6:7 Test::Whitespace fasbar:hgap joined backdent @6:7 element #1 of @6:1; overindented by 2
+Unused suppression: hoons/arvo/ren/tree/include.hoon 6:7 Test::Whitespace fordfasbar:hgap
 === hoons/arvo/ren/tree/elem.hoon ===
-hoons/arvo/ren/tree/elem.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/elem.hoon 5:1 Test::Whitespace fordFascen joined fordFascen body @5:7 is overindented by 2
 hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fordFascom split Fascom @6:5; underindented by 4
 hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fordFascomElement Fascom element head @6:5; underindented by 6
 hoons/arvo/ren/tree/elem.hoon 7:5 Test::Whitespace fordFascomElement Fascom element head @7:5; underindented by 6
 === hoons/arvo/ren/tree/head.hoon ===
-hoons/arvo/ren/tree/head.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/tree/head.hoon 6:1 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
 hoons/arvo/ren/tree/head.hoon 6:1 Test::Whitespace fordFastis Fastis horn @6:14; overindented by 2
 hoons/arvo/ren/tree/head.hoon 7:1 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
 hoons/arvo/ren/tree/head.hoon 13:1 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
 hoons/arvo/ren/tree/head.hoon 19:1 Test::Whitespace fordFastis Fastis symbol @19:7; overindented by 2
 hoons/arvo/ren/tree/head.hoon 19:1 Test::Whitespace fordFastis Fastis horn @19:17; overindented by 2
+hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fasket:hgap joined backdent @20:40 element #2 of @20:17; overindented by 2
+Unused suppression: hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fordfasket:hgap
 === hoons/arvo/ren/tree/combine.hoon ===
-hoons/arvo/ren/tree/combine.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/ren/tree/combine.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 hoons/arvo/ren/tree/combine.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/ren/tree/combine.hoon 7:1 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
@@ -1758,10 +1679,10 @@ hoons/arvo/ren/tree/combine.hoon 13:1 Test::Whitespace fordFastis Fastis horn @1
 hoons/arvo/ren/tree/combine.hoon 14:1 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
 hoons/arvo/ren/tree/combine.hoon 14:1 Test::Whitespace fordFastis Fastis horn @14:15; overindented by 2
 === hoons/arvo/ren/tree/comments.hoon ===
-hoons/arvo/ren/tree/comments.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
+hoons/arvo/ren/tree/comments.hoon 5:7 Test::Whitespace fascol:hgap joined backdent @5:7 element #1 of @5:1; overindented by 2
 hoons/arvo/ren/tree/comments.hoon 5:1 Test::Whitespace fordFascol backdented element #2 @6:3; overindented by 2
+Unused suppression: hoons/arvo/ren/tree/comments.hoon 5:7 Test::Whitespace fordfascol:hgap
 === hoons/arvo/ren/urb/tree.hoon ===
-hoons/arvo/ren/urb/tree.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/urb/tree.hoon 6:1 Test::Whitespace fordFastis Fastis symbol @6:6; overindented by 1
 hoons/arvo/ren/urb/tree.hoon 6:1 Test::Whitespace fordFastis Fastis horn @6:13; overindented by 2
 hoons/arvo/ren/urb/tree.hoon 6:13 Test::Whitespace fordFashax joined fordFashax body @6:19 is overindented by 2
@@ -1771,21 +1692,17 @@ hoons/arvo/ren/urb/tree.hoon 7:1 Test::Whitespace fordFastis Fastis horn @7:13; 
 hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFashax joined fordFashax body @7:19 is overindented by 2
 hoons/arvo/ren/urb/tree.hoon 7:19 Test::Whitespace fordFascen joined fordFascen body @7:24 is overindented by 1
 === hoons/arvo/ren/css.hoon ===
-hoons/arvo/ren/css.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/css.hoon 6:20 Test::Whitespace fordFascen joined fordFascen body @6:25 is overindented by 1
 === hoons/arvo/ren/test-tree.hoon ===
 hoons/arvo/ren/test-tree.hoon 2:1 Test::Whitespace fordFastis Fastis horn @2:12; overindented by 1
 === hoons/arvo/ren/run.hoon ===
-hoons/arvo/ren/run.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/run.hoon 7:15 Test::Whitespace fordFascen joined fordFascen body @7:21 is overindented by 2
 === hoons/arvo/ren/js.hoon ===
-hoons/arvo/ren/js.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/ren/js.hoon 6:19 Test::Whitespace fordFascen joined fordFascen body @6:24 is overindented by 1
 === hoons/arvo/gen/pipe/cancel.hoon ===
 === hoons/arvo/gen/pipe/connect.hoon ===
 === hoons/arvo/gen/pipe/list.hoon ===
 === hoons/arvo/gen/glass.hoon ===
-hoons/arvo/gen/glass.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/gen/glass.hoon 27:5 Test::Whitespace tallKethep backdented element #2, @28:5; comment overindented by 4
 hoons/arvo/gen/glass.hoon 27:5 Test::Whitespace tallKethep backdented element #2, @29:5; comment overindented by 4
 hoons/arvo/gen/glass.hoon 27:5 Test::Whitespace tallKethep backdented element #2, @30:5; comment overindented by 4
@@ -1797,12 +1714,9 @@ hoons/arvo/gen/glass.hoon 120:3 Test::Whitespace tallTiswut backdented element #
 === hoons/arvo/gen/test.hoon ===
 hoons/arvo/gen/test.hoon 64:3 Test::Whitespace tallWutsig backdented element #2, @65:5; comment overindented by 2
 === hoons/arvo/gen/gmail/list.hoon ===
-hoons/arvo/gen/gmail/list.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/gmail/send.hoon ===
-hoons/arvo/gen/gmail/send.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/gmail/send.hoon 6:1 Test::Whitespace optFordFashep Fashep body @6:7 is overindented by 2
 === hoons/arvo/gen/hello.hoon ===
-hoons/arvo/gen/hello.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/al.hoon ===
 hoons/arvo/gen/al.hoon 207:9 Test::Whitespace tallWutcol backdented element #2, @208:11; comment overindented by 2
 hoons/arvo/gen/al.hoon 207:9 Test::Whitespace tallWutcol backdented element #2, @209:11; comment overindented by 2
@@ -1821,31 +1735,22 @@ hoons/arvo/gen/al.hoon 324:7 Test::Whitespace tallCollus backdented element #2, 
 hoons/arvo/gen/al.hoon 346:7 Test::Whitespace tallWutcol backdented element #2, @347:9; comment overindented by 2
 hoons/arvo/gen/al.hoon 346:7 Test::Whitespace tallWutcol backdented element #2, @348:9; comment overindented by 2
 === hoons/arvo/gen/solid.hoon ===
-hoons/arvo/gen/solid.hoon 8:1 Test::Whitespace fordFaswut FASWUT; body @8:7 is overindented by 2
 hoons/arvo/gen/solid.hoon 11:3 Test::Whitespace tallZapcol backdented element #1 @12:1; underindented by 2
 hoons/arvo/gen/solid.hoon 26:24 Test::Whitespace tallBardot backdented element #1 @27:5; underindented by 9
 hoons/arvo/gen/solid.hoon 57:5 Test::Whitespace tallColsig joined 0-running @65:1; empty line in comment
 === hoons/arvo/gen/ticket.hoon ===
-hoons/arvo/gen/ticket.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/ticket.hoon 8:3 Test::Whitespace tallZapdot backdented element #1 @9:1; underindented by 2
 === hoons/arvo/gen/ivory.hoon ===
-hoons/arvo/gen/ivory.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/gen/ivory.hoon 7:3 Test::Whitespace tallZapcol backdented element #1 @8:1; underindented by 2
 === hoons/arvo/gen/moon.hoon ===
-hoons/arvo/gen/moon.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/womb/balances.hoon ===
-hoons/arvo/gen/womb/balances.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/womb/balances.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/womb/balance.hoon ===
-hoons/arvo/gen/womb/balance.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/womb/balance.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/womb/stats.hoon ===
-hoons/arvo/gen/womb/stats.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/gen/womb/stats.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 === hoons/arvo/gen/womb/shop.hoon ===
-hoons/arvo/gen/womb/shop.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/metal.hoon ===
-hoons/arvo/gen/metal.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/gen/metal.hoon 6:1 Test::Whitespace tallTiscom backdented element #2 @9:3; overindented by 2
 hoons/arvo/gen/metal.hoon 9:3 Test::Whitespace tallZapcol backdented element #1 @10:1; underindented by 2
 hoons/arvo/gen/metal.hoon 104:9 Test::Whitespace tallColcab backdented element #2, @105:9; comment overindented by 4
@@ -1878,23 +1783,17 @@ hoons/arvo/gen/musk.hoon 281:5 Test::Whitespace tallWutdot backdented element #2
 hoons/arvo/gen/musk.hoon 289:5 Test::Whitespace tallWutcol backdented element #2, @290:7; comment overindented by 2
 hoons/arvo/gen/musk.hoon 289:5 Test::Whitespace tallWutcol backdented element #2, @291:7; comment overindented by 2
 === hoons/arvo/gen/serving.hoon ===
-hoons/arvo/gen/serving.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/ls.hoon ===
-hoons/arvo/gen/ls.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/ls.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/twit/as.hoon ===
 hoons/arvo/gen/twit/as.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
 === hoons/arvo/gen/twit/feed.hoon ===
-hoons/arvo/gen/twit/feed.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/twit/feed.hoon 6:1 Test::Whitespace optFordFashep Fashep body @6:7 is overindented by 2
 === hoons/arvo/gen/help.hoon ===
-hoons/arvo/gen/help.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/help.hoon 48:22 Test::Whitespace tallKethep backdented element #2 @49:1; underindented by 11
 hoons/arvo/gen/help.hoon 55:5 Test::Whitespace tallTisgal backdented element #2 @56:5; overindented by 4
 === hoons/arvo/gen/ask/admins.hoon ===
-hoons/arvo/gen/ask/admins.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/brass.hoon ===
-hoons/arvo/gen/brass.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 hoons/arvo/gen/brass.hoon 7:3 Test::Whitespace tallZapcol backdented element #1 @8:1; underindented by 2
 hoons/arvo/gen/brass.hoon 102:9 Test::Whitespace tallColcab backdented element #2, @103:9; comment overindented by 4
 hoons/arvo/gen/brass.hoon 102:9 Test::Whitespace tallColcab backdented element #2, @104:9; comment overindented by 4
@@ -1911,156 +1810,93 @@ hoons/arvo/gen/brass.hoon 274:9 Test::Whitespace tallWutdot backdented element #
 hoons/arvo/gen/brass.hoon 274:9 Test::Whitespace tallWutdot backdented element #2, @276:11; comment overindented by 2
 hoons/arvo/gen/brass.hoon 274:9 Test::Whitespace tallWutdot backdented element #2, @277:11; comment overindented by 2
 === hoons/arvo/gen/tree.hoon ===
-hoons/arvo/gen/tree.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/tree.hoon 13:12 Test::Whitespace tallCenhep backdented element #2 @14:1; underindented by 11
 === hoons/arvo/gen/capitalize.hoon ===
 hoons/arvo/gen/capitalize.hoon 72:9 Test::Whitespace tallTiswut backdented element #3 @73:12; overindented by 1
 === hoons/arvo/gen/bug.hoon ===
 === hoons/arvo/gen/code.hoon ===
 === hoons/arvo/gen/curl-hiss.hoon ===
-hoons/arvo/gen/curl-hiss.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/curl-hiss.hoon 10:11 Test::Whitespace tallBartis backdented element #2 @11:1; underindented by 10
 === hoons/arvo/gen/cat.hoon ===
-hoons/arvo/gen/cat.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/cat.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/curl/url.hoon ===
-hoons/arvo/gen/curl/url.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/curl/url.hoon 7:1 Test::Whitespace tallTiscom backdented element #2, @10:3; comment overindented by 2
 === hoons/arvo/gen/curl.hoon ===
-hoons/arvo/gen/curl.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/curl.hoon 10:11 Test::Whitespace tallBartis backdented element #2 @11:1; underindented by 10
 === hoons/arvo/gen/hood/sync.hoon ===
-hoons/arvo/gen/hood/sync.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/replay-womb-log.hoon ===
-hoons/arvo/gen/hood/replay-womb-log.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/replay-womb-log.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/hood/mv.hoon ===
-hoons/arvo/gen/hood/mv.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/mv.hoon 17:14 Test::Whitespace tallColhep backdented element #2 @18:1; underindented by 13
 === hoons/arvo/gen/hood/unlink.hoon ===
-hoons/arvo/gen/hood/unlink.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/rekey.hoon ===
-hoons/arvo/gen/hood/rekey.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/commit.hoon ===
-hoons/arvo/gen/hood/commit.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/reset.hoon ===
-hoons/arvo/gen/hood/reset.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/cp.hoon ===
-hoons/arvo/gen/hood/cp.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/obey.hoon ===
-hoons/arvo/gen/hood/obey.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/gen/hood/label.hoon ===
-hoons/arvo/gen/hood/label.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/cancel.hoon ===
-hoons/arvo/gen/hood/cancel.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/begin.hoon ===
-hoons/arvo/gen/hood/begin.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/manage-old-key.hoon ===
-hoons/arvo/gen/hood/manage-old-key.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/invite.hoon ===
-hoons/arvo/gen/hood/invite.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/tlon/init-stream.hoon ===
 === hoons/arvo/gen/hood/tlon/add-fora.hoon ===
 === hoons/arvo/gen/hood/tlon/add-stream.hoon ===
 === hoons/arvo/gen/hood/ping.hoon ===
-hoons/arvo/gen/hood/ping.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/claim.hoon ===
-hoons/arvo/gen/hood/claim.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/hi.hoon ===
-hoons/arvo/gen/hood/hi.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/serve.hoon ===
-hoons/arvo/gen/hood/serve.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/deset.hoon ===
-hoons/arvo/gen/hood/deset.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/reload.hoon ===
-hoons/arvo/gen/hood/reload.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/init-oauth2.hoon ===
 === hoons/arvo/gen/hood/rm.hoon ===
-hoons/arvo/gen/hood/rm.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/manage.hoon ===
-hoons/arvo/gen/hood/manage.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/autoload.hoon ===
-hoons/arvo/gen/hood/autoload.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/schedule.hoon ===
-hoons/arvo/gen/hood/schedule.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/reload-desk.hoon ===
-hoons/arvo/gen/hood/reload-desk.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/bonus.hoon ===
-hoons/arvo/gen/hood/bonus.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/unmount.hoon ===
-hoons/arvo/gen/hood/unmount.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/release-ships.hoon ===
-hoons/arvo/gen/hood/release-ships.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/exit.hoon ===
-hoons/arvo/gen/hood/exit.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/merge.hoon ===
-hoons/arvo/gen/hood/merge.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/rf.hoon ===
-hoons/arvo/gen/hood/rf.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/report.hoon ===
-hoons/arvo/gen/hood/report.hoon 4:1 Test::Whitespace fordFaswut FASWUT; body @4:7 is overindented by 2
 === hoons/arvo/gen/hood/verb.hoon ===
-hoons/arvo/gen/hood/verb.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/mount.hoon ===
-hoons/arvo/gen/hood/mount.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/breload.hoon ===
-hoons/arvo/gen/hood/breload.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/syncs.hoon ===
-hoons/arvo/gen/hood/syncs.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/public.hoon ===
 === hoons/arvo/gen/hood/private.hoon ===
 === hoons/arvo/gen/hood/nuke.hoon ===
-hoons/arvo/gen/hood/nuke.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/nuke.hoon 8:3 Test::Whitespace tallZapcol backdented element #1 @9:1; underindented by 2
 === hoons/arvo/gen/hood/mass.hoon ===
-hoons/arvo/gen/hood/mass.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/overload.hoon ===
-hoons/arvo/gen/hood/overload.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/reinvite.hoon ===
-hoons/arvo/gen/hood/reinvite.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/ask.hoon ===
-hoons/arvo/gen/hood/ask.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/start.hoon ===
-hoons/arvo/gen/hood/start.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/transfer.hoon ===
-hoons/arvo/gen/hood/transfer.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/transfer.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/hood/load.hoon ===
-hoons/arvo/gen/hood/load.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/load.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 === hoons/arvo/gen/hood/track.hoon ===
-hoons/arvo/gen/hood/track.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/save.hoon ===
-hoons/arvo/gen/hood/save.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/rc.hoon ===
-hoons/arvo/gen/hood/rc.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/init-oauth2/google.hoon ===
 hoons/arvo/gen/hood/init-oauth2/google.hoon 29:5 Test::Whitespace tallSigbar backdented element #2 @30:5; overindented by 4
 === hoons/arvo/gen/hood/wipe-ford.hoon ===
-hoons/arvo/gen/hood/wipe-ford.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/hood/wipe-ford.hoon 8:3 Test::Whitespace tallZapcol backdented element #1 @9:1; underindented by 2
 === hoons/arvo/gen/hood/init-oauth1.hoon ===
 === hoons/arvo/gen/hood/init-auth-basic.hoon ===
 === hoons/arvo/gen/hood/unsync.hoon ===
-hoons/arvo/gen/hood/unsync.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/reboot.hoon ===
-hoons/arvo/gen/hood/reboot.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/release.hoon ===
-hoons/arvo/gen/hood/release.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hood/link.hoon ===
-hoons/arvo/gen/hood/link.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/pope.hoon ===
-hoons/arvo/gen/pope.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 hoons/arvo/gen/pope.hoon 7:1 Test::Whitespace optFordFashep Fashep body @7:7 is overindented by 2
 === hoons/arvo/gen/deco.hoon ===
 === hoons/arvo/gen/hall/log.hoon ===
-hoons/arvo/gen/hall/log.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hall/load-legacy.hoon ===
-hoons/arvo/gen/hall/load-legacy.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hall/load.hoon ===
-hoons/arvo/gen/hall/load.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hall/save.hoon ===
-hoons/arvo/gen/hall/save.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/hall/unlog.hoon ===
-hoons/arvo/gen/hall/unlog.hoon 5:1 Test::Whitespace fordFaswut FASWUT; body @5:7 is overindented by 2
 === hoons/arvo/gen/static/build.hoon ===

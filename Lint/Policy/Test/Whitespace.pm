@@ -81,6 +81,9 @@ sub nodeSubpolicy {
     my ( $policy, $node ) = @_;
     my $instance        = $policy->{lint};
     my $name = $instance->brickName($node);
+    if ( my ($tag) = $name =~ /^ford([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
+        return lc $tag;
+    }
     if ( my ($tag) = $name =~ /^tall([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
         return lc $tag;
     }
