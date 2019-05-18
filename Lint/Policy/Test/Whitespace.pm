@@ -2408,7 +2408,7 @@ sub checkFashep {
               };
             last BODY_ISSUES;
         }
-        my $expectedBodyColumn = $parentColumn + 6;
+        my $expectedBodyColumn = $parentColumn + 4;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
               sprintf 'Fashep body %s is %s',
@@ -2480,7 +2480,7 @@ sub checkFaslus {
               };
             last BODY_ISSUES;
         }
-        my $expectedBodyColumn = $parentColumn + 6;
+        my $expectedBodyColumn = $parentColumn + 4;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
               sprintf 'Faslus body %s is %s',
@@ -2621,10 +2621,10 @@ sub checkFaswut {
               };
             last BODY_ISSUES;
         }
-        my $expectedBodyColumn = $parentColumn + 6;
+        my $expectedBodyColumn = $parentColumn + 4;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
-              sprintf 'FASWUT; body %s is %s',
+              sprintf 'body %s is %s',
               describeLC( $bodyLine, $bodyColumn ),
               describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
@@ -2634,6 +2634,7 @@ sub checkFaswut {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                subpolicy => $policy->nodeSubpolicy($node) . ':hgap',
                 expectedColumn => $expectedBodyColumn,
               };
         }
