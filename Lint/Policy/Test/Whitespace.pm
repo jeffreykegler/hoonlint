@@ -119,7 +119,6 @@ sub anchorDetails {
     my $runeLineLiteral = $instance->literalLine($runeLine);
     $runeLineLiteral =~ s/\n\z//xms;
 
-    $DB::single = 1 if not defined $anchorColumn;
     if ($anchorColumn == $runeColumn) {
       my $brickLiteral = $instance->literalLine($runeLine);
       my $brickLexeme = substr $brickLiteral, $brickColumn;
@@ -3382,7 +3381,7 @@ sub check_1Jogging {
 
 sub check_2Jogging {
     my ( $policy, $node ) = @_;
-    my $instance   = $policy->{lint};
+    my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
     my (
@@ -3392,16 +3391,16 @@ sub check_2Jogging {
 
     my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
-    my ( $subheadLine,    $subheadColumn )    = $instance->nodeLC($subhead);
+    my ( $subheadLine, $subheadColumn ) = $instance->nodeLC($subhead);
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
-    my $chessSide = $policy->chessSideOfJoggingHoon($node);
-    my $joggingRules = $instance->{joggingRule};
-    my $jogBodyColumn = $policy->bodyColumn($node, $joggingRules);
+    my $chessSide     = $policy->chessSideOfJoggingHoon($node);
+    my $joggingRules  = $instance->{joggingRule};
+    my $jogBodyColumn = $policy->bodyColumn( $node, $joggingRules );
 
     my @mistakes = ();
-    my $tag = '2-jogging';
+    my $tag      = '2-jogging';
 
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
@@ -3442,7 +3441,7 @@ sub check_2Jogging {
         if ( $subheadGap->{length} != 2 ) {
             my ( undef, $subheadGapColumn ) = $instance->nodeLC($subheadGap);
             $expectedColumn = $subheadGapColumn + 2;
-            my $msg            = sprintf
+            my $msg = sprintf
               "2-jogging %s subhead %s; %s",
               $chessSide,
               describeLC( $subheadLine, $subheadColumn ),
@@ -3481,18 +3480,18 @@ sub check_2Jogging {
         # If here, we have "split heads", which should follow the "pseudo-jog"
         # format
 
-    push @mistakes,
-      @{
-    $policy->checkOneLineGap(
-        $subheadGap,
-        {
-        mainColumn => $runeColumn,
-        tag         => $tag,
-        details => [ [ $tag ] ],
-                    topicLines   => [$subheadLine],
-        }
-    )
-      };
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $subheadGap,
+                {
+                    mainColumn => $runeColumn,
+                    tag        => $tag,
+                    details    => [ [$tag] ],
+                    topicLines => [$subheadLine],
+                }
+            )
+          };
 
         $expectedColumn = $headColumn - 2;
         if ( $subheadColumn != $expectedColumn ) {
@@ -3515,27 +3514,27 @@ sub check_2Jogging {
 
     push @mistakes,
       @{
-    $policy->checkOneLineGap(
-        $joggingGap,
-        {
-        mainColumn => $runeColumn,
-        tag         => $tag,
-        details => [ [ $tag ] ],
-                topicLines   => [ $joggingLine ],
-        }
-    )
+        $policy->checkOneLineGap(
+            $joggingGap,
+            {
+                mainColumn => $runeColumn,
+                tag        => $tag,
+                details    => [ [$tag] ],
+                topicLines => [$joggingLine],
+            }
+        )
       };
 
     push @mistakes,
       @{
-    $policy->checkOneLineGap(
-        $tistisGap,
-        {
-        mainColumn => $runeColumn,
-        tag         => $tag,
-        topicLines   => [$tistisLine],
-        }
-    )
+        $policy->checkOneLineGap(
+            $tistisGap,
+            {
+                mainColumn => $runeColumn,
+                tag        => $tag,
+                topicLines => [$tistisLine],
+            }
+        )
       };
 
     push @mistakes,
@@ -4111,6 +4110,13 @@ sub checkKingsideJog {
             column         => $bodyColumn,
             expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
+            details        => [
+                [ $tag,
+                    sprintf qq{lexeme "%s" %s},
+                    $instance->lexeme( $brickLine, $brickColumn ),
+                    describeLC( $brickLine, $brickColumn )
+                ]
+            ],
           };
         return \@mistakes;
     }
@@ -4217,6 +4223,13 @@ sub checkQueensideJog {
             column         => $bodyColumn,
             expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
+            details        => [
+                [ $tag,
+                    sprintf qq{lexeme "%s" %s},
+                    $instance->lexeme( $brickLine, $brickColumn ),
+                    describeLC( $brickLine, $brickColumn )
+                ]
+            ],
           };
         return \@mistakes;
     }

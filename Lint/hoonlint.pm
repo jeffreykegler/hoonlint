@@ -216,6 +216,14 @@ sub describeNodeRange {
     return describeRange($firstLine, $firstColumn, $lastLine, $lastColumn);
 }
 
+sub lexeme {
+    my ( $instance, $line, $column ) = @_;
+    my $literal = $instance->literalLine($line);
+    my $lexeme = substr $literal, $column;
+    $lexeme =~ s/[\s].*\z//xms;
+    return $lexeme;
+}
+
 sub literalNode {
     my ( $instance, $node ) = @_;
     my $start = $node->{start};
