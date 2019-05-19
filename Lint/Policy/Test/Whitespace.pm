@@ -4414,6 +4414,7 @@ sub checkBackdented {
                 $gap,
                 {
                     mainColumn => $anchorColumn,
+                    preColumn => $elementColumn,
                     tag =>
                       ( sprintf 'backdented element #%d,', $elementNumber ),
                     details => [
