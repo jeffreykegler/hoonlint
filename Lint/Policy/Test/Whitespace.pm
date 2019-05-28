@@ -69,6 +69,7 @@ sub new {
     my ( $class, $lintInstance ) = @_;
     my $policy = {};
     $policy->{lint} = $lintInstance;
+    %{$policy->{chainable}} = %{$lintInstance->{backdentedRule}};
     Scalar::Util::weaken( $policy->{lint} );
     $policy->{gapGrammar} = Marpa::R2::Scanless::G->new( {   source => \$gapCommentDSL });
     return bless $policy, $class;
@@ -3236,10 +3237,38 @@ sub bodyColumn {
     die "No jogging found for ", $instance->symbol($node);
 }
 
-sub joggingBodyAlignment {
-    my ( $policy, $node ) = @_;
+# Compute the alignment for a chained series of fixed-N
+# runes
+sub chainedAlignment {
+    my ( $policy, $link0 ) = @_;
     my $instance = $policy->{lint};
-    my $children = $node->{children};
+    my $chainable = $policy->{chainable};
+    my $grammar  = $instance->{grammar};
+
+    # Assumes link is chainable
+    my $link = $link0;
+    my ( $linkLine, $linkColumn ) = $instance->line_column ( $link->{start} );
+    my $alignment0 = $linkColumn;
+
+    LINK: while (1) {
+        my $children = $link->{children};
+
+        # compute next link
+        $link = $children->[$#$children];
+        my $ruleID = $link->{ruleID};
+        my ( $lhs, @rhs ) = $grammar->rule_expand( $link->{ruleID} );
+        my $lhsName = $grammar->symbol_name($lhs);
+        # last LINK if next is not chainable
+        last LINK unless $chainable->{$lhsName};
+        ( $linkLine, $linkColumn ) = $instance->line_column ( $link->{start} );
+    }
+
+}
+
+sub joggingBodyAlignment {
+    my ( $policy, $jogging ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $jogging->{children};
     my $firstBodyColumn;
     my %firstLine       = ();
     my %bodyColumnCount = ();
@@ -3250,12 +3279,12 @@ sub joggingBodyAlignment {
     for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
         my $jog         = $children->[$childIX];
         my $jogChildren = $jog->{children};
-        my $head        = $jogChildren->[1];
+        my $head        = $jogChildren->[0];
         my $gap         = $jogChildren->[1];
         my $body        = $jogChildren->[2];
         my ( $bodyLine, $bodyColumn ) =
           $instance->line_column( $body->{start} );
-        my ( $headLine, $headColumn ) =
+        my ( $headLine ) =
           $instance->line_column( $head->{start} );
         my $gapLength = $gap->{length};
         $firstBodyColumn = $bodyColumn

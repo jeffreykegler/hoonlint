@@ -63,7 +63,7 @@ sub internalError {
 
 sub doNode {
     my ( $instance, @argChildren ) = @_;
-    my $pSource = $instance->{pHoonSource};
+    my $pSource    = $instance->{pHoonSource};
     my @results    = ();
     my $childCount = scalar @argChildren;
     no warnings 'once';
@@ -100,7 +100,7 @@ sub doNode {
 
                 if ( $lexemeName eq 'TRIPLE_DOUBLE_QUOTE_STRING' ) {
                     my $terminator    = q{"""};
-                    my $terminatorPos = index ${ $pSource },
+                    my $terminatorPos = index ${$pSource},
                       $terminator,
                       $lexemeStart + $lexemeLength;
                     $lexemeLength =
@@ -108,7 +108,7 @@ sub doNode {
                 }
                 if ( $lexemeName eq 'TRIPLE_QUOTE_STRING' ) {
                     my $terminator    = q{'''};
-                    my $terminatorPos = index ${ $pSource },
+                    my $terminatorPos = index ${$pSource},
                       $terminator,
                       $lexemeStart + $lexemeLength;
                     $lexemeLength =
@@ -192,28 +192,30 @@ sub doNode {
     }
 
     my $nodeCount = $instance->{nodeCount};
-    $node->{IX} = $nodeCount;
-    $instance->{nodeCount} = $nodeCount+1;
+    $node->{IX}            = $nodeCount;
+    $instance->{nodeCount} = $nodeCount + 1;
 
     return $node;
 }
 
-
 sub describeRange {
     my ( $firstLine, $firstColumn, $lastLine, $lastColumn ) = @_;
-    return sprintf "@%d:%d-%d:%d", $firstLine, $firstColumn, $lastLine, $lastColumn if $firstLine != $lastLine; 
-    return sprintf "@%d:%d-%d", $firstLine, $firstColumn, $lastColumn if $firstColumn != $lastColumn; 
+    return sprintf "@%d:%d-%d:%d", $firstLine, $firstColumn, $lastLine,
+      $lastColumn
+      if $firstLine != $lastLine;
+    return sprintf "@%d:%d-%d", $firstLine, $firstColumn, $lastColumn
+      if $firstColumn != $lastColumn;
     return sprintf "@%d:%d", $firstLine, $firstColumn;
 }
 
 sub describeNodeRange {
     my ( $instance, $node ) = @_;
     my $firstPos = $node->{start};
-    my $length = $node->{length};
-    my $lastPos = $firstPos + $length;
+    my $length   = $node->{length};
+    my $lastPos  = $firstPos + $length;
     my ( $firstLine, $firstColumn ) = $instance->line_column($firstPos);
-    my ( $lastLine, $lastColumn ) = $instance->line_column($lastPos);
-    return describeRange($firstLine, $firstColumn, $lastLine, $lastColumn);
+    my ( $lastLine,  $lastColumn )  = $instance->line_column($lastPos);
+    return describeRange( $firstLine, $firstColumn, $lastLine, $lastColumn );
 }
 
 sub lexeme {
@@ -226,16 +228,16 @@ sub lexeme {
 
 sub literalNode {
     my ( $instance, $node ) = @_;
-    my $start = $node->{start};
+    my $start  = $node->{start};
     my $length = $node->{length};
-    return $instance->literal($start, $length);
+    return $instance->literal( $start, $length );
 }
 
 sub literalLine {
     my ( $instance, $lineNum ) = @_;
-    my $lineToPos     = $instance->{lineToPos};
-    my $startPos = $lineToPos->[$lineNum];
-    $DB::single = 1 if not defined    $lineToPos->[ $lineNum + 1 ] ;
+    my $lineToPos = $instance->{lineToPos};
+    my $startPos  = $lineToPos->[$lineNum];
+    $DB::single = 1 if not defined $lineToPos->[ $lineNum + 1 ];
     my $line =
       $instance->literal( $startPos,
         ( $lineToPos->[ $lineNum + 1 ] - $startPos ) );
@@ -256,32 +258,32 @@ sub column {
 }
 
 sub maxNumWidth {
-    my ($instance)    = @_;
+    my ($instance) = @_;
     return length q{} . $#{ $instance->{lineToPos} };
 }
 
 sub contextDisplay {
-    my ($instance)    = @_;
-    my $pTopicLines   = $instance->{topicLines};
-    my $pMistakeLines = $instance->{mistakeLines};
-    my $contextSize   = $instance->{contextSize};
-    my $displayDetails   = $instance->{displayDetails};
-    my $lineToPos     = $instance->{lineToPos};
-    my @pieces        = ();
+    my ($instance)     = @_;
+    my $pTopicLines    = $instance->{topicLines};
+    my $pMistakeLines  = $instance->{mistakeLines};
+    my $contextSize    = $instance->{contextSize};
+    my $displayDetails = $instance->{displayDetails};
+    my $lineToPos      = $instance->{lineToPos};
+    my @pieces         = ();
     my %tag = map { $_ => q{>} } keys %{$pTopicLines};
     $tag{$_} = q{!} for keys %{$pMistakeLines};
     my @sortedLines = sort { $a <=> $b } map { $_ + 0; } keys %tag;
 
-    # say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@sortedLines);
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($pMistakeLines);
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($lineToPos);
+# say STDERR join " ", __FILE__, __LINE__, "# of sorted lines:", (scalar @sortedLines);
+# say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@sortedLines);
+# say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($pMistakeLines);
+# say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($lineToPos);
 
     if ( $contextSize <= 0 ) {
         for my $lineNum (@sortedLines) {
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
-                my ($mistake, $desc) = @{$mistakeDesc};
+                my ( $mistake, $desc ) = @{$mistakeDesc};
                 push @pieces, $desc, "\n";
             }
         }
@@ -294,27 +296,29 @@ sub contextDisplay {
     # Add to @pieces a set of lines to be displayed consecutively
     my $doConsec = sub () {
         my ( $start, $end ) = @_;
-        $start = 1            if $start < 1;
-        $end   = $#$lineToPos-1 if $end >= $#$lineToPos;
+        $start = 1 if $start < 1;
+        $end = $#$lineToPos - 1 if $end >= $#$lineToPos;
         for my $lineNum ( $start .. $end ) {
-            my $startPos = $lineToPos->[$lineNum];
-            my $line = $instance->literalLine($lineNum);
+            my $startPos     = $lineToPos->[$lineNum];
+            my $line         = $instance->literalLine($lineNum);
             my $tag          = $tag{$lineNum} // q{ };
             my $mistakeDescs = $pMistakeLines->{$lineNum};
             for my $mistakeDesc ( @{$mistakeDescs} ) {
-                my ($mistake, $desc) = @{$mistakeDesc};
+                my ( $mistake, $desc ) = @{$mistakeDesc};
                 my $details = $mistake->{details};
-                if ($details and scalar @{$details} and $displayDetails > 0) {
+                if ( $details and scalar @{$details} and $displayDetails > 0 ) {
                     push @pieces, '[ ', $desc, "\n";
+
                     # detail levels are not currently used, but are for future
                     # extensions.
-                    for my $detailLevel (@{$details}) {
-                       for my $detail (@{$detailLevel}) {
-                           push @pieces, q{  }, $detail, "\n";
-                       }
+                    for my $detailLevel ( @{$details} ) {
+                        for my $detail ( @{$detailLevel} ) {
+                            push @pieces, q{  }, $detail, "\n";
+                        }
                     }
                     push @pieces, "]\n";
-                } else {
+                }
+                else {
                     push @pieces, '[ ', $desc, " ]\n";
                 }
             }
@@ -360,10 +364,11 @@ sub reportItem {
     my ( $instance, $mistake, $mistakeDesc, $topicLineArg, $mistakeLineArg ) =
       @_;
 
-    my $inclusions       = $instance->{inclusions};
-    my $suppressions     = $instance->{suppressions};
-    my $reportPolicy     = $mistake->{policy};
-    my $reportSubpolicy  = $mistake->{subpolicy};
+    my $inclusions      = $instance->{inclusions};
+    my $suppressions    = $instance->{suppressions};
+    my $reportPolicy    = $mistake->{policy};
+    my $reportSubpolicy = $mistake->{subpolicy};
+
     # TODO: Usually a default of parentLine, parentColumn has already
     # been enforced.  This is a mistake and should change.
     my $reportLine       = $mistake->{reportLine} // $mistake->{line};
@@ -372,15 +377,19 @@ sub reportItem {
     my $suppressThisItem = 0;
     my $excludeThisItem  = 0;
 
-    $excludeThisItem = 1 if $inclusions and not $inclusions->{$reportLC}{$reportPolicy}{$reportSubpolicy};
-    my $suppression = $suppressions->{$reportLC}->{$reportPolicy}->{$reportSubpolicy};
+    $excludeThisItem = 1
+      if $inclusions
+      and not $inclusions->{$reportLC}{$reportPolicy}{$reportSubpolicy};
+    my $suppression =
+      $suppressions->{$reportLC}->{$reportPolicy}->{$reportSubpolicy};
     if ( defined $suppression ) {
         $suppressThisItem = 1;
-        $instance->{unusedSuppressions}->{$reportLC}->{$reportPolicy}->{$reportSubpolicy} = undef;
+        $instance->{unusedSuppressions}->{$reportLC}->{$reportPolicy}
+          ->{$reportSubpolicy} = undef;
     }
 
     return if $excludeThisItem;
-    if ( $suppressThisItem ) {
+    if ($suppressThisItem) {
         return unless $instance->{censusWhitespace};
         $mistakeDesc = "SUPPRESSION $suppression";
     }
@@ -388,18 +397,24 @@ sub reportItem {
     my $fileName     = $instance->{fileName};
     my $mistakeLines = $instance->{mistakeLines};
 
-    my $topicLines   = $instance->{topicLines};
+    my $topicLines = $instance->{topicLines};
     my @topicLines = ();
     push @topicLines, ref $topicLineArg ? @{$topicLineArg} : $topicLineArg;
-    push @topicLines, grep { defined $_ } ($mistakeLineArg, $mistake->{line},
-      $mistake->{parentLine}, $reportLine);
+    push @topicLines,
+      grep { defined $_ }
+      ( $mistakeLineArg, $mistake->{line},
+        $mistake->{parentLine}, $reportLine );
     for my $topicLine (@topicLines) {
-       $topicLines->{$topicLine} = 1;
+        $topicLines->{$topicLine} = 1;
     }
 
     my $thisMistakeDescs = $mistakeLines->{$mistakeLineArg};
     $thisMistakeDescs = [] if not defined $thisMistakeDescs;
-    push @{$thisMistakeDescs}, [$mistake, "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc"];
+    push @{$thisMistakeDescs},
+      [
+        $mistake,
+        "$fileName $reportLC $reportPolicy $reportSubpolicy $mistakeDesc"
+      ];
     $mistakeLines->{$mistakeLineArg} = $thisMistakeDescs;
 
 }
@@ -407,7 +422,7 @@ sub reportItem {
 sub lhsName {
     my ( $instance, $node ) = @_;
     my $grammar = $instance->{grammar};
-    my $type = $node->{type};
+    my $type    = $node->{type};
     return if $type ne 'node';
     my $ruleID = $node->{ruleID};
     my ( $lhs, @rhs ) = $grammar->rule_expand($ruleID);
@@ -417,10 +432,10 @@ sub lhsName {
 # The "symbol" of a node.  Not necessarily unique.
 sub symbol {
     my ( $instance, $node ) = @_;
-    my $name    = $node->{symbol};
+    my $name = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
-    die Data::Dumper::Dumper($node) if not $type;
+    die Data::Dumper::Dumper($node)  if not $type;
     return $instance->lhsName($node) if $type eq 'node';
     return "[$type]";
 }
@@ -428,7 +443,7 @@ sub symbol {
 # Can be used as test of "brick-ness"
 sub brickName {
     my ( $instance, $node ) = @_;
-    my $type    = $node->{type};
+    my $type = $node->{type};
     return symbol($node) if $type ne 'node';
     my $lhsName = $instance->lhsName($node);
     return $lhsName if not $instance->{mortarLHS}->{$lhsName};
@@ -447,8 +462,8 @@ sub diagName {
 # The "name" of a node.  Not necessarily unique
 sub name {
     my ( $instance, $node ) = @_;
-    my $type    = $node->{type};
-    my $symbol  = $instance->symbol($node);
+    my $type   = $node->{type};
+    my $symbol = $instance->symbol($node);
     return $symbol if $type ne 'node';
     return $instance->lhsName($node);
 }
@@ -504,8 +519,8 @@ sub testStyleCensus {
         $data->{id}     = $symbolID;
         $data->{lexeme} = 1;                     # default to lexeme
         $data->{gap}    = 1 if $name eq 'GAP';
-        if ($name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/) {
-            $data->{gap}    = 1;
+        if ( $name =~ m/^[B-Z][AEOIU][B-Z][B-Z][AEIOU][B-Z]GAP$/ ) {
+            $data->{gap}     = 1;
             $data->{runeGap} = 1;
         }
         $symbolDB->[$symbolID] = $data;
@@ -542,7 +557,7 @@ sub testStyleCensus {
 sub gapNode {
     my ( $instance, $node ) = @_;
     my $symbolReverseDB = $instance->{symbolReverseDB};
-    my $symbol = $node->{symbol};
+    my $symbol          = $node->{symbol};
     return if not defined $symbol;
     return $symbolReverseDB->{$symbol}->{gap};
 }
@@ -550,7 +565,7 @@ sub gapNode {
 sub runeGapNode {
     my ( $instance, $node ) = @_;
     my $symbolReverseDB = $instance->{symbolReverseDB};
-    my $symbol = $node->{symbol};
+    my $symbol          = $node->{symbol};
     return if not defined $symbol;
     return $symbolReverseDB->{$symbol}->{runeGap};
 }
@@ -589,7 +604,7 @@ sub ancestorByLHS {
 sub ancestor {
     my ( $instance, $node, $generations ) = @_;
     my $thisNode = $node;
-    PARENT: while ($thisNode) {
+  PARENT: while ($thisNode) {
         return $thisNode if $generations <= 0;
         $generations--;
         $thisNode = $thisNode->{PARENT};
@@ -638,20 +653,24 @@ sub firstBrickOfLine {
 # $node if there is no prior included brick node
 sub firstBrickOfLineInc {
     my ( $instance, $node, $inclusions ) = @_;
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($inclusions);
     my ($currentLine)  = $instance->nodeLC($node);
     my $thisNode       = $node;
     my $firstBrickNode = $node;
   NODE: while ($thisNode) {
         my ($thisLine) = $instance->nodeLC($thisNode);
-        # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
-        # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+
+  # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+  # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
         last NODE if $thisLine != $currentLine;
       PICK_NODE: {
             my $brickName = $instance->brickName($thisNode);
-            # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+
+           # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
             last PICK_NODE if not defined $brickName;
             $firstBrickNode = $thisNode if $inclusions->{$brickName};
+
             # say STDERR join " ", __FILE__, __LINE__, $brickName;
         }
         $thisNode = $thisNode->{PARENT};
@@ -664,27 +683,33 @@ sub firstBrickOfLineInc {
 # $node if there is no prior unexcluded brick node
 sub firstBrickOfLineExc {
     my ( $instance, $node, $exclusions ) = @_;
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($exclusions);
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($exclusions);
     my ($currentLine)  = $instance->nodeLC($node);
     my $thisNode       = $node;
     my $firstBrickNode = $node;
   NODE: while ($thisNode) {
         my ($thisLine) = $instance->nodeLC($thisNode);
-        # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
-        # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
+
+  # say STDERR join " ", __FILE__, __LINE__, 'LC', $instance->nodeLC($thisNode);
+  # say STDERR join " ", __FILE__, __LINE__, $thisLine, $currentLine;
         last NODE if $thisLine != $currentLine;
       PICK_NODE: {
             my $brickName = $instance->brickName($thisNode);
-            # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
+
+           # say STDERR join " ", __FILE__, __LINE__, ($brickName // '[undef]');
             last PICK_NODE if not defined $brickName;
+
             # say STDERR join " ", __FILE__, __LINE__, $brickName;
             last PICK_NODE if $exclusions->{$brickName};
+
             # say STDERR join " ", __FILE__, __LINE__, $brickName;
             $firstBrickNode = $thisNode;
         }
         $thisNode = $thisNode->{PARENT};
     }
-            # say STDERR join " ", __FILE__, __LINE__, "returning from firstBrickOfLine";
+
+   # say STDERR join " ", __FILE__, __LINE__, "returning from firstBrickOfLine";
 
     return $firstBrickNode;
 }
@@ -717,7 +742,7 @@ sub nearestBrickOfLineInc {
         $thisNode = $thisNode->{PARENT};
     }
 
- # say STDERR join " ", __FILE__, __LINE__, "returning from nearestBrickOfLineInc";
+# say STDERR join " ", __FILE__, __LINE__, "returning from nearestBrickOfLineInc";
 
     return $node;
 }
@@ -759,6 +784,7 @@ sub nearestBrickOfLineExc {
 
 sub anchorNode {
     my ( $instance, $node ) = @_;
+
     # say STDERR join " ", __FILE__, __LINE__, "calling anchorNode()";
     my $isTallRuneRule = $instance->{tallRuneRule};
     my $isTallNoteRule = $instance->{tallNoteRule};
@@ -769,19 +795,25 @@ sub anchorNode {
   NODE: while ($thisNode) {
         my ($thisLine) = $instance->nodeLC($thisNode);
         last NODE if $thisLine != $currentLine;
+
         # say join " ", __FILE__, __LINE__, $thisLine;
       SEEK_ANCHOR: {
-            # say STDERR join " ", __FILE__, __LINE__, "this node", $instance->nodeLC($thisNode);
+
+# say STDERR join " ", __FILE__, __LINE__, "this node", $instance->nodeLC($thisNode);
             my $brickName = $instance->brickName($thisNode);
             last SEEK_ANCHOR unless $brickName;
+
             # say STDERR join " ", __FILE__, __LINE__, "brick name", $brickName;
             $brickParent //= $thisNode;
-            # say STDERR join " ", __FILE__, __LINE__, "brick parent", $instance->nodeLC($brickParent);
+
+# say STDERR join " ", __FILE__, __LINE__, "brick parent", $instance->nodeLC($brickParent);
             last SEEK_ANCHOR unless $isTallRuneRule->{$brickName};
             $tallRuneParent = $thisNode;
-            # say STDERR join " ", __FILE__, __LINE__, "tall rune parent", $instance->nodeLC($tallRuneParent);
+
+# say STDERR join " ", __FILE__, __LINE__, "tall rune parent", $instance->nodeLC($tallRuneParent);
             last SEEK_ANCHOR if $isTallNoteRule->{$brickName};
-            # say STDERR join " ", __FILE__, __LINE__, "returning this node", $instance->nodeLC($thisNode);
+
+# say STDERR join " ", __FILE__, __LINE__, "returning this node", $instance->nodeLC($thisNode);
             return $thisNode;
         }
         $thisNode = $thisNode->{PARENT};
@@ -790,13 +822,13 @@ sub anchorNode {
 }
 
 sub new {
-    my ($class, $config) = (@_);
-    my $fileName = $config->{fileName};
+    my ( $class, $config ) = (@_);
+    my $fileName     = $config->{fileName};
     my %lint         = %{$config};
     my $lintInstance = \%lint;
     bless $lintInstance, "MarpaX::YAHC::Lint";
     my $policies = $lintInstance->{policies};
-    my $pSource = $lintInstance->{pHoonSource};
+    my $pSource  = $lintInstance->{pHoonSource};
 
     my @data = ();
 
@@ -838,8 +870,8 @@ EOS
 
     my %mortarLHS = map { +( $_, 1 ) }
       qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq
-            fordFile fordHoop fordHoopSeq norm5d tall5d
-            boog5d wisp5d whap5d);
+      fordFile fordHoop fordHoopSeq norm5d tall5d
+      boog5d wisp5d whap5d);
     $lintInstance->{mortarLHS} = \%mortarLHS;
 
     my %tallBodyRule =
@@ -850,15 +882,16 @@ EOS
     # BuccenMold BuccolMold BucwutMold
     # Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
     my %tall_0RunningRule = map { +( $_, 1 ) } qw(
-    tallBuccen tallBuccenMold
-    tallBuccol tallBuccolMold
-    tallBucwut tallBucwutMold
-    tallColsig tallColtar
-    tallWutbar tallWutpam);
+      tallBuccen tallBuccenMold
+      tallBuccol tallBuccolMold
+      tallBucwut tallBucwutMold
+      tallColsig tallColtar
+      tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
     # Will include CencolMold?
-    my %tall_1RunningRule = map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig );
+    my %tall_1RunningRule =
+      map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig );
     $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
 
     my %tall_0_as_1RunningRule = map { +( $_, 1 ) } qw(tallTissig);
@@ -881,7 +914,8 @@ EOS
     );
     $lintInstance->{joggingRule} = \%joggingRule;
 
-    my %tallLuslusRule = map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell);
+    my %tallLuslusRule =
+      map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell);
     $lintInstance->{tallLuslusRule} = \%tallLuslusRule;
 
     my %barcenAnchorExceptions = ();
@@ -955,7 +989,7 @@ EOS
     $parser->read($pSource);
 
     $MarpaX::YAHC::Lint::recce = $parser->rawRecce();
-    $lintInstance->{recce} = $MarpaX::YAHC::Lint::recce;
+    $lintInstance->{recce}     = $MarpaX::YAHC::Lint::recce;
     $lintInstance->{nodeCount} = 0;
 
     $parser = undef;    # free up memory
@@ -963,17 +997,19 @@ EOS
 
     my @lineToPos = ( -1, 0 );
     {
-    my $lastPos = 0;
-    LINE: while (1) {
-        my $newPos = index ${$pSource}, "\n", $lastPos;
-        # say $newPos;
-        last LINE if $newPos < 0;
-        $lastPos = $newPos+1;
-        push @lineToPos, $lastPos;
-    }
+        my $lastPos = 0;
+      LINE: while (1) {
+            my $newPos = index ${$pSource}, "\n", $lastPos;
+
+            # say $newPos;
+            last LINE if $newPos < 0;
+            $lastPos = $newPos + 1;
+            push @lineToPos, $lastPos;
+        }
     }
     $lintInstance->{lineToPos} = \@lineToPos;
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@lineToPos);
+
+   # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\@lineToPos);
 
     die "Parse failed" if not $astRef;
 
@@ -995,8 +1031,8 @@ EOS
         my $policy         = $constructor->( $policyFullName, $lintInstance );
         $policy->{shortName} = $policyShortName;
         $policy->{fullName}  = $policyFullName;
-        $policy->{perNode}  = {};
-        $policy->validate( $astValue );
+        $policy->{perNode}   = {};
+        $policy->validate($astValue);
     }
 
     print $lintInstance->contextDisplay();
@@ -1006,13 +1042,13 @@ EOS
         my $perLCSuppressions = $unusedSuppressions->{$lc};
         for my $policy (
             grep { $perLCSuppressions->{$_} }
-            keys %{ $perLCSuppressions }
+            keys %{$perLCSuppressions}
           )
         {
             my $perPolicySuppressions = $perLCSuppressions->{$policy};
             for my $subpolicy (
                 grep { $perPolicySuppressions->{$_} }
-                keys %{ $perPolicySuppressions }
+                keys %{$perPolicySuppressions}
               )
             {
                 say "Unused suppression: $fileName $lc $policy $subpolicy";
