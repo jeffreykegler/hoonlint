@@ -3326,48 +3326,68 @@ sub chainedAlignment {
 
 }
 
+# Find the oversize alignment for this column of elements.
+# $nodes must a ref to an array of alternating gap, body,
+# nodes.
+sub findAlignment {
+    my ( $policy, $nodes ) = @_;
+    my $instance = $policy->{lint};
+    my %allAlignments = ();
+
+    # "wide", meaning an alignment following a gap of more than
+    # one stop
+    my %wideAlignments = ();
+  CHILD: for ( my $bodyIX = 2 ; 1 ; $bodyIX += 2 ) {
+        my $body   = $nodes->[$bodyIX];
+        last CHILD if not defined $body;
+        my ( $bodyLine, $bodyColumn ) =
+          $instance->line_column( $body->{start} );
+        $allAlignments{$bodyColumn} //= [];
+        push @{ $allAlignments{$bodyColumn} }, $bodyLine;
+        my $gap       = $nodes->[ $bodyIX - 1 ];
+        my $gapLength = $gap->{length};
+        next CHILD if $gapLength <= 2;
+        $wideAlignments{$bodyColumn} //= [];
+        push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
+    }
+
+    return if not scalar %wideAlignments;
+
+    # wide alignments, in order first by descending count,
+    # then by ascending first line
+    my @sortedWideAlignments =
+      sort {
+        ( scalar @{ $wideAlignments{$b} } ) <=> ( scalar @{ $wideAlignments{$a} } )
+          or $wideAlignments{$a}[0] <=> $wideAlignments{$b}[0]
+      }
+      keys %wideAlignments;
+
+    my $topWideColumn = $sortedWideAlignments[0];
+
+    # If only one wide instance of this column, make sure it aligns
+    # with *something*, or else ignore it
+    return
+      if (  scalar @{ $wideAlignments{$topWideColumn} } <= 1
+        and scalar @{ $allAlignments{$topWideColumn} } ) <= 1;
+
+    return $topWideColumn;
+
+}
+
 sub joggingBodyAlignment {
     my ( $policy, $jogging ) = @_;
-    my $instance = $policy->{lint};
     my $children = $jogging->{children};
-    my $firstBodyColumn;
-    my %firstLine       = ();
-    my %bodyColumnCount = ();
 
     # Traverse first to last to make it easy to record
     # first line of occurrence of each body column
+    my @nodesToAlign = ();
   CHILD:
-    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+    for ( my $childIX = 0; $childIX <= $#$children ; $childIX++ ) {
         my $jog         = $children->[$childIX];
         my $jogChildren = $jog->{children};
-        my $head        = $jogChildren->[0];
-        my $gap         = $jogChildren->[1];
-        my $body        = $jogChildren->[2];
-        my ( $bodyLine, $bodyColumn ) =
-          $instance->line_column( $body->{start} );
-        my ($headLine) =
-          $instance->line_column( $head->{start} );
-        my $gapLength = $gap->{length};
-        $firstBodyColumn = $bodyColumn
-          if not defined $firstBodyColumn;
-        next CHILD unless $headLine == $bodyLine;
-        next CHILD unless $gap > 2;
-        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
-        $firstLine{$bodyColumn}       = $bodyLine;
+        push @nodesToAlign, $jogChildren->[1], $jogChildren->[2];
     }
-    my @bodyColumns = keys %bodyColumnCount;
-
-    # If no aligned columns, simply return first
-    return $firstBodyColumn if not @bodyColumns;
-
-    my @sortedBodyColumns =
-      sort {
-             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
-          or $firstLine{$b} <=> $firstLine{$a}
-      }
-      keys %bodyColumnCount;
-    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return $topBodyColumn;
+    return $policy->findAlignment( \@nodesToAlign );
 }
 
 sub check_1Jogging {
