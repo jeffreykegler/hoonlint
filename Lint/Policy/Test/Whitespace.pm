@@ -3271,18 +3271,18 @@ sub chessSideOfJogging {
 sub bodyColumn {
     my ( $policy, $node ) = @_;
     my $nodeIX        = $node->{IX};
-    my $jogBodyColumn = $policy->{perNode}->{$nodeIX}->{jogBodyColumn};
-    return $jogBodyColumn if defined $jogBodyColumn;
+    my $jogBodyData = $policy->{perNode}->{$nodeIX}->{jogBodyData};
+    return $jogBodyData if defined $jogBodyData;
 
     my $instance     = $policy->{lint};
     my $joggingRules = $instance->{joggingRule};
     my $joggingRule  = $instance->{joggingRule};
     my $nodeName     = $instance->brickName($node);
     if ( not $nodeName or not $joggingRule->{$nodeName} ) {
-        my $jogBodyColumn =
+        my $jogBodyData =
           $policy->bodyColumn( $node->{PARENT}, $joggingRules );
-        $policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
-        return $jogBodyColumn;
+        $policy->{perNode}->{$nodeIX}->{jogBodyData} = $jogBodyData;
+        return $jogBodyData;
     }
 
     my $children = $node->{children};
@@ -3290,9 +3290,9 @@ sub bodyColumn {
         my $child  = $children->[$childIX];
         my $symbol = $instance->symbol($child);
         next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $jogBodyColumn = $policy->joggingBodyAlignment($child);
-        $policy->{perNode}->{$nodeIX}->{jogBodyColumn} = $jogBodyColumn;
-        return $jogBodyColumn;
+        my $jogBodyData = $policy->joggingBodyAlignment($child);
+        $policy->{perNode}->{$nodeIX}->{jogBodyData} = $jogBodyData;
+        return $jogBodyData;
     }
     die "No jogging found for ", $instance->symbol($node);
 }
@@ -3334,58 +3334,79 @@ sub findAlignment {
     my $instance = $policy->{lint};
     my %allAlignments = ();
 
+    # local $Data::Dumper::Maxdepth = 1;
+    # say STDERR join " ", __FILE__, __LINE__;
+
     # "wide", meaning an alignment following a gap of more than
     # one stop
     my %wideAlignments = ();
-  CHILD: for ( my $bodyIX = 2 ; 1 ; $bodyIX += 2 ) {
+  CHILD: for ( my $bodyIX = 1 ; 1 ; $bodyIX += 2 ) {
         my $body   = $nodes->[$bodyIX];
+        # say STDERR join " ", __FILE__, __LINE__, $bodyIX, $#$nodes;
+        # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
         last CHILD if not defined $body;
-        my ( $bodyLine, $bodyColumn ) =
-          $instance->line_column( $body->{start} );
+        # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
+        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC( $body );
         $allAlignments{$bodyColumn} //= [];
         push @{ $allAlignments{$bodyColumn} }, $bodyLine;
         my $gap       = $nodes->[ $bodyIX - 1 ];
         my $gapLength = $gap->{length};
+     #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         next CHILD if $gapLength <= 2;
+        # say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         $wideAlignments{$bodyColumn} //= [];
         push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
     }
 
-    return if not scalar %wideAlignments;
+    # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
 
-    # wide alignments, in order first by descending count,
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
+    return [-1, []] if not scalar %wideAlignments;
+
+    # wide alignments, in order first by descending count of wide instances;
+    # then by descending count of all instances;
     # then by ascending first line
     my @sortedWideAlignments =
       sort {
         ( scalar @{ $wideAlignments{$b} } ) <=> ( scalar @{ $wideAlignments{$a} } )
+        or ( scalar @{ $allAlignments{$b} } ) <=> ( scalar @{ $allAlignments{$a} } )
           or $wideAlignments{$a}[0] <=> $wideAlignments{$b}[0]
       }
       keys %wideAlignments;
 
     my $topWideColumn = $sortedWideAlignments[0];
 
-    # If only one wide instance of this column, make sure it aligns
-    # with *something*, or else ignore it
-    return
-      if (  scalar @{ $wideAlignments{$topWideColumn} } <= 1
-        and scalar @{ $allAlignments{$topWideColumn} } ) <= 1;
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
 
-    return $topWideColumn;
+    # Make sure this is actually an *alignment*, that is,
+    # that there are at least 2 instances.  Otherwise,
+    # ignore it.
+    return [-1, []] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
+
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+
+    return [$topWideColumn, [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]];
 
 }
 
 sub joggingBodyAlignment {
     my ( $policy, $jogging ) = @_;
+    my $instance  = $policy->{lint};
     my $children = $jogging->{children};
 
     # Traverse first to last to make it easy to record
     # first line of occurrence of each body column
     my @nodesToAlign = ();
   CHILD:
-    for ( my $childIX = 0; $childIX <= $#$children ; $childIX++ ) {
+    for ( my $childIX = 0; $childIX <= $#$children ; $childIX+=2 ) {
         my $jog         = $children->[$childIX];
         my $jogChildren = $jog->{children};
-        push @nodesToAlign, $jogChildren->[1], $jogChildren->[2];
+        my $jogChild1 = $jogChildren->[1];
+        my $jogChild2 = $jogChildren->[2];
+        my ( $line1    )    = $instance->nodeLC($jogChild1);
+        my ( $line2    )    = $instance->nodeLC($jogChild2);
+        next CHILD if $line1 ne $line2;
+        push @nodesToAlign, $jogChild1, $jogChild2;
     }
     return $policy->findAlignment( \@nodesToAlign );
 }
@@ -3405,7 +3426,6 @@ sub check_1Jogging {
 
     my $chessSide     = $policy->chessSideOfJoggingHoon($node);
     my $joggingRules  = $instance->{joggingRule};
-    my $jogBodyColumn = $policy->bodyColumn( $node, $joggingRules );
 
     my @mistakes = ();
     my $tag      = '1-jogging';
@@ -3502,7 +3522,6 @@ sub check_2Jogging {
 
     my $chessSide     = $policy->chessSideOfJoggingHoon($node);
     my $joggingRules  = $instance->{joggingRule};
-    my $jogBodyColumn = $policy->bodyColumn( $node, $joggingRules );
 
     my @mistakes = ();
     my $tag      = '2-jogging';
@@ -4088,7 +4107,8 @@ sub checkKingsideJog {
       $instance->line_column( $node->{start} );
 
     my $joggingRules = $instance->{joggingRule};
-    my $jogBodyColumn = $policy->bodyColumn( $node, $joggingRules );
+    my ($jogBodyColumn, $jogBodyColumnLines) = @{$policy->bodyColumn( $node, $joggingRules )};
+    $jogBodyColumn //= -1;
 
     my @mistakes = ();
     my $tag      = 'kingside jog';
@@ -4132,10 +4152,34 @@ sub checkKingsideJog {
         my $gapLength = $gap->{length};
 
         if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
+            my $misindent;
+            my $details;
+            my @topicLines = ($brickLine);
+            if ( $jogBodyColumn < 0 ) {
+              $misindent = describeMisindent2( $gapLength, 2 );
+                $details = [ [ $tag, "no inter-line alignment detected" ] ];
+            }
+            else {
+              $misindent = describeMisindent2( $bodyColumn, $jogBodyColumn );
+                my $oneBasedColumn = $jogBodyColumn + 1;
+                push @topicLines, @{$jogBodyColumnLines};
+                $details = [
+                    [
+                        $tag,
+                        sprintf 'inter-line alignment is %d, see %s',
+                        $oneBasedColumn,
+                        (
+                            join q{ },
+                            map { $_ . ':' . $oneBasedColumn }
+                              @{$jogBodyColumnLines}
+                        )
+                    ]
+                ];
+            }
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $jogBodyColumn );
+              $misindent;
             push @mistakes,
               {
                 desc           => $msg,
@@ -4144,7 +4188,8 @@ sub checkKingsideJog {
                 line           => $bodyLine,
                 column         => $bodyColumn,
                 expectedColumn => $jogBodyColumn,
-                topicLines     => [$brickLine],
+                topicLines     => \@topicLines,
+                details        => $details,
               };
         }
         return \@mistakes;
@@ -4253,7 +4298,8 @@ sub checkQueensideJog {
     my $tag      = 'queenside jog';
 
     my $joggingRules = $instance->{joggingRule};
-    my $jogBodyColumn = $policy->bodyColumn( $node, $joggingRules );
+    my ($jogBodyColumn, $jogBodyColumnLines) = @{$policy->bodyColumn( $node, $joggingRules )};
+    $jogBodyColumn //= -1;
 
     # Replace inherited attribute rune LC with brick LC
     my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
@@ -4291,10 +4337,31 @@ sub checkQueensideJog {
     if ( $headLine == $bodyLine ) {
         my $gapLength = $gap->{length};
         if ( $gapLength != 2 and $bodyColumn != $jogBodyColumn ) {
+            my $misindent;
+            my $details;
+            my @topicLines = ($brickLine);
+            if ($jogBodyColumn < 0) {
+              $misindent = describeMisindent2( $gapLength, 2 );
+               $details = [
+                  [ $tag,
+                  "no inter-line alignment detected"
+                  ]
+               ];
+            } else {
+              $misindent = describeMisindent2( $bodyColumn, $jogBodyColumn );
+               my $oneBasedColumn = $jogBodyColumn+1;
+               push @topicLines, @{$jogBodyColumnLines};
+               $details = [
+                  [ $tag,
+                  sprintf 'inter-line alignment is %d, see %s', $oneBasedColumn,
+                  (join q{ }, map { $_ . ':' . $oneBasedColumn } @{$jogBodyColumnLines})
+                  ]
+               ];
+            }
             my $msg = sprintf 'Jog %s body %s; %s',
               $sideDesc,
               describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $jogBodyColumn );
+              $misindent;
             push @mistakes,
               {
                 desc           => $msg,
@@ -4303,7 +4370,8 @@ sub checkQueensideJog {
                 line           => $bodyLine,
                 column         => $bodyColumn,
                 expectedColumn => $jogBodyColumn,
-                topicLines     => [$brickLine],
+                topicLines     => \@topicLines,
+                details => $details,
               };
         }
         return \@mistakes;
