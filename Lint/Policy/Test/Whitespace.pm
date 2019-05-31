@@ -1602,20 +1602,20 @@ sub cellBodyColumn {
     my ( $policy, $node ) = @_;
     my $instance       = $policy->{lint};
     my $nodeIX         = $node->{IX};
-    my $cellBodyColumn = $policy->{perNode}->{$nodeIX}->{cellBodyColumn};
-    return $cellBodyColumn if defined $cellBodyColumn;
+    my $cellBodyData = $policy->{perNode}->{$nodeIX}->{cellBodyData};
+    return $cellBodyData if $cellBodyData;
 
   FIND_CELL_BODY_COLUMN: {
         my $instance = $policy->{lint};
         my $lhsName  = $instance->lhsName($node);
         if ( $lhsName and $lhsName eq 'whap5d' ) {
-            $cellBodyColumn = $policy->whapCellBodyAlignment($node);
+            $cellBodyData = $policy->whapCellBodyAlignment($node);
             last FIND_CELL_BODY_COLUMN;
         }
-        $cellBodyColumn = $policy->cellBodyColumn( $node->{PARENT} );
+        $cellBodyData = $policy->cellBodyColumn( $node->{PARENT} );
     }
-    $policy->{perNode}->{$nodeIX}->{cellBodyColumn} = $cellBodyColumn;
-    return $cellBodyColumn;
+    $policy->{perNode}->{$nodeIX}->{cellBodyData} = $cellBodyData;
+    return $cellBodyData;
 }
 
 # assumes this is a <whap5d> node
@@ -1647,7 +1647,7 @@ sub whapCellBodyAlignment {
     my @bodyColumns = keys %bodyColumnCount;
 
     # If no aligned columns, simply return first
-    return $firstBodyColumn if not @bodyColumns;
+    return [$firstBodyColumn, []] if not @bodyColumns;
 
     my @sortedBodyColumns =
       sort {
@@ -1656,7 +1656,7 @@ sub whapCellBodyAlignment {
       }
       keys %bodyColumnCount;
     my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return $topBodyColumn;
+    return [$topBodyColumn, []];
 }
 
 sub checkWhap5d {
@@ -4776,7 +4776,7 @@ sub checkLuslus {
     my $battery = $instance->ancestorByLHS( $node, { whap5d => 1 } );
     die "battery not found" if not defined $battery;
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
-    my $cellBodyColumn = $policy->cellBodyColumn($battery);
+    my ($cellBodyColumn, $cellBodyColumnLines) = @{$policy->cellBodyColumn($battery)};
 
     my @mistakes = ();
     my $tag      = 'luslus';
