@@ -1615,6 +1615,7 @@ sub cellBodyColumn {
         $cellBodyData = $policy->cellBodyColumn( $node->{PARENT} );
     }
     $policy->{perNode}->{$nodeIX}->{cellBodyData} = $cellBodyData;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($cellBodyData);
     return $cellBodyData;
 }
 
@@ -1623,40 +1624,21 @@ sub whapCellBodyAlignment {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $children = $node->{children};
-    my $firstBodyColumn;
-    my %firstLine       = ();
-    my %bodyColumnCount = ();
+    my @nodesToAlign = ();
 
-    # Traverse first to last to make it easy to record
-    # first line of occurrence of each body column
   CHILD:
-    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX -= 2 ) {
+    for ( my $childIX = 0 ; $childIX <= $#$children ; $childIX += 2 ) {
         my $boog = $children->[$childIX];
         my $cell = $boog->{children}->[0];
         my ( undef, $head, $gap, $body ) = @{ $policy->gapSeq0($cell) };
-        my ( $headLine, $headColumn ) = $instance->nodeLC($head);
-        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
-        my $gapLength = $gap->{length};
-        $firstBodyColumn = $bodyColumn
-          if not defined $firstBodyColumn;
+        my ( $headLine ) = $instance->nodeLC($head);
+        my ( $bodyLine ) = $instance->nodeLC($body);
         next CHILD unless $headLine == $bodyLine;
-        next CHILD unless $gapLength > 2;
-        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
-        $firstLine{$bodyColumn}       = $bodyLine;
+        # say STDERR sprintf q{Gap: "%s"}, $instance->literalNode($gap);
+        # say STDERR sprintf q{Body: "%s"}, $instance->literalNode($body);
+        push @nodesToAlign, $gap, $body;
     }
-    my @bodyColumns = keys %bodyColumnCount;
-
-    # If no aligned columns, simply return first
-    return [$firstBodyColumn, []] if not @bodyColumns;
-
-    my @sortedBodyColumns =
-      sort {
-             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
-          or $firstLine{$b} <=> $firstLine{$a}
-      }
-      keys %bodyColumnCount;
-    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return [$topBodyColumn, []];
+    return $policy->findAlignment( \@nodesToAlign );
 }
 
 sub checkWhap5d {
@@ -4807,9 +4789,32 @@ sub checkLuslus {
         my $bodyGapLength = $bodyGap->{length};
 
         if ( $bodyGapLength != 2 and $bodyColumn != $cellBodyColumn ) {
+            my @topicLines = ($batteryLine);
+            my $misindent;
+            my $details;
+            if ( $cellBodyColumn < 0 ) {
+                $misindent = describeMisindent2( $bodyGapLength, 2 );
+                $details = [ [ $tag, "no inter-line alignment detected" ] ];
+            }
+            else {
+                $misindent = describeMisindent2( $bodyColumn, $cellBodyColumn );
+                my $oneBasedColumn = $cellBodyColumn + 1;
+                push @topicLines, @{$cellBodyColumnLines};
+                $details = [
+                    [
+                        $tag,
+                        sprintf 'inter-line alignment is %d, see %s',
+                        $oneBasedColumn,
+                        (
+                            join q{ },
+                            map { $_ . ':' . $oneBasedColumn }
+                              @{$cellBodyColumnLines}
+                        )
+                    ]
+                ];
+            }
             my $msg = sprintf 'Cell body %s; %s',
-              describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $cellBodyColumn );
+              describeLC( $bodyLine, $bodyColumn ), $misindent;
             push @mistakes,
               {
                 desc           => $msg,
@@ -4818,7 +4823,8 @@ sub checkLuslus {
                 line           => $bodyLine,
                 column         => $bodyColumn,
                 expectedColumn => $cellBodyColumn,
-                topicLines     => [$batteryLine],
+                topicLines     => \@topicLines,
+                details        => $details,
               };
         }
         return \@mistakes;

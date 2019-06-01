@@ -842,3 +842,11 @@ hoons/arvo/sys/zuse.hoon 2968:28 Test::Whitespace tisfas:hgap joined backdent @2
 hoons/arvo/sys/zuse.hoon 5034:19 Test::Whitespace wutsig:hgap joined backdent @5034:19 element #2 of @5034:7; overindented by 3
 hoons/arvo/sys/zuse.hoon 5035:19 Test::Whitespace wutsig:hgap joined backdent @5035:19 element #2 of @5035:7; overindented by 1
 hoons/arvo/web/unmark/all.hoon 25:9 Test::Whitespace tiscom:hgap joined backdent @25:9 element #1 of @25:3; overindented by 2
+
+# Cell body misindents, from tests of Sat Jun  1 15:55:16 EDT 2019
+hoons/arvo/app/ask.hoon 58:1 Test::Whitespace LuslusCell Cell body @58:16; overindented by 1
+hoons/arvo/lib/hood/kiln.hoon 471:3 Test::Whitespace LuslusCell Cell body @471:13; overindented by 1
+hoons/arvo/sur/gh.hoon 184:1 Test::Whitespace LuslusCell Cell body @184:12; overindented by 1
+hoons/arvo/sur/hall.hoon 97:1 Test::Whitespace LuslusCell Cell body @97:17; overindented by 1
+hoons/arvo/sys/hoon.hoon 635:1 Test::Whitespace LuslusCell Cell body @635:12; overindented by 1
+hoons/arvo/sys/zuse.hoon 1512:3 Test::Whitespace LuslusCell Cell body @1512:14; overindented by 2

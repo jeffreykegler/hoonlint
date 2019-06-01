@@ -25,18 +25,6 @@ hoons/arvo/sur/twitter.hoon 70:3 Test::Whitespace LuslusCell Pseudo-joined cell 
 === hoons/arvo/sur/unicode-data.hoon ===
 === hoons/arvo/sur/hall.hoon ===
 hoons/arvo/sur/hall.hoon 108:3 Test::Whitespace tallBucwut runstep #2 @108:3; underindented by 4
-hoons/arvo/sur/hall.hoon 179:1 Test::Whitespace LuslusCell Cell body @179:16; underindented by 1
-hoons/arvo/sur/hall.hoon 181:1 Test::Whitespace LuslusCell Cell body @181:16; underindented by 1
-hoons/arvo/sur/hall.hoon 195:1 Test::Whitespace LuslusCell Cell body @195:16; underindented by 1
-hoons/arvo/sur/hall.hoon 203:1 Test::Whitespace LuslusCell Cell body @203:16; underindented by 1
-hoons/arvo/sur/hall.hoon 204:1 Test::Whitespace LuslusCell Cell body @204:16; underindented by 1
-hoons/arvo/sur/hall.hoon 205:1 Test::Whitespace LuslusCell Cell body @205:16; underindented by 1
-hoons/arvo/sur/hall.hoon 216:1 Test::Whitespace LuslusCell Cell body @216:16; underindented by 1
-hoons/arvo/sur/hall.hoon 227:1 Test::Whitespace LuslusCell Cell body @227:16; underindented by 1
-hoons/arvo/sur/hall.hoon 228:1 Test::Whitespace LuslusCell Cell body @228:16; underindented by 1
-hoons/arvo/sur/hall.hoon 256:1 Test::Whitespace LuslusCell Cell body @256:16; underindented by 1
-hoons/arvo/sur/hall.hoon 257:1 Test::Whitespace LuslusCell Cell body @257:16; underindented by 1
-hoons/arvo/sur/hall.hoon 258:1 Test::Whitespace LuslusCell Cell body @258:16; underindented by 1
 === hoons/arvo/sur/gmail-label.hoon ===
 hoons/arvo/sur/gmail-label.hoon 5:1 Test::Whitespace fordHoopSeq hoop @16:1; empty line in comment
 hoons/arvo/sur/gmail-label.hoon 20:1 Test::Whitespace tallBarcen whap @21:1; empty line in comment
