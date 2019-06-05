@@ -3794,7 +3794,7 @@ sub fascomBodyAlignment {
     my @bodyColumns = keys %bodyColumnCount;
 
     # If no aligned columns, simply return first
-    return $firstBodyColumn if not @bodyColumns;
+    return [$firstBodyColumn, []] if not @bodyColumns;
 
     my @sortedBodyColumns =
       sort {
@@ -3803,7 +3803,7 @@ sub fascomBodyAlignment {
       }
       keys %bodyColumnCount;
     my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return $topBodyColumn;
+    return [$topBodyColumn, []];
 }
 
 # Find the body column, based on alignment within
@@ -3833,10 +3833,10 @@ sub fascomBodyColumn {
             my $child2  = $children2->[$childIX2];
             my $symbol2 = $instance->symbol($child2);
             next CHILD2 if $symbol2 ne 'fordFascomElements';
-            my $fascomBodyColumn = $policy->fascomBodyAlignment($child2);
-            $policy->{perNode}->{$nodeIX}->{fascomBodyColumn} =
-              $fascomBodyColumn;
-            return $fascomBodyColumn;
+            my $fascomBodyData = $policy->fascomBodyAlignment($child2);
+            $policy->{perNode}->{$nodeIX}->{fascomBodyData} =
+              $fascomBodyData;
+            return $fascomBodyData;
         }
     }
     die "No jogging found for ", $instance->symbol($node);
@@ -3855,8 +3855,8 @@ sub checkFascomElement {
     my ( $gap,        $body )         = @{ $policy->gapSeq0($node) };
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
-    my $fascomBodyColumn =
-      $policy->fascomBodyColumn( $node, { fordFascom => 1 } );
+    my ( $fascomBodyColumn, $fascomBodyColumnDetails ) =
+      @{ $policy->fascomBodyColumn( $node, { fordFascom => 1 } ) };
 
     my @mistakes = ();
     my $tag      = 'fascom element';
