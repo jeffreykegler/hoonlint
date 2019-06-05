@@ -929,6 +929,7 @@ sub sailAttributeBodyAlignment {
     my $firstBodyColumn;
     my %firstLine       = ();
     my %bodyColumnCount = ();
+    my @nodesToAlign = ();
 
     # Traverse first to last to make it easy to record
     # first line of occurrence of each body column
@@ -938,27 +939,10 @@ sub sailAttributeBodyAlignment {
         my ( undef, $head, $gap, $body ) = @{ $policy->gapSeq0($attribute) };
         my ( $headLine, $headColumn ) = $instance->nodeLC($head);
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
-        my $gapLength = $gap->{length};
-        $firstBodyColumn = $bodyColumn
-          if not defined $firstBodyColumn;
-        next CHILD unless $headLine == $bodyLine;
-        next CHILD unless $gap > 2;
-        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
-        $firstLine{$bodyColumn}       = $bodyLine;
+        next CHILD if $headLine != $bodyLine;
+        push @nodesToAlign, $gap, $body;
     }
-    my @bodyColumns = keys %bodyColumnCount;
-
-    # If no aligned columns, simply return first
-    return $firstBodyColumn if not @bodyColumns;
-
-    my @sortedBodyColumns =
-      sort {
-             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
-          or $firstLine{$b} <=> $firstLine{$a}
-      }
-      keys %bodyColumnCount;
-    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return $topBodyColumn;
+    return $policy->findAlignment( \@nodesToAlign );
 }
 
 sub checkSailAttribute {
@@ -974,7 +958,7 @@ sub checkSailAttribute {
     my ( $sailApexLine, $sailApexColumn ) = $instance->nodeLC($sailApex);
     my $attributes = $instance->ancestorByLHS( $node, { tallAttributes => 1 } );
     my $expectedHeadColumn = $sailApexColumn + 4;
-    my $expectedBodyColumn = $policy->sailAttributeBodyAlignment($attributes);
+    my ($expectedBodyColumn, $expectBodyColumnDetails) = @{$policy->sailAttributeBodyAlignment($attributes)};
 
     my @mistakes = ();
     my $tag      = 'sail atttribute';
@@ -1028,21 +1012,39 @@ sub checkSailAttribute {
         }
 
         my $bodyGapLength = $bodyGap->{length};
-        if ( $bodyColumn != $expectedBodyColumn and $bodyGapLength != 2 ) {
-            my $msg = sprintf
-              "Sail attribute body %s; %s",
-              describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $expectedBodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $sailApexLine,
-                parentColumn   => $sailApexColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
-                topicLines     => [$bodyLine],
-              };
+      CHECK_GAP: {
+            last CHECK_GAP if $bodyGapLength == 2;
+            if ( $expectedBodyColumn < 0 ) {
+                my $msg = sprintf
+                  "Sail attribute body %s; %s",
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent2( $bodyGapLength, 2 );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $sailApexLine,
+                    parentColumn => $sailApexColumn,
+                    line         => $bodyLine,
+                    column       => $bodyColumn,
+                    topicLines   => [$bodyLine],
+                  };
+                last CHECK_GAP;
+            }
+            if ( $bodyColumn != $expectedBodyColumn ) {
+                my $msg = sprintf
+                  "Sail attribute body %s; %s",
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent2( $bodyColumn, $expectedBodyColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $sailApexLine,
+                    parentColumn => $sailApexColumn,
+                    line         => $bodyLine,
+                    column       => $bodyColumn,
+                    topicLines   => [$bodyLine],
+                  };
+            }
         }
     }
 

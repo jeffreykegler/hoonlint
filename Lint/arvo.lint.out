@@ -1356,6 +1356,7 @@ hoons/arvo/web/pack/js/tree-urb.hoon 6:9 Test::Whitespace fasdot:hgap joined bac
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 5:1 Test::Whitespace fordFasket backdented element #2 @6:3; overindented by 2
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace fasdot:hgap joined backdent @6:9 element #1 of @6:3; overindented by 2
 === hoons/arvo/web/dojo.hoon ===
+hoons/arvo/web/dojo.hoon 13:1 Test::Whitespace tallAttribute Sail attribute body @14:18; overindented by 1
 === hoons/arvo/web/talk.hoon ===
 === hoons/arvo/web/womb.hoon ===
 === hoons/arvo/ren/urb.hoon ===
