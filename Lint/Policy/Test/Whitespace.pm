@@ -3774,36 +3774,18 @@ sub fascomBodyAlignment {
     my $firstBodyColumn;
     my %firstLine       = ();
     my %bodyColumnCount = ();
+    my @nodesToAlign = ();
 
-    # Traverse first to last to make it easy to record
-    # first line of occurrence of each body column
   CHILD:
-    for ( my $childIX = $#$children ; $childIX >= 0 ; $childIX-- ) {
+    for ( my $childIX = 0 ; $childIX <= $#$children ; $childIX++ ) {
         my $jog = $children->[$childIX];
         my ( $gap,      $body )       = @{ $policy->gapSeq0($jog) };
         my ( $headLine, $headColumn ) = $instance->nodeLC($jog);
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC($body);
-        my $gapLength = $gap->{length};
-        $firstBodyColumn = $bodyColumn
-          if not defined $firstBodyColumn;
         next CHILD unless $headLine == $bodyLine;
-        next CHILD unless $gap > 2;
-        $bodyColumnCount{$bodyColumn} = $bodyColumnCount{$bodyColumn}++;
-        $firstLine{$bodyColumn}       = $bodyLine;
+        push @nodesToAlign, $gap, $body;
     }
-    my @bodyColumns = keys %bodyColumnCount;
-
-    # If no aligned columns, simply return first
-    return [$firstBodyColumn, []] if not @bodyColumns;
-
-    my @sortedBodyColumns =
-      sort {
-             $bodyColumnCount{$a} <=> $bodyColumnCount{$b}
-          or $firstLine{$b} <=> $firstLine{$a}
-      }
-      keys %bodyColumnCount;
-    my $topBodyColumn = $sortedBodyColumns[$#sortedBodyColumns];
-    return [$topBodyColumn, []];
+    return $policy->findAlignment( \@nodesToAlign );
 }
 
 # Find the body column, based on alignment within
@@ -4506,32 +4488,19 @@ sub checkBackdented {
           $anchorColumn + ( $elementCount - $elementNumber ) * 2;
 
         if ( $elementLine == $parentLine ) {
-            my $gapLiteral = $instance->literalNode($gap);
-
-            # Remove the rune, if present
-            $gapLiteral = substr( $gapLiteral, 2 )
-              if $instance->runeGapNode($gap);
-
-            # OK if final space are exactly one stop
-            next ELEMENT if length $gapLiteral == 2;
 
             # OK if at proper alignment for backdent
             next ELEMENT if $expectedColumn == $elementColumn;
 
-            my $gapLength = $gap->{length};
-            my ( undef, $gapColumn ) = $instance->nodeLC($gap);
+            my $gapLength = $instance->gapLength($gap);
+            next ELEMENT if $gapLength == 2;
 
-            # expected length is the length if the spaces at the end
-            # of the gap-equivalent were exactly one stop.
-            my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-
-            $expectedColumn = $gapColumn + $expectedLength;
             my $msg = sprintf
               "joined backdent %s element #%d of %s; %s",
               describeLC( $elementLine, $elementColumn ),
               $elementNumber,
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent2( $elementColumn, $expectedColumn );
+              describeMisindent2( $gapLength, 2 );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4542,7 +4511,6 @@ sub checkBackdented {
                 reportLine     => $elementLine,
                 reportColumn   => $elementColumn,
                 subpolicy      => $policy->nodeSubpolicy($node) . ':hgap',
-                expectedColumn => $expectedColumn,
               };
             next ELEMENT;
         }

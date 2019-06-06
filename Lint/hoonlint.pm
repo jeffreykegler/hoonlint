@@ -570,6 +570,16 @@ sub runeGapNode {
     return $symbolReverseDB->{$symbol}->{runeGap};
 }
 
+# Assumes the node *is* a gap
+sub gapLength {
+    my ( $instance, $node ) = @_;
+    if ( $instance->runeGapNode($node) ) {
+        my $gapLiteral = $instance->literalNode($node);
+        return (length $gapLiteral) - 2;
+    }
+    return $node->{length};
+}
+
 sub line_column {
     my ( $instance, $pos ) = @_;
     $Data::Dumper::Maxdepth = 3;
