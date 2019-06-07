@@ -75,6 +75,18 @@ sub new {
     return bless $policy, $class;
 }
 
+# Return Perl true is node is chainable
+sub chainable {
+    my ( $policy, $node ) = @_;
+    my $chainable = $policy->{chainable};
+    my $instance = $policy->{lint};
+    my $grammar  = $instance->{grammar};
+    my $ruleID   = $node->{ruleID};
+    my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
+    my $lhsName  = $grammar->symbol_name($lhs);
+    return $chainable->{$lhsName};
+}
+
 # Return the node tag for the subpolicy field.
 # Archetypally, this is the 6-character form of
 # rune for the node's brick.
@@ -3158,11 +3170,42 @@ sub describeMisindent2 {
 }
 
 sub chainAlignmentData {
-    my ( $policy, $node ) = @_;
-    my $nodeIX = $node->{IX};
+    my ( $policy, $argNode ) = @_;
+    my $instance  = $policy->{lint};
+    my $chainable = $policy->{chainable};
+    my $grammar   = $instance->{grammar};
+
+    my $nodeIX = $argNode->{IX};
     my $chainAlignmentData =
       $policy->{perNode}->{$nodeIX}->{chainAlignmentData};
     return $chainAlignmentData if $chainAlignmentData;
+
+    # Find the base column of the alignment
+    my $alignmentBaseColumn;
+    my $chainHead;
+    my ( $argNodeLine, $argNodeColumn ) = $instance->nodeLC($argNode);
+    my $thisNode = $argNode;
+    LINK: while ($thisNode) {
+        last LINK if $thisNode->{NEXT}; # Must be rightmost
+        last LINK if not $policy->chainable($thisNode); # Must be chainable
+        my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
+        last LINK if $thisNodeLine != $argNodeLine;
+        $alignmentBaseColumn = $thisNodeColumn;
+        $chainHead = $thisNode;
+        $thisNode = $thisNode->{PARENT};
+    }
+
+    die if not defined $alignmentBaseColumn; # TODO: delete after development
+
+    # Find the head (first link) of this alignment chain
+    LINK: while ($thisNode) {
+        last LINK if $thisNode->{NEXT}; # Must be rightmost
+        last LINK if not $policy->chainable($thisNode); # Must be chainable
+        my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
+        last LINK if $thisNodeColumn < $alignmentBaseColumn;
+        $chainHead = $thisNode if $thisNodeColumn == $alignmentBaseColumn;
+        $thisNode = $thisNode->{PARENT};
+    }
 
     $chainAlignmentData = {
         chainOffset     => 0,
@@ -3260,6 +3303,7 @@ sub bodyColumn {
     die "No jogging found for ", $instance->symbol($node);
 }
 
+# TODO: Delete this?
 # Compute the alignment for a chained series of fixed-N
 # runes
 sub chainedAlignment {
