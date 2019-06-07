@@ -913,7 +913,6 @@ sub checkTistis {
             parentColumn   => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            expectedColumn => $parentColumn,
             details        => [ [$tag] ],
           };
     }
@@ -989,7 +988,6 @@ sub checkSailAttribute {
             parentColumn   => $sailApexColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedHeadColumn,
             topicLines     => [$headLine],
           };
     }
@@ -1204,7 +1202,6 @@ sub checkBont {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
                 details        => [ [$tag] ],
               };
         }
@@ -1239,7 +1236,6 @@ sub checkBonzElement {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
                 details        => [ [$tag] ],
               };
             last BODY_ISSUES;
@@ -1265,7 +1261,6 @@ sub checkBonzElement {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -1328,7 +1323,6 @@ sub checkTopSail {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -1391,7 +1385,6 @@ sub checkTopKids {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -1453,7 +1446,6 @@ sub checkRunning {
             parentColumn   => $runStepColumn,
             line           => $thisRunStepLine,
             column         => $runStepColumn,
-            expectedColumn => $expectedColumn,
             topicLines     => [$runeLine],
             details        => [ [ $tag, @{$anchorDetails} ] ],
           };
@@ -1492,7 +1484,6 @@ sub checkRunning {
                     parentColumn   => $runeColumn,
                     line           => $thisRunStepLine,
                     column         => $runStepColumn,
-                    expectedColumn => $nextExpectedColumn,
                     subpolicy      => $mistakeSubpolicy . ':running-hgap',
                     details        => [ [$tag] ],
                   };
@@ -1568,7 +1559,6 @@ sub checkRunning {
                 parentColumn   => $runStepColumn,
                 line           => $thisRunStepLine,
                 column         => $runStepColumn,
-                expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
                 details        => [ [ $tag, @{$anchorDetails} ] ],
               };
@@ -1683,7 +1673,6 @@ sub checkWhap5d {
                 parentColumn   => $boogColumn,
                 line           => $boogLine,
                 column         => $boogColumn,
-                expectedColumn => $expectedColumn,
                 topicLines     => [ $parentLine, $expectedLine ],
                 details        => [ [$tag] ],
               };
@@ -1790,7 +1779,6 @@ sub checkWisp5d {
             parentColumn   => $parentColumn,
             line           => $hephepLine,
             column         => $hephepColumn,
-            expectedColumn => $expectedColumn,
             topicLines     => [$batteryLine],
             details        => [ [$tag] ],
           };
@@ -1846,7 +1834,6 @@ sub checkSplitFascom {
             parentColumn   => $runeColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedColumn,
             topicLines     => [ $runeLine, $expectedLine ],
             details        => [ [$tag] ],
           };
@@ -1911,7 +1898,6 @@ sub checkJoinedFascom {
             parentColumn   => $runeColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedColumn,
             topicLines     => [ $runeLine, $expectedLine ],
             details        => [ [$tag] ],
           };
@@ -1987,7 +1973,6 @@ sub checkFascomElements {
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
-                expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -2047,7 +2032,6 @@ sub checkSeq {
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
-                expectedColumn => $expectedColumn,
               };
         }
 
@@ -2112,7 +2096,6 @@ sub checkBarcab {
                     parentColumn   => $parentColumn,
                     line           => $headLine,
                     column         => $headColumn,
-                    expectedColumn => $expectedColumn,
                   };
                 last HEAD_ISSUES;
             }
@@ -2130,7 +2113,6 @@ sub checkBarcab {
                     parentColumn   => $parentColumn,
                     line           => $headLine,
                     column         => $headColumn,
-                    expectedColumn => $expectedHeadColumn,
                   };
             }
             last HEAD_ISSUES;
@@ -2156,7 +2138,6 @@ sub checkBarcab {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedColumn,
           };
 
     }
@@ -2186,7 +2167,6 @@ sub checkBarcab {
             parentColumn   => $parentColumn,
             line           => $batteryLine,
             column         => $batteryColumn,
-            expectedColumn => $expectedColumn,
           };
         return \@mistakes;
     }
@@ -2245,7 +2225,6 @@ sub checkBarcen {
                 parentColumn   => $parentColumn,
                 line           => $batteryLine,
                 column         => $batteryColumn,
-                expectedColumn => $expectedColumn,
               };
         }
         return \@mistakes;
@@ -2279,7 +2258,6 @@ sub checkBarcen {
             line         => $batteryLine,
             column       => $batteryColumn,
             anchorDetails  => $policy->anchorDetails( $node, $anchorData ),
-            expectedColumn => $expectedColumn,
           };
         return \@mistakes;
     }
@@ -2319,7 +2297,6 @@ sub checkBarket {
                     parentColumn   => $parentColumn,
                     line           => $headLine,
                     column         => $headColumn,
-                    expectedColumn => $expectedColumn,
                     details        => [ [$tag] ],
                   };
                 last HEAD_ISSUES;
@@ -2338,7 +2315,6 @@ sub checkBarket {
                     parentColumn   => $parentColumn,
                     line           => $headLine,
                     column         => $headColumn,
-                    expectedColumn => $expectedHeadColumn,
                     details        => [ [$tag] ],
                   };
             }
@@ -2365,7 +2341,6 @@ sub checkBarket {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedColumn,
             details        => [ [$tag] ],
           };
 
@@ -2396,7 +2371,6 @@ sub checkBarket {
             parentColumn   => $parentColumn,
             line           => $batteryLine,
             column         => $batteryColumn,
-            expectedColumn => $expectedColumn,
           };
         return \@mistakes;
     }
@@ -2436,7 +2410,6 @@ sub checkFashep {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
               };
             last BODY_ISSUES;
         }
@@ -2453,7 +2426,6 @@ sub checkFashep {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
               };
         }
         last BODY_ISSUES;
@@ -2508,7 +2480,6 @@ sub checkFaslus {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
               };
             last BODY_ISSUES;
         }
@@ -2525,7 +2496,6 @@ sub checkFaslus {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
               };
         }
         last BODY_ISSUES;
@@ -2578,7 +2548,6 @@ sub checkFord_1Gap {
                     parentColumn   => $parentColumn,
                     line           => $bodyLine,
                     column         => $bodyColumn,
-                    expectedColumn => $expectedBodyColumn,
                   };
             }
             last BODY_ISSUES;
@@ -2611,7 +2580,6 @@ sub checkFord_1Gap {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
               };
         }
     }
@@ -2649,7 +2617,6 @@ sub checkFaswut {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
               };
             last BODY_ISSUES;
         }
@@ -2667,7 +2634,6 @@ sub checkFaswut {
                 line           => $bodyLine,
                 column         => $bodyColumn,
                 subpolicy      => $policy->nodeSubpolicy($node) . ':hgap',
-                expectedColumn => $expectedBodyColumn,
               };
         }
         last BODY_ISSUES;
@@ -2956,7 +2922,6 @@ sub check_1Running {
             parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -3011,7 +2976,6 @@ sub check_1Running {
                 parentColumn   => $runeColumn,
                 line           => $runningLine,
                 column         => $runningColumn,
-                expectedColumn => $nextExpectedColumn,
               };
         }
 
@@ -3191,6 +3155,21 @@ sub describeMisindent2 {
     my ( $got, $sought ) = @_;
     $DB::single = 1 if not defined $sought;
     return describeMisindent( $got - $sought );
+}
+
+sub chainAlignmentData {
+    my ( $policy, $node ) = @_;
+    my $nodeIX = $node->{IX};
+    my $chainAlignmentData =
+      $policy->{perNode}->{$nodeIX}->{chainAlignmentData};
+    return $chainAlignmentData if $chainAlignmentData;
+
+    $chainAlignmentData = {
+        chainOffset     => 0,
+        chainAlignments => [ ( [ -1, [] ] ) x 10 ]
+        # chainAlignments => [ ( [ -1, [] ] ) x $elementCount ]
+    };
+    return $chainAlignmentData;
 }
 
 sub chessSideOfJoggingHoon {
@@ -3445,7 +3424,6 @@ sub check_1Jogging {
             parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -3542,7 +3520,6 @@ sub check_2Jogging {
                 parentColumn   => $runeColumn,
                 line           => $headLine,
                 column         => $headColumn,
-                expectedColumn => $expectedColumn,
               };
         }
 
@@ -3561,7 +3538,6 @@ sub check_2Jogging {
                 parentColumn   => $runeColumn,
                 line           => $headLine,
                 column         => $headColumn,
-                expectedColumn => $expectedColumn,
               };
         }
     }
@@ -3581,7 +3557,6 @@ sub check_2Jogging {
                 parentColumn   => $runeColumn,
                 line           => $headLine,
                 column         => $headColumn,
-                expectedColumn => $expectedColumn,
               };
         }
 
@@ -3615,7 +3590,6 @@ sub check_2Jogging {
                 parentColumn   => $runeColumn,
                 line           => $subheadLine,
                 column         => $subheadColumn,
-                expectedColumn => $expectedColumn,
               };
         }
     }
@@ -3705,7 +3679,6 @@ sub check_Jogging1 {
             parentColumn   => $runeColumn,
             line           => $joggingLine,
             column         => $joggingColumn,
-            expectedColumn => $expectedColumn,
             details        => [ [$tag] ],
           };
     }
@@ -3760,7 +3733,6 @@ sub check_Jogging1 {
             parentColumn   => $runeColumn,
             line           => $tailLine,
             column         => $tailColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -3857,7 +3829,6 @@ sub checkFascomElement {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedHeadColumn,
             topicLines     => [$runeLine],
           };
     }
@@ -3876,7 +3847,6 @@ sub checkFascomElement {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $fascomBodyColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -3900,7 +3870,6 @@ sub checkFascomElement {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -3918,7 +3887,6 @@ sub checkFascomElement {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -3939,7 +3907,6 @@ sub checkFascomElement {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
             topicLines     => [$runeLine],
           };
         return \@mistakes;
@@ -4001,7 +3968,6 @@ sub checkFastis {
                 parentColumn   => $parentColumn,
                 line           => $symbolLine,
                 column         => $symbolColumn,
-                expectedColumn => $expectedSymbolColumn,
               };
         }
     }
@@ -4021,7 +3987,6 @@ sub checkFastis {
                     parentColumn   => $parentColumn,
                     line           => $hornLine,
                     column         => $hornColumn,
-                    expectedColumn => $expectedHornColumn,
                   };
             }
             last CHECK_HORN;
@@ -4053,7 +4018,6 @@ sub checkFastis {
                 parentColumn   => $parentColumn,
                 line           => $hornLine,
                 column         => $hornColumn,
-                expectedColumn => $expectedHornColumn,
               };
         }
 
@@ -4109,7 +4073,6 @@ sub checkKingsideJog {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedHeadColumn,
             topicLines     => [$brickLine],
           };
     }
@@ -4153,7 +4116,6 @@ sub checkKingsideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $jogBodyColumn,
                 topicLines     => \@topicLines,
                 details        => $details,
               };
@@ -4179,7 +4141,6 @@ sub checkKingsideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedBodyColumn,
                 topicLines     => [$brickLine],
               };
         }
@@ -4199,7 +4160,6 @@ sub checkKingsideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $expectedColumn,
                 topicLines     => [$brickLine],
               };
         }
@@ -4221,7 +4181,6 @@ sub checkKingsideJog {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
             details        => [
                 [
@@ -4293,7 +4252,6 @@ sub checkQueensideJog {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedHeadColumn,
             topicLines     => [$brickLine],
           };
     }
@@ -4335,7 +4293,6 @@ sub checkQueensideJog {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $jogBodyColumn,
                 topicLines     => \@topicLines,
                 details => $details,
               };
@@ -4358,7 +4315,6 @@ sub checkQueensideJog {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
             topicLines     => [$brickLine],
             details        => [
                 [
@@ -4435,6 +4391,10 @@ sub checkBackdented {
     my @mistakes = ();
     my $tag      = $elementCount . '-backdented';
 
+    my $chainOffset = 0;
+    # my $chainBaseColumn = $parentColumn;
+    my $chainAlignments = [ ([ -1, [] ]) x $elementCount ];
+
     my $reanchorOffset;    # for re-anchoring logic
 
   ENFORCE_ELEMENT1_JOINEDNESS: {
@@ -4484,16 +4444,23 @@ sub checkBackdented {
         my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
         my $gap = $gapSeq[ $elementNumber * 2 - 2 ];
         my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-        my $expectedColumn =
+        my $backdentColumn =
           $anchorColumn + ( $elementCount - $elementNumber ) * 2;
 
         if ( $elementLine == $parentLine ) {
 
             # OK if at proper alignment for backdent
-            next ELEMENT if $expectedColumn == $elementColumn;
+            next ELEMENT if $backdentColumn == $elementColumn;
 
             my $gapLength = $instance->gapLength($gap);
             next ELEMENT if $gapLength == 2;
+
+            my $thisAlignment = $chainAlignments->[$chainOffset + $elementNumber - 1];
+            my ($chainAlignmentColumn, $chainAlignmentDetails) = @{$thisAlignment};
+
+            next ELEMENT
+              if $chainAlignmentColumn >= 0
+              and $chainAlignmentColumn == $elementColumn;
 
             my $msg = sprintf
               "joined backdent %s element #%d of %s; %s",
@@ -4522,7 +4489,7 @@ sub checkBackdented {
             last CHECK_FOR_PSEUDOJOIN if $pseudoJoinColumn < 0;
 
             last CHECK_FOR_PSEUDOJOIN
-              if $pseudoJoinColumn != $expectedColumn
+              if $pseudoJoinColumn != $backdentColumn
               and $pseudoJoinColumn != $parentColumn + 4;
 
             if ( $elementColumn != $pseudoJoinColumn ) {
@@ -4539,7 +4506,6 @@ sub checkBackdented {
                     parentColumn   => $parentColumn,
                     line           => $elementLine,
                     column         => $elementColumn,
-                    expectedColumn => $pseudoJoinColumn,
                   };
             }
 
@@ -4575,12 +4541,12 @@ sub checkBackdented {
             )
         };
 
-        if ( $expectedColumn != $elementColumn ) {
+        if ( $backdentColumn != $elementColumn ) {
             my $msg = sprintf
               'backdented element #%d %s; %s',
               $elementNumber,
               describeLC( $elementLine, $elementColumn ),
-              describeMisindent2( $elementColumn, $expectedColumn );
+              describeMisindent2( $elementColumn, $backdentColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -4588,7 +4554,6 @@ sub checkBackdented {
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
-                expectedColumn => $expectedColumn,
                 details        => [ [ $tag, @{$anchorDetails}, ] ],
               };
         }
@@ -4644,7 +4609,6 @@ sub checkKetdot {
                 parentColumn   => $parentColumn,
                 line           => $element1Line,
                 column         => $element1Column,
-                expectedColumn => $expectedColumn,
               };
         }
     }
@@ -4682,7 +4646,6 @@ sub checkKetdot {
                     parentColumn   => $parentColumn,
                     line           => $element2Line,
                     column         => $element2Column,
-                    expectedColumn => $expectedColumn,
                   };
             }
             last ELEMENT2;
@@ -4712,7 +4675,6 @@ sub checkKetdot {
                 parentColumn   => $parentColumn,
                 line           => $element2Line,
                 column         => $element2Column,
-                expectedColumn => $expectedColumn,
               };
         }
     }
@@ -4751,7 +4713,6 @@ sub checkLuslus {
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
-            expectedColumn => $expectedColumn,
           };
     }
 
@@ -4792,7 +4753,6 @@ sub checkLuslus {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $cellBodyColumn,
                 topicLines     => \@topicLines,
                 details        => $details,
               };
@@ -4822,7 +4782,6 @@ sub checkLuslus {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
-                expectedColumn => $pseudoJoinColumn,
                 topicLines     => [$batteryLine],
               };
         }
@@ -4843,7 +4802,6 @@ sub checkLuslus {
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
-            expectedColumn => $expectedBodyColumn,
             topicLines     => [$batteryLine],
           };
         return \@mistakes;
