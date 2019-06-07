@@ -82,10 +82,12 @@ sub new {
 # Return Perl true is node is chainable
 sub chainable {
     my ( $policy, $node ) = @_;
+    # say STDERR join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($node);
     my $chainable = $policy->{chainable};
     my $instance = $policy->{lint};
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
+    return if not $ruleID;
     my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName  = $grammar->symbol_name($lhs);
     # say STDERR join ' ', __FILE__, __LINE__, $lhsName, $chainable->{$lhsName};
@@ -3257,17 +3259,23 @@ sub chainAlignmentData {
     my $chainHead;
     my ( $argNodeLine, $argNodeColumn ) = $instance->nodeLC($argNode);
     my $thisNode = $argNode;
+    # say STDERR join " ", __FILE__, __LINE__;
   LINK: while ($thisNode) {
+    # say STDERR join " ", __FILE__, __LINE__;
         last LINK if $thisNode->{NEXT};                    # Must be rightmost
+    # say STDERR join " ", __FILE__, __LINE__;
         last LINK if not $policy->chainable($thisNode);    # Must be chainable
+    # say STDERR join " ", __FILE__, __LINE__;
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         last LINK if $thisNodeLine != $argNodeLine;
+    # say STDERR join " ", __FILE__, __LINE__;
         $alignmentBaseColumn = $thisNodeColumn;
         $chainHead           = $thisNode;
         $thisNode            = $thisNode->{PARENT};
     }
+    # say STDERR join " ", __FILE__, __LINE__;
 
-    die if not defined $alignmentBaseColumn;    # TODO: delete after development
+    return if not defined $alignmentBaseColumn;    # TODO: delete after development
 
     # Find the head (first link) of this alignment chain
   LINK: while ($thisNode) {
@@ -4590,9 +4598,13 @@ sub checkBackdented {
     my @mistakes = ();
     my $tag      = $elementCount . '-backdented';
 
+    my $chainOffset = 0;
+    my $chainAlignments;
     my $chainAlignmentData = $policy->chainAlignmentData($node);
-    my $chainOffset = $chainAlignmentData->{offset};
-    my $chainAlignments = $chainAlignmentData->{alignments};
+    if ($chainAlignmentData) {
+        my $chainOffset = $chainAlignmentData->{offset};
+        my $chainAlignments = $chainAlignmentData->{alignments};
+    }
 
     my $reanchorOffset;    # for re-anchoring logic
 
@@ -4654,12 +4666,16 @@ sub checkBackdented {
             my $gapLength = $instance->gapLength($gap);
             next ELEMENT if $gapLength == 2;
 
-            my $thisAlignment = $chainAlignments->[$chainOffset + $elementNumber - 1];
-            my ($chainAlignmentColumn, $chainAlignmentDetails) = @{$thisAlignment};
+            if ($chainAlignments) {
+                my $thisAlignment =
+                  $chainAlignments->[ $chainOffset + $elementNumber - 1 ];
+                my ( $chainAlignmentColumn, $chainAlignmentDetails ) =
+                  @{$thisAlignment};
 
-            next ELEMENT
-              if $chainAlignmentColumn >= 0
-              and $chainAlignmentColumn == $elementColumn;
+                next ELEMENT
+                  if $chainAlignmentColumn >= 0
+                  and $chainAlignmentColumn == $elementColumn;
+            }
 
             my $msg = sprintf
               "joined backdent %s element #%d of %s; %s",
