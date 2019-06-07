@@ -3207,6 +3207,30 @@ sub chainAlignmentData {
         $thisNode = $thisNode->{PARENT};
     }
 
+    # Traverse the whole chain, from the head
+    $thisNode = $chainHead;
+    my $lastNodeIX;
+    my $parentNodeLine = -1;
+    my $parentElementCount = 0;
+    my $currentChainOffset = 0;
+    LINK: while ($thisNode) {
+        last LINK if not $policy->chainable($thisNode); # Must be chainable
+        my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
+        if ($thisNodeColumn == $alignmentBaseColumn) {
+           $currentChainOffset = 0;
+        } else {
+           last LINK if $thisNodeLine != $parentNodeLine;
+           $currentChainOffset += $parentElementCount;
+        }
+        my @thisGapSeq       = @{ $policy->gapSeq0($thisNode) };
+        my $elementCount = ( scalar @thisGapSeq ) / 2;
+        $lastNodeIX = $thisNode->{IX};
+        $parentNodeLine = $thisNodeLine;
+        $parentElementCount = $elementCount;
+        my $children = $thisNode->{children};
+        $thisNode = $children->{$#$children}; # rightmost child
+    }
+
     $chainAlignmentData = {
         chainOffset     => 0,
         chainAlignments => [ ( [ -1, [] ] ) x 10 ]
