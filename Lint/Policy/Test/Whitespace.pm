@@ -3169,6 +3169,71 @@ sub describeMisindent2 {
     return describeMisindent( $got - $sought );
 }
 
+# Find the oversize alignment for this column of elements.
+# of a chain alignment
+# $nodes must a ref to an array of alternating gap, body,
+# nodes.
+sub findChainAlignment {
+    my ( $policy, $nodes, $backdentColumn ) = @_;
+    my $instance = $policy->{lint};
+    my %allAlignments = ();
+
+    # local $Data::Dumper::Maxdepth = 1;
+    # say STDERR join " ", __FILE__, __LINE__;
+
+    # "wide", meaning an alignment following a gap of more than
+    # one stop
+    my %wideAlignments = ();
+  CHILD: for ( my $bodyIX = 1 ; 1 ; $bodyIX += 2 ) {
+        my $body   = $nodes->[$bodyIX];
+        # say STDERR join " ", __FILE__, __LINE__, $bodyIX, $#$nodes;
+        # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
+        last CHILD if not defined $body;
+        # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
+        my ( $bodyLine, $bodyColumn ) = $instance->nodeLC( $body );
+        next CHILD if $bodyColumn == $backdentColumn;
+        $allAlignments{$bodyColumn} //= [];
+        push @{ $allAlignments{$bodyColumn} }, $bodyLine;
+        my $gap       = $nodes->[ $bodyIX - 1 ];
+        my $gapLength = $instance->gapLength($gap);
+     #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
+        next CHILD if $gapLength <= 2;
+        # say STDERR join " ", __FILE__, __LINE__, $bodyIX;
+        $wideAlignments{$bodyColumn} //= [];
+        push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
+    }
+
+    # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
+
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
+    return [-1, []] if not scalar %wideAlignments;
+
+    # wide alignments, in order first by descending count of wide instances;
+    # then by descending count of all instances;
+    # then by ascending first line
+    my @sortedWideAlignments =
+      sort {
+        ( scalar @{ $wideAlignments{$b} } ) <=> ( scalar @{ $wideAlignments{$a} } )
+        or ( scalar @{ $allAlignments{$b} } ) <=> ( scalar @{ $allAlignments{$a} } )
+          or $wideAlignments{$a}[0] <=> $wideAlignments{$b}[0]
+      }
+      keys %wideAlignments;
+
+    my $topWideColumn = $sortedWideAlignments[0];
+
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+
+    # Make sure this is actually an *alignment*, that is,
+    # that there are at least 2 instances.  Otherwise,
+    # ignore it.
+    return [-1, []] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
+
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+
+    return [$topWideColumn, [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]];
+
+}
+
 sub chainAlignmentData {
     my ( $policy, $argNode ) = @_;
     my $instance  = $policy->{lint};
@@ -3209,10 +3274,10 @@ sub chainAlignmentData {
 
     # Traverse the whole chain, from the head
     $thisNode = $chainHead;
-    my $lastNodeIX;
     my $parentNodeLine = -1;
     my $parentElementCount = 0;
     my $currentChainOffset = 0;
+    my $thisNodeIX;
     LINK: while ($thisNode) {
         last LINK if not $policy->chainable($thisNode); # Must be chainable
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
@@ -3224,12 +3289,20 @@ sub chainAlignmentData {
         }
         my @thisGapSeq       = @{ $policy->gapSeq0($thisNode) };
         my $elementCount = ( scalar @thisGapSeq ) / 2;
-        $lastNodeIX = $thisNode->{IX};
+        $thisNodeIX = $thisNode->{IX};
+
+        $policy->{perNode}->{$thisNodeIX}->{chainAlignmentData} =
+          { offset => $currentChainOffset };
+
+        # Set "parent" data for next pass
         $parentNodeLine = $thisNodeLine;
         $parentElementCount = $elementCount;
+
+        # descend to rightmost child
         my $children = $thisNode->{children};
-        $thisNode = $children->{$#$children}; # rightmost child
+        $thisNode = $children->{$#$children};
     }
+    my $lastNodeIX = $thisNodeIX;
 
     $chainAlignmentData = {
         chainOffset     => 0,
@@ -3381,7 +3454,7 @@ sub findAlignment {
         $allAlignments{$bodyColumn} //= [];
         push @{ $allAlignments{$bodyColumn} }, $bodyLine;
         my $gap       = $nodes->[ $bodyIX - 1 ];
-        my $gapLength = $gap->{length};
+        my $gapLength = $instance->gapLength($gap);
      #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         next CHILD if $gapLength <= 2;
         # say STDERR join " ", __FILE__, __LINE__, $bodyIX;
