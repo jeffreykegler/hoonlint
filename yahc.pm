@@ -476,9 +476,7 @@ sub parse {
 
 # Takes one argument and returns a ref to an array of acceptable
 # nodes.  The array may be empty.  All scalars are acceptable
-# leaf nodes.  Acceptable interior nodes have length at least 1
-# and contain a Haskell Standard symbol name, followed by zero or
-# more acceptable nodes.
+# leaf nodes.  Acceptable interior nodes have length at least 1.
 sub prune {
     no warnings 'recursion';
     my ($v) = @_;

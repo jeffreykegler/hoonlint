@@ -3212,9 +3212,8 @@ sub findChainAlignment {
         push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
     }
 
-    # CURRENT say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
+    # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
 
-    # CURRENT say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
     return [-1, []] if not scalar %wideAlignments;
 
     # wide alignments, in order first by descending count of wide instances;
@@ -3230,14 +3229,16 @@ sub findChainAlignment {
 
     my $topWideColumn = $sortedWideAlignments[0];
 
-    say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+    
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%allAlignments);
 
     # Make sure this is actually an *alignment*, that is,
     # that there are at least 2 instances.  Otherwise,
     # ignore it.
     return [-1, []] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
 
-    say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
 
     return [$topWideColumn, [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]];
 
@@ -3248,6 +3249,11 @@ sub chainAlignmentData {
     my $instance  = $policy->{lint};
     my $chainable = $policy->{chainable};
     my $grammar   = $instance->{grammar};
+
+    state $mortar = {
+       tall5d => 1,
+       norm5d => 1,
+    };
 
     my $argNodeIX = $argNode->{IX};
     my $chainAlignmentData =
@@ -3263,7 +3269,20 @@ sub chainAlignmentData {
   LINK: while ($thisNode) {
     # say STDERR join " ", __FILE__, __LINE__;
         last LINK if $thisNode->{NEXT};                    # Must be rightmost
+        my $symbolName = $instance->symbol($thisNode);
+        if ($mortar->{$symbolName}) {
+            $thisNode            = $thisNode->{PARENT};
+            next LINK;
+        }
+
+        # TODO -- replace this test by always ending the LINK
+        # loop on non-recognized-mortar non-chainable.
+        last LINK if $symbolName =~ m/^(rick5dJog|ruck5dJog|fordHoop)$/;
     # say STDERR join " ", __FILE__, __LINE__;
+        if (not $policy->chainable($thisNode) and not $instance->brickName($thisNode)) {
+            say STDERR join " ", __FILE__, __LINE__, $instance->symbol($thisNode);
+        }
+
         last LINK if not $policy->chainable($thisNode);    # Must be chainable
     # say STDERR join " ", __FILE__, __LINE__;
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
@@ -3280,6 +3299,11 @@ sub chainAlignmentData {
     # Find the head (first link) of this alignment chain
   LINK: while ($thisNode) {
         last LINK if $thisNode->{NEXT};                    # Must be rightmost
+        my $symbolName = $instance->symbol($thisNode);
+        if ($mortar->{$symbolName}) {
+            $thisNode            = $thisNode->{PARENT};
+            next LINK;
+        }
         last LINK if not $policy->chainable($thisNode);    # Must be chainable
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         last LINK if $thisNodeColumn < $alignmentBaseColumn;
@@ -3298,12 +3322,19 @@ sub chainAlignmentData {
     # of [ gap, body ], to align
     my @nodesToAlignByChildIX;
   LINK: while ($thisNode) {
-        # CURRENT say STDERR sprintf q{Traversing %s}, $instance->literalNode($thisNode);
+        # say STDERR sprintf q{Traversing %s}, $instance->literalNode($thisNode);
 
         # End of loop tests --
         # Is it chainable?
         # Is the line,column right for the current chain?
         # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
+        my $symbolName = $instance->symbol($thisNode);
+        # Skip if it's one of the appropriate list of mortar symbols.
+        if ($mortar->{$symbolName}) {
+            my $children = $thisNode->{children};
+            $thisNode = $children->[$#$children];
+            next LINK;
+        }
         last LINK if not $policy->chainable($thisNode);
         # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
@@ -4614,10 +4645,10 @@ sub checkBackdented {
     my $chainOffset = 0;
     my $chainAlignments;
     my $chainAlignmentData = $policy->chainAlignmentData($node);
-    # CURRENT say STDERR join " ", Data::Dumper::Dumper($chainAlignmentData);
+    # say STDERR join " ", Data::Dumper::Dumper($chainAlignmentData);
     if ($chainAlignmentData) {
-        my $chainOffset = $chainAlignmentData->{offset};
-        my $chainAlignments = $chainAlignmentData->{alignments};
+        $chainOffset = $chainAlignmentData->{offset};
+        $chainAlignments = $chainAlignmentData->{alignments};
     }
 
     my $reanchorOffset;    # for re-anchoring logic
@@ -4683,6 +4714,7 @@ sub checkBackdented {
             if ($chainAlignments) {
                 my $thisAlignment =
                   $chainAlignments->[ $chainOffset + $elementNumber - 1 ];
+                # say STDERR "$thisAlignment = chainAlignments->[ $chainOffset + $elementNumber - 1 ]";
                 my ( $chainAlignmentColumn, $chainAlignmentDetails ) =
                   @{$thisAlignment};
 
