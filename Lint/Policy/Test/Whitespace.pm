@@ -3250,22 +3250,22 @@ sub chainAlignmentData {
     my $chainHead;
     my ( $argNodeLine, $argNodeColumn ) = $instance->nodeLC($argNode);
     my $thisNode = $argNode;
-    LINK: while ($thisNode) {
-        last LINK if $thisNode->{NEXT}; # Must be rightmost
-        last LINK if not $policy->chainable($thisNode); # Must be chainable
+  LINK: while ($thisNode) {
+        last LINK if $thisNode->{NEXT};                    # Must be rightmost
+        last LINK if not $policy->chainable($thisNode);    # Must be chainable
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         last LINK if $thisNodeLine != $argNodeLine;
         $alignmentBaseColumn = $thisNodeColumn;
-        $chainHead = $thisNode;
-        $thisNode = $thisNode->{PARENT};
+        $chainHead           = $thisNode;
+        $thisNode            = $thisNode->{PARENT};
     }
 
-    die if not defined $alignmentBaseColumn; # TODO: delete after development
+    die if not defined $alignmentBaseColumn;    # TODO: delete after development
 
     # Find the head (first link) of this alignment chain
-    LINK: while ($thisNode) {
-        last LINK if $thisNode->{NEXT}; # Must be rightmost
-        last LINK if not $policy->chainable($thisNode); # Must be chainable
+  LINK: while ($thisNode) {
+        last LINK if $thisNode->{NEXT};                    # Must be rightmost
+        last LINK if not $policy->chainable($thisNode);    # Must be chainable
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         last LINK if $thisNodeColumn < $alignmentBaseColumn;
         $chainHead = $thisNode if $thisNodeColumn == $alignmentBaseColumn;
@@ -3274,40 +3274,92 @@ sub chainAlignmentData {
 
     # Traverse the whole chain, from the head
     $thisNode = $chainHead;
-    my $parentNodeLine = -1;
+    my $parentNodeLine     = -1;
     my $parentElementCount = 0;
     my $currentChainOffset = 0;
     my $thisNodeIX;
-    LINK: while ($thisNode) {
-        last LINK if not $policy->chainable($thisNode); # Must be chainable
+
+    # Array, indexed by child index, of "columns"
+    # of [ gap, body ], to align
+    my @nodesToAlignByChildIX;
+  LINK: while ($thisNode) {
+
+        # End of loop tests --
+        # Is it chainable?
+        # Is the line,column right for the current chain?
+        last LINK if not $policy->chainable($thisNode);
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
-        if ($thisNodeColumn == $alignmentBaseColumn) {
-           $currentChainOffset = 0;
-        } else {
-           last LINK if $thisNodeLine != $parentNodeLine;
-           $currentChainOffset += $parentElementCount;
+        if ( $thisNodeColumn == $alignmentBaseColumn ) {
+            $currentChainOffset = 0;
         }
-        my @thisGapSeq       = @{ $policy->gapSeq0($thisNode) };
-        my $elementCount = ( scalar @thisGapSeq ) / 2;
+        else {
+            last LINK if $thisNodeLine != $parentNodeLine;
+            $currentChainOffset += $parentElementCount;
+        }
+
+        # Tracks "last" node IX, so do not set $thisNodeIX before "end
+        # of loop" tests.
         $thisNodeIX = $thisNode->{IX};
+
+        my @thisGapSeq   = @{ $policy->gapSeq0($thisNode) };
+        my $elementCount = ( scalar @thisGapSeq ) / 2;
+
+      ELEMENT:
+        for (
+            my $elementNumber = 1 ;
+            $elementNumber <= $elementCount ;
+            $elementNumber++
+          )
+        {
+            my $gap           = $thisGapSeq[ $elementNumber * 2 - 2 ];
+            my $element       = $thisGapSeq[ $elementNumber * 2 - 1 ];
+            my ($gapLine)     = $instance->nodeLC($gap);
+            my ($elementLine) = $instance->nodeLC($element);
+
+            # Not in aligment if not on rune line
+            next ELEMENT if $elementLine != $thisNodeLine;
+
+            push @{ $nodesToAlignByChildIX[$elementNumber-1] }, $gap, $element;
+        }
 
         $policy->{perNode}->{$thisNodeIX}->{chainAlignmentData} =
           { offset => $currentChainOffset };
 
         # Set "parent" data for next pass
-        $parentNodeLine = $thisNodeLine;
+        $parentNodeLine     = $thisNodeLine;
         $parentElementCount = $elementCount;
 
         # descend to rightmost child
         my $children = $thisNode->{children};
         $thisNode = $children->{$#$children};
     }
+
     my $lastNodeIX = $thisNodeIX;
 
+    my @chainAlignments = ();
+  ELEMENT:
+    for (
+        my $childIX = 0 ;
+        $childIX <= $#nodesToAlignByChildIX;
+        $childIX++
+      )
+    {
+        my $nodesToAlign = $nodesToAlignByChildIX[$childIX];
+        if (not $nodesToAlign) {
+            $chainAlignments[ $childIX ] = [ -1, [] ];
+            next ELEMENT;
+        }
+        my $backdentColumn =
+          $alignmentBaseColumn + ( $elementCount - $childIX - 1 ) * 2;
+        $chainAlignments[ $childIX ] = $policy->findChainAlignment( $nodesToAlign->[$childIX],
+            $backdentColumn );
+    }
+
     $chainAlignmentData = {
-        chainOffset     => 0,
-        chainAlignments => [ ( [ -1, [] ] ) x 10 ]
-        # chainAlignments => [ ( [ -1, [] ] ) x $elementCount ]
+        offset     => 0,
+        alignments => [ ( [ -1, [] ] ) x 10 ]
+
+          # chainAlignments => [ ( [ -1, [] ] ) x $elementCount ]
     };
     return $chainAlignmentData;
 }
@@ -4532,9 +4584,9 @@ sub checkBackdented {
     my @mistakes = ();
     my $tag      = $elementCount . '-backdented';
 
-    my $chainOffset = 0;
-    # my $chainBaseColumn = $parentColumn;
-    my $chainAlignments = [ ([ -1, [] ]) x $elementCount ];
+    my $chainAlignmentData = $policy->chainAlignmentData($node);
+    my $chainOffset = $chainAlignmentData->{offset};
+    my $chainAlignments = $chainAlignmentData->{alignments};
 
     my $reanchorOffset;    # for re-anchoring logic
 
