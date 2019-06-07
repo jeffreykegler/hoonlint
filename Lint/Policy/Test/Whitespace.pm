@@ -68,7 +68,11 @@ sub new {
     my ( $class, $lintInstance ) = @_;
     my $policy = {};
     $policy->{lint} = $lintInstance;
-    %{ $policy->{chainable} } = %{ $lintInstance->{backdentedRule} };
+    my %chainable = ();
+    for my $key (keys %{ $lintInstance->{backdentedRule} }, keys %{ $lintInstance->{tallNoteRule} }) {
+       $chainable{$key} = 1;
+    }
+    $policy->{chainable} = \%chainable;
     Scalar::Util::weaken( $policy->{lint} );
     $policy->{gapGrammar} =
       Marpa::R2::Scanless::G->new( { source => \$gapCommentDSL } );
@@ -84,6 +88,8 @@ sub chainable {
     my $ruleID   = $node->{ruleID};
     my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName  = $grammar->symbol_name($lhs);
+    # say STDERR join ' ', __FILE__, __LINE__, $lhsName, $chainable->{$lhsName};
+    # say STDERR Data::Dumper::Dumper($chainable);
     return $chainable->{$lhsName};
 }
 
@@ -3171,10 +3177,10 @@ sub describeMisindent2 {
 
 # Find the oversize alignment for this column of elements.
 # of a chain alignment
-# $nodes must a ref to an array of alternating gap, body,
-# nodes.
+# $nodes must a ref to an array of repeating
+# ( gap, body, backdentColumn ) elements
 sub findChainAlignment {
-    my ( $policy, $nodes, $backdentColumn ) = @_;
+    my ( $policy, $nodes ) = @_;
     my $instance = $policy->{lint};
     my %allAlignments = ();
 
@@ -3184,17 +3190,18 @@ sub findChainAlignment {
     # "wide", meaning an alignment following a gap of more than
     # one stop
     my %wideAlignments = ();
-  CHILD: for ( my $bodyIX = 1 ; 1 ; $bodyIX += 2 ) {
-        my $body   = $nodes->[$bodyIX];
+  CHILD: for ( my $bodyIX = 2 ; 1 ; $bodyIX += 3 ) {
+        my $body   = $nodes->[$bodyIX -1];
         # say STDERR join " ", __FILE__, __LINE__, $bodyIX, $#$nodes;
         # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
         last CHILD if not defined $body;
         # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC( $body );
+        my $backdentColumn   = $nodes->[$bodyIX];
         next CHILD if $bodyColumn == $backdentColumn;
         $allAlignments{$bodyColumn} //= [];
         push @{ $allAlignments{$bodyColumn} }, $bodyLine;
-        my $gap       = $nodes->[ $bodyIX - 1 ];
+        my $gap       = $nodes->[ $bodyIX - 2 ];
         my $gapLength = $instance->gapLength($gap);
      #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         next CHILD if $gapLength <= 2;
@@ -3319,7 +3326,9 @@ sub chainAlignmentData {
             # Not in aligment if not on rune line
             next ELEMENT if $elementLine != $thisNodeLine;
 
-            push @{ $nodesToAlignByChildIX[$elementNumber-1] }, $gap, $element;
+            my $backdentColumn =
+              $thisNodeColumn + ( $elementCount - $elementNumber ) * 2;
+            push @{ $nodesToAlignByChildIX[$elementNumber-1] }, $gap, $element, $backdentColumn;
         }
 
         $policy->{perNode}->{$thisNodeIX}->{chainAlignmentData} =
@@ -3331,7 +3340,7 @@ sub chainAlignmentData {
 
         # descend to rightmost child
         my $children = $thisNode->{children};
-        $thisNode = $children->{$#$children};
+        $thisNode = $children->[$#$children];
     }
 
     my $lastNodeIX = $thisNodeIX;
@@ -3349,10 +3358,7 @@ sub chainAlignmentData {
             $chainAlignments[ $childIX ] = [ -1, [] ];
             next ELEMENT;
         }
-        my $backdentColumn =
-          $alignmentBaseColumn + ( $elementCount - $childIX - 1 ) * 2;
-        $chainAlignments[ $childIX ] = $policy->findChainAlignment( $nodesToAlign->[$childIX],
-            $backdentColumn );
+        $chainAlignments[ $childIX ] = $policy->findChainAlignment( $nodesToAlign);
     }
 
     $chainAlignmentData = {
