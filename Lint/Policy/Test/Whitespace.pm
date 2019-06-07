@@ -90,7 +90,7 @@ sub chainable {
     return if not $ruleID;
     my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName  = $grammar->symbol_name($lhs);
-    # say STDERR join ' ', __FILE__, __LINE__, $lhsName, $chainable->{$lhsName};
+    # CURRENT say STDERR join ' ', __FILE__, __LINE__, $lhsName, ($chainable->{$lhsName} // 'na');
     # say STDERR Data::Dumper::Dumper($chainable);
     return $chainable->{$lhsName};
 }
@@ -3212,9 +3212,9 @@ sub findChainAlignment {
         push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
     }
 
-    # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
+    # CURRENT say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
 
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
+    # CURRENT say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
     return [-1, []] if not scalar %wideAlignments;
 
     # wide alignments, in order first by descending count of wide instances;
@@ -3230,14 +3230,14 @@ sub findChainAlignment {
 
     my $topWideColumn = $sortedWideAlignments[0];
 
-    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+    say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
 
     # Make sure this is actually an *alignment*, that is,
     # that there are at least 2 instances.  Otherwise,
     # ignore it.
     return [-1, []] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
 
-    # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
+    say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
 
     return [$topWideColumn, [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]];
 
@@ -3298,23 +3298,29 @@ sub chainAlignmentData {
     # of [ gap, body ], to align
     my @nodesToAlignByChildIX;
   LINK: while ($thisNode) {
+        # CURRENT say STDERR sprintf q{Traversing %s}, $instance->literalNode($thisNode);
 
         # End of loop tests --
         # Is it chainable?
         # Is the line,column right for the current chain?
+        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
         last LINK if not $policy->chainable($thisNode);
+        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         if ( $thisNodeColumn == $alignmentBaseColumn ) {
             $currentChainOffset = 0;
         }
         else {
+        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
             last LINK if $thisNodeLine != $parentNodeLine;
+        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
             $currentChainOffset += $parentElementCount;
         }
 
         # Tracks "last" node IX, so do not set $thisNodeIX before "end
         # of loop" tests.
         $thisNodeIX = $thisNode->{IX};
+        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
 
         my @thisGapSeq   = @{ $policy->gapSeq0($thisNode) };
         my $elementCount = ( scalar @thisGapSeq ) / 2;
@@ -4608,6 +4614,7 @@ sub checkBackdented {
     my $chainOffset = 0;
     my $chainAlignments;
     my $chainAlignmentData = $policy->chainAlignmentData($node);
+    # CURRENT say STDERR join " ", Data::Dumper::Dumper($chainAlignmentData);
     if ($chainAlignmentData) {
         my $chainOffset = $chainAlignmentData->{offset};
         my $chainAlignments = $chainAlignmentData->{alignments};
