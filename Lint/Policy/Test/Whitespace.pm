@@ -3249,9 +3249,9 @@ sub chainAlignmentData {
     my $chainable = $policy->{chainable};
     my $grammar   = $instance->{grammar};
 
-    my $nodeIX = $argNode->{IX};
+    my $argNodeIX = $argNode->{IX};
     my $chainAlignmentData =
-      $policy->{perNode}->{$nodeIX}->{chainAlignmentData};
+      $policy->{perNode}->{$argNodeIX}->{chainAlignmentData};
     return $chainAlignmentData if $chainAlignmentData;
 
     # Find the base column of the alignment
@@ -3369,12 +3369,19 @@ sub chainAlignmentData {
         $chainAlignments[ $childIX ] = $policy->findChainAlignment( $nodesToAlign);
     }
 
-    $chainAlignmentData = {
-        offset     => 0,
-        alignments => [ ( [ -1, [] ] ) x 10 ]
+    $thisNode = $chainHead;
+  LINK: while ($thisNode) {
+        my $thisNodeIX = $thisNode->{IX};
+        $policy->{perNode}->{$thisNodeIX}->{chainAlignmentData}->{alignments} =
+          \@chainAlignments;
+        last LINK if $thisNodeIX == $lastNodeIX;
 
-          # chainAlignments => [ ( [ -1, [] ] ) x $elementCount ]
-    };
+        # descend to rightmost child
+        my $children = $thisNode->{children};
+        $thisNode = $children->[$#$children];
+    }
+
+    $chainAlignmentData = $policy->{perNode}->{$argNodeIX}->{chainAlignmentData};
     return $chainAlignmentData;
 }
 
