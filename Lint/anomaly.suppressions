@@ -769,7 +769,6 @@ hoons/arvo/lib/hood/womb.hoon 322:19 Test::Whitespace cenlus:hgap joined backden
 hoons/arvo/lib/hood/womb.hoon 336:23 Test::Whitespace cenlus:hgap joined backdent @336:23 element #2 of @336:5; overindented by 1
 hoons/arvo/lib/hood/womb.hoon 351:21 Test::Whitespace cenlus:hgap joined backdent @351:21 element #2 of @351:3; overindented by 1
 hoons/arvo/lib/hood/womb.hoon 356:11 Test::Whitespace tissem:hgap joined backdent @356:11 element #2 of @356:3; overindented by 1
-hoons/arvo/lib/hood/womb.hoon 511:14 Test::Whitespace cenlus:hgap joined backdent @511:14 element #2 of @511:3; overindented by 1
 hoons/arvo/lib/oauth1.hoon 109:9 Test::Whitespace cenhep:hgap joined backdent @109:9 element #1 of @109:3; overindented by 2
 hoons/arvo/lib/oauth1.hoon 109:17 Test::Whitespace cenhep:hgap joined backdent @109:17 element #2 of @109:3; overindented by 2
 hoons/arvo/lib/oauth2.hoon 106:9 Test::Whitespace cenhep:hgap joined backdent @106:9 element #1 of @106:3; overindented by 2
@@ -782,14 +781,12 @@ hoons/arvo/sys/hoon.hoon 483:8 Test::Whitespace barhep:hgap joined backdent @483
 hoons/arvo/sys/hoon.hoon 4319:11 Test::Whitespace barhep:hgap joined backdent @4319:11 element #1 of @4319:5; overindented by 2
 hoons/arvo/sys/hoon.hoon 4889:21 Test::Whitespace cenlus:hgap joined backdent @4889:21 element #2 of @4889:10; overindented by 1
 hoons/arvo/sys/hoon.hoon 5026:16 Test::Whitespace wutsig:hgap joined backdent @5026:16 element #1 of @5026:11; overindented by 1
-hoons/arvo/sys/hoon.hoon 5466:21 Test::Whitespace wutcol:hgap joined backdent @5466:21 element #2 of @5466:5; overindented by 1
 hoons/arvo/sys/hoon.hoon 8620:14 Test::Whitespace wutgar:hgap joined backdent @8620:14 element #1 of @8620:9; overindented by 1
 hoons/arvo/sys/hoon.hoon 10078:15 Test::Whitespace colket:hgap joined backdent @10078:15 element #2 of @10078:7; overindented by 1
 hoons/arvo/sys/hoon.hoon 10966:30 Test::Whitespace wutdot:hgap joined backdent @10966:30 element #2 of @10966:11; overindented by 1
 hoons/arvo/sys/vane/ames.hoon 1323:27 Test::Whitespace ketlus:hgap joined backdent @1323:27 element #2 of @1323:19; overindented by 1
 hoons/arvo/sys/vane/clay.hoon 542:15 Test::Whitespace wutsig:hgap joined backdent @542:15 element #2 of @542:5; overindented by 1
 hoons/arvo/sys/vane/ford.hoon 653:13 Test::Whitespace collus:hgap joined backdent @653:13 element #1 of @653:7; overindented by 2
-hoons/arvo/sys/vane/ford.hoon 1430:20 Test::Whitespace wutsig:hgap joined backdent @1430:20 element #2 of @1430:9; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 742:14 Test::Whitespace kethep:hgap joined backdent @742:14 element #1 of @742:9; overindented by 1
 hoons/arvo/sys/vane/gall.hoon 1051:17 Test::Whitespace wutket:hgap joined backdent @1051:17 element #2 of @1051:7; overindented by 1
 hoons/arvo/sys/vane/gall.hoon 1235:24 Test::Whitespace sigcen:hgap joined backdent @1235:24 element #3 of @1235:3; overindented by 1
@@ -799,8 +796,6 @@ hoons/arvo/sys/zuse.hoon 2962:24 Test::Whitespace tisfas:hgap joined backdent @2
 hoons/arvo/sys/zuse.hoon 2966:28 Test::Whitespace tisfas:hgap joined backdent @2966:28 element #2 of @2966:7; overindented by 2
 hoons/arvo/sys/zuse.hoon 2967:32 Test::Whitespace tisfas:hgap joined backdent @2967:32 element #2 of @2967:7; overindented by 1
 hoons/arvo/sys/zuse.hoon 2968:28 Test::Whitespace tisfas:hgap joined backdent @2968:28 element #2 of @2968:7; overindented by 3
-hoons/arvo/sys/zuse.hoon 5034:19 Test::Whitespace wutsig:hgap joined backdent @5034:19 element #2 of @5034:7; overindented by 3
-hoons/arvo/sys/zuse.hoon 5035:19 Test::Whitespace wutsig:hgap joined backdent @5035:19 element #2 of @5035:7; overindented by 1
 hoons/arvo/web/unmark/all.hoon 25:9 Test::Whitespace tiscom:hgap joined backdent @25:9 element #1 of @25:3; overindented by 2
 
 # Cell body misindents, from tests of Sat Jun  1 15:55:16 EDT 2019
