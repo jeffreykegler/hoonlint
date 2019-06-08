@@ -64,6 +64,29 @@ UpperRiser ~ unicorn
 
 END_OF_DSL
 
+# Format line and 0-based column as string
+sub describeLC {
+    my ( $line, $column ) = @_;
+    return '@' . $line . ':' . ( $column + 1 );
+}
+
+sub describeMisindent {
+    my ($difference) = @_;
+    if ( $difference > 0 ) {
+        return "overindented by $difference";
+    }
+    if ( $difference < 0 ) {
+        return "underindented by " . ( -$difference );
+    }
+    return "correctly indented";
+}
+
+sub describeMisindent2 {
+    my ( $got, $sought ) = @_;
+    $DB::single = 1 if not defined $sought;
+    return describeMisindent( $got - $sought );
+}
+
 sub new {
     my ( $class, $lintInstance ) = @_;
     my $policy = {};
@@ -3154,29 +3177,6 @@ sub check_0_as_1Running {
     return \@mistakes;
 }
 
-# Format line and 0-based column as string
-sub describeLC {
-    my ( $line, $column ) = @_;
-    return '@' . $line . ':' . ( $column + 1 );
-}
-
-sub describeMisindent {
-    my ($difference) = @_;
-    if ( $difference > 0 ) {
-        return "overindented by $difference";
-    }
-    if ( $difference < 0 ) {
-        return "underindented by " . ( -$difference );
-    }
-    return "correctly indented";
-}
-
-sub describeMisindent2 {
-    my ( $got, $sought ) = @_;
-    $DB::single = 1 if not defined $sought;
-    return describeMisindent( $got - $sought );
-}
-
 # Find the oversize alignment for this column of elements.
 # of a chain alignment
 # $nodes must a ref to an array of repeating
@@ -3214,7 +3214,7 @@ sub findChainAlignment {
 
     # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
 
-    return [-1, []] if not scalar %wideAlignments;
+    return [-1, {lines => []}] if not scalar %wideAlignments;
 
     # wide alignments, in order first by descending count of wide instances;
     # then by descending count of all instances;
@@ -3236,11 +3236,11 @@ sub findChainAlignment {
     # Make sure this is actually an *alignment*, that is,
     # that there are at least 2 instances.  Otherwise,
     # ignore it.
-    return [-1, []] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
+    return [-1, {lines => []}] if scalar @{ $allAlignments{$topWideColumn} } <= 1;
 
     # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
 
-    return [$topWideColumn, [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]];
+    return [$topWideColumn, {lines => [splice(@{$allAlignments{$topWideColumn}}, 0, 5)]}];
 
 }
 
@@ -4711,11 +4711,14 @@ sub checkBackdented {
             my $gapLength = $instance->gapLength($gap);
             next ELEMENT if $gapLength == 2;
 
+            my $thisAlignment;
+            my ( $chainAlignmentColumn, $chainAlignmentDetails );
+            my $chainAlignmentLines = [];
             if ($chainAlignments) {
-                my $thisAlignment =
+                $thisAlignment =
                   $chainAlignments->[ $chainOffset + $elementNumber - 1 ];
                 # say STDERR "$thisAlignment = chainAlignments->[ $chainOffset + $elementNumber - 1 ]";
-                my ( $chainAlignmentColumn, $chainAlignmentDetails ) =
+                ( $chainAlignmentColumn, $chainAlignmentDetails ) =
                   @{$thisAlignment};
 
                 next ELEMENT
@@ -4723,12 +4726,47 @@ sub checkBackdented {
                   and $chainAlignmentColumn == $elementColumn;
             }
 
+            my @topicLines = ();
+            my $tightColumn = $gapColumn + 2;
+            my @allowedColumns =([ $tightColumn => 'tight' ]);
+            if ($backdentColumn > $tightColumn) {
+                push @allowedColumns, [ $backdentColumn => 'backdent' ];
+            }
+            my $details;
+            if ($chainAlignmentColumn and $chainAlignmentColumn >= $tightColumn) {
+                push @allowedColumns, [ $chainAlignmentColumn => 'inter-line' ];
+                my $oneBasedColumn = $chainAlignmentColumn + 1;
+                my $chainAlignmentLines = $chainAlignmentDetails->{lines};
+                push @topicLines, @{$chainAlignmentLines};
+                $details = [
+                    [
+                        $tag,
+                        sprintf 'inter-line alignment is %d, see %s',
+                        $oneBasedColumn,
+                        (
+                            join q{ },
+                            map { $_ . ':' . $oneBasedColumn }
+                              @{$chainAlignmentLines}
+                        )
+                    ]
+                ];
+            }
+            else {
+                $details = [ [ $tag, "no inter-line alignment detected" ] ];
+            }
+            my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
+            my $allowedDesc = join "; ",
+              map { sprintf '@%d:%d (%s)', $elementLine, $_->[0]+1, $_->[1] } @sortedColumns;
+            if (scalar @sortedColumns >= 2) {
+               $allowedDesc = 'one of ' . $allowedDesc;
+            }
+
             my $msg = sprintf
-              "joined backdent %s element #%d of %s; %s",
-              describeLC( $elementLine, $elementColumn ),
+              'joined backdent element #%d of %s is at %s; should be %s',
               $elementNumber,
               describeLC( $parentLine, $parentColumn ),
-              describeMisindent2( $gapLength, 2 );
+              describeLC( $elementLine, $elementColumn ),
+              $allowedDesc;
             push @mistakes,
               {
                 desc           => $msg,
@@ -4739,6 +4777,8 @@ sub checkBackdented {
                 reportLine     => $elementLine,
                 reportColumn   => $elementColumn,
                 subpolicy      => $policy->nodeSubpolicy($node) . ':hgap',
+                topicLines => \@topicLines,
+                details => $details,
               };
             next ELEMENT;
         }
