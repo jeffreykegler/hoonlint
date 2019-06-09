@@ -3197,8 +3197,8 @@ sub findChainAlignment {
         # say STDERR join " ", __FILE__, __LINE__, $bodyIX, $#$nodes;
         # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
         last CHILD if not defined $body;
-        # say STDERR join " ", __FILE__, __LINE__, $nodes->[$bodyIX];
         my ( $bodyLine, $bodyColumn ) = $instance->nodeLC( $body );
+        # say STDERR join " ", __FILE__, __LINE__, $bodyLine, $bodyColumn;
         my $backdentColumn   = $nodes->[$bodyIX];
         next CHILD if $bodyColumn == $backdentColumn;
         $allAlignments{$bodyColumn} //= [];
@@ -3373,7 +3373,7 @@ sub chainAlignmentData {
 
             my $backdentColumn =
               $thisNodeColumn + ( $elementCount - $elementNumber ) * 2;
-            push @{ $nodesToAlignByChildIX[$elementNumber-1] }, $gap, $element, $backdentColumn;
+            push @{ $nodesToAlignByChildIX[$currentChainOffset + $elementNumber-1] }, $gap, $element, $backdentColumn;
         }
 
         $policy->{perNode}->{$thisNodeIX}->{chainAlignmentData} =
