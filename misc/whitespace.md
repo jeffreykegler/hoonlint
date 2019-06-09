@@ -690,9 +690,14 @@ the runsteps in TISSIG should be aligned with the rune.
 
 ## Appendix: Non-standard code
 
-For linting purposes, it is necessary to decide the intended
-chess-sidedness of misindented jogging hoons, joggings and jogs
-in non-standard code.
+In non-standard code -- code which does not follow these guidelines,
+`hoonlint` sometimes must decide the "intended" syntax,
+in order to produce diagnostics that are as helpful as possible.
+This section describes the methods used for deciding what was
+"intended" in non-standard Hoon code.
+
+### Chess-sidedness
+
 A jog is considered queenside if its indentation is 2 stops or more
 greater than the anchor column.
 Otherwise, the jog is considered kingside.
@@ -702,6 +707,8 @@ of its jogs.
 In case of a tie, the jogging is considered to be queenside.
 The chess-sidedness of a misindented jogging hoon is that of its
 jogging.
+
+### Jogging body column
 
 In non-standard code,
 the jogging body column of a jogging is considered to be the most common start column
@@ -714,3 +721,23 @@ start at one of the most common columns.
 If there are no aligned jogs in a jogging,
 the jogging body column is the body column of the
 lexically first jog in the jogging.
+
+### Inter-line alignment
+
+In non-standard code,
+the inter-line alignment of a column of lexemes is
+the alignment most common in the "wide" lexemes.
+(Wide lexemes are those which do not have tight or backdented
+alignment.)
+
+If two alignment tie by wide lexeme count,
+the tie is broken using the total lexeme count.
+If two alignments tie by total lexeme count,
+the tie is broken in favor of the alignment which
+occurs first, lexically.
+
+If there are no wide lexemes, the inter-line alignment is
+irrelevant and left undefined.
+Also an inter-line alignment must actually align with another lexeme
+in the lexeme column -- in other words, the inter-line alignment
+must have a total lexeme count of at least 2.
