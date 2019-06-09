@@ -271,6 +271,22 @@ while pre-comments preceed sequence steps.
 The inter-comment column and pre-comment column is specified,
 for each type of sequence, below.
 
+Every multi-line comment contains
+
+* A newline-terminated partial line preamble.
+This may be just the newline.
+
+* A body of one or more full newline-terminated lines,
+all of them comments or
+(in the case of non-standard code) blank lines.
+
+* A partial line postamble.
+This is never newline-terminated,
+and may be zero-length.
+
+Informally, the body of a standard multi-line comment 
+follows these conventions:
+
 <ol>
 <li>A multi-line comment may contain
 an "inter-part", a "pre-part",
@@ -297,6 +313,9 @@ An <b>structural comment</b> is any good comment which is
 not a meta-comment.
 </li>
 </ol>
+
+A more formal description of a multi-line comment body is
+given in an appendix.
 
 ### Types of hoons
 
@@ -774,23 +793,9 @@ on another line.
 in other words, the inter-line alignment
 must have a total lexeme count of at least 2.
 
-## Appendix: Multi-line comments
+## Appendix: Multi-line comment body
 
-Every multi-line comment contains
-
-* A newline-terminated partial line preamble.
-This may be just the newline.
-
-* A body of one or more full newline-terminated lines,
-all of them comments or
-(in the case of non-standard code) blank lines.
-
-* A partial line postamble.
-This is never newline-terminated,
-and may be zero-length.
-
-The rest of this appendix describes the format of the body.
-This obeys the BNF
+The format of a multi-line comment body obeys the BNF
 
 ```
 :start ::= gapComments
