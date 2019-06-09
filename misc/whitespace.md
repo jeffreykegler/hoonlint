@@ -802,16 +802,6 @@ Exception ::= BadComment
 Exception ::= BlankLine
 ```
 
-unicorn ~ [^\d\D]
-BadComment ~ unicorn
-BlankLine ~ unicorn
-InterComment ~ unicorn
-LowerRiser ~ unicorn
-MetaComment ~ unicorn
-PreComment ~ unicorn
-Tread ~ unicorn
-UpperRiser ~ unicorn
-
 The terminals in this BNF are
 
 * BadComment -- a comment with any indent. Priority 3.
