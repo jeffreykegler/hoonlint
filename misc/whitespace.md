@@ -746,3 +746,113 @@ an inter-line alignment must actually align with a corresponding lexeme
 on another line.
 in other words, the inter-line alignment
 must have a total lexeme count of at least 2.
+
+## Appendix: Multi-line comments
+
+Every multi-line comment contains
+
+* A newline-terminated partial line preamble.
+This may be just the newline.
+
+* A body of one or more full newline-terminated lines,
+all of them comments or
+(in the case of non-standard code) blank lines.
+
+* A partial line postamble.
+This is never newline-terminated,
+and may be zero-length.
+
+The rest of this appendix describes the format of the body.
+This obeys the BNF
+
+```
+:start ::= gapComments
+gapComments ::= OptExceptions Body
+gapComments ::= OptExceptions
+Body ::= InterPart PrePart
+Body ::= InterPart
+Body ::= PrePart
+InterPart ::= InterComponent
+InterPart ::= InterruptedInterComponents
+InterPart ::= InterruptedInterComponents InterComponent
+
+InterruptedInterComponents ::= InterruptedInterComponent+
+InterruptedInterComponent ::= InterComponent Exceptions
+InterComponent ::= Staircases
+InterComponent ::= Staircases InterComments
+InterComponent ::= InterComments
+
+InterComments ::= InterComment+
+
+Staircases ::= Staircase+
+Staircase ::= UpperRisers Tread LowerRisers
+UpperRisers ::= UpperRiser+
+LowerRisers ::= LowerRiser+
+
+PrePart ::= ProperPreComponent OptPreComponents
+ProperPreComponent ::= PreComment
+OptPreComponents ::= PreComponent*
+PreComponent ::= ProperPreComponent
+PreComponent ::= Exception
+
+OptExceptions ::= Exception*
+Exceptions ::= Exception+
+Exception ::= MetaComment
+Exception ::= BadComment
+Exception ::= BlankLine
+```
+
+unicorn ~ [^\d\D]
+BadComment ~ unicorn
+BlankLine ~ unicorn
+InterComment ~ unicorn
+LowerRiser ~ unicorn
+MetaComment ~ unicorn
+PreComment ~ unicorn
+Tread ~ unicorn
+UpperRiser ~ unicorn
+
+The terminals in this BNF are
+
+* BadComment -- a comment with any indent. Priority 3.
+
+* BlankLine -- a line terminated with a newline and
+otherwise containing only zero or more spaces. Priority 3.
+
+* InterComment -- a comment that starts at the inter-comment column.
+Priority 1.
+
+* LowerRiser -- a comment that starts one stop past the inter-comment
+column.
+Priority 1.
+
+* MetaComment -- a comment that starts at column zero.
+Priority 2.
+
+* PreComment -- a comment that starts at the pre-comment column.
+Priority 1.
+
+* Tread -- a comment that starts at the inter-comment column,
+whose first four characters are colons,
+and whose fifth character is either a space or a newline.
+Priority 1.
+
+* UpperRiser -- a comment that starts at the inter-comment column.
+Priority 1.
+
+Terminals are ambiguous -- a given line may match more than one terminal.
+The lexer limits this ambiguity using the "priorities".
+Comments are read as if tested for each
+priority in numerical order.
+This has the slightly counter-intuitive effect
+that the highest priority is the lowest numbered one.
+Comments with the same priority are treated as if tested
+all at once, which allows for ambiguous terminals.
+
+Specifically,
+
+* No comment is read as a Priority 3 comment if it can be
+lexed as a Priority 1 or 2 comment.
+
+* No comment is read as a Priority 2 comment if it can be
+lexed as a Priority 1.
