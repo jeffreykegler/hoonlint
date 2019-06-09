@@ -730,7 +730,7 @@ the alignment most common in the "wide" lexemes.
 (Wide lexemes are those which do not have tight or backdented
 alignment.)
 
-If two alignment tie by wide lexeme count,
+If two alignments tie by wide lexeme count,
 the tie is broken using the total lexeme count.
 If two alignments tie by total lexeme count,
 the tie is broken in favor of the alignment which
@@ -738,6 +738,11 @@ occurs first, lexically.
 
 If there are no wide lexemes, the inter-line alignment is
 irrelevant and left undefined.
-Also an inter-line alignment must actually align with another lexeme
-in the lexeme column -- in other words, the inter-line alignment
+Also,
+the inter-line alignment is undefined unless it 
+has a total lexeme count of at least 2 --
+in other words
+an inter-line alignment must actually align with a corresponding lexeme
+on another line.
+in other words, the inter-line alignment
 must have a total lexeme count of at least 2.
