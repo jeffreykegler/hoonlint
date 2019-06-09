@@ -53,6 +53,26 @@ but there are many exceptions, and they
 are important.
 See below.
 
+### Horizontal Alignment
+
+All lexemes in hoon are aligned horizontally in one of 4 ways:
+
+* **Tight**:  Tightly aligned lexemes follow the preceding
+lexeme by exactly one stop.  A lexeme cannot be tightly aligned
+if it is the first one on its line.
+
+* **Backdented**:  Hoon's standard alignment, described
+in detail below.
+
+* **Inter-line**:  Inter-line alignment aligns the lexeme with
+lexemes on associated lines.  Which lexeme is aligned with which,
+and which lines are considered "associated" varies depending on
+the syntactic context.  Inter-line alignment is described in detail
+in the sections describing the syntaxes where it is allowed.
+
+* **Free-form**:  Within SELACE hoons,
+horizontal alignment can be free-form.
+
 ### Reanchoring
 
 If the rune line contains other bricks,
@@ -232,7 +252,7 @@ a whitespace character; and
 a comment aligned at the column one stop greater
 than the anchor column.
 
-### Gaps
+### Vertical Gaps
 
 A **newline-equivalent gap** is a gap containing which contains only one
 newline, not counting those newlines which termination properly aligned
