@@ -264,12 +264,39 @@ a newline-equivalent gap may contain zero or more
 followed by zero or more **pre-comments**.
 Both inter-comments and pre-comments can contain any content,
 but in concept,
-inter-comments separate the sequence steps from other lexemese,
+inter-comments separate the sequence steps from other lexemes,
 and from each other;
 while pre-comments preceed sequence steps.
 
-The correct indentation of inter-comments and pre-comments is specified,
+The inter-comment column and pre-comment column is specified,
 for each type of sequence, below.
+
+<ol>
+<li>A multi-line comment may contain
+an "inter-part", a "pre-part",
+or both.
+</li>
+<li>If both an inter-part and a pre-part are present,
+the inter-part must precede the pre-part.
+</li>
+<li>The inter-part is a non-empty sequence of inter-comments
+and staircases.
+</li>
+<li>A pre-part is a non-empty sequence of pre-comments.
+</li>
+<li>Meta-comments may be inserted anywhere in either the pre-part
+or the inter-part.
+</li>
+<li>Comments which do not obey the above rules are
+<b>bad comments</b>.
+A <b>good comment</b> is any comment which is not a bad comment.
+</li>
+<li>A comment is not regarded as a meta-comment
+if it can be parsed as structural comment.
+An <b>structural comment</b> is any good comment which is
+not a meta-comment.
+</li>
+</ol>
 
 ### Types of hoons
 
