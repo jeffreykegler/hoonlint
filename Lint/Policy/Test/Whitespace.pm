@@ -1462,11 +1462,56 @@ sub checkRunning {
     # say STDERR Data::Dumper::Dumper($options->{anchorDetails});
     # say STDERR Data::Dumper::Dumper($anchorDetails);
 
-    my $childIX = 0;
+    # TODO: Delete the singleton logic?
     my $firstSingletonLine;
+
     my $mistakeSubpolicy = $policy->nodeSubpolicy($parent);
     my @mistakes         = ();
 
+    my $skipFirst = $options->{skipFirst};
+    my $childIX = $skipFirst ? 2 : 1;
+
+    # Call an column of runsteps with the same row
+    # position a "pile" because "column" and the other terms are
+    # too overloaded.
+    my @runStepsToAlignByPile = ();
+  RUNNING_LINE: while (1) {
+
+        # The index into the runstep alignment array.
+        # The alignment of the 2nd runstep
+        # in a row (or line) is at index 0.
+        my $pileIX = 0;
+      RUNSTEP: while (1) {
+            last RUNNING_LINE if $childIX + 1 > $#$runningChildren;
+            my $gap       = $runningChildren->[$childIX];
+            my $runStep   = $runningChildren->[ $childIX + 1 ];
+            my ($gapLine) = $instance->nodeLC($gap);
+            my ( $runStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
+            last RUNSTEP if $gapLine != $runStepLine;
+
+            # Uses Perl's autoinstantiation
+            push @{ $runStepsToAlignByPile[$pileIX] }, $gap, $runStep;
+            $pileIX += 1;
+            $childIX += 2;
+        }
+
+        # In this loop, childIX always points to a gap
+        $childIX += 2;
+    }
+
+    my @pileAlignments = ();
+  ELEMENT:
+    for ( my $pileIX = 0 ; $pileIX <= $#runStepsToAlignByPile ; $pileIX++ ) {
+        my $runStepsToAlign = $runStepsToAlignByPile[$pileIX];
+        if ( not $runStepsToAlign ) {
+            $pileAlignments[$pileIX] = [ -1, [] ];
+            next ELEMENT;
+        }
+        $pileAlignments[$pileIX] =
+          $policy->findAlignment($runStepsToAlign);
+    }
+
+    $childIX = 0;
     # Do the first run step
     my $runStepCount = 1;
     my $gap          = $runningChildren->[$childIX];
@@ -1475,7 +1520,7 @@ sub checkRunning {
     my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
 
   CHECK_FIRST_RUNNING: {
-        last CHECK_FIRST_RUNNING if $options->{skipFirst};
+        last CHECK_FIRST_RUNNING if $skipFirst;
         last CHECK_FIRST_RUNNING if $runStepColumn == $expectedColumn;
         my $msg = sprintf
           "runstep #%d %s; %s",
@@ -1501,6 +1546,8 @@ sub checkRunning {
     $childIX = 2;
   RUN_STEP: while ( $childIX < $#$runningChildren ) {
 
+    my ( $thisRunStepLine, $runStepColumn ) ;
+
       INLINE_RUN_STEP: while (1) {
             if ( $childIX >= $#$runningChildren ) {
                 last RUN_STEP;
@@ -1512,24 +1559,70 @@ sub checkRunning {
             if ( $thisRunStepLine != $workingRunStepLine ) {
                 last INLINE_RUN_STEP;
             }
-            $runStepCount++;
-            if ( $gap->{length} != 2 ) {
-                my $nextExpectedColumn = $gapColumn + 2;
-                my $msg                = sprintf
-                  'runstep #%d %s; %s',
-                  ( $childIX / 2 ) + 1,
-                  describeLC( $gapLine, $gapColumn ),
-                  describeMisindent2( $runStepColumn, $nextExpectedColumn );
-                push @mistakes,
-                  {
-                    desc           => $msg,
-                    parentLine     => $runeLine,
-                    parentColumn   => $runeColumn,
-                    line           => $thisRunStepLine,
-                    column         => $runStepColumn,
-                    subpolicy      => $mistakeSubpolicy . ':running-hgap',
-                    details        => [ [$tag] ],
-                  };
+            CHECK_COLUMN: {
+            my $tightColumn = $gapColumn + 2;
+            last CHECK_COLUMN if $runStepColumn == $tightColumn;
+            my @allowedColumns =([ $tightColumn => 'tight' ]);
+
+            my ( $pileAlignmentColumn, $pileAlignmentLines );
+            my $thisAlignment = $pileAlignments[ $runStepCount - 2 ];
+            if ($thisAlignment) {
+                ( $pileAlignmentColumn, $pileAlignmentLines ) = @{$thisAlignment};
+                last CHECK_COLUMN if $pileAlignmentColumn > $tightColumn
+                  and $pileAlignmentColumn == $runStepColumn;
+            }
+
+            my $details;
+            my @topicLines = ();
+            if ($pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn) {
+                push @allowedColumns, [ $pileAlignmentColumn => 'runstep' ];
+                my $oneBasedColumn = $pileAlignmentColumn + 1;
+                my $pileAlignmentLines = $pileAlignmentLines;
+                push @topicLines, @{$pileAlignmentLines};
+                $details = [
+                    [
+                        $tag,
+                        sprintf 'runstep alignment is %d, see %s',
+                        $oneBasedColumn,
+                        (
+                            join q{ },
+                            map { $_ . ':' . $oneBasedColumn }
+                              @{$pileAlignmentLines}
+                        )
+                    ]
+                ];
+            }
+            else {
+                $details = [ [ $tag, "no runstep alignment detected" ] ];
+            }
+
+            my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
+            my $allowedDesc = join "; ",
+              map { sprintf '@%d:%d (%s)', $thisRunStepLine, $_->[0]+1, $_->[1] } @sortedColumns;
+            if (scalar @sortedColumns >= 2) {
+               $allowedDesc = 'one of ' . $allowedDesc;
+            }
+
+            my $msg = sprintf
+              'runstep #%d of running %s, line %d is at %s; should be %s',
+              $runStepCount,
+              describeLC( $runeLine, $runeColumn ),
+              $thisRunStepLine,
+              describeLC( $thisRunStepLine, $runStepColumn ),
+              $allowedDesc;
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $runeLine,
+                parentColumn   => $runeColumn,
+                line           => $thisRunStepLine,
+                column         => $runStepColumn,
+                reportLine     => $thisRunStepLine,
+                reportColumn   => $runStepColumn,
+                subpolicy      => $policy->nodeSubpolicy($parent) . ':hgap',
+                topicLines => \@topicLines,
+                details => $details,
+              };
             }
             $childIX += 2;
         }
@@ -4734,14 +4827,14 @@ sub checkBackdented {
             }
             my $details;
             if ($chainAlignmentColumn and $chainAlignmentColumn >= $tightColumn) {
-                push @allowedColumns, [ $chainAlignmentColumn => 'inter-line' ];
+                push @allowedColumns, [ $chainAlignmentColumn => 'chain' ];
                 my $oneBasedColumn = $chainAlignmentColumn + 1;
                 my $chainAlignmentLines = $chainAlignmentDetails->{lines};
                 push @topicLines, @{$chainAlignmentLines};
                 $details = [
                     [
                         $tag,
-                        sprintf 'inter-line alignment is %d, see %s',
+                        sprintf 'chain alignment is %d, see %s',
                         $oneBasedColumn,
                         (
                             join q{ },
@@ -4752,7 +4845,7 @@ sub checkBackdented {
                 ];
             }
             else {
-                $details = [ [ $tag, "no inter-line alignment detected" ] ];
+                $details = [ [ $tag, "no chain alignment detected" ] ];
             }
             my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
             my $allowedDesc = join "; ",
