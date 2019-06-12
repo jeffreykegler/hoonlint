@@ -113,7 +113,7 @@ sub chainable {
     return if not $ruleID;
     my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName  = $grammar->symbol_name($lhs);
-    # CURRENT say STDERR join ' ', __FILE__, __LINE__, $lhsName, ($chainable->{$lhsName} // 'na');
+    # say STDERR join ' ', __FILE__, __LINE__, $lhsName, ($chainable->{$lhsName} // 'na');
     # say STDERR Data::Dumper::Dumper($chainable);
     return $chainable->{$lhsName};
 }
@@ -1511,7 +1511,57 @@ sub checkRunning {
         $pileAlignments[$pileIX] =
           $policy->findAlignment($runStepsToAlign);
     }
-        # say STDERR Data::Dumper::Dumper( \@pileAlignments );
+
+    # If there are no pile alignments, then we check for
+    # alignments among the running's children.
+        my @nodesToAlignByElement;
+  RUNNING_CHILD_ALIGNMENTS: {
+        last RUNNING_CHILD_ALIGNMENT if scalar @pileAlignments;
+      RUNSTEP:
+        for (
+            my $runStepIX = ( $skipFirst ? 2 : 1 ) ;
+            $runStepIX < $#$runningChildren ;
+            $runStepIX += 2
+          )
+        {
+            my $runStep = $runningChildren->[$runStepIX];
+
+            # say STDERR "Child $runStepIX: ", $instance->literalNode($runStep);
+            my $brickDescendant = $instance->brickDescendant($runStep);
+            last RUNSTEP if not $brickDescendant;
+
+    say STDERR "Brick $runStepIX: ", $instance->literalNode($brickDescendant);
+            next RUNSTEP if not $policy->chainable($brickDescendant);
+            say STDERR "Chainable Child $runStepIX: ",
+              $instance->literalNode($brickDescendant);
+            my @gapSeq = $policy->gapSeq0($brickDescendant);
+          BRICK_ELEMENT: for ( my $elementIX = 0 ; ; $elementIX++ ) {
+        say STDERR join " ", __FILE__, __LINE__;
+                my $seqIX = $elementIX * 2;
+                last BRICK_ELEMENT if $seqIX >= $#gapSeq;
+                my $gap     = $gapSeq[$seqIX];
+                my $element = $gapSeq[ $seqIX + 1 ];
+                push @{ $nodesToAlignByElement[$elementIX] }, $gap, $element;
+            }
+        say STDERR join " ", __FILE__, __LINE__;
+        }
+        say STDERR join " ", __FILE__, __LINE__;
+    }
+
+  my @runstepChildAlignments = ();
+        say STDERR join " ", __FILE__, __LINE__;
+  ELEMENT:
+    for ( my $elementIX = 0 ;
+        $elementIX <= $#nodesToAlignByElement ; $elementIX++ )
+    {
+        say STDERR join " ", __FILE__, __LINE__;
+        my $nodesToAlign = $nodesToAlignByElement[$elementIX];
+        if ( not $nodesToAlign ) {
+            $runstepChildAlignments[$elementIX] = [ -1, [] ];
+            next ELEMENT;
+        }
+        $runstepChildAlignments[$elementIX] = $policy->findAlignment($nodesToAlign);
+    }
 
     $childIX = 0;
     # Do the first run step

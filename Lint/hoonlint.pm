@@ -637,6 +637,18 @@ sub brickNode {
     return;
 }
 
+# Return a brick descendent, if there is one.
+# Only singletons are followed.
+sub brickDescendant {
+    my ( $instance, $node ) = @_;
+    my $thisNode = $node;
+    while ($thisNode) {
+        return $thisNode if $instance->brickName($thisNode);
+        $thisNode = $thisNode->{children}->[0];
+    }
+    return;
+}
+
 sub brickLC {
     my ( $instance, $node ) = @_;
     return $instance->nodeLC( $instance->brickNode($node) );
