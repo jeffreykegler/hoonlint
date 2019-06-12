@@ -1,11 +1,5 @@
 === hoons/arvo/sur/gmail-message.hoon ===
 === hoons/arvo/sur/kyev.hoon ===
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #4 @8:24; overindented by 1
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #5 @8:32; overindented by 1
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #11 @9:17; overindented by 1
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #13 @9:31; overindented by 2
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #17 @10:8; overindented by 2
-hoons/arvo/sur/kyev.hoon 8:1 Test::Whitespace bucwut:running-hgap runstep #18 @10:17; overindented by 1
 === hoons/arvo/sur/plan/diff.hoon ===
 hoons/arvo/sur/plan/diff.hoon 1:1 Test::Whitespace optFordFashep Fashep body @1:7 is overindented by 2
 === hoons/arvo/sur/plan/acct.hoon ===
@@ -62,8 +56,6 @@ hoons/arvo/sys/zuse.hoon 354:11 Test::Whitespace tallKetwut backdented element #
 hoons/arvo/sys/zuse.hoon 359:13 Test::Whitespace tallKetwut backdented element #1 @360:5; underindented by 8
 hoons/arvo/sys/zuse.hoon 376:11 Test::Whitespace tallKetwut backdented element #1 @377:3; underindented by 8
 hoons/arvo/sys/zuse.hoon 381:13 Test::Whitespace tallKetwut backdented element #1 @382:5; underindented by 8
-hoons/arvo/sys/zuse.hoon 408:11 Test::Whitespace buccol:running-bad-multistep runstep @409:31; multi-step line not allowed after singleton (408)
-hoons/arvo/sys/zuse.hoon 408:11 Test::Whitespace buccol:running-bad-multistep runstep @410:41; multi-step line not allowed after singleton (408)
 hoons/arvo/sys/zuse.hoon 547:11 Test::Whitespace tallKetwut backdented element #1 @548:3; underindented by 8
 hoons/arvo/sys/zuse.hoon 552:13 Test::Whitespace tallKetwut backdented element #1 @553:5; underindented by 8
 hoons/arvo/sys/zuse.hoon 661:11 Test::Whitespace tallKetwut backdented element #1 @662:3; underindented by 8
@@ -135,7 +127,6 @@ hoons/arvo/sys/zuse.hoon 2587:18 Test::Whitespace tallWutsig backdented element 
 hoons/arvo/sys/zuse.hoon 2592:18 Test::Whitespace tallKethep backdented element #2 @2593:9; overindented by 2
 hoons/arvo/sys/zuse.hoon 2595:29 Test::Whitespace tallKethep backdented element #2 @2596:11; underindented by 7
 hoons/arvo/sys/zuse.hoon 2595:18 Test::Whitespace tallTisdot backdented element #3 @2599:9; underindented by 9
-hoons/arvo/sys/zuse.hoon 2616:11 Test::Whitespace wutpam:running-bad-multistep runstep @2617:31; multi-step line not allowed after singleton (2616)
 hoons/arvo/sys/zuse.hoon 2618:15 Test::Whitespace tallCenlus backdented element #2 @2619:19; overindented by 2
 hoons/arvo/sys/zuse.hoon 2618:15 Test::Whitespace tallCenlus backdented element #3 @2620:17; overindented by 2
 hoons/arvo/sys/zuse.hoon 2624:18 Test::Whitespace tallTislus backdented element #2 @2625:9; underindented by 9
@@ -148,11 +139,9 @@ hoons/arvo/sys/zuse.hoon 2960:23 Test::Whitespace tallCenhep backdented element 
 hoons/arvo/sys/zuse.hoon 3082:11 Test::Whitespace tallKethep backdented element #2 @3085:9; overindented by 2
 hoons/arvo/sys/zuse.hoon 3164:7 Test::Whitespace tallBarket Barket head @3165:9; must be on rune line
 hoons/arvo/sys/zuse.hoon 3275:14 Test::Whitespace tallColsig runstep #1 @3275:14; overindented by 1
-hoons/arvo/sys/zuse.hoon 3275:9 Test::Whitespace colsig:running-hgap runstep #2 @3275:15; overindented by 1
-hoons/arvo/sys/zuse.hoon 3275:9 Test::Whitespace colsig:running-hgap runstep #8 @3276:19; overindented by 1
+hoons/arvo/sys/zuse.hoon 3276:22 Test::Whitespace colsig:hgap runstep #3 of running @3275:9, line 3276 is at @3276:22; should be @3276:21 (tight)
 hoons/arvo/sys/zuse.hoon 3277:14 Test::Whitespace tallColsig runstep #11 @3277:14; overindented by 1
-hoons/arvo/sys/zuse.hoon 3275:9 Test::Whitespace colsig:running-hgap runstep #20 @3278:27; overindented by 1
-hoons/arvo/sys/zuse.hoon 3275:9 Test::Whitespace colsig:running-hgap runstep #22 @3279:15; overindented by 1
+hoons/arvo/sys/zuse.hoon 3278:30 Test::Whitespace colsig:hgap runstep #5 of running @3275:9, line 3278 is at @3278:30; should be @3278:29 (tight)
 hoons/arvo/sys/zuse.hoon 3287:12 Test::Whitespace tallKetwut backdented element #1 @3288:3; underindented by 9
 hoons/arvo/sys/zuse.hoon 3292:13 Test::Whitespace tallKethep backdented element #2 @3293:9; overindented by 4
 hoons/arvo/sys/zuse.hoon 3316:13 Test::Whitespace tallKetwut backdented element #1 @3317:3; underindented by 10
@@ -165,8 +154,8 @@ hoons/arvo/sys/zuse.hoon 3920:11 Test::Whitespace tallKetwut Pseudo-joined backd
 hoons/arvo/sys/zuse.hoon 3926:14 Test::Whitespace tallKetwut backdented element #1 @3927:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 3950:11 Test::Whitespace tallKettis backdented element #2 @3951:7; underindented by 4
 hoons/arvo/sys/zuse.hoon 4189:15 Test::Whitespace tallSiglus backdented element #1 @4190:7; underindented by 8
-hoons/arvo/sys/zuse.hoon 4191:34 Test::Whitespace colsig:running-hgap runstep #14 @4193:38; overindented by 3
-hoons/arvo/sys/zuse.hoon 4191:34 Test::Whitespace colsig:running-hgap runstep #15 @4193:50; overindented by 1
+hoons/arvo/sys/zuse.hoon 4193:43 Test::Whitespace colsig:hgap runstep #5 of running @4191:34, line 4193 is at @4193:43; should be @4193:40 (tight)
+hoons/arvo/sys/zuse.hoon 4193:53 Test::Whitespace colsig:hgap runstep #6 of running @4191:34, line 4193 is at @4193:53; should be @4193:52 (tight)
 hoons/arvo/sys/zuse.hoon 4206:9 Test::Whitespace tallCenlus backdented element #3 @4207:11; overindented by 2
 hoons/arvo/sys/zuse.hoon 4374:11 Test::Whitespace tallKethep backdented element #2 @4375:11; overindented by 4
 hoons/arvo/sys/zuse.hoon 4538:3 Test::Whitespace LuslusCell cell body @4539:7; overindented by 2
@@ -179,10 +168,6 @@ hoons/arvo/sys/zuse.hoon 4819:15 Test::Whitespace tallColsig runstep #1 @4819:15
 hoons/arvo/sys/zuse.hoon 4820:15 Test::Whitespace tallColsig runstep #2 @4820:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4821:15 Test::Whitespace tallColsig runstep #3 @4821:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4822:15 Test::Whitespace tallColsig runstep #4 @4822:15; overindented by 2
-hoons/arvo/sys/zuse.hoon 4892:9 Test::Whitespace colsig:running-hgap runstep #2 @4892:33; overindented by 1
-hoons/arvo/sys/zuse.hoon 4892:9 Test::Whitespace colsig:running-hgap runstep #10 @4896:33; overindented by 1
-hoons/arvo/sys/zuse.hoon 4892:9 Test::Whitespace colsig:running-hgap runstep #16 @4899:33; overindented by 1
-hoons/arvo/sys/zuse.hoon 4892:9 Test::Whitespace colsig:running-hgap runstep #18 @4900:33; overindented by 1
 hoons/arvo/sys/zuse.hoon 4920:14 Test::Whitespace tallKetwut backdented element #1 @4921:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 4961:13 Test::Whitespace tallKetwut backdented element #1 @4962:5; underindented by 8
 hoons/arvo/sys/zuse.hoon 5042:15 Test::Whitespace tallKetwut backdented element #1 @5043:5; underindented by 10
@@ -614,10 +599,6 @@ hoons/arvo/sys/vane/clay.hoon 237:1 Test::Whitespace LuslusCell cell body @238:1
 hoons/arvo/sys/vane/clay.hoon 256:1 Test::Whitespace LuslusCell cell body @257:11; overindented by 8
 hoons/arvo/sys/vane/clay.hoon 268:1 Test::Whitespace LuslusCell cell body @269:11; overindented by 8
 hoons/arvo/sys/vane/clay.hoon 280:1 Test::Whitespace LuslusCell cell body @281:11; overindented by 8
-hoons/arvo/sys/vane/clay.hoon 302:11 Test::Whitespace bucwut:running-hgap runstep #2 @302:20; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 302:11 Test::Whitespace bucwut:running-hgap runstep #3 @302:27; overindented by 2
-hoons/arvo/sys/vane/clay.hoon 302:11 Test::Whitespace bucwut:running-hgap runstep #4 @302:40; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 302:11 Test::Whitespace bucwut:running-hgap runstep #8 @303:40; overindented by 1
 hoons/arvo/sys/vane/clay.hoon 310:1 Test::Whitespace LuslusCell cell body @311:11; overindented by 8
 hoons/arvo/sys/vane/clay.hoon 15:1 Test::Whitespace tallBarcen battery hephep @321:1; underindented by 4
 hoons/arvo/sys/vane/clay.hoon 326:3 Test::Whitespace tallBuccolMold runstep #2 @326:3; underindented by 8
@@ -637,12 +618,8 @@ hoons/arvo/sys/vane/clay.hoon 714:11 Test::Whitespace wutpam:comment-indent runs
 hoons/arvo/sys/vane/clay.hoon 733:11 Test::Whitespace wutpam:comment-indent runstep #3 @729:9; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 903:7 Test::Whitespace tallBarket Barket head @904:7; must be on rune line
 hoons/arvo/sys/vane/clay.hoon 932:7 Test::Whitespace tallWutsig backdented element #2 @933:8; underindented by 1
-hoons/arvo/sys/vane/clay.hoon 1106:11 Test::Whitespace coltar:running-bad-multistep runstep @1108:58; multi-step line not allowed after singleton (1107)
-hoons/arvo/sys/vane/clay.hoon 1117:11 Test::Whitespace coltar:running-bad-multistep runstep @1119:58; multi-step line not allowed after singleton (1118)
-hoons/arvo/sys/vane/clay.hoon 1129:11 Test::Whitespace coltar:running-bad-multistep runstep @1131:58; multi-step line not allowed after singleton (1130)
 hoons/arvo/sys/vane/clay.hoon 1272:9 Test::Whitespace tallKethep backdented element #2 @1273:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1278:5 Test::Whitespace tallTisdot backdented element #2 @1279:11; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 1284:5 Test::Whitespace coltar:running-bad-multistep runstep @1286:52; multi-step line not allowed after singleton (1285)
 hoons/arvo/sys/vane/clay.hoon 1345:9 Test::Whitespace tallKethep backdented element #2 @1346:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1383:21 Test::Whitespace tallColket backdented element #4 @1384:9; underindented by 12
 hoons/arvo/sys/vane/clay.hoon 1410:9 Test::Whitespace tallKethep backdented element #2 @1411:9; overindented by 4
@@ -650,10 +627,8 @@ hoons/arvo/sys/vane/clay.hoon 1432:5 Test::Whitespace tallTisket backdented elem
 hoons/arvo/sys/vane/clay.hoon 1442:9 Test::Whitespace tallKethep backdented element #2 @1443:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1459:9 Test::Whitespace tallKethep backdented element #2 @1460:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1499:9 Test::Whitespace tallKethep backdented element #2 @1500:9; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 1635:5 Test::Whitespace coltar:running-bad-multistep runstep @1637:41; multi-step line not allowed after singleton (1636)
 hoons/arvo/sys/vane/clay.hoon 1686:9 Test::Whitespace tallKethep backdented element #2 @1687:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1691:9 Test::Whitespace tallKethep backdented element #2 @1692:9; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 1743:5 Test::Whitespace coltar:running-bad-multistep runstep @1745:48; multi-step line not allowed after singleton (1744)
 hoons/arvo/sys/vane/clay.hoon 1764:9 Test::Whitespace tallKethep backdented element #2 @1765:9; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 1859:7 Test::Whitespace tallBarket Barket head @1860:7; must be on rune line
 hoons/arvo/sys/vane/clay.hoon 1875:7 Test::Whitespace tallTissem backdented element #2 @1876:11; overindented by 2
@@ -669,12 +644,8 @@ hoons/arvo/sys/vane/clay.hoon 2422:13 Test::Whitespace wutbar:comment-indent run
 hoons/arvo/sys/vane/clay.hoon 2560:11 Test::Whitespace tallKethep backdented element #2 @2563:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2653:11 Test::Whitespace tallKethep backdented element #2 @2654:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2719:11 Test::Whitespace tallSigbar backdented element #2 @2726:12; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 2764:9 Test::Whitespace coltar:running-bad-multistep runstep @2766:44; multi-step line not allowed after singleton (2765)
 hoons/arvo/sys/vane/clay.hoon 2967:15 Test::Whitespace tallKethep backdented element #2 @2968:15; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 2978:15 Test::Whitespace tallKethep backdented element #2 @2979:15; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 2999:9 Test::Whitespace coltar:running-bad-multistep runstep @3002:60; multi-step line not allowed after singleton (3000)
-hoons/arvo/sys/vane/clay.hoon 3128:11 Test::Whitespace coltar:running-bad-multistep runstep @3130:63; multi-step line not allowed after singleton (3129)
-hoons/arvo/sys/vane/clay.hoon 3168:9 Test::Whitespace coltar:running-bad-multistep runstep @3170:61; multi-step line not allowed after singleton (3169)
 hoons/arvo/sys/vane/clay.hoon 3207:13 Test::Whitespace tallKethep backdented element #2 @3208:13; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 3211:13 Test::Whitespace tallKethep backdented element #2 @3212:13; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 3242:13 Test::Whitespace tallKethep backdented element #2 @3243:13; overindented by 4
@@ -682,10 +653,8 @@ hoons/arvo/sys/vane/clay.hoon 3247:13 Test::Whitespace tallKethep backdented ele
 hoons/arvo/sys/vane/clay.hoon 3278:13 Test::Whitespace tallKethep backdented element #2 @3279:11; overindented by 2
 hoons/arvo/sys/vane/clay.hoon 3287:13 Test::Whitespace tallKethep backdented element #2 @3288:13; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 3309:13 Test::Whitespace tallKethep backdented element #2 @3310:13; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 3314:9 Test::Whitespace coltar:running-bad-multistep runstep @3316:44; multi-step line not allowed after singleton (3315)
 hoons/arvo/sys/vane/clay.hoon 3359:13 Test::Whitespace tallKethep backdented element #2 @3360:13; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 3366:13 Test::Whitespace tallKethep backdented element #2 @3367:13; overindented by 4
-hoons/arvo/sys/vane/clay.hoon 3371:9 Test::Whitespace coltar:running-bad-multistep runstep @3373:44; multi-step line not allowed after singleton (3372)
 hoons/arvo/sys/vane/clay.hoon 3394:13 Test::Whitespace tallTisbar backdented element #2 @3395:13; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 3522:1 Test::Whitespace tallTisbar backdented element #1 @3523:5; overindented by 2
 hoons/arvo/sys/vane/clay.hoon 3538:11 Test::Whitespace tallTislus backdented element #1 @3539:11; underindented by 2
@@ -836,7 +805,6 @@ hoons/arvo/app/dojo.hoon 1663:13 Test::Whitespace tallKethep backdented element 
 === hoons/arvo/app/gh.hoon ===
 hoons/arvo/app/gh.hoon 83:7 Test::Whitespace tallKethep backdented element #2 @84:7; overindented by 4
 hoons/arvo/app/gh.hoon 117:11 Test::Whitespace tallTislus backdented element #2, @118:9; comment underindented by 2
-hoons/arvo/app/gh.hoon 279:5 Test::Whitespace coltar:running-bad-multistep runstep @283:20; multi-step line not allowed after singleton (279)
 === hoons/arvo/app/ask.hoon ===
 hoons/arvo/app/ask.hoon 5:1 Test::Whitespace optFordFaslus Faslus body @5:7 is overindented by 2
 hoons/arvo/app/ask.hoon 7:1 Test::Whitespace tallBarcen split Barcen battery @8:3; overindented by 2
@@ -1023,13 +991,12 @@ hoons/arvo/lib/down-jet/parse.hoon 190:13 Test::Whitespace tallKethep backdented
 hoons/arvo/lib/down-jet/parse.hoon 360:9 Test::Whitespace tallKethep backdented element #2 @361:9; overindented by 4
 hoons/arvo/lib/down-jet/parse.hoon 465:1 Test::Whitespace LuslusCell cell body @466:2; underindented by 1
 hoons/arvo/lib/down-jet/parse.hoon 475:1 Test::Whitespace LuslusCell cell body @476:4; overindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #2 @493:17; overindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #30 @496:12; overindented by 4
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #42 @497:34; overindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #43 @497:44; overindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #44 @497:53; overindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #46 @497:70; overindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 493:5 Test::Whitespace colsig:running-hgap runstep #48 @498:12; overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 493:20 Test::Whitespace colsig:hgap runstep #2 of running @493:5, line 493 is at @493:20; should be @493:19 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:38 Test::Whitespace colsig:hgap runstep #4 of running @493:5, line 497 is at @497:38; should be @497:36 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:47 Test::Whitespace colsig:hgap runstep #5 of running @493:5, line 497 is at @497:47; should be @497:46 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:56 Test::Whitespace colsig:hgap runstep #6 of running @493:5, line 497 is at @497:56; should be @497:55 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:74 Test::Whitespace colsig:hgap runstep #8 of running @493:5, line 497 is at @497:74; should be @497:72 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 498:15 Test::Whitespace colsig:hgap runstep #2 of running @493:5, line 498 is at @498:15; should be one of @498:14 (tight); @498:18 (runstep)
 hoons/arvo/lib/down-jet/parse.hoon 522:3 Test::Whitespace LuslusCell Pseudo-joined cell @522:3; body/comment mismatch; body is underindented by 9
 hoons/arvo/lib/down-jet/parse.hoon 565:16 Test::Whitespace tallBartis backdented element #2 @566:3; underindented by 13
 hoons/arvo/lib/down-jet/parse.hoon 602:7 Test::Whitespace tallKethep backdented element #2 @603:7; overindented by 4
@@ -1135,7 +1102,6 @@ hoons/arvo/lib/hood/kiln.hoon 135:13 Test::Whitespace tallCenhep backdented elem
 hoons/arvo/lib/hood/kiln.hoon 242:5 Test::Whitespace tallWutcol backdented element #3, @247:7; comment overindented by 2
 hoons/arvo/lib/hood/kiln.hoon 317:7 Test::Whitespace tallKethep backdented element #2 @318:7; overindented by 4
 hoons/arvo/lib/hood/kiln.hoon 327:7 Test::Whitespace tallKethep backdented element #2 @328:7; overindented by 4
-hoons/arvo/lib/hood/kiln.hoon 417:5 Test::Whitespace coltar:running-bad-multistep runstep @419:35; multi-step line not allowed after singleton (418)
 hoons/arvo/lib/hood/kiln.hoon 458:7 Test::Whitespace tallKethep backdented element #2 @459:7; overindented by 4
 hoons/arvo/lib/hood/kiln.hoon 569:17 Test::Whitespace tallKethep backdented element #2 @570:17; overindented by 4
 hoons/arvo/lib/hood/kiln.hoon 582:5 Test::Whitespace tallWutlus 2-jogging split head @582:11; overindented by 2
@@ -1220,7 +1186,6 @@ hoons/arvo/mar/plan.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is 
 === hoons/arvo/mar/gh/commit.hoon ===
 === hoons/arvo/mar/gh/issue-comment.hoon ===
 === hoons/arvo/mar/gh/issues.hoon ===
-hoons/arvo/mar/gh/issues.hoon 82:5 Test::Whitespace coltar:running-bad-multistep runstep @85:17; multi-step line not allowed after singleton (83)
 === hoons/arvo/mar/gh/poke.hoon ===
 === hoons/arvo/mar/gh/issue.hoon ===
 === hoons/arvo/mar/gh/repository.hoon ===

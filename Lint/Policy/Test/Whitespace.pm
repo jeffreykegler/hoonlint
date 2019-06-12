@@ -1462,14 +1462,11 @@ sub checkRunning {
     # say STDERR Data::Dumper::Dumper($options->{anchorDetails});
     # say STDERR Data::Dumper::Dumper($anchorDetails);
 
-    # TODO: Delete the singleton logic?
-    my $firstSingletonLine;
-
     my $mistakeSubpolicy = $policy->nodeSubpolicy($parent);
     my @mistakes         = ();
 
     my $skipFirst = $options->{skipFirst};
-    my $childIX = $skipFirst ? 2 : 1;
+    my $childIX = $skipFirst ? 3 : 2;
 
     # Call an column of runsteps with the same row
     # position a "pile" because "column" and the other terms are
@@ -1482,11 +1479,15 @@ sub checkRunning {
         # in a row (or line) is at index 0.
         my $pileIX = 0;
       RUNSTEP: while (1) {
+        # say STDERR join " ", __FILE__, __LINE__, $childIX, $pileIX;
             last RUNNING_LINE if $childIX + 1 > $#$runningChildren;
             my $gap       = $runningChildren->[$childIX];
             my $runStep   = $runningChildren->[ $childIX + 1 ];
             my ($gapLine) = $instance->nodeLC($gap);
             my ( $runStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
+        # say STDERR sprintf q{Gap: "%s"}, $instance->literalNode($gap);
+        # say STDERR sprintf q{Runstep: "%s"}, $instance->literalNode($runStep);
+        # say STDERR join " ", __FILE__, __LINE__, "gapline vs. run step line", $gapLine, $runStepLine;
             last RUNSTEP if $gapLine != $runStepLine;
 
             # Uses Perl's autoinstantiation
@@ -1510,21 +1511,22 @@ sub checkRunning {
         $pileAlignments[$pileIX] =
           $policy->findAlignment($runStepsToAlign);
     }
+        # say STDERR Data::Dumper::Dumper( \@pileAlignments );
 
     $childIX = 0;
     # Do the first run step
-    my $runStepCount = 1;
     my $gap          = $runningChildren->[$childIX];
     my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
     my $runStep = $runningChildren->[ $childIX + 1 ];
     my ( $thisRunStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
 
+  my $runStepCount = 1;
   CHECK_FIRST_RUNNING: {
         last CHECK_FIRST_RUNNING if $skipFirst;
         last CHECK_FIRST_RUNNING if $runStepColumn == $expectedColumn;
         my $msg = sprintf
           "runstep #%d %s; %s",
-          ( $childIX / 2 ) + 1,
+          $runStepCount,
           describeLC( $thisRunStepLine, $runStepColumn ),
           describeMisindent2( $runStepColumn, $expectedColumn );
         push @mistakes,
@@ -1544,6 +1546,7 @@ sub checkRunning {
     # Initial runsteps may be on a single line,
     # separated by one stop
     $childIX = 2;
+    $runStepCount = 2;
   RUN_STEP: while ( $childIX < $#$runningChildren ) {
 
     my ( $thisRunStepLine, $runStepColumn ) ;
@@ -1567,6 +1570,7 @@ sub checkRunning {
             my ( $pileAlignmentColumn, $pileAlignmentLines );
             my $thisAlignment = $pileAlignments[ $runStepCount - 2 ];
             if ($thisAlignment) {
+                # say STDERR Data::Dumper::Dumper($thisAlignment);
                 ( $pileAlignmentColumn, $pileAlignmentLines ) = @{$thisAlignment};
                 last CHECK_COLUMN if $pileAlignmentColumn > $tightColumn
                   and $pileAlignmentColumn == $runStepColumn;
@@ -1574,7 +1578,8 @@ sub checkRunning {
 
             my $details;
             my @topicLines = ();
-            if ($pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn) {
+            # say STDERR qq{$pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn};
+            if (defined $pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn) {
                 push @allowedColumns, [ $pileAlignmentColumn => 'runstep' ];
                 my $oneBasedColumn = $pileAlignmentColumn + 1;
                 my $pileAlignmentLines = $pileAlignmentLines;
@@ -1625,31 +1630,10 @@ sub checkRunning {
               };
             }
             $childIX += 2;
-        }
-
-        $firstSingletonLine = $workingRunStepLine
-          if $runStepCount <= 1 and not defined $firstSingletonLine;
-
-        if ( $runStepCount > 1 and defined $firstSingletonLine ) {
-            my $msg = sprintf
-              'runstep %s; multi-step line not allowed after singleton (%d)',
-              describeLC( $gapLine, $gapColumn ),
-              $firstSingletonLine;
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $runeLine,
-                parentColumn => $runeColumn,
-                line         => $workingRunStepLine,
-                column       => $runStepColumn,
-                topicLines   => [$firstSingletonLine],
-                subpolicy    => $mistakeSubpolicy . ':running-bad-multistep',
-                details      => [ [$tag] ],
-              };
+            $runStepCount++;
         }
 
         $workingRunStepLine = $thisRunStepLine;
-        $runStepCount       = 1;
 
         # If the run step is mis-indented, complaints about the comments are
         # misleading and confusing.  Skip them.
@@ -1701,6 +1685,7 @@ sub checkRunning {
         }
 
         $childIX += 2;
+        $runStepCount = 2;
 
     }
 
