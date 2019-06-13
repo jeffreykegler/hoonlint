@@ -186,6 +186,7 @@ hoons/arvo/sys/hoon.hoon 840:9 Test::Whitespace tallCenlus backdented element #3
 hoons/arvo/sys/hoon.hoon 857:9 Test::Whitespace tallCenlus backdented element #3 @858:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 878:10 Test::Whitespace tallBartis backdented element #2 @879:3; underindented by 7
 hoons/arvo/sys/hoon.hoon 898:23 Test::Whitespace tallBarhep backdented element #1 @899:5; underindented by 6
+hoons/arvo/sys/hoon.hoon 909:13 Test::Whitespace tisfas:hgap joined backdent element #2 of @909:3 is at @909:13; should be one of @909:11 (tight); @909:16 (chain)
 hoons/arvo/sys/hoon.hoon 390:1 Test::Whitespace tallBarcen whap @943:3; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 1062:7 Test::Whitespace tallWutcol backdented element #3 @1063:3; underindented by 4
 hoons/arvo/sys/hoon.hoon 1244:9 Test::Whitespace tallWutsig backdented element #3 @1245:5; underindented by 4
@@ -748,6 +749,8 @@ hoons/arvo/app/gmail.hoon 254:3 Test::Whitespace tallBarcen wisp @293:5; comment
 hoons/arvo/app/test.hoon 62:5 Test::Whitespace tallColsig runstep #2 @62:5; underindented by 2
 hoons/arvo/app/test.hoon 87:5 Test::Whitespace tallColsig runstep #2 @87:5; underindented by 2
 hoons/arvo/app/test.hoon 147:11 Test::Whitespace tallColsig split 0-running @148:3; comment underindented by 2
+hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent element #2 of @149:5 is at @149:29; should be one of @149:20 (tight); @149:35 (running)
+hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent element #2 of @150:5 is at @150:29; should be one of @150:26 (tight); @150:35 (running)
 === hoons/arvo/app/gmail/split.hoon ===
 hoons/arvo/app/gmail/split.hoon 7:1 Test::Whitespace tallBarcen whap @36:1; empty line in comment
 hoons/arvo/app/gmail/split.hoon 7:1 Test::Whitespace tallBarcen whap @53:1; empty line in comment

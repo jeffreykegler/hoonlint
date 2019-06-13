@@ -1,23 +1,4 @@
-hoons/arvo/sys/hoon.hoon 909:13 Test::Whitespace tisfas:hgap joined backdent @909:13 element #2 of @909:3; overindented by 2
-hoons/arvo/sys/hoon.hoon 5305:24 Test::Whitespace colhep:hgap joined backdent @5305:24 element #2 of @5305:9; overindented by 6
-hoons/arvo/sys/hoon.hoon 5306:24 Test::Whitespace colhep:hgap joined backdent @5306:24 element #2 of @5306:9; overindented by 6
-hoons/arvo/sys/hoon.hoon 5307:24 Test::Whitespace colhep:hgap joined backdent @5307:24 element #2 of @5307:9; overindented by 6
-hoons/arvo/app/test.hoon 134:29 Test::Whitespace colhep:hgap joined backdent @134:29 element #2 of @134:5; overindented by 10
-hoons/arvo/app/test.hoon 135:29 Test::Whitespace colhep:hgap joined backdent @135:29 element #2 of @135:5; overindented by 11
-hoons/arvo/app/test.hoon 136:29 Test::Whitespace colhep:hgap joined backdent @136:29 element #2 of @136:5; overindented by 10
-hoons/arvo/app/test.hoon 138:29 Test::Whitespace colhep:hgap joined backdent @138:29 element #2 of @138:5; overindented by 11
-hoons/arvo/app/test.hoon 139:29 Test::Whitespace colhep:hgap joined backdent @139:29 element #2 of @139:5; overindented by 11
-hoons/arvo/app/test.hoon 140:29 Test::Whitespace colhep:hgap joined backdent @140:29 element #2 of @140:5; overindented by 9
-hoons/arvo/app/test.hoon 141:29 Test::Whitespace colhep:hgap joined backdent @141:29 element #2 of @141:5; overindented by 9
-hoons/arvo/app/test.hoon 142:29 Test::Whitespace colhep:hgap joined backdent @142:29 element #2 of @142:5; overindented by 9
-hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent @149:29 element #2 of @149:5; overindented by 9
-hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent @150:29 element #2 of @150:5; overindented by 3
-hoons/arvo/app/test.hoon 152:35 Test::Whitespace colhep:hgap joined backdent @152:35 element #2 of @152:5; overindented by 5
-hoons/arvo/app/test.hoon 153:35 Test::Whitespace colhep:hgap joined backdent @153:35 element #2 of @153:5; overindented by 6
-hoons/arvo/app/test.hoon 154:35 Test::Whitespace colhep:hgap joined backdent @154:35 element #2 of @154:5; overindented by 10
-hoons/arvo/app/test.hoon 155:35 Test::Whitespace colhep:hgap joined backdent @155:35 element #2 of @155:5; overindented by 15
-hoons/arvo/app/test.hoon 156:35 Test::Whitespace colhep:hgap joined backdent @156:35 element #2 of @156:5; overindented by 15
-hoons/arvo/app/test.hoon 157:35 Test::Whitespace colhep:hgap joined backdent @157:35 element #2 of @157:5; overindented by 12
-hoons/arvo/app/test.hoon 158:35 Test::Whitespace colhep:hgap joined backdent @158:35 element #2 of @158:5; overindented by 15
-hoons/arvo/app/test.hoon 159:35 Test::Whitespace colhep:hgap joined backdent @159:35 element #2 of @159:5; overindented by 10
-hoons/arvo/app/test.hoon 160:35 Test::Whitespace colhep:hgap joined backdent @160:35 element #2 of @160:5; overindented by 10
+# hoons/arvo/sys/hoon.hoon 909:13 Test::Whitespace tisfas:hgap joined backdent @909:13 element #2 of @909:3; overindented by 2
+# hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent @149:29 element #2 of @149:5; overindented by 9
+# hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent @150:29 element #2 of @150:5; overindented by 3
+# hoons/arvo/app/test.hoon 152:35 Test::Whitespace colhep:hgap joined backdent @152:35 element #2 of @152:5; overindented by 5

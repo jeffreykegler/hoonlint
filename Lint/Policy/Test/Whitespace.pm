@@ -1521,7 +1521,7 @@ sub checkRunning {
       RUNSTEP:
         for (
             my $runStepIX = ( $skipFirst ? 2 : 1 ) ;
-            $runStepIX < $#$runningChildren ;
+            $runStepIX <= $#$runningChildren ;
             $runStepIX += 2
           )
         {
@@ -4876,8 +4876,60 @@ sub checkBackdented {
 
             }
 
-            my $interlineAlignmentType = 'chain';
-            my $interlineAlignmentColumn = $chainAlignmentColumn;
+            # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($runningAlignments);
+            # say STDERR join " ", __FILE__, __LINE__, $elementNumber;
+            my ( $runningAlignmentColumn, $runningAlignmentDetails );
+            if ($runningAlignments) {
+                $thisAlignment = $runningAlignments->[ $elementNumber - 1];
+                ( $runningAlignmentColumn, $runningAlignmentDetails ) =
+                  @{$thisAlignment};
+            }
+
+            if (    defined $chainAlignmentColumn
+                and $chainAlignmentColumn >= 0
+                and defined $runningAlignmentColumn
+                and $runningAlignmentColumn >= 0
+                and $chainAlignmentColumn != $runningAlignmentColumn )
+            {
+                my $msg = sprintf
+'inter-line alignment conflict; element #%d of %s at %s; running is %d but chain is %d',
+                  $elementNumber,
+                  describeLC( $parentLine,  $parentColumn ),
+                  describeLC( $elementLine, $elementColumn ),
+                  describeLC( $elementLine, $runningAlignmentColumn ),
+                  describeLC( $elementLine, $chainAlignmentColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $elementLine,
+                    column       => $elementColumn,
+                    reportLine   => $elementLine,
+                    reportColumn => $elementColumn,
+                    subpolicy    => $policy->nodeSubpolicy($node)
+                      . ':interline-mismatch',
+                  };
+            }
+
+            my $interlineAlignmentType;
+            my $interlineAlignmentColumn;
+          SET_INTERLINE_ALIGNMENT: {
+                if ( defined $chainAlignmentColumn
+                    and $chainAlignmentColumn >= 0 )
+                {
+                    $interlineAlignmentType   = 'chain';
+                    $interlineAlignmentColumn = $chainAlignmentColumn;
+                    last SET_INTERLINE_ALIGNMENT;
+                }
+                if ( defined $runningAlignmentColumn)
+                {
+                    $interlineAlignmentType   = 'running';
+                    $interlineAlignmentColumn = $runningAlignmentColumn;
+                }
+            }
+
+            # say STDERR join " ", __FILE__, __LINE__, $interlineAlignmentColumn;
             next ELEMENT
               if defined $interlineAlignmentColumn
               and $interlineAlignmentColumn >= 0
