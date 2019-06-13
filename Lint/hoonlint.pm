@@ -432,6 +432,8 @@ sub lhsName {
 # The "symbol" of a node.  Not necessarily unique.
 sub symbol {
     my ( $instance, $node ) = @_;
+    # local $Data::Dumper::Maxdepth    = 1;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($node);
     my $name = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
@@ -443,8 +445,10 @@ sub symbol {
 # Can be used as test of "brick-ness"
 sub brickName {
     my ( $instance, $node ) = @_;
+    # local $Data::Dumper::Maxdepth    = 1;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($node);
     my $type = $node->{type};
-    return symbol($node) if $type ne 'node';
+    return $instance->symbol($node) if $type ne 'node';
     my $lhsName = $instance->lhsName($node);
     return $lhsName if not $instance->{mortarLHS}->{$lhsName};
     return;
@@ -641,10 +645,15 @@ sub brickNode {
 # Only singletons are followed.
 sub brickDescendant {
     my ( $instance, $node ) = @_;
+    # local $Data::Dumper::Maxdepth    = 1;
+    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($node);
     my $thisNode = $node;
     while ($thisNode) {
+        # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($thisNode);
         return $thisNode if $instance->brickName($thisNode);
-        $thisNode = $thisNode->{children}->[0];
+        my $children = $thisNode->{children};
+        return if not $children;
+        $thisNode = $children->[0];
     }
     return;
 }

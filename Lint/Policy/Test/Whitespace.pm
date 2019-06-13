@@ -1516,7 +1516,8 @@ sub checkRunning {
     # alignments among the running's children.
         my @nodesToAlignByElement;
   RUNNING_CHILD_ALIGNMENTS: {
-        last RUNNING_CHILD_ALIGNMENT if scalar @pileAlignments;
+        last RUNNING_CHILD_ALIGNMENTS if scalar @pileAlignments;
+        my @bricks;
       RUNSTEP:
         for (
             my $runStepIX = ( $skipFirst ? 2 : 1 ) ;
@@ -1530,37 +1531,56 @@ sub checkRunning {
             my $brickDescendant = $instance->brickDescendant($runStep);
             last RUNSTEP if not $brickDescendant;
 
-    say STDERR "Brick $runStepIX: ", $instance->literalNode($brickDescendant);
-            next RUNSTEP if not $policy->chainable($brickDescendant);
-            say STDERR "Chainable Child $runStepIX: ",
+            # say STDERR "Brick $runStepIX: ",
               $instance->literalNode($brickDescendant);
-            my @gapSeq = $policy->gapSeq0($brickDescendant);
+            next RUNSTEP if not $policy->chainable($brickDescendant);
+
+            push @bricks, $brickDescendant;
+            # say STDERR "Chainable Child $runStepIX: ",
+              $instance->literalNode($brickDescendant);
+            my $gapSeq = $policy->gapSeq0($brickDescendant);
           BRICK_ELEMENT: for ( my $elementIX = 0 ; ; $elementIX++ ) {
-        say STDERR join " ", __FILE__, __LINE__;
+                # say STDERR join " ", __FILE__, __LINE__;
                 my $seqIX = $elementIX * 2;
-                last BRICK_ELEMENT if $seqIX >= $#gapSeq;
-                my $gap     = $gapSeq[$seqIX];
-                my $element = $gapSeq[ $seqIX + 1 ];
+                last BRICK_ELEMENT if $seqIX >= $#$gapSeq;
+                my $gap     = $gapSeq->[$seqIX];
+                my $element = $gapSeq->[ $seqIX + 1 ];
+                # say STDERR join " ", __FILE__, __LINE__;
                 push @{ $nodesToAlignByElement[$elementIX] }, $gap, $element;
             }
-        say STDERR join " ", __FILE__, __LINE__;
+            # say STDERR join " ", __FILE__, __LINE__;
         }
-        say STDERR join " ", __FILE__, __LINE__;
-    }
 
-  my @runstepChildAlignments = ();
-        say STDERR join " ", __FILE__, __LINE__;
-  ELEMENT:
-    for ( my $elementIX = 0 ;
-        $elementIX <= $#nodesToAlignByElement ; $elementIX++ )
-    {
-        say STDERR join " ", __FILE__, __LINE__;
-        my $nodesToAlign = $nodesToAlignByElement[$elementIX];
-        if ( not $nodesToAlign ) {
-            $runstepChildAlignments[$elementIX] = [ -1, [] ];
-            next ELEMENT;
+        last RUNNING_CHILD_ALIGNMENTS unless scalar @nodesToAlignByElement;
+
+        # say STDERR join " ", __FILE__, __LINE__;
+        my @runStepChildAlignments = ();
+        # say STDERR join " ", __FILE__, __LINE__;
+      ELEMENT:
+        for (
+            my $elementIX = 0 ;
+            $elementIX <= $#nodesToAlignByElement ;
+            $elementIX++
+          )
+        {
+            # say STDERR join " ", __FILE__, __LINE__;
+            my $nodesToAlign = $nodesToAlignByElement[$elementIX];
+            if ( not $nodesToAlign ) {
+                $runStepChildAlignments[$elementIX] = [ -1, [] ];
+                next ELEMENT;
+            }
+            $runStepChildAlignments[$elementIX] =
+              $policy->findAlignment($nodesToAlign);
         }
-        $runstepChildAlignments[$elementIX] = $policy->findAlignment($nodesToAlign);
+
+
+        for my $brick (@bricks) {
+            my $brickNodeIX = $brick->{IX};
+            # say STDERR join " ", __FILE__, __LINE__, $brickNodeIX, Data::Dumper::Dumper( \@runStepChildAlignments);
+            $policy->{perNode}->{$brickNodeIX}->{runningAlignments} =
+             \@runStepChildAlignments;
+        }
+
     }
 
     $childIX = 0;
@@ -4779,6 +4799,11 @@ sub checkBackdented {
         $chainAlignments = $chainAlignmentData->{alignments};
     }
 
+    my $runningAlignments =
+      $policy->{perNode}->{$nodeIX}->{runningAlignments};
+            # say STDERR join " ", __FILE__, __LINE__, "nodeIX:", $nodeIX;
+    # say STDERR Data::Dumper::Dumper($runningAlignments);
+
     my $reanchorOffset;    # for re-anchoring logic
 
   ENFORCE_ELEMENT1_JOINEDNESS: {
@@ -4849,10 +4874,14 @@ sub checkBackdented {
                 ( $chainAlignmentColumn, $chainAlignmentDetails ) =
                   @{$thisAlignment};
 
-                next ELEMENT
-                  if $chainAlignmentColumn >= 0
-                  and $chainAlignmentColumn == $elementColumn;
             }
+
+            my $interlineAlignmentType = 'chain';
+            my $interlineAlignmentColumn = $chainAlignmentColumn;
+            next ELEMENT
+              if defined $interlineAlignmentColumn
+              and $interlineAlignmentColumn >= 0
+              and $interlineAlignmentColumn == $elementColumn;
 
             my @topicLines = ();
             my $tightColumn = $gapColumn + 2;
@@ -4861,9 +4890,9 @@ sub checkBackdented {
                 push @allowedColumns, [ $backdentColumn => 'backdent' ];
             }
             my $details;
-            if ($chainAlignmentColumn and $chainAlignmentColumn >= $tightColumn) {
-                push @allowedColumns, [ $chainAlignmentColumn => 'chain' ];
-                my $oneBasedColumn = $chainAlignmentColumn + 1;
+            if ($interlineAlignmentColumn and $interlineAlignmentColumn >= $tightColumn) {
+                push @allowedColumns, [ $interlineAlignmentColumn => $interlineAlignmentType ];
+                my $oneBasedColumn = $interlineAlignmentColumn + 1;
                 my $chainAlignmentLines = $chainAlignmentDetails->{lines};
                 push @topicLines, @{$chainAlignmentLines};
                 $details = [
