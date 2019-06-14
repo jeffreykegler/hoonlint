@@ -454,7 +454,7 @@ head of the 1-running hoon.
 In this case, the first line of the running may be
 a horizontal sub-running.
 
-### Runnings
+## Runnings
 
 From `sys/zuse.hoon`, lines 4892-4905.
 
