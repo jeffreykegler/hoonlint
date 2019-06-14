@@ -394,27 +394,6 @@ TISSIG (`=~`).
 
 [ TODO: More on TISSIG. ]
 
-## Runnings
-
-A running is considered to start at the start of its first run step.
-Every running ends in a TISTIS (`==`).
-The TISTIS should occur on its own line, or as part of a criss-cross
-TISTIS line.
-
-A vertical gap should occur between every pair of runsteps.
-A vertical gap should also occur between the last runstep
-and the TISTIS.
-Inter-comments in a running should be at the anchor column
-of the parent hoon.
-Pre-comments in a running should be aligned with the runstep.
-
-## Horizontal sub-running
-
-A **horizontal sub-running** is a portion of a running which has
-two or more runsteps on one line.
-The runsteps in a horizontal subrunning
-should be separated from each other by one stop.
-
 ## 0-running hoons
 
 0-running hoons may be either split or joined.
@@ -455,6 +434,23 @@ In this case, the first line of the running may be
 a horizontal sub-running.
 
 ## Runnings
+
+A running is considered to start at the start of its first run step.
+Every running ends in a TISTIS (`==`).
+The TISTIS should occur on its own line, or as part of a criss-cross
+TISTIS line.
+
+A vertical gap should occur between every pair of runsteps.
+A vertical gap should also occur between the last runstep
+and the TISTIS.
+Inter-comments in a running should be at the anchor column
+of the parent hoon.
+Pre-comments in a running should be aligned with the runstep.
+
+A **horizontal sub-running** is a portion of a running which has
+two or more runsteps on one line.
+The runsteps in a horizontal subrunning
+should be separated from each other by one stop.
 
 From `sys/zuse.hoon`, lines 4892-4905.
 
