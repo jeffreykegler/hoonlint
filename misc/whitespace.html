@@ -29,22 +29,22 @@
 <li><a href="#types-of-hoons">Types of hoons</a></li>
 <li><a href="#backdented-hoons">Backdented hoons</a></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
-<li><a href="#proper-spacing-of-runnings">Proper spacing of Runnings</a></li>
+<li><a href="#runnings">Runnings</a></li>
 <li><a href="#horizontal-sub-running">Horizontal sub-running</a></li>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
 <li><a href="#running-hoons-2">1-running hoons</a><ul>
-<li><a href="#runnings">Runnings</a></li>
+<li><a href="#runnings-1">Runnings</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#jogging-hoons">Jogging hoons</a><ul>
 <li><a href="#jogs">Jogs</a></li>
 <li><a href="#chess-sidedness">Chess-sidedness</a></li>
-<li><a href="#proper-spacing-of-jogs">Proper spacing of jogs</a></li>
-<li><a href="#proper-spacing-of-joggings">Proper spacing of Joggings</a></li>
+<li><a href="#jogs-1">Jogs</a></li>
+<li><a href="#joggings">Joggings</a></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
-<li><a href="#proper-spacing-of-1-jogging-hoons">Proper spacing of 1-jogging hoons</a></li>
-<li><a href="#proper-spacing-of-2-jogging-hoons">Proper spacing of 2-jogging hoons</a></li>
-<li><a href="#proper-spacing-of-jogging-1-hoons">Proper spacing of jogging-1 hoons</a></li>
+<li><a href="#jogging-hoons-1">1-jogging hoons</a></li>
+<li><a href="#jogging-hoons-2">2-jogging hoons</a></li>
+<li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#batteries">Batteries</a></li>
@@ -181,7 +181,7 @@
 <li><p>The current 0-as-1-running rule is TISSIG (<code>=~</code>).</p></li>
 </ul>
 <p>[ TODO: More on TISSIG. ]</p>
-<h2 id="proper-spacing-of-runnings">Proper spacing of Runnings</h2>
+<h2 id="runnings">Runnings</h2>
 <p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
 <p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
 <h2 id="horizontal-sub-running">Horizontal sub-running</h2>
@@ -195,7 +195,7 @@
 <h2 id="running-hoons-2">1-running hoons</h2>
 <p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one vertical gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>As a special case, the running may start on the same line as the head of the 1-running hoon. In this case, the first line of the running may be a horizontal sub-running.</p>
-<h3 id="runnings">Runnings</h3>
+<h3 id="runnings-1">Runnings</h3>
 <p>From <code>sys/zuse.hoon</code>, lines 4892-4905.</p>
 <pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
             ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
@@ -233,7 +233,7 @@
 <h2 id="chess-sidedness">Chess-sidedness</h2>
 <p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside.</p>
 <p>Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. Indentation will be described more precisely in what follows.</p>
-<h2 id="proper-spacing-of-jogs">Proper spacing of jogs</h2>
+<h2 id="jogs-1">Jogs</h2>
 <p>The indentation of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
 <p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is indented 1 stop after its head. Otherwise, a joined jog is considered aligned.</p>
 <p>All aligned jogs in a jogging should be indented to the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is a aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
@@ -245,13 +245,13 @@
 </ul>
 <p>Note that this implies that the line containing the head of the jog must contain a comment. Pseudo-joined jogs are so called because the comment on the line of the head of the jog is a kind of &quot;place holder&quot; for the join, and the comments can be seen as &quot;postponing&quot; the join.</p>
 <p>The gap of split jog should be vertical, with the gap's comments aligned with the jog body. The indentation of the body of a split kingside jog should be 1 stop <strong>greater</strong> than the indentation of the jog's head. The indentation of the body of a split queenside jog should be 1 stop <strong>less</strong> than the indentation of the jog's head.</p>
-<h2 id="proper-spacing-of-joggings">Proper spacing of Joggings</h2>
+<h2 id="joggings">Joggings</h2>
 <p>A jogging is considered to start at the start of jog head of its first jog. Every jogging ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or a part of a criss-cross TISTIS line.</p>
 <p>The TISTIS of a kingside jogging should be outdented one stop from the start of its jogging. The TISTIS of a queenside jogging should be outdented two stops from the start of its jogging.</p>
 <h2 id="criss-cross-lines">Criss-cross lines</h2>
 <p>Successive TISTIS's may occur on the same line, as part of a <strong>criss-cross TISTIS line</strong>. If a TISTIS is in a criss-cross line, it does not have to be properly aligned, if some other TISTIS with the required alignment &quot;stands in&quot; for it. Such lines are called &quot;criss-cross&quot; because if you drew lines connecting the TISTIS's that match each rune by alignment with the TISTIS's that match the same rune syntactically, the lines would form a &quot;criss-cross&quot; pattern.</p>
 <p>HEPHEP's may also be joined into criss-cross lines.</p>
-<h2 id="proper-spacing-of-1-jogging-hoons">Proper spacing of 1-jogging hoons</h2>
+<h2 id="jogging-hoons-1">1-jogging hoons</h2>
 <p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column.</p>
 <p>&quot;Sidedness&quot; should be consistent:</p>
 <ul>
@@ -260,7 +260,7 @@
 <li><p>The head of a queenside 1-jogging hoon should be queenside. It should be on the rune line, indented 2 stops after the anchor column.</p></li>
 <li><p>The jogging of a queenside 1-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
-<h2 id="proper-spacing-of-2-jogging-hoons">Proper spacing of 2-jogging hoons</h2>
+<h2 id="jogging-hoons-2">2-jogging hoons</h2>
 <p>Every 2-jogging hoon is either kingside or queenside. The base column for the jogs of a 2-jogging hoon is its anchor column.</p>
 <p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
 <p>&quot;Sidedness&quot; should be consistent:</p>
@@ -273,7 +273,7 @@
 <li><p>The jogging of a kingside 2-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 <li><p>The jogging of a queenside 2-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
-<h2 id="proper-spacing-of-jogging-1-hoons">Proper spacing of jogging-1 hoons</h2>
+<h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
 <p>Every jogging-1 hoon is considered kingside. The base column for the jogs of a jogging-1 hoon is one stop greater than its anchor column.</p>
 <ul>
 <li><p>The jogging of a jogging-1 hoon should start on the rune line, 1 stop after the rune line, and should consist entirely of kingside jogs. This implies that the TISTIS should be indented one stop more than the anchor column.</p></li>

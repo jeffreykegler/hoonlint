@@ -394,7 +394,7 @@ TISSIG (`=~`).
 
 [ TODO: More on TISSIG. ]
 
-## Proper spacing of Runnings
+## Runnings
 
 A running is considered to start at the start of its first run step.
 Every running ends in a TISTIS (`==`).
@@ -530,7 +530,7 @@ Informally, **kingside** means the indentation has a left-side bias;
 and **queenside** means that the indentation has a right-side bias.
 Indentation will be described more precisely in what follows.
 
-## Proper spacing of jogs
+## Jogs
 
 The indentation of a jog is that of its head.
 A jog is **joined** if its head is on the same
@@ -589,7 +589,7 @@ should be 1 stop **greater** than the indentation of the jog's head.
 The indentation of the body of a split queenside jog
 should be 1 stop **less** than the indentation of the jog's head.
 
-## Proper spacing of Joggings
+## Joggings
 
 A jogging is considered to start at the start of jog head
 of its first jog.
@@ -617,7 +617,7 @@ the lines would form a "criss-cross" pattern.
 
 HEPHEP's may also be joined into criss-cross lines.
 
-## Proper spacing of 1-jogging hoons
+## 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
 The base column
@@ -641,7 +641,7 @@ indented 2 stops after the anchor column.
 It should be on a line after the rune line,
 and should consist entirely of queenside jogs.
 
-## Proper spacing of 2-jogging hoons
+## 2-jogging hoons
 
 Every 2-jogging hoon is either kingside or queenside.
 The base column
@@ -687,7 +687,7 @@ and should consist entirely of kingside jogs.
 It should be on a line after the rune line,
 and should consist entirely of queenside jogs.
 
-## Proper spacing of jogging-1 hoons
+## Jogging-1 hoons
 
 Every jogging-1 hoon is considered kingside.
 The base column
