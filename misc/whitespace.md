@@ -760,8 +760,6 @@ has a total lexeme count of at least 2 --
 in other words
 an inter-line alignment must actually align with a corresponding lexeme
 on another line.
-in other words, the inter-line alignment
-must have a total lexeme count of at least 2.
 
 # Appendix: Multi-line comment body
 

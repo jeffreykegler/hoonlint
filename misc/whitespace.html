@@ -18,7 +18,10 @@
 <li><a href="#deontology">Deontology</a></li>
 <li><a href="#lines-columns-and-indentation">Lines, columns and indentation</a></li>
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
-<li><a href="#reanchoring">Reanchoring</a></li>
+<li><a href="#reanchoring">Reanchoring</a><ul>
+<li><a href="#first-example">First example</a></li>
+<li><a href="#second-example">Second example</a></li>
+</ul></li>
 <li><a href="#comments">Comments</a></li>
 <li><a href="#staircase-comments">Staircase comments</a></li>
 <li><a href="#vertical-gaps">Vertical Gaps</a></li>
@@ -66,7 +69,7 @@
 <h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
 <p>In this document, a <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
 <p>Let <code>Column(Y)</code> be column at which text <code>Y</code> begins. We say the indentation of text <code>X</code> is <code>N</code> stops <strong>greater than the indentation</strong> of text <code>Y</code> if text <code>X</code> begins at column <code>Column(Y)+N*2</code>. We say the indentation of text <code>X</code> is <code>N</code> stops <strong>less than the indentation</strong> of text <code>Y</code> if text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
-<p>A <strong>brick</strong> is a Hoon lexeme with semantics. A Hoon lexeme without semantics is a <strong>mortar</strong> lexeme. All rune are bricks, but not all bricks are runes.</p>
+<p>A <strong>brick</strong> is a Hoon lexeme with semantics. A Hoon lexeme without semantics is a <strong>mortar</strong> lexeme. All runes are bricks, but not all bricks are runes.</p>
 <p>The <strong>rune line</strong> of a hoon is the line on which the hoon's rune occurs, and the <strong>rune column</strong> of a hoon is the column at which the hoon's rune begins.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are many exceptions, and they are important. See below.</p>
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
@@ -79,21 +82,22 @@
 </ul>
 <h2 id="reanchoring">Reanchoring</h2>
 <p>If the rune line contains other bricks, it may <strong>reanchor</strong>, that is the anchor column may be somewhere other than the rune column. Not all runes participate in reanchoring. Which do, and which do not, is described in the individual cases.</p>
-<p>We will first give a definition of reanchoring. The definitions are difficult to follow without illustrations, and they are followed by a number of examples which hopefully will make the concept clear.</p>
-<p>Informally, reanchoring is a method of conserving indentation. Reanchoring moves the anchor column left on the rune line, so that it becomes based at a parent brick earlier in the rune line. The column of the parent brick becomes the <strong>anchor brick column</strong>. All parent bricks contribute to the backdenting, so that all the per-brick offsets are added together to produce an <strong>reanchor offset</strong>. The anchor column is the anchor brick column, plus the reanchor offset.</p>
+<p>We will first give a definition of reanchoring. Because the definitions are difficult to follow without illustrations, they are followed by a number of examples.</p>
+<p>Informally, reanchoring is a method of conserving indentation. Reanchoring moves the anchor column left on the rune line, so that it becomes based at a parent brick earlier in the rune line. The column of the parent brick becomes the <strong>anchor brick column</strong>. All parent bricks contribute to the backdenting, so that all the per-brick offsets are added together to produce an <strong>reanchor offset</strong>.</p>
 <p>More formally, then, the <strong>anchor column</strong> is the <strong>anchor brick column</strong>, plus the <strong>reanchor offset</strong>. The anchor brick column is the column of a brick on the rune line. Which one will depend on the individual bricks involved, but often it is the first brick on the rune line.</p>
 <p>Each rune line has the rune itself and zero or more parent bricks. Here parent means &quot;proper parent&quot;, so that a rune is not considered to be its own parent brick.</p>
 <p>Depending on the number of elements required by the brick, and the number of those elements joined on the rune line, each brick on the rune line has a <strong>per-brick anchor offset</strong>. If <code>n</code> elements of a parent brick are on the rune line, the per-brick anchor offset is the indentation that would apply to the <code>n</code>th element, if the <code>n</code>th element were split onto the next line. (Note that every proper parent brick must have at least one element on the rune line.)</p>
 <p>The total of all the per-brick anchor offsets of parent bricks is the <strong>reanchor offset</strong> of the rune line. The <strong>anchor column</strong> of the rune line is the anchor brick column, plus the reanchor offset.</p>
 <p>Note that when a rune is the only brick on a line, the above definition of reanchoring is equivalent to the statement that the rune column is the anchor column.</p>
-<p>Here is a first example:</p>
+<h3 id="first-example">First example</h3>
 <pre><code>        :+  %depends  %|  :~
           definitions+[%&amp; deh]
           listeners+[%&amp; sup]
           waiting+[%&amp; out]
         ==</code></pre>
-<p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The reanchor base is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its elements are on the rune line, so the per-brick anchor offset is 0. The anchor column is the anchor brick column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor brick column. COLSIG is 1-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and the final TISTIS at the anchor column. This is what we see.</p>
-<p>The second example is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>:</p>
+<p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The reanchor base is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its elements are on the rune line, so the per-brick anchor offset is 0. The anchor column is the anchor brick column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor brick column.</p>
+<p>COLSIG is 1-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and the final TISTIS at the anchor column. This is exactly what we see.</p>
+<h3 id="second-example">Second example</h3>
 <pre><code>    =/  request-data  :~
         [0 [0 8.080] 0 &#39;localhost&#39; ~]
         ::  associate 0 as the anonymous ship, which is the ++add result.
@@ -105,11 +109,11 @@
     =/  monies/coin  [%many ~[[%blob request-data] [%$ ~.n 0]]]
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
-<p>Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its elements are on the rune line, so that the per-brick anchor offset of the TISFAS is that of its 2nd element -- one stop. The anchor column is therefore one stop after the anchor brick column. COLSIG again is 1-running, so that its runsteps are indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS is indented at the anchor column, whicb is one stop past the anchor brick column. The last three lines of the example are the last element of the TISFAS.</p>
+<p>This is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>: Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its elements are on the rune line, so that the per-brick anchor offset of the TISFAS is that of its 2nd element -- one stop. The anchor column is therefore one stop after the anchor brick column.</p>
+<p>COLSIG again is 1-running, so that its runsteps should be indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS should be indented at the anchor column, whicb is one stop past the anchor brick column. This is what we see in the example. The last three lines of the example are the last element of the TISFAS.</p>
 <h2 id="comments">Comments</h2>
-<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. Header comments outside of a running or a jogging should be immediately followed by a code line or a line containing another header comment, and should align with the the code or header comment which follows. Header comments inside of a running or a jogging should align at the anchor column.</p>
-<p>If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57.</p>
-<p>A rightside comment is an <strong>inline comment</strong> if it is not a margin comment. Inline comments must be aligned according to a scheme yet to be investigated.</p>
+<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. Header comments outside of a running or a jogging should be immediately followed by a code line or a line containing another header comment, and should align with the code or header comment which follows. Header comments inside of a running or a jogging should align at the anchor column.</p>
+<p>If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <h2 id="staircase-comments">Staircase comments</h2>
 <p>Informally, staircase comments take the form</p>
 <pre><code>::
@@ -117,46 +121,26 @@
 ::::
   ::
   ::</code></pre>
-<p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the anchor column. The tread is four colons, aligned at the anchor column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the anchor column.</p>
-<p>For <code>hoonlint</code> purposes, it is useful to distinquish between malintended staircase comments, and malindented normal comments. Informally, a comment is a staircase comment if it contains a tread and the first line of the lower riser. More formally, a sequence of comment lines is consider a staircase comment if</p>
-<ul>
-<li><p>it contains a tread, properly aligned and followed by a whitespace character; and</p></li>
-<li><p>the line immediately after the tread is a comment aligned at the column one stop greater than the anchor column.</p></li>
-</ul>
+<p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the anchor column. The tread is four colons, aligned at the anchor column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the anchor column. A more formal definition of a staircase is given in an appendix.</p>
 <h2 id="vertical-gaps">Vertical Gaps</h2>
-<p>A <strong>newline-equivalent gap</strong> is a gap containing which contains only one newline, not counting those newlines which termination properly aligned header commments.</p>
-<p>If it is before a step of a sequence, a newline-equivalent gap may contain zero or more <strong>inter-comments</strong> followed by zero or more <strong>pre-comments</strong>. Both inter-comments and pre-comments can contain any content, but in concept, inter-comments separate the sequence steps from other lexemes, and from each other; while pre-comments preceed sequence steps.</p>
-<p>The inter-comment column and pre-comment column is specified, for each type of sequence, below.</p>
-<p>Every multi-line comment contains</p>
+<p>A <strong>vertical gap</strong> is a gap containing which contains</p>
 <ul>
 <li><p>A newline-terminated partial line preamble. This may be just the newline.</p></li>
 <li><p>A body of one or more full newline-terminated lines, all of them comments or (in the case of non-standard code) blank lines.</p></li>
 <li><p>A partial line postamble. This is never newline-terminated, and may be zero-length.</p></li>
 </ul>
+<p>If it is before a step of a sequence, a vertical gap may contain zero or more <strong>inter-comments</strong> followed by zero or more <strong>pre-comments</strong>. Both inter-comments and pre-comments can contain any content, but in concept, inter-comments separate the sequence steps from other lexemes, and from each other; while pre-comments preceed sequence steps.</p>
+<p>The inter-comment column and pre-comment column is specified, for each type of sequence, below.</p>
 <p>Informally, the body of a standard multi-line comment follows these conventions:</p>
-<ol>
-<li>
-A multi-line comment may contain an &quot;inter-part&quot;, a &quot;pre-part&quot;, or both.
-</li>
-<li>
-If both an inter-part and a pre-part are present, the inter-part must precede the pre-part.
-</li>
-<li>
-The inter-part is a non-empty sequence of inter-comments and staircases.
-</li>
-<li>
-A pre-part is a non-empty sequence of pre-comments.
-</li>
-<li>
-Meta-comments may be inserted anywhere in either the pre-part or the inter-part.
-</li>
-<li>
-Comments which do not obey the above rules are <b>bad comments</b>. A <b>good comment</b> is any comment which is not a bad comment.
-</li>
-<li>
-A comment is not regarded as a meta-comment if it can be parsed as structural comment. An <b>structural comment</b> is any good comment which is not a meta-comment.
-</li>
-</ol>
+<ul>
+<li><p>A multi-line comment may contain an &quot;inter-part&quot;, a &quot;pre-part&quot;, or both.</p></li>
+<li><p>If both an inter-part and a pre-part are present, the inter-part must precede the pre-part.</p></li>
+<li><p>The inter-part is a non-empty sequence of inter-comments and staircases.</p></li>
+<li><p>A pre-part is a non-empty sequence of pre-comments.</p></li>
+<li><p>Meta-comments may be inserted anywhere in either the pre-part or the inter-part.</p></li>
+<li><p>Comments which do not obey the above rules are <strong>bad comments</strong>. A <strong>good comment</strong> is any comment which is not a bad comment.</p></li>
+<li><p>A comment is not regarded as a meta-comment if it can be parsed as structural comment. An <strong>structural comment</strong> is any good comment which is not a meta-comment.</p></li>
+</ul>
 <p>A more formal description of a multi-line comment body is given in an appendix.</p>
 <h1 id="types-of-hoons">Types of hoons</h1>
 <p>Hoons may be backdented, running, jogging, battery or irregular.</p>
@@ -164,16 +148,16 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <li><p>A hoon is a <strong>battery hoon</strong> if it contains an element that uses the battery syntax.</p></li>
 <li><p>A hoon is a <strong>running hoon</strong> if it contains an element that uses the running syntax.</p></li>
 <li><p>A hoon is a <strong>jogging hoon</strong> if it contains an element that uses the jogging syntax.</p></li>
-<li><p>A hoon is a <strong>backdented hoon</strong> if it and contains a fixed number of gap-separated elements, and none of them follow the running, jogging or battery syntax.</p></li>
+<li><p>A hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated elements, and none of them follow the running, jogging or battery syntax.</p></li>
 <li><p>A hoon is an <strong>irregular hoon</strong> if it is not a backdented, running, jogging or backdented hoon. Most irregular hoons do not contain a gap.</p></li>
 </ul>
 <p>TODO: Corner cases, including BARCAB, SELACE and (possibly) other tall irregular hoons.</p>
 <p>Re BARCAB, ohAitch asks, &quot;Is this not just a battery hoon + single &quot;backdented&quot; same-line child?&quot;</p>
 <h1 id="backdented-hoons">Backdented hoons</h1>
 <p>The archetypal Hoon whitespace pattern is backdenting. A backdented hoon of 3 or more elements should be joined. A backdented hoon of 2 or fewer elements should be split.</p>
-<p>The first element of a joined backdented hoon should be on the same line as the rune, separated by a gap. Subsequent elements of a joined backdented hoon should be separated by a newline-equivalent.</p>
-<p>The first element of a joined backdented hoon should be separated from the rune by a newline-equivalent. Subsequent elements of a joined backdented hoon should also be separated by a newline-equivalents.</p>
-<p>The last element of a backdented hoon should be aligned at the anchor column. All other elements of a backdented hoon should be aligned one stop more than element that follow them.</p>
+<p>The first element of a joined backdented hoon should be on the same line as the rune, separated by a gap. Subsequent elements of a joined backdented hoon should be separated by a vertical gap.</p>
+<p>The first element of a joined backdented hoon should be separated from the rune by a vertical gap. Subsequent elements of a joined backdented hoon should also be separated by a vertical gap.</p>
+<p>The last element of a backdented hoon should be aligned at the anchor column. Every other elements of a backdented hoon should be aligned one stop more than the element that follows it.</p>
 <p>This means that, in an <em>n</em>-element hoon, the first element should be indented <code>n-1</code> stops more than the anchor column; a second element should be indented <code>n-2</code> stops more than the anchor column; etc.</p>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running element is more often called simply a <strong>running</strong>. (Currently all hoons contains at most one running.)</p>
@@ -186,8 +170,8 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 </ul>
 <p>[ TODO: More on TISSIG. ]</p>
 <h2 id="proper-spacing-of-runnings">Proper spacing of Runnings</h2>
-<p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or a part of a criss-cross TISTIS line.</p>
-<p>A newline-equivalent gap should occur between every pair of runsteps. A newline-equivalent gap should also occur between the last and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
+<p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
+<p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
 <h2 id="horizontal-sub-running">Horizontal sub-running</h2>
 <p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be separated from each other by one stop.</p>
 <h2 id="proper-spacing-of-0-running-hoons">Proper spacing of 0-running hoons</h2>
@@ -197,7 +181,7 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <p>For both joined and split 0-running hoons, the TISTIS should align at the anchor column.</p>
 <p>As a special case, the first line of the running of either a joined or split 0-running hoon, may be a horizontal sub-running. If a joined 0-running hoon has an initial horizontal sub-running, the rune and the sub-running should be separated by one stop.</p>
 <h2 id="proper-spacing-of-1-running-hoons">Proper spacing of 1-running hoons</h2>
-<p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one newline-equivlent gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
+<p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one vertical gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>As a special case, the running may start on the same line as the head of the 1-running hoon. In this case, the first line of the running may be a horizontal sub-running.</p>
 <h1 id="jogging-hoons">Jogging hoons</h1>
 <p>A jogging element is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
@@ -215,8 +199,8 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside.</p>
 <p>Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. Indentation will be described more precisely in what follows.</p>
 <h2 id="proper-spacing-of-jogs">Proper spacing of jogs</h2>
-<p>The indentation of a jog is that of its head. A joined is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
-<p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged is its body is indented 1 stop after its head. Otherwise, a joined jog is considered aligned.</p>
+<p>The indentation of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
+<p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is indented 1 stop after its head. Otherwise, a joined jog is considered aligned.</p>
 <p>All aligned jogs in a jogging should be indented to the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is a aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
 <p>Jogs are either kingside or queenside. A kingside jog should have an indentation 1 stop greater than the base column of its jogging hoon. A queenside jog should have an indentation 2 stops greater than the base column of its jogging hoon. The base column of a jogging hoon is described below, in the description for the different kinds of jogging hoon.</p>
 <p>A multi-line kingside jog may either be pseudo-joined or split. A multi-line kingside jog must be a split jog. A jog is <strong>pseudo-joined</strong></p>
@@ -225,13 +209,12 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <li><p>if and only every line of it, except the body line, has a comment at the column where the properly aligned body of a jogging-body-aligned jog would start.</p></li>
 </ul>
 <p>Note that this implies that the line containing the head of the jog must contain a comment. Pseudo-joined jogs are so called because the comment on the line of the head of the jog is a kind of &quot;place holder&quot; for the join, and the comments can be seen as &quot;postponing&quot; the join.</p>
-<p>The gap of split jog should be newline-equivalent, with the gap's comments aligned with the jog body. The indentation of the body of a split kingside jog should be 1 stop <em>greater</em> than the indentation of the jog's head. The indentation of the body of a split queenside jog should be 1 stop <em>less</em> than the indentation of the jog's head.</p>
+<p>The gap of split jog should be vertical, with the gap's comments aligned with the jog body. The indentation of the body of a split kingside jog should be 1 stop <strong>greater</strong> than the indentation of the jog's head. The indentation of the body of a split queenside jog should be 1 stop <strong>less</strong> than the indentation of the jog's head.</p>
 <h2 id="proper-spacing-of-joggings">Proper spacing of Joggings</h2>
 <p>A jogging is considered to start at the start of jog head of its first jog. Every jogging ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or a part of a criss-cross TISTIS line.</p>
 <p>The TISTIS of a kingside jogging should be outdented one stop from the start of its jogging. The TISTIS of a queenside jogging should be outdented two stops from the start of its jogging.</p>
 <h2 id="criss-cross-lines">Criss-cross lines</h2>
-<p>Successive TISTIS's may occur on the same line, as part of a <strong>criss-cross TISTIS line</strong>. If a TISTIS is in a criss-cross line, it does not have to be properly aligned, if some other TISTIS with the required alignment &quot;stands in&quot; for it.</p>
-<p>Such lines are called &quot;criss-cross&quot; because, it the boundaries of the hoons were drawn on a tree diagram of the parse, and the boundaries were drawn based on matching TISTIS's according to alignment, rather than following the logic of the syntax, the boundaries at the criss-cross TISTIS line would cross each other.</p>
+<p>Successive TISTIS's may occur on the same line, as part of a <strong>criss-cross TISTIS line</strong>. If a TISTIS is in a criss-cross line, it does not have to be properly aligned, if some other TISTIS with the required alignment &quot;stands in&quot; for it. Such lines are called &quot;criss-cross&quot; because if you drew lines connecting the TISTIS's that match each rune by alignment with the TISTIS's that match the same rune syntactically, the lines would form a &quot;criss-cross&quot; pattern.</p>
 <p>HEPHEP's may also be joined into criss-cross lines.</p>
 <h2 id="proper-spacing-of-1-jogging-hoons">Proper spacing of 1-jogging hoons</h2>
 <p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column.</p>
@@ -251,7 +234,7 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <li><p>The head of a queenside 2-jogging head-joined hoon should be queenside. It should be on the rune line, indented 2 stops after the anchor column.</p></li>
 <li><p>The head of a head-split 2-jogging has no sidedness. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
 <li><p>The subhead of a head-joined 2-jogging hoon is on the rune line, and should be indented one stop after the head.</p></li>
-<li><p>The subhead of a head-split 2-jogging hoon should be one newline-equivalent after the the rune line, and should be indented one stop less than the head. This style is more indentation-conserving than backdenting. It is called the &quot;pseudo-jog&quot; style, because arrangement of the head and subhead resembles that of a queenside jog.</p></li>
+<li><p>The subhead of a head-split 2-jogging hoon should be one vertical gap after the the rune line, and should be indented one stop less than the head. This style is more indentation-conserving than backdenting. It is called the &quot;pseudo-jog&quot; style, because arrangement of the head and subhead resembles that of a queenside jog.</p></li>
 <li><p>The jogging of a kingside 2-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 <li><p>The jogging of a queenside 2-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
@@ -264,10 +247,10 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
-<p>The cells of a battery should all align at the same column, called the <strong>cell alignment column</strong>. The cells should be separated by newline-equivalents, where the base column for header comments is the cell alignment column. The &quot;cell alignment column&quot; is specified below, for each battery hoon.</p>
+<p>The cells of a battery should all align at the same column, called the <strong>cell alignment column</strong>. The cells should be separated by vertical gaps, where the base column for header comments is the cell alignment column. The &quot;cell alignment column&quot; is specified below, for each battery hoon.</p>
 <h2 id="barcen">BARCEN</h2>
 <p>With one exception, the <strong>anchor column</strong> of a BARCEN battery is the column of the first rune on the same line as the rune of the hoon of the battery that contains those cells. The exception is that the rune column of a parent TISGAL or TISGAR rune should never be the anchor column of a BARCEN battery.</p>
-<p>Note that BARCEN Cells also should never use the column of a parent LUSLUS, LUSHEP or LUSTIS as their anchor column. Technically, this is not an exception because, pedantically, LUSLUS, LUSHEP and LUSTIS are not runes.</p>
+<p>Note that BARCEN Cells also should never use the column of a parent LUSLUS, LUSHEP or LUSTIS as their anchor column. Technically, this is not an exception because pedantically, LUSLUS, LUSHEP and LUSTIS are not runes.</p>
 <h1 id="selace">SELACE</h1>
 <p>Only one-line SELACE's occur in the <code>arvo/</code> corpus. One-line SELACE's are free-form -- <code>hoonlint</code> never generates a warning for them. If <code>hoonlint</code> encounters a multi-line SELACE, it issues a &quot;not yet implemented&quot; warning.</p>
 <h1 id="special-cases">Special cases</h1>
@@ -283,7 +266,7 @@ A comment is not regarded as a meta-comment if it can be parsed as structural co
 <h2 id="inter-line-alignment">Inter-line alignment</h2>
 <p>In non-standard code, the inter-line alignment of a column of lexemes is the alignment most common in the &quot;wide&quot; lexemes. (Wide lexemes are those which do not have tight or backdented alignment.)</p>
 <p>If two alignments tie by wide lexeme count, the tie is broken using the total lexeme count. If two alignments tie by total lexeme count, the tie is broken in favor of the alignment which occurs first, lexically.</p>
-<p>If there are no wide lexemes, the inter-line alignment is irrelevant and left undefined. Also, the inter-line alignment is undefined unless it has a total lexeme count of at least 2 -- in other words an inter-line alignment must actually align with a corresponding lexeme on another line. in other words, the inter-line alignment must have a total lexeme count of at least 2.</p>
+<p>If there are no wide lexemes, the inter-line alignment is irrelevant and left undefined. Also, the inter-line alignment is undefined unless it has a total lexeme count of at least 2 -- in other words an inter-line alignment must actually align with a corresponding lexeme on another line.</p>
 <h1 id="appendix-multi-line-comment-body">Appendix: Multi-line comment body</h1>
 <p>The format of a multi-line comment body obeys the BNF</p>
 <pre><code>:start ::= gapComments
