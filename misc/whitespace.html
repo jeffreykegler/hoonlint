@@ -29,12 +29,9 @@
 <li><a href="#types-of-hoons">Types of hoons</a></li>
 <li><a href="#backdented-hoons">Backdented hoons</a></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
-<li><a href="#runnings">Runnings</a></li>
-<li><a href="#horizontal-sub-running">Horizontal sub-running</a></li>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
-<li><a href="#running-hoons-2">1-running hoons</a><ul>
-<li><a href="#runnings-1">Runnings</a></li>
-</ul></li>
+<li><a href="#running-hoons-2">1-running hoons</a></li>
+<li><a href="#runnings">Runnings</a></li>
 </ul></li>
 <li><a href="#jogging-hoons">Jogging hoons</a><ul>
 <li><a href="#jogs">Jogs</a></li>
@@ -181,11 +178,6 @@
 <li><p>The current 0-as-1-running rule is TISSIG (<code>=~</code>).</p></li>
 </ul>
 <p>[ TODO: More on TISSIG. ]</p>
-<h2 id="runnings">Runnings</h2>
-<p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
-<p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
-<h2 id="horizontal-sub-running">Horizontal sub-running</h2>
-<p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be separated from each other by one stop.</p>
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>The running of a <strong>joined 0-running hoon</strong> begins on the rune line. The runsteps of a joined 0-running hoons should begin on the rune line, indented two stops more than the anchor column. This has the effect of aligning all subsequent runesteps with the runstep on the rune line.</p>
@@ -195,7 +187,10 @@
 <h2 id="running-hoons-2">1-running hoons</h2>
 <p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one vertical gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>As a special case, the running may start on the same line as the head of the 1-running hoon. In this case, the first line of the running may be a horizontal sub-running.</p>
-<h3 id="runnings-1">Runnings</h3>
+<h2 id="runnings">Runnings</h2>
+<p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
+<p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
+<p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be separated from each other by one stop.</p>
 <p>From <code>sys/zuse.hoon</code>, lines 4892-4905.</p>
 <pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
             ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
