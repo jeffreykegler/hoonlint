@@ -31,8 +31,10 @@
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#proper-spacing-of-runnings">Proper spacing of Runnings</a></li>
 <li><a href="#horizontal-sub-running">Horizontal sub-running</a></li>
-<li><a href="#proper-spacing-of-0-running-hoons">Proper spacing of 0-running hoons</a></li>
-<li><a href="#proper-spacing-of-1-running-hoons">Proper spacing of 1-running hoons</a></li>
+<li><a href="#running-hoons-1">0-running hoons</a></li>
+<li><a href="#running-hoons-2">1-running hoons</a><ul>
+<li><a href="#runnings">Runnings</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#jogging-hoons">Jogging hoons</a><ul>
 <li><a href="#jogs">Jogs</a></li>
@@ -159,6 +161,16 @@
 <p>The first element of a joined backdented hoon should be separated from the rune by a vertical gap. Subsequent elements of a joined backdented hoon should also be separated by a vertical gap.</p>
 <p>The last element of a backdented hoon should be aligned at the anchor column. Every other elements of a backdented hoon should be aligned one stop more than the element that follows it.</p>
 <p>This means that, in an <em>n</em>-element hoon, the first element should be indented <code>n-1</code> stops more than the anchor column; a second element should be indented <code>n-2</code> stops more than the anchor column; etc.</p>
+<pre><code>     ::
+     ::  make acru cores
+     ::
+     =/  ali      (pit:nu:crub 512 (shaz &#39;Alice&#39;))
+     =/  ali-pub  (com:nu:crub pub:ex.ali)
+     =/  bob      (pit:nu:crub 512 (shaz &#39;Robert&#39;))
+     =/  bob-pub  (com:nu:crub pub:ex.bob)
+     ::
+     ::  alice signs and encrypts a symmetric key to bob
+     ::</code></pre>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running element is more often called simply a <strong>running</strong>. (Currently all hoons contains at most one running.)</p>
 <p>In addition to the running, a running hoon may contain an element before the running. If there is one element before the running, it is called the <strong>head</strong> of the running hoon.</p>
@@ -174,15 +186,38 @@
 <p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
 <h2 id="horizontal-sub-running">Horizontal sub-running</h2>
 <p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be separated from each other by one stop.</p>
-<h2 id="proper-spacing-of-0-running-hoons">Proper spacing of 0-running hoons</h2>
+<h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>The running of a <strong>joined 0-running hoon</strong> begins on the rune line. The runsteps of a joined 0-running hoons should begin on the rune line, indented two stops more than the anchor column. This has the effect of aligning all subsequent runesteps with the runstep on the rune line.</p>
 <p>The running of a <strong>split 0-running hoon</strong> begins after the rune line. The runsteps of a split 0-running hoons should begin one newline equivalent after the rune line, indented one stop more than the anchor column.</p>
 <p>For both joined and split 0-running hoons, the TISTIS should align at the anchor column.</p>
 <p>As a special case, the first line of the running of either a joined or split 0-running hoon, may be a horizontal sub-running. If a joined 0-running hoon has an initial horizontal sub-running, the rune and the sub-running should be separated by one stop.</p>
-<h2 id="proper-spacing-of-1-running-hoons">Proper spacing of 1-running hoons</h2>
+<h2 id="running-hoons-2">1-running hoons</h2>
 <p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one vertical gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
 <p>As a special case, the running may start on the same line as the head of the 1-running hoon. In this case, the first line of the running may be a horizontal sub-running.</p>
+<h3 id="runnings">Runnings</h3>
+<p>From <code>sys/zuse.hoon</code>, lines 4892-4905.</p>
+<pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
+            ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
+            ~1998.12.31..23.59.56  ~1997.6.30..23.59.55
+            ~1995.12.31..23.59.54  ~1994.6.30..23.59.53
+            ~1993.6.30..23.59.52   ~1992.6.30..23.59.51
+            ~1990.12.31..23.59.50  ~1989.12.31..23.59.49
+            ~1987.12.31..23.59.48  ~1985.6.30..23.59.47
+            ~1983.6.30..23.59.46   ~1982.6.30..23.59.45
+            ~1981.6.30..23.59.44   ~1979.12.31..23.59.43
+            ~1978.12.31..23.59.42  ~1977.12.31..23.59.41
+            ~1976.12.31..23.59.40  ~1975.12.31..23.59.39
+            ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
+            ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
+        ==</code></pre>
+<p>From `sys/hoon.hoon', lines 5303-5308.</p>
+<pre><code>    :~  :-  [&#39;a&#39; &#39;z&#39;]  (cook |=(a/@ta [%$ %tas a]) sym)
+        :-  [&#39;0&#39; &#39;9&#39;]  (stag %$ bisk)
+        :-  &#39;-&#39;        (stag %$ tash)
+        :-  &#39;.&#39;        ;~(pfix dot perd)
+        :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
+    ==</code></pre>
 <h1 id="jogging-hoons">Jogging hoons</h1>
 <p>A jogging element is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
 <p>In addition to the jogging, a jogging hoon may contain other elements, either before or after the jogging. An element after the jogging is called a <strong>tail</strong>. If there is one element before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two elements before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>

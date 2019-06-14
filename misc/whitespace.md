@@ -346,6 +346,19 @@ the first element should be indented `n-1` stops more than the anchor column;
 a second element should be indented `n-2` stops more than the anchor column;
 etc.
 
+```
+     ::
+     ::  make acru cores
+     ::
+     =/  ali      (pit:nu:crub 512 (shaz 'Alice'))
+     =/  ali-pub  (com:nu:crub pub:ex.ali)
+     =/  bob      (pit:nu:crub 512 (shaz 'Robert'))
+     =/  bob-pub  (com:nu:crub pub:ex.bob)
+     ::
+     ::  alice signs and encrypts a symmetric key to bob
+     ::
+```
+
 # Running hoons
 
 A running element is more often called simply a **running**.
@@ -402,7 +415,7 @@ two or more runsteps on one line.
 The runsteps in a horizontal subrunning
 should be separated from each other by one stop.
 
-## Proper spacing of 0-running hoons
+## 0-running hoons
 
 0-running hoons may be either split or joined.
 Header comments in a 1-running hoon should be aligned at the anchor
@@ -427,7 +440,7 @@ joined or split 0-running hoon, may be a horizontal sub-running.
 If a joined 0-running hoon has an initial horizontal sub-running,
 the rune and the sub-running should be separated by one stop.
 
-## Proper spacing of 1-running hoons
+## 1-running hoons
 
 The head of a 1-running hoon should occur on the rune line,
 one stop after the anchor column.
@@ -440,6 +453,38 @@ As a special case, the running may start on the same line as the
 head of the 1-running hoon.
 In this case, the first line of the running may be
 a horizontal sub-running.
+
+### Runnings
+
+From `sys/zuse.hoon`, lines 4892-4905.
+
+```
+        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
+            ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
+            ~1998.12.31..23.59.56  ~1997.6.30..23.59.55
+            ~1995.12.31..23.59.54  ~1994.6.30..23.59.53
+            ~1993.6.30..23.59.52   ~1992.6.30..23.59.51
+            ~1990.12.31..23.59.50  ~1989.12.31..23.59.49
+            ~1987.12.31..23.59.48  ~1985.6.30..23.59.47
+            ~1983.6.30..23.59.46   ~1982.6.30..23.59.45
+            ~1981.6.30..23.59.44   ~1979.12.31..23.59.43
+            ~1978.12.31..23.59.42  ~1977.12.31..23.59.41
+            ~1976.12.31..23.59.40  ~1975.12.31..23.59.39
+            ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
+            ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
+        ==
+```
+
+From `sys/hoon.hoon', lines 5303-5308.
+
+```
+    :~  :-  ['a' 'z']  (cook |=(a/@ta [%$ %tas a]) sym)
+        :-  ['0' '9']  (stag %$ bisk)
+        :-  '-'        (stag %$ tash)
+        :-  '.'        ;~(pfix dot perd)
+        :-  '~'        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
+    ==
+```
 
 # Jogging hoons
 
