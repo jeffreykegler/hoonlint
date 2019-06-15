@@ -441,6 +441,21 @@ If two runchildren are in the same silo of the same chain,
 they should have the
 same inter-line alignment.
 
+More formally,
+a chain is a sequence of fixed-arity hoons
+which obeys the following rules:
+
+* Every hoon except the first is the last
+runchild of the previous hoon in the sequence
+
+* Every rune-ish is either at the same column location
+as the first hoon in the sequence, or
+is on the same line as ("joined with") the rune-ish of previous
+hoon in the sequence.
+
+* The sequence is maximal.  That is,
+no chain is a sub-sequence of a longer chain.
+
 Silo'ing is by rune-ishes and runechildren of hoons in the chain
 so that, in the above example, there are 4 rows each of 3 silos.
 Every row in a chain starts with a rune-ish, but not every
