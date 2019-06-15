@@ -28,7 +28,9 @@
 <li><a href="#vertical-gaps">Vertical Gaps</a></li>
 </ul></li>
 <li><a href="#types-of-hoons">Types of hoons</a></li>
-<li><a href="#backdented-hoons">Backdented hoons</a></li>
+<li><a href="#fixed-arity-hoons">Fixed arity hoons</a><ul>
+<li><a href="#chaining-fixed-arity-hoons">Chaining fixed arity hoons</a></li>
+</ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
 <li><a href="#running-hoons-2">1-running hoons</a></li>
@@ -57,7 +59,8 @@
 <li><a href="#jogging-body-column">Jogging body column</a></li>
 <li><a href="#inter-line-alignment">Inter-line alignment</a></li>
 </ul></li>
-<li><a href="#appendix-multi-line-comment-body">Appendix: Multi-line comment body</a></li>
+<li><a href="#appendix-vertical-gap-body">Appendix: Vertical gap body</a></li>
+<li><a href="#appendix-non-standard-chains">Appendix: Non-standard chains</a></li>
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
@@ -80,7 +83,8 @@
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Often, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
 <p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>. (TODO: Give more detail re rune-ishes.) Currently rune-ishes are always represented in Hoon source files as digraphs. Let <code>r</code> be the rune-ish digraph of a rune-ish expression. The <strong>rune line</strong> of a hoon is <code>Line(r)</code>. The <strong>rune column</strong> of a hoon is <code>Column(r)</code>.</p>
-<p>A rune-ish expression consists of the initial rune-ish and zero or more subexpressions, called <strong>runechildren</strong>. Runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
+<p>A rune-ish expression consists of the initial rune-ish followed by zero or more subexpressions, called <strong>runechildren</strong>. Runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
+<p>The <strong>arity</strong> of a rune-ish expression is the number of its runechildren.</p>
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
 <p>All lexemes in Hoon are aligned horizontally in one of 4 ways:</p>
 <ul>
@@ -94,13 +98,13 @@
 <p>We will first give a definition of reanchoring. Because the definitions are difficult to follow without illustrations, they are followed by a number of examples.</p>
 <p>Informally, reanchoring is a method of conserving indentation. Reanchoring moves the anchor column left on the rune line, so that it becomes based at a parent brick earlier in the rune line. The column of the parent brick becomes the <strong>anchor brick column</strong>. All parent bricks contribute to the backdenting, so that all the per-brick offsets are added together to produce an <strong>reanchor offset</strong>.</p>
 <p>More formally, then, the <strong>anchor column</strong> is the <strong>anchor brick column</strong>, plus the <strong>reanchor offset</strong>. The anchor brick column is the column of a brick on the rune line. Which one will depend on the individual bricks involved, but often it is the first brick on the rune line.</p>
-<p>Let <code>r</code> be a rune. <code>r</code> has zero or more <strong>inline ancestors</strong>. A rune-ish <code>ia</code> is an inline ancestor of <code>r</code> if</p>
+<p>Let <code>r</code> be a rune. <code>r</code> has zero or more <strong>horizontal ancestors</strong>. A rune-ish <code>ia</code> is an horizontal ancestor of <code>r</code> if</p>
 <ul>
 <li><p><code>ia</code> is a brick.</p></li>
 <li><p><code>ia</code> is a proper ancestor of <code>r</code>. Here &quot;proper&quot; means the <code>ia</code> and <code>r</code> must be different -- a rune-ish is not its own proper ancestor.</p></li>
-<li><p><code>Line(ia) == Line(r)</code>. That is, a rune and its inline ancestory must be on the same line.</p></li>
+<li><p><code>Line(ia) == Line(r)</code>. That is, a rune and its horizontal ancestor must be on the same line.</p></li>
 </ul>
-<p>Depending on the number of elements required by the brick, and the number of those elements joined on the rune line, each brick on the rune line has a <strong>per-brick anchor offset</strong>. If <code>n</code> elements of a parent brick are on the rune line, the per-brick anchor offset is the indentation that would apply to the <code>n</code>th element, if the <code>n</code>th element were split onto the next line. (Note that every proper parent brick must have at least one element on the rune line.)</p>
+<p>Depending on the number of runechildren required by the brick, and the number of those runechildren joined on the rune line, each brick on the rune line has a <strong>per-brick anchor offset</strong>. If <code>n</code> runechildren of a parent brick are on the rune line, the per-brick anchor offset is the indentation that would apply to the <code>n</code>th runechild, if the <code>n</code>th runechild were split onto the next line. (Note that every horizontal ancestor must have at least one runechild on the rune line -- the child of which it is the ancestor.)</p>
 <p>The total of all the per-brick anchor offsets of parent bricks is the <strong>reanchor offset</strong> of the rune line. The <strong>anchor column</strong> of the rune line is the anchor brick column, plus the reanchor offset.</p>
 <p>Note that when a rune is the only brick on a line, the above definition of reanchoring is equivalent to the statement that the rune column is the anchor column.</p>
 <h3 id="first-example">First example</h3>
@@ -109,8 +113,8 @@
           listeners+[%&amp; sup]
           waiting+[%&amp; out]
         ==</code></pre>
-<p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The reanchor base is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its elements are on the rune line, so the per-brick anchor offset is 0. The anchor column is the anchor brick column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor brick column.</p>
-<p>COLSIG is 1-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and the final TISTIS at the anchor column. This is exactly what we see.</p>
+<p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The reanchor base is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-brick anchor offset is 0. The anchor column is the anchor brick column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor brick column.</p>
+<p>COLSIG is 1-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
 <h3 id="second-example">Second example</h3>
 <pre><code>    =/  request-data  :~
         [0 [0 8.080] 0 &#39;localhost&#39; ~]
@@ -123,11 +127,10 @@
     =/  monies/coin  [%many ~[[%blob request-data] [%$ ~.n 0]]]
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
-<p>This is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>: Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its elements are on the rune line, so that the per-brick anchor offset of the TISFAS is that of its 2nd element -- one stop. The anchor column is therefore one stop after the anchor brick column.</p>
-<p>COLSIG again is 1-running, so that its runsteps should be indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS should be indented at the anchor column, whicb is one stop past the anchor brick column. This is what we see in the example. The last three lines of the example are the last element of the TISFAS.</p>
+<p>This is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>: Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-brick anchor offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor brick column.</p>
+<p>COLSIG again is 1-running, so that its runsteps should be indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS should be indented at the anchor column, whicb is one stop past the anchor brick column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
 <h2 id="comments">Comments</h2>
-<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. Header comments outside of a running or a jogging should be immediately followed by a code line or a line containing another header comment, and should align with the code or header comment which follows. Header comments inside of a running or a jogging should align at the anchor column.</p>
-<p>If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
+<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <h2 id="staircase-comments">Staircase comments</h2>
 <p>Informally, staircase comments take the form</p>
 <pre><code>::
@@ -137,17 +140,17 @@
   ::</code></pre>
 <p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the anchor column. The tread is four colons, aligned at the anchor column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the anchor column. A more formal definition of a staircase is given in an appendix.</p>
 <h2 id="vertical-gaps">Vertical Gaps</h2>
-<p>A <strong>vertical gap</strong> is a gap containing which contains</p>
+<p>A <strong>vertical gap</strong> is a gap which contains</p>
 <ul>
-<li><p>A newline-terminated partial line preamble. This may be just the newline.</p></li>
+<li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline.</p></li>
 <li><p>A body of one or more full newline-terminated lines, all of them comments or (in the case of non-standard code) blank lines.</p></li>
 <li><p>A partial line postamble. This is never newline-terminated, and may be zero-length.</p></li>
 </ul>
-<p>If it is before a step of a sequence, a vertical gap may contain zero or more <strong>inter-comments</strong> followed by zero or more <strong>pre-comments</strong>. Both inter-comments and pre-comments can contain any content, but in concept, inter-comments separate the sequence steps from other lexemes, and from each other; while pre-comments preceed sequence steps.</p>
-<p>The inter-comment column and pre-comment column is specified, for each type of sequence, below.</p>
-<p>Informally, the body of a standard multi-line comment follows these conventions:</p>
+<p>A vertical gap may contain zero or more <strong>inter-comments</strong> followed by zero or more <strong>pre-comments</strong>. Both inter-comments and pre-comments can contain any content, but in concept, inter-comments separate the sequence steps from other lexemes, and from each other; while pre-comments preceed sequence steps.</p>
+<p>The rune-ish expression that directly contains a vertical comment, determines its inter-comment column location and the pre-comment column location. A comment is &quot;directly contained&quot; by a rune-ish if the rune-ish expression contains the comment, but no proper subexpression of the rune-ish expression also contains that comment. This implies taht a comment is &quot;contained&quot; by a rune-ish expression if it separates the rune-ish from the first runechild; of if it separates a consecutive pair of the rune-ish expression's runechildren.</p>
+<p>Informally, the body of a standard vertical gap follows these conventions:</p>
 <ul>
-<li><p>A multi-line comment may contain an &quot;inter-part&quot;, a &quot;pre-part&quot;, or both.</p></li>
+<li><p>A vertical gap may contain an &quot;inter-part&quot;, a &quot;pre-part&quot;, or both.</p></li>
 <li><p>If both an inter-part and a pre-part are present, the inter-part must precede the pre-part.</p></li>
 <li><p>The inter-part is a non-empty sequence of inter-comments and staircases.</p></li>
 <li><p>A pre-part is a non-empty sequence of pre-comments.</p></li>
@@ -155,24 +158,31 @@
 <li><p>Comments which do not obey the above rules are <strong>bad comments</strong>. A <strong>good comment</strong> is any comment which is not a bad comment.</p></li>
 <li><p>A comment is not regarded as a meta-comment if it can be parsed as structural comment. An <strong>structural comment</strong> is any good comment which is not a meta-comment.</p></li>
 </ul>
-<p>A more formal description of a multi-line comment body is given in an appendix.</p>
+<p>A more formal description of a vertical gap body is given in an appendix.</p>
 <h1 id="types-of-hoons">Types of hoons</h1>
-<p>Hoons may be backdented, running, jogging, battery or irregular.</p>
+<p>Every hoon falls into one of 5 disjoint classes: backdented, running, jogging, battery or irregular.</p>
 <ul>
-<li><p>A hoon is a <strong>battery hoon</strong> if it contains an element that uses the battery syntax.</p></li>
-<li><p>A hoon is a <strong>running hoon</strong> if it contains an element that uses the running syntax.</p></li>
-<li><p>A hoon is a <strong>jogging hoon</strong> if it contains an element that uses the jogging syntax.</p></li>
-<li><p>A hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated elements, and none of them follow the running, jogging or battery syntax.</p></li>
+<li><p>A hoon is a <strong>battery hoon</strong> if it contains an runechild that uses the battery syntax.</p></li>
+<li><p>A hoon is a <strong>running hoon</strong> if it contains an runechild that uses the running syntax.</p></li>
+<li><p>A hoon is a <strong>jogging hoon</strong> if it contains an runechild that uses the jogging syntax.</p></li>
+<li><p>A hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated runechildren, and none of them follow the running, jogging or battery syntax.</p></li>
 <li><p>A hoon is an <strong>irregular hoon</strong> if it is not a backdented, running, jogging or backdented hoon. Most irregular hoons do not contain a gap.</p></li>
 </ul>
-<p>TODO: Corner cases, including BARCAB, SELACE and (possibly) other tall irregular hoons.</p>
-<p>Re BARCAB, ohAitch asks, &quot;Is this not just a battery hoon + single &quot;backdented&quot; same-line child?&quot;</p>
-<h1 id="backdented-hoons">Backdented hoons</h1>
-<p>The archetypal Hoon whitespace pattern is backdenting. A backdented hoon of 3 or more elements should be joined. A backdented hoon of 2 or fewer elements should be split.</p>
-<p>The first element of a joined backdented hoon should be on the same line as the rune, separated by a gap. Subsequent elements of a joined backdented hoon should be separated by a vertical gap.</p>
-<p>The first element of a joined backdented hoon should be separated from the rune by a vertical gap. Subsequent elements of a joined backdented hoon should also be separated by a vertical gap.</p>
-<p>The last element of a backdented hoon should be aligned at the anchor column. Every other elements of a backdented hoon should be aligned one stop more than the element that follows it.</p>
-<p>This means that, in an <em>n</em>-element hoon, the first element should be indented <code>n-1</code> stops more than the anchor column; a second element should be indented <code>n-2</code> stops more than the anchor column; etc.</p>
+<p>TODO: Corner cases, including BARCAB. Re BARCAB: ohAitch asks, &quot;Is this not just a battery hoon + single &quot;backdented&quot; same-line child?&quot; Any other tall irregular hoons?</p>
+<h1 id="fixed-arity-hoons">Fixed arity hoons</h1>
+<p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in fixed arity hoons.</p>
+<p>A backdented hoon of arity 3 or more should be joined. A backdented hoon of arity 2 or less should be split.</p>
+<p>The first runechild of a joined backdented hoon should be on the same line as the rune, separated by a gap. Subsequent runechildren of a joined backdented hoon should be separated by a vertical gap.</p>
+<p>The first runechild of a joined backdented hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined backdented hoon should also be separated by a vertical gap.</p>
+<p>In an fixed <code>n</code>-arity hoon, the <code>m</code>'th runechild should be indented <code>n-m</code> stops more than the anchor column. For example, in an 3-runechild hoon, the first runechild should be indented 2 stops more than the anchor column; a second runechild should be indented 1 stop more than the anchor column; and the third runechild be indented at the anchor column.</p>
+<p>This implies that, regardless of the number of runechildren in a backdented hoon,</p>
+<ul>
+<li><p>the last runechild should be aligned at the anchor column;</p></li>
+<li><p>every runechild before the last should have a column location one stop greater than the column location of the runechild that follows it.</p></li>
+<li><p>every runechild after the first should have a column location one stop less than the runechild that precedes it.</p></li>
+</ul>
+<h2 id="chaining-fixed-arity-hoons">Chaining fixed arity hoons</h2>
+<p>As a special case, a runechild of an backdented hoon may have an inter-line alignment, based on its <strong>silo</strong> and <strong>chain</strong>. Here is an example of chained alignment from <code>arvo/sys/zuse.hoon</code>, lines 2950-2959:</p>
 <pre><code>     ::
      ::  make acru cores
      ::
@@ -183,9 +193,24 @@
      ::
      ::  alice signs and encrypts a symmetric key to bob
      ::</code></pre>
+<p>If two runchildren are in the same silo of the same chain, they should have the same inter-line alignment.</p>
+<p>More formally, a chain is a sequence of fixed-arity hoons which obeys the following rules:</p>
+<ul>
+<li><p>Every hoon except the first is the last runchild of the previous hoon in the sequence</p></li>
+<li><p>Every rune-ish is either at the same column location as the first hoon in the sequence, or is on the same line as (&quot;joined with&quot;) the rune-ish of previous hoon in the sequence.</p></li>
+<li><p>The sequence is maximal. That is, no chain is a sub-sequence of a longer chain.</p></li>
+</ul>
+<p>Silo'ing is by rune-ishes and runechildren of hoons in the chain so that, in the above example, there are 4 rows each of 3 silos. Every row in a chain starts with a rune-ish, but not every rune-ish need start a row, and a given silo may contain both rune-ishes and runechildren. For example, here is code from <code>arvo/sys/hoon.hoon</code>, lines 1572-1575:</p>
+<pre><code>    =|  b/(set _?&gt;(?=(^ a) p.n.a))
+    |-  ^+  b
+    ?~  a   b
+    $(a r.a, b $(a l.a, b (~(put in b) p.n.a)))</code></pre>
+<p>In the above example, the chain contains 3 rows. (Pedantically, the last line is not a row of the chain.) There are 3 silos, but the rows are &quot;ragged&quot;, so that nothing in the first is in the 3rd silo. In all 3 rows, the 2nd silo is tightly aligned, as is the 3rd silo in the 2nd row.</p>
+<p>The 3rd silo of the 3rd row is inter-line aligned. The <code>b</code> in the 3rd row comes after a gap of 3 spaces, but this is standard because it aligns with the <code>b</code> of the 2nd row, at column location 13.</p>
+<p>Note that the 2nd silo includes both runechild and a rune-ish. Hoons of a chain may be &quot;joined&quot; on a single line, and this can be convenient when the row starts with a unary rune.</p>
 <h1 id="running-hoons">Running hoons</h1>
-<p>A running element is more often called simply a <strong>running</strong>. (Currently all hoons contains at most one running.)</p>
-<p>In addition to the running, a running hoon may contain an element before the running. If there is one element before the running, it is called the <strong>head</strong> of the running hoon.</p>
+<p>A running runechild is more often called simply a <strong>running</strong>. (Currently all hoons contains at most one running.)</p>
+<p>In addition to the running, a running hoon may contain an runechild before the running. If there is one runechild before the running, it is called the <strong>head</strong> of the running hoon.</p>
 <p>There are current two kinds of regular runnings. A 1-running has a head. A 0-running has no head.</p>
 <ul>
 <li><p>The current 0-running rules are BUCCEN (<code>$%</code>), BUCCOL (<code>$:</code>), BUCWUT (<code>$?</code>), COLSIG (<code>:~</code>), COLTAR (<code>:*</code>), WUTBAR (<code>?|</code>), and WUTPAM (<code>?&amp;</code>).</p></li>
@@ -229,8 +254,8 @@
         :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
     ==</code></pre>
 <h1 id="jogging-hoons">Jogging hoons</h1>
-<p>A jogging element is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
-<p>In addition to the jogging, a jogging hoon may contain other elements, either before or after the jogging. An element after the jogging is called a <strong>tail</strong>. If there is one element before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two elements before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
+<p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
+<p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
 <p>There are current four kinds of jogging. A 1-jogging has one head and no tail. A 2-jogging has a head and a subhead and no tail. A jogging-1 has a tail and no head.</p>
 <ul>
 <li><p>The current 1-jogging rules are CENTIS (<code>%=</code>), CENCAB (<code>%_</code>) and WUTHEP (<code>?-</code>).</p></li>
@@ -312,8 +337,8 @@
 <p>In non-standard code, the inter-line alignment of a column of lexemes is the alignment most common in the &quot;wide&quot; lexemes. (Wide lexemes are those which do not have tight or backdented alignment.)</p>
 <p>If two alignments tie by wide lexeme count, the tie is broken using the total lexeme count. If two alignments tie by total lexeme count, the tie is broken in favor of the alignment which occurs first, lexically.</p>
 <p>If there are no wide lexemes, the inter-line alignment is irrelevant and left undefined. Also, the inter-line alignment is undefined unless it has a total lexeme count of at least 2 -- in other words an inter-line alignment must actually align with a corresponding lexeme on another line.</p>
-<h1 id="appendix-multi-line-comment-body">Appendix: Multi-line comment body</h1>
-<p>The format of a multi-line comment body obeys the BNF</p>
+<h1 id="appendix-vertical-gap-body">Appendix: Vertical gap body</h1>
+<p>The format of a vertical gap body obeys the BNF</p>
 <pre><code>:start ::= gapComments
 gapComments ::= OptExceptions Body
 gapComments ::= OptExceptions
@@ -365,5 +390,6 @@ Exception ::= BlankLine</code></pre>
 <li><p>No comment is read as a Priority 3 comment if it can be lexed as a Priority 1 or 2 comment.</p></li>
 <li><p>No comment is read as a Priority 2 comment if it can be lexed as a Priority 1.</p></li>
 </ul>
+<h1 id="appendix-non-standard-chains">Appendix: Non-standard chains</h1>
 </body>
 </html>
