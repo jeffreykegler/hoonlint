@@ -89,10 +89,13 @@ The **rune line** of a hoon is `Line(r)`.
 The **rune column** of a hoon is `Column(r)`.
 
 A rune-ish expression consists of the initial rune-ish
-and zero or more subexpressions,
+followed by zero or more subexpressions,
 called **runechildren**.
 Runechildren are separated from the initial rune-ish,
 and from each other, by gaps.
+
+The **arity** of a rune-ish expression is the number of
+its runechildren.
 
 ## Horizontal Alignment
 
@@ -144,8 +147,8 @@ Which one will depend on the individual bricks involved, but often
 it is the first brick on the rune line.
 
 Let `r` be a rune.
-`r` has zero or more **inline ancestors**.
-A rune-ish `ia` is an inline ancestor of `r` if
+`r` has zero or more **horizontal ancestors**.
+A rune-ish `ia` is an horizontal ancestor of `r` if
 
 * `ia` is a brick.
 
@@ -155,17 +158,18 @@ be different -- a rune-ish is not its own proper
 ancestor.
 
 * `Line(ia) == Line(r)`.  That is, a rune
-and its inline ancestory must be on the same line.
+and its horizontal ancestor must be on the same line.
 
-Depending on the number of elements required by the brick,
-and the number of those elements joined on the rune line,
+Depending on the number of runechildren required by the brick,
+and the number of those runechildren joined on the rune line,
 each brick on the rune line has a **per-brick anchor offset**.
-If `n` elements of a parent brick are on the rune line,
+If `n` runechildren of a parent brick are on the rune line,
 the per-brick anchor offset is the indentation that would
-apply to the `n`th element,
-if the `n`th element were split onto the next line.
-(Note that every proper parent brick must have at least one
-element on the rune line.)
+apply to the `n`th runechild,
+if the `n`th runechild were split onto the next line.
+(Note that every horizontal ancestor must have at least one
+runechild on the rune line -- the child of which it is
+the ancestor.)
 
 The total of all the per-brick anchor offsets of parent bricks
 is the **reanchor offset** of the rune line.
@@ -192,7 +196,7 @@ This is lines 1916-1920 of
 The rune line is line 1916, and the rune is
 COLSIG (`:~`).
 The reanchor base is the COLLUS (`:+`).
-COLLUS is 3-fixed, but all three of its elements are
+COLLUS is 3-fixed, but all three of its runechildren are
 on the rune line, so the per-brick anchor offset is 0.
 The anchor column is the anchor brick column plus the reanchor
 offset, so that in this case,
@@ -200,7 +204,7 @@ the anchor column is the same as the anchor brick column.
 
 COLSIG is 1-running, and normal COLSIG indentation indents the runsteps
 one stop past the anchor column,
-and the final TISTIS at the anchor column.
+and puts the final TISTIS at the anchor column.
 This is exactly what we see.
 
 ### Second example
@@ -224,9 +228,9 @@ lines 346-356 of
 `arvo/lib/hood/kiln.hoon`:
 Here the rune line is line 346, the rune is again COLSIG,
 and it reanchors at TISFAS (`=/`).
-TISFAS is 3-fixed, and 2 of its elements are on the rune line,
+TISFAS is 3-fixed, and 2 of its runechildren are on the rune line,
 so that the per-brick anchor offset of the TISFAS is that of
-its 2nd element -- one stop.
+its 2nd runechild -- one stop.
 The anchor column is therefore one stop after the anchor brick
 column.
 
@@ -236,7 +240,7 @@ which in this case means two stops past the anchor brick column.
 By the same logic, the TISTIS should be indented at the anchor column,
 whicb is one stop past the anchor brick column.
 This is what we see in the example.
-The last three lines of the example are the last element of the
+The last three lines of the example are the last runechild of the
 TISFAS.
 
 ## Comments
@@ -244,14 +248,6 @@ TISFAS.
 Comments count as whitespace.
 A comment is a **header comment** if it is on a line
 by itself.
-Header comments outside of a running or a jogging
-should be immediately followed by a code line or
-a line containing another header comment,
-and should align with the code or header comment
-which follows.
-Header comments inside of a running or a jogging should
-align at the anchor column.
-
 If a comment is not a header
 comment, it is a **rightside** comment.
 A rightside comment is
@@ -288,10 +284,11 @@ given in an appendix.
 
 ## Vertical Gaps
 
-A **vertical gap** is a gap containing which contains
+A **vertical gap** is a gap which contains
 
 * A newline-terminated partial line preamble.
-This may be just the newline.
+This preamble may be of length 1 -- that is,
+it may be just the newline.
 
 * A body of one or more full newline-terminated lines,
 all of them comments or
@@ -301,8 +298,7 @@ all of them comments or
 This is never newline-terminated,
 and may be zero-length.
 
-If it is before a step of a sequence,
-a vertical gap may contain zero or more
+A vertical gap may contain zero or more
 **inter-comments**
 followed by zero or more **pre-comments**.
 Both inter-comments and pre-comments can contain any content,
@@ -311,13 +307,23 @@ inter-comments separate the sequence steps from other lexemes,
 and from each other;
 while pre-comments preceed sequence steps.
 
-The inter-comment column and pre-comment column is specified,
-for each type of sequence, below.
+The rune-ish expression that directly contains
+a vertical comment, determines
+its inter-comment column location and the pre-comment column location.
+A comment is "directly contained" by a rune-ish if the rune-ish expression
+contains the comment,
+but no proper subexpression of the rune-ish expression also
+contains that comment.
+This implies taht
+a comment is "contained" by a rune-ish expression if it separates
+the rune-ish from the first runechild;
+of if it separates
+a consecutive pair of the rune-ish expression's runechildren.
 
-Informally, the body of a standard multi-line comment 
+Informally, the body of a standard vertical gap 
 follows these conventions:
 
-* A multi-line comment may contain
+* A vertical gap may contain
 an "inter-part", a "pre-part",
 or both.
 
@@ -341,63 +347,82 @@ if it can be parsed as structural comment.
 An **structural comment** is any good comment which is
 not a meta-comment.
 
-A more formal description of a multi-line comment body is
+A more formal description of a vertical gap body is
 given in an appendix.
 
 # Types of hoons
 
-Hoons may be backdented, running, jogging, battery or irregular.
+Every hoon falls into one of 5 disjoint classes:
+backdented, running, jogging, battery or irregular.
 
-* A hoon is a **battery hoon** if it contains an element that
+* A hoon is a **battery hoon** if it contains an runechild that
 uses the battery syntax.
 
-* A hoon is a **running hoon** if it contains an element that
+* A hoon is a **running hoon** if it contains an runechild that
 uses the running syntax.
 
-* A hoon is a **jogging hoon** if it contains an element that
+* A hoon is a **jogging hoon** if it contains an runechild that
 uses the jogging syntax.
 
 * A hoon is a **backdented hoon** if it contains a fixed number
-of gap-separated elements, and none of them follow the running, jogging or
+of gap-separated runechildren, and none of them follow the running, jogging or
 battery syntax.
 
 * A hoon is an **irregular hoon** if it is not a backdented,
 running, jogging or backdented hoon.
 Most irregular hoons do not contain a gap.
 
-TODO: Corner cases, including BARCAB,
-SELACE and (possibly)
-other tall irregular hoons.
-
-Re BARCAB,
-ohAitch asks,
+TODO: Corner cases, including BARCAB.
+Re BARCAB: ohAitch asks,
 "Is this not just a battery hoon + single "backdented" same-line child?"
+Any other tall irregular hoons?
 
-# Backdented hoons
+# Fixed arity hoons
 
-The archetypal Hoon whitespace pattern is backdenting.
-A backdented hoon of 3 or more elements should be joined.
-A backdented hoon of 2 or fewer elements should be split.
+The flagship Hoon whitespace strategy is backdenting.
+Variations on the idea of backdenting appear throughout,
+but the archetypal case of backdenting is its use in
+fixed arity hoons.
 
-The first element of a joined backdented hoon should be
+A backdented hoon of arity 3 or more should be joined.
+A backdented hoon of arity 2 or less should be split.
+
+The first runechild of a joined backdented hoon should be
 on the same line as the rune, separated by a gap.
-Subsequent elements of a joined backdented hoon should be
+Subsequent runechildren of a joined backdented hoon should be
 separated by a vertical gap.
 
-The first element of a joined backdented hoon should be
+The first runechild of a joined backdented hoon should be
 separated from the rune by a vertical gap.
-Subsequent elements of a joined backdented hoon should also be
+Subsequent runechildren of a joined backdented hoon should also be
 separated by a vertical gap.
 
-The last element of a backdented hoon should be aligned at the
-anchor column.
-Every other elements of a backdented hoon should be aligned one
-stop more than the element that follows it.
+In an fixed `n`-arity hoon,
+the `m`'th runechild should be indented `n-m` stops more than the anchor column.
+For example,
+in an 3-runechild hoon,
+the first runechild should be indented 2 stops more than the anchor column;
+a second runechild should be indented 1 stop more than the anchor column;
+and the third runechild be indented at the anchor column.
 
-This means that, in an *n*-element hoon,
-the first element should be indented `n-1` stops more than the anchor column;
-a second element should be indented `n-2` stops more than the anchor column;
-etc.
+This implies that, regardless of the number of runechildren in a
+backdented hoon,
+
+* the last runechild should be aligned at the anchor column;
+
+* every runechild before the last should have a column location one
+stop greater
+than the column location of the runechild that follows it.
+
+* every runechild after the first should have a column location
+one stop less than the runechild that precedes it.
+
+## Chaining fixed arity hoons
+
+As a special case, a runechild of an backdented hoon may
+have an inter-line alignment, based on its **silo** and **chain**.
+Here is an example of chained alignment
+from `arvo/sys/zuse.hoon`, lines 2950-2959:
 
 ```
      ::
@@ -412,14 +437,49 @@ etc.
      ::
 ```
 
+If two runchildren are in the same silo of the same chain,
+they should have the
+same inter-line alignment.
+
+Silo'ing is by rune-ishes and runechildren of hoons in the chain
+so that, in the above example, there are 4 rows each of 3 silos.
+Every row in a chain starts with a rune-ish, but not every
+rune-ish need start a row,
+and a given silo may contain both rune-ishes and runechildren.
+For example, here is code
+from `arvo/sys/hoon.hoon`, lines 1572-1575:
+
+```
+    =|  b/(set _?>(?=(^ a) p.n.a))
+    |-  ^+  b
+    ?~  a   b
+    $(a r.a, b $(a l.a, b (~(put in b) p.n.a)))
+```
+
+In the above example, the chain contains 3 rows.
+(Pedantically, the last line is not a row of the chain.)
+There are 3 silos, but the rows are "ragged", so that nothing
+in the first is in the 3rd silo.
+In all 3 rows, the 2nd silo is tightly aligned,
+as is the 3rd silo in the 2nd row.
+
+The 3rd silo of the 3rd row is inter-line aligned.
+The `b` in the 3rd row comes after a gap of 3 spaces,
+but this is standard because it aligns with the `b`
+of the 2nd row, at column location 13.
+
+Note that the 2nd silo includes both runechild and a rune-ish.
+Hoons of a chain may be "joined" on a single line,
+and this can be convenient when the row starts with a unary rune.
+
 # Running hoons
 
-A running element is more often called simply a **running**.
+A running runechild is more often called simply a **running**.
 (Currently all hoons contains at most one running.)
 
 In addition to the running, a running hoon may contain
-an element before the running.
-If there is one element before the running, it
+an runechild before the running.
+If there is one runechild before the running, it
 is called the **head** of the running hoon.
 
 There are current two kinds of regular runnings.
@@ -537,15 +597,15 @@ From `sys/hoon.hoon', lines 5303-5308.
 
 # Jogging hoons
 
-A jogging element is more often called simply a **jogging**.
+A jogging runechild is more often called simply a **jogging**.
 (Currently all hoons contains at most one jogging.)
 
 In addition to the jogging, a jogging hoon may contain
-other elements, either before or after the jogging.
-An element after the jogging is called a **tail**.
-If there is one element before the jogging, it
+other runechildren, either before or after the jogging.
+An runechild after the jogging is called a **tail**.
+If there is one runechild before the jogging, it
 is called the **head** of the jogging hoon.
-If there are two elements before the jogging, they
+If there are two runechildren before the jogging, they
 are called, in order, the **head** and **subhead** of
 the jogging.
 
@@ -855,9 +915,9 @@ in other words
 an inter-line alignment must actually align with a corresponding lexeme
 on another line.
 
-# Appendix: Multi-line comment body
+# Appendix: Vertical gap body
 
-The format of a multi-line comment body obeys the BNF
+The format of a vertical gap body obeys the BNF
 
 ```
 :start ::= gapComments
@@ -940,3 +1000,5 @@ lexed as a Priority 1 or 2 comment.
 
 * No comment is read as a Priority 2 comment if it can be
 lexed as a Priority 1.
+
+# Appendix: Non-standard chains
