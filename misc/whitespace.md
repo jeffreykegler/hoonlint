@@ -4,6 +4,21 @@ This document is intended to describe the use of whitespace by
 Hoon to the level and degree of precision
 necessary for `hoonfmt` and `hoonlint`.
 
+Whitespace in wide Hoon expressions and in all irregular expressions
+except SELACE, is always an "ace" -- a single space.
+This means that, for these Hoon expressions, there is latitude
+in the use of whitespace,
+and therefore no need for conventions of the kind described
+in this document.
+
+This document therefore only deals with conventions
+for Hoon expressions which contain gaps.
+These are
+
+* Tall Hoon expressions; and
+
+* SELACE, a special case.
+
 # Terminology
 
 ## Deontology
@@ -15,14 +30,9 @@ Code, or practices which do not meet this standard we
 will call **non-standard**.
 One pragmatic consequence of non-standard code
 is that,
-by default, it may draw warnings from the hoon toolkit.
-
-It is expected that, even in carefully written hoon code,
+by default, it may draw warnings from the Hoon toolkit.
+It is expected that, even in carefully written Hoon code,
 non-standard practices will occur.
-For this reason, at points,
-we will be careful to define
-terms in such a way that they are meaningful even
-when applied to non-standard code.
 
 ## Lines, columns and indentation
 
@@ -31,29 +41,62 @@ We say the text `Y` is indented `N` stops **after** text `X`,
 if there are exactly `N` stops between the end of text `X`
 and the beginning of text `Y`.
 
-Let `Column(Y)` be column at which text `Y` begins.
-We say the indentation of text `X` is `N` stops **greater than the indentation**
-of text `Y` if text `X` begins at column `Column(Y)+N*2`.
-We say the indentation of text `X` is `N` stops **less than the indentation**
-of text `Y` if text `X` begins at column `Column(Y)-N*2`.
+This document applies to Hoon source files.
+A Hoon source file is organized in newline-terminated lines
+that contains 1 or more characters.
+The 1-based offset of a character in its line is its **column location**.
+The 1-based line number of a character is its **line location**.
+Line location is often abbreviated to **line**,
+and column location is often abbreviated to **column**.
 
-A **brick** is a Hoon lexeme with semantics.
-A Hoon lexeme without semantics is a **mortar** lexeme.
-All runes are bricks, but not all bricks are runes.
+The column location at which `x` starts
+will sometimes be written as `Column(x)`,
+where `x` designates some text in a Hoon source file.
+The line location at which `x` starts
+will sometimes be written as `Line(x)`.
 
-The **rune line** of a hoon is the line on which the hoon's rune occurs,
-and the **rune column** of a hoon
-is the column at which the hoon's rune begins.
+A **stop** is two spaces.
+If the column location of text `X` is `N` stops more
+than the column location of text `Y`,
+then text `X` begins at column `Column(Y)+N*2`.
+If the column location of text `X` is `N` stops less
+than the column location of text `Y`,
+then text `X` begins at column `Column(Y)-N*2`.
+
+A **brick** is a subtree of the Hoon syntax tree with semantics.
+A subtree without semantics is a **mortar** subtree.
+All rune expressions are bricks, but not all bricks are rune expressions.
+Mortar subtrees will not play a big role in this document --
+they are usually invisible at the source file level.
 
 Many alignments are with respect to an **anchor column**.
-Usually, the anchor column is the rune column,
-but there are many exceptions, and they
-are important.
-See below.
+Often, the anchor column is the rune column,
+but there are important exceptions, which
+will be described below.
+
+## Hoon expressions
+
+A tall **rune-ish expression** is a tall hoon expression whose "keyword"
+is a rune-ish.
+A `rune-ish` is usually a rune,
+but the `rune-ishes` also include some other keyword digraphs,
+such as `++`.
+(TODO: Give more detail re rune-ishes.)
+Currently rune-ishes are always represented in Hoon source
+files as digraphs.
+Let `r` be the rune-ish digraph of a rune-ish expression.
+The **rune line** of a hoon is `Line(r)`.
+The **rune column** of a hoon is `Column(r)`.
+
+A rune-ish expression consists of the initial rune-ish
+and zero or more subexpressions,
+called **runechildren**.
+Runechildren are separated from the initial rune-ish,
+and from each other, by gaps.
 
 ## Horizontal Alignment
 
-All lexemes in hoon are aligned horizontally in one of 4 ways:
+All lexemes in Hoon are aligned horizontally in one of 4 ways:
 
 * **Tight**:  Tightly aligned lexemes follow the preceding
 lexeme by exactly one stop.  A lexeme cannot be tightly aligned
@@ -100,9 +143,19 @@ The anchor brick column is the column of a brick on the rune line.
 Which one will depend on the individual bricks involved, but often
 it is the first brick on the rune line.
 
-Each rune line has the rune itself and zero or more parent bricks.
-Here parent means "proper parent", so that a rune is not considered
-to be its own parent brick.
+Let `r` be a rune.
+`r` has zero or more **inline ancestors**.
+A rune-ish `ia` is an inline ancestor of `r` if
+
+* `ia` is a brick.
+
+* `ia` is a proper ancestor of `r`.
+Here "proper" means the `ia` and `r` must
+be different -- a rune-ish is not its own proper
+ancestor.
+
+* `Line(ia) == Line(r)`.  That is, a rune
+and its inline ancestory must be on the same line.
 
 Depending on the number of elements required by the brick,
 and the number of those elements joined on the rune line,

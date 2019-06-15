@@ -17,6 +17,7 @@
 <li><a href="#terminology">Terminology</a><ul>
 <li><a href="#deontology">Deontology</a></li>
 <li><a href="#lines-columns-and-indentation">Lines, columns and indentation</a></li>
+<li><a href="#hoon-expressions">Hoon expressions</a></li>
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
 <li><a href="#reanchoring">Reanchoring</a><ul>
 <li><a href="#first-example">First example</a></li>
@@ -61,18 +62,27 @@
 </div>
 <h1 id="about-this-document">About this document</h1>
 <p>This document is intended to describe the use of whitespace by Hoon to the level and degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>.</p>
+<p>Whitespace in wide Hoon expressions and in all irregular expressions except SELACE, is always an &quot;ace&quot; -- a single space. This means that, for these Hoon expressions, there is latitude in the use of whitespace, and therefore no need for conventions of the kind described in this document.</p>
+<p>This document therefore only deals with conventions for Hoon expressions which contain gaps. These are</p>
+<ul>
+<li><p>Tall Hoon expressions; and</p></li>
+<li><p>SELACE, a special case.</p></li>
+</ul>
 <h1 id="terminology">Terminology</h1>
 <h2 id="deontology">Deontology</h2>
-<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that, by default, it may draw warnings from the hoon toolkit.</p>
-<p>It is expected that, even in carefully written hoon code, non-standard practices will occur. For this reason, at points, we will be careful to define terms in such a way that they are meaningful even when applied to non-standard code.</p>
+<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that, by default, it may draw warnings from the Hoon toolkit. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
 <h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
 <p>In this document, a <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
-<p>Let <code>Column(Y)</code> be column at which text <code>Y</code> begins. We say the indentation of text <code>X</code> is <code>N</code> stops <strong>greater than the indentation</strong> of text <code>Y</code> if text <code>X</code> begins at column <code>Column(Y)+N*2</code>. We say the indentation of text <code>X</code> is <code>N</code> stops <strong>less than the indentation</strong> of text <code>Y</code> if text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
-<p>A <strong>brick</strong> is a Hoon lexeme with semantics. A Hoon lexeme without semantics is a <strong>mortar</strong> lexeme. All runes are bricks, but not all bricks are runes.</p>
-<p>The <strong>rune line</strong> of a hoon is the line on which the hoon's rune occurs, and the <strong>rune column</strong> of a hoon is the column at which the hoon's rune begins.</p>
-<p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are many exceptions, and they are important. See below.</p>
+<p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines that contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
+<p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>.</p>
+<p>A <strong>stop</strong> is two spaces. If the column location of text <code>X</code> is <code>N</code> stops more than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)+N*2</code>. If the column location of text <code>X</code> is <code>N</code> stops less than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
+<p>A <strong>brick</strong> is a subtree of the Hoon syntax tree with semantics. A subtree without semantics is a <strong>mortar</strong> subtree. All rune expressions are bricks, but not all bricks are rune expressions. Mortar subtrees will not play a big role in this document -- they are usually invisible at the source file level.</p>
+<p>Many alignments are with respect to an <strong>anchor column</strong>. Often, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
+<h2 id="hoon-expressions">Hoon expressions</h2>
+<p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>. (TODO: Give more detail re rune-ishes.) Currently rune-ishes are always represented in Hoon source files as digraphs. Let <code>r</code> be the rune-ish digraph of a rune-ish expression. The <strong>rune line</strong> of a hoon is <code>Line(r)</code>. The <strong>rune column</strong> of a hoon is <code>Column(r)</code>.</p>
+<p>A rune-ish expression consists of the initial rune-ish and zero or more subexpressions, called <strong>runechildren</strong>. Runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
-<p>All lexemes in hoon are aligned horizontally in one of 4 ways:</p>
+<p>All lexemes in Hoon are aligned horizontally in one of 4 ways:</p>
 <ul>
 <li><p><strong>Tight</strong>: Tightly aligned lexemes follow the preceding lexeme by exactly one stop. A lexeme cannot be tightly aligned if it is the first one on its line.</p></li>
 <li><p><strong>Backdented</strong>: Hoon's standard alignment, described in detail below.</p></li>
@@ -84,7 +94,12 @@
 <p>We will first give a definition of reanchoring. Because the definitions are difficult to follow without illustrations, they are followed by a number of examples.</p>
 <p>Informally, reanchoring is a method of conserving indentation. Reanchoring moves the anchor column left on the rune line, so that it becomes based at a parent brick earlier in the rune line. The column of the parent brick becomes the <strong>anchor brick column</strong>. All parent bricks contribute to the backdenting, so that all the per-brick offsets are added together to produce an <strong>reanchor offset</strong>.</p>
 <p>More formally, then, the <strong>anchor column</strong> is the <strong>anchor brick column</strong>, plus the <strong>reanchor offset</strong>. The anchor brick column is the column of a brick on the rune line. Which one will depend on the individual bricks involved, but often it is the first brick on the rune line.</p>
-<p>Each rune line has the rune itself and zero or more parent bricks. Here parent means &quot;proper parent&quot;, so that a rune is not considered to be its own parent brick.</p>
+<p>Let <code>r</code> be a rune. <code>r</code> has zero or more <strong>inline ancestors</strong>. A rune-ish <code>ia</code> is an inline ancestor of <code>r</code> if</p>
+<ul>
+<li><p><code>ia</code> is a brick.</p></li>
+<li><p><code>ia</code> is a proper ancestor of <code>r</code>. Here &quot;proper&quot; means the <code>ia</code> and <code>r</code> must be different -- a rune-ish is not its own proper ancestor.</p></li>
+<li><p><code>Line(ia) == Line(r)</code>. That is, a rune and its inline ancestory must be on the same line.</p></li>
+</ul>
 <p>Depending on the number of elements required by the brick, and the number of those elements joined on the rune line, each brick on the rune line has a <strong>per-brick anchor offset</strong>. If <code>n</code> elements of a parent brick are on the rune line, the per-brick anchor offset is the indentation that would apply to the <code>n</code>th element, if the <code>n</code>th element were split onto the next line. (Note that every proper parent brick must have at least one element on the rune line.)</p>
 <p>The total of all the per-brick anchor offsets of parent bricks is the <strong>reanchor offset</strong> of the rune line. The <strong>anchor column</strong> of the rune line is the anchor brick column, plus the reanchor offset.</p>
 <p>Note that when a rune is the only brick on a line, the above definition of reanchoring is equivalent to the statement that the rune column is the anchor column.</p>
