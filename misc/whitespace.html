@@ -34,12 +34,14 @@
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
 <li><a href="#running-hoons-2">1-running hoons</a></li>
-<li><a href="#runnings">Runnings</a></li>
+<li><a href="#runnings">Runnings</a><ul>
+<li><a href="#runstep-inter-line-alignment">Runstep inter-line alignment</a></li>
+<li><a href="#running-inherited-inter-line-alignment">Running-inherited inter-line alignment</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#jogging-hoons">Jogging hoons</a><ul>
-<li><a href="#jogs">Jogs</a></li>
 <li><a href="#chess-sidedness">Chess-sidedness</a></li>
-<li><a href="#jogs-1">Jogs</a></li>
+<li><a href="#jogs">Jogs</a></li>
 <li><a href="#joggings">Joggings</a></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
 <li><a href="#jogging-hoons-1">1-jogging hoons</a></li>
@@ -76,8 +78,8 @@
 <p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that, by default, it may draw warnings from the Hoon toolkit. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
 <h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
 <p>In this document, a <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
-<p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines that contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
-<p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>.</p>
+<p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
+<p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>. When we say &quot;the column location of <code>x</code>&quot;, we mean <code>Column(x)</code>.</p>
 <p>A <strong>stop</strong> is two spaces. If the column location of text <code>X</code> is <code>N</code> stops more than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)+N*2</code>. If the column location of text <code>X</code> is <code>N</code> stops less than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
 <p>A <strong>brick</strong> is a subtree of the Hoon syntax tree with semantics. A subtree without semantics is a <strong>mortar</strong> subtree. All rune expressions are bricks, but not all bricks are rune expressions. Mortar subtrees will not play a big role in this document -- they are usually invisible at the source file level.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Often, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
@@ -114,7 +116,7 @@
           waiting+[%&amp; out]
         ==</code></pre>
 <p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The reanchor base is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-brick anchor offset is 0. The anchor column is the anchor brick column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor brick column.</p>
-<p>COLSIG is 1-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
+<p>COLSIG is 0-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
 <h3 id="second-example">Second example</h3>
 <pre><code>    =/  request-data  :~
         [0 [0 8.080] 0 &#39;localhost&#39; ~]
@@ -128,7 +130,7 @@
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
 <p>This is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>: Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-brick anchor offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor brick column.</p>
-<p>COLSIG again is 1-running, so that its runsteps should be indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS should be indented at the anchor column, whicb is one stop past the anchor brick column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
+<p>COLSIG again is 0-running, so that its runsteps should be indented one stop past the anchor column, which in this case means two stops past the anchor brick column. By the same logic, the TISTIS should be indented at the anchor column, whicb is one stop past the anchor brick column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
 <h2 id="comments">Comments</h2>
 <p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <h2 id="staircase-comments">Staircase comments</h2>
@@ -211,27 +213,29 @@
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. (Currently all hoons contains at most one running.)</p>
 <p>In addition to the running, a running hoon may contain an runechild before the running. If there is one runechild before the running, it is called the <strong>head</strong> of the running hoon.</p>
-<p>There are current two kinds of regular runnings. A 1-running has a head. A 0-running has no head.</p>
+<p>There are current three kinds of regular runnings.</p>
 <ul>
-<li><p>The current 0-running rules are BUCCEN (<code>$%</code>), BUCCOL (<code>$:</code>), BUCWUT (<code>$?</code>), COLSIG (<code>:~</code>), COLTAR (<code>:*</code>), WUTBAR (<code>?|</code>), and WUTPAM (<code>?&amp;</code>).</p></li>
-<li><p>The current 1-running rules are CENCOL (<code>%:</code>), DOTKET (<code>.^</code>), SEMCOL (<code>;:</code>), SEMSIG (<code>;~</code>).</p></li>
-<li><p>The current 0-as-1-running rule is TISSIG (<code>=~</code>).</p></li>
+<li><p>A <strong>0-running</strong> has no head. The current 0-running rules are BUCCEN (<code>$%</code>), BUCCOL (<code>$:</code>), BUCWUT (<code>$?</code>), COLSIG (<code>:~</code>), COLTAR (<code>:*</code>), WUTBAR (<code>?|</code>), and WUTPAM (<code>?&amp;</code>).</p></li>
+<li><p>A 1-running has a head. The current 1-running rules are CENCOL (<code>%:</code>), DOTKET (<code>.^</code>), SEMCOL (<code>;:</code>), SEMSIG (<code>;~</code>).</p></li>
+<li><p>TISSIG (<code>=~</code>) is a special case. TODO: In the code I call this a 0-as-1-running rule. Do I need to say more here?</p></li>
 </ul>
 <p>[ TODO: More on TISSIG. ]</p>
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
-<p>The running of a <strong>joined 0-running hoon</strong> begins on the rune line. The runsteps of a joined 0-running hoons should begin on the rune line, indented two stops more than the anchor column. This has the effect of aligning all subsequent runesteps with the runstep on the rune line.</p>
+<p>The running of a <strong>joined 0-running hoon</strong> begins on the rune line. The running of a joined 0-running hoons should be tightly aligned on the rune line. This implies that the first runestep of every runestep row will be at the same column location as the running.</p>
 <p>The running of a <strong>split 0-running hoon</strong> begins after the rune line. The runsteps of a split 0-running hoons should begin one newline equivalent after the rune line, indented one stop more than the anchor column.</p>
 <p>For both joined and split 0-running hoons, the TISTIS should align at the anchor column.</p>
 <p>As a special case, the first line of the running of either a joined or split 0-running hoon, may be a horizontal sub-running. If a joined 0-running hoon has an initial horizontal sub-running, the rune and the sub-running should be separated by one stop.</p>
 <h2 id="running-hoons-2">1-running hoons</h2>
-<p>The head of a 1-running hoon should occur on the rune line, one stop after the anchor column. The running should occur one vertical gap after the head, and should be indented one stop after the anchor column. Header comments in a 1-running hoon should be aligned at the anchor column of the parent hoon.</p>
-<p>As a special case, the running may start on the same line as the head of the 1-running hoon. In this case, the first line of the running may be a horizontal sub-running.</p>
+<p>The head of a 1-running hoon should occur on the rune line, tightly aligned. The running may either be joined or split. If split, the running should occur one vertical gap after the head, and should be indented one stop after the anchor column. If joined, the running should be tightly aligned.</p>
+<p>If vertical gap occurs between the head and the running, the inter-comment column is the column location of the running, and the pre-column is not defined.</p>
+<p>[ TODO: Recheck the 1-running description against the code. ]</p>
 <h2 id="runnings">Runnings</h2>
 <p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
 <p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
-<p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be separated from each other by one stop.</p>
-<p>From <code>sys/zuse.hoon</code>, lines 4892-4905.</p>
+<p>A <strong>horizontal sub-running</strong> is a portion of a running which has two or more runsteps on one line. The runsteps in a horizontal subrunning should be tightly aligned, or follow runstep inter-line alignment, as described next.</p>
+<h3 id="runstep-inter-line-alignment">Runstep inter-line alignment</h3>
+<p>In a row of runsteps, runsteps after the first may have inter-line alignment. Within a running, The inter-line alignment column of runsteps is determined by their silo. Here is an example of runstep inter-line alignment from <code>sys/zuse.hoon</code>, lines 4892-4905:</p>
 <pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
             ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
             ~1998.12.31..23.59.56  ~1997.6.30..23.59.55
@@ -246,6 +250,8 @@
             ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
             ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
         ==</code></pre>
+<h3 id="running-inherited-inter-line-alignment">Running-inherited inter-line alignment</h3>
+<p>If a runstep is a hoon, the runechildren of a fixed-arity hoon may have a <strong>running-inherited</strong> inter-line alignment. [ Describe row-silo ] Within a running, the running-inherited inter-line alignment of a runechild is determined by the silo of the runechild.</p>
 <p>From `sys/hoon.hoon', lines 5303-5308.</p>
 <pre><code>    :~  :-  [&#39;a&#39; &#39;z&#39;]  (cook |=(a/@ta [%$ %tas a]) sym)
         :-  [&#39;0&#39; &#39;9&#39;]  (stag %$ bisk)
@@ -253,6 +259,7 @@
         :-  &#39;.&#39;        ;~(pfix dot perd)
         :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
     ==</code></pre>
+<p>Note that if a fixed-arity hoon is a runestep, that it may have both a running-inherited inter-line alignment and a chained inter-line alignment. If a fixed-arity hoon does have both inter-line alignments, for every runechild silo, their column locations should be identical.</p>
 <h1 id="jogging-hoons">Jogging hoons</h1>
 <p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
 <p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
@@ -262,24 +269,23 @@
 <li><p>The current 2-jogging rules are CENTAR (<code>%*</code>) and WUTLUS (<code>?+</code>).</p></li>
 <li><p>The current jogging-1 rule is TISCOL (<code>=:</code>).</p></li>
 </ul>
-<h2 id="jogs">Jogs</h2>
 <p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
-<p>A jog is <strong>joined</strong> if its head and its body are both on the same line. Otherwise, the jog is said to be <strong>split</strong>.</p>
 <h2 id="chess-sidedness">Chess-sidedness</h2>
 <p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside.</p>
 <p>Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. Indentation will be described more precisely in what follows.</p>
-<h2 id="jogs-1">Jogs</h2>
+<h2 id="jogs">Jogs</h2>
+<p>A jog is <strong>joined</strong> if its head and its body are both on the same line. Otherwise, the jog is said to be <strong>split</strong>.</p>
 <p>The indentation of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
 <p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is indented 1 stop after its head. Otherwise, a joined jog is considered aligned.</p>
-<p>All aligned jogs in a jogging should be indented to the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is a aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
-<p>Jogs are either kingside or queenside. A kingside jog should have an indentation 1 stop greater than the base column of its jogging hoon. A queenside jog should have an indentation 2 stops greater than the base column of its jogging hoon. The base column of a jogging hoon is described below, in the description for the different kinds of jogging hoon.</p>
-<p>A multi-line kingside jog may either be pseudo-joined or split. A multi-line kingside jog must be a split jog. A jog is <strong>pseudo-joined</strong></p>
+<p>All aligned jogs in a jogging should be indented to the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
+<p>Jogs are either kingside or queenside. The column location of a kingside jog should be 1 stop greater than the base column location of its jogging hoon. The column location of a queenside jog should be 2 stops greater than the base column location of its jogging hoon. The base column location of a jogging hoon was described above, in the description for the different kinds of jogging hoon.</p>
+<p>A multi-line kingside jog may either be pseudo-joined or split. A jog is <strong>pseudo-joined</strong></p>
 <ul>
-<li><p>if and only every line of it, except the body line, has a comment at the column where the properly aligned body of a ragged jog would start; or</p></li>
-<li><p>if and only every line of it, except the body line, has a comment at the column where the properly aligned body of a jogging-body-aligned jog would start.</p></li>
+<li><p>if and only every line of it, except the body line, has a comment at the column location where the properly aligned body of a ragged jog would start; or</p></li>
+<li><p>if and only every line of it, except the body line, has a comment at the column location where the properly aligned body of a jogging-body-aligned jog would start.</p></li>
 </ul>
 <p>Note that this implies that the line containing the head of the jog must contain a comment. Pseudo-joined jogs are so called because the comment on the line of the head of the jog is a kind of &quot;place holder&quot; for the join, and the comments can be seen as &quot;postponing&quot; the join.</p>
-<p>The gap of split jog should be vertical, with the gap's comments aligned with the jog body. The indentation of the body of a split kingside jog should be 1 stop <strong>greater</strong> than the indentation of the jog's head. The indentation of the body of a split queenside jog should be 1 stop <strong>less</strong> than the indentation of the jog's head.</p>
+<p>The gap of split jog should be vertical. The inter-comment column location of the gap should be the column location of the jog body; and there should be no pre-comment column location. The column location of the body of a split kingside jog should be 1 stop <strong>greater</strong> than the column location of the jog's head. The column location of the body of a split queenside jog should be 1 stop <strong>less</strong> than the column location of the jog's head.</p>
 <h2 id="joggings">Joggings</h2>
 <p>A jogging is considered to start at the start of jog head of its first jog. Every jogging ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or a part of a criss-cross TISTIS line.</p>
 <p>The TISTIS of a kingside jogging should be outdented one stop from the start of its jogging. The TISTIS of a queenside jogging should be outdented two stops from the start of its jogging.</p>

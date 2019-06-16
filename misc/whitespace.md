@@ -43,7 +43,7 @@ and the beginning of text `Y`.
 
 This document applies to Hoon source files.
 A Hoon source file is organized in newline-terminated lines
-that contains 1 or more characters.
+each of which contains 1 or more characters.
 The 1-based offset of a character in its line is its **column location**.
 The 1-based line number of a character is its **line location**.
 Line location is often abbreviated to **line**,
@@ -54,6 +54,8 @@ will sometimes be written as `Column(x)`,
 where `x` designates some text in a Hoon source file.
 The line location at which `x` starts
 will sometimes be written as `Line(x)`.
+When we say "the column location of `x`",
+we mean `Column(x)`.
 
 A **stop** is two spaces.
 If the column location of text `X` is `N` stops more
@@ -202,7 +204,7 @@ The anchor column is the anchor brick column plus the reanchor
 offset, so that in this case,
 the anchor column is the same as the anchor brick column.
 
-COLSIG is 1-running, and normal COLSIG indentation indents the runsteps
+COLSIG is 0-running, and normal COLSIG indentation indents the runsteps
 one stop past the anchor column,
 and puts the final TISTIS at the anchor column.
 This is exactly what we see.
@@ -234,7 +236,7 @@ its 2nd runechild -- one stop.
 The anchor column is therefore one stop after the anchor brick
 column.
 
-COLSIG again is 1-running, so that its runsteps should be indented
+COLSIG again is 0-running, so that its runsteps should be indented
 one stop past the anchor column,
 which in this case means two stops past the anchor brick column.
 By the same logic, the TISTIS should be indented at the anchor column,
@@ -497,11 +499,10 @@ an runechild before the running.
 If there is one runechild before the running, it
 is called the **head** of the running hoon.
 
-There are current two kinds of regular runnings.
-A 1-running has a head.
-A 0-running has no head.
+There are current three kinds of regular runnings.
 
-* The current 0-running rules are
+* A **0-running** has no head.
+The current 0-running rules are
 BUCCEN (`$%`),
 BUCCOL (`$:`),
 BUCWUT (`$?`),
@@ -511,14 +512,16 @@ WUTBAR (`?|`),
 and
 WUTPAM (`?&`).
 
-* The current 1-running rules are
+* A 1-running has a head.
+The current 1-running rules are
 CENCOL (`%:`),
 DOTKET (`.^`),
 SEMCOL (`;:`),
 SEMSIG (`;~`).
 
-* The current 0-as-1-running rule is
-TISSIG (`=~`).
+* TISSIG (`=~`) is a special case.
+TODO: In the code I call this a 0-as-1-running rule.
+Do I need to say more here?
 
 [ TODO: More on TISSIG. ]
 
@@ -529,10 +532,12 @@ Header comments in a 1-running hoon should be aligned at the anchor
 column of the parent hoon.
 
 The running of a **joined 0-running hoon** begins on the rune line.
-The runsteps of a joined 0-running hoons should begin on the rune
-line, indented two stops more than the anchor column.  This has the
-effect of aligning all subsequent runesteps with the runstep on the
-rune line.
+The running of a joined 0-running hoons should be tightly aligned
+on the rune line.
+This implies that
+the first runestep of every runestep row will be at the
+same column location as
+the running.
 
 The running of a **split 0-running hoon** begins after the rune line.
 The runsteps of a split 0-running hoons should begin one newline equivalent
@@ -550,16 +555,18 @@ the rune and the sub-running should be separated by one stop.
 ## 1-running hoons
 
 The head of a 1-running hoon should occur on the rune line,
-one stop after the anchor column.
-The running should occur one vertical gap after the
+tightly aligned.
+The running may either be joined or split.
+If split, the running
+should occur one vertical gap after the
 head, and should be indented one stop after the anchor column.
-Header comments in a 1-running hoon should be aligned at the anchor
-column of the parent hoon.
+If joined, the running should be tightly aligned.
 
-As a special case, the running may start on the same line as the
-head of the 1-running hoon.
-In this case, the first line of the running may be
-a horizontal sub-running.
+If vertical gap occurs between the head and the running,
+the inter-comment column is the column location of
+the running, and the pre-column is not defined.
+
+[ TODO: Recheck the 1-running description against the code. ]
 
 ## Runnings
 
@@ -578,9 +585,19 @@ Pre-comments in a running should be aligned with the runstep.
 A **horizontal sub-running** is a portion of a running which has
 two or more runsteps on one line.
 The runsteps in a horizontal subrunning
-should be separated from each other by one stop.
+should be tightly aligned,
+or follow runstep inter-line alignment,
+as described next.
 
-From `sys/zuse.hoon`, lines 4892-4905.
+### Runstep inter-line alignment
+
+In a row of runsteps, runsteps after the first may have
+inter-line alignment.
+Within a running,
+The inter-line alignment column of runsteps is
+determined by their silo.
+Here is an example of runstep inter-line alignment
+from `sys/zuse.hoon`, lines 4892-4905:
 
 ```
         :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
@@ -599,6 +616,15 @@ From `sys/zuse.hoon`, lines 4892-4905.
         ==
 ```
 
+### Running-inherited inter-line alignment
+
+If a runstep is a hoon, the runechildren of a fixed-arity hoon
+may have a **running-inherited** inter-line alignment.
+[ Describe row-silo ]
+Within a running,
+the running-inherited inter-line alignment of a runechild
+is determined by the silo of the runechild.
+
 From `sys/hoon.hoon', lines 5303-5308.
 
 ```
@@ -609,6 +635,13 @@ From `sys/hoon.hoon', lines 5303-5308.
         :-  '~'        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
     ==
 ```
+
+Note that if a fixed-arity hoon is a runestep,
+that it may have both a running-inherited inter-line alignment
+and a chained inter-line alignment.
+If a fixed-arity hoon does have both inter-line alignments,
+for every runechild silo,
+their column locations should be identical.
 
 # Jogging hoons
 
@@ -635,15 +668,10 @@ A jogging-1 has a tail and no head.
 
 * The current jogging-1 rule is TISCOL (`=:`).
 
-## Jogs
-
 A jogging is a gap-separated sequence of one or more jogs.
 Every **jog** contains a **jog head**, followed by a gap and a **jog body**.
 Note that it is important to distinguish between the head of a jogging
 hoon, defined above, and the head of a jog.
-
-A jog is **joined** if its head and its body are both on the same line.
-Otherwise, the jog is said to be **split**.
 
 ## Chess-sidedness
 
@@ -655,6 +683,9 @@ and **queenside** means that the indentation has a right-side bias.
 Indentation will be described more precisely in what follows.
 
 ## Jogs
+
+A jog is **joined** if its head and its body are both on the same line.
+Otherwise, the jog is said to be **split**.
 
 The indentation of a jog is that of its head.
 A jog is **joined** if its head is on the same
@@ -672,31 +703,32 @@ Otherwise, a joined jog is considered aligned.
 All aligned jogs in a jogging should be indented to the
 same column.
 This column is called the **jogging body column** of the jogging.
-A jog body which is a aligned at the jog body column
+A jog body which is aligned at the jog body column
 is said to be **jogging-body-aligned**.
 A jog whose jog body is jogging-body-aligned
 is also said to be **jogging-body-aligned**.
 
 Jogs are either kingside or queenside.
-A kingside jog should have an indentation 1 stop greater than
-the base column of its jogging hoon.
-A queenside jog should have an indentation 2 stops greater than
-the base column of its jogging hoon.
-The base column of a jogging hoon is described below,
+The column location
+of a kingside jog should be 1 stop greater than
+the base column location of its jogging hoon.
+The column location
+of a queenside jog should be 2 stops greater than
+the base column location of its jogging hoon.
+The base column location of a jogging hoon was described above,
 in the description for the different kinds of jogging hoon.
 
 A multi-line kingside jog may either be pseudo-joined or split.
-A multi-line kingside jog must be a split jog.
 A jog is **pseudo-joined**
 
 * if and only every line of it,
 except the body line,
-has a comment at the column where the properly aligned body of
+has a comment at the column location where the properly aligned body of
 a ragged jog would start; or
 
 * if and only every line of it,
 except the body line,
-has a comment at the column where the properly aligned body of
+has a comment at the column location where the properly aligned body of
 a jogging-body-aligned jog would start.
 
 Note that this implies that the line containing the head of the
@@ -706,12 +738,14 @@ line of the head of the jog is a kind of "place holder" for
 the join,
 and the comments can be seen as "postponing" the join.
 
-The gap of split jog should be vertical,
-with the gap's comments aligned with the jog body.
-The indentation of the body of a split kingside jog
-should be 1 stop **greater** than the indentation of the jog's head.
-The indentation of the body of a split queenside jog
-should be 1 stop **less** than the indentation of the jog's head.
+The gap of split jog should be vertical.
+The inter-comment column location of the gap
+should be the column location of the jog body;
+and there should be no pre-comment column location.
+The column location of the body of a split kingside jog
+should be 1 stop **greater** than the column location of the jog's head.
+The column location of the body of a split queenside jog
+should be 1 stop **less** than the column location of the jog's head.
 
 ## Joggings
 
