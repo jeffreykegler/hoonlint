@@ -3127,7 +3127,7 @@ sub check_1Running {
                 $runningGap,
                 {
                     mainColumn => $anchorColumn,
-                    preColumn  => $expectedColumn,
+                    preColumn  => $runningColumn,
                     tag        => $tag,
                 }
             )
@@ -3149,7 +3149,7 @@ sub check_1Running {
 
     }
     else {
-        # joined, that is, $headLine != $runningLine
+        # joined, that is, $headLine == $runningLine
         my $gapLength = $runningGap->{length};
         my ( $runningGapLine, $runningGapColumn ) =
           $instance->nodeLC($runningGap);

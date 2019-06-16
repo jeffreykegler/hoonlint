@@ -385,6 +385,15 @@ The flagship Hoon whitespace strategy is backdenting.
 Variations on the idea of backdenting appear throughout,
 but the archetypal case of backdenting is its use in
 fixed arity hoons.
+Here is a example of a backdented 4-ary hoon:
+
+```
+        :^    %wtcl
+            [%dtts [%rock %$ |] [%$ axe]]
+          [%rock %f |]
+        [%rock %f &]
+
+```
 
 A backdented hoon of arity 3 or more should be joined.
 A backdented hoon of arity 2 or less should be split.
@@ -559,14 +568,13 @@ tightly aligned.
 The running may either be joined or split.
 If split, the running
 should occur one vertical gap after the
-head, and should be indented one stop after the anchor column.
+head, and its column location
+should be one stop more than the anchor column.
 If joined, the running should be tightly aligned.
 
 If vertical gap occurs between the head and the running,
-the inter-comment column is the column location of
-the running, and the pre-column is not defined.
-
-[ TODO: Recheck the 1-running description against the code. ]
+the inter-comment column is the anchor column,
+and the pre-column is the column location of the running.
 
 ## Runnings
 
@@ -769,9 +777,10 @@ be properly aligned, if some other TISTIS with the required alignment
 "stands in" for it.
 Such lines are called "criss-cross" because
 if you drew
-lines connecting the TISTIS's that match each rune by alignment
-with the TISTIS's that match the same rune syntactically,
-the lines would form a "criss-cross" pattern.
+a line that pairs each TISTIS with the rune that it matches by alignment;
+and another set of lines, each of which pairs its TISTIS with the rune that
+it matches syntactically;
+then the two sets of lines would cross each other.
 
 HEPHEP's may also be joined into criss-cross lines.
 
