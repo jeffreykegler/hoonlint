@@ -1022,7 +1022,46 @@ battery hoon.
 
 ## BARCEN
 
+From the sieve_k example:
+```
+|%
+++  abet  (sort (~(tap in fed)) lth)
+++  main
+  =+  fac=2
+  |-  ^+  ..main
+  ?:  (gth (mul fac fac) top)
+    ..main
+  $(fac +(fac), ..main (reap fac))
+::
+++  reap
+  |=  fac=@
+  =+  cot=(mul 2 fac)
+  |-  ^+  ..reap
+  ?:  (gth cot top)
+    ..reap
+  $(cot (add cot fac), fed (~(del in fed) cot))
+--
+```
+
+From `arvo/sys/zuse.hoon`, lines 176-181:
+```
+      |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
+          ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
+          ++  sure  |~({a/@ b/@} *(unit @))             ::  authenticate from us
+          ++  tear  |~  {a/pass b/@}                    ::  accept from a
+                    *(unit {p/@ q/@})                   ::
+      --  ::as                                          ::
+```
+
 BARCEN may reanchor at KETBAR or KETWUT.
+It may be joined or split.
+The battery of a joined BARCEN must be tightly
+aligned.
+A split BARCEN has
+a vertical gap between the rune and the battery.
+In this vertical gap, the inter-comment column location
+should be the anchor column,
+and the pre-comment column location should be undefined.
 
 # SELACE
 
