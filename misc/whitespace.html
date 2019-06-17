@@ -33,7 +33,9 @@
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
-<li><a href="#running-hoons-2">1-running hoons</a></li>
+<li><a href="#running-hoons-2">1-running hoons</a><ul>
+<li><a href="#tissig">TISSIG</a></li>
+</ul></li>
 <li><a href="#runnings">Runnings</a><ul>
 <li><a href="#runstep-inter-line-alignment">Runstep inter-line alignment</a></li>
 <li><a href="#running-inherited-inter-line-alignment">Running-inherited inter-line alignment</a></li>
@@ -53,9 +55,6 @@
 <li><a href="#barcen">BARCEN</a></li>
 </ul></li>
 <li><a href="#selace">SELACE</a></li>
-<li><a href="#special-cases">Special cases</a><ul>
-<li><a href="#tissig">TISSIG</a></li>
-</ul></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
 <li><a href="#jogging-body-column">Jogging body column</a></li>
@@ -259,6 +258,23 @@
              ==</code></pre>
 <p>The head of a 1-running hoon should occur on the rune line, tightly aligned. The running may either be joined or split. If split, the running should occur one vertical gap after the head, and its column location should be one stop more than the anchor column. If joined, the running should be tightly aligned.</p>
 <p>If vertical gap occurs between the head and the running, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p>
+<h3 id="tissig">TISSIG</h3>
+<p>From <code>arvo/sys/vane/ford.hoon</code>, beginning at line 8:</p>
+<pre><code>=&gt;  =~
+::  structures
+|%
+++  heel  path                                          ::  functional ending
+++  move  {p/duct q/(wind note gift:able)}              ::  local move
+:: Lines from 13 on omitted ]</code></pre>
+<p>Note that, in the example above, the anchor column is different from the rune column.</p>
+<p>The running must be separated from the rune by a vertical gap. The inter-comment location of this vertical gap is the anchor column, and its pre-comment location is undefined. The column location of the running must be the anchor column.</p>
+<p>The TISTIS should be at the anchor column. TISSIG is a special case, in that the TISTIS should be aligned with the runsteps. The TISTIS should be separated from the last runstep by a vertical gap, whose inter-comment location is the anchor column, and whose pre-comment location is undefined.</p>
+<!-- TODO: TISSIG is very problematic.
+By the above definition of correctness, none
+of the TISTIS occurrences in the corpus are correct.
+Also, contrary to the above
+ there may to be a joined form of TISSIG.
+-->
 <h2 id="runnings">Runnings</h2>
 <p>A running is considered to start at the start of its first run step. Every running ends in a TISTIS (<code>==</code>). The TISTIS should occur on its own line, or as part of a criss-cross TISTIS line.</p>
 <p>A vertical gap should occur between every pair of runsteps. A vertical gap should also occur between the last runstep and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the runstep.</p>
@@ -399,9 +415,6 @@
 <p>Note that BARCEN Cells also should never use the column of a parent LUSLUS, LUSHEP or LUSTIS as their anchor column. Technically, this is not an exception because pedantically, LUSLUS, LUSHEP and LUSTIS are not runes.</p>
 <h1 id="selace">SELACE</h1>
 <p>Only one-line SELACE's occur in the <code>arvo/</code> corpus. One-line SELACE's are free-form -- <code>hoonlint</code> never generates a warning for them. If <code>hoonlint</code> encounters a multi-line SELACE, it issues a &quot;not yet implemented&quot; warning.</p>
-<h1 id="special-cases">Special cases</h1>
-<h2 id="tissig">TISSIG</h2>
-<p>As a special case, the runsteps in TISSIG should be aligned with the rune.</p>
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
 <p>In non-standard code -- code which does not follow these guidelines, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This section describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
 <h2 id="chess-sidedness-1">Chess-sidedness</h2>

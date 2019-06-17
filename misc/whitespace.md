@@ -1022,19 +1022,7 @@ battery hoon.
 
 ## BARCEN
 
-With one exception,
-the **anchor column** of a BARCEN battery is the column
-of the first rune on the same line as the rune of the hoon
-of the battery that contains those cells.
-The exception is that
-the rune column of a parent TISGAL or TISGAR rune
-should never be the anchor column of a BARCEN battery.
-
-Note that BARCEN Cells
-also should never use the column of a parent LUSLUS, LUSHEP or LUSTIS
-as their anchor column.
-Technically, this is not an exception because pedantically,
-LUSLUS, LUSHEP and LUSTIS are not runes.
+BARCEN may reanchor at KETBAR or KETWUT.
 
 # SELACE
 
