@@ -3247,8 +3247,7 @@ sub check_0_as_1Running {
         $policy->checkOneLineGap(
             $runningGap,
             {
-                mainColumn => $runeColumn,
-                preColumn  => $expectedColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
             }
         )

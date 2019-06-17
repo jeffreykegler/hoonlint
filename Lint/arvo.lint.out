@@ -582,7 +582,6 @@ hoons/arvo/sys/vane/xmas.hoon 71:1 Test::Whitespace LuslusCell cell body @72:11;
 hoons/arvo/sys/vane/xmas.hoon 76:1 Test::Whitespace LuslusCell cell body @77:11; overindented by 8
 hoons/arvo/sys/vane/xmas.hoon 82:1 Test::Whitespace LuslusCell cell body @83:11; overindented by 8
 hoons/arvo/sys/vane/xmas.hoon 89:1 Test::Whitespace LuslusCell cell body @90:11; overindented by 8
-hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tallTissig 0as1-running @103:3; comment overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 105:1 Test::Whitespace tallBarcen whap @388:3; comment overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 105:1 Test::Whitespace tallBarcen whap @389:3; comment overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 105:1 Test::Whitespace tallBarcen whap @390:5; comment overindented by 4
