@@ -411,8 +411,32 @@ Also, contrary to the above
 <h2 id="batteries">Batteries</h2>
 <p>The cells of a battery should all align at the same column, called the <strong>cell alignment column</strong>. The cells should be separated by vertical gaps, where the base column for header comments is the cell alignment column. The &quot;cell alignment column&quot; is specified below, for each battery hoon.</p>
 <h2 id="barcen">BARCEN</h2>
-<p>With one exception, the <strong>anchor column</strong> of a BARCEN battery is the column of the first rune on the same line as the rune of the hoon of the battery that contains those cells. The exception is that the rune column of a parent TISGAL or TISGAR rune should never be the anchor column of a BARCEN battery.</p>
-<p>Note that BARCEN Cells also should never use the column of a parent LUSLUS, LUSHEP or LUSTIS as their anchor column. Technically, this is not an exception because pedantically, LUSLUS, LUSHEP and LUSTIS are not runes.</p>
+<p>From the sieve_k example:</p>
+<pre><code>|%
+++  abet  (sort (~(tap in fed)) lth)
+++  main
+  =+  fac=2
+  |-  ^+  ..main
+  ?:  (gth (mul fac fac) top)
+    ..main
+  $(fac +(fac), ..main (reap fac))
+::
+++  reap
+  |=  fac=@
+  =+  cot=(mul 2 fac)
+  |-  ^+  ..reap
+  ?:  (gth cot top)
+    ..reap
+  $(cot (add cot fac), fed (~(del in fed) cot))
+--</code></pre>
+<p>From <code>arvo/sys/zuse.hoon</code>, lines 176-181:</p>
+<pre><code>      |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
+          ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
+          ++  sure  |~({a/@ b/@} *(unit @))             ::  authenticate from us
+          ++  tear  |~  {a/pass b/@}                    ::  accept from a
+                    *(unit {p/@ q/@})                   ::
+      --  ::as                                          ::</code></pre>
+<p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split. The battery of a joined BARCEN must be tightly aligned. A split BARCEN has a vertical gap between the rune and the battery. In this vertical gap, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p>
 <h1 id="selace">SELACE</h1>
 <p>Only one-line SELACE's occur in the <code>arvo/</code> corpus. One-line SELACE's are free-form -- <code>hoonlint</code> never generates a warning for them. If <code>hoonlint</code> encounters a multi-line SELACE, it issues a &quot;not yet implemented&quot; warning.</p>
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
