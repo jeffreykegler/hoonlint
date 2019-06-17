@@ -2395,29 +2395,20 @@ sub checkBarcen {
     my $expectedColumn;
 
     if ( $parentLine == $batteryLine ) {
-        return [] if length $gapLiteral == 2;
         my $gapLength = $gap->{length};
-        my ( undef, $gapColumn ) = $instance->nodeLC($gap);
+        return [] if length $gapLiteral == 2;
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-
-        $expectedColumn = $gapColumn + $expectedLength;
-
-        if ( $expectedColumn != $batteryColumn ) {
-            my $msg = sprintf 'joined Barcen battery %s; %s',
-              describeLC( $batteryLine, $batteryColumn ),
-              describeMisindent2( $batteryColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $batteryLine,
-                column         => $batteryColumn,
-              };
-        }
+        my $msg = sprintf 'joined Barcen battery %s; %s',
+          describeLC( $batteryLine, $batteryColumn ),
+          describeMisindent2( $gapLength, 2 );
+        push @mistakes,
+          {
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $batteryLine,
+            column       => $batteryColumn,
+          };
         return \@mistakes;
     }
 
