@@ -584,6 +584,21 @@ of the TISTIS should be the same as the anchor column location.
 
 ## 1-running hoons
 
+Lines 4048-4051 of `arvo/sys/zuse.hoon`:
+```
+      ;~  pose
+        (cold & (jest 'true'))
+        (cold | (jest 'false'))
+      ==
+```
+
+Lines 4853-4855 of `arvo/sys/hoon.hoon`:
+```
+             ;~  less  soz
+               (ifix [soq soq] (boss 256 (more gon qit)))
+             ==
+```
+
 The head of a 1-running hoon should occur on the rune line,
 tightly aligned.
 The running may either be joined or split.
@@ -807,6 +822,24 @@ HEPHEP's may also be joined into criss-cross lines.
 
 ## 1-jogging hoons
 
+From `arvo/sys/hoon.hoon`, lines 6330-6334:
+```
+  ?-  pex
+    {$1 $0}  yom
+    {$1 $1}  woq
+    *        [%6 pex yom woq]
+  ==
+```
+
+From `arvo/sys/hoon.hoon`, lines 6305-6309:
+```
+  ?-    nug
+      {$0 *}   p.nug
+      {$10 *}  $(nug q.nug)
+      *        ~_(leaf+"cove" !!)
+  ==
+```
+
 Every 1-jogging hoon is either kingside or queenside.
 The base column
 for the jogs of a 1-jogging hoon is its anchor column.
@@ -830,6 +863,36 @@ It should be on a line after the rune line,
 and should consist entirely of queenside jogs.
 
 ## 2-jogging hoons
+
+From `arvo/sys/vane/ames.hoon`, lines 1568-1575:
+```
+      ?+    lot  ~
+          [$$ %ud @]
+        (perm p.why u.hun q.p.lot [syd t.tyl])
+      ::
+          [$$ %da @]
+        ?.  =(now q.p.lot)  ~
+        (temp p.why u.hun [syd t.tyl])
+      ==
+```
+
+From `arvo/sys/hoon.hoon`, lines 10111-10116:
+```
+      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
+          ~(rend co [%$ p.q.ham lum])
+        $$    ~(rend co [%$ %ud lum])
+        $t    (dash (rip 3 lum) '\'' ~)
+        $tas  ['%' ?.(=(0 lum) (rip 3 lum) ['$' ~])]
+      ==
+```
+
+From `arvo/sys/hoon.hoon`, lines 6583-6586:
+```
+      ?+  p.mod  [%rock %$ 0]
+        $cell  [[%rock %$ 0] [%rock %$ 0]]
+        $void  [%zpzp ~]
+      ==
+```
 
 Every 2-jogging hoon is either kingside or queenside.
 The base column
@@ -877,20 +940,37 @@ and should consist entirely of queenside jogs.
 
 ## Jogging-1 hoons
 
+<!-- "Split" form addressed in Github issue #31" -->
+
+From `arvo/sys/hoon.hoon`, lines 9720-9727:
+```
+          =:  hos  ~
+              wec  [~ ~ ~]
+            ==
+          ::  descend into cell
+          ::
+          :+  %cell
+            dext(sut p.sut, ref (peek(sut ref) %free 2))
+          dext(sut q.sut, ref (peek(sut ref) %free 3))
+```
+
 Every jogging-1 hoon is considered kingside.
-The base column
+The base column location
 for the jogs of a jogging-1 hoon is one stop greater than its anchor column.
 
-* The jogging of a jogging-1 hoon
+The jogging of a jogging-1 hoon
 should start on the rune line,
-1 stop after the rune line,
-and should consist entirely of kingside jogs.
+and be tightly joined.
+The jogging should consist entirely of kingside jogs.
 This implies that the TISTIS should be indented one stop
 more than the anchor column.
 
-* The tail of a jogging-1 hoon should be
-should be one new-line equivalent after the TISTIS,
-and aligned at the anchor column.
+The tail of a jogging-1 hoon should be
+should be one vertical gap after the TISTIS,
+and its column location should be the anchor column.
+For the vertical gap before the TISTIS,
+the inter-comment column location should be the anchor
+column, and the pre-comment column location should be undefined.
 
 # Battery hoons
 

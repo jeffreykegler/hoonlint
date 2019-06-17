@@ -248,6 +248,15 @@
 <p>The column location of the running of a split 0-running hoon should be one stop greater than the rune column. In the vertical gap between the rune and the running of a split 0-running hoon, the inter-comment column location should be the same as the rune column, and the pre-comment location should be the column location of the running.</p>
 <p>For both joined and split 0-running hoons, the column location of the TISTIS should be the same as the anchor column location.</p>
 <h2 id="running-hoons-2">1-running hoons</h2>
+<p>Lines 4048-4051 of <code>arvo/sys/zuse.hoon</code>:</p>
+<pre><code>      ;~  pose
+        (cold &amp; (jest &#39;true&#39;))
+        (cold | (jest &#39;false&#39;))
+      ==</code></pre>
+<p>Lines 4853-4855 of <code>arvo/sys/hoon.hoon</code>:</p>
+<pre><code>             ;~  less  soz
+               (ifix [soq soq] (boss 256 (more gon qit)))
+             ==</code></pre>
 <p>The head of a 1-running hoon should occur on the rune line, tightly aligned. The running may either be joined or split. If split, the running should occur one vertical gap after the head, and its column location should be one stop more than the anchor column. If joined, the running should be tightly aligned.</p>
 <p>If vertical gap occurs between the head and the running, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p>
 <h2 id="runnings">Runnings</h2>
@@ -313,6 +322,18 @@
 <p>Successive TISTIS's may occur on the same line, as part of a <strong>criss-cross TISTIS line</strong>. If a TISTIS is in a criss-cross line, it does not have to be properly aligned, if some other TISTIS with the required alignment &quot;stands in&quot; for it. Such lines are called &quot;criss-cross&quot; because if you drew a line that pairs each TISTIS with the rune that it matches by alignment; and another set of lines, each of which pairs its TISTIS with the rune that it matches syntactically; then the two sets of lines would cross each other.</p>
 <p>HEPHEP's may also be joined into criss-cross lines.</p>
 <h2 id="jogging-hoons-1">1-jogging hoons</h2>
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 6330-6334:</p>
+<pre><code>  ?-  pex
+    {$1 $0}  yom
+    {$1 $1}  woq
+    *        [%6 pex yom woq]
+  ==</code></pre>
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 6305-6309:</p>
+<pre><code>  ?-    nug
+      {$0 *}   p.nug
+      {$10 *}  $(nug q.nug)
+      *        ~_(leaf+&quot;cove&quot; !!)
+  ==</code></pre>
 <p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column.</p>
 <p>&quot;Sidedness&quot; should be consistent:</p>
 <ul>
@@ -322,6 +343,27 @@
 <li><p>The jogging of a queenside 1-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
 <h2 id="jogging-hoons-2">2-jogging hoons</h2>
+<p>From <code>arvo/sys/vane/ames.hoon</code>, lines 1568-1575:</p>
+<pre><code>      ?+    lot  ~
+          [$$ %ud @]
+        (perm p.why u.hun q.p.lot [syd t.tyl])
+      ::
+          [$$ %da @]
+        ?.  =(now q.p.lot)  ~
+        (temp p.why u.hun [syd t.tyl])
+      ==</code></pre>
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 10111-10116:</p>
+<pre><code>      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
+          ~(rend co [%$ p.q.ham lum])
+        $$    ~(rend co [%$ %ud lum])
+        $t    (dash (rip 3 lum) &#39;\&#39;&#39; ~)
+        $tas  [&#39;%&#39; ?.(=(0 lum) (rip 3 lum) [&#39;$&#39; ~])]
+      ==</code></pre>
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</p>
+<pre><code>      ?+  p.mod  [%rock %$ 0]
+        $cell  [[%rock %$ 0] [%rock %$ 0]]
+        $void  [%zpzp ~]
+      ==</code></pre>
 <p>Every 2-jogging hoon is either kingside or queenside. The base column for the jogs of a 2-jogging hoon is its anchor column.</p>
 <p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
 <p>&quot;Sidedness&quot; should be consistent:</p>
@@ -335,11 +377,19 @@
 <li><p>The jogging of a queenside 2-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
 <h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
-<p>Every jogging-1 hoon is considered kingside. The base column for the jogs of a jogging-1 hoon is one stop greater than its anchor column.</p>
-<ul>
-<li><p>The jogging of a jogging-1 hoon should start on the rune line, 1 stop after the rune line, and should consist entirely of kingside jogs. This implies that the TISTIS should be indented one stop more than the anchor column.</p></li>
-<li><p>The tail of a jogging-1 hoon should be should be one new-line equivalent after the TISTIS, and aligned at the anchor column.</p></li>
-</ul>
+<!-- "Split" form addressed in Github issue #31" -->
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 9720-9727:</p>
+<pre><code>          =:  hos  ~
+              wec  [~ ~ ~]
+            ==
+          ::  descend into cell
+          ::
+          :+  %cell
+            dext(sut p.sut, ref (peek(sut ref) %free 2))
+          dext(sut q.sut, ref (peek(sut ref) %free 3))</code></pre>
+<p>Every jogging-1 hoon is considered kingside. The base column location for the jogs of a jogging-1 hoon is one stop greater than its anchor column.</p>
+<p>The jogging of a jogging-1 hoon should start on the rune line, and be tightly joined. The jogging should consist entirely of kingside jogs. This implies that the TISTIS should be indented one stop more than the anchor column.</p>
+<p>The tail of a jogging-1 hoon should be should be one vertical gap after the TISTIS, and its column location should be the anchor column. For the vertical gap before the TISTIS, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p>
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
