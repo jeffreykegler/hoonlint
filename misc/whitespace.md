@@ -537,29 +537,50 @@ Do I need to say more here?
 ## 0-running hoons
 
 0-running hoons may be either split or joined.
-Header comments in a 1-running hoon should be aligned at the anchor
-column of the parent hoon.
 
-The running of a **joined 0-running hoon** begins on the rune line.
-The running of a joined 0-running hoons should be tightly aligned
+This example of a joined 0-running hoon
+is from `arvo/sys/zuse.hoon`, lines 2399-2402:
+
+```
+              :~  [b er]
+                  [b pk]
+                  [(met 0 m) m]
+              ==
+```
+
+The running of a joined 0-running hoon should be tightly aligned
 on the rune line.
 This implies that
 the first runestep of every runestep row will be at the
 same column location as
 the running.
 
-The running of a **split 0-running hoon** begins after the rune line.
-The runsteps of a split 0-running hoons should begin one newline equivalent
-after the rune
-line, indented one stop more than the anchor column.
+This example is the beginning and end of a long split 0-running hoon,
+which starts at line 84 of `avro/sur/twitter.hoon`.
+
+```
+    :~
+      [  {$mentions $~}                %get   /statuses/mentions-timeline  ]
+      [  {$posts-by sd $~}             %get   /statuses/user-timeline  ]
+      [  {$timeline $~}                %get   /statuses/home-timeline  ]
+      [  {$retweets-mine $~}           %get   /statuses/retweets-of-me  ]
+:: Lines 89-189 are omitted
+      [  {$help-langs $~}              %get   /help/languages  ]
+      [  {$help-privacy $~}            %get   /help/privacy  ]
+      [  {$help-tos $~}                %get   /help/tos  ]
+      [  {$rate-limit-info $~}         %get   /application/rate-limit-status  ]
+    ==
+```
+
+The column location of the running of a split 0-running hoon should be
+one stop greater than the rune column.
+In the vertical gap between the rune and the running of a split 0-running hoon,
+the inter-comment column location should be the same as the rune column,
+and the pre-comment location should be the column location of the running.
 
 For both joined and split 0-running hoons,
-the TISTIS should align at the anchor column.
-
-As a special case, the first line of the running of either a
-joined or split 0-running hoon, may be a horizontal sub-running.
-If a joined 0-running hoon has an initial horizontal sub-running,
-the rune and the sub-running should be separated by one stop.
+the column location
+of the TISTIS should be the same as the anchor column location.
 
 ## 1-running hoons
 
