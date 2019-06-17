@@ -374,11 +374,6 @@ battery syntax.
 running, jogging or backdented hoon.
 Most irregular hoons do not contain a gap.
 
-TODO: Corner cases, including BARCAB.
-Re BARCAB: ohAitch asks,
-"Is this not just a battery hoon + single "backdented" same-line child?"
-Any other tall irregular hoons?
-
 # Fixed arity hoons
 
 The flagship Hoon whitespace strategy is backdenting.
@@ -1066,6 +1061,7 @@ and the pre-comment column location should be undefined.
 ## BARCAB
 
 From `sys/vane/jael.hoon`, lines 697-827
+```
   |_  pig/safe
   ::                                                    ::  ++delete:up
   ++  delete                                            ::  delete right
