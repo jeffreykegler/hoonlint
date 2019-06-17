@@ -54,7 +54,15 @@
 <li><a href="#batteries">Batteries</a></li>
 <li><a href="#barcen">BARCEN</a></li>
 <li><a href="#barcab">BARCAB</a></li>
+<li><a href="#barket">BARKET</a></li>
 </ul></li>
+<li><a href="#selgap">SELGAP</a></li>
+<li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
+<li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
+<li><a href="#jogging-body-column">Jogging body column</a></li>
+<li><a href="#inter-line-alignment">Inter-line alignment</a></li>
+</ul></li>
+<li><a href="#appendix-vertical-gap-body">Appendix: Vertical gap body</a></li>
 <li><a href="#appendix-non-standard-chains">Appendix: Non-standard chains</a></li>
 </ul>
 </div>
@@ -163,7 +171,6 @@
 <li><p>A hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated runechildren, and none of them follow the running, jogging or battery syntax.</p></li>
 <li><p>A hoon is an <strong>irregular hoon</strong> if it is not a backdented, running, jogging or backdented hoon. Most irregular hoons do not contain a gap.</p></li>
 </ul>
-<p>TODO: Corner cases, including BARCAB. Re BARCAB: ohAitch asks, &quot;Is this not just a battery hoon + single &quot;backdented&quot; same-line child?&quot; Any other tall irregular hoons?</p>
 <h1 id="fixed-arity-hoons">Fixed arity hoons</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in fixed arity hoons. Here is a example of a backdented 4-ary hoon:</p>
 <pre><code>        :^    %wtcl
@@ -432,109 +439,91 @@ Also, contrary to the above
       --  ::as                                          ::</code></pre>
 <p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split. The battery of a joined BARCEN must be tightly aligned. A split BARCEN has a vertical gap between the rune and the battery. In this vertical gap, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p>
 <h2 id="barcab">BARCAB</h2>
-<p>From <code>sys/vane/jael.hoon</code>, lines 697-827 |_ pig/safe :: :: ++delete:up ++ delete :: delete right |= ryt/rite ^- safe :: Lines 701-820 omitted :: ++ update :: arbitrary change |= del/bump ^- safe (splice(pig (remove les.del)) mor.del) --</p>
-<pre><code>
-The head of BARCAB may be tightly joined or pseudo-joined.
-The battery column location should be the anchor column.
-There should be a vertical gap between the head and the battery.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+<p>From <code>sys/vane/jael.hoon</code>, lines 697-827</p>
+<pre><code>  |_  pig/safe
+  ::                                                    ::  ++delete:up
+  ++  delete                                            ::  delete right
+    |=  ryt/rite
+    ^-  safe
+:: Lines 701-820 omitted
+  ::
+  ++  update                                            ::  arbitrary change
+    |=  del/bump
+    ^-  safe
+    (splice(pig (remove les.del)) mor.del)
+  --</code></pre>
+<p>The head of BARCAB may be tightly joined or pseudo-joined. The battery column location should be the anchor column. There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p>
+<h2 id="barket">BARKET</h2>
+<p>From <code>arvo/sys/zuse.hoon</code>, lines 3975-4025</p>
+<pre><code>    |^  |=(val/json (apex val &quot;&quot;))
+    ::                                                  ::  ++apex:en-json:html
+    ++  apex
+      |=  {val/json rez/tape}
+      ^-  tape
+:: Lines 3980-4015 omitted
+    ::                                                  ::  ++jesc:en-json:html
+    ++  jesc                                            ::  escaped
+      =+  utf=|=(a/@ [&#39;\\&#39; &#39;u&#39; ((x-co 4):co a)])
+      |=  a/@  ^-  tape
+      ?+  a  ?:((gth a 0x1f) [a ~] (utf a))
+        $10  &quot;\\n&quot;
+        $34  &quot;\\\&quot;&quot;
+        $92  &quot;\\\\&quot;
+      ==
+    --  ::en-json</code></pre>
+<p>The head of BARKET should be tightly joined or pseudo-joined. The battery column location should be the anchor column. There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p>
+<h1 id="selgap">SELGAP</h1>
+<p>From <code>arvo/sur/twitter.hoon</code>, line 85:</p>
+<pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
+<p>Whitespace in one-line SELGAP's is free-form -- <code>hoonlint</code> never generates a warning for them.</p>
+<p>Only one-line SELGAP's occur in the <code>arvo</code> corpus. If <code>hoonlint</code> encounters a multi-line SELGAP, it issues a &quot;not yet implemented&quot; warning.</p>
+<h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
+<p>In non-standard code -- code which does not follow these guidelines, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This section describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
+<h2 id="chess-sidedness-1">Chess-sidedness</h2>
+<p>A jog is considered queenside if its indentation is 2 stops or more greater than the anchor column. Otherwise, the jog is considered kingside.</p>
+<p>The chess-sidedness of a misindented jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a misindented jogging hoon is that of its jogging.</p>
+<h2 id="jogging-body-column">Jogging body column</h2>
+<p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's aligned jogs. If more than one column is &quot;most common&quot;, so that there is a tie, the jogging body column is the body column of the lexically first jog to have its jog body start at one of the most common columns. If there are no aligned jogs in a jogging, the jogging body column is the body column of the lexically first jog in the jogging.</p>
+<h2 id="inter-line-alignment">Inter-line alignment</h2>
+<p>In non-standard code, the inter-line alignment of a column of lexemes is the alignment most common in the &quot;wide&quot; lexemes. (Wide lexemes are those which do not have tight or backdented alignment.)</p>
+<p>If two alignments tie by wide lexeme count, the tie is broken using the total lexeme count. If two alignments tie by total lexeme count, the tie is broken in favor of the alignment which occurs first, lexically.</p>
+<p>If there are no wide lexemes, the inter-line alignment is irrelevant and left undefined. Also, the inter-line alignment is undefined unless it has a total lexeme count of at least 2 -- in other words an inter-line alignment must actually align with a corresponding lexeme on another line.</p>
+<h1 id="appendix-vertical-gap-body">Appendix: Vertical gap body</h1>
+<p>The format of a vertical gap body obeys the BNF</p>
+<pre><code>:start ::= gapComments
+gapComments ::= OptExceptions Body
+gapComments ::= OptExceptions
+Body ::= InterPart PrePart
+Body ::= InterPart
+Body ::= PrePart
+InterPart ::= InterComponent
+InterPart ::= InterruptedInterComponents
+InterPart ::= InterruptedInterComponents InterComponent
 
-## BARKET
+InterruptedInterComponents ::= InterruptedInterComponent+
+InterruptedInterComponent ::= InterComponent Exceptions
+InterComponent ::= Staircases
+InterComponent ::= Staircases InterComments
+InterComponent ::= InterComments
 
-From `arvo/sys/zuse.hoon`, lines 3975-4025</code></pre>
-<pre><code>|^  |=(val/json (apex val &quot;&quot;))
-::                                                  ::  ++apex:en-json:html
-++  apex
-  |=  {val/json rez/tape}
-  ^-  tape</code></pre>
-<p>:: Lines 3980-4015 omitted :: :: ++jesc:en-json:html ++ jesc :: escaped =+ utf=|=(a/@ ['\' 'u' ((x-co 4):co a)]) |= a/@ ^- tape ?+ a ?:((gth a 0x1f) [a ~] (utf a)) $10 &quot;\n&quot; $34 &quot;\&quot;&quot; $92 &quot;\\&quot; == -- ::en-json</p>
-<pre><code>
-The head of BARKET should be tightly joined or pseudo-joined.
-The battery column location should be the anchor column.
-There should be a vertical gap between the head and the battery.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+InterComments ::= InterComment+
 
-# SELGAP
+Staircases ::= Staircase+
+Staircase ::= UpperRisers Tread LowerRisers
+UpperRisers ::= UpperRiser+
+LowerRisers ::= LowerRiser+
 
-From `arvo/sur/twitter.hoon`, line 85:</code></pre>
-<pre><code> [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
-<pre><code>
-Whitespace in one-line SELGAP&#39;s is free-form -- `hoonlint` never generates
-a warning for them.
+PrePart ::= ProperPreComponent OptPreComponents
+ProperPreComponent ::= PreComment
+OptPreComponents ::= PreComponent*
+PreComponent ::= ProperPreComponent
+PreComponent ::= Exception
 
-Only one-line SELGAP&#39;s occur in the `arvo` corpus.
-If `hoonlint` encounters a multi-line SELGAP,
-it issues a &quot;not yet implemented&quot; warning.
-
-# Appendix: Non-standard code
-
-In non-standard code -- code which does not follow these guidelines,
-`hoonlint` sometimes must decide the &quot;intended&quot; syntax,
-in order to produce diagnostics that are as helpful as possible.
-This section describes the methods used for deciding what was
-&quot;intended&quot; in non-standard Hoon code.
-
-## Chess-sidedness
-
-A jog is considered queenside if its indentation is 2 stops or more
-greater than the anchor column.
-Otherwise, the jog is considered kingside.
-
-The chess-sidedness of a misindented jogging is that of the majority
-of its jogs.
-In case of a tie, the jogging is considered to be queenside.
-The chess-sidedness of a misindented jogging hoon is that of its
-jogging.
-
-## Jogging body column
-
-In non-standard code,
-the jogging body column of a jogging is considered to be the most common start column
-of the bodies of the jogging&#39;s aligned jogs.
-If more than one column is &quot;most common&quot;,
-so that there is a tie,
-the jogging body column is
-the body column of the lexically first jog to have its jog body
-start at one of the most common columns.
-If there are no aligned jogs in a jogging,
-the jogging body column is the body column of the
-lexically first jog in the jogging.
-
-## Inter-line alignment
-
-In non-standard code,
-the inter-line alignment of a column of lexemes is
-the alignment most common in the &quot;wide&quot; lexemes.
-(Wide lexemes are those which do not have tight or backdented
-alignment.)
-
-If two alignments tie by wide lexeme count,
-the tie is broken using the total lexeme count.
-If two alignments tie by total lexeme count,
-the tie is broken in favor of the alignment which
-occurs first, lexically.
-
-If there are no wide lexemes, the inter-line alignment is
-irrelevant and left undefined.
-Also,
-the inter-line alignment is undefined unless it 
-has a total lexeme count of at least 2 --
-in other words
-an inter-line alignment must actually align with a corresponding lexeme
-on another line.
-
-# Appendix: Vertical gap body
-
-The format of a vertical gap body obeys the BNF
-</code></pre>
-<p>:start ::= gapComments gapComments ::= OptExceptions Body gapComments ::= OptExceptions Body ::= InterPart PrePart Body ::= InterPart Body ::= PrePart InterPart ::= InterComponent InterPart ::= InterruptedInterComponents InterPart ::= InterruptedInterComponents InterComponent</p>
-<p>InterruptedInterComponents ::= InterruptedInterComponent+ InterruptedInterComponent ::= InterComponent Exceptions InterComponent ::= Staircases InterComponent ::= Staircases InterComments InterComponent ::= InterComments</p>
-<p>InterComments ::= InterComment+</p>
-<p>Staircases ::= Staircase+ Staircase ::= UpperRisers Tread LowerRisers UpperRisers ::= UpperRiser+ LowerRisers ::= LowerRiser+</p>
-<p>PrePart ::= ProperPreComponent OptPreComponents ProperPreComponent ::= PreComment OptPreComponents ::= PreComponent* PreComponent ::= ProperPreComponent PreComponent ::= Exception</p>
-<p>OptExceptions ::= Exception* Exceptions ::= Exception+ Exception ::= MetaComment Exception ::= BadComment Exception ::= BlankLine ```</p>
+OptExceptions ::= Exception*
+Exceptions ::= Exception+
+Exception ::= MetaComment
+Exception ::= BadComment
+Exception ::= BlankLine</code></pre>
 <p>The terminals in this BNF are</p>
 <ul>
 <li><p>BadComment -- a comment with any indent. Priority 3.</p></li>
