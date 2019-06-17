@@ -612,6 +612,40 @@ If vertical gap occurs between the head and the running,
 the inter-comment column is the anchor column,
 and the pre-column is the column location of the running.
 
+### TISSIG
+
+From `arvo/sys/vane/ford.hoon`, beginning at line 8:
+```
+=>  =~
+::  structures
+|%
+++  heel  path                                          ::  functional ending
+++  move  {p/duct q/(wind note gift:able)}              ::  local move
+:: Lines from 13 on omitted ]
+```
+
+Note that, in the example above, the anchor column is different
+from the rune column.
+
+The running must be separated from the rune by a vertical gap.
+The inter-comment location of this vertical gap is the anchor
+column, and its pre-comment location is undefined.
+The column location of the running must be the anchor column.
+
+The TISTIS should be at the anchor column.
+TISSIG is a special case, in that the TISTIS should be aligned
+with the runsteps.
+The TISTIS should be separated from the last runstep by a vertical gap,
+whose inter-comment location is the anchor
+column, and whose pre-comment location is undefined.
+
+<!-- TODO: TISSIG is very problematic.
+By the above definition of correctness, none
+of the TISTIS occurrences in the corpus are correct.
+Also, contrary to the above
+ there may to be a joined form of TISSIG.
+-->
+
 ## Runnings
 
 A running is considered to start at the start of its first run step.
@@ -1009,13 +1043,6 @@ One-line SELACE's are free-form -- `hoonlint` never generates
 a warning for them.
 If `hoonlint` encounters a multi-line SELACE,
 it issues a "not yet implemented" warning.
-
-# Special cases
-
-## TISSIG
-
-As a special case,
-the runsteps in TISSIG should be aligned with the rune.
 
 # Appendix: Non-standard code
 
