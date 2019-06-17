@@ -5,7 +5,7 @@ Hoon to the level and degree of precision
 necessary for `hoonfmt` and `hoonlint`.
 
 Whitespace in wide Hoon expressions and in all irregular expressions
-except SELACE, is always an "ace" -- a single space.
+except SELGAP, is always an "ace" -- a single space.
 This means that, for these Hoon expressions, there is latitude
 in the use of whitespace,
 and therefore no need for conventions of the kind described
@@ -17,7 +17,7 @@ These are
 
 * Tall Hoon expressions; and
 
-* SELACE, a special case.
+* SELGAP, a special case.
 
 # Terminology
 
@@ -116,7 +116,7 @@ and which lines are considered "associated" varies depending on
 the syntactic context.  Inter-line alignment is described in detail
 in the sections describing the syntaxes where it is allowed.
 
-* **Free-form**:  Within SELACE hoons,
+* **Free-form**:  Within SELGAP hoons,
 horizontal alignment can be free-form.
 
 ## Reanchoring
@@ -1063,12 +1063,69 @@ In this vertical gap, the inter-comment column location
 should be the anchor column,
 and the pre-comment column location should be undefined.
 
-# SELACE
+## BARCAB
 
-Only one-line SELACE's occur in the `arvo/` corpus.
-One-line SELACE's are free-form -- `hoonlint` never generates
+From `sys/vane/jael.hoon`, lines 697-827
+  |_  pig/safe
+  ::                                                    ::  ++delete:up
+  ++  delete                                            ::  delete right
+    |=  ryt/rite
+    ^-  safe
+:: Lines 701-820 omitted
+  ::
+  ++  update                                            ::  arbitrary change
+    |=  del/bump
+    ^-  safe
+    (splice(pig (remove les.del)) mor.del)
+  --
+```
+
+The head of BARCAB may be tightly joined or pseudo-joined.
+The battery column location should be the anchor column.
+There should be a vertical gap between the head and the battery.
+The inter-comment column location of the vertical gap should
+be the anchor column and the pre-column should be undefined.
+
+## BARKET
+
+From `arvo/sys/zuse.hoon`, lines 3975-4025
+```
+    |^  |=(val/json (apex val ""))
+    ::                                                  ::  ++apex:en-json:html
+    ++  apex
+      |=  {val/json rez/tape}
+      ^-  tape
+:: Lines 3980-4015 omitted
+    ::                                                  ::  ++jesc:en-json:html
+    ++  jesc                                            ::  escaped
+      =+  utf=|=(a/@ ['\\' 'u' ((x-co 4):co a)])
+      |=  a/@  ^-  tape
+      ?+  a  ?:((gth a 0x1f) [a ~] (utf a))
+        $10  "\\n"
+        $34  "\\\""
+        $92  "\\\\"
+      ==
+    --  ::en-json
+```
+
+The head of BARKET should be tightly joined or pseudo-joined.
+The battery column location should be the anchor column.
+There should be a vertical gap between the head and the battery.
+The inter-comment column location of the vertical gap should
+be the anchor column and the pre-column should be undefined.
+
+# SELGAP
+
+From `arvo/sur/twitter.hoon`, line 85:
+```
+     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]
+```
+
+Whitespace in one-line SELGAP's is free-form -- `hoonlint` never generates
 a warning for them.
-If `hoonlint` encounters a multi-line SELACE,
+
+Only one-line SELGAP's occur in the `arvo` corpus.
+If `hoonlint` encounters a multi-line SELGAP,
 it issues a "not yet implemented" warning.
 
 # Appendix: Non-standard code
