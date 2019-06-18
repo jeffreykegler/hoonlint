@@ -1,15 +1,8 @@
 # About this document
 
 This document is intended to describe the use of whitespace by
-Hoon to the level and degree of precision
+Hoon to the level and to the degree of precision
 necessary for `hoonfmt` and `hoonlint`.
-
-Whitespace in wide Hoon expressions and in all irregular expressions
-except SELGAP, is always an "ace" -- a single space.
-This means that, for these Hoon expressions, there is latitude
-in the use of whitespace,
-and therefore no need for conventions of the kind described
-in this document.
 
 This document therefore only deals with conventions
 for Hoon expressions which contain gaps.
@@ -18,6 +11,12 @@ These are
 * Tall Hoon expressions; and
 
 * SELGAP, a special case.
+
+Whitespace in other Hoon expressions is always an "ace" -- a single space.
+For these Hoon expressions in which all whitespace is an ace,
+there is no latitude in the use of whitespace,
+and no need for conventions of the kind described
+in this document.
 
 # Terminology
 
@@ -29,17 +28,18 @@ in this document.
 Code, or practices which do not meet this standard we
 will call **non-standard**.
 One pragmatic consequence of non-standard code
-is that,
-by default, it may draw warnings from the Hoon toolkit.
+is that
+it may draw warnings from `hoonlint`.
 It is expected that, even in carefully written Hoon code,
 non-standard practices will occur.
 
-## Lines, columns and indentation
+In this document, we say "`X` must be `Y`",
+if `X` must be `Y` in both standard and non-standard code.
+This would be the case, for example,
+if X is Y as matter of definition,
+or due to a mathematical equivalence.
 
-In this document, a **stop** is two spaces.
-We say the text `Y` is indented `N` stops **after** text `X`,
-if there are exactly `N` stops between the end of text `X`
-and the beginning of text `Y`.
+## Lines, columns and indentation
 
 This document applies to Hoon source files.
 A Hoon source file is organized in newline-terminated lines
@@ -48,6 +48,18 @@ The 1-based offset of a character in its line is its **column location**.
 The 1-based line number of a character is its **line location**.
 Line location is often abbreviated to **line**,
 and column location is often abbreviated to **column**.
+
+To avoid confusion,
+in this document
+column position is always used to mean the
+location of a character within a line,
+as defined above.
+When we discuss other horizontal vs. vertical grids,
+we use the terms "row" for position on the vertical axis,
+and "silo" for position on the horizontal axis.
+The definition of the specific meaning of
+"row" and "silo" will be given with the context
+where it is used.
 
 The column location at which `x` starts
 will sometimes be written as `Column(x)`,
@@ -58,6 +70,10 @@ When we say "the column location of `x`",
 we mean `Column(x)`.
 
 A **stop** is two spaces.
+We say the text `Y` is indented `N` stops **after** text `X`,
+if there are exactly `N` stops between the end of text `X`
+and the beginning of text `Y`.
+
 If the column location of text `X` is `N` stops more
 than the column location of text `Y`,
 then text `X` begins at column `Column(Y)+N*2`.
@@ -82,10 +98,16 @@ A tall **rune-ish expression** is a tall hoon expression whose "keyword"
 is a rune-ish.
 A `rune-ish` is usually a rune,
 but the `rune-ishes` also include some other keyword digraphs,
-such as `++`.
-(TODO: Give more detail re rune-ishes.)
+such as `++`, `+=`, `+-`, `--` and `==`.
 Currently rune-ishes are always represented in Hoon source
 files as digraphs.
+
+Digraphs which introduce comments,
+such as `::` are **not** considered rune-ishes.
+Comments, including the digraphs which begin them
+are considered whitespace,
+and nothing in whitespace is considered a rune-ish.
+
 Let `r` be the rune-ish digraph of a rune-ish expression.
 The **rune line** of a hoon is `Line(r)`.
 The **rune column** of a hoon is `Column(r)`.
@@ -93,11 +115,24 @@ The **rune column** of a hoon is `Column(r)`.
 A rune-ish expression consists of the initial rune-ish
 followed by zero or more subexpressions,
 called **runechildren**.
-Runechildren are separated from the initial rune-ish,
-and from each other, by gaps.
-
 The **arity** of a rune-ish expression is the number of
 its runechildren.
+In the hoon expressions being considered in this document,
+runechildren are separated from the initial rune-ish,
+and from each other, by gaps.
+
+Let `r` be a rune-ish.
+We sometimes write the hoon expression that begin with `r`
+as `Hoon(r)`.
+Then
+
+```
+   Line(Hoon(r)) == Line(r)
+   Column(Hoon(r)) == Column(r)
+```
+Let `h` be a rune-ish expression.
+We sometimes write the hoon expression that is the syntactic parent 
+of `h` as `Parent(h)`.
 
 ## Horizontal Alignment
 
@@ -524,10 +559,6 @@ SEMCOL (`;:`),
 SEMSIG (`;~`).
 
 * TISSIG (`=~`) is a special case.
-TODO: In the code I call this a 0-as-1-running rule.
-Do I need to say more here?
-
-[ TODO: More on TISSIG. ]
 
 ## 0-running hoons
 
@@ -608,7 +639,7 @@ head, and its column location
 should be one stop more than the anchor column.
 If joined, the running should be tightly aligned.
 
-### TISSIG
+## TISSIG
 
 From `arvo/sys/vane/ford.hoon`, beginning at line 8:
 ```
@@ -862,7 +893,7 @@ Specifics are given below,
 but the general rule for sidedness is that it should be
 consistend.
 
-### 1-jogging hoons (kingside)
+### Kingside 1-jogging hoons
 
 From `arvo/sys/hoon.hoon`, lines 6330-6334:
 ```
@@ -881,7 +912,7 @@ indented 1 stop after the anchor column.
 It should be on a line after the rune line,
 and should consist entirely of kingside jogs.
 
-### 1-jogging hoons (queenside)
+### Queenside 1-jogging hoons
 
 From `arvo/sys/hoon.hoon`, lines 6305-6309:
 ```
@@ -915,7 +946,7 @@ same line, the 2-jogging hoon is called **head-joined**.
 If the head and subhead of a 2-jogging hoon are on
 different lines, the 2-jogging hoon is called **head-split**.
 
-## Kingside 2-jogging hoons
+### Kingside 2-jogging hoons
 
 From `arvo/sys/hoon.hoon`, lines 6583-6586:
 ```
@@ -935,7 +966,7 @@ should be on the rune line, tightly aligned.
 It should be on a line after the rune line,
 and should consist entirely of kingside jogs.
 
-## Head-joined queenside 2-jogging hoons
+### Head-joined queenside 2-jogging hoons
 
 From `arvo/sys/vane/ames.hoon`, lines 1568-1575:
 ```
@@ -956,7 +987,7 @@ separated by 2 stops from the rune.
 * The subhead of a head-joined 2-jogging hoon
 should be on the rune line, tightly aligned.
 
-## Head-split queenside 2-jogging hoons
+### Head-split queenside 2-jogging hoons
 
 From `arvo/sys/hoon.hoon`, lines 10111-10116:
 ```
@@ -1040,7 +1071,7 @@ battery hoon.
 BARCEN may reanchor at KETBAR or KETWUT.
 It may be joined or split.
 
-## Split BARCEN
+### Split BARCEN
 
 From the sieve_k example:
 ```
@@ -1069,7 +1100,7 @@ In this vertical gap, the inter-comment column location
 should be the anchor column,
 and the pre-comment column location should be undefined.
 
-## Joined BARCEN
+### Joined BARCEN
 
 From `arvo/sys/zuse.hoon`, lines 176-181:
 ```

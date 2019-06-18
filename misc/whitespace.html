@@ -33,9 +33,8 @@
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a></li>
-<li><a href="#running-hoons-2">1-running hoons</a><ul>
+<li><a href="#running-hoons-2">1-running hoons</a></li>
 <li><a href="#tissig">TISSIG</a></li>
-</ul></li>
 <li><a href="#runnings">Runnings</a><ul>
 <li><a href="#runstep-inter-line-alignment">Runstep inter-line alignment</a></li>
 <li><a href="#running-inherited-inter-line-alignment">Running-inherited inter-line alignment</a></li>
@@ -47,20 +46,22 @@
 <li><a href="#joggings">Joggings</a></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
 <li><a href="#jogging-hoons-1">1-jogging hoons</a><ul>
-<li><a href="#jogging-hoons-kingside">1-jogging hoons (kingside)</a></li>
-<li><a href="#jogging-hoons-queenside">1-jogging hoons (queenside)</a></li>
+<li><a href="#kingside-1-jogging-hoons">Kingside 1-jogging hoons</a></li>
+<li><a href="#queenside-1-jogging-hoons">Queenside 1-jogging hoons</a></li>
 </ul></li>
-<li><a href="#jogging-hoons-2">2-jogging hoons</a></li>
+<li><a href="#jogging-hoons-2">2-jogging hoons</a><ul>
 <li><a href="#kingside-2-jogging-hoons">Kingside 2-jogging hoons</a></li>
 <li><a href="#head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</a></li>
 <li><a href="#head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</a></li>
+</ul></li>
 <li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#batteries">Batteries</a></li>
-<li><a href="#barcen">BARCEN</a></li>
+<li><a href="#barcen">BARCEN</a><ul>
 <li><a href="#split-barcen">Split BARCEN</a></li>
 <li><a href="#joined-barcen">Joined BARCEN</a></li>
+</ul></li>
 <li><a href="#barcab">BARCAB</a></li>
 <li><a href="#barket">BARKET</a></li>
 </ul></li>
@@ -75,27 +76,34 @@
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
-<p>This document is intended to describe the use of whitespace by Hoon to the level and degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>.</p>
-<p>Whitespace in wide Hoon expressions and in all irregular expressions except SELGAP, is always an &quot;ace&quot; -- a single space. This means that, for these Hoon expressions, there is latitude in the use of whitespace, and therefore no need for conventions of the kind described in this document.</p>
+<p>This document is intended to describe the use of whitespace by Hoon to the level and to the degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>.</p>
 <p>This document therefore only deals with conventions for Hoon expressions which contain gaps. These are</p>
 <ul>
 <li><p>Tall Hoon expressions; and</p></li>
 <li><p>SELGAP, a special case.</p></li>
 </ul>
+<p>Whitespace in other Hoon expressions is always an &quot;ace&quot; -- a single space. For these Hoon expressions in which all whitespace is an ace, there is no latitude in the use of whitespace, and no need for conventions of the kind described in this document.</p>
 <h1 id="terminology">Terminology</h1>
 <h2 id="deontology">Deontology</h2>
-<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that, by default, it may draw warnings from the Hoon toolkit. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
+<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
+<p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as matter of definition, or due to a mathematical equivalence.</p>
 <h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
-<p>In this document, a <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
 <p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
+<p>To avoid confusion, in this document column position is always used to mean the location of a character within a line, as defined above. When we discuss other horizontal vs. vertical grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis. The definition of the specific meaning of &quot;row&quot; and &quot;silo&quot; will be given with the context where it is used.</p>
 <p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>. When we say &quot;the column location of <code>x</code>&quot;, we mean <code>Column(x)</code>.</p>
-<p>A <strong>stop</strong> is two spaces. If the column location of text <code>X</code> is <code>N</code> stops more than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)+N*2</code>. If the column location of text <code>X</code> is <code>N</code> stops less than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
+<p>A <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
+<p>If the column location of text <code>X</code> is <code>N</code> stops more than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)+N*2</code>. If the column location of text <code>X</code> is <code>N</code> stops less than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
 <p>A <strong>brick</strong> is a subtree of the Hoon syntax tree with semantics. A subtree without semantics is a <strong>mortar</strong> subtree. All rune expressions are bricks, but not all bricks are rune expressions. Mortar subtrees will not play a big role in this document -- they are usually invisible at the source file level.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Often, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
-<p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>. (TODO: Give more detail re rune-ishes.) Currently rune-ishes are always represented in Hoon source files as digraphs. Let <code>r</code> be the rune-ish digraph of a rune-ish expression. The <strong>rune line</strong> of a hoon is <code>Line(r)</code>. The <strong>rune column</strong> of a hoon is <code>Column(r)</code>.</p>
-<p>A rune-ish expression consists of the initial rune-ish followed by zero or more subexpressions, called <strong>runechildren</strong>. Runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
-<p>The <strong>arity</strong> of a rune-ish expression is the number of its runechildren.</p>
+<p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>, <code>+=</code>, <code>+-</code>, <code>--</code> and <code>==</code>. Currently rune-ishes are always represented in Hoon source files as digraphs.</p>
+<p>Digraphs which introduce comments, such as <code>::</code> are <strong>not</strong> considered rune-ishes. Comments, including the digraphs which begin them are considered whitespace, and nothing in whitespace is considered a rune-ish.</p>
+<p>Let <code>r</code> be the rune-ish digraph of a rune-ish expression. The <strong>rune line</strong> of a hoon is <code>Line(r)</code>. The <strong>rune column</strong> of a hoon is <code>Column(r)</code>.</p>
+<p>A rune-ish expression consists of the initial rune-ish followed by zero or more subexpressions, called <strong>runechildren</strong>. The <strong>arity</strong> of a rune-ish expression is the number of its runechildren. In the hoon expressions being considered in this document, runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
+<p>Let <code>r</code> be a rune-ish. We sometimes write the hoon expression that begin with <code>r</code> as <code>Hoon(r)</code>. Then</p>
+<pre><code>   Line(Hoon(r)) == Line(r)
+   Column(Hoon(r)) == Column(r)</code></pre>
+<p>Let <code>h</code> be a rune-ish expression. We sometimes write the hoon expression that is the syntactic parent of <code>h</code> as <code>Parent(h)</code>.</p>
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
 <p>All lexemes in Hoon are aligned horizontally in one of 4 ways:</p>
 <ul>
@@ -230,9 +238,8 @@
 <ul>
 <li><p>A <strong>0-running</strong> has no head. The current 0-running rules are BUCCEN (<code>$%</code>), BUCCOL (<code>$:</code>), BUCWUT (<code>$?</code>), COLSIG (<code>:~</code>), COLTAR (<code>:*</code>), WUTBAR (<code>?|</code>), and WUTPAM (<code>?&amp;</code>).</p></li>
 <li><p>A 1-running has a head. The current 1-running rules are CENCOL (<code>%:</code>), DOTKET (<code>.^</code>), SEMCOL (<code>;:</code>), SEMSIG (<code>;~</code>).</p></li>
-<li><p>TISSIG (<code>=~</code>) is a special case. TODO: In the code I call this a 0-as-1-running rule. Do I need to say more here?</p></li>
+<li><p>TISSIG (<code>=~</code>) is a special case.</p></li>
 </ul>
-<p>[ TODO: More on TISSIG. ]</p>
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined.</p>
 <p>This example of a joined 0-running hoon is from <code>arvo/sys/zuse.hoon</code>, lines 2399-2402:</p>
@@ -270,7 +277,7 @@
 <li><p>If vertical gap occurs between the head and the running, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p></li>
 <li><p>The running may either be joined or split. If split, the running should occur one vertical gap after the head, and its column location should be one stop more than the anchor column. If joined, the running should be tightly aligned.</p></li>
 </ul>
-<h3 id="tissig">TISSIG</h3>
+<h2 id="tissig">TISSIG</h2>
 <p>From <code>arvo/sys/vane/ford.hoon</code>, beginning at line 8:</p>
 <pre><code>=&gt;  =~
 ::  structures
@@ -355,7 +362,7 @@ Also, contrary to the above
 <p>HEPHEP's may also be joined into criss-cross lines.</p>
 <h2 id="jogging-hoons-1">1-jogging hoons</h2>
 <p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column. Specifics are given below, but the general rule for sidedness is that it should be consistend.</p>
-<h3 id="jogging-hoons-kingside">1-jogging hoons (kingside)</h3>
+<h3 id="kingside-1-jogging-hoons">Kingside 1-jogging hoons</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 6330-6334:</p>
 <pre><code>  ?-  pex
     {$1 $0}  yom
@@ -366,7 +373,7 @@ Also, contrary to the above
 <li><p>The head of a kingside 1-jogging hoon should be kingside. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
 <li><p>The jogging of a kingside 1-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 </ul>
-<h3 id="jogging-hoons-queenside">1-jogging hoons (queenside)</h3>
+<h3 id="queenside-1-jogging-hoons">Queenside 1-jogging hoons</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 6305-6309:</p>
 <pre><code>  ?-    nug
       {$0 *}   p.nug
@@ -380,7 +387,7 @@ Also, contrary to the above
 <h2 id="jogging-hoons-2">2-jogging hoons</h2>
 <p>Every 2-jogging hoon is either kingside or queenside. Specifics are given below, but the general rule is that &quot;sidedness&quot; should be consistent. The base column for the jogs of a 2-jogging hoon is its anchor column.</p>
 <p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
-<h2 id="kingside-2-jogging-hoons">Kingside 2-jogging hoons</h2>
+<h3 id="kingside-2-jogging-hoons">Kingside 2-jogging hoons</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</p>
 <pre><code>      ?+  p.mod  [%rock %$ 0]
         $cell  [[%rock %$ 0] [%rock %$ 0]]
@@ -391,7 +398,7 @@ Also, contrary to the above
 <li><p>The subhead of a head-joined 2-jogging hoon should be on the rune line, tightly aligned.</p></li>
 <li><p>The jogging of a kingside 2-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 </ul>
-<h2 id="head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</h2>
+<h3 id="head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</h3>
 <p>From <code>arvo/sys/vane/ames.hoon</code>, lines 1568-1575:</p>
 <pre><code>      ?+    lot  ~
           [$$ %ud @]
@@ -405,7 +412,7 @@ Also, contrary to the above
 <li><p>The head of a queenside 2-jogging head-joined hoon should be queenside. It should be on the rune line, separated by 2 stops from the rune.</p></li>
 <li><p>The subhead of a head-joined 2-jogging hoon should be on the rune line, tightly aligned.</p></li>
 </ul>
-<h2 id="head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</h2>
+<h3 id="head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 10111-10116:</p>
 <pre><code>      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
           ~(rend co [%$ p.q.ham lum])
@@ -441,7 +448,7 @@ Also, contrary to the above
 <p>The cells of a battery should all align at the same column, called the <strong>cell alignment column</strong>. The cells should be separated by vertical gaps, where the base column for header comments is the cell alignment column. The &quot;cell alignment column&quot; is specified below, for each battery hoon.</p>
 <h2 id="barcen">BARCEN</h2>
 <p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split.</p>
-<h2 id="split-barcen">Split BARCEN</h2>
+<h3 id="split-barcen">Split BARCEN</h3>
 <p>From the sieve_k example:</p>
 <pre><code>|%
 ++  abet  (sort (~(tap in fed)) lth)
@@ -463,7 +470,7 @@ Also, contrary to the above
 <ul>
 <li>A split BARCEN has a vertical gap between the rune and the battery. In this vertical gap, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</li>
 </ul>
-<h2 id="joined-barcen">Joined BARCEN</h2>
+<h3 id="joined-barcen">Joined BARCEN</h3>
 <p>From <code>arvo/sys/zuse.hoon</code>, lines 176-181:</p>
 <pre><code>      |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
           ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
