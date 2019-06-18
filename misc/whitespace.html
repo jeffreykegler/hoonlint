@@ -46,13 +46,21 @@
 <li><a href="#jogs">Jogs</a></li>
 <li><a href="#joggings">Joggings</a></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
-<li><a href="#jogging-hoons-1">1-jogging hoons</a></li>
+<li><a href="#jogging-hoons-1">1-jogging hoons</a><ul>
+<li><a href="#jogging-hoons-kingside">1-jogging hoons (kingside)</a></li>
+<li><a href="#jogging-hoons-queenside">1-jogging hoons (queenside)</a></li>
+</ul></li>
 <li><a href="#jogging-hoons-2">2-jogging hoons</a></li>
+<li><a href="#kingside-2-jogging-hoons">Kingside 2-jogging hoons</a></li>
+<li><a href="#head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</a></li>
+<li><a href="#head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</a></li>
 <li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#batteries">Batteries</a></li>
 <li><a href="#barcen">BARCEN</a></li>
+<li><a href="#split-barcen">Split BARCEN</a></li>
+<li><a href="#joined-barcen">Joined BARCEN</a></li>
 <li><a href="#barcab">BARCAB</a></li>
 <li><a href="#barket">BARKET</a></li>
 </ul></li>
@@ -257,8 +265,11 @@
 <pre><code>             ;~  less  soz
                (ifix [soq soq] (boss 256 (more gon qit)))
              ==</code></pre>
-<p>The head of a 1-running hoon should occur on the rune line, tightly aligned. The running may either be joined or split. If split, the running should occur one vertical gap after the head, and its column location should be one stop more than the anchor column. If joined, the running should be tightly aligned.</p>
-<p>If vertical gap occurs between the head and the running, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p>
+<ul>
+<li><p>The head of a 1-running hoon should occur on the rune line, tightly aligned.</p></li>
+<li><p>If vertical gap occurs between the head and the running, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p></li>
+<li><p>The running may either be joined or split. If split, the running should occur one vertical gap after the head, and its column location should be one stop more than the anchor column. If joined, the running should be tightly aligned.</p></li>
+</ul>
 <h3 id="tissig">TISSIG</h3>
 <p>From <code>arvo/sys/vane/ford.hoon</code>, beginning at line 8:</p>
 <pre><code>=&gt;  =~
@@ -268,8 +279,12 @@
 ++  move  {p/duct q/(wind note gift:able)}              ::  local move
 :: Lines from 13 on omitted ]</code></pre>
 <p>Note that, in the example above, the anchor column is different from the rune column.</p>
-<p>The running must be separated from the rune by a vertical gap. The inter-comment location of this vertical gap is the anchor column, and its pre-comment location is undefined. The column location of the running must be the anchor column.</p>
-<p>The TISTIS should be at the anchor column. TISSIG is a special case, in that the TISTIS should be aligned with the runsteps. The TISTIS should be separated from the last runstep by a vertical gap, whose inter-comment location is the anchor column, and whose pre-comment location is undefined.</p>
+<ul>
+<li><p>The running must be separated from the rune by a vertical gap. The inter-comment location of this vertical gap is the anchor column, and its pre-comment location is undefined. The column location of the running must be the anchor column.</p></li>
+<li><p>The TISTIS should be separated from the last runstep by a vertical gap, whose inter-comment location is the anchor column, and whose pre-comment location is undefined.</p></li>
+<li><p>The TISTIS should be at the anchor column.</p></li>
+</ul>
+<p>TISSIG is a special case of 0-running, in that the TISTIS should be aligned with the runsteps.</p>
 <!-- TODO: TISSIG is very problematic.
 By the above definition of correctness, none
 of the TISTIS occurrences in the corpus are correct.
@@ -339,27 +354,44 @@ Also, contrary to the above
 <p>Successive TISTIS's may occur on the same line, as part of a <strong>criss-cross TISTIS line</strong>. If a TISTIS is in a criss-cross line, it does not have to be properly aligned, if some other TISTIS with the required alignment &quot;stands in&quot; for it. Such lines are called &quot;criss-cross&quot; because if you drew a line that pairs each TISTIS with the rune that it matches by alignment; and another set of lines, each of which pairs its TISTIS with the rune that it matches syntactically; then the two sets of lines would cross each other.</p>
 <p>HEPHEP's may also be joined into criss-cross lines.</p>
 <h2 id="jogging-hoons-1">1-jogging hoons</h2>
+<p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column. Specifics are given below, but the general rule for sidedness is that it should be consistend.</p>
+<h3 id="jogging-hoons-kingside">1-jogging hoons (kingside)</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 6330-6334:</p>
 <pre><code>  ?-  pex
     {$1 $0}  yom
     {$1 $1}  woq
     *        [%6 pex yom woq]
   ==</code></pre>
+<ul>
+<li><p>The head of a kingside 1-jogging hoon should be kingside. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
+<li><p>The jogging of a kingside 1-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
+</ul>
+<h3 id="jogging-hoons-queenside">1-jogging hoons (queenside)</h3>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 6305-6309:</p>
 <pre><code>  ?-    nug
       {$0 *}   p.nug
       {$10 *}  $(nug q.nug)
       *        ~_(leaf+&quot;cove&quot; !!)
   ==</code></pre>
-<p>Every 1-jogging hoon is either kingside or queenside. The base column for the jogs of a 1-jogging hoon is its anchor column.</p>
-<p>&quot;Sidedness&quot; should be consistent:</p>
 <ul>
-<li><p>The head of a kingside 1-jogging hoon should be kingside. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
-<li><p>The jogging of a kingside 1-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 <li><p>The head of a queenside 1-jogging hoon should be queenside. It should be on the rune line, indented 2 stops after the anchor column.</p></li>
 <li><p>The jogging of a queenside 1-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
 <h2 id="jogging-hoons-2">2-jogging hoons</h2>
+<p>Every 2-jogging hoon is either kingside or queenside. Specifics are given below, but the general rule is that &quot;sidedness&quot; should be consistent. The base column for the jogs of a 2-jogging hoon is its anchor column.</p>
+<p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
+<h2 id="kingside-2-jogging-hoons">Kingside 2-jogging hoons</h2>
+<p>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</p>
+<pre><code>      ?+  p.mod  [%rock %$ 0]
+        $cell  [[%rock %$ 0] [%rock %$ 0]]
+        $void  [%zpzp ~]
+      ==</code></pre>
+<ul>
+<li><p>The head of a kingside 2-jogging head-joined hoon should be kingside. It should be on the rune line, tightly aligned.</p></li>
+<li><p>The subhead of a head-joined 2-jogging hoon should be on the rune line, tightly aligned.</p></li>
+<li><p>The jogging of a kingside 2-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
+</ul>
+<h2 id="head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</h2>
 <p>From <code>arvo/sys/vane/ames.hoon</code>, lines 1568-1575:</p>
 <pre><code>      ?+    lot  ~
           [$$ %ud @]
@@ -369,6 +401,11 @@ Also, contrary to the above
         ?.  =(now q.p.lot)  ~
         (temp p.why u.hun [syd t.tyl])
       ==</code></pre>
+<ul>
+<li><p>The head of a queenside 2-jogging head-joined hoon should be queenside. It should be on the rune line, separated by 2 stops from the rune.</p></li>
+<li><p>The subhead of a head-joined 2-jogging hoon should be on the rune line, tightly aligned.</p></li>
+</ul>
+<h2 id="head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</h2>
 <p>From <code>arvo/sys/hoon.hoon</code>, lines 10111-10116:</p>
 <pre><code>      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
           ~(rend co [%$ p.q.ham lum])
@@ -376,21 +413,9 @@ Also, contrary to the above
         $t    (dash (rip 3 lum) &#39;\&#39;&#39; ~)
         $tas  [&#39;%&#39; ?.(=(0 lum) (rip 3 lum) [&#39;$&#39; ~])]
       ==</code></pre>
-<p>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</p>
-<pre><code>      ?+  p.mod  [%rock %$ 0]
-        $cell  [[%rock %$ 0] [%rock %$ 0]]
-        $void  [%zpzp ~]
-      ==</code></pre>
-<p>Every 2-jogging hoon is either kingside or queenside. The base column for the jogs of a 2-jogging hoon is its anchor column.</p>
-<p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
-<p>&quot;Sidedness&quot; should be consistent:</p>
 <ul>
-<li><p>The head of a kingside 2-jogging head-joined hoon should be kingside. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
-<li><p>The head of a queenside 2-jogging head-joined hoon should be queenside. It should be on the rune line, indented 2 stops after the anchor column.</p></li>
-<li><p>The head of a head-split 2-jogging has no sidedness. It should be on the rune line, indented 1 stop after the anchor column.</p></li>
-<li><p>The subhead of a head-joined 2-jogging hoon is on the rune line, and should be indented one stop after the head.</p></li>
+<li><p>The head of a head-split 2-jogging has no sidedness. It should be on the rune line, separated by two stops from the rune.</p></li>
 <li><p>The subhead of a head-split 2-jogging hoon should be one vertical gap after the the rune line, and should be indented one stop less than the head. This style is more indentation-conserving than backdenting. It is called the &quot;pseudo-jog&quot; style, because arrangement of the head and subhead resembles that of a queenside jog.</p></li>
-<li><p>The jogging of a kingside 2-jogging hoon should be kingside. It should be on a line after the rune line, and should consist entirely of kingside jogs.</p></li>
 <li><p>The jogging of a queenside 2-jogging hoon should be queenside. It should be on a line after the rune line, and should consist entirely of queenside jogs.</p></li>
 </ul>
 <h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
@@ -405,13 +430,18 @@ Also, contrary to the above
             dext(sut p.sut, ref (peek(sut ref) %free 2))
           dext(sut q.sut, ref (peek(sut ref) %free 3))</code></pre>
 <p>Every jogging-1 hoon is considered kingside. The base column location for the jogs of a jogging-1 hoon is one stop greater than its anchor column.</p>
-<p>The jogging of a jogging-1 hoon should start on the rune line, and be tightly joined. The jogging should consist entirely of kingside jogs. This implies that the TISTIS should be indented one stop more than the anchor column.</p>
-<p>The tail of a jogging-1 hoon should be should be one vertical gap after the TISTIS, and its column location should be the anchor column. For the vertical gap before the TISTIS, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p>
+<ul>
+<li><p>The jogging of a jogging-1 hoon should start on the rune line, and be tightly joined. The jogging should consist entirely of kingside jogs. This implies that the TISTIS should be indented one stop more than the anchor column.</p></li>
+<li><p>For the vertical gap before the TISTIS, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p></li>
+<li><p>The tail of a jogging-1 hoon should be should be one vertical gap after the TISTIS, and its column location should be the anchor column.</p></li>
+</ul>
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
 <p>The cells of a battery should all align at the same column, called the <strong>cell alignment column</strong>. The cells should be separated by vertical gaps, where the base column for header comments is the cell alignment column. The &quot;cell alignment column&quot; is specified below, for each battery hoon.</p>
 <h2 id="barcen">BARCEN</h2>
+<p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split.</p>
+<h2 id="split-barcen">Split BARCEN</h2>
 <p>From the sieve_k example:</p>
 <pre><code>|%
 ++  abet  (sort (~(tap in fed)) lth)
@@ -430,6 +460,10 @@ Also, contrary to the above
     ..reap
   $(cot (add cot fac), fed (~(del in fed) cot))
 --</code></pre>
+<ul>
+<li>A split BARCEN has a vertical gap between the rune and the battery. In this vertical gap, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</li>
+</ul>
+<h2 id="joined-barcen">Joined BARCEN</h2>
 <p>From <code>arvo/sys/zuse.hoon</code>, lines 176-181:</p>
 <pre><code>      |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
           ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
@@ -437,7 +471,9 @@ Also, contrary to the above
           ++  tear  |~  {a/pass b/@}                    ::  accept from a
                     *(unit {p/@ q/@})                   ::
       --  ::as                                          ::</code></pre>
-<p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split. The battery of a joined BARCEN must be tightly aligned. A split BARCEN has a vertical gap between the rune and the battery. In this vertical gap, the inter-comment column location should be the anchor column, and the pre-comment column location should be undefined.</p>
+<ul>
+<li>The battery of a joined BARCEN must be tightly aligned.</li>
+</ul>
 <h2 id="barcab">BARCAB</h2>
 <p>From <code>sys/vane/jael.hoon</code>, lines 697-827</p>
 <pre><code>  |_  pig/safe
@@ -452,7 +488,11 @@ Also, contrary to the above
     ^-  safe
     (splice(pig (remove les.del)) mor.del)
   --</code></pre>
-<p>The head of BARCAB may be tightly joined or pseudo-joined. The battery column location should be the anchor column. There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p>
+<ul>
+<li><p>The head of BARCAB may be tightly joined or pseudo-joined.</p></li>
+<li><p>There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>The battery column location should be the anchor column.</p></li>
+</ul>
 <h2 id="barket">BARKET</h2>
 <p>From <code>arvo/sys/zuse.hoon</code>, lines 3975-4025</p>
 <pre><code>    |^  |=(val/json (apex val &quot;&quot;))
@@ -471,7 +511,11 @@ Also, contrary to the above
         $92  &quot;\\\\&quot;
       ==
     --  ::en-json</code></pre>
-<p>The head of BARKET should be tightly joined or pseudo-joined. The battery column location should be the anchor column. There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p>
+<ul>
+<li><p>The head of BARKET should be tightly joined or pseudo-joined.</p></li>
+<li><p>There should be a vertical gap between the head and the battery. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>The battery column location should be the anchor column.</p></li>
+</ul>
 <h1 id="selgap">SELGAP</h1>
 <p>From <code>arvo/sur/twitter.hoon</code>, line 85:</p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
