@@ -124,6 +124,7 @@ and from each other, by gaps.
 Let `r` be a rune-ish.
 We sometimes write the hoon expression that begin with `r`
 as `Hoon(r)`.
+If `h` is a Hoon, we can write its rune-ish as `Rune(h)`.
 Then
 
 ```
@@ -136,86 +137,97 @@ of `h` as `Parent(h)`.
 
 ## Horizontal Alignment
 
-All lexemes in Hoon are aligned horizontally in one of 4 ways:
+All non-whitespace lexemes in Hoon are aligned horizontally in one of 4 ways:
 
-* **Tight**:  Tightly aligned lexemes follow the preceding
-lexeme by exactly one stop.  A lexeme cannot be tightly aligned
-if it is the first one on its line.
+* **Tight**:  Tightly aligned non-whitespace lexemes follow the preceding
+non-whitespace lexeme by exactly one stop.  A non-whitespace lexeme cannot be tightly aligned
+if it is the first non-whitespace lexeme on its line.
 
 * **Backdented**:  Hoon's standard alignment, described
 in detail below.
 
-* **Inter-line**:  Inter-line alignment aligns the lexeme with
-lexemes on associated lines.  Which lexeme is aligned with which,
+* **Inter-line**:  Inter-line alignment aligns the non-whitespace lexeme with
+non-whitespace lexemes on associated lines.  Which non-whitespace lexeme is aligned with which,
 and which lines are considered "associated" varies depending on
 the syntactic context.  Inter-line alignment is described in detail
 in the sections describing the syntaxes where it is allowed.
 
 * **Free-form**:  Within SELGAP hoons,
-horizontal alignment can be free-form.
+horizontal alignment in standard code can be free-form.
 
 ## Reanchoring
 
-If the rune line contains other bricks,
-it may **reanchor**, that is the anchor column
-may be somewhere other than the rune column.
-Not all runes participate in reanchoring.
+Reanchoring is a method of conserving indentation.
+Typically, a rune-ish is its own
+"anchor" rune-ish for indentation purposes,
+but Hoon takes advantage of some opportunities
+to move the anchor column closer to the left margin.
+Not all rune-ishes participate in reanchoring.
 Which do, and which do not, is described in the
 individual cases.
 
-We will first give a definition of reanchoring.
-Because the definitions are difficult to follow without illustrations,
-they are followed by a number of examples.
+We now present a more formal
+definition of reanchoring,
+which will be followed by a number of examples.
+Let `r` be a rune-ish.
+If `Line(r)` contains other rune-ishes,
+`r` may **reanchor**,
+that is,
+the anchor column of `r`
+may be somewhere to the left of `Column(r)`.
 
-Informally, reanchoring is a method of conserving indentation.
-Reanchoring moves the anchor column left
-on the rune line, so that it becomes based at a parent brick earlier in the
-rune line.
-The column of the parent brick becomes the **anchor brick column**.
-All parent bricks contribute to the backdenting, so that all the per-brick
-offsets are added together to produce
-an **reanchor offset**.
+For every rune-ish, there is always an anchor
+rune-ish,
+although usually this is trivially true --
+a rune-ish is its own anchor rune-ish.
+Let `a` be an anchor rune-ish.
+The anchor column is the column of an
+anchor rune-ish,
+plus the **reanchor-offset**.
 
-More formally, then,
-the **anchor column** is the **anchor brick column**,
-plus the **reanchor offset**.
-The anchor brick column is the column of a brick on the rune line.
-Which one will depend on the individual bricks involved, but often
-it is the first brick on the rune line.
+Again, let `r` 
+Let `S` be a sequence of rune-ishes such that
 
-Let `r` be a rune.
-`r` has zero or more **horizontal ancestors**.
-A rune-ish `ia` is an horizontal ancestor of `r` if
+* `S` is empty if a rune-ish is its own anchor, that is `S` is
+empty if `a == r`.
 
-* `ia` is a brick.
+* `S[0] = a`
 
-* `ia` is a proper ancestor of `r`.
-Here "proper" means the `ia` and `r` must
-be different -- a rune-ish is not its own proper
-ancestor.
+* Where `S[n]` is the last element of `S`,
+`S[n] = (Rune(Parent(Hoon(r)))`.
 
-* `Line(ia) == Line(r)`.  That is, a rune
-and its horizontal ancestor must be on the same line.
+* For all `i` such that `0 <= i < n`,
+S[i] = (Rune(Parent(Hoon(S[i+1])))`
 
-Depending on the number of runechildren required by the brick,
-and the number of those runechildren joined on the rune line,
-each brick on the rune line has a **per-brick anchor offset**.
-If `n` runechildren of a parent brick are on the rune line,
-the per-brick anchor offset is the indentation that would
-apply to the `n`th runechild,
-if the `n`th runechild were split onto the next line.
-(Note that every horizontal ancestor must have at least one
-runechild on the rune line -- the child of which it is
-the ancestor.)
+Note that, by the above definition, `r` is never an
+element of `S`.
+Informally, if `S` is not empty, it includes `a`
+and all the proper syntactic parents
+of `r` which are descendants of `a`.
 
-The total of all the per-brick anchor offsets of parent bricks
-is the **reanchor offset** of the rune line.
-The **anchor column** of the rune line is the anchor brick column,
-plus the reanchor offset.
+Intuitively, the per-rune-ish offsets are the
+indentation that is "left over" when its rune-ish
+child begins.
+Note that, because of the way that we constructed `S`,
+the `c`'th runechild of `S[i]` must be a
+rune-ish.
+More formally,
+let `S[i]` be a rune-ish in S,
+and let `c` be the number of runechildren
+of `S[i]` that are on `Line(S[i])`.
+The
+per-rune-ish offset is the indentation from the anchor
+column that
+would apply to the `c`'th runechild
+if it were on `Line(S[i]) + 1`.
 
-Note that when a rune is the only brick on a line,
-the above definition of reanchoring is equivalent to the statement
-that the rune column is the anchor column.
+The **reanchor offset** of `r` is the sum of all the
+per-rune-ish offsets in `S`.
+Note that in the trivial case,
+where a rune-ish is its own anchor,
+`S` is always empty; the reanchor offset is always zero;
+and the anchor column is always the same
+as the rune column.
 
 ### First example
 
@@ -232,12 +244,12 @@ This is lines 1916-1920 of
 `arvo/sys/vane/ford.hoon`.
 The rune line is line 1916, and the rune is
 COLSIG (`:~`).
-The reanchor base is the COLLUS (`:+`).
+The anchor rune-ish is the COLLUS (`:+`).
 COLLUS is 3-fixed, but all three of its runechildren are
-on the rune line, so the per-brick anchor offset is 0.
-The anchor column is the anchor brick column plus the reanchor
+on the rune line, so the per-rune-ish offset is 0.
+The anchor column is the anchor rune-ish column plus the reanchor
 offset, so that in this case,
-the anchor column is the same as the anchor brick column.
+the anchor column is the same as the anchor rune-ish column.
 
 COLSIG is 0-running, and normal COLSIG indentation indents the runsteps
 one stop past the anchor column,
@@ -263,24 +275,22 @@ This is exactly what we see.
 This is 
 lines 346-356 of
 `arvo/lib/hood/kiln.hoon`:
-Here the rune line is line 346, the rune is again COLSIG,
+Here the rune line is line 346, the rune-ish is again COLSIG,
 and it reanchors at TISFAS (`=/`).
 TISFAS is 3-fixed, and 2 of its runechildren are on the rune line,
-so that the per-brick anchor offset of the TISFAS is that of
+so that the per-rune-ish offset of the TISFAS is that of
 its 2nd runechild -- one stop.
-The anchor column is therefore one stop after the anchor brick
+The anchor column is therefore one stop after the anchor rune-ish
 column.
 
 COLSIG again is 0-running, so that its runsteps should be indented
-one stop past the anchor column,
-which in this case means two stops past the anchor brick column.
-By the same logic, the TISTIS should be indented at the anchor column,
-whicb is one stop past the anchor brick column.
+one stop past the anchor column.
+By the same logic, the TISTIS should be indented at the anchor column.
 This is what we see in the example.
 The last three lines of the example are the last runechild of the
 TISFAS.
 
-## Comments
+## Header and inline comments
 
 Comments count as whitespace.
 A comment is a **header comment** if it is on a line
@@ -292,6 +302,39 @@ a **margin comment** if it begins at or after column 57,
 or immediately after a horizontal gap of 20 or more spaces.
 All margin comments should start at column 57.
 A rightside comment is an **inline comment** if it is not a margin comment.
+
+In standard code, header comments are
+
+* Pre-comments or inter-comments,
+as determined by their hoon.
+
+* Meta-comments.
+
+We say a hoon is the hoon of a comment
+if that hoon directly contains the gap
+that that comment is part of.
+A comment is "directly contained" by a hoon if the hoon
+contains the comment,
+but no proper subexpression of the hoon also
+contains that comment.
+This implies that
+a vertical gap, and its comments,
+are "contained" by a rune-ish expression if that vertical gap separates
+the rune-ish from the first runechild;
+or if that vertical gap separates
+a consecutive pair of the rune-ish expression's runechildren.
+
+Meta-comments start at column 1.
+Since, depending on their hoon,
+inter-comments may also start at column 1,
+only the programmer's intent determines whether
+a given header comment is an inter-comment or a meta-comment.
+An inter-comment is structural, so that its content should
+fit the syntactic structure of the code in which it occurs.
+Meta-comments are not structural comments, and their content
+may be anything.
+A frequent use for meta-comments is to
+"comment out" Hoon code.
 
 ## Staircase comments
 
@@ -328,7 +371,7 @@ This preamble may be of length 1 -- that is,
 it may be just the newline.
 
 * A body of one or more full newline-terminated lines,
-all of them comments or
+all of them header comments or
 (in the case of non-standard code) blank lines.
 
 * A partial line postamble.
@@ -343,19 +386,6 @@ but in concept,
 inter-comments separate the sequence steps from other lexemes,
 and from each other;
 while pre-comments preceed sequence steps.
-
-The rune-ish expression that directly contains
-a vertical comment, determines
-its inter-comment column location and the pre-comment column location.
-A comment is "directly contained" by a rune-ish if the rune-ish expression
-contains the comment,
-but no proper subexpression of the rune-ish expression also
-contains that comment.
-This implies taht
-a comment is "contained" by a rune-ish expression if it separates
-the rune-ish from the first runechild;
-of if it separates
-a consecutive pair of the rune-ish expression's runechildren.
 
 Informally, the body of a standard vertical gap 
 follows these conventions:
@@ -458,6 +488,11 @@ than the column location of the runechild that follows it.
 * every runechild after the first should have a column location
 one stop less than the runechild that precedes it.
 
+In the vertical gaps belonging to backdented hoons,
+the inter-comment column location should be the column
+location of the first text after the gap;
+and the pre-comment column location should be undefined.
+
 ## Chaining fixed arity hoons
 
 As a special case, a runechild of an backdented hoon may
@@ -478,7 +513,8 @@ from `arvo/sys/zuse.hoon`, lines 2950-2959:
      ::
 ```
 
-If two runchildren are in the same silo of the same chain,
+Intuitively,
+if two runchildren are in the same silo of the same chain,
 they should have the
 same inter-line alignment.
 
@@ -489,16 +525,52 @@ which obeys the following rules:
 * Every hoon except the first is the last
 runchild of the previous hoon in the sequence
 
-* Every rune-ish is either at the same column location
-as the first hoon in the sequence, or
-is on the same line as ("joined with") the rune-ish of previous
-hoon in the sequence.
+* Every tall rune-ish is either
+
+    * a "row-initial" tall rune-ish,
+      which should be at the same column location
+      as the first hoon in the sequence, or;
+
+    * a "joined" tall rune-ish, that is, another tall
+       rune-ish on the same line as
+       the initial rune-ish.
 
 * The sequence is maximal.  That is,
 no chain is a sub-sequence of a longer chain.
 
-Silo'ing is by rune-ishes and runechildren of hoons in the chain
-so that, in the above example, there are 4 rows each of 3 silos.
+For the purposes of chain inter-line alignment,
+a row starts with a row-initial rune-ish.
+The silo elements for a row are its tall rune-ishes and their runechildren,
+in lexical order,
+recursively.
+A runechild which itself is a tall rune-ish expressions is never
+a silo elements -- instead it is broken out into
+its rune-ish and runechildren,
+and these are become silo elements in that row.
+Each silo element goes into one silo,
+so that the first silo element goes into silo 0,
+the second goes into silo 1, etc.
+
+A row may contain multiple lines,
+but rune-ishes and
+runechildren not on the first line of the row
+are not used in determining inter-line alignment,
+and therefore are not added as silo elements.
+
+This implies that
+
+* Every row-initial rune-ish is in silo 0,
+
+* Every tall rune-ish is a separate silo element.
+
+* Every runechildren of a tall rune-ish is a separate
+  silo element, unless it is itself a tall rune-ish.
+
+* For chained inter-line alignment,
+  The row and silo grid may be "ragged", so that some
+  rows do not have elements in every silo.
+
+In the following example, there are 4 rows each of 3 silos.
 Every row in a chain starts with a rune-ish, but not every
 rune-ish need start a row,
 and a given silo may contain both rune-ishes and runechildren.
@@ -1329,3 +1401,47 @@ lexed as a Priority 1 or 2 comment.
 lexed as a Priority 1.
 
 # Appendix: Non-standard chains
+
+In determining the "intended" inter-line alignment of chained hoons,
+and of runsteps,
+each silo is examined separately.
+For each silo, only rows with an element in that silo participate.
+
+In each silos,
+some element are "nominators" and others are "tie-breakers".
+Nominator elements "nominate" their column location --
+an inter-line alignment must have been "nominated".
+
+For runsteps, the the silo elements which are tightly aligned
+are tie-breakers.
+All others are nominators.
+
+For chains, the silo elements which are tightly or backdented
+aligned are tie-breakers.
+All others are nominators.
+
+The following steps are followed:
+
+* The inter-line alignment are narrowed down to those which are most common by count of the nominators.
+
+* If the previous step produces a tie,
+it is broken by selecting the elements which is most common by count of all elements in
+that silo, including both nominators and tie-breakers.
+
+* If this still produces a tie,
+it is broken by using the column location of the element which is first lexically.
+This will result in a unique column location.
+
+* The resulting column location must be the column location of at least 2 elements
+in its silo.
+If so, it is the result of this procedure.
+Otherwise, the inter-line column location is considered to
+be undefined.
+
+The purpose of the last step is to ensure that
+an inter-line column location does actually involve two
+elements on two different rows -- in other words,
+that it is really an alignment.
+* A colum
+
+
