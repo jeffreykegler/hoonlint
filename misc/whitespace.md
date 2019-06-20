@@ -155,6 +155,39 @@ in the sections describing the syntaxes where it is allowed.
 * **Free-form**:  Within SELGAP hoons,
 horizontal alignment in standard code can be free-form.
 
+## Pseudo-joins
+
+In many cases, these conventions distinguish between "joined"
+and "split" syntax,
+so that whether the gap between two texts is vertical or horizontal
+affects other conventions.
+In the cases,
+it is sometimes convenient to have a gap which contains one or
+more comments but which,
+for the purposes of these conventions,
+behaves like a horizontal gap.
+Such a gap is called a **pseudo-join**.
+
+Let `J` be a **join column**.
+A text is **pseudo-joined** at `J`
+if and every line of it,
+except the last line,
+has a comment at `J`.
+Note that this implies that the first, partial, line of the gap
+must contain a comment starting at `J`.
+
+Intuitively, a pseudo-joins acts as a kind of "place holder" for
+the text that follows that the pseudo-join,
+and a pseudo-join comments can be seen as "postponing" the join.
+
+Intuitively, a pseudo-join is equivalent to a horizontal gap
+if both of them position the text which follows them
+at the same column location.
+More formally,
+a pseudo-join is **equivalent** to a horizontal gap,
+if the join column of the pseudo-join is the column location
+immediately after the last character of the horizontal gap.
+
 ## Reanchoring
 
 Reanchoring is a method of conserving indentation.
@@ -727,7 +760,7 @@ should be one stop more than the anchor column.
 
 ## TISSIG
 
-From `arvo/sys/vane/ford.hoon`, beginning at line 8:
+*From `arvo/sys/vane/ford.hoon`, beginning at line 8:*
 ```
 =>  =~
 ::  structures
@@ -817,17 +850,23 @@ from `sys/zuse.hoon`, lines 4892-4905:
         ==
 ```
 
+Each runstep line is a row and the runsteps are siloed
+in lexical order from left to right,
+so that the `n`'th runstep of a runstep line goes into
+the `n`'th silo.
+
 ### Running-inherited inter-line alignment
 
-If a runstep is a hoon, the runechildren of a fixed-arity hoon
+If a runstep is a fixed-arity hoon,
+the runechildren of a fixed-arity hoon
 may have a **running-inherited** inter-line alignment.
-[ Describe row-silo ]
 Within a running,
 the running-inherited inter-line alignment of a runechild
 is determined by the silo of the runechild.
+A running should not have both running-inherited and runestep
+alignment.
 
-From `sys/hoon.hoon', lines 5303-5308.
-
+*From `sys/hoon.hoon', lines 5303-5308:*
 ```
     :~  :-  ['a' 'z']  (cook |=(a/@ta [%$ %tas a]) sym)
         :-  ['0' '9']  (stag %$ bisk)
@@ -844,6 +883,14 @@ If a fixed-arity hoon does have both inter-line alignments,
 for every runechild silo,
 their column locations should be identical.
 
+Each fixed-arity hoon is a row and its rune-ish goes into
+the first silo.
+Subsequent runechildren on the rune line goes into subsequent
+silos
+in lexical order from left to right,
+so that the `n`'th runechild goes into
+the `n+1`'th silo, etc.
+
 # Jogging hoons
 
 A jogging runechild is more often called simply a **jogging**.
@@ -858,16 +905,16 @@ If there are two runechildren before the jogging, they
 are called, in order, the **head** and **subhead** of
 the jogging.
 
-There are current four kinds of jogging.
-A 1-jogging has one head and no tail.
-A 2-jogging has a head and a subhead and no tail.
-A jogging-1 has a tail and no head.
+There are current three kinds of jogging.
 
 * The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
+  A 1-jogging has one head and no tail.
 
 * The current 2-jogging rules are CENTAR (`%*`) and WUTLUS (`?+`).
+  A 2-jogging has a head and a subhead and no tail.
 
 * The current jogging-1 rule is TISCOL (`=:`).
+  A jogging-1 has a tail and no head.
 
 A jogging is a gap-separated sequence of one or more jogs.
 Every **jog** contains a **jog head**, followed by a gap and a **jog body**.
@@ -885,9 +932,6 @@ Indentation will be described more precisely in what follows.
 
 ## Jogs
 
-A jog is **joined** if its head and its body are both on the same line.
-Otherwise, the jog is said to be **split**.
-
 The indentation of a jog is that of its head.
 A jog is **joined** if its head is on the same
 line as its body.
@@ -895,6 +939,18 @@ Otherwise, a jog is **multiline**.
 As explained below,
 a multiline jog may be either **pseudo-joined**
 or **split**.
+
+Jogs are either kingside or queenside.
+In standard code,
+the sidedness of a jog determines the alignment
+of split jogs.
+
+The base column location of a jog depends on the jogging hoon
+that it belongs to.
+It is specified
+in the description for the different kinds of jogging hoon.
+
+### Joined jogs
 
 A joined jog may be either **aligned** or **ragged**.
 A joined jog is ragged if its body is indented 1 stop after
@@ -909,59 +965,43 @@ is said to be **jogging-body-aligned**.
 A jog whose jog body is jogging-body-aligned
 is also said to be **jogging-body-aligned**.
 
-Jogs are either kingside or queenside.
-The column location
-of a kingside jog should be 1 stop greater than
-the base column location of its jogging hoon.
-The column location
-of a queenside jog should be 2 stops greater than
-the base column location of its jogging hoon.
-The base column location of a jogging hoon was described above,
-in the description for the different kinds of jogging hoon.
+The pseudo-join of pseudo-joined jog should be
+equivalent to the one of the horizontal gaps
+that a joined jog is allowed according to this standard.
 
-A multi-line kingside jog may either be pseudo-joined or split.
-A jog is **pseudo-joined**
-
-* if and only every line of it,
-except the body line,
-has a comment at the column location where the properly aligned body of
-a ragged jog would start; or
-
-* if and only every line of it,
-except the body line,
-has a comment at the column location where the properly aligned body of
-a jogging-body-aligned jog would start.
-
-Note that this implies that the line containing the head of the
-jog must contain a comment.
-Pseudo-joined jogs are so called because the comment on the
-line of the head of the jog is a kind of "place holder" for
-the join,
-and the comments can be seen as "postponing" the join.
+### Split jogs
 
 The gap of split jog should be vertical.
 The inter-comment column location of the gap
 should be the column location of the jog body;
 and there should be no pre-comment column location.
-The column location of the body of a split kingside jog
+The standard column location of the body of a split job
+varies according to the sidedness of the jog.
+
+* The column location of the body of a split kingside jog
 should be 1 stop **greater** than the column location of the jog's head.
-The column location of the body of a split queenside jog
+
+* The column location of the body of a split queenside jog
 should be 1 stop **less** than the column location of the jog's head.
 
-## Joggings
-
-A jogging is considered to start at the start of jog head
-of its first jog.
-Every jogging ends in a TISTIS (`==`).
-The TISTIS should occur on its own line, or a part of a criss-cross
-TISTIS line.
-
-The TISTIS of a kingside jogging should be outdented one stop
-from the start of its jogging.
-The TISTIS of a queenside jogging should be outdented two stops
-from the start of its jogging.
-
 ## Criss-cross lines
+
+*From `arvo/sys/zuse.hoon`, lines 906-918 :*
+```
+          $:  $:  our/ship                              ::  host
+                  src/ship                              ::  guest
+                  dap/term                              ::  agent
+              ==                                        ::
+              $:  wex/boat                              ::  outgoing subs
+                  sup/bitt                              ::  incoming subs
+              ==                                        ::
+              $:  ost/bone                              ::  opaque cause
+                  act/@ud                               ::  change number
+                  eny/@uvJ                              ::  entropy
+                  now/@da                               ::  current time
+                  byk/beak                              ::  load source
+          ==  ==                                        ::
+```
 
 Successive TISTIS's may occur on the same line,
 as part of a **criss-cross TISTIS line**.
@@ -980,15 +1020,13 @@ HEPHEP's may also be joined into criss-cross lines.
 ## 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
-The base column
-for the jogs of a 1-jogging hoon is its anchor column.
 Specifics are given below,
 but the general rule for sidedness is that it should be
 consistend.
 
 ### Kingside 1-jogging hoons
 
-From `arvo/sys/hoon.hoon`, lines 6330-6334:
+*From `arvo/sys/hoon.hoon`, lines 6330-6334:*
 ```
   ?-  pex
     {$1 $0}  yom
@@ -997,17 +1035,32 @@ From `arvo/sys/hoon.hoon`, lines 6330-6334:
   ==
 ```
 
-* The head of a kingside 1-jogging hoon should be kingside.
-It should be on the rune line,
-indented 1 stop after the anchor column.
+A kingside 1-jogging hoon should consist of,
+in lexical order:
 
-* The jogging of a kingside 1-jogging hoon should be kingside.
-It should be on a line after the rune line,
-and should consist entirely of kingside jogs.
+* Its rune.
+
+* A one-stop horizontal gap.
+
+* A head.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A kingside jogging.
+  Its base column should be one stop after the anchor column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  starting at the anchor column.
 
 ### Queenside 1-jogging hoons
 
-From `arvo/sys/hoon.hoon`, lines 6305-6309:
+*From `arvo/sys/hoon.hoon`, lines 6305-6309:*
 ```
   ?-    nug
       {$0 *}   p.nug
@@ -1016,14 +1069,28 @@ From `arvo/sys/hoon.hoon`, lines 6305-6309:
   ==
 ```
 
+A queenside 1-jogging hoon should consist of,
+in lexical order:
 
-* The head of a queenside 1-jogging hoon should be queenside.
-It should be on the rune line,
-indented 2 stops after the anchor column.
+* Its rune.
 
-* The jogging of a queenside 1-jogging hoon should be queenside.
-It should be on a line after the rune line,
-and should consist entirely of queenside jogs.
+* A 2-stop horizontal gap.
+
+* A head.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A queenside jogging.
+  Its base column should be 2 stops after the anchor column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  starting at the anchor column.
 
 ## 2-jogging hoons
 
@@ -1041,7 +1108,9 @@ different lines, the 2-jogging hoon is called **head-split**.
 
 ### Kingside 2-jogging hoons
 
-From `arvo/sys/hoon.hoon`, lines 6583-6586:
+All kingside 2-jogging hoons are head-joined.
+
+*From `arvo/sys/hoon.hoon`, lines 6583-6586:*
 ```
       ?+  p.mod  [%rock %$ 0]
         $cell  [[%rock %$ 0] [%rock %$ 0]]
@@ -1049,19 +1118,37 @@ From `arvo/sys/hoon.hoon`, lines 6583-6586:
       ==
 ```
 
-* The head of a kingside 2-jogging head-joined hoon should be kingside.
-It should be on the rune line, tightly aligned.
+A kingside 2-jogging hoon should consist of,
+in lexical order:
 
-* The subhead of a head-joined 2-jogging hoon
-should be on the rune line, tightly aligned.
+* Its rune.
 
-* The jogging of a kingside 2-jogging hoon should be kingside.
-It should be on a line after the rune line,
-and should consist entirely of kingside jogs.
+* A one-stop horizontal gap.
+
+* Its head.
+
+* A one-stop horizontal gap.
+
+* Its subhead.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A kingside jogging.
+  The base column of its jogs should be one stop after the anchor
+  column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  starting at the anchor column.
 
 ### Head-joined queenside 2-jogging hoons
 
-From `arvo/sys/vane/ames.hoon`, lines 1568-1575:
+*From `arvo/sys/vane/ames.hoon`, lines 1568-1575:*
 ```
       ?+    lot  ~
           [$$ %ud @]
@@ -1073,16 +1160,37 @@ From `arvo/sys/vane/ames.hoon`, lines 1568-1575:
       ==
 ```
 
-* The head of a queenside 2-jogging head-joined hoon should be queenside.
-It should be on the rune line,
-separated by 2 stops from the rune.
+A head-joined queenside 2-jogging hoon should consist of,
+in lexical order:
 
-* The subhead of a head-joined 2-jogging hoon
-should be on the rune line, tightly aligned.
+* Its rune.
+
+* A 2-stop horizontal gap.
+
+* Its head.
+
+* A one-stop horizontal gap.
+
+* Its subhead.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A queenside jogging.
+  The base column of its jogs should be 2 stops after the anchor
+  column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  starting at the anchor column.
 
 ### Head-split queenside 2-jogging hoons
 
-From `arvo/sys/hoon.hoon`, lines 10111-10116:
+*From `arvo/sys/hoon.hoon`, lines 10111-10116:*
 ```
       ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
           ~(rend co [%$ p.q.ham lum])
@@ -1092,29 +1200,45 @@ From `arvo/sys/hoon.hoon`, lines 10111-10116:
       ==
 ```
 
+A head-split queenside 2-jogging hoon should consist of,
+in lexical order:
 
-* The head of a head-split 2-jogging has no sidedness.
-It should be on the rune line, separated by two stops
-from the rune.
+* Its rune.
 
-* The subhead of a head-split 2-jogging hoon
-should be one vertical gap after the
-the rune line, and
-should be indented one stop less than the head.
-This style is more indentation-conserving than backdenting.
-It is called the "pseudo-jog" style, because arrangement
-of the head
-and subhead resembles that of a queenside jog.
+* A 2-stop horizontal gap.
 
-* The jogging of a queenside 2-jogging hoon should be queenside.
-It should be on a line after the rune line,
-and should consist entirely of queenside jogs.
+* Its head.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* Its subhead, outdented one stop from the head.
+  This style is more indentation-conserving than backdenting.
+  It is called the "pseudo-jog" style, because arrangement
+  of the head
+  and subhead resembles that of a queenside jog.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A queenside jogging.
+  The base column of its jogs should be 2 stops after the anchor
+  column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  starting at the anchor column.
 
 ## Jogging-1 hoons
 
 <!-- "Split" form addressed in Github issue #31" -->
 
-From `arvo/sys/hoon.hoon`, lines 9720-9727:
+*From `arvo/sys/hoon.hoon`, lines 9720-9727:*
 ```
           =:  hos  ~
               wec  [~ ~ ~]
@@ -1127,23 +1251,29 @@ From `arvo/sys/hoon.hoon`, lines 9720-9727:
 ```
 
 Every jogging-1 hoon is considered kingside.
-The base column location
-for the jogs of a jogging-1 hoon is one stop greater than its anchor column.
+A jogging-1 hoon should consist of,
+in lexical order:
 
-* The jogging of a jogging-1 hoon
-should start on the rune line,
-and be tightly joined.
-The jogging should consist entirely of kingside jogs.
-This implies that the TISTIS should be indented one stop
-more than the anchor column.
+* Its rune.
 
-* For the vertical gap before the TISTIS,
-the inter-comment column location should be the anchor
-column, and the pre-comment column location should be undefined.
+* A one-stop horizontal gap.
 
-* The tail of a jogging-1 hoon should be
-should be one vertical gap after the TISTIS,
-and its column location should be the anchor column.
+* A kingside jogging.
+  The base column of its jogs
+  should be 2 stops after the anchor column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A TISTIS,
+  indented one stop more than the anchor column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A tail, starting at the anchor column.
 
 # Battery hoons
 
@@ -1159,6 +1289,8 @@ alignment column.
 The "cell alignment column" is specified below, for each
 battery hoon.
 
+[ TODO: Describe intra-LUSLUS conventions. ]
+
 ## BARCEN
 
 BARCEN may reanchor at KETBAR or KETWUT.
@@ -1166,7 +1298,7 @@ It may be joined or split.
 
 ### Split BARCEN
 
-From the sieve_k example:
+*From the sieve_k example:*
 ```
 |%
 ++  abet  (sort (~(tap in fed)) lth)
@@ -1187,15 +1319,20 @@ From the sieve_k example:
 --
 ```
 
-* A split BARCEN has
-a vertical gap between the rune and the battery.
-In this vertical gap, the inter-comment column location
-should be the anchor column,
-and the pre-comment column location should be undefined.
+A split BARCEN should consist of,
+in lexical order:
+
+* Its rune.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A battery whose base column is the anchor column.
 
 ### Joined BARCEN
 
-From `arvo/sys/zuse.hoon`, lines 176-181:
+*From `arvo/sys/zuse.hoon`, lines 176-181:*
 ```
       |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
           ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
@@ -1205,12 +1342,25 @@ From `arvo/sys/zuse.hoon`, lines 176-181:
       --  ::as                                          ::
 ```
 
-* The battery of a joined BARCEN must be tightly
-aligned.
+A split BARCEN should consist of,
+in lexical order:
+
+* Its rune.
+
+* A one stop horizontal gap.
+
+* A battery whose base column is
+  two stops after the rune column.
+
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A HEPHEP, starting at the anchor column.
 
 ## BARCAB
 
-From `sys/vane/jael.hoon`, lines 697-827
+*From `sys/vane/jael.hoon`, lines 697-827:*
 ```
   |_  pig/safe
   ::                                                    ::  ++delete:up
@@ -1226,17 +1376,31 @@ From `sys/vane/jael.hoon`, lines 697-827
   --
 ```
 
-* The head of BARCAB may be tightly joined or pseudo-joined.
+A BARCAB should consist of,
+in lexical order:
 
-* There should be a vertical gap between the head and the battery.
+* Its rune
+
+* A one stop horizontal gap,
+  or a equivalent pseudo-join.
+
+* Its head.
+
+* A vertical gap.
 The inter-comment column location of the vertical gap should
 be the anchor column and the pre-column should be undefined.
 
-* The battery column location should be the anchor column.
+* A battery, whose base column location should be the anchor column.
+
+* A vertical gap.
+The inter-comment column location of the vertical gap should
+be the anchor column and the pre-column should be undefined.
+
+* A HEPHEP, starting at the anchor column.
 
 ## BARKET
 
-From `arvo/sys/zuse.hoon`, lines 3975-4025
+*From `arvo/sys/zuse.hoon`, lines 3975-4025:*
 ```
     |^  |=(val/json (apex val ""))
     ::                                                  ::  ++apex:en-json:html
@@ -1256,17 +1420,31 @@ From `arvo/sys/zuse.hoon`, lines 3975-4025
     --  ::en-json
 ```
 
-* The head of BARKET should be tightly joined or pseudo-joined.
+A BARKET should consist of,
+in lexical order:
 
-* There should be a vertical gap between the head and the battery.
+* Its rune
+
+* A one stop horizontal gap,
+  or an equivalent pseudo-join.
+
+* Its head.
+
+* A vertical gap.
 The inter-comment column location of the vertical gap should
 be the anchor column and the pre-column should be undefined.
 
-* The battery column location should be the anchor column.
+* A battery, whose base column location should be the anchor column.
+
+* A vertical gap.
+The inter-comment column location of the vertical gap should
+be the anchor column and the pre-column should be undefined.
+
+* A HEPHEP, starting at the anchor column.
 
 # SELGAP
 
-From `arvo/sur/twitter.hoon`, line 85:
+*From `arvo/sur/twitter.hoon`, line 85:*
 ```
      [  {$mentions $~}                %get   /statuses/mentions-timeline  ]
 ```
@@ -1334,6 +1512,36 @@ has a total lexeme count of at least 2 --
 in other words
 an inter-line alignment must actually align with a corresponding lexeme
 on another line.
+
+## Inter-line alignment by silo
+
+In the case of chained inter-line alignments,
+runstep inter-line alignments,
+and running-inheritied inter-line alignments,
+multiple silos are involved.
+The rules multi-silo inter-line alignments
+in non-standard code are an extension of the basic
+rules for inter-line alignments in non-standard code.
+When only one silo is involved,
+the rules are equivalent.
+
+Each silo is examined separately.
+For each silo, only rows with an element in that silo participate
+in the calculation.
+
+For runstep alignment and running-inherited alignment,
+the "wide" elements at those which are not
+tightly aligned.
+For chains, the "wide" elements
+are those which are tightly or backdented
+aligned.
+
+If a running could have both a runestep alignment,
+and a running-inherited alignment,
+the runestep alignment takes precedence.
+In other words,
+if a running has runestep alignment,
+the running-inherited alignment is undefined.
 
 # Appendix: Vertical gap body
 
@@ -1420,49 +1628,4 @@ lexed as a Priority 1 or 2 comment.
 
 * No comment is read as a Priority 2 comment if it can be
 lexed as a Priority 1.
-
-# Appendix: Non-standard chains
-
-In determining the "intended" inter-line alignment of chained hoons,
-and of runsteps,
-each silo is examined separately.
-For each silo, only rows with an element in that silo participate.
-
-In each silos,
-some element are "nominators" and others are "tie-breakers".
-Nominator elements "nominate" their column location --
-an inter-line alignment must have been "nominated".
-
-For runsteps, the the silo elements which are tightly aligned
-are tie-breakers.
-All others are nominators.
-
-For chains, the silo elements which are tightly or backdented
-aligned are tie-breakers.
-All others are nominators.
-
-The following steps are followed:
-
-* The inter-line alignment are narrowed down to those which are most common by count of the nominators.
-
-* If the previous step produces a tie,
-it is broken by selecting the elements which is most common by count of all elements in
-that silo, including both nominators and tie-breakers.
-
-* If this still produces a tie,
-it is broken by using the column location of the element which is first lexically.
-This will result in a unique column location.
-
-* The resulting column location must be the column location of at least 2 elements
-in its silo.
-If so, it is the result of this procedure.
-Otherwise, the inter-line column location is considered to
-be undefined.
-
-The purpose of the last step is to ensure that
-an inter-line column location does actually involve two
-elements on two different rows -- in other words,
-that it is really an alignment.
-* A colum
-
 

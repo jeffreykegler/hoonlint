@@ -25,3 +25,6 @@ ast_reset: yahc.pm
 
 dev:
 	echo empty dev target
+
+doc:
+	cd misc; make all

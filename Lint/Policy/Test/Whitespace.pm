@@ -1512,7 +1512,7 @@ sub checkRunning {
           $policy->findAlignment($runStepsToAlign);
     }
 
-    # If there are no pile alignments, then we check for
+    # If there are no alignments by runstep, then we check for
     # alignments among the running's children.
         my @nodesToAlignByElement;
   RUNNING_CHILD_ALIGNMENTS: {
