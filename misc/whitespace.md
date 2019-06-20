@@ -585,27 +585,30 @@ from `arvo/sys/hoon.hoon`, lines 1572-1575:
 ```
 
 In the above example, the chain contains 3 rows.
-(Pedantically, the last line is not a row of the chain.)
+(The 3rd and 4th lines are both in last row.)
 There are 3 silos, but the rows are "ragged", so that nothing
-in the first is in the 3rd silo.
+in the first row is in the 3rd silo.
 In all 3 rows, the 2nd silo is tightly aligned,
 as is the 3rd silo in the 2nd row.
 
 The 3rd silo of the 3rd row is inter-line aligned.
 The `b` in the 3rd row comes after a gap of 3 spaces,
-but this is standard because it aligns with the `b`
+but this follows the standard set forth
+in this document because it aligns with the `b`
 of the 2nd row, at column location 13.
 
 Note that the 2nd silo includes both runechild and a rune-ish.
-Hoons of a chain may be "joined" on a single line,
-and this can be convenient when the row starts with a unary rune.
+This is an example of a "joined" hoon.
+In a chained hoon sequence,
+when the row starts with a unary rune,
+joined hoons can be convenient.
 
 # Running hoons
 
 A running runechild is more often called simply a **running**.
-(Currently all hoons contains at most one running.)
+Currently, no hoon contains more than one running.
 
-In addition to the running, a running hoon may contain
+A running hoon may contain
 an runechild before the running.
 If there is one runechild before the running, it
 is called the **head** of the running hoon.
@@ -623,7 +626,7 @@ WUTBAR (`?|`),
 and
 WUTPAM (`?&`).
 
-* A 1-running has a head.
+* A **1-running** has a head.
 The current 1-running rules are
 CENCOL (`%:`),
 DOTKET (`.^`),
@@ -635,6 +638,8 @@ SEMSIG (`;~`).
 ## 0-running hoons
 
 0-running hoons may be either split or joined.
+
+### Joined 0-running hoons
 
 This example of a joined 0-running hoon
 is from `arvo/sys/zuse.hoon`, lines 2399-2402:
@@ -648,10 +653,10 @@ is from `arvo/sys/zuse.hoon`, lines 2399-2402:
 
 The running of a joined 0-running hoon should be tightly aligned
 on the rune line.
-This implies that
-the first runestep of every runestep row will be at the
-same column location as
-the running.
+All subsequent runstep lines should be at the same column
+location as the first runstep line.
+
+### Split 0-running hoons
 
 This example is the beginning and end of a long split 0-running hoon,
 which starts at line 84 of `avro/sur/twitter.hoon`.
@@ -670,17 +675,35 @@ which starts at line 84 of `avro/sur/twitter.hoon`.
     ==
 ```
 
-The column location of the running of a split 0-running hoon should be
-one stop greater than the rune column.
-In the vertical gap between the rune and the running of a split 0-running hoon,
-the inter-comment column location should be the same as the rune column,
-and the pre-comment location should be the column location of the running.
+In a split 0-running hoon,
+the column location of the running and of the runstep lines should be one stop
+more than the anchor column.
+This implies that all runstep lines should be at the same column location.
 
-For both joined and split 0-running hoons,
-the column location
-of the TISTIS should be the same as the anchor column location.
+In the vertical gap between the rune and the running of a split 0-running hoon,
+the inter-comment column location should be the same as the rune column.
+The pre-comment location should be the column location of the running.
 
 ## 1-running hoons
+
+1-running hoons can be joined or split.
+
+### Joined 1-running hoons
+
+Lines 4853-4855 of `arvo/sys/hoon.hoon`:
+```
+             ;~  less  soz
+               (ifix [soq soq] (boss 256 (more gon qit)))
+             ==
+```
+
+The head of a joined 1-running hoon should occur on the rune line,
+tightly aligned.
+The running (and therefore the first runstep line)
+of a joined 1-running hood should be tightly aligned.
+Subsequent runstep lines should be one stop after the anchor column.
+
+### Split 1-running hoons
 
 Lines 4048-4051 of `arvo/sys/zuse.hoon`:
 ```
@@ -690,26 +713,17 @@ Lines 4048-4051 of `arvo/sys/zuse.hoon`:
       ==
 ```
 
-Lines 4853-4855 of `arvo/sys/hoon.hoon`:
-```
-             ;~  less  soz
-               (ifix [soq soq] (boss 256 (more gon qit)))
-             ==
-```
-
-* The head of a 1-running hoon should occur on the rune line,
-tightly aligned.
-
-* If vertical gap occurs between the head and the running,
+In a split 1-running hoon,
+there should be a vertical gap
+between the head and the running.
+In the vertical gap,
 the inter-comment column is the anchor column,
 and the pre-column is the column location of the running.
 
-* The running may either be joined or split.
-If split, the running
+The column location running of a split 1-running hoon
 should occur one vertical gap after the
 head, and its column location
 should be one stop more than the anchor column.
-If joined, the running should be tightly aligned.
 
 ## TISSIG
 
@@ -726,20 +740,22 @@ From `arvo/sys/vane/ford.hoon`, beginning at line 8:
 Note that, in the example above, the anchor column is different
 from the rune column.
 
-* The running must be separated from the rune by a vertical gap.
+In TISSIG, the running must be separated from the rune by a vertical gap.
 The inter-comment location of this vertical gap is the anchor
 column, and its pre-comment location is undefined.
+
 The column location of the running must be the anchor column.
+The column location of the runstep lines in TISSIG should be
+the anchor column.
 
-* The TISTIS should be separated from the last runstep by a vertical gap,
+The TISTIS should be separated from the last runstep by a vertical gap,
 whose inter-comment location is the anchor
-column, and whose pre-comment location is undefined.
-
-* The TISTIS should be at the anchor column.
-
-TISSIG is a special case of 0-running,
-in that the TISTIS should be aligned
-with the runsteps.
+column.
+Since the runstep column location and the anchor column are the same,
+the vertical gap before the TISTIS
+is a special case.
+The pre-comment column location of the vertical gap before the
+TISTIS should be undefined.
 
 <!-- TODO: TISSIG is very problematic.
 By the above definition of correctness, none
@@ -751,20 +767,25 @@ Also, contrary to the above
 ## Runnings
 
 A running is considered to start at the start of its first run step.
+A running contains one or more **runstep lines**.
+The column location of the runstep lines should be as described
+for the parent running hoon.
+
 Every running ends in a TISTIS (`==`).
 The TISTIS should occur on its own line, or as part of a criss-cross
 TISTIS line.
+The column location of the TISTIS should be the anchor column of
+the hoon that contains it.
 
-A vertical gap should occur between every pair of runsteps.
-A vertical gap should also occur between the last runstep
+A vertical gap should occur between every line of runsteps.
+A vertical gap should also occur between the last runstep line
 and the TISTIS.
 Inter-comments in a running should be at the anchor column
 of the parent hoon.
-Pre-comments in a running should be aligned with the runstep.
+Pre-comments in a running should be aligned with the following
+runstep.
 
-A **horizontal sub-running** is a portion of a running which has
-two or more runsteps on one line.
-The runsteps in a horizontal subrunning
+Within a runstep line, the runsteps
 should be tightly aligned,
 or follow runstep inter-line alignment,
 as described next.
