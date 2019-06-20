@@ -141,14 +141,16 @@
 <p>Intuitively, the per-rune-ish offsets are the indentation that is &quot;left over&quot; when its rune-ish child begins. Note that, because of the way that we constructed <code>S</code>, the <code>c</code>'th runechild of <code>S[i]</code> must be a rune-ish. More formally, let <code>S[i]</code> be a rune-ish in S, and let <code>c</code> be the number of runechildren of <code>S[i]</code> that are on <code>Line(S[i])</code>. The per-rune-ish offset is the indentation from the anchor column that would apply to the <code>c</code>'th runechild if it were on <code>Line(S[i]) + 1</code>.</p>
 <p>The <strong>reanchor offset</strong> of <code>r</code> is the sum of all the per-rune-ish offsets in <code>S</code>. Note that in the trivial case, where a rune-ish is its own anchor, <code>S</code> is always empty; the reanchor offset is always zero; and the anchor column is always the same as the rune column.</p>
 <h3 id="first-example">First example</h3>
+<p><em>From <code>arvo/sys/vane/ford.hoon</code>, lines 1916-1920:</em></p>
 <pre><code>        :+  %depends  %|  :~
           definitions+[%&amp; deh]
           listeners+[%&amp; sup]
           waiting+[%&amp; out]
         ==</code></pre>
-<p>This is lines 1916-1920 of <code>arvo/sys/vane/ford.hoon</code>. The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The anchor rune-ish is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-rune-ish offset is 0. The anchor column is the anchor rune-ish column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor rune-ish column.</p>
+<p>The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The anchor rune-ish is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-rune-ish offset is 0. The anchor column is the anchor rune-ish column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor rune-ish column.</p>
 <p>COLSIG is 0-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
 <h3 id="second-example">Second example</h3>
+<p><em>From <code>arvo/lib/hood/kiln.hoon</code>, lines 346-356:</em></p>
 <pre><code>    =/  request-data  :~
         [0 [0 8.080] 0 &#39;localhost&#39; ~]
         ::  associate 0 as the anonymous ship, which is the ++add result.
@@ -160,7 +162,7 @@
     =/  monies/coin  [%many ~[[%blob request-data] [%$ ~.n 0]]]
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
-<p>This is lines 346-356 of <code>arvo/lib/hood/kiln.hoon</code>: Here the rune line is line 346, the rune-ish is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune-ish offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor rune-ish column.</p>
+<p>Here the rune line is line 346, the rune-ish is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune-ish offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor rune-ish column.</p>
 <p>COLSIG again is 0-running, so that its runsteps should be indented one stop past the anchor column. By the same logic, the TISTIS should be indented at the anchor column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
 <h2 id="header-and-inline-comments">Header and inline comments</h2>
 <p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
@@ -209,6 +211,7 @@
 </ul>
 <h1 id="fixed-arity-hoons">Fixed arity hoons</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in fixed arity hoons. Here is a example of a backdented 4-ary hoon:</p>
+<p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>
 <pre><code>        :^    %wtcl
             [%dtts [%rock %$ |] [%$ axe]]
           [%rock %f |]
@@ -226,7 +229,8 @@
 </ul>
 <p>In the vertical gaps belonging to backdented hoons, the inter-comment column location should be the column location of the first text after the gap; and the pre-comment column location should be undefined.</p>
 <h2 id="chaining-fixed-arity-hoons">Chaining fixed arity hoons</h2>
-<p>As a special case, a runechild of an backdented hoon may have an inter-line alignment, based on its <strong>silo</strong> and <strong>chain</strong>. Here is an example of chained alignment from <code>arvo/sys/zuse.hoon</code>, lines 2950-2959:</p>
+<p>As a special case, a runechild of an backdented hoon may have an inter-line alignment, based on its <strong>silo</strong> and <strong>chain</strong>.</p>
+<p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2950-2959:</em></p>
 <pre><code>     ::
      ::  make acru cores
      ::
@@ -257,7 +261,8 @@
 <li><p>Every runechildren of a tall rune-ish is a separate silo element, unless it is itself a tall rune-ish.</p></li>
 <li><p>For chained inter-line alignment, The row and silo grid may be &quot;ragged&quot;, so that some rows do not have elements in every silo.</p></li>
 </ul>
-<p>In the following example, there are 4 rows each of 3 silos. Every row in a chain starts with a rune-ish, but not every rune-ish need start a row, and a given silo may contain both rune-ishes and runechildren. For example, here is code from <code>arvo/sys/hoon.hoon</code>, lines 1572-1575:</p>
+<p>In the following example, there are 4 rows each of 3 silos. Every row in a chain starts with a rune-ish, but not every rune-ish need start a row, and a given silo may contain both rune-ishes and runechildren.</p>
+<p><em>From <code>arvo/sys/hoon.hoon</code>, lines 1572-1575:</em></p>
 <pre><code>    =|  b/(set _?&gt;(?=(^ a) p.n.a))
     |-  ^+  b
     ?~  a   b
@@ -277,14 +282,15 @@
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined.</p>
 <h3 id="joined-0-running-hoons">Joined 0-running hoons</h3>
-<p>This example of a joined 0-running hoon is from <code>arvo/sys/zuse.hoon</code>, lines 2399-2402:</p>
+<p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2399-2402:</em></p>
 <pre><code>              :~  [b er]
                   [b pk]
                   [(met 0 m) m]
               ==</code></pre>
 <p>The running of a joined 0-running hoon should be tightly aligned on the rune line. All subsequent runstep lines should be at the same column location as the first runstep line.</p>
 <h3 id="split-0-running-hoons">Split 0-running hoons</h3>
-<p>This example is the beginning and end of a long split 0-running hoon, which starts at line 84 of <code>avro/sur/twitter.hoon</code>.</p>
+<p>This example is the beginning and end of a long split 0-running hoon.</p>
+<p><em>From <code>avro/sur/twitter.hoon</code>, lines 84-194:</em></p>
 <pre><code>    :~
       [  {$mentions $~}                %get   /statuses/mentions-timeline  ]
       [  {$posts-by sd $~}             %get   /statuses/user-timeline  ]
@@ -301,13 +307,13 @@
 <h2 id="running-hoons-2">1-running hoons</h2>
 <p>1-running hoons can be joined or split.</p>
 <h3 id="joined-1-running-hoons">Joined 1-running hoons</h3>
-<p>Lines 4853-4855 of <code>arvo/sys/hoon.hoon</code>:</p>
+<p><em>From <code>arvo/sys/hoon.hoon</code>, lines 4853-4855:</em></p>
 <pre><code>             ;~  less  soz
                (ifix [soq soq] (boss 256 (more gon qit)))
              ==</code></pre>
 <p>The head of a joined 1-running hoon should occur on the rune line, tightly aligned. The running (and therefore the first runstep line) of a joined 1-running hood should be tightly aligned. Subsequent runstep lines should be one stop after the anchor column.</p>
 <h3 id="split-1-running-hoons">Split 1-running hoons</h3>
-<p>Lines 4048-4051 of <code>arvo/sys/zuse.hoon</code>:</p>
+<p><em>From <code>arvo/sys/zuse.hoon</code>, lines 4048-4051:</em></p>
 <pre><code>      ;~  pose
         (cold &amp; (jest &#39;true&#39;))
         (cold | (jest &#39;false&#39;))
@@ -315,7 +321,7 @@
 <p>In a split 1-running hoon, there should be a vertical gap between the head and the running. In the vertical gap, the inter-comment column is the anchor column, and the pre-column is the column location of the running.</p>
 <p>The column location running of a split 1-running hoon should occur one vertical gap after the head, and its column location should be one stop more than the anchor column.</p>
 <h2 id="tissig">TISSIG</h2>
-<p><em>From <code>arvo/sys/vane/ford.hoon</code>, beginning at line 8:</em></p>
+<p><em>From <code>arvo/sys/vane/ford.hoon</code>, lines 8-13:</em></p>
 <pre><code>=&gt;  =~
 ::  structures
 |%
@@ -338,7 +344,8 @@ Also, contrary to the above
 <p>A vertical gap should occur between every line of runsteps. A vertical gap should also occur between the last runstep line and the TISTIS. Inter-comments in a running should be at the anchor column of the parent hoon. Pre-comments in a running should be aligned with the following runstep.</p>
 <p>Within a runstep line, the runsteps should be tightly aligned, or follow runstep inter-line alignment, as described next.</p>
 <h3 id="runstep-inter-line-alignment">Runstep inter-line alignment</h3>
-<p>In a row of runsteps, runsteps after the first may have inter-line alignment. Within a running, The inter-line alignment column of runsteps is determined by their silo. Here is an example of runstep inter-line alignment from <code>sys/zuse.hoon</code>, lines 4892-4905:</p>
+<p>In a row of runsteps, runsteps after the first may have inter-line alignment. Within a running, The inter-line alignment column of runsteps is determined by their silo.</p>
+<p><em>From <code>sys/zuse.hoon</code>, lines 4892-4905:</em></p>
 <pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
             ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
             ~1998.12.31..23.59.56  ~1997.6.30..23.59.55

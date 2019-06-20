@@ -265,6 +265,7 @@ as the rune column.
 ### First example
 
 
+*From `arvo/sys/vane/ford.hoon`, lines 1916-1920:*
 ```
         :+  %depends  %|  :~
           definitions+[%& deh]
@@ -273,8 +274,6 @@ as the rune column.
         ==
 ```
 
-This is lines 1916-1920 of
-`arvo/sys/vane/ford.hoon`.
 The rune line is line 1916, and the rune is
 COLSIG (`:~`).
 The anchor rune-ish is the COLLUS (`:+`).
@@ -291,6 +290,7 @@ This is exactly what we see.
 
 ### Second example
 
+*From `arvo/lib/hood/kiln.hoon`, lines 346-356:*
 ```
     =/  request-data  :~
         [0 [0 8.080] 0 'localhost' ~]
@@ -305,9 +305,6 @@ This is exactly what we see.
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])
 ```
 
-This is 
-lines 346-356 of
-`arvo/lib/hood/kiln.hoon`:
 Here the rune line is line 346, the rune-ish is again COLSIG,
 and it reanchors at TISFAS (`=/`).
 TISFAS is 3-fixed, and 2 of its runechildren are on the rune line,
@@ -480,6 +477,7 @@ but the archetypal case of backdenting is its use in
 fixed arity hoons.
 Here is a example of a backdented 4-ary hoon:
 
+*From `arvo/sys/hoon.hoon`, 6752-6755:*
 ```
         :^    %wtcl
             [%dtts [%rock %$ |] [%$ axe]]
@@ -530,9 +528,8 @@ and the pre-comment column location should be undefined.
 
 As a special case, a runechild of an backdented hoon may
 have an inter-line alignment, based on its **silo** and **chain**.
-Here is an example of chained alignment
-from `arvo/sys/zuse.hoon`, lines 2950-2959:
 
+*From `arvo/sys/zuse.hoon`, lines 2950-2959:*
 ```
      ::
      ::  make acru cores
@@ -607,9 +604,8 @@ In the following example, there are 4 rows each of 3 silos.
 Every row in a chain starts with a rune-ish, but not every
 rune-ish need start a row,
 and a given silo may contain both rune-ishes and runechildren.
-For example, here is code
-from `arvo/sys/hoon.hoon`, lines 1572-1575:
 
+*From `arvo/sys/hoon.hoon`, lines 1572-1575:*
 ```
     =|  b/(set _?>(?=(^ a) p.n.a))
     |-  ^+  b
@@ -674,9 +670,7 @@ SEMSIG (`;~`).
 
 ### Joined 0-running hoons
 
-This example of a joined 0-running hoon
-is from `arvo/sys/zuse.hoon`, lines 2399-2402:
-
+*From `arvo/sys/zuse.hoon`, lines 2399-2402:*
 ```
               :~  [b er]
                   [b pk]
@@ -691,9 +685,9 @@ location as the first runstep line.
 
 ### Split 0-running hoons
 
-This example is the beginning and end of a long split 0-running hoon,
-which starts at line 84 of `avro/sur/twitter.hoon`.
+This example is the beginning and end of a long split 0-running hoon.
 
+*From `avro/sur/twitter.hoon`, lines 84-194:*
 ```
     :~
       [  {$mentions $~}                %get   /statuses/mentions-timeline  ]
@@ -723,7 +717,7 @@ The pre-comment location should be the column location of the running.
 
 ### Joined 1-running hoons
 
-Lines 4853-4855 of `arvo/sys/hoon.hoon`:
+*From `arvo/sys/hoon.hoon`, lines 4853-4855:*
 ```
              ;~  less  soz
                (ifix [soq soq] (boss 256 (more gon qit)))
@@ -738,7 +732,7 @@ Subsequent runstep lines should be one stop after the anchor column.
 
 ### Split 1-running hoons
 
-Lines 4048-4051 of `arvo/sys/zuse.hoon`:
+*From `arvo/sys/zuse.hoon`, lines 4048-4051:*
 ```
       ;~  pose
         (cold & (jest 'true'))
@@ -760,7 +754,7 @@ should be one stop more than the anchor column.
 
 ## TISSIG
 
-*From `arvo/sys/vane/ford.hoon`, beginning at line 8:*
+*From `arvo/sys/vane/ford.hoon`, lines 8-13:*
 ```
 =>  =~
 ::  structures
@@ -830,9 +824,8 @@ inter-line alignment.
 Within a running,
 The inter-line alignment column of runsteps is
 determined by their silo.
-Here is an example of runstep inter-line alignment
-from `sys/zuse.hoon`, lines 4892-4905:
 
+*From `sys/zuse.hoon`, lines 4892-4905:*
 ```
         :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
             ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
