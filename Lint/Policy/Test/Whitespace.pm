@@ -2704,6 +2704,9 @@ sub checkFord_1Gap {
     my ( $policy, $node, $tag ) = @_;
     my $instance = $policy->{lint};
 
+    # TODO Split is implemented, but not split Ford-1 hoon
+    # is represented in the corpus AFAICT
+
     # fordFassig ::= (- FAS SIG GAP -) tall5d
     my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
 

@@ -1435,6 +1435,48 @@ be the anchor column and the pre-column should be undefined.
 
 * A HEPHEP, starting at the anchor column.
 
+# Ford-1 hoons
+
+The ford-1 hoons are a set of unary ford hoons:
+FASSIG (`/~`),
+FASBUC (`/$`),
+FASCAB (`/_`),
+FASCEN (`/%`) and
+FASHAX (`/#`).
+
+<!-- TODO: fordHoop? -->
+
+*From `arvo/app/hall.hoon`, line 17:*
+```
+          /~  |=({t/telegram:hall bowl:gall} t)
+```
+
+* The rune.
+
+* A horizontal gap.
+
+* The runechild.
+
+# FASCOM
+
+TODO
+
+# FASHEP
+
+TODO
+
+# FASLUS
+
+TODO
+
+# FASTIS
+
+TODO
+
+# FASWUT
+
+TODO
+
 # SELGAP
 
 *From `arvo/sur/twitter.hoon`, line 85:*
