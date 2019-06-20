@@ -3456,7 +3456,7 @@ sub chainAlignmentData {
     my $currentChainOffset = 0;
     my $thisNodeIX;
 
-    # Array, indexed by child index, of "columns"
+    # Array, indexed by child index, of "silos"
     # of [ gap, body ], to align
     my @nodesToAlignByChildIX;
   LINK: while ($thisNode) {
@@ -3474,15 +3474,12 @@ sub chainAlignmentData {
             next LINK;
         }
         last LINK if not $policy->chainable($thisNode);
-        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
         my ( $thisNodeLine, $thisNodeColumn ) = $instance->nodeLC($thisNode);
         if ( $thisNodeColumn == $alignmentBaseColumn ) {
             $currentChainOffset = 0;
         }
         else {
-        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
             last LINK if $thisNodeLine != $parentNodeLine;
-        # CURRENT say STDERR join q{ }, __FILE__, __LINE__;
             $currentChainOffset += $parentElementCount;
         }
 
