@@ -1451,9 +1451,12 @@ FASHAX (`/#`).
           /~  |=({t/telegram:hall bowl:gall} t)
 ```
 
+A tall Ford-1 hoon should consist of,
+in lexical order:
+
 * The rune.
 
-* A horizontal gap.
+* A one-stop horizontal gap.
 
 * The runechild.
 
