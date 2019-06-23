@@ -83,7 +83,7 @@ A **whitespace boundary** is one of the following:
 
 Pedantically, a whitespace boundary is not a column
 location.
-Instead it is a location immediately before,
+Instead it is a location immediately before
 a column location;
 immediately after a column location;
 or both.
@@ -100,7 +100,7 @@ A **horizontal gap** is a gap which contains only ASCII spaces.
 A **vertical gap** is a gap which contains at least one newline.
 All gaps are either horizontal or vertical.
 
-A *text block* is a character block that
+A **text block** is a character block that
 
 * occurs between two whitespace boundaries;
 
@@ -111,11 +111,11 @@ A *text block* is a character block that
 Note that text blocks may contain whitespace characters.
 We often refer to a text block simply as a **text**.
 
-We say "column `C` is aligned `N` spaces after column `D`"
+We say "column `C` is aligned `N` characters after column `D`"
 if and only if `C = D + N`.
 We say "column `C` is aligned at column `D`"
 if and only if `C = D`.
-We say "column `C` is aligned `N` spaces before column `D`"
+We say "column `C` is aligned `N` characters before column `D`"
 if and only if `C = D - N`.
 
 When
@@ -123,12 +123,12 @@ we speak texts being aligned relative to
 columns or relative to other text blocks,
 we are refering to the column location of the texts.
 For example, if we say
-"Text X is aligned N spaces after text Y",
+"Text X is aligned N characters after text Y",
 we mean that `Column(X) = Column(Y) + N`.
 
 Often we express distance between columns
-in stops instead of spaces.
-A **stop** is two spaces.
+in stops instead of characters.
+A **stop** is two characters.
 
 Many alignments are with respect to an **anchor column**.
 Usually, the anchor column is the rune column,
@@ -372,7 +372,7 @@ If a comment is not a header
 comment, it is a **rightside** comment.
 A rightside comment is
 a **margin comment** if it begins at or after column 57,
-or immediately after a horizontal gap of 20 or more spaces.
+or immediately after a horizontal gap of 20 or more characters.
 All margin comments should start at column 57.
 A rightside comment is an **inline comment** if it is not a margin comment.
 
