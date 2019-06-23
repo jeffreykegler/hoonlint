@@ -16,7 +16,7 @@
 <li><a href="#about-this-document">About this document</a></li>
 <li><a href="#terminology">Terminology</a><ul>
 <li><a href="#deontology">Deontology</a></li>
-<li><a href="#lines-columns-and-indentation">Lines, columns and indentation</a></li>
+<li><a href="#lines-columns-and-alignment">Lines, columns and alignment</a></li>
 <li><a href="#hoon-expressions">Hoon expressions</a></li>
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
 <li><a href="#pseudo-joins">Pseudo-joins</a></li>
@@ -102,7 +102,7 @@
 <h2 id="deontology">Deontology</h2>
 <p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
 <p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as a matter of definition, or due to a logical or a mathematical equivalence.</p>
-<h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
+<h2 id="lines-columns-and-alignment">Lines, columns and alignment</h2>
 <p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
 <p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
 <p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>. When we say &quot;the column location of <code>x</code>&quot;, we mean <code>Column(x)</code>.</p>
@@ -122,8 +122,8 @@
 <li><p>ends with a non-whitespace character.</p></li>
 </ul>
 <p>Note that text blocks may contain whitespace characters. We often refer to a text block simply as a <strong>text</strong>.</p>
-<p>We say column <code>C</code> is aligned <code>N</code> spaces after column <code>D</code> if <code>C = D + N</code>. We say column <code>C</code> is aligned at column <code>D</code> if <code>C = D</code>. We say column <code>C</code> is aligned <code>N</code> spaces before column <code>D</code> if <code>C = D - N</code>.</p>
-<p>When we speak texts being aligned relative to columns or relative to other text blocks, we will mean column location of the texts so that, for example, &quot;Text X is aligned N spaces after text Y&quot; means that <code>Column(X) = Column(Y) + N</code>.</p>
+<p>We say &quot;column <code>C</code> is aligned <code>N</code> spaces after column <code>D</code>&quot; if and only if <code>C = D + N</code>. We say &quot;column <code>C</code> is aligned at column <code>D</code>&quot; if and only if <code>C = D</code>. We say &quot;column <code>C</code> is aligned <code>N</code> spaces before column <code>D</code>&quot; if and only if <code>C = D - N</code>.</p>
+<p>When we speak texts being aligned relative to columns or relative to other text blocks, we are refering to the column location of the texts. For example, if we say &quot;Text X is aligned N spaces after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
 <p>Often we express distance between columns in stops instead of spaces. A <strong>stop</strong> is two spaces.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
@@ -170,7 +170,7 @@
           waiting+[%&amp; out]
         ==</code></pre>
 <p>The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The anchor rune-ish is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-rune-ish offset is 0. The anchor column is the anchor rune-ish column plus the reanchor offset, so that in this case, the anchor column is the same as the anchor rune-ish column.</p>
-<p>COLSIG is 0-running, and normal COLSIG indentation indents the runsteps one stop past the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
+<p>COLSIG is 0-running, and normal COLSIG indentation align the runsteps one stop after the anchor column, and puts the final TISTIS at the anchor column. This is exactly what we see.</p>
 <h3 id="second-example">Second example</h3>
 <p><em>From <code>arvo/lib/hood/kiln.hoon</code>, lines 346-356:</em></p>
 <pre><code>    =/  request-data  :~
@@ -185,7 +185,7 @@
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
 <p>Here the rune line is line 346, the rune-ish is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune-ish offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor rune-ish column.</p>
-<p>COLSIG again is 0-running, so that its runsteps should be indented one stop past the anchor column. By the same logic, the TISTIS should be indented at the anchor column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
+<p>COLSIG again is 0-running, so that its runsteps should be aligned one stop after the anchor column. By the same logic, the TISTIS should be aligned at the anchor column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
 <h2 id="header-and-inline-comments">Header and inline comments</h2>
 <p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <p>In standard code, header comments are</p>
@@ -242,7 +242,7 @@
 <p>A backdented hoon of arity 3 or more should be joined. A backdented hoon of arity 2 or less should be split.</p>
 <p>The first runechild of a joined backdented hoon should be on the same line as the rune, separated by a gap. Subsequent runechildren of a joined backdented hoon should be separated by a vertical gap.</p>
 <p>The first runechild of a joined backdented hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined backdented hoon should also be separated by a vertical gap.</p>
-<p>In an fixed <code>n</code>-arity hoon, the <code>m</code>'th runechild should be indented <code>n-m</code> stops more than the anchor column. For example, in an 3-runechild hoon, the first runechild should be indented 2 stops more than the anchor column; a second runechild should be indented 1 stop more than the anchor column; and the third runechild be indented at the anchor column.</p>
+<p>In an fixed <code>n</code>-arity hoon, the <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. For example, in an 3-runechild hoon, the first runechild should be aligned 2 stops after than the anchor column; a second runechild should be aligned 1 stop after than the anchor column; and the third runechild be aligned at the anchor column.</p>
 <p>This implies that, regardless of the number of runechildren in a backdented hoon,</p>
 <ul>
 <li><p>the last runechild should be aligned at the anchor column;</p></li>
@@ -406,14 +406,14 @@ Also, contrary to the above
 <p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
 <h2 id="chess-sidedness">Chess-sidedness</h2>
 <p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside.</p>
-<p>Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. Indentation will be described more precisely in what follows.</p>
+<p>Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. The effect of sidedness on indentation will be described more precisely in what follows.</p>
 <h2 id="jogs">Jogs</h2>
-<p>The indentation of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
+<p>The alignment of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
 <p>Jogs are either kingside or queenside. In standard code, the sidedness of a jog determines the alignment of split jogs.</p>
 <p>The base column location of a jog depends on the jogging hoon that it belongs to. It is specified in the description for the different kinds of jogging hoon.</p>
 <h3 id="joined-jogs">Joined jogs</h3>
-<p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is indented 1 stop after its head. Otherwise, a joined jog is considered aligned.</p>
-<p>All aligned jogs in a jogging should be indented to the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
+<p>A joined jog may be either <strong>aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is aligned one stop after its head. Otherwise, a joined jog is considered aligned.</p>
+<p>All aligned jogs in a jogging should be aligned at the same column. This column is called the <strong>jogging body column</strong> of the jogging. A jog body which is aligned at the jog body column is said to be <strong>jogging-body-aligned</strong>. A jog whose jog body is jogging-body-aligned is also said to be <strong>jogging-body-aligned</strong>.</p>
 <p>The pseudo-join of pseudo-joined jog should be equivalent to the one of the horizontal gaps that a joined jog is allowed according to this standard.</p>
 <h3 id="split-jogs">Split jogs</h3>
 <p>The gap of split jog should be vertical. The inter-comment column location of the gap should be the column location of the jog body; and there should be no pre-comment column location. The standard column location of the body of a split job varies according to the sidedness of the jog.</p>
@@ -555,7 +555,7 @@ Also, contrary to the above
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A kingside jogging. The base column of its jogs should be 2 stops after the anchor column.</p></li>
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
-<li><p>A TISTIS, indented one stop more than the anchor column.</p></li>
+<li><p>A TISTIS, aligned one stop after than the anchor column.</p></li>
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
 <li><p>A tail, starting at the anchor column.</p></li>
 </ul>
@@ -688,8 +688,8 @@ Also, contrary to the above
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
 <p>In non-standard code -- code which does not follow these guidelines, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This section describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
 <h2 id="chess-sidedness-1">Chess-sidedness</h2>
-<p>A jog is considered queenside if its indentation is 2 stops or more greater than the anchor column. Otherwise, the jog is considered kingside.</p>
-<p>The chess-sidedness of a misindented jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a misindented jogging hoon is that of its jogging.</p>
+<p>A jog is considered queenside if it is aligned 2 stops or more after the anchor column. Otherwise, the jog is considered kingside.</p>
+<p>The chess-sidedness of a jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a jogging hoon is that of its jogging.</p>
 <h2 id="jogging-body-column">Jogging body column</h2>
 <p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's aligned jogs. If more than one column is &quot;most common&quot;, so that there is a tie, the jogging body column is the body column of the lexically first jog to have its jog body start at one of the most common columns. If there are no aligned jogs in a jogging, the jogging body column is the body column of the lexically first jog in the jogging.</p>
 <h2 id="inter-line-alignment">Inter-line alignment</h2>
@@ -739,7 +739,7 @@ Exception ::= BadComment
 Exception ::= BlankLine</code></pre>
 <p>The terminals in this BNF are</p>
 <ul>
-<li><p>BadComment -- a comment with any indent. Priority 3.</p></li>
+<li><p>BadComment -- a comment with any alignment. Priority 3.</p></li>
 <li><p>BlankLine -- a line terminated with a newline and otherwise containing only zero or more spaces. Priority 3.</p></li>
 <li><p>InterComment -- a comment that starts at the inter-comment column. Priority 1.</p></li>
 <li><p>LowerRiser -- a comment that starts one stop past the inter-comment column. Priority 1.</p></li>

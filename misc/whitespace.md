@@ -39,7 +39,7 @@ This would be the case, for example,
 if X is Y as a matter of definition,
 or due to a logical or a mathematical equivalence.
 
-## Lines, columns and indentation
+## Lines, columns and alignment
 
 This document applies to Hoon source files.
 A Hoon source file is organized in newline-terminated lines
@@ -111,20 +111,20 @@ A *text block* is a character block that
 Note that text blocks may contain whitespace characters.
 We often refer to a text block simply as a **text**.
 
-We say column `C` is aligned `N` spaces after column
-`D` if `C = D + N`.
-We say column `C` is aligned at column
-`D` if `C = D`.
-We say column `C` is aligned `N` spaces before column
-`D` if `C = D - N`.
+We say "column `C` is aligned `N` spaces after column `D`"
+if and only if `C = D + N`.
+We say "column `C` is aligned at column `D`"
+if and only if `C = D`.
+We say "column `C` is aligned `N` spaces before column `D`"
+if and only if `C = D - N`.
 
 When
 we speak texts being aligned relative to
 columns or relative to other text blocks,
-we will mean column location of the texts so that,
-for example,
-"Text X is aligned N spaces after text Y"
-means that `Column(X) = Column(Y) + N`.
+we are refering to the column location of the texts.
+For example, if we say
+"Text X is aligned N spaces after text Y",
+we mean that `Column(X) = Column(Y) + N`.
 
 Often we express distance between columns
 in stops instead of spaces.
@@ -326,8 +326,8 @@ The anchor column is the anchor rune-ish column plus the reanchor
 offset, so that in this case,
 the anchor column is the same as the anchor rune-ish column.
 
-COLSIG is 0-running, and normal COLSIG indentation indents the runsteps
-one stop past the anchor column,
+COLSIG is 0-running, and normal COLSIG indentation align the runsteps
+one stop after the anchor column,
 and puts the final TISTIS at the anchor column.
 This is exactly what we see.
 
@@ -356,9 +356,9 @@ its 2nd runechild -- one stop.
 The anchor column is therefore one stop after the anchor rune-ish
 column.
 
-COLSIG again is 0-running, so that its runsteps should be indented
-one stop past the anchor column.
-By the same logic, the TISTIS should be indented at the anchor column.
+COLSIG again is 0-running, so that its runsteps should be aligned
+one stop after the anchor column.
+By the same logic, the TISTIS should be aligned at the anchor column.
 This is what we see in the example.
 The last three lines of the example are the last runechild of the
 TISFAS.
@@ -543,12 +543,12 @@ Subsequent runechildren of a joined backdented hoon should also be
 separated by a vertical gap.
 
 In an fixed `n`-arity hoon,
-the `m`'th runechild should be indented `n-m` stops more than the anchor column.
+the `m`'th runechild should be aligned `n-m` stops after than the anchor column.
 For example,
 in an 3-runechild hoon,
-the first runechild should be indented 2 stops more than the anchor column;
-a second runechild should be indented 1 stop more than the anchor column;
-and the third runechild be indented at the anchor column.
+the first runechild should be aligned 2 stops after than the anchor column;
+a second runechild should be aligned 1 stop after than the anchor column;
+and the third runechild be aligned at the anchor column.
 
 This implies that, regardless of the number of runechildren in a
 backdented hoon,
@@ -964,11 +964,12 @@ Chess-sidedness is always either kingside and queenside.
 
 Informally, **kingside** means the indentation has a left-side bias;
 and **queenside** means that the indentation has a right-side bias.
-Indentation will be described more precisely in what follows.
+The effect of sidedness on
+indentation will be described more precisely in what follows.
 
 ## Jogs
 
-The indentation of a jog is that of its head.
+The alignment of a jog is that of its head.
 A jog is **joined** if its head is on the same
 line as its body.
 Otherwise, a jog is **multiline**.
@@ -989,11 +990,11 @@ in the description for the different kinds of jogging hoon.
 ### Joined jogs
 
 A joined jog may be either **aligned** or **ragged**.
-A joined jog is ragged if its body is indented 1 stop after
+A joined jog is ragged if its body is aligned one stop after
 its head.
 Otherwise, a joined jog is considered aligned.
 
-All aligned jogs in a jogging should be indented to the
+All aligned jogs in a jogging should be aligned at the
 same column.
 This column is called the **jogging body column** of the jogging.
 A jog body which is aligned at the jog body column
@@ -1303,7 +1304,7 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  indented one stop more than the anchor column.
+  aligned one stop after than the anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
@@ -1547,14 +1548,14 @@ This section describes the methods used for deciding what was
 
 ## Chess-sidedness
 
-A jog is considered queenside if its indentation is 2 stops or more
-greater than the anchor column.
+A jog is considered queenside if it is aligned 2 stops or more
+after the anchor column.
 Otherwise, the jog is considered kingside.
 
-The chess-sidedness of a misindented jogging is that of the majority
+The chess-sidedness of a jogging is that of the majority
 of its jogs.
 In case of a tie, the jogging is considered to be queenside.
-The chess-sidedness of a misindented jogging hoon is that of its
+The chess-sidedness of a jogging hoon is that of its
 jogging.
 
 ## Jogging body column
@@ -1667,7 +1668,7 @@ Exception ::= BlankLine
 
 The terminals in this BNF are
 
-* BadComment -- a comment with any indent. Priority 3.
+* BadComment -- a comment with any alignment. Priority 3.
 
 * BlankLine -- a line terminated with a newline and
 otherwise containing only zero or more spaces. Priority 3.
