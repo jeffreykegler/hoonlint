@@ -19,8 +19,11 @@
 <li><a href="#lines-columns-and-alignment">Lines, columns and alignment</a></li>
 <li><a href="#hoon-expressions">Hoon expressions</a></li>
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
+<li><a href="#joined-and-split">Joined and split</a></li>
 <li><a href="#pseudo-joins">Pseudo-joins</a></li>
 <li><a href="#reanchoring">Reanchoring</a><ul>
+<li><a href="#reanchor-offset">Reanchor offset</a></li>
+<li><a href="#formal-definition">Formal definition</a></li>
 <li><a href="#first-example">First example</a></li>
 <li><a href="#second-example">Second example</a></li>
 </ul></li>
@@ -112,25 +115,31 @@
 <li><p>The end of the Hoon source file.</p></li>
 <li><p>A location between a whitespace character and a non-whitespace character.</p></li>
 </ul>
-<p>Pedantically, a whitespace boundary is not a column location. Instead it is a location immediately before, a column location; immediately after a column location; or both.</p>
+<p>Pedantically, a whitespace boundary is not a column location. Instead it is a location immediately before a column location; immediately after a column location; or both.</p>
 <p>A character block is a lexically contiguous sequence of one or more characters. A whitespace block is a character block that contains only whitespace characters and occurs between two whitespace boundaries. An <strong>ace</strong> is a whitespace block that contains a single ASCII space. A <strong>gap</strong> is any whitespace block that is not an ace.</p>
 <p>A <strong>horizontal gap</strong> is a gap which contains only ASCII spaces. A <strong>vertical gap</strong> is a gap which contains at least one newline. All gaps are either horizontal or vertical.</p>
-<p>A <em>text block</em> is a character block that</p>
+<p>A <strong>text block</strong> is a character block that</p>
 <ul>
 <li><p>occurs between two whitespace boundaries;</p></li>
 <li><p>begins with a non-whitespace character; and</p></li>
 <li><p>ends with a non-whitespace character.</p></li>
 </ul>
 <p>Note that text blocks may contain whitespace characters. We often refer to a text block simply as a <strong>text</strong>.</p>
-<p>We say &quot;column <code>C</code> is aligned <code>N</code> spaces after column <code>D</code>&quot; if and only if <code>C = D + N</code>. We say &quot;column <code>C</code> is aligned at column <code>D</code>&quot; if and only if <code>C = D</code>. We say &quot;column <code>C</code> is aligned <code>N</code> spaces before column <code>D</code>&quot; if and only if <code>C = D - N</code>.</p>
-<p>When we speak texts being aligned relative to columns or relative to other text blocks, we are refering to the column location of the texts. For example, if we say &quot;Text X is aligned N spaces after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
-<p>Often we express distance between columns in stops instead of spaces. A <strong>stop</strong> is two spaces.</p>
+<p>We say &quot;column <code>C</code> is aligned <code>N</code> characters after column <code>D</code>&quot; if and only if <code>C = D + N</code>. We say &quot;column <code>C</code> is aligned at column <code>D</code>&quot; if and only if <code>C = D</code>. We say &quot;column <code>C</code> is aligned <code>N</code> characters before column <code>D</code>&quot; if and only if <code>C = D - N</code>.</p>
+<p>When we speak texts being aligned relative to columns or relative to other text blocks, we are refering to the column location of the texts. For example, if we say &quot;Text X is aligned N characters after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
+<p>Often we express distance between columns in stops instead of characters. A <strong>stop</strong> is two characters.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
-<p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>, <code>+=</code>, <code>+-</code>, <code>--</code> and <code>==</code>. Currently rune-ishes are always represented in Hoon source files as digraphs.</p>
-<p>Digraphs which introduce comments, such as <code>::</code> are <strong>not</strong> considered rune-ishes. Comments, including the digraphs which begin them are considered whitespace, and nothing in whitespace is considered a rune-ish.</p>
+<p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <strong>rune-ish</strong> is one of the following:</p>
+<ul>
+<li><p>A rune.</p></li>
+<li><p>A <strong>terminator</strong>, either HEPHEP (<code>--</code>) or TISTIS (<code>==</code>).</p></li>
+<li><p>A cell keyword, one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+_</code>).</p></li>
+</ul>
+<p>Currently rune-ishes are always represented in Hoon source files as digraphs.</p>
+<p>Note that not all special-character digraphs are rune-ishes. Comments, including the digraphs which begin them are considered whitespace, and nothing in whitespace is considered a rune-ish. Comment digraphs include <code>::</code>.</p>
 <p>Let <code>r</code> be the rune-ish digraph of a rune-ish expression. The <strong>rune line</strong> of a hoon is <code>Line(r)</code>. The <strong>rune column</strong> of a hoon is <code>Column(r)</code>.</p>
-<p>A rune-ish expression consists of the initial rune-ish followed by zero or more subexpressions, called <strong>runechildren</strong>. The <strong>arity</strong> of a rune-ish expression is the number of its runechildren. In the hoon expressions being considered in this document, runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
+<p>A tall rune-ish expression consists of the initial rune-ish followed by zero or more subexpressions, called <strong>runechildren</strong>. The <strong>arity</strong> of a rune-ish expression is the number of its runechildren. In the tall hoon expressions being considered in this document, runechildren are separated from the initial rune-ish, and from each other, by gaps.</p>
 <p>Let <code>r</code> be a rune-ish. We sometimes write the hoon expression that begin with <code>r</code> as <code>Hoon(r)</code>. If <code>h</code> is a Hoon, we can write its rune-ish as <code>Rune(h)</code>. Then</p>
 <pre><code>   Line(Hoon(r)) == Line(r)
    Column(Hoon(r)) == Column(r)</code></pre>
@@ -138,30 +147,60 @@
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
 <p>All non-whitespace lexemes in Hoon are aligned horizontally in one of 4 ways:</p>
 <ul>
-<li><p><strong>Tight</strong>: Tightly aligned non-whitespace lexemes follow the preceding non-whitespace lexeme by exactly one stop. A non-whitespace lexeme cannot be tightly aligned if it is the first non-whitespace lexeme on its line.</p></li>
+<li><p><strong>Tight</strong>: A text block is tightly aligned if is immediately preceded by, and separated from another text block by, a horizontal one-stop gap. Note that, by this definition, the first text block on a line can never be tightly aligned.</p></li>
 <li><p><strong>Backdented</strong>: Hoon's standard alignment, described in detail below.</p></li>
 <li><p><strong>Inter-line</strong>: Inter-line alignment aligns the non-whitespace lexeme with non-whitespace lexemes on associated lines. Which non-whitespace lexeme is aligned with which, and which lines are considered &quot;associated&quot; varies depending on the syntactic context. Inter-line alignment is described in detail in the sections describing the syntaxes where it is allowed.</p></li>
 <li><p><strong>Free-form</strong>: Within SELGAP hoons, horizontal alignment in standard code can be free-form.</p></li>
 </ul>
+<h2 id="joined-and-split">Joined and split</h2>
+<p>For many Hoon expressions, the pattern of the standard whitespace conventions depends on whether a specific gap in that Hoon expression is horizontal or vertical. If the pattern-decisive gap is horizontal, the conventions follow a &quot;joined&quot; pattern. If the pattern-decisive gap is vertical, the conventions follow a &quot;split&quot; pattern. The specific conventions will be described below, for each syntax.</p>
 <h2 id="pseudo-joins">Pseudo-joins</h2>
-<p>In many cases, these conventions distinguish between &quot;joined&quot; and &quot;split&quot; syntax, so that whether the gap between two texts is vertical or horizontal affects other conventions. In the cases, it is sometimes convenient to have a gap which contains one or more comments but which, for the purposes of these conventions, behaves like a horizontal gap. Such a gap is called a <strong>pseudo-join</strong>.</p>
-<p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and every line of it, except the last line, has a comment at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment starting at <code>J</code>.</p>
-<p>Intuitively, a pseudo-joins acts as a kind of &quot;place holder&quot; for the text that follows that the pseudo-join, and a pseudo-join comments can be seen as &quot;postponing&quot; the join.</p>
-<p>Intuitively, a pseudo-join is equivalent to a horizontal gap if both of them position the text which follows them at the same column location. More formally, a pseudo-join is <strong>equivalent</strong> to a horizontal gap, if the join column of the pseudo-join is the column location immediately after the last character of the horizontal gap.</p>
+<p>In some cases, it is sometimes convenient to have a vertical pattern-decisive gap, but to otherwise follow the &quot;joined&quot; syntax pattern. For example, the programmer may find &quot;joined&quot; syntax appropriate, but want to insert a comment in the pattern-decisive gap. In these situations, it is useful to have a form of the vertical gap which, for pattern-decisive purposes, is treated as if it were a horizontal gap. Such a gap is called a <strong>pseudo-join</strong>.</p>
+<p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment aligned at <code>J</code>.</p>
+<p>Visually, the pseudo-join's comments looks like &quot;place holders&quot; for the text that follows the pseudo-join.</p>
+<p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text which follows both of them is aligned at the same column location. More formally, a pseudo-join is <strong>equivalent</strong> to a horizontal gap, if the join column of the pseudo-join is the column location immediately after the last character of the horizontal gap.</p>
 <h2 id="reanchoring">Reanchoring</h2>
 <p>Reanchoring is a method of conserving indentation. Typically, a rune-ish is its own &quot;anchor&quot; rune-ish for indentation purposes, but Hoon takes advantage of some opportunities to move the anchor column closer to the left margin. Not all rune-ishes participate in reanchoring. Which do, and which do not, is described in the individual cases.</p>
-<p>We now present a more formal definition of reanchoring, which will be followed by a number of examples. Let <code>r</code> be a rune-ish. If <code>Line(r)</code> contains other rune-ishes, <code>r</code> may <strong>reanchor</strong>, that is, the anchor column of <code>r</code> may be somewhere to the left of <code>Column(r)</code>.</p>
-<p>For every rune-ish, there is always an anchor rune-ish, although usually this is trivially true -- a rune-ish is its own anchor rune-ish. Let <code>a</code> be an anchor rune-ish. The anchor column is the column of an anchor rune-ish, plus the <strong>reanchor-offset</strong>.</p>
-<p>Again, let <code>r</code> Let <code>S</code> be a sequence of rune-ishes such that</p>
+<p>When a rune-ish re-anchors, the anchor column depends on two things: the column location of anchor rune-ish, and the &quot;reanchor offset&quot;. The anchor rune-ish is another rune-ish on the same line as the original rune-ish, but closer to the left margin.</p>
+<h3 id="reanchor-offset">Reanchor offset</h3>
+<p>The reanchor offset is an adjustment necessary to make reanchor indentation &quot;look right&quot; in Hoon terms. It makes the reanchored indentation look and act like normal backdented indentation. The need for it is not obvious from the definition but, visually, if the reanchor offset were not applied, things would look &quot;wrong&quot;.</p>
+<p>Call the text block which starts with the anchor rune-ish and ends with the reanchored rune-ish, the &quot;reanchor block&quot;. Reanchoring may be thought of treating the &quot;reanchor block&quot; as a single rune-ish. This can be thought of a sort of &quot;currying&quot;, and the contents of the reanchor block can be thought of as a curried rune-ish.</p>
+<p>Some runechild of the curried rune-ishes are included in the reanchor block, and therefore are included in the currying. Those runechildren not in the reanchor block are &quot;left over&quot;, and are not included in the currying.</p>
+<p>The &quot;left over&quot; runechildren can be thought of as the runechildren of the curried rune-ish. For it to look as if the children of this curried rune-ish were backdented normally, the whitespace conventions must account for curried versus &quot;left over&quot; runechildren.</p>
+<p>Intuitively, if not all the runechildren of a curried rune-ish are on the rune line, not only are some of the runechildren &quot;left over&quot;, the appropriate amount of indentation is also &quot;left over&quot;. This &quot;left over&quot; indentation of each rune-ish is the &quot;per-rune-ish offset&quot; of that rune.</p>
+<p>The <strong>reanchor offset</strong> of <code>r</code> is the sum of all the per-rune-ish offsets between the <code>a</code> and <code>r</code>, including <code>a</code> but not including <code>r</code>. <code>r</code>'s per-rune-ish offset is not included in the calculation of the reanchor offset, because the rune-children of <code>r</code> are not curried. In effect, all of <code>r</code>'s children are &quot;left over&quot;.</p>
+<p>There will be examples below that show the calculation of per-rune-offsets in a reanchoring context. But, for a first example, it will be easiest to see how the definition of the per-rune-offset applies to a simple backdented hoon. Call the following Hoon fragment, &quot;Actual&quot;:</p>
+<pre><code>:^  a  b  c
+d</code></pre>
+<p>What is the per-rune-ish offset of the COLKET (<code>:^</code>) expression? Its last runechild on the same line is the text <code>c</code>. We move this to the next line, and call our new fragment &quot;What if?&quot;</p>
+<pre><code>:^  a  b
+  c
+d</code></pre>
+<p>Standard alignment for the 3rd COLKET runechild placed it at column 3 in the &quot;What if?&quot; example. Column 3 is two characters after the alignment of the COLKET rune, at column 1. Therefore the per-rune-offset of the COLKET in &quot;Actual&quot; is two: <code>3 - 1 == 2</code>.</p>
+<p>More formally, let <code>r</code> be a rune-ish and let <code>Child(n, r)</code>, the <code>n</code>'th runechild of <code>r</code>, be the last runechild of <code>r</code> on <code>Line(r)</code>. Consider a rewrite of Hoon source as follows:</p>
 <ul>
-<li><p><code>S</code> is empty if a rune-ish is its own anchor, that is <code>S</code> is empty if <code>a == r</code>.</p></li>
-<li><p><code>S[0] = a</code></p></li>
-<li><p>Where <code>S[n]</code> is the last element of <code>S</code>, <code>S[n] = (Rune(Parent(Hoon(r)))</code>.</p></li>
-<li><p>For all <code>i</code> such that <code>0 &lt;= i &lt; n</code>, S[i] = (Rune(Parent(Hoon(S[i+1])))`</p></li>
+<li><p>Move <code>Child(n, r)</code> to <code>Line(r)+1</code>.</p></li>
+<li><p>Adjust as necessary to follow the standard whitespace conventions.</p></li>
+<li><p>In all other respects, be minimal.</p></li>
 </ul>
-<p>Note that, by the above definition, <code>r</code> is never an element of <code>S</code>. Informally, if <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> which are descendants of <code>a</code>.</p>
-<p>Intuitively, the per-rune-ish offsets are the indentation that is &quot;left over&quot; when its rune-ish child begins. Note that, because of the way that we constructed <code>S</code>, the <code>c</code>'th runechild of <code>S[i]</code> must be a rune-ish. More formally, let <code>S[i]</code> be a rune-ish in S, and let <code>c</code> be the number of runechildren of <code>S[i]</code> that are on <code>Line(S[i])</code>. The per-rune-ish offset is the indentation from the anchor column that would apply to the <code>c</code>'th runechild if it were on <code>Line(S[i]) + 1</code>.</p>
-<p>The <strong>reanchor offset</strong> of <code>r</code> is the sum of all the per-rune-ish offsets in <code>S</code>. Note that in the trivial case, where a rune-ish is its own anchor, <code>S</code> is always empty; the reanchor offset is always zero; and the anchor column is always the same as the rune column.</p>
+<p>Let <code>c2</code> be <code>Child(n, r)</code> in this rewrite, so that <code>Line(c2) == Line(r)+1 == Line(c1)+1</code>. Then the per-rune-ish offset is <code>Offset(r) == Column(c2) - Column(r)</code>.</p>
+<h3 id="formal-definition">Formal definition</h3>
+<p>We now present a more formal definition of reanchoring, which will be followed by a number of examples. Let <code>r</code> be a rune-ish. If <code>Line(r)</code> contains other rune-ishes, <code>r</code> may <strong>reanchor</strong>, that is, the anchor column of <code>r</code> may be somewhere to the left of <code>Column(r)</code>.</p>
+<p>Let <code>a</code> be an anchor rune-ish. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>.</p>
+<p>Again, let <code>r</code> be a rune-ish; and let <code>a</code> be the anchor rune-ish of <code>r</code>. Then, we define a sequence of rune-ishes, call it <code>S</code>, such that all of the following are true.</p>
+<ul>
+<li><p><code>S</code> is empty if a rune-ish is its own anchor. That is, <code>S</code> is empty if <code>a == r</code>.</p></li>
+<li><p><code>S[0] = a</code>.</p></li>
+<li><p><code>S[n] = (Rune(Parent(Hoon(r)))</code>, where <code>S[n]</code> is the last element of <code>S</code>.</p></li>
+<li><p><code>S[i] = (Rune(Parent(Hoon(S[i+1])))</code>, for all <code>i</code> such that <code>0 &lt;= i &lt; n</code>.</p></li>
+</ul>
+<p>Note the following:</p>
+<ul>
+<li><p>By the above definition, <code>r</code> is never an element of <code>S</code>.</p></li>
+<li><p>Because of the way that we constructed <code>S</code>, the <code>c</code>'th runechild of <code>S[i]</code> must be a rune-ish.</p></li>
+<li><p>In the trivial case, where a rune-ish is its own anchor, <code>S</code> is always empty; the reanchor offset is always zero; and the anchor column is always the same as the rune column.</p></li>
+<li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> which are descendants of <code>a</code>.</p></li>
+</ul>
 <h3 id="first-example">First example</h3>
 <p><em>From <code>arvo/sys/vane/ford.hoon</code>, lines 1916-1920:</em></p>
 <pre><code>        :+  %depends  %|  :~
@@ -187,7 +226,7 @@
 <p>Here the rune line is line 346, the rune-ish is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune-ish offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor rune-ish column.</p>
 <p>COLSIG again is 0-running, so that its runsteps should be aligned one stop after the anchor column. By the same logic, the TISTIS should be aligned at the anchor column. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
 <h2 id="header-and-inline-comments">Header and inline comments</h2>
-<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
+<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more characters. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <p>In standard code, header comments are</p>
 <ul>
 <li><p>Pre-comments or inter-comments, as determined by their hoon.</p></li>

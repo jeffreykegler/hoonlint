@@ -139,28 +139,34 @@ will be described below.
 
 A tall **rune-ish expression** is a tall hoon expression whose "keyword"
 is a rune-ish.
-A `rune-ish` is usually a rune,
-but the `rune-ishes` also include some other keyword digraphs,
-such as `++`, `+=`, `+-`, `--` and `==`.
+A **rune-ish** is one of the following:
+
+* A rune.
+
+* A **terminator**, either HEPHEP (`--`) or TISTIS (`==`).
+
+* A cell keyword, one of LUSLUS (`++`), LUSHEP (`+-`), or
+  LUSTIS (`+_`).
+
 Currently rune-ishes are always represented in Hoon source
 files as digraphs.
 
-Digraphs which introduce comments,
-such as `::` are **not** considered rune-ishes.
+Note that not all special-character digraphs are rune-ishes.
 Comments, including the digraphs which begin them
 are considered whitespace,
 and nothing in whitespace is considered a rune-ish.
+Comment digraphs include `::`.
 
 Let `r` be the rune-ish digraph of a rune-ish expression.
 The **rune line** of a hoon is `Line(r)`.
 The **rune column** of a hoon is `Column(r)`.
 
-A rune-ish expression consists of the initial rune-ish
+A tall rune-ish expression consists of the initial rune-ish
 followed by zero or more subexpressions,
 called **runechildren**.
 The **arity** of a rune-ish expression is the number of
 its runechildren.
-In the hoon expressions being considered in this document,
+In the tall hoon expressions being considered in this document,
 runechildren are separated from the initial rune-ish,
 and from each other, by gaps.
 
@@ -182,9 +188,10 @@ of `h` as `Parent(h)`.
 
 All non-whitespace lexemes in Hoon are aligned horizontally in one of 4 ways:
 
-* **Tight**:  Tightly aligned non-whitespace lexemes follow the preceding
-non-whitespace lexeme by exactly one stop.  A non-whitespace lexeme cannot be tightly aligned
-if it is the first non-whitespace lexeme on its line.
+* **Tight**:  A text block is tightly aligned if is immediately preceded by,
+and separated from another text block by, a horizontal one-stop gap.
+Note that, by this definition,
+the first text block on a line can never be tightly aligned.
 
 * **Backdented**:  Hoon's standard alignment, described
 in detail below.
@@ -198,34 +205,49 @@ in the sections describing the syntaxes where it is allowed.
 * **Free-form**:  Within SELGAP hoons,
 horizontal alignment in standard code can be free-form.
 
+## Joined and split
+
+For many Hoon expressions,
+the pattern of the standard whitespace conventions depends
+on whether a specific gap in that Hoon expression
+is horizontal or vertical.
+If the pattern-decisive gap is horizontal, the
+conventions follow a "joined" pattern.
+If the pattern-decisive gap is vertical, the
+conventions follow a "split" pattern.
+The specific conventions will be described below,
+for each syntax.
+
 ## Pseudo-joins
 
-In many cases, these conventions distinguish between "joined"
-and "split" syntax,
-so that whether the gap between two texts is vertical or horizontal
-affects other conventions.
-In the cases,
-it is sometimes convenient to have a gap which contains one or
-more comments but which,
-for the purposes of these conventions,
-behaves like a horizontal gap.
+In some cases,
+it is sometimes convenient to have a vertical
+pattern-decisive gap,
+but to otherwise follow
+the "joined" syntax pattern.
+For example, the programmer may find "joined"
+syntax appropriate, but want to insert
+a comment in the pattern-decisive gap.
+In these situations,
+it is useful to have a form of the vertical gap
+which, for pattern-decisive purposes,
+is treated as if it were a horizontal gap.
 Such a gap is called a **pseudo-join**.
 
 Let `J` be a **join column**.
 A text is **pseudo-joined** at `J`
-if and every line of it,
+if and only if every line of it,
 except the last line,
-has a comment at `J`.
+has a comment aligned at `J`.
 Note that this implies that the first, partial, line of the gap
-must contain a comment starting at `J`.
+must contain a comment aligned at `J`.
 
-Intuitively, a pseudo-joins acts as a kind of "place holder" for
-the text that follows that the pseudo-join,
-and a pseudo-join comments can be seen as "postponing" the join.
+Visually, the pseudo-join's comments looks like "place holders" for
+the text that follows the pseudo-join.
 
 Intuitively, a pseudo-join is equivalent to a horizontal gap
-if both of them position the text which follows them
-at the same column location.
+if the text which follows both of them
+is aligned at the same column location.
 More formally,
 a pseudo-join is **equivalent** to a horizontal gap,
 if the join column of the pseudo-join is the column location
@@ -242,6 +264,118 @@ Not all rune-ishes participate in reanchoring.
 Which do, and which do not, is described in the
 individual cases.
 
+When a rune-ish re-anchors, the anchor column depends
+on two things: the column location of anchor rune-ish,
+and the "reanchor offset".
+The anchor rune-ish is another rune-ish on the same
+line as the original rune-ish,
+but closer to the left margin.
+
+### Reanchor offset
+
+The reanchor offset is an adjustment
+necessary
+to make reanchor indentation "look right" in
+Hoon terms.
+It makes the reanchored indentation look
+and act like normal backdented indentation.
+The need for it is not obvious from the definition but,
+visually,
+if the reanchor offset were not applied,
+things would look "wrong".
+
+Call the text block which starts with the anchor rune-ish
+and ends with the reanchored rune-ish,
+the "reanchor block".
+Reanchoring may be thought of treating the
+"reanchor block"
+as a single rune-ish.
+This can be thought of a sort of "currying",
+and the contents of the reanchor block can
+be thought of as a curried rune-ish.
+
+Some runechild of the curried rune-ishes are
+included in the reanchor block,
+and therefore are included in the currying.
+Those runechildren not in the reanchor block
+are "left over",
+and are not included in the currying.
+
+The "left over" runechildren
+can be thought of as the runechildren of the
+curried rune-ish.
+For it to look as if the children of
+this curried rune-ish were backdented
+normally,
+the whitespace conventions must account for
+curried versus "left over" runechildren.
+
+Intuitively, if not all the runechildren of a curried rune-ish
+are on the rune line,
+not only are some of the runechildren "left over",
+the appropriate amount of indentation is also "left over".
+This "left over" indentation of each rune-ish is the "per-rune-ish offset"
+of that rune.
+
+The **reanchor offset** of `r` is the sum of all the
+per-rune-ish offsets between the `a`
+and `r`, including `a` but not including `r`.
+`r`'s per-rune-ish offset is not included in the
+calculation of the reanchor offset,
+because the rune-children of `r` are not curried.
+In effect, all of `r`'s children are "left over".
+
+There will be examples below that show the calculation
+of per-rune-offsets in a reanchoring context.
+But, for a first example,
+it will be easiest to see how
+the definition of the per-rune-offset
+applies to a simple backdented
+hoon.
+Call the following Hoon fragment, "Actual":
+
+```
+:^  a  b  c
+d
+```
+
+What is the per-rune-ish offset of the COLKET (`:^`) expression?
+Its last runechild on the same line is the text `c`.
+We move this to the next line,
+and call our new fragment "What if?"
+
+```
+:^  a  b
+  c
+d
+```
+
+Standard alignment for the 3rd COLKET runechild placed it at column 3
+in the "What if?" example.
+Column 3 is two characters after the alignment of the COLKET rune, at column 1.
+Therefore the per-rune-offset of the COLKET in "Actual" is two:
+`3 - 1 == 2`.
+
+More formally,
+let `r` be a rune-ish and
+let `Child(n, r)`,
+the `n`'th runechild of `r`,
+be the last runechild of `r` on `Line(r)`.
+Consider a rewrite of Hoon source as follows:
+
+* Move `Child(n, r)` to `Line(r)+1`.
+
+* Adjust as necessary to follow the standard whitespace conventions.
+
+* In all other respects, be minimal.
+
+Let `c2` be `Child(n, r)` in this rewrite,
+so that `Line(c2) == Line(r)+1 == Line(c1)+1`.
+Then the per-rune-ish offset
+is `Offset(r) == Column(c2) - Column(r)`.
+
+### Formal definition
+
 We now present a more formal
 definition of reanchoring,
 which will be followed by a number of examples.
@@ -252,58 +386,47 @@ that is,
 the anchor column of `r`
 may be somewhere to the left of `Column(r)`.
 
-For every rune-ish, there is always an anchor
-rune-ish,
-although usually this is trivially true --
-a rune-ish is its own anchor rune-ish.
 Let `a` be an anchor rune-ish.
-The anchor column is the column of an
-anchor rune-ish,
-plus the **reanchor-offset**.
+The anchor column is
+`Column(a) + Offset(r)`,
+where `Offset(r)`
+is the reanchor-offset of `r`.
 
-Again, let `r` 
-Let `S` be a sequence of rune-ishes such that
+Again, let `r` be a rune-ish;
+and let `a` be the anchor rune-ish of `r`.
+Then, we define a sequence of rune-ishes, call it `S`,
+such that all
+of the following are true.
 
-* `S` is empty if a rune-ish is its own anchor, that is `S` is
-empty if `a == r`.
+* `S` is empty if a rune-ish is its own anchor.
+That is, `S` is empty if `a == r`.
 
-* `S[0] = a`
+* `S[0] = a`.
 
-* Where `S[n]` is the last element of `S`,
-`S[n] = (Rune(Parent(Hoon(r)))`.
+* `S[n] = (Rune(Parent(Hoon(r)))`,
+  where `S[n]` is the last element of `S`.
 
-* For all `i` such that `0 <= i < n`,
-S[i] = (Rune(Parent(Hoon(S[i+1])))`
+* `S[i] = (Rune(Parent(Hoon(S[i+1])))`,
+  for all `i` such that `0 <= i < n`.
 
-Note that, by the above definition, `r` is never an
-element of `S`.
-Informally, if `S` is not empty, it includes `a`
-and all the proper syntactic parents
-of `r` which are descendants of `a`.
+Note the following:
 
-Intuitively, the per-rune-ish offsets are the
-indentation that is "left over" when its rune-ish
-child begins.
-Note that, because of the way that we constructed `S`,
-the `c`'th runechild of `S[i]` must be a
-rune-ish.
-More formally,
-let `S[i]` be a rune-ish in S,
-and let `c` be the number of runechildren
-of `S[i]` that are on `Line(S[i])`.
-The
-per-rune-ish offset is the indentation from the anchor
-column that
-would apply to the `c`'th runechild
-if it were on `Line(S[i]) + 1`.
+* By the above definition, `r` is never an
+  element of `S`.
 
-The **reanchor offset** of `r` is the sum of all the
-per-rune-ish offsets in `S`.
-Note that in the trivial case,
-where a rune-ish is its own anchor,
-`S` is always empty; the reanchor offset is always zero;
-and the anchor column is always the same
-as the rune column.
+* Because of the way that we constructed `S`,
+  the `c`'th runechild of `S[i]` must be a
+  rune-ish.
+
+* In the trivial case,
+  where a rune-ish is its own anchor,
+  `S` is always empty; the reanchor offset is always zero;
+  and the anchor column is always the same
+  as the rune column.
+
+* If `S` is not empty, it includes `a`
+  and all the proper syntactic parents
+  of `r` which are descendants of `a`.
 
 ### First example
 
