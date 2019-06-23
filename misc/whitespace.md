@@ -184,6 +184,16 @@ Let `h` be a rune-ish expression.
 We sometimes write the hoon expression that is the syntactic parent 
 of `h` as `Parent(h)`.
 
+A hoon properly contains a text block
+if it includes the entire text block,
+but is not identical to it.
+A hoon
+"directly contains" a text block if it
+properly contains the text block,
+and no other properly contained text block of the hoon
+is a Hoon subexpression
+that properly contains that text block.
+
 ## Horizontal Alignment
 
 All non-whitespace lexemes in Hoon are aligned horizontally in one of 4 ways:
@@ -256,20 +266,25 @@ immediately after the last character of the horizontal gap.
 ## Reanchoring
 
 Reanchoring is a method of conserving indentation.
+We call the original rune-ish,
+the one which is to be reanchored,
+the **reanchored rune-ish*.
+
 Typically, a rune-ish is its own
 "anchor" rune-ish for indentation purposes,
 but Hoon takes advantage of some opportunities
 to move the anchor column closer to the left margin.
 Not all rune-ishes participate in reanchoring.
-Which do, and which do not, is described in the
+Which do, and which do not, are described in the
 individual cases.
 
-When a rune-ish re-anchors, the anchor column depends
+The anchor column depends
 on two things: the column location of anchor rune-ish,
 and the "reanchor offset".
-The anchor rune-ish is another rune-ish on the same
-line as the original rune-ish,
-but closer to the left margin.
+The **anchor rune-ish** is a rune-ish on the same
+line as the reanchored rune-ish.
+The anchor rune-ish is either the same as the reanchored rune-ish,
+or is a rune-ish closer to the left margin.
 
 ### Reanchor offset
 
@@ -291,12 +306,12 @@ Reanchoring may be thought of treating the
 "reanchor block"
 as a single rune-ish.
 This can be thought of a sort of "currying",
-and the contents of the reanchor block can
+and the reanchor block can
 be thought of as a curried rune-ish.
 
-Some runechild of the curried rune-ishes are
+Some runechildren of the curried rune-ishes are
 included in the reanchor block,
-and therefore are included in the currying.
+and they therefore must be included in the currying.
 Those runechildren not in the reanchor block
 are "left over",
 and are not included in the currying.
@@ -339,10 +354,16 @@ Call the following Hoon fragment, "Actual":
 d
 ```
 
-What is the per-rune-ish offset of the COLKET (`:^`) expression?
+What is the per-rune-ish offset of the COLKET (`:^`) expression
+in "Actual"?
 Its last runechild on the same line is the text `c`.
-We move this to the next line,
-and call our new fragment "What if?"
+Let us rewrite "Actual",
+moving the `c` to the next line
+and aligning according to the conventions
+of this document.
+Our rewritten fragment
+which we will call "What if?",
+follows:
 
 ```
 :^  a  b
@@ -356,45 +377,39 @@ Column 3 is two characters after the alignment of the COLKET rune, at column 1.
 Therefore the per-rune-offset of the COLKET in "Actual" is two:
 `3 - 1 == 2`.
 
+### Formal definition of the anchor column.
+
 More formally,
-let `r` be a rune-ish and
-let `Child(n, r)`,
-the `n`'th runechild of `r`,
-be the last runechild of `r` on `Line(r)`.
-Consider a rewrite of Hoon source as follows:
-
-* Move `Child(n, r)` to `Line(r)+1`.
-
-* Adjust as necessary to follow the standard whitespace conventions.
-
-* In all other respects, be minimal.
-
-Let `c2` be `Child(n, r)` in this rewrite,
-so that `Line(c2) == Line(r)+1 == Line(c1)+1`.
-Then the per-rune-ish offset
-is `Offset(r) == Column(c2) - Column(r)`.
-
-### Formal definition
-
-We now present a more formal
-definition of reanchoring,
-which will be followed by a number of examples.
-Let `r` be a rune-ish.
-If `Line(r)` contains other rune-ishes,
-`r` may **reanchor**,
-that is,
-the anchor column of `r`
-may be somewhere to the left of `Column(r)`.
-
-Let `a` be an anchor rune-ish.
+let `r` be the reanchored rune-ish.
+Let `a` be the anchor rune-ish of `r`.
 The anchor column is
 `Column(a) + Offset(r)`,
 where `Offset(r)`
 is the reanchor-offset of `r`.
+It remains to define `Offset(r)`.
 
-Again, let `r` be a rune-ish;
-and let `a` be the anchor rune-ish of `r`.
-Then, we define a sequence of rune-ishes, call it `S`,
+We now procede to define `Offset(r)`.
+To do this, we first define `PerRuneOff(r)`,
+the per-rune-offset.
+Let `Child(n, r1)`,
+the `n`'th runechild of a `r1`,
+be the last runechild of `r1` on `Line(r1)`.
+Consider a rewrite of Hoon source that
+
+* moves `Child(n, r1)` to `Line(r1)+1`,
+
+* adjust the whitespace as necessary to follow the standard whitespace conventions.
+
+and which is, in other respects, minimal.
+
+Let `c2` be `Child(n, r1)` in this rewrite,
+so that `Line(c2) == Line(r1)+1 == Line(c1)+1`.
+Then the per-rune-ish offset of (r1)
+is `PerRuneOff(r) == Column(c2) - Column(r)`.
+
+Recall that `r` is the reanchored rune-ish,
+and that `a` is the anchor rune-ish of `r`.
+We define now defined a sequence of rune-ishes, call it `S`,
 such that all
 of the following are true.
 
@@ -428,6 +443,11 @@ Note the following:
   and all the proper syntactic parents
   of `r` which are descendants of `a`.
 
+We now finish our definition of anchor column,
+by defining `Offset(r)`.
+`Offset(r)` is the sum of all `PerRuneOff(S[i])`
+for all `i` such that `0 <= i < n`.
+
 ### First example
 
 
@@ -445,7 +465,8 @@ COLSIG (`:~`).
 The anchor rune-ish is the COLLUS (`:+`).
 COLLUS is 3-fixed, but all three of its runechildren are
 on the rune line, so the per-rune-ish offset is 0.
-The anchor column is the anchor rune-ish column plus the reanchor
+The anchor column is defined to be
+the anchor rune-ish column plus the reanchor
 offset, so that in this case,
 the anchor column is the same as the anchor rune-ish column.
 
@@ -480,8 +501,10 @@ The anchor column is therefore one stop after the anchor rune-ish
 column.
 
 COLSIG again is 0-running, so that its runsteps should be aligned
-one stop after the anchor column.
+one stop after the anchor column,
+which is two stops after the TISFAS column.
 By the same logic, the TISTIS should be aligned at the anchor column.
+(One stop after the TISFAS.)
 This is what we see in the example.
 The last three lines of the example are the last runechild of the
 TISFAS.
@@ -501,34 +524,32 @@ A rightside comment is an **inline comment** if it is not a margin comment.
 
 In standard code, header comments are
 
-* Pre-comments or inter-comments,
-as determined by their hoon.
+* pre-comments or inter-comments,
+as determined by their hoon;
 
-* Meta-comments.
+* part of a staircase; or
 
-We say a hoon is the hoon of a comment
+* meta-comments.
+
+We say that a comment belongs to a hoon
 if that hoon directly contains the gap
-that that comment is part of.
-A comment is "directly contained" by a hoon if the hoon
-contains the comment,
-but no proper subexpression of the hoon also
-contains that comment.
-This implies that
-a vertical gap, and its comments,
-are "contained" by a rune-ish expression if that vertical gap separates
-the rune-ish from the first runechild;
-or if that vertical gap separates
-a consecutive pair of the rune-ish expression's runechildren.
+that lexically contains that comment.
+We say a hoon is the hoon of a comment
+if the comment belongs to that hoon.
 
 Meta-comments start at column 1.
 Since, depending on their hoon,
 inter-comments may also start at column 1,
 only the programmer's intent determines whether
 a given header comment is an inter-comment or a meta-comment.
-An inter-comment is structural, so that its content should
-fit the syntactic structure of the code in which it occurs.
-Meta-comments are not structural comments, and their content
-may be anything.
+
+Pre-comments, inter-comments and staircases are structural comments.
+The contents of structural comments should usually
+be appropriate for the syntactic structure of the code in which
+the structural comment occurs.
+
+Meta-comments are not structural comments,
+and their content may be anything.
 A frequent use for meta-comments is to
 "comment out" Hoon code.
 
@@ -555,7 +576,7 @@ column and followed by a whitespace character.
 The lower riser is a sequence of normal comment lines,
 aligned at the column
 one stop greater than the anchor column.
-A more formal definition of a staircase is
+A even more formal definition of a staircase is
 given in an appendix.
 
 ## Vertical Gaps
@@ -574,14 +595,14 @@ all of them header comments or
 This is never newline-terminated,
 and may be zero-length.
 
-A vertical gap may contain zero or more
+A vertical gap should contain zero or more
 **inter-comments**
 followed by zero or more **pre-comments**.
-Both inter-comments and pre-comments can contain any content,
+Both inter-comments and pre-comments may contain any content,
 but in concept,
 inter-comments separate the sequence steps from other lexemes,
 and from each other;
-while pre-comments preceed sequence steps.
+while pre-comments precede sequence steps.
 
 Informally, the body of a standard vertical gap 
 follows these conventions:
@@ -607,33 +628,30 @@ A **good comment** is any comment which is not a bad comment.
 
 * A comment is not regarded as a meta-comment
 if it can be parsed as structural comment.
-An **structural comment** is any good comment which is
-not a meta-comment.
 
 A more formal description of a vertical gap body is
 given in an appendix.
 
-# Types of hoons
+# Types of tall hoons
 
-Every hoon falls into one of 5 disjoint classes:
+Every tall hoon falls into one of 5 disjoint classes:
 backdented, running, jogging, battery or irregular.
 
-* A hoon is a **battery hoon** if it contains an runechild that
+* A tall hoon is a **battery hoon** if it contains an runechild that
 uses the battery syntax.
 
-* A hoon is a **running hoon** if it contains an runechild that
+* A tall hoon is a **running hoon** if it contains an runechild that
 uses the running syntax.
 
-* A hoon is a **jogging hoon** if it contains an runechild that
+* A tall hoon is a **jogging hoon** if it contains an runechild that
 uses the jogging syntax.
 
-* A hoon is a **backdented hoon** if it contains a fixed number
+* A tall hoon is a **backdented hoon** if it contains a fixed number
 of gap-separated runechildren, and none of them follow the running, jogging or
 battery syntax.
 
-* A hoon is an **irregular hoon** if it is not a backdented,
-running, jogging or backdented hoon.
-Most irregular hoons do not contain a gap.
+* SELGAP is a tall **irregular hoon**.
+(Most irregular hoons do not contain a gap.)
 
 # Fixed arity hoons
 
