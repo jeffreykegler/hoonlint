@@ -415,7 +415,9 @@ such that all
 of the following are true.
 
 * `S` is empty if a rune-ish is its own anchor.
-That is, `S` is empty if `a == r`.
+That is,
+If `a == r`,
+the `S` is empty and `n == 0`.
 
 * `S[0] = a`.
 
@@ -446,7 +448,7 @@ Note the following:
 We now finish our definition of anchor column,
 by defining `Offset(r)`.
 `Offset(r)` is the sum of all `PerRuneOff(S[i])`
-for all `i` such that `0 <= i < n`.
+for all `i` such that `0 <= i <= n`.
 
 ### First example
 
