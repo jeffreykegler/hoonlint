@@ -409,7 +409,8 @@ is `PerRuneOff(r) == Column(c2) - Column(r)`.
 
 Recall that `r` is the reanchored rune-ish,
 and that `a` is the anchor rune-ish of `r`.
-We define now defined a sequence of rune-ishes, call it `S`,
+We define now defined a sequence of rune-ishes,
+`S[0], S[1] ... S[n]`,
 such that all
 of the following are true.
 
@@ -418,8 +419,7 @@ That is, `S` is empty if `a == r`.
 
 * `S[0] = a`.
 
-* `S[n] = (Rune(Parent(Hoon(r)))`,
-  where `S[n]` is the last element of `S`.
+* `S[n] = (Rune(Parent(Hoon(r)))`.
 
 * `S[i] = (Rune(Parent(Hoon(S[i+1])))`,
   for all `i` such that `0 <= i < n`.
