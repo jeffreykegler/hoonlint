@@ -188,11 +188,11 @@ d</code></pre>
 </ul>
 <p>and which is, in other respects, minimal.</p>
 <p>Let <code>c2</code> be <code>Child(n, r1)</code> in this rewrite, so that <code>Line(c2) == Line(r1)+1 == Line(c1)+1</code>. Then the per-rune-ish offset of (r1) is <code>PerRuneOff(r) == Column(c2) - Column(r)</code>.</p>
-<p>Recall that <code>r</code> is the reanchored rune-ish, and that <code>a</code> is the anchor rune-ish of <code>r</code>. We define now defined a sequence of rune-ishes, call it <code>S</code>, such that all of the following are true.</p>
+<p>Recall that <code>r</code> is the reanchored rune-ish, and that <code>a</code> is the anchor rune-ish of <code>r</code>. We define now defined a sequence of rune-ishes, <code>S[0], S[1] ... S[n]</code>, such that all of the following are true.</p>
 <ul>
 <li><p><code>S</code> is empty if a rune-ish is its own anchor. That is, <code>S</code> is empty if <code>a == r</code>.</p></li>
 <li><p><code>S[0] = a</code>.</p></li>
-<li><p><code>S[n] = (Rune(Parent(Hoon(r)))</code>, where <code>S[n]</code> is the last element of <code>S</code>.</p></li>
+<li><p><code>S[n] = (Rune(Parent(Hoon(r)))</code>.</p></li>
 <li><p><code>S[i] = (Rune(Parent(Hoon(S[i+1])))</code>, for all <code>i</code> such that <code>0 &lt;= i &lt; n</code>.</p></li>
 </ul>
 <p>Note the following:</p>
