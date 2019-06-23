@@ -94,22 +94,38 @@
 <p>This document is intended to describe the use of whitespace by Hoon to the level and to the degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>.</p>
 <p>This document therefore only deals with conventions for Hoon expressions which contain gaps. These are</p>
 <ul>
-<li><p>Tall Hoon expressions; and</p></li>
+<li><p>tall Hoon expressions; and</p></li>
 <li><p>SELGAP, a special case.</p></li>
 </ul>
 <p>Whitespace in other Hoon expressions is always an &quot;ace&quot; -- a single space. For these Hoon expressions in which all whitespace is an ace, there is no latitude in the use of whitespace, and no need for conventions of the kind described in this document.</p>
 <h1 id="terminology">Terminology</h1>
 <h2 id="deontology">Deontology</h2>
 <p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code>, in order to meet the standard described in this document. Code, or practices which do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
-<p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as matter of definition, or due to a mathematical equivalence.</p>
+<p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as a matter of definition, or due to a logical or a mathematical equivalence.</p>
 <h2 id="lines-columns-and-indentation">Lines, columns and indentation</h2>
 <p>This document applies to Hoon source files. A Hoon source file is organized in newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
-<p>To avoid confusion, in this document column position is always used to mean the location of a character within a line, as defined above. When we discuss other horizontal vs. vertical grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis. The definition of the specific meaning of &quot;row&quot; and &quot;silo&quot; will be given with the context where it is used.</p>
+<p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
 <p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>. When we say &quot;the column location of <code>x</code>&quot;, we mean <code>Column(x)</code>.</p>
-<p>A <strong>stop</strong> is two spaces. We say the text <code>Y</code> is indented <code>N</code> stops <strong>after</strong> text <code>X</code>, if there are exactly <code>N</code> stops between the end of text <code>X</code> and the beginning of text <code>Y</code>.</p>
-<p>If the column location of text <code>X</code> is <code>N</code> stops more than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)+N*2</code>. If the column location of text <code>X</code> is <code>N</code> stops less than the column location of text <code>Y</code>, then text <code>X</code> begins at column <code>Column(Y)-N*2</code>.</p>
-<p>A <strong>brick</strong> is a subtree of the Hoon syntax tree with semantics. A subtree without semantics is a <strong>mortar</strong> subtree. All rune expressions are bricks, but not all bricks are rune expressions. Mortar subtrees will not play a big role in this document -- they are usually invisible at the source file level.</p>
-<p>Many alignments are with respect to an <strong>anchor column</strong>. Often, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
+<p>A <strong>whitespace character</strong> is either an ASCII space or a newline. A <strong>whitespace boundary</strong> is one of the following:</p>
+<ul>
+<li><p>The start of the Hoon source file.</p></li>
+<li><p>The end of the Hoon source file.</p></li>
+<li><p>A location between a whitespace character and a non-whitespace character.</p></li>
+</ul>
+<p>Pedantically, a whitespace boundary is not a column location. Instead it is a location immediately before, a column location; immediately after a column location; or both.</p>
+<p>A character block is a lexically contiguous sequence of one or more characters. A whitespace block is a character block that contains only whitespace characters and occurs between two whitespace boundaries. An <strong>ace</strong> is a whitespace block that contains a single ASCII space. A <strong>gap</strong> is any whitespace block that is not an ace.</p>
+<p>A <strong>horizontal gap</strong> is a gap which contains only ASCII spaces. A <strong>vertical gap</strong> is a gap which contains at least one newline. All gaps are either horizontal or vertical.</p>
+<p>A <em>text block</em> is a character block that</p>
+<ul>
+<li><p>occurs between two whitespace boundaries;</p></li>
+<li><p>begins with a non-whitespace character; and</p></li>
+<li><p>ends with a non-whitespace character.</p></li>
+</ul>
+<p>Note that text blocks may contain whitespace characters. We often refer to a text block simply as a <strong>text</strong>.</p>
+<p>We say column <code>C</code> is aligned <code>N</code> spaces after column <code>D</code> if <code>C = D + N</code>. We say column <code>C</code> is aligned at column <code>D</code> if <code>C = D</code>. We say column <code>C</code> is aligned <code>N</code> spaces before column <code>D</code> if <code>C = D - N</code>.</p>
+<p>When we speak texts being aligned relative to columns or relative to other text blocks, we will mean column location of the texts so that, for example, &quot;Text X is aligned N spaces after text Y&quot; means that <code>Column(X) = Column(Y) + N</code>.</p>
+<p>Often we express distance between columns in stops instead of spaces. A <strong>stop</strong> is two spaces.</p>
+<p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
 <p>A tall <strong>rune-ish expression</strong> is a tall hoon expression whose &quot;keyword&quot; is a rune-ish. A <code>rune-ish</code> is usually a rune, but the <code>rune-ishes</code> also include some other keyword digraphs, such as <code>++</code>, <code>+=</code>, <code>+-</code>, <code>--</code> and <code>==</code>. Currently rune-ishes are always represented in Hoon source files as digraphs.</p>
 <p>Digraphs which introduce comments, such as <code>::</code> are <strong>not</strong> considered rune-ishes. Comments, including the digraphs which begin them are considered whitespace, and nothing in whitespace is considered a rune-ish.</p>

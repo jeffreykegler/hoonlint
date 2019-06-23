@@ -8,7 +8,7 @@ This document therefore only deals with conventions
 for Hoon expressions which contain gaps.
 These are
 
-* Tall Hoon expressions; and
+* tall Hoon expressions; and
 
 * SELGAP, a special case.
 
@@ -36,8 +36,8 @@ non-standard practices will occur.
 In this document, we say "`X` must be `Y`",
 if `X` must be `Y` in both standard and non-standard code.
 This would be the case, for example,
-if X is Y as matter of definition,
-or due to a mathematical equivalence.
+if X is Y as a matter of definition,
+or due to a logical or a mathematical equivalence.
 
 ## Lines, columns and indentation
 
@@ -51,15 +51,16 @@ and column location is often abbreviated to **column**.
 
 To avoid confusion,
 in this document
-column position is always used to mean the
-location of a character within a line,
+"column" is always used to mean the
+column location of a character within a line,
 as defined above.
-When we discuss other horizontal vs. vertical grids,
+When we discuss other 2-dimensional grids,
 we use the terms "row" for position on the vertical axis,
 and "silo" for position on the horizontal axis.
-The definition of the specific meaning of
-"row" and "silo" will be given with the context
-where it is used.
+There will be several definitions
+of "row" and "silo", and we will give
+specifics in the context
+where they are used.
 
 The column location at which `x` starts
 will sometimes be written as `Column(x)`,
@@ -69,26 +70,68 @@ will sometimes be written as `Line(x)`.
 When we say "the column location of `x`",
 we mean `Column(x)`.
 
+A **whitespace character** is either an ASCII space
+or a newline.
+A **whitespace boundary** is one of the following:
+
+* The start of the Hoon source file.
+
+* The end of the Hoon source file.
+
+* A location between a whitespace character and a
+  non-whitespace character.
+
+Pedantically, a whitespace boundary is not a column
+location.
+Instead it is a location immediately before,
+a column location;
+immediately after a column location;
+or both.
+
+A character block is a lexically contiguous sequence of one or more 
+characters.
+A whitespace block is a character block
+that contains only whitespace characters
+and occurs between two whitespace boundaries.
+An **ace** is a whitespace block that contains a single ASCII space.
+A **gap** is any whitespace block that is not an ace.
+
+A **horizontal gap** is a gap which contains only ASCII spaces.
+A **vertical gap** is a gap which contains at least one newline.
+All gaps are either horizontal or vertical.
+
+A *text block* is a character block that
+
+* occurs between two whitespace boundaries;
+
+* begins with a non-whitespace character; and
+
+* ends with a non-whitespace character.
+
+Note that text blocks may contain whitespace characters.
+We often refer to a text block simply as a **text**.
+
+We say column `C` is aligned `N` spaces after column
+`D` if `C = D + N`.
+We say column `C` is aligned at column
+`D` if `C = D`.
+We say column `C` is aligned `N` spaces before column
+`D` if `C = D - N`.
+
+When
+we speak texts being aligned relative to
+columns or relative to other text blocks,
+we will mean column location of the texts so that,
+for example,
+"Text X is aligned N spaces after text Y"
+means that `Column(X) = Column(Y) + N`.
+
+Often we express distance between columns
+in stops instead of spaces.
 A **stop** is two spaces.
-We say the text `Y` is indented `N` stops **after** text `X`,
-if there are exactly `N` stops between the end of text `X`
-and the beginning of text `Y`.
-
-If the column location of text `X` is `N` stops more
-than the column location of text `Y`,
-then text `X` begins at column `Column(Y)+N*2`.
-If the column location of text `X` is `N` stops less
-than the column location of text `Y`,
-then text `X` begins at column `Column(Y)-N*2`.
-
-A **brick** is a subtree of the Hoon syntax tree with semantics.
-A subtree without semantics is a **mortar** subtree.
-All rune expressions are bricks, but not all bricks are rune expressions.
-Mortar subtrees will not play a big role in this document --
-they are usually invisible at the source file level.
 
 Many alignments are with respect to an **anchor column**.
-Often, the anchor column is the rune column,
+Usually, the anchor column is the rune column,
 but there are important exceptions, which
 will be described below.
 
