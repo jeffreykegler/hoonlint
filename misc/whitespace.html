@@ -68,7 +68,6 @@
 <li><a href="#head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</a></li>
 <li><a href="#head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</a></li>
 </ul></li>
-<li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#batteries">Batteries</a></li>
@@ -630,26 +629,7 @@ Also, contrary to the above
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</h3>
-<p><em>From <code>arvo/sys/hoon.hoon</code>, lines 10111-10116:</em></p>
-<pre><code>      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
-          ~(rend co [%$ p.q.ham lum])
-        $$    ~(rend co [%$ %ud lum])
-        $t    (dash (rip 3 lum) &#39;\&#39;&#39; ~)
-        $tas  [&#39;%&#39; ?.(=(0 lum) (rip 3 lum) [&#39;$&#39; ~])]
-      ==</code></pre>
-<p>A head-split queenside 2-jogging hoon should consist of, in lexical order:</p>
-<ul>
-<li><p>Its rune.</p></li>
-<li><p>A 2-stop horizontal gap.</p></li>
-<li><p>Its head.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
-<li><p>Its subhead, aligned one stop before the head. This style is more indentation-conserving than backdenting. It is called the &quot;pseudo-jog&quot; style, because arrangement of the head and subhead resembles that of a queenside jog.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
-<li><p>A queenside jogging. The base column of its jogs should be aligned two stops after the anchor column.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
-<li><p>A TISTIS, aligned at the anchor column.</p></li>
-</ul>
-<h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
+<p>TODO ## Jogging-1 hoons</p>
 <!-- "Split" form addressed in Github issue #31" -->
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 9720-9727:</em></p>
 <pre><code>          =:  hos  ~
@@ -664,7 +644,7 @@ Also, contrary to the above
 <ul>
 <li><p>Its rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>A kingside jogging. The base column of its jogs should be aligned 2 stops after the anchor column.</p></li>
+<li><p>A kingside jogging. The base column of its jogs should be aligned two stops after the anchor column.</p></li>
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
 <li><p>A TISTIS, aligned one stop after the anchor column.</p></li>
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
@@ -680,7 +660,7 @@ Also, contrary to the above
 <li><p>A cell marker.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>The cell head.</p></li>
-<li><p>A one-stop horizontal gap, or a equivalent pseudo-join.</p></li>
+<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
 <li><p>The cell body.</p></li>
 </ul>
 <p>A split cell consists of, in lexical order:</p>
@@ -818,14 +798,14 @@ Also, contrary to the above
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
 <p>By non-standard code, we mean code that does not follow the guidelines of this document. In non-standard code, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This appendix describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
 <h2 id="chess-sidedness-1">Chess-sidedness</h2>
-<p>A jog is considered queenside if it is aligned 2 stops or more after the anchor column. Otherwise, the jog is considered kingside.</p>
+<p>A jog is considered queenside if it is aligned 2 stops or more after the base column of the joggging. Otherwise, the jog is considered kingside.</p>
 <p>The chess-sidedness of a jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a jogging hoon is that of its jogging.</p>
 <h2 id="jogging-body-column">Jogging body column</h2>
-<p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's inter-line aligned jogs. If more than one column is &quot;most common&quot;, so that there is a tie, the tie is resolved in favor of the body column that is first, lexically. If there are no inter-line aligned jogs in a jogging, the jogging body column is undefined.</p>
+<p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's inter-line aligned jogs. If more than one column is &quot;most common&quot;, the tie is resolved in favor of the body column that is lexically first. If there are no inter-line aligned jogs in a jogging, the jogging body column is undefined.</p>
 <h2 id="inter-line-alignment">Inter-line alignment</h2>
-<p>In non-standard code, the inter-line alignment of a silo of text blocks is the alignment most common in the &quot;floating&quot; text blocks. &quot;Attached&quot; text blocks are those with tight or backdented alignment. All other text blocks are &quot;floating&quot;.</p>
-<p>If two alignments tie by floating text block count, the tie is broken using the count of total text blocks for that alignment. If two alignments tie by total text block count, the tie is broken in favor of the alignment that occurs first, lexically.</p>
-<p>If there are no floating lexemes, the inter-line alignment is irrelevant and left undefined. Also, the inter-line alignment is undefined unless it also has a total text block count of at least 2 -- in other words an inter-line alignment must actually align with another text block.</p>
+<p>&quot;Attached&quot; text blocks are those with tight or backdented alignment. All other text blocks are &quot;floating&quot;. In non-standard code, the column location of the inter-line alignment of a silo of text blocks is the column location most common in the &quot;floating&quot; text blocks.</p>
+<p>If two column location tie in the count of floating text blocks, the tie is broken using the count of total text blocks for that column location. If two column locations tie by total text block count, the tie is broken in favor of the column location that occurs first, lexically.</p>
+<p>If there are no floating lexemes, the inter-line alignment column location is irrelevant and undefined. Also, the inter-line alignment column location is undefined unless it also has a total text block count of at least 2 -- in other words an inter-line alignment column location must be the column location of at least two of the text blocks in the silo.</p>
 <p>Each silo is examined separately. For each silo, only rows with an element in that silo participate in the calculation.</p>
 <p>If a running could have both a runestep alignment, and a running-inherited alignment, the runestep alignment takes precedence. In other words, if a running has runestep alignment, the running-inherited alignment is undefined.</p>
 <h1 id="appendix-vertical-gap-body">Appendix: Vertical gap body</h1>
@@ -875,8 +855,9 @@ Exception ::= BlankLine</code></pre>
 <li><p>Tread -- a comment that starts at the inter-comment column, whose first four characters are colons, and whose fifth character is either a space or a newline.</p></li>
 <li><p>UpperRiser -- a comment that starts at the inter-comment column.</p></li>
 </ul>
-<p>The priority 1 comments are InterComment, LowerRiser, PreComment, Tread, and UpperRiser. The priority 2 comment is MetaComment. The priority 3 comments are BadComment and BlankLine.</p>
-<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using the &quot;priorities&quot;. Comments are read as if tested for each priority in numerical order. This has the slightly counter-intuitive effect that the highest priority is the lowest numbered one. Comments with the same priority are treated as if tested all at once, which allows for ambiguous terminals.</p>
+<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using &quot;priorities&quot;. Each terminal has a numerical priority: 1, 2 or 3. Comments are read as if looked for in numerical order by priority. This has the slightly counter-intuitive effect that the highest priority is the lowest numbered one.</p>
+<p>Comments with the same priority are treated as if they were looked for simultaneously. This means that it remains possible for terminals to be ambiguous -- that is, one line can be read as two different terminals. In these cases the BNF grammar ensures that only one of the terminals will be used.</p>
+<p>Priority 1 comments are InterComment, LowerRiser, PreComment, Tread, and UpperRiser. The priority 2 comment is MetaComment. Priority 3 comments are BadComment and BlankLine.</p>
 <p>Specifically,</p>
 <ul>
 <li><p>No comment is read as a Priority 3 comment if it can be lexed as a Priority 1 or 2 comment.</p></li>
