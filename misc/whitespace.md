@@ -3,7 +3,6 @@
 This document is intended to describe the use of whitespace by
 Hoon to the level and to the degree of precision
 necessary for `hoonfmt` and `hoonlint`.
-
 This document therefore only deals with conventions
 for Hoon expressions that contain gaps.
 These are
@@ -42,7 +41,7 @@ or due to a logical or a mathematical equivalence.
 ## Lines, columns and alignment
 
 This document applies to Hoon source files.
-A Hoon source file is organized in newline-terminated lines
+A Hoon source file is divided into newline-terminated lines
 each of which contains 1 or more characters.
 The 1-based offset of a character in its line is its **column location**.
 The 1-based line number of a character is its **line location**.
@@ -66,17 +65,8 @@ where they are used.
 
 When we say that "sequence `S[0], S[1] ... S[n]` is **siloed** beginning at silo `x`",
 we mean that, for `0 <= i <= n`, `S[i]` goes into silo `i+x`.
-When we say simply that "sequence `S[0], S[1] ... S[n]` is **siloed**",
+When we say that "sequence `S[0], S[1] ... S[n]` is **siloed**",
 we mean that element `S[i]` goes into silo `i+1`.
-(We are assuming that `S` is 0-based.)
-
-The column location at which `x` starts
-will sometimes be written as `Column(x)`,
-where `x` designates some text in a Hoon source file.
-The line location at which `x` starts
-will sometimes be written as `Line(x)`.
-When we say "the column location of `x`",
-we mean `Column(x)`.
 
 A **whitespace character** is either an ASCII space
 or a newline.
@@ -89,7 +79,7 @@ A **whitespace boundary** is one of the following:
 * A location between a whitespace character and a
   non-whitespace character.
 
-Pedantically, a whitespace boundary is not a column
+Note that a whitespace boundary is not a column
 location.
 Instead it is a location immediately before
 a column location;
@@ -108,16 +98,26 @@ A **horizontal gap** is a gap that contains only ASCII spaces.
 A **vertical gap** is a gap that contains at least one newline.
 All gaps are either horizontal or vertical.
 
-A **text block** is a character block that
+A **text block** is a character block
 
-* occurs between two whitespace boundaries;
+* that begins at a whitespace boundary;
 
-* begins with a non-whitespace character; and
+* whose first character is a non-whitespace character;
 
-* ends with a non-whitespace character.
+* that ends at a whitespace boundary; and
+
+* whose last character is a non-whitespace character.
 
 Note that text blocks may contain whitespace characters.
 We often refer to a text block simply as a **text**.
+
+The column location at which `x` starts
+will sometimes be written as `Column(x)`,
+where `x` designates some text in a Hoon source file.
+The line location at which `x` starts
+will sometimes be written as `Line(x)`.
+When we say "the column location of `x`",
+we mean `Column(x)`.
 
 We say "column `C` is aligned `N` characters after column `D`"
 if and only if `C = D + N`.
@@ -127,9 +127,10 @@ We say "column `C` is aligned `N` characters before column `D`"
 if and only if `C = D - N`.
 
 When
-we speak texts being aligned relative to
+we speak of text blocks being aligned relative to
 columns or relative to other text blocks,
-we are refering to the column location of the texts.
+we are refering to the column location
+of the text blocks.
 For example, if we say
 "Text X is aligned N characters after text Y",
 we mean that `Column(X) = Column(Y) + N`.
@@ -145,7 +146,7 @@ will be described below.
 
 ## Hoon expressions
 
-A tall **rune-ish expression** is a tall hoon expression whose "keyword"
+A tall **rune-ish expression** is a tall Hoon expression whose "keyword"
 is a rune-ish.
 A **rune-ish** is one of the following:
 
@@ -160,10 +161,10 @@ Currently rune-ishes are always represented in Hoon source
 files as digraphs.
 
 Note that not all special-character digraphs are rune-ishes.
-Comments, including the digraphs that begin them
+For example, the digraph `::` is not a rune-ish.
+Comments, including the digraphs that begin them,
 are considered whitespace,
 and nothing in whitespace is considered a rune-ish.
-Comment digraphs include `::`.
 
 Let `r` be the rune-ish digraph of a rune-ish expression.
 The **rune line** of a hoon is `Line(r)`.
@@ -174,12 +175,12 @@ followed by zero or more subexpressions,
 called **runechildren**.
 The **arity** of a rune-ish expression is the number of
 its runechildren.
-In the tall hoon expressions being considered in this document,
+In the tall Hoon expressions being considered in this document,
 runechildren are separated from the initial rune-ish,
 and from each other, by gaps.
 
 Let `r` be a rune-ish.
-We sometimes write the hoon expression that begin with `r`
+We sometimes write the Hoon expression that begin with `r`
 as `Hoon(r)`.
 If `h` is a Hoon, we can write its rune-ish as `Rune(h)`.
 Then
@@ -189,7 +190,7 @@ Then
    Column(Hoon(r)) == Column(r)
 ```
 Let `h` be a rune-ish expression.
-We sometimes write the hoon expression that is the syntactic parent
+We sometimes write the Hoon expression that is the syntactic parent
 of `h` as `Parent(h)`.
 
 A hoon properly contains a text block
@@ -204,7 +205,9 @@ that properly contains that text block.
 
 ## Horizontal Alignment
 
-All non-whitespace lexemes in Hoon are aligned horizontally in one of 4 ways:
+All text blocks in Hoon are aligned horizontally in one of 5 ways:
+
+* **Initial**: The first text block of a Hoon source file starts at column 1.
 
 * **Tight**:  A text block is tightly aligned if is immediately preceded by,
 and separated from another text block by, a horizontal one-stop gap.
@@ -233,13 +236,12 @@ If the pattern-decisive gap is horizontal, the
 conventions follow a "joined" pattern.
 If the pattern-decisive gap is vertical, the
 conventions follow a "split" pattern.
-The specific conventions will be described below,
-for each syntax.
+The specific conventions will be specified below,
+with each syntax.
 
 ## Pseudo-joins
 
-In some cases,
-it is sometimes convenient to have a vertical
+It is sometimes convenient to have a vertical
 pattern-decisive gap,
 but to otherwise follow
 the "joined" syntax pattern.
@@ -260,7 +262,7 @@ has a comment aligned at `J`.
 Note that this implies that the first, partial, line of the gap
 must contain a comment aligned at `J`.
 
-Visually, the pseudo-join's comments looks like "place holders" for
+Visually, the pseudo-join's comments look like "place holders" for
 the text that follows the pseudo-join.
 
 Intuitively, a pseudo-join is equivalent to a horizontal gap
@@ -269,6 +271,7 @@ is aligned at the same column location.
 More formally,
 a pseudo-join is **equivalent** to a horizontal gap,
 if the join column of the pseudo-join is the column location
+that would be located
 immediately after the last character of the horizontal gap.
 
 ## Reanchoring
@@ -276,14 +279,14 @@ immediately after the last character of the horizontal gap.
 Reanchoring is a method of conserving indentation.
 We call the original rune-ish,
 the one that is to be reanchored,
-the **reanchored rune-ish*.
+the **reanchored rune-ish**.
 
 Typically, a rune-ish is its own
 "anchor" rune-ish for indentation purposes,
 but Hoon takes advantage of some opportunities
 to move the anchor column closer to the left margin.
 Not all rune-ishes participate in reanchoring.
-Which do, and which do not, are described in the
+Which do, and which do not, are specified in the
 individual cases.
 
 The anchor column depends
@@ -305,14 +308,16 @@ and act like normal backdented indentation.
 The need for it is not obvious from the definition but,
 visually,
 if the reanchor offset were not applied,
-things would look "wrong".
+things would "look wrong".
 
-Call the text block that starts with the anchor rune-ish
-and ends with the reanchored rune-ish,
+Call the text block that starts at the
+column location of the anchor rune-ish,
+and that ends immediately after the last character
+of the reanchored rune-ish,
 the "reanchor block".
 Reanchoring may be thought of treating the
 "reanchor block"
-as a single rune-ish.
+as if it were a single rune-ish.
 This can be thought of a sort of "currying",
 and the reanchor block can
 be thought of as a curried rune-ish.
@@ -369,7 +374,7 @@ Let us rewrite "Actual",
 moving the `c` to the next line
 and aligning according to the conventions
 of this document.
-Our rewritten fragment
+Our rewritten fragment,
 which we will call "What if?",
 follows:
 
@@ -394,10 +399,10 @@ The anchor column is
 `Column(a) + Offset(r)`,
 where `Offset(r)`
 is the reanchor-offset of `r`.
-It remains to define `Offset(r)`.
+The rest of this definition will be
+devoted to defining `Offset(r)`.
 
-We now procede to define `Offset(r)`.
-To do this, we first define `PerRuneOff(r)`,
+We first define `PerRuneOff(r)`,
 the per-rune-offset.
 Let `Child(n, r1)`,
 the `n`'th runechild of a `r1`,
@@ -406,26 +411,27 @@ Consider a rewrite of Hoon source that
 
 * moves `Child(n, r1)` to `Line(r1)+1`,
 
-* adjust the whitespace as necessary to follow the standard whitespace conventions.
+* adjusts the whitespace as necessary to follow the standard whitespace conventions,
+  and
 
-and that is, in other respects, minimal.
+* is minimal in all other respects.
 
 Let `c2` be `Child(n, r1)` in this rewrite,
 so that `Line(c2) == Line(r1)+1 == Line(c1)+1`.
-Then the per-rune-ish offset of (r1)
-is `PerRuneOff(r) == Column(c2) - Column(r)`.
+Then the per-rune-ish offset of `r1`
+is `PerRuneOff(r1) == Column(c2) - Column(r1)`.
 
 Recall that `r` is the reanchored rune-ish,
 and that `a` is the anchor rune-ish of `r`.
-We define now defined a sequence of rune-ishes,
+We now define a sequence of rune-ishes,
 `S[0], S[1] ... S[n]`,
 such that all
 of the following are true.
 
-* `S` is empty if a rune-ish is its own anchor.
+* `S` is empty if `r` is its own anchor.
 That is,
-If `a == r`,
-the `S` is empty and `n == 0`.
+if `a == r`,
+`S` is empty.
 
 * `S[0] = a`.
 
@@ -453,8 +459,8 @@ Note the following:
   and all the proper syntactic parents
   of `r` that are descendants of `a`.
 
-We now finish our definition of anchor column,
-by defining `Offset(r)`.
+We can now finish our definition of anchor column,
+by defining `Offset(r)`:
 `Offset(r)` is the sum of all `PerRuneOff(S[i])`
 for all `i` such that `0 <= i <= n`.
 
@@ -480,7 +486,7 @@ the anchor rune-ish column plus the reanchor
 offset, so that in this case,
 the anchor column is the same as the anchor rune-ish column.
 
-COLSIG is 0-running, and normal COLSIG indentation align the runsteps
+COLSIG is 0-running, and normal COLSIG indentation aligns the runsteps
 one stop after the anchor column,
 and puts the final TISTIS at the anchor column.
 This is exactly what we see.
@@ -513,8 +519,8 @@ column.
 COLSIG again is 0-running, so that its runsteps should be aligned
 one stop after the anchor column,
 which is two stops after the TISFAS column.
-By the same logic, the TISTIS should be aligned at the anchor column.
-(One stop after the TISFAS.)
+By the same logic, the TISTIS should be aligned at the anchor column --
+one stop after the TISFAS.
 This is what we see in the example.
 The last three lines of the example are the last runechild of the
 TISFAS.
@@ -555,7 +561,7 @@ a given header comment is an inter-comment or a meta-comment.
 
 Pre-comments, inter-comments and staircases are structural comments.
 The contents of structural comments should usually
-be appropriate for the syntactic structure of the code in which
+be appropriate for the syntactic context of the code in which
 the structural comment occurs.
 
 Meta-comments are not structural comments,
@@ -580,18 +586,21 @@ More formally, a staircase comment consists of an
 a **tread**,
 and a **lower riser**.
 The upper riser is a sequence of normal comment lines,
-aligned at the anchor column.
-The tread is four colons, aligned at the anchor
+aligned at the inter-comment column.
+(The inter-comment column location varies,
+depending on the syntax which
+contains the comment.)
+The tread is four colons, aligned at the inter-comment
 column and followed by a whitespace character.
 The lower riser is a sequence of normal comment lines,
 aligned at the column
-one stop greater than the anchor column.
+one stop greater than the inter-comment column.
 A even more formal definition of a staircase is
 given in an appendix.
 
 ## Vertical Gaps
 
-A **vertical gap** is a gap that contains
+A vertical gap contains
 
 * A newline-terminated partial line preamble.
 This preamble may be of length 1 -- that is,
@@ -604,15 +613,6 @@ all of them header comments or
 * A partial line postamble.
 This is never newline-terminated,
 and may be zero-length.
-
-A vertical gap should contain zero or more
-**inter-comments**
-followed by zero or more **pre-comments**.
-Both inter-comments and pre-comments may contain any content,
-but in concept,
-inter-comments separate the sequence steps from other lexemes,
-and from each other;
-while pre-comments precede sequence steps.
 
 Informally, the body of a standard vertical gap
 follows these conventions:
@@ -632,17 +632,13 @@ and staircases.
 * Meta-comments may be inserted anywhere in either the pre-part
 or the inter-part.
 
-* Comments that do not obey the above rules are
-**bad comments**.
-A **good comment** is any comment that is not a bad comment.
-
 * A comment is not regarded as a meta-comment
 if it can be parsed as structural comment.
 
 A more formal description of a vertical gap body is
 given in an appendix.
 
-# Types of tall hoons
+## Types of tall hoons
 
 Every tall hoon falls into one of 5 disjoint classes:
 backdented, running, jogging, battery or irregular.
@@ -751,8 +747,8 @@ runechild of the previous hoon in the sequence.
 * Every tall rune-ish is either
 
     * a "row-initial" tall rune-ish,
-      which should be at the same column location
-      as the first hoon in the sequence, or;
+      which should be aligned at
+      the first hoon in the sequence, or;
 
     * a "joined" tall rune-ish, that is, another tall
        rune-ish on the same line as
@@ -763,7 +759,7 @@ no chain is a sub-sequence of a longer chain.
 
 For the purposes of chain inter-line alignment,
 we define row and silo as follows:
-A row starts with a row-initial rune-ish.
+Each row-initial rune-ish starts a new row.
 For each row,
 the tall rune-ishes and their runechildren on the
 initial rune-ish's line,
@@ -772,11 +768,11 @@ taken in lexical order and recursively, are siloed.
 A runechild that itself is a tall rune-ish expression is never
 a silo element -- instead it is broken out into
 its rune-ish and runechildren,
-and these are become silo elements in that row.
+and these become silo elements in that row.
 A row may contain multiple lines,
 but rune-ishes and
 runechildren not on the first line of the row
-and are not added as silo elements,
+are not added as silo elements,
 and therefore are not used in determining inter-line alignment.
 
 This implies that
@@ -785,16 +781,17 @@ This implies that
 
 * Every tall rune-ish is a separate silo element.
 
-* Every runechildr of a tall rune-ish is a separate
+* Every runechild of a tall rune-ish is a separate
   silo element, unless it is itself a tall rune-ish.
 
 * For chained inter-line alignment,
   the row and silo grid may be "ragged", so that some
   rows do not have elements in every silo.
 
-Every row in a chain starts with a rune-ish, but not every
-rune-ish need start a row,
-and a given silo may contain both rune-ishes and runechildren.
+* Every row in a chain starts with a rune-ish, but not every
+  rune-ish need start a row.
+
+* A silo may contain both rune-ishes and runechildren.
 
 *From `arvo/sys/hoon.hoon`, lines 1572-1575:*
 ```
@@ -829,11 +826,11 @@ A running runechild is more often called simply a **running**.
 Currently, no hoon contains more than one running.
 
 A running hoon may contain
-an runechild before the running.
+a runechild before the running.
 That runechild
 is called the **head** of the running hoon.
 
-There are current three kinds of regular runnings.
+There are current three kinds of running hoons:
 
 * A **0-running** has no head.
 The current 0-running rules are
@@ -846,7 +843,7 @@ WUTBAR (`?|`),
 and
 WUTPAM (`?&`).
 
-* TISSIG (`=~`) also has no head,
+* **TISSIG** (`=~`) also has no head,
   but is a special case.
 
 * A **1-running** has a head.
@@ -880,14 +877,14 @@ in lexical order:
 
 * A running where
 
-  - runstep lines are aligned two stops
-    after the anchor column;
+    * runstep lines are aligned two stops
+      after the anchor column;
 
-  - the inter-column of the vertical gaps is
-    aligned at the anchor column; and
+    * the inter-column of the vertical gaps is
+      aligned at the anchor column; and
 
-  - the pre-column of the vertical gaps is
-    aligned at the runstep lines.
+    * the pre-column of the vertical gaps is
+      aligned at the runstep lines.
 
 * A vertical gap, whose inter-column is the anchor column,
   and whose pre-column is aligned at the runstep lines.
@@ -913,6 +910,30 @@ This example is the beginning and end of a long split 0-running hoon.
     ==
 ```
 
+A split 0-running hoon should consist of,
+in lexical order:
+
+* Its rune.
+
+* A vertical gap, whose inter-column is the anchor column,
+  and whose pre-column is aligned at the runstep lines.
+
+* A running where
+
+    * runstep lines are aligned one stop
+      after the anchor column;
+
+    * the inter-column of the vertical gaps is
+      aligned at the anchor column; and
+
+    * the pre-column of the vertical gaps is
+      aligned at the runstep lines.
+
+* A vertical gap, whose inter-column is the anchor column,
+  and whose pre-column is aligned at the runstep lines.
+
+* A TISTIS aligned at the anchor column.
+
 <!-- TODO: check all uses of runeColumn to be sure that
      anchor column is not what is intended -->
 
@@ -937,18 +958,18 @@ in lexical order:
 * Its rune.
 
 * A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is undefined
+  and whose pre-column is undefined.
 
 * A running where
 
-  - runstep lines are aligned
-    at the anchor column;
+    - runstep lines are aligned
+      at the anchor column;
 
-  - the inter-column of the vertical gaps is
-    aligned at the anchor column; and
+    - the inter-column of the vertical gaps is
+      aligned at the anchor column; and
 
-  - the pre-column of the vertical gaps is
-    undefined.
+    - the pre-column of the vertical gaps is
+      undefined.
 
 * A vertical gap, whose inter-column is the anchor column,
   and whose pre-column is undefined.
@@ -975,7 +996,7 @@ Also, contrary to the above
              ==
 ```
 
-A joined 0-running hoon should consist of,
+A joined 1-running hoon should consist of,
 in lexical order:
 
 * Its rune.
@@ -989,19 +1010,19 @@ in lexical order:
 * The first runstep line.
 
 * A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned one stops after
+  and whose pre-column is aligned one stop after
   the anchor column.
 
 * A running where
 
-  - runstep lines are aligned two stops
-    after the anchor column;
+    - runstep lines are aligned two stops
+      after the anchor column;
 
-  - the inter-column of the vertical gaps is
-    aligned at the anchor column; and
+    - the inter-column of the vertical gaps is
+      aligned at the anchor column; and
 
-  - the pre-column of the vertical gaps is
-    aligned one stops after the anchor column.
+    - the pre-column of the vertical gaps is
+      aligned one stop after the anchor column.
 
 * A vertical gap, whose inter-column is the anchor column,
   and whose pre-column is aligned one stop after the
@@ -1019,7 +1040,7 @@ in lexical order:
       ==
 ```
 
-A joined 0-running hoon should consist of,
+A split 1-running hoon should consist of,
 in lexical order:
 
 * Its rune.
@@ -1034,14 +1055,14 @@ in lexical order:
 
 * A running where
 
-  - runstep lines are aligned one stop
-    after the anchor column;
+    - runstep lines are aligned one stop
+      after the anchor column;
 
-  - the inter-column of the vertical gaps is
-    aligned at the anchor column; and
+    - the inter-column of the vertical gaps is
+      aligned at the anchor column; and
 
-  - the pre-column of the vertical gaps is
-    aligned one stop after the anchor column.
+    - the pre-column of the vertical gaps is
+      aligned one stop after the anchor column.
 
 * A vertical gap, whose inter-column is the anchor column,
   and whose pre-column is aligned one stop after the
@@ -1053,12 +1074,12 @@ in lexical order:
 
 A running is considered to start at the start of its first run step.
 A running contains one or more **runstep lines**.
-The column location of the runstep lines should be as described
+The column location of the runstep lines should be as specified
 for the running hoon that directly contains the running.
 
 Within a runstep line, the runsteps
 should be tightly aligned,
-or follow runstep inter-line alignment,
+or they should follow runstep inter-line alignment,
 as described next.
 
 ### Runstep inter-line alignment
@@ -1066,7 +1087,7 @@ as described next.
 In a row of runsteps, runsteps after the first may have
 inter-line alignment.
 Within a running,
-The inter-line alignment column of runsteps is
+the inter-line alignment column of runsteps is
 determined by their silo.
 
 *From `sys/zuse.hoon`, lines 4892-4905:*
@@ -1112,19 +1133,25 @@ alignment.
     ==
 ```
 
-Note that if a backdented hoon is a runestep,
-that it may have both a running-inherited inter-line alignment
-and a chained inter-line alignment.
-If a backdented hoon does have both inter-line alignments,
-for every runechild silo,
-their column locations should be identical.
-
 Each backdented hoon is a row.
 For each row,
 The sequence composed of the rune-ish of the hoon,
 followed by its runechildren in
-lexical order
+lexical order,
 is siloed.
+
+Note that if a backdented hoon is a runestep,
+it may have both a running-inherited inter-line alignment
+and a chained inter-line alignment.
+If a backdented hoon does have both inter-line alignments,
+they should be consistent.
+That is,
+for every silo,
+the column location of that silo according
+to running-inherited alignment
+should be identical to
+the column location of that silo according
+to chained alignment.
 
 # Jogging hoons
 
@@ -1140,7 +1167,7 @@ If there are two runechildren before the jogging, they
 are called, in order, the **head** and **subhead** of
 the jogging.
 
-There are current three kinds of jogging.
+There are currently three kinds of jogging hoon:
 
 * The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
   A 1-jogging has one head and no tail.
@@ -1151,12 +1178,14 @@ There are current three kinds of jogging.
 * The current jogging-1 rule is TISCOL (`=:`).
   A jogging-1 has a tail and no head.
 
+## Joggings
+
 A jogging is a gap-separated sequence of one or more jogs.
 Every **jog** contains a **jog head**, followed by a gap and a **jog body**.
 Note that it is important to distinguish between the head of a jogging
 hoon, defined above, and the head of a jog.
 
-## Chess-sidedness
+### Chess-sidedness
 
 Jogs, joggings and jogging hoons have **chess-sidedness**.
 Chess-sidedness is always either kingside and queenside.
@@ -1170,7 +1199,7 @@ a hoon.
 
 ## Jogs
 
-The alignment of a jog is that of its head.
+The column location of a jog is that of its head.
 A jog is **joined** if its head is on the same
 line as its body.
 Otherwise, a jog is **multiline**.
@@ -1186,22 +1215,21 @@ of split jogs.
 The base column location of a jog depends on the jogging hoon
 that it belongs to.
 It is specified
-in the description for the different kinds of jogging hoon.
+in the description of the different kinds of jogging hoon.
 
 ### Joined jogs
 
-A joined jog may be either **aligned** or **ragged**.
+A joined jog may be either
+**inter-line aligned** or **ragged**.
 A joined jog is ragged if its body is aligned one stop after
 its head.
 Otherwise, a joined jog is considered inter-line aligned.
 
+All inter-line aligned jogging should be aligned at
+the jogging body column.
 With each jogging,
 at most one column is designated as
 the **jogging body column** of the jogging.
-A jog body that is aligned at the jog body column
-is said to be **jogging-body-aligned**.
-A jog whose jog body is jogging-body-aligned
-is also said to be **jogging-body-aligned**.
 
 A jog may also be pseudo-joined.
 The pseudo-join of pseudo-joined jog should be
@@ -1214,7 +1242,7 @@ The gap of split jog should be vertical.
 The inter-comment column location of the gap
 should be the column location of the jog body;
 and there should be no pre-comment column location.
-The standard column location of the body of a split job
+The standard column location of the body of a split jog
 varies according to the sidedness of the jog.
 
 * The column location of the body of a split kingside jog
@@ -1244,11 +1272,11 @@ should be aligned one stop
           ==  ==                                        ::
 ```
 
-Successive terminators may occur on the same line,
-as part of a **criss-cross terminator line**.
-(Recall that a terminator is
+Recall that a terminator is
 a HEPHEP (`--') or
 a TISTIS (`==`).
+Successive terminators may occur on the same line,
+as part of a **criss-cross terminator line**.
 A terminator is in a criss-cross line does not have to
 be aligned correctly,
 if some other terminator with the required alignment
@@ -1267,9 +1295,9 @@ and a line each of which pairs its terminator with the rune that
 it matches syntactically;
 then the two sets of lines would cross each other.
 
-Only one kind of terminator should appear in a criss-cross line,
-and only terminators, gaps and parts of gaps
-should be in a criss-cross line.
+Only one kind of terminator should appear in a criss-cross line.
+Every character in a criss-cross line should be
+part of a terminator, or part of a gap.
 
 ## 1-jogging hoons
 
@@ -1293,7 +1321,7 @@ in lexical order:
 
 * A one-stop horizontal gap.
 
-* A head.
+* Its head.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
@@ -1327,7 +1355,7 @@ in lexical order:
 
 * A 2-stop horizontal gap.
 
-* A head.
+* Its head.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
