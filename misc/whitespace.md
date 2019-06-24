@@ -5,7 +5,7 @@ Hoon to the level and to the degree of precision
 necessary for `hoonfmt` and `hoonlint`.
 
 This document therefore only deals with conventions
-for Hoon expressions which contain gaps.
+for Hoon expressions that contain gaps.
 These are
 
 * tall Hoon expressions; and
@@ -25,7 +25,7 @@ in this document.
 In this document, we say "`X` should be `Y`",
 if `X` must be `Y`, in order to meet the standard described
 in this document.
-Code, or practices which do not meet this standard we
+Code, or practices that do not meet this standard we
 will call **non-standard**.
 One pragmatic consequence of non-standard code
 is that
@@ -104,8 +104,8 @@ and occurs between two whitespace boundaries.
 An **ace** is a whitespace block that contains a single ASCII space.
 A **gap** is any whitespace block that is not an ace.
 
-A **horizontal gap** is a gap which contains only ASCII spaces.
-A **vertical gap** is a gap which contains at least one newline.
+A **horizontal gap** is a gap that contains only ASCII spaces.
+A **vertical gap** is a gap that contains at least one newline.
 All gaps are either horizontal or vertical.
 
 A **text block** is a character block that
@@ -160,7 +160,7 @@ Currently rune-ishes are always represented in Hoon source
 files as digraphs.
 
 Note that not all special-character digraphs are rune-ishes.
-Comments, including the digraphs which begin them
+Comments, including the digraphs that begin them
 are considered whitespace,
 and nothing in whitespace is considered a rune-ish.
 Comment digraphs include `::`.
@@ -248,7 +248,7 @@ syntax appropriate, but want to insert
 a comment in the pattern-decisive gap.
 In these situations,
 it is useful to have a form of the vertical gap
-which, for pattern-decisive purposes,
+that, for pattern-decisive purposes,
 is treated as if it were a horizontal gap.
 Such a gap is called a **pseudo-join**.
 
@@ -264,7 +264,7 @@ Visually, the pseudo-join's comments looks like "place holders" for
 the text that follows the pseudo-join.
 
 Intuitively, a pseudo-join is equivalent to a horizontal gap
-if the text which follows both of them
+if the text that follows both of them
 is aligned at the same column location.
 More formally,
 a pseudo-join is **equivalent** to a horizontal gap,
@@ -275,7 +275,7 @@ immediately after the last character of the horizontal gap.
 
 Reanchoring is a method of conserving indentation.
 We call the original rune-ish,
-the one which is to be reanchored,
+the one that is to be reanchored,
 the **reanchored rune-ish*.
 
 Typically, a rune-ish is its own
@@ -307,7 +307,7 @@ visually,
 if the reanchor offset were not applied,
 things would look "wrong".
 
-Call the text block which starts with the anchor rune-ish
+Call the text block that starts with the anchor rune-ish
 and ends with the reanchored rune-ish,
 the "reanchor block".
 Reanchoring may be thought of treating the
@@ -408,7 +408,7 @@ Consider a rewrite of Hoon source that
 
 * adjust the whitespace as necessary to follow the standard whitespace conventions.
 
-and which is, in other respects, minimal.
+and that is, in other respects, minimal.
 
 Let `c2` be `Child(n, r1)` in this rewrite,
 so that `Line(c2) == Line(r1)+1 == Line(c1)+1`.
@@ -451,7 +451,7 @@ Note the following:
 
 * If `S` is not empty, it includes `a`
   and all the proper syntactic parents
-  of `r` which are descendants of `a`.
+  of `r` that are descendants of `a`.
 
 We now finish our definition of anchor column,
 by defining `Offset(r)`.
@@ -591,7 +591,7 @@ given in an appendix.
 
 ## Vertical Gaps
 
-A **vertical gap** is a gap which contains
+A **vertical gap** is a gap that contains
 
 * A newline-terminated partial line preamble.
 This preamble may be of length 1 -- that is,
@@ -632,9 +632,9 @@ and staircases.
 * Meta-comments may be inserted anywhere in either the pre-part
 or the inter-part.
 
-* Comments which do not obey the above rules are
+* Comments that do not obey the above rules are
 **bad comments**.
-A **good comment** is any comment which is not a bad comment.
+A **good comment** is any comment that is not a bad comment.
 
 * A comment is not regarded as a meta-comment
 if it can be parsed as structural comment.
@@ -743,7 +743,7 @@ same inter-line alignment.
 
 More formally,
 a chain is a sequence of backdented hoons
-which obeys the following rules:
+that obeys the following rules:
 
 * Every hoon except the first is the last
 runechild of the previous hoon in the sequence.
@@ -769,7 +769,7 @@ the tall rune-ishes and their runechildren on the
 initial rune-ish's line,
 taken in lexical order and recursively, are siloed.
 
-A runechild which itself is a tall rune-ish expression is never
+A runechild that itself is a tall rune-ish expression is never
 a silo element -- instead it is broken out into
 its rune-ish and runechildren,
 and these are become silo elements in that row.
@@ -1160,11 +1160,13 @@ hoon, defined above, and the head of a jog.
 
 Jogs, joggings and jogging hoons have **chess-sidedness**.
 Chess-sidedness is always either kingside and queenside.
-
 Informally, **kingside** means the indentation has a left-side bias;
 and **queenside** means that the indentation has a right-side bias.
 The effect of sidedness on
-indentation will be described more precisely in what follows.
+indentation will be specified more precisely in the descriptions of
+jogs and of the individual types of jogging hoon.
+The general idea is that chess-sidedness stays consistent within
+a hoon.
 
 ## Jogs
 
@@ -1191,16 +1193,17 @@ in the description for the different kinds of jogging hoon.
 A joined jog may be either **aligned** or **ragged**.
 A joined jog is ragged if its body is aligned one stop after
 its head.
-Otherwise, a joined jog is considered aligned.
+Otherwise, a joined jog is considered inter-line aligned.
 
-All aligned jogs in a jogging should be aligned at the
-same column.
-This column is called the **jogging body column** of the jogging.
-A jog body which is aligned at the jog body column
+With each jogging,
+at most one column is designated as
+the **jogging body column** of the jogging.
+A jog body that is aligned at the jog body column
 is said to be **jogging-body-aligned**.
 A jog whose jog body is jogging-body-aligned
 is also said to be **jogging-body-aligned**.
 
+A jog may also be pseudo-joined.
 The pseudo-join of pseudo-joined jog should be
 equivalent to the one of the horizontal gaps
 that a joined jog is allowed according to this standard.
@@ -1215,10 +1218,12 @@ The standard column location of the body of a split job
 varies according to the sidedness of the jog.
 
 * The column location of the body of a split kingside jog
-should be 1 stop **greater** than the column location of the jog's head.
+should be aligned one stop
+**after** the jog's head.
 
 * The column location of the body of a split queenside jog
-should be 1 stop **less** than the column location of the jog's head.
+should be aligned one stop
+**before** the jog's head.
 
 ## Criss-cross lines
 
@@ -1239,26 +1244,36 @@ should be 1 stop **less** than the column location of the jog's head.
           ==  ==                                        ::
 ```
 
-Successive TISTIS's may occur on the same line,
-as part of a **criss-cross TISTIS line**.
-If a TISTIS is in a criss-cross line, it does not have to
-be properly aligned, if some other TISTIS with the required alignment
+Successive terminators may occur on the same line,
+as part of a **criss-cross terminator line**.
+(Recall that a terminator is
+a HEPHEP (`--') or
+a TISTIS (`==`).
+A terminator is in a criss-cross line does not have to
+be aligned correctly,
+if some other terminator with the required alignment
 "stands in" for it.
-Such lines are called "criss-cross" because
+
+Note, however, that since every terminator on the line will require some
+terminator to be aligned according to this standard,
+every terminator will have an alignment requirement.
+In the example above, the two terminators on line 918 stand in
+for each other.
+
+Criss-cross lines are so called because
 if you drew
-a line that pairs each TISTIS with the rune that it matches by alignment;
-and another set of lines, each of which pairs its TISTIS with the rune that
+a line that pairs each terminator with the rune that it matches by alignment;
+and a line each of which pairs its terminator with the rune that
 it matches syntactically;
 then the two sets of lines would cross each other.
 
-HEPHEP's may also be joined into criss-cross lines.
+Only one kind of terminator should appear in a criss-cross line,
+and only terminators, gaps and parts of gaps
+should be in a criss-cross line.
 
 ## 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
-Specifics are given below,
-but the general rule for sidedness is that it should be
-consistend.
 
 ### Kingside 1-jogging hoons
 
@@ -1319,21 +1334,19 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A queenside jogging.
-  Its base column should be 2 stops after the anchor column.
+  Its base column should be aligned
+  two stops after the anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  starting at the anchor column.
+  aligned at the anchor column.
 
 ## 2-jogging hoons
 
 Every 2-jogging hoon is either kingside or queenside.
-Specifics are given below,
-but the general rule is that
-"sidedness" should be consistent.
 The base column
 for the jogs of a 2-jogging hoon is its anchor column.
 
@@ -1372,7 +1385,8 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A kingside jogging.
-  The base column of its jogs should be one stop after the anchor
+  The base column of its jogs should be
+  aligned one stop after the anchor
   column.
 
 * A vertical gap.
@@ -1380,7 +1394,7 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  starting at the anchor column.
+  aligned at the anchor column.
 
 ### Head-joined queenside 2-jogging hoons
 
@@ -1414,7 +1428,8 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A queenside jogging.
-  The base column of its jogs should be 2 stops after the anchor
+  The base column of its jogs should be aligned
+  two stops after the anchor
   column.
 
 * A vertical gap.
@@ -1422,7 +1437,7 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  starting at the anchor column.
+  aligned at the anchor column.
 
 ### Head-split queenside 2-jogging hoons
 
@@ -1449,7 +1464,7 @@ in lexical order:
   Its inter-comment column should be the anchor column.
   Its pre-comment column should be undefined.
 
-* Its subhead, outdented one stop from the head.
+* Its subhead, aligned one stop before the head.
   This style is more indentation-conserving than backdenting.
   It is called the "pseudo-jog" style, because arrangement
   of the head
@@ -1460,7 +1475,8 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A queenside jogging.
-  The base column of its jogs should be 2 stops after the anchor
+  The base column of its jogs should be aligned
+  two stops after the anchor
   column.
 
 * A vertical gap.
@@ -1468,7 +1484,7 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  starting at the anchor column.
+  aligned at the anchor column.
 
 ## Jogging-1 hoons
 
@@ -1496,20 +1512,21 @@ in lexical order:
 
 * A kingside jogging.
   The base column of its jogs
-  should be 2 stops after the anchor column.
+  should be aligned
+  2 stops after the anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
   Its pre-comment column should be undefined.
 
 * A TISTIS,
-  aligned one stop after than the anchor column.
+  aligned one stop after the anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
   Its pre-comment column should be undefined.
 
-* A tail, starting at the anchor column.
+* A tail, aligned at the anchor column.
 
 # Battery hoons
 
@@ -1518,14 +1535,45 @@ The battery hoons are BARCAB, BARCEN and BARKET.
 ## Batteries
 
 The cells of a battery should all align at the
-same column, called the **cell alignment column**.
+same column, called the **base column**
+of the battery.
 The cells should be separated by vertical gaps,
-where the base column for header comments is the cell
-alignment column.
-The "cell alignment column" is specified below, for each
-battery hoon.
+where the inter-column is the base column,
+and the pre-column is undefined.
 
-[ TODO: Describe intra-LUSLUS conventions. ]
+The base column of the battery is specified below,
+in the description of each battery hoon.
+
+Cells may be joined or split.
+A joined cell consists of,
+in lexical order:
+
+* A cell marker.
+
+* A one-stop horizontal gap.
+
+* The cell head.
+
+* A one-stop horizontal gap,
+  or a equivalent pseudo-join.
+
+* The cell body.
+
+A split cell consists of,
+in lexical order:
+
+* A cell marker.
+
+* A one-stop horizontal gap.
+
+* The cell head.
+
+* A vertical gap,
+  whose inter-comment location is the base column,
+  and whose pre-comment location is undefined.
+
+* The cell body,
+  aligned one stop after the cell marker.
 
 ## BARCEN
 
@@ -1566,6 +1614,13 @@ in lexical order:
 
 * A battery whose base column is the anchor column.
 
+* A vertical gap.
+  Its inter-comment column should be the anchor column.
+  Its pre-comment column should be undefined.
+
+* A HEPHEP, aligned at the anchor column.
+
+
 ### Joined BARCEN
 
 *From `arvo/sys/zuse.hoon`, lines 176-181:*
@@ -1586,13 +1641,13 @@ in lexical order:
 * A one stop horizontal gap.
 
 * A battery whose base column is
-  two stops after the rune column.
+  two stops after anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
   Its pre-comment column should be undefined.
 
-* A HEPHEP, starting at the anchor column.
+* A HEPHEP, aligned at the anchor column.
 
 ## BARCAB
 
@@ -1632,7 +1687,7 @@ be the anchor column and the pre-column should be undefined.
 The inter-comment column location of the vertical gap should
 be the anchor column and the pre-column should be undefined.
 
-* A HEPHEP, starting at the anchor column.
+* A HEPHEP, aligned at the anchor column.
 
 ## BARKET
 
@@ -1676,9 +1731,11 @@ be the anchor column and the pre-column should be undefined.
 The inter-comment column location of the vertical gap should
 be the anchor column and the pre-column should be undefined.
 
-* A HEPHEP, starting at the anchor column.
+* A HEPHEP, aligned at the anchor column.
 
-# Ford-1 hoons
+# Ford hoons
+
+## Ford-1 hoons
 
 The ford-1 hoons are a set of unary ford hoons:
 FASSIG (`/~`),
@@ -1703,23 +1760,23 @@ in lexical order:
 
 * The runechild.
 
-# FASCOM
+## FASCOM
 
 TODO
 
-# FASHEP
+## FASHEP
 
 TODO
 
-# FASLUS
+## FASLUS
 
 TODO
 
-# FASTIS
+## FASTIS
 
 TODO
 
-# FASWUT
+## FASWUT
 
 TODO
 
@@ -1739,10 +1796,12 @@ it issues a "not yet implemented" warning.
 
 # Appendix: Non-standard code
 
-In non-standard code -- code which does not follow these guidelines,
+By non-standard code, we mean code that does not follow
+the guidelines of this document.
+In non-standard code,
 `hoonlint` sometimes must decide the "intended" syntax,
 in order to produce diagnostics that are as helpful as possible.
-This section describes the methods used for deciding what was
+This appendix describes the methods used for deciding what was
 "intended" in non-standard Hoon code.
 
 ## Chess-sidedness
@@ -1761,61 +1820,41 @@ jogging.
 
 In non-standard code,
 the jogging body column of a jogging is considered to be the most common start column
-of the bodies of the jogging's aligned jogs.
+of the bodies of the jogging's inter-line aligned jogs.
 If more than one column is "most common",
 so that there is a tie,
-the jogging body column is
-the body column of the lexically first jog to have its jog body
-start at one of the most common columns.
-If there are no aligned jogs in a jogging,
-the jogging body column is the body column of the
-lexically first jog in the jogging.
+the tie is resolved in favor of the body column
+that is first, lexically.
+If there are no inter-line aligned jogs in a jogging,
+the jogging body column is undefined.
 
 ## Inter-line alignment
 
 In non-standard code,
-the inter-line alignment of a column of lexemes is
-the alignment most common in the "wide" lexemes.
-(Wide lexemes are those which do not have tight or backdented
-alignment.)
+the inter-line alignment of a silo of text blocks is
+the alignment most common in the "floating" text blocks.
+"Attached" text blocks are those with tight or backdented
+alignment.
+All other text blocks are "floating".
 
-If two alignments tie by wide lexeme count,
-the tie is broken using the total lexeme count.
-If two alignments tie by total lexeme count,
-the tie is broken in favor of the alignment which
+If two alignments tie by floating text block count,
+the tie is broken using the count of total text blocks
+for that alignment.
+If two alignments tie by total text block count,
+the tie is broken in favor of the alignment that
 occurs first, lexically.
 
-If there are no wide lexemes, the inter-line alignment is
-irrelevant and left undefined.
+If there are no floating lexemes,
+the inter-line alignment is irrelevant and left undefined.
 Also,
-the inter-line alignment is undefined unless it
-has a total lexeme count of at least 2 --
+the inter-line alignment is undefined unless it also
+has a total text block count of at least 2 --
 in other words
-an inter-line alignment must actually align with a corresponding lexeme
-on another line.
-
-## Inter-line alignment by silo
-
-In the case of chained inter-line alignments,
-runstep inter-line alignments,
-and running-inheritied inter-line alignments,
-multiple silos are involved.
-The rules multi-silo inter-line alignments
-in non-standard code are an extension of the basic
-rules for inter-line alignments in non-standard code.
-When only one silo is involved,
-the rules are equivalent.
+an inter-line alignment must actually align with another text block.
 
 Each silo is examined separately.
 For each silo, only rows with an element in that silo participate
 in the calculation.
-
-For runstep alignment and running-inherited alignment,
-the "wide" elements at those which are not
-tightly aligned.
-For chains, the "wide" elements
-are those which are tightly or backdented
-aligned.
 
 If a running could have both a runestep alignment,
 and a running-inherited alignment,
@@ -1867,31 +1906,31 @@ Exception ::= BlankLine
 
 The terminals in this BNF are
 
-* BadComment -- a comment with any alignment. Priority 3.
+* BadComment -- a comment with any alignment.
 
 * BlankLine -- a line terminated with a newline and
-otherwise containing only zero or more spaces. Priority 3.
+otherwise containing only zero or more spaces.
 
 * InterComment -- a comment that starts at the inter-comment column.
-Priority 1.
 
 * LowerRiser -- a comment that starts one stop past the inter-comment
 column.
-Priority 1.
 
 * MetaComment -- a comment that starts at column zero.
-Priority 2.
 
 * PreComment -- a comment that starts at the pre-comment column.
-Priority 1.
 
 * Tread -- a comment that starts at the inter-comment column,
 whose first four characters are colons,
 and whose fifth character is either a space or a newline.
-Priority 1.
 
 * UpperRiser -- a comment that starts at the inter-comment column.
-Priority 1.
+
+The priority 1 comments are InterComment, LowerRiser, PreComment, Tread,
+and UpperRiser.
+The priority 2 comment is MetaComment.
+The priority
+3 comments are BadComment and BlankLine.
 
 Terminals are ambiguous -- a given line may match more than one terminal.
 The lexer limits this ambiguity using the "priorities".
