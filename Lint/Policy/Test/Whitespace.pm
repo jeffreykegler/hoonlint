@@ -3872,6 +3872,7 @@ sub check_2Jogging {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my $chessSide     = $policy->chessSideOfJoggingHoon($node);
+    say STDERR "side=$chessSide";
     my $joggingRules  = $instance->{joggingRule};
 
     my @mistakes = ();

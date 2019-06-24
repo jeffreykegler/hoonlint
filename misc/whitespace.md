@@ -1469,51 +1469,7 @@ in lexical order:
 
 ### Head-split queenside 2-jogging hoons
 
-*From `arvo/sys/hoon.hoon`, lines 10111-10116:*
-```
-      ?+    (rash p.q.ham ;~(sfix (cook crip (star low)) (star hig)))
-          ~(rend co [%$ p.q.ham lum])
-        $$    ~(rend co [%$ %ud lum])
-        $t    (dash (rip 3 lum) '\'' ~)
-        $tas  ['%' ?.(=(0 lum) (rip 3 lum) ['$' ~])]
-      ==
-```
-
-A head-split queenside 2-jogging hoon should consist of,
-in lexical order:
-
-* Its rune.
-
-* A 2-stop horizontal gap.
-
-* Its head.
-
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
-
-* Its subhead, aligned one stop before the head.
-  This style is more indentation-conserving than backdenting.
-  It is called the "pseudo-jog" style, because arrangement
-  of the head
-  and subhead resembles that of a queenside jog.
-
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
-
-* A queenside jogging.
-  The base column of its jogs should be aligned
-  two stops after the anchor
-  column.
-
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
-
-* A TISTIS,
-  aligned at the anchor column.
-
+TODO 
 ## Jogging-1 hoons
 
 <!-- "Split" form addressed in Github issue #31" -->
@@ -1541,7 +1497,7 @@ in lexical order:
 * A kingside jogging.
   The base column of its jogs
   should be aligned
-  2 stops after the anchor column.
+  two stops after the anchor column.
 
 * A vertical gap.
   Its inter-comment column should be the anchor column.
@@ -1583,7 +1539,7 @@ in lexical order:
 * The cell head.
 
 * A one-stop horizontal gap,
-  or a equivalent pseudo-join.
+  or an equivalent pseudo-join.
 
 * The cell body.
 
@@ -1835,7 +1791,7 @@ This appendix describes the methods used for deciding what was
 ## Chess-sidedness
 
 A jog is considered queenside if it is aligned 2 stops or more
-after the anchor column.
+after the base column of the joggging.
 Otherwise, the jog is considered kingside.
 
 The chess-sidedness of a jogging is that of the majority
@@ -1850,35 +1806,38 @@ In non-standard code,
 the jogging body column of a jogging is considered to be the most common start column
 of the bodies of the jogging's inter-line aligned jogs.
 If more than one column is "most common",
-so that there is a tie,
 the tie is resolved in favor of the body column
-that is first, lexically.
+that is lexically first.
 If there are no inter-line aligned jogs in a jogging,
 the jogging body column is undefined.
 
 ## Inter-line alignment
 
-In non-standard code,
-the inter-line alignment of a silo of text blocks is
-the alignment most common in the "floating" text blocks.
 "Attached" text blocks are those with tight or backdented
 alignment.
 All other text blocks are "floating".
+In non-standard code,
+the column location of the inter-line alignment
+of a silo of text blocks is
+the column location most common in the "floating" text blocks.
 
-If two alignments tie by floating text block count,
+If two column location tie in the
+count of floating text blocks,
 the tie is broken using the count of total text blocks
-for that alignment.
-If two alignments tie by total text block count,
-the tie is broken in favor of the alignment that
+for that column location.
+If two column locations tie by total text block count,
+the tie is broken in favor of the column location that
 occurs first, lexically.
 
 If there are no floating lexemes,
-the inter-line alignment is irrelevant and left undefined.
+the inter-line alignment column location
+is irrelevant and undefined.
 Also,
-the inter-line alignment is undefined unless it also
+the inter-line alignment column location is undefined unless it also
 has a total text block count of at least 2 --
 in other words
-an inter-line alignment must actually align with another text block.
+an inter-line alignment column location must be the column location
+of at least two of the text blocks in the silo.
 
 Each silo is examined separately.
 For each silo, only rows with an element in that silo participate
@@ -1954,20 +1913,26 @@ and whose fifth character is either a space or a newline.
 
 * UpperRiser -- a comment that starts at the inter-comment column.
 
-The priority 1 comments are InterComment, LowerRiser, PreComment, Tread,
-and UpperRiser.
-The priority 2 comment is MetaComment.
-The priority
-3 comments are BadComment and BlankLine.
-
 Terminals are ambiguous -- a given line may match more than one terminal.
-The lexer limits this ambiguity using the "priorities".
-Comments are read as if tested for each
-priority in numerical order.
+The lexer limits this ambiguity using "priorities".
+Each terminal has a numerical priority: 1, 2 or 3.
+Comments are read as if looked for
+in numerical order by priority.
 This has the slightly counter-intuitive effect
 that the highest priority is the lowest numbered one.
-Comments with the same priority are treated as if tested
-all at once, which allows for ambiguous terminals.
+
+Comments with the same priority are treated
+as if they were looked for simultaneously.
+This means that it remains possible for terminals to be ambiguous --
+that is, one line can be read as
+two different terminals.
+In these cases the BNF grammar ensures that only
+one of the terminals will be used.
+
+Priority 1 comments are InterComment, LowerRiser, PreComment, Tread,
+and UpperRiser.
+The priority 2 comment is MetaComment.
+Priority 3 comments are BadComment and BlankLine.
 
 Specifically,
 
