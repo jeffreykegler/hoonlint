@@ -154,7 +154,7 @@ A **rune-ish** is one of the following:
 
 * A **terminator**, either HEPHEP (`--`) or TISTIS (`==`).
 
-* A cell keyword, one of LUSLUS (`++`), LUSHEP (`+-`), or
+* An arm marker digraph, one of LUSLUS (`++`), LUSHEP (`+-`), or
   LUSTIS (`+=`).
 
 Currently rune-ishes are always represented in Hoon source
@@ -1516,46 +1516,46 @@ The battery hoons are BARCAB, BARCEN and BARKET.
 
 ## Batteries
 
-The cells of a battery should all align at the
+The arms of a battery should all align at the
 same column, called the **base column**
 of the battery.
-The cells should be separated by vertical gaps,
+The arms should be separated by vertical gaps,
 where the inter-column is the base column,
 and the pre-column is undefined.
 
 The base column of the battery is specified below,
 in the description of each battery hoon.
 
-Cells may be joined or split.
-A joined cell consists of,
+arms may be joined or split.
+A joined arm consists of,
 in lexical order:
 
-* A cell marker.
+* A arm marker.
 
 * A one-stop horizontal gap.
 
-* The cell head.
+* The arm head.
 
 * A one-stop horizontal gap,
   or an equivalent pseudo-join.
 
-* The cell body.
+* The arm body.
 
-A split cell consists of,
+A split arm consists of,
 in lexical order:
 
-* A cell marker.
+* A arm marker.
 
 * A one-stop horizontal gap.
 
-* The cell head.
+* The arm head.
 
 * A vertical gap,
   whose inter-comment location is the base column,
   and whose pre-comment location is undefined.
 
-* The cell body,
-  aligned one stop after the cell marker.
+* The arm body,
+  aligned one stop after the arm marker.
 
 ## BARCEN
 
@@ -1753,9 +1753,41 @@ TODO
 
 ## FASLUS
 
+*From `hoons/arvo/mar/twit/feed.hoon`, line 6:*
+```
+/+  twitter, httr-to-json, old-zuse
+```
+
+A tall FASLUS hoon should consist of,
+in lexical order:
+
+* The FASLUS rune.
+
+* A one-stop horizontal gap.
+
+* A ford hoof sequence.
+
+## Ford hoof sequence
+
 TODO
 
 ## FASTIS
+
+TODO
+```
+/=  rfctext  /:  /%/rfc  /txt/
+```
+
+A tall FASTIS hoon should consist of,
+in lexical order:
+
+* The FASTIS rune.
+
+* A one-stop horizontal gap.
+
+* A ford horn
+
+## Ford horn
 
 TODO
 

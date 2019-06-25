@@ -84,7 +84,9 @@
 <li><a href="#fascom">FASCOM</a></li>
 <li><a href="#fashep">FASHEP</a></li>
 <li><a href="#faslus">FASLUS</a></li>
+<li><a href="#ford-hoof-sequence">Ford hoof sequence</a></li>
 <li><a href="#fastis">FASTIS</a></li>
+<li><a href="#ford-horn">Ford horn</a></li>
 </ul></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
@@ -137,7 +139,7 @@
 <ul>
 <li><p>A rune.</p></li>
 <li><p>A <strong>terminator</strong>, either HEPHEP (<code>--</code>) or TISTIS (<code>==</code>).</p></li>
-<li><p>A cell keyword, one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
+<li><p>An arm marker digraph, one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
 </ul>
 <p>Currently rune-ishes are always represented in Hoon source files as digraphs.</p>
 <p>Note that not all special-character digraphs are rune-ishes. For example, the digraph <code>::</code> is not a rune-ish. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune-ish.</p>
@@ -653,23 +655,23 @@ Also, contrary to the above
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
-<p>The cells of a battery should all align at the same column, called the <strong>base column</strong> of the battery. The cells should be separated by vertical gaps, where the inter-column is the base column, and the pre-column is undefined.</p>
+<p>The arms of a battery should all align at the same column, called the <strong>base column</strong> of the battery. The arms should be separated by vertical gaps, where the inter-column is the base column, and the pre-column is undefined.</p>
 <p>The base column of the battery is specified below, in the description of each battery hoon.</p>
-<p>Cells may be joined or split. A joined cell consists of, in lexical order:</p>
+<p>arms may be joined or split. A joined arm consists of, in lexical order:</p>
 <ul>
-<li><p>A cell marker.</p></li>
+<li><p>A arm marker.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>The cell head.</p></li>
+<li><p>The arm head.</p></li>
 <li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
-<li><p>The cell body.</p></li>
+<li><p>The arm body.</p></li>
 </ul>
-<p>A split cell consists of, in lexical order:</p>
+<p>A split arm consists of, in lexical order:</p>
 <ul>
-<li><p>A cell marker.</p></li>
+<li><p>A arm marker.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>The cell head.</p></li>
+<li><p>The arm head.</p></li>
 <li><p>A vertical gap, whose inter-comment location is the base column, and whose pre-comment location is undefined.</p></li>
-<li><p>The cell body, aligned one stop after the cell marker.</p></li>
+<li><p>The arm body, aligned one stop after the arm marker.</p></li>
 </ul>
 <h2 id="barcen">BARCEN</h2>
 <p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split.</p>
@@ -785,8 +787,26 @@ Also, contrary to the above
 <h2 id="fashep">FASHEP</h2>
 <p>TODO</p>
 <h2 id="faslus">FASLUS</h2>
+<p><em>From <code>hoons/arvo/mar/twit/feed.hoon</code>, line 6:</em></p>
+<pre><code>/+  twitter, httr-to-json, old-zuse</code></pre>
+<p>A tall FASLUS hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The FASLUS rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A ford hoof sequence.</p></li>
+</ul>
+<h2 id="ford-hoof-sequence">Ford hoof sequence</h2>
 <p>TODO</p>
 <h2 id="fastis">FASTIS</h2>
+<p>TODO</p>
+<pre><code>/=  rfctext  /:  /%/rfc  /txt/</code></pre>
+<p>A tall FASTIS hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The FASTIS rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A ford horn</p></li>
+</ul>
+<h2 id="ford-horn">Ford horn</h2>
 <p>TODO</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>

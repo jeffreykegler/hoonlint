@@ -2,10 +2,10 @@
 
 .PHONY: all
 
-all: whitespace.html whitespace.pdf
+all: whitespace.html whitespace.pdf whitespace.tex
 
-whitespace.html: whitespace.md whitespace.yaml
-	pandoc whitespace.md whitespace.yaml -s --toc --output whitespace.html
+whitespace.html: whitespace.md whitespace.html.yaml
+	pandoc whitespace.md whitespace.html.yaml -s --toc --output whitespace.html
 
-whitespace.pdf: whitespace.md whitespace.yaml
-	pandoc whitespace.md whitespace.yaml --toc --output whitespace.pdf
+whitespace.pdf: whitespace.md whitespace.pdf.yaml
+	pandoc whitespace.md whitespace.pdf.yaml -s --toc --output whitespace.pdf
