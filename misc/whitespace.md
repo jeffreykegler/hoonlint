@@ -270,7 +270,7 @@ is aligned at the same column location.
 More formally,
 Let `file1` be a Hoon source file.
 Let `J` be the join column of a pseudo-join in `file1`.
-Construct another Hoon source file, `file2, by
+Construct another Hoon source file, `file2`, by
 lexically replacing the pseudo-join with a horizontal gap.
 Call that horizontal gap, `G`.
 Let `H` be the column location immediately after `G` in `file2`.
@@ -1281,17 +1281,17 @@ if some other terminator with the required alignment
 
 Note, however, that since every terminator on the line requires some
 terminator to be aligned according to this standard,
-all of the terminator end up with an alignment requirement.
+all of the terminators end up with an alignment requirement.
 In the example above, the two terminators on line 918 stand in
 for each other,
 and each imposes an alignment requirement on the other.
 
 Criss-cross lines are so called because
-if you drew
+if you draw
 a line from each terminator on the criss-cross line
-to the rune that 
+to the rune that
 it matches syntactically,
-you would end up with
+you end up with
 a set of lines,
 each of which crosses
 all the others.
@@ -1466,7 +1466,7 @@ in lexical order:
 
 ### Head-split queenside 2-jogging hoons
 
-TODO 
+TODO
 
 ## Jogging-1 hoons
 
