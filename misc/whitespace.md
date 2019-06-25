@@ -1723,8 +1723,9 @@ The ford-1 hoons are a set of unary ford hoons:
 FASSIG (`/~`),
 FASBUC (`/$`),
 FASCAB (`/_`),
-FASCEN (`/%`) and
-FASHAX (`/#`).
+FASCEN (`/%`),
+FASHAX (`/#`) and
+FASWUT (`/?`).
 
 <!-- TODO: fordHoop? -->
 
@@ -1733,7 +1734,7 @@ FASHAX (`/#`).
           /~  |=({t/telegram:hall bowl:gall} t)
 ```
 
-A tall Ford-1 hoon should consist of,
+A tall ford-1 hoon should consist of,
 in lexical order:
 
 * The rune.
@@ -1755,10 +1756,6 @@ TODO
 TODO
 
 ## FASTIS
-
-TODO
-
-## FASWUT
 
 TODO
 

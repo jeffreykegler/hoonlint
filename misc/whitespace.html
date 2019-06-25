@@ -85,7 +85,6 @@
 <li><a href="#fashep">FASHEP</a></li>
 <li><a href="#faslus">FASLUS</a></li>
 <li><a href="#fastis">FASTIS</a></li>
-<li><a href="#faswut">FASWUT</a></li>
 </ul></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
@@ -162,7 +161,7 @@
 <p>It is sometimes convenient to have a vertical pattern-decisive gap, but to otherwise follow the &quot;joined&quot; syntax pattern. For example, the programmer may find &quot;joined&quot; syntax appropriate, but want to insert a comment in the pattern-decisive gap. In these situations, it is useful to have a form of the vertical gap that, for pattern-decisive purposes, is treated as if it were a horizontal gap. Such a gap is called a <strong>pseudo-join</strong>.</p>
 <p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment aligned at <code>J</code>.</p>
 <p>Visually, the pseudo-join's comments look like &quot;place holders&quot; for the text that follows the pseudo-join.</p>
-<p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2, by lexically replacing the pseudo-join with a horizontal gap. Call that horizontal gap,</code>G<code>. Let</code>H<code>be the column location immediately after</code>G<code>in</code>file2<code>. The pseudo-join and the horizontal gap are **equivalent** if and only if</code>J == H`.</p>
+<p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2</code>, by lexically replacing the pseudo-join with a horizontal gap. Call that horizontal gap, <code>G</code>. Let <code>H</code> be the column location immediately after <code>G</code> in <code>file2</code>. The pseudo-join and the horizontal gap are <strong>equivalent</strong> if and only if <code>J == H</code>.</p>
 <h2 id="reanchoring">Reanchoring</h2>
 <p>Reanchoring is a method of conserving indentation. We call the original rune-ish, the one that is to be reanchored, the <strong>reanchored rune-ish</strong>.</p>
 <p>Typically, a rune-ish is its own &quot;anchor&quot; rune-ish for indentation purposes, but Hoon takes advantage of some opportunities to move the anchor column closer to the left margin. Not all rune-ishes participate in reanchoring. Which do, and which do not, are specified in the individual cases.</p>
@@ -546,8 +545,8 @@ Also, contrary to the above
                   byk/beak                              ::  load source
           ==  ==                                        ::</code></pre>
 <p>Recall that a terminator is a HEPHEP (<code>--</code>) or a TISTIS (<code>==</code>). Successive terminators may occur on the same line, as part of a <strong>criss-cross terminator line</strong>. A terminator is in a criss-cross line does not have to be aligned correctly, if some other terminator with the required alignment &quot;stands in&quot; for it.</p>
-<p>Note, however, that since every terminator on the line requires some terminator to be aligned according to this standard, all of the terminator end up with an alignment requirement. In the example above, the two terminators on line 918 stand in for each other, and each imposes an alignment requirement on the other.</p>
-<p>Criss-cross lines are so called because if you drew a line from each terminator on the criss-cross line to the rune that it matches syntactically, you would end up with a set of lines, each of which crosses all the others.</p>
+<p>Note, however, that since every terminator on the line requires some terminator to be aligned according to this standard, all of the terminators end up with an alignment requirement. In the example above, the two terminators on line 918 stand in for each other, and each imposes an alignment requirement on the other.</p>
+<p>Criss-cross lines are so called because if you draw a line from each terminator on the criss-cross line to the rune that it matches syntactically, you end up with a set of lines, each of which crosses all the others.</p>
 <p>Only one kind of terminator should appear in a criss-cross line. Every character in a criss-cross line should be part of a terminator, or part of a gap.</p>
 <h2 id="jogging-hoons-1">1-jogging hoons</h2>
 <p>Every 1-jogging hoon is either kingside or queenside.</p>
@@ -771,11 +770,11 @@ Also, contrary to the above
 </ul>
 <h1 id="ford-hoons">Ford hoons</h1>
 <h2 id="ford-1-hoons">Ford-1 hoons</h2>
-<p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>) and FASHAX (<code>/#</code>).</p>
+<p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>), FASHAX (<code>/#</code>) and FASWUT (<code>/?</code>).</p>
 <!-- TODO: fordHoop? -->
 <p><em>From <code>arvo/app/hall.hoon</code>, line 17:</em></p>
 <pre><code>          /~  |=({t/telegram:hall bowl:gall} t)</code></pre>
-<p>A tall Ford-1 hoon should consist of, in lexical order:</p>
+<p>A tall ford-1 hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
@@ -788,8 +787,6 @@ Also, contrary to the above
 <h2 id="faslus">FASLUS</h2>
 <p>TODO</p>
 <h2 id="fastis">FASTIS</h2>
-<p>TODO</p>
-<h2 id="faswut">FASWUT</h2>
 <p>TODO</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
