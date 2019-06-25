@@ -40,6 +40,33 @@ or if X is Y due to a logical or a mathematical equivalence.
 
 ## Lines, columns and alignment
 
+In this document, **rune** is used in a somewhat different
+sense than in most Hoon documents.
+In most Hoon documents, "rune"
+means a digraph which acts as the keyword at
+the beginning of a regular hoon.
+In this document, we will refer to those as the
+"regular runes".
+
+In this document,
+"rune" will mean either
+
+* a regular rune; or
+
+* an arm marker digraph:
+  one of LUSLUS (`++`), LUSHEP (`+-`), or
+  LUSTIS (`+=`).
+
+Note that not all special-character digraphs are runes.
+In this document,
+HEPHEP (`--`) or TISTIS (`==`) will be called **terminators**,
+and they are not runes.
+The comment-marking digraph `::`,
+is also not a rune.
+Comments, including the digraphs that begin them,
+are considered whitespace,
+and nothing in whitespace is considered a rune.
+
 This document applies to Hoon source files.
 A Hoon source file is divided into newline-terminated lines
 each of which contains 1 or more characters.
@@ -146,52 +173,35 @@ will be described below.
 
 ## Hoon expressions
 
-A tall **rune-ish expression** is a tall Hoon expression whose "keyword"
-is a rune-ish.
-A **rune-ish** is one of the following:
+A tall **rune expression** is a tall Hoon expression whose "keyword"
+is a rune.
 
-* A rune.
-
-* A **terminator**, either HEPHEP (`--`) or TISTIS (`==`).
-
-* An arm marker digraph, one of LUSLUS (`++`), LUSHEP (`+-`), or
-  LUSTIS (`+=`).
-
-Currently rune-ishes are always represented in Hoon source
-files as digraphs.
-
-Note that not all special-character digraphs are rune-ishes.
-For example, the digraph `::` is not a rune-ish.
-Comments, including the digraphs that begin them,
-are considered whitespace,
-and nothing in whitespace is considered a rune-ish.
-
-Let `r` be the rune-ish digraph of a rune-ish expression.
+Let `r` be the rune digraph of a rune expression.
 The **rune line** of `r` is `Line(r)`.
 The **rune column** of `r` is `Column(r)`.
 
-A tall rune-ish expression consists of the initial rune-ish
+A tall rune expression consists of the initial rune
 followed by zero or more subexpressions,
 called **runechildren**.
-The **arity** of a rune-ish expression is the number of
+The **arity** of a rune expression is the number of
 its runechildren.
 In the tall Hoon expressions being considered in this document,
-the rune-ish is separated from its first runechild,
+the rune is separated from its first runechild,
 and consecutive
 runechildren are separated
 from each other, by gaps.
 
-Let `r` be a rune-ish.
+Let `r` be a rune.
 We sometimes write the Hoon expression that begins with `r`
 as `Hoon(r)`.
-If `h` is a Hoon, we can write its rune-ish as `Rune(h)`.
+If `h` is a Hoon, we can write its rune as `Rune(h)`.
 Then
 
 ```
    Line(Hoon(r)) == Line(r)
    Column(Hoon(r)) == Column(r)
 ```
-Let `h` be a rune-ish expression.
+Let `h` be a rune expression.
 We sometimes write the Hoon expression that is the syntactic parent
 of `h` as `Parent(h)`.
 
@@ -280,25 +290,25 @@ if and only if `J == H`.
 ## Reanchoring
 
 Reanchoring is a method of conserving indentation.
-We call the original rune-ish,
+We call the original rune,
 the one that is to be reanchored,
-the **reanchored rune-ish**.
+the **reanchored rune**.
 
-Typically, a rune-ish is its own
-"anchor" rune-ish for indentation purposes,
+Typically, a rune is its own
+"anchor" rune for indentation purposes,
 but Hoon takes advantage of some opportunities
 to move the anchor column closer to the left margin.
-Not all rune-ishes participate in reanchoring.
+Not all runes participate in reanchoring.
 Which do, and which do not, are specified in the
 individual cases.
 
 The anchor column depends
-on two things: the column location of anchor rune-ish,
+on two things: the column location of anchor rune,
 and the "reanchor offset".
-The **anchor rune-ish** is a rune-ish on the same
-line as the reanchored rune-ish.
-The anchor rune-ish is either the same as the reanchored rune-ish,
-or is a rune-ish closer to the left margin.
+The **anchor rune** is a rune on the same
+line as the reanchored rune.
+The anchor rune is either the same as the reanchored rune,
+or is a rune closer to the left margin.
 
 ### Reanchor offset
 
@@ -314,18 +324,18 @@ if the reanchor offset were not applied,
 things would "look wrong".
 
 Call the text block that starts at the
-column location of the anchor rune-ish,
+column location of the anchor rune,
 and that ends immediately after the last character
-of the reanchored rune-ish,
+of the reanchored rune,
 the "reanchor block".
 Reanchoring may be thought of treating the
 "reanchor block"
-as if it were a single rune-ish.
+as if it were a single rune.
 This can be thought of a sort of "currying",
 and the reanchor block can
-be thought of as a curried rune-ish.
+be thought of as a curried rune.
 
-Some runechildren of the curried rune-ishes are
+Some runechildren of the curried runes are
 included in the reanchor block,
 and they therefore must be included in the currying.
 Those runechildren not in the reanchor block
@@ -334,24 +344,24 @@ and are not included in the currying.
 
 The "left over" runechildren
 can be thought of as the runechildren of the
-curried rune-ish.
+curried rune.
 For it to look as if the children of
-this curried rune-ish were backdented
+this curried rune were backdented
 normally,
 the whitespace conventions must account for
 curried versus "left over" runechildren.
 
-Intuitively, if not all the runechildren of a curried rune-ish
+Intuitively, if not all the runechildren of a curried rune
 are on the rune line,
 not only are some of the runechildren "left over",
 the appropriate amount of indentation is also "left over".
-This "left over" indentation of each rune-ish is the "per-rune-ish offset"
-of that rune-ish.
+This "left over" indentation of each rune is the "per-rune offset"
+of that rune.
 
 The **reanchor offset** of `r` is the sum of all the
-per-rune-ish offsets between the `a`
+per-rune offsets between the `a`
 and `r`, including `a` but not including `r`.
-`r`'s per-rune-ish offset is not included in the
+`r`'s per-rune offset is not included in the
 calculation of the reanchor offset,
 because the rune-children of `r` are not curried.
 In effect, all of `r`'s children are "left over".
@@ -370,7 +380,7 @@ Call the following Hoon fragment, "Actual":
 d
 ```
 
-What is the per-rune-ish offset of the COLKET (`:^`) expression
+What is the per-rune offset of the COLKET (`:^`) expression
 in "Actual"?
 Its last runechild on the same line is the text `c`.
 Let us rewrite "Actual",
@@ -396,8 +406,8 @@ Therefore the per-rune-offset of the COLKET in "Actual" is two:
 ### Formal definition of the anchor column.
 
 More formally,
-let `r` be the reanchored rune-ish.
-Let `a` be the anchor rune-ish of `r`.
+let `r` be the reanchored rune.
+Let `a` be the anchor rune of `r`.
 The anchor column is
 `Column(a) + Offset(r)`,
 where `Offset(r)`
@@ -421,12 +431,12 @@ Consider a rewrite of Hoon source that
 
 Let `c2` be `Child(n, r1)` in this rewrite,
 so that `Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1`.
-Then the per-rune-ish offset of `r1`
+Then the per-rune offset of `r1`
 is `PerRuneOff(r1) == Column(c2) - Column(r1)`.
 
-Recall that `r` is the reanchored rune-ish,
-and that `a` is the anchor rune-ish of `r`.
-We now define a sequence of rune-ishes, `S`,
+Recall that `r` is the reanchored rune,
+and that `a` is the anchor rune of `r`.
+We now define a sequence of runes, `S`,
 such that
 
 * If `a == r`, then `S` is empty.
@@ -447,7 +457,7 @@ Note the following:
   element of `S`.
 
 * In the trivial case,
-  where a rune-ish is its own anchor,
+  where a rune is its own anchor,
   `S` is always empty; the reanchor offset is always zero;
   and the anchor column is always the same
   as the rune column.
@@ -475,13 +485,13 @@ for all `i` such that `0 <= i <= n`.
 
 The rune line is line 1916, and the rune is
 COLSIG (`:~`).
-The anchor rune-ish is the COLLUS (`:+`).
+The anchor rune is the COLLUS (`:+`).
 COLLUS is 3-fixed, but all three of its runechildren are
-on the rune line, so the per-rune-ish offset is 0.
+on the rune line, so the per-rune offset is 0.
 The anchor column is defined to be
-the anchor rune-ish column plus the reanchor
+the anchor rune column plus the reanchor
 offset, so that in this case,
-the anchor column is the same as the anchor rune-ish column.
+the anchor column is the same as the anchor rune column.
 
 COLSIG is 0-running, and normal COLSIG indentation aligns the runsteps
 one stop after the anchor column,
@@ -505,12 +515,12 @@ This is exactly what we see.
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])
 ```
 
-Here the rune line is line 346, the rune-ish is again COLSIG,
+Here the rune line is line 346, the rune is again COLSIG,
 and it reanchors at TISFAS (`=/`).
 TISFAS is 3-fixed, and 2 of its runechildren are on the rune line,
-so that the per-rune-ish offset of the TISFAS is that of
+so that the per-rune offset of the TISFAS is that of
 its 2nd runechild -- one stop.
-The anchor column is therefore one stop after the anchor rune-ish
+The anchor column is therefore one stop after the anchor rune
 column.
 
 COLSIG again is 0-running, so that its runsteps should be aligned
@@ -741,54 +751,54 @@ that obeys the following rules:
 * Every hoon except the first is the last
 runechild of the previous hoon in the sequence.
 
-* Every tall rune-ish is either
+* Every tall rune is either
 
-    * a "row-initial" tall rune-ish,
+    * a "row-initial" tall rune,
       which should be aligned at
       the first hoon in the sequence, or;
 
-    * a "joined" tall rune-ish, that is, another tall
-       rune-ish on the same line as
-       an initial rune-ish.
+    * a "joined" tall rune, that is, another tall
+       rune on the same line as
+       an initial rune.
 
 * The sequence is maximal.  That is,
 no chain is a sub-sequence of a longer chain.
 
 For the purposes of chain inter-line alignment,
 we define row and silo as follows:
-Each row-initial rune-ish starts a new row.
+Each row-initial rune starts a new row.
 For each row,
-the tall rune-ishes and their runechildren on the
-initial rune-ish's line,
+the tall runes and their runechildren on the
+initial rune's line,
 taken in lexical order and recursively, are siloed.
 
-A runechild that itself is a tall rune-ish expression is never
+A runechild that itself is a tall rune expression is never
 a silo element -- instead it is broken out into
-its rune-ish and runechildren,
+its rune and runechildren,
 and these become silo elements in that row.
 A row may contain multiple lines,
-but rune-ishes and
+but runes and
 runechildren not on the first line of the row
 are not added as silo elements,
 and therefore are not used in determining inter-line alignment.
 
 This implies that
 
-* Every row-initial rune-ish is in silo 0,
+* Every row-initial rune is in silo 0,
 
-* Every tall rune-ish is a separate silo element.
+* Every tall rune is a separate silo element.
 
-* Every runechild of a tall rune-ish is a separate
-  silo element, unless it is itself a tall rune-ish expression.
+* Every runechild of a tall rune is a separate
+  silo element, unless it is itself a tall rune expression.
 
 * For chained inter-line alignment,
   the row and silo grid may be "ragged", so that some
   rows do not have elements in every silo.
 
-* Every row in a chain starts with a rune-ish, but not every
-  rune-ish starts a new row.
+* Every row in a chain starts with a rune, but not every
+  rune starts a new row.
 
-* A silo may contain both rune-ishes and runechildren.
+* A silo may contain both runes and runechildren.
 
 *From `arvo/sys/hoon.hoon`, lines 1572-1575:*
 ```
@@ -811,7 +821,7 @@ but this follows the standard set forth
 in this document because it aligns with the `b`
 of the 2nd row, at column location 13.
 
-Note that the 2nd silo includes both runechild and a rune-ish.
+Note that the 2nd silo includes both runechild and a rune.
 This is an example of a "joined" hoon.
 In a chained hoon sequence,
 when the row starts with a unary rune,
@@ -1132,7 +1142,7 @@ alignment.
 
 Each backdented hoon is a row.
 For each row,
-The sequence composed of the rune-ish of the hoon,
+The sequence composed of the rune of the hoon,
 followed by its runechildren in
 lexical order,
 is siloed.
