@@ -890,6 +890,8 @@ sub checkOneLineGap {
                 desc         => $msg,
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
+                reportLine   => $gapMistakeLine,
+                reportColumn => $gapMistakeColumn,
                 line         => $gapMistakeLine,
                 column       => $gapMistakeColumn,
                 topicLines   => $topicLines,
