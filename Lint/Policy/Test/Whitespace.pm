@@ -4343,6 +4343,8 @@ sub checkFastis {
                 parentColumn => $parentColumn,
                 line         => $symbolLine,
                 column       => $symbolColumn,
+                reportLine   => $symbolLine,
+                reportColumn => $symbolColumn,
               };
             last CHECK_SYMBOL;
         }
@@ -4354,11 +4356,13 @@ sub checkFastis {
               describeMisindent2( $symbolColumn, $expectedSymbolColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $symbolLine,
-                column         => $symbolColumn,
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $symbolLine,
+                column       => $symbolColumn,
+                reportLine   => $symbolLine,
+                reportColumn => $symbolColumn,
               };
         }
     }
@@ -4373,11 +4377,13 @@ sub checkFastis {
                   describeMisindent2( $hornColumn, $expectedHornColumn );
                 push @mistakes,
                   {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $hornLine,
-                    column         => $hornColumn,
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $hornLine,
+                    column       => $hornColumn,
+                    reportLine   => $hornLine,
+                    reportColumn => $hornColumn,
                   };
             }
             last CHECK_HORN;
@@ -4404,11 +4410,13 @@ sub checkFastis {
               describeMisindent2( $hornColumn, $expectedHornColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $hornLine,
-                column         => $hornColumn,
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $hornLine,
+                column       => $hornColumn,
+                reportLine   => $hornLine,
+                reportColumn => $hornColumn,
               };
         }
 
