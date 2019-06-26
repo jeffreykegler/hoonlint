@@ -876,7 +876,6 @@ hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace tallColsig runstep #2 @68:11; ov
 hoons/arvo/app/pipe.hoon 66:19 Test::Whitespace colsig:tistis-indent TISTIS @69:9; overindented by 2
 === hoons/arvo/app/talk.hoon ===
 hoons/arvo/app/talk.hoon 16:1 Test::Whitespace optFordFashep Fashep body @16:7 is overindented by 2
-hoons/arvo/app/talk.hoon 18:7 Test::Whitespace fordFastis Fastis symbol @18:7; overindented by 2
 hoons/arvo/app/talk.hoon 158:5 Test::Whitespace tallBarket Barket head @159:7; must be on rune line
 hoons/arvo/app/talk.hoon 384:5 Test::Whitespace tallWutlus 2-jogging queenside head @384:9; underindented by 2
 hoons/arvo/app/talk.hoon 406:5 Test::Whitespace tallWutlus 2-jogging queenside head @406:9; underindented by 2
@@ -905,8 +904,6 @@ hoons/arvo/app/github.hoon 39:9 Test::Whitespace tallColsig runstep #3 @39:9; ov
 hoons/arvo/app/github.hoon 36:17 Test::Whitespace colsig:tistis-indent TISTIS @40:7; overindented by 2
 === hoons/arvo/app/hall.hoon ===
 hoons/arvo/app/hall.hoon 11:1 Test::Whitespace optFordFashep Fashep body @11:7 is overindented by 2
-hoons/arvo/app/hall.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
-hoons/arvo/app/hall.hoon 14:7 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
 hoons/arvo/app/hall.hoon 15:7 Test::Whitespace fordFastis Fastis split horn @15:7; overindented by 4
 hoons/arvo/app/hall.hoon 83:7 Test::Whitespace tallBucwut runstep #2 @83:7; underindented by 4
 hoons/arvo/app/hall.hoon 671:37 Test::Whitespace tallTisgal backdented element #2 @672:5; underindented by 19
@@ -1173,7 +1170,6 @@ hoons/arvo/lib/hall.hoon 52:7 Test::Whitespace tallKethep backdented element #2 
 hoons/arvo/lib/hall.hoon 177:11 Test::Whitespace tallDottis backdented element #2 @178:15; overindented by 4
 === hoons/arvo/mar/coffee.hoon ===
 === hoons/arvo/mar/urb.hoon ===
-hoons/arvo/mar/urb.hoon 5:25 Test::Whitespace fordFastis Fastis horn @5:25; overindented by 2
 hoons/arvo/mar/urb.hoon 5:31 Test::Whitespace fascol:hgap joined backdent element #1 of @5:25 is at @5:31; should be @5:29 (tight)
 hoons/arvo/mar/urb.hoon 5:47 Test::Whitespace fascol:hgap joined backdent element #2 of @5:25 is at @5:47; should be @5:45 (tight)
 === hoons/arvo/mar/mime.hoon ===
@@ -1322,7 +1318,6 @@ hoons/arvo/mar/hall/prize.hoon 4:1 Test::Whitespace optFordFashep Fashep body @4
 === hoons/arvo/mar/static/action.hoon ===
 === hoons/arvo/web/unmark/test.hoon ===
 === hoons/arvo/web/unmark/all.hoon ===
-hoons/arvo/web/unmark/all.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
 hoons/arvo/web/unmark/all.hoon 48:5 Test::Whitespace tallWutlus Jog kingside body @48:21; overindented by 1
 === hoons/arvo/web/listen.hoon ===
 === hoons/arvo/web/404.hoon ===
@@ -1352,21 +1347,12 @@ hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fordFascomElement Fascom element 
 hoons/arvo/ren/rss-xml.hoon 9:1 Test::Whitespace fordFasbuc joined fordFasbuc body @9:7 is overindented by 2
 hoons/arvo/ren/rss-xml.hoon 22:11 Test::Whitespace tallCenhep backdented element #2 @23:1; underindented by 10
 === hoons/arvo/ren/tree/body.hoon ===
-hoons/arvo/ren/tree/body.hoon 5:7 Test::Whitespace fordFastis Fastis symbol @5:7; overindented by 2
-hoons/arvo/ren/tree/body.hoon 5:14 Test::Whitespace fordFastis Fastis horn @5:14; overindented by 2
-hoons/arvo/ren/tree/body.hoon 6:7 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
 hoons/arvo/ren/tree/body.hoon 6:21 Test::Whitespace fasbar:hgap joined backdent element #1 of @6:16 is at @6:21; should be @6:20 (tight)
 === hoons/arvo/ren/tree/json.hoon ===
 hoons/arvo/ren/tree/json.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
-hoons/arvo/ren/tree/json.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
-hoons/arvo/ren/tree/json.hoon 7:14 Test::Whitespace fordFastis Fastis horn @7:14; overindented by 2
 hoons/arvo/ren/tree/json.hoon 7:14 Test::Whitespace fordFasbuc joined fordFasbuc body @7:20 is overindented by 2
-hoons/arvo/ren/tree/json.hoon 8:7 Test::Whitespace fordFastis Fastis symbol @8:7; overindented by 2
-hoons/arvo/ren/tree/json.hoon 8:14 Test::Whitespace fordFastis Fastis horn @8:14; overindented by 2
 hoons/arvo/ren/tree/json.hoon 8:20 Test::Whitespace fasket:hgap joined backdent element #1 of @8:14 is at @8:20; should be @8:18 (tight)
 hoons/arvo/ren/tree/json.hoon 8:36 Test::Whitespace fasket:hgap joined backdent element #2 of @8:14 is at @8:36; should be @8:34 (tight)
-hoons/arvo/ren/tree/json.hoon 9:7 Test::Whitespace fordFastis Fastis symbol @9:7; overindented by 2
-hoons/arvo/ren/tree/json.hoon 9:14 Test::Whitespace fordFastis Fastis horn @9:14; overindented by 2
 hoons/arvo/ren/tree/json.hoon 9:20 Test::Whitespace fasket:hgap joined backdent element #1 of @9:14 is at @9:20; should be @9:18 (tight)
 hoons/arvo/ren/tree/json.hoon 10:14 Test::Whitespace fordFascab joined fordFascab body @10:20 is overindented by 2
 === hoons/arvo/ren/tree/index.hoon ===
@@ -1391,41 +1377,17 @@ hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fordFascom split Fascom @6:5;
 hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fordFascomElement Fascom element head @6:5; underindented by 6
 hoons/arvo/ren/tree/elem.hoon 7:5 Test::Whitespace fordFascomElement Fascom element head @7:5; underindented by 6
 === hoons/arvo/ren/tree/head.hoon ===
-hoons/arvo/ren/tree/head.hoon 6:7 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
-hoons/arvo/ren/tree/head.hoon 6:14 Test::Whitespace fordFastis Fastis horn @6:14; overindented by 2
-hoons/arvo/ren/tree/head.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
-hoons/arvo/ren/tree/head.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
-hoons/arvo/ren/tree/head.hoon 19:7 Test::Whitespace fordFastis Fastis symbol @19:7; overindented by 2
-hoons/arvo/ren/tree/head.hoon 19:17 Test::Whitespace fordFastis Fastis horn @19:17; overindented by 2
 hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fasket:hgap joined backdent element #2 of @20:17 is at @20:40; should be @20:38 (tight)
 === hoons/arvo/ren/tree/combine.hoon ===
 hoons/arvo/ren/tree/combine.hoon 5:1 Test::Whitespace optFordFashep Fashep body @5:7 is overindented by 2
-hoons/arvo/ren/tree/combine.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 7:15 Test::Whitespace fordFastis Fastis horn @7:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 8:7 Test::Whitespace fordFastis Fastis symbol @8:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 8:15 Test::Whitespace fordFastis Fastis horn @8:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 9:7 Test::Whitespace fordFastis Fastis symbol @9:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 9:15 Test::Whitespace fordFastis Fastis horn @9:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 10:7 Test::Whitespace fordFastis Fastis symbol @10:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 10:15 Test::Whitespace fordFastis Fastis horn @10:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 11:7 Test::Whitespace fordFastis Fastis symbol @11:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 11:15 Test::Whitespace fordFastis Fastis horn @11:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 12:7 Test::Whitespace fordFastis Fastis symbol @12:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 12:15 Test::Whitespace fordFastis Fastis horn @12:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 13:15 Test::Whitespace fordFastis Fastis horn @13:15; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 14:7 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
-hoons/arvo/ren/tree/combine.hoon 14:15 Test::Whitespace fordFastis Fastis horn @14:15; overindented by 2
 === hoons/arvo/ren/tree/comments.hoon ===
 hoons/arvo/ren/tree/comments.hoon 5:7 Test::Whitespace fascol:hgap joined backdent element #1 of @5:1 is at @5:7; should be @5:5 (tight)
 hoons/arvo/ren/tree/comments.hoon 5:1 Test::Whitespace fordFascol backdented element #2 @6:3; overindented by 2
 === hoons/arvo/ren/urb/tree.hoon ===
 hoons/arvo/ren/urb/tree.hoon 6:6 Test::Whitespace fordFastis Fastis symbol @6:6; overindented by 1
-hoons/arvo/ren/urb/tree.hoon 6:13 Test::Whitespace fordFastis Fastis horn @6:13; overindented by 2
 hoons/arvo/ren/urb/tree.hoon 6:13 Test::Whitespace fordFashax joined fordFashax body @6:19 is overindented by 2
 hoons/arvo/ren/urb/tree.hoon 6:19 Test::Whitespace fordFascen joined fordFascen body @6:24 is overindented by 1
 hoons/arvo/ren/urb/tree.hoon 7:6 Test::Whitespace fordFastis Fastis symbol @7:6; overindented by 1
-hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFastis Fastis horn @7:13; overindented by 2
 hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFashax joined fordFashax body @7:19 is overindented by 2
 hoons/arvo/ren/urb/tree.hoon 7:19 Test::Whitespace fordFascen joined fordFascen body @7:24 is overindented by 1
 === hoons/arvo/ren/css.hoon ===

@@ -1065,3 +1065,43 @@ hoons/arvo/gen/cat.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is o
 hoons/arvo/gen/hood/replay-womb-log.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/gen/hood/transfer.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
 hoons/arvo/gen/hood/load.hoon 6:1 Test::Whitespace optFordFaslus Faslus body @6:7 is overindented by 2
+
+# Ford FASTIS two-stop gaps
+hoons/arvo/app/talk.hoon 18:7 Test::Whitespace fordFastis Fastis symbol @18:7; overindented by 2
+hoons/arvo/app/hall.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
+hoons/arvo/app/hall.hoon 14:7 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
+hoons/arvo/mar/urb.hoon 5:25 Test::Whitespace fordFastis Fastis horn @5:25; overindented by 2
+hoons/arvo/web/unmark/all.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
+hoons/arvo/ren/tree/body.hoon 5:7 Test::Whitespace fordFastis Fastis symbol @5:7; overindented by 2
+hoons/arvo/ren/tree/body.hoon 5:14 Test::Whitespace fordFastis Fastis horn @5:14; overindented by 2
+hoons/arvo/ren/tree/body.hoon 6:7 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
+hoons/arvo/ren/tree/json.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
+hoons/arvo/ren/tree/json.hoon 7:14 Test::Whitespace fordFastis Fastis horn @7:14; overindented by 2
+hoons/arvo/ren/tree/json.hoon 8:7 Test::Whitespace fordFastis Fastis symbol @8:7; overindented by 2
+hoons/arvo/ren/tree/json.hoon 8:14 Test::Whitespace fordFastis Fastis horn @8:14; overindented by 2
+hoons/arvo/ren/tree/json.hoon 9:7 Test::Whitespace fordFastis Fastis symbol @9:7; overindented by 2
+hoons/arvo/ren/tree/json.hoon 9:14 Test::Whitespace fordFastis Fastis horn @9:14; overindented by 2
+hoons/arvo/ren/tree/head.hoon 6:7 Test::Whitespace fordFastis Fastis symbol @6:7; overindented by 2
+hoons/arvo/ren/tree/head.hoon 6:14 Test::Whitespace fordFastis Fastis horn @6:14; overindented by 2
+hoons/arvo/ren/tree/head.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
+hoons/arvo/ren/tree/head.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
+hoons/arvo/ren/tree/head.hoon 19:7 Test::Whitespace fordFastis Fastis symbol @19:7; overindented by 2
+hoons/arvo/ren/tree/head.hoon 19:17 Test::Whitespace fordFastis Fastis horn @19:17; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 7:7 Test::Whitespace fordFastis Fastis symbol @7:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 7:15 Test::Whitespace fordFastis Fastis horn @7:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 8:7 Test::Whitespace fordFastis Fastis symbol @8:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 8:15 Test::Whitespace fordFastis Fastis horn @8:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 9:7 Test::Whitespace fordFastis Fastis symbol @9:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 9:15 Test::Whitespace fordFastis Fastis horn @9:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 10:7 Test::Whitespace fordFastis Fastis symbol @10:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 10:15 Test::Whitespace fordFastis Fastis horn @10:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 11:7 Test::Whitespace fordFastis Fastis symbol @11:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 11:15 Test::Whitespace fordFastis Fastis horn @11:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 12:7 Test::Whitespace fordFastis Fastis symbol @12:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 12:15 Test::Whitespace fordFastis Fastis horn @12:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 13:7 Test::Whitespace fordFastis Fastis symbol @13:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 13:15 Test::Whitespace fordFastis Fastis horn @13:15; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 14:7 Test::Whitespace fordFastis Fastis symbol @14:7; overindented by 2
+hoons/arvo/ren/tree/combine.hoon 14:15 Test::Whitespace fordFastis Fastis horn @14:15; overindented by 2
+hoons/arvo/ren/urb/tree.hoon 6:13 Test::Whitespace fordFastis Fastis horn @6:13; overindented by 2
+hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFastis Fastis horn @7:13; overindented by 2
