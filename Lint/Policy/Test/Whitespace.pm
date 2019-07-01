@@ -121,7 +121,7 @@ sub chainable {
 # Return the node tag for the subpolicy field.
 # Archetypally, this is the 6-character form of
 # rune for the node's brick.
-sub nodeSubpolicy {
+sub runeName {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $name     = $instance->brickName($node);
@@ -136,6 +136,11 @@ sub nodeSubpolicy {
         return lc $tag;
     }
     return lc $name;
+}
+
+sub nodeSubpolicy {
+    my ( $policy, $node ) = @_;
+    return $policy->runeName($node);
 }
 
 # return standard anchor "detail" line
@@ -639,6 +644,17 @@ sub i_isOneLineGap {
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
     $mainColumn //= -1;    # -1 will never match
 
+    my @subpolicyElements = ();
+    SET_SUBPOLICY: {
+        my $subpolicyArg = $options->{subpolicy};
+        last SET_SUBPOLICY if not defined $subpolicyArg;
+        if ( not ref $subpolicyArg ) {
+            push @subpolicyElements, $subpolicyArg;
+            last SET_SUBPOLICY;
+        }
+        push @subpolicyElements, @{$subpolicyArg};
+    }
+
     # Criss-cross TISTIS lines are a special case
     if (    $startLine == $endLine
         and $instance->literal( $start - 2, 2 ) ne '=='
@@ -648,7 +664,7 @@ sub i_isOneLineGap {
             {
                 msg => "missing newline "
                   . describeLC( $startLine, $startColumn ),
-                subpolicy => 'missing-newline',
+                subpolicy => (join ':', @subpolicyElements, 'missing-newline'),
                 line      => $startLine,
                 column    => $startColumn,
             }
@@ -688,7 +704,6 @@ sub i_isOneLineGap {
         if ( $type eq 'vgap-bad-comment' ) {
             my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
 
-# say STDERR join ' ', __LINE__, 'vgap-bad-comment', $lineNum, $offset, $expectedOffset;
             my $desc = "comment";
             push @mistakes,
               {
@@ -871,7 +886,7 @@ sub checkOneLineGap {
 
     if (
         my @gapMistakes = @{
-            $policy->isOneLineGap( $gap, { tag => $tag },
+            $policy->isOneLineGap( $gap, { subpolicy => $subpolicy, tag => $tag },
                 $mainColumn, $preColumn )
         }
       )
@@ -2633,7 +2648,7 @@ sub checkFashep {
 }
 
 sub checkFaslus {
-    my ( $policy, $node ) = @_;
+    my ( $policy, $lhsName, $node ) = @_;
     my $instance = $policy->{lint};
 
     # FASWUT is very similar to FASLUS.  Combine them?
@@ -2645,39 +2660,42 @@ sub checkFaslus {
       @{ $node->{children} };
 
     # TODO: Should we require that parent column be 0?
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $parentLine, $anchorColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
-    my $tag      = 'faslus';
+    my $runeName = $policy->runeName($node);
+    my $tag      = $runeName;
 
-    my $expectedColumn;
+    my $expectedColumn = $anchorColumn;
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf 'Faslus body %s; must be on rune line',
+            my $msg = sprintf '%s body %s; must be on rune line',
+              $runeName,
               describeLC( $bodyLine, $bodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
                 parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
+                parentColumn   => $anchorColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
               };
             last BODY_ISSUES;
         }
-        my $expectedBodyColumn = $parentColumn + 4;
+        my $expectedBodyColumn = $anchorColumn + 4;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
-              sprintf 'Faslus body %s is %s',
+              sprintf '%s body %s is %s',
+              $runeName,
               describeLC( $bodyLine, $bodyColumn ),
               describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
                 desc           => $msg,
                 parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
+                parentColumn   => $anchorColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
               };
@@ -2686,7 +2704,6 @@ sub checkFaslus {
 
     }
 
-    $expectedColumn = $parentColumn;
     push @mistakes,
       @{
         $policy->checkOneLineGap(
@@ -3270,15 +3287,21 @@ sub check_0_as_1Running {
       };
 
     # Needs to use lower level isOneLineGap() call
-    if ( my @gapMistakes =
-        @{ $policy->isOneLineGap( $tistisGap, { tag => $tag }, $anchorColumn ) }
-      )
+    if (
+    my @gapMistakes = @{
+        $policy->isOneLineGap( $tistisGap,
+            { tag => $tag, subpolicy => $policy->nodeSubpolicy($node) },
+            $anchorColumn )
+      }
+    )
     {
         for my $gapMistake (@gapMistakes) {
             my $gapMistakeMsg    = $gapMistake->{msg};
             my $gapMistakeLine   = $gapMistake->{line};
             my $gapMistakeColumn = $gapMistake->{column};
             my $gapSubpolicy     = $gapMistake->{subpolicy} // q{};
+            my $gapSubpolicyTail = $gapSubpolicy;
+            $gapSubpolicyTail =~ s/^.*[:]//;
             my $msg;
             if ( $gapSubpolicy eq 'missing-newline' ) {
                 $msg = sprintf
@@ -3290,12 +3313,10 @@ sub check_0_as_1Running {
                   "$tag TISTIS %s; $gapMistakeMsg",
                   describeLC( $tistisLine, $tistisColumn );
             }
-            my $mistakeSubpolicy = $policy->nodeSubpolicy($node);
-            $mistakeSubpolicy .= ':' . $gapSubpolicy if $gapSubpolicy;
             push @mistakes,
               {
                 desc         => $msg,
-                subpolicy    => $mistakeSubpolicy,
+                subpolicy    => $gapSubpolicy,
                 parentLine   => $runeLine,
                 parentColumn => $runeColumn,
                 line         => $gapMistakeLine,
@@ -3348,9 +3369,7 @@ sub findChainAlignment {
         push @{ $allAlignments{$bodyColumn} }, $bodyLine;
         my $gap       = $nodes->[ $bodyIX - 2 ];
         my $gapLength = $instance->gapLength($gap);
-     #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         next CHILD if $gapLength <= 2;
-        # say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         $wideAlignments{$bodyColumn} //= [];
         push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
     }
@@ -3705,9 +3724,7 @@ sub findAlignment {
         push @{ $allAlignments{$bodyColumn} }, $bodyLine;
         my $gap       = $nodes->[ $bodyIX - 1 ];
         my $gapLength = $instance->gapLength($gap);
-     #    say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         next CHILD if $gapLength <= 2;
-        # say STDERR join " ", __FILE__, __LINE__, $bodyIX;
         $wideAlignments{$bodyColumn} //= [];
         push @{ $wideAlignments{$bodyColumn} }, $bodyLine;
     }
@@ -5612,7 +5629,7 @@ sub validate_node {
             }
 
             if ( $lhsName eq "optFordFaslus" ) {
-                $mistakes = $policy->checkFaslus($node);
+                $mistakes = $policy->checkFaslus($lhsName, $node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASLUS';
                 last TYPE_INDENT;
