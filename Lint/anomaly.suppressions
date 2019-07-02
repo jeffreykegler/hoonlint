@@ -1105,3 +1105,38 @@ hoons/arvo/ren/tree/combine.hoon 14:7 Test::Whitespace fordFastis Fastis symbol 
 hoons/arvo/ren/tree/combine.hoon 14:15 Test::Whitespace fordFastis Fastis horn @14:15; overindented by 2
 hoons/arvo/ren/urb/tree.hoon 6:13 Test::Whitespace fordFastis Fastis horn @6:13; overindented by 2
 hoons/arvo/ren/urb/tree.hoon 7:13 Test::Whitespace fordFastis Fastis horn @7:13; overindented by 2
+
+# Ford FASHEP two-stop gaps
+hoons/arvo/sur/plan/diff.hoon 1:7 Test::Whitespace fashep:hgap Fashep body @1:7 is overindented by 2
+hoons/arvo/app/twit.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/app/talk.hoon 16:7 Test::Whitespace fashep:hgap Fashep body @16:7 is overindented by 2
+hoons/arvo/app/hall.hoon 11:7 Test::Whitespace fashep:hgap Fashep body @11:7 is overindented by 2
+hoons/arvo/lib/hall-json.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/lib/sole.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/lib/twitter.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7 is overindented by 2
+hoons/arvo/lib/down-jet.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/lib/hood/helm.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/lib/hood/drum.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/lib/hood/write.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7 is overindented by 2
+hoons/arvo/lib/hall.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/mar/plan-diff.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/tree/include.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/plan.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/dill/belt.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/dill/blit.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/down.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/recoverable-error.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/sole/action.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/sole/effect.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/hall/action.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/mar/hall/rumor.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/mar/hall/telegrams.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/mar/hall/command.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/mar/hall/prize.hoon 4:7 Test::Whitespace fashep:hgap Fashep body @4:7 is overindented by 2
+hoons/arvo/ren/tree/json.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/ren/tree/include.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/ren/tree/combine.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/gen/gmail/send.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7 is overindented by 2
+hoons/arvo/gen/twit/as.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
+hoons/arvo/gen/twit/feed.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7 is overindented by 2
+hoons/arvo/gen/pope.hoon 7:7 Test::Whitespace fashep:hgap Fashep body @7:7 is overindented by 2

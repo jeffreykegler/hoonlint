@@ -2489,6 +2489,9 @@ sub checkFashep {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                reportLine           => $bodyLine,
+                reportColumn         => $bodyColumn,
+                subpolicy => [ $runeName, 'same-line' ],
               };
             last BODY_ISSUES;
         }
@@ -2505,6 +2508,9 @@ sub checkFashep {
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                reportLine           => $bodyLine,
+                reportColumn         => $bodyColumn,
+                subpolicy => [ $runeName, 'hgap' ],
               };
         }
         last BODY_ISSUES;

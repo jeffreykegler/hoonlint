@@ -1759,7 +1759,19 @@ TODO
 
 ## FASHEP
 
-TODO
+*From `../hoons/arvo/app/dojo.hoon`, line 5:*
+```
+/-  sole, lens                                          ::  console structures
+```
+
+A tall FASLUS hoon should consist of,
+in lexical order:
+
+* The FASLUS rune.
+
+* A one-stop horizontal gap.
+
+* A ford hoof sequence.
 
 ## FASLUS
 
