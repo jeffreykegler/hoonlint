@@ -1734,10 +1734,9 @@ FASSIG (`/~`),
 FASBUC (`/$`),
 FASCAB (`/_`),
 FASCEN (`/%`),
+FASFAS (`//`),
 FASHAX (`/#`) and
 FASWUT (`/?`).
-
-<!-- TODO: fordHoop? -->
 
 *From `arvo/app/hall.hoon`, line 17:*
 ```
@@ -1753,37 +1752,32 @@ in lexical order:
 
 * The runechild.
 
+## FASCOL
+
+TODO
+
 ## FASCOM
 
 TODO
 
-## FASHEP
+## Ford hoof hoons
+
+The ford hoof hoons are FASHEP (`/-`) and FASLUS (`/+`).
 
 *From `../hoons/arvo/app/dojo.hoon`, line 5:*
 ```
 /-  sole, lens                                          ::  console structures
 ```
 
-A tall FASLUS hoon should consist of,
-in lexical order:
-
-* The FASLUS rune.
-
-* A one-stop horizontal gap.
-
-* A ford hoof sequence.
-
-## FASLUS
-
 *From `hoons/arvo/mar/twit/feed.hoon`, line 6:*
 ```
 /+  twitter, httr-to-json, old-zuse
 ```
 
-A tall FASLUS hoon should consist of,
+A tall Ford hoof hoon should consist of,
 in lexical order:
 
-* The FASLUS rune.
+* The rune.
 
 * A one-stop horizontal gap.
 
@@ -1795,7 +1789,6 @@ TODO
 
 ## FASTIS
 
-TODO
 ```
 /=  rfctext  /:  /%/rfc  /txt/
 ```

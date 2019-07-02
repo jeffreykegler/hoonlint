@@ -2456,25 +2456,27 @@ sub checkBarket {
     return \@mistakes;
 }
 
-sub checkFashep {
-    my ( $policy, $node ) = @_;
+sub checkFordHoofRune {
+    my ( $policy, $lhsName, $node ) = @_;
     my $instance = $policy->{lint};
 
-    # FASWUT is very similar to FASHEP.  Combine them?
+    # FASWUT is very similar to these runes.  Combine them?
 
-    # FASHEP is special, so we need to find the components using low-level
+    # Ford hoof runes is special, so we need to find the components using low-level
     # techniques.
     # optFordFashep ::= (- FAS HEP GAP -) fordHoofSeq (- GAP -)
     my ( undef, undef, $leaderGap, $body, $trailerGap ) =
       @{ $node->{children} };
 
+    my $runeName = $policy->runeName($node);
+
     # TODO: Should we require that parent column be 0?
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+    my ( $leaderGapLine,   $leaderGapColumn )   = $instance->nodeLC($leaderGap);
 
     my @mistakes = ();
-    my $tag      = 'fashep';
-    my $runeName = 'fashep';
+    my $tag      = $runeName;
 
     my $expectedColumn;
 
@@ -2527,80 +2529,6 @@ sub checkFashep {
                 tag        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
-            }
-        )
-      };
-
-    return \@mistakes;
-}
-
-sub checkFaslus {
-    my ( $policy, $lhsName, $node ) = @_;
-    my $instance = $policy->{lint};
-
-    # FASWUT is very similar to FASLUS.  Combine them?
-
-    # FASWUT is special, so we need to find the components using low-level
-    # techniques.
-    # optFordFaslus ::= (- FAS LUS GAP -) fordHoofSeq (- GAP -)
-    my ( undef, undef, $leaderGap, $body, $trailerGap ) =
-      @{ $node->{children} };
-
-    # TODO: Should we require that parent column be 0?
-    my ( $parentLine, $anchorColumn ) = $instance->nodeLC($node);
-    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
-
-    my @mistakes = ();
-    my $runeName = $policy->runeName($node);
-    my $tag      = $runeName;
-
-    my $expectedColumn = $anchorColumn;
-
-  BODY_ISSUES: {
-        if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf '%s body %s; must be on rune line',
-              $runeName,
-              describeLC( $bodyLine, $bodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $anchorColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-              };
-            last BODY_ISSUES;
-        }
-        my $expectedBodyColumn = $anchorColumn + 4;
-        if ( $bodyColumn != $expectedBodyColumn ) {
-            my $msg =
-              sprintf '%s body %s is %s',
-              $runeName,
-              describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $expectedBodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $anchorColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-              };
-        }
-        last BODY_ISSUES;
-
-    }
-
-    push @mistakes,
-      @{
-        $policy->checkOneLineGap(
-            $trailerGap,
-            {
-                mainColumn => $expectedColumn,
-                tag        => $tag,
-                subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
-                subpolicy => [ $runeName ],
             }
         )
       };
@@ -5542,17 +5470,10 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq "optFordFashep" ) {
-                $mistakes = $policy->checkFashep($node);
+            if ( $lhsName =~ m/optFordFas(hep|lus)/ ) {
+                $mistakes = $policy->checkFordHoofRune($lhsName, $node);
                 last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASHEP';
-                last TYPE_INDENT;
-            }
-
-            if ( $lhsName eq "optFordFaslus" ) {
-                $mistakes = $policy->checkFaslus($lhsName, $node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASLUS';
+                $indentDesc = 'Ford hoof rune';
                 last TYPE_INDENT;
             }
 
