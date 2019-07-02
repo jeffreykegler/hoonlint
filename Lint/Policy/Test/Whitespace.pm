@@ -105,7 +105,6 @@ sub new {
 # Return Perl true is node is chainable
 sub chainable {
     my ( $policy, $node ) = @_;
-    # say STDERR join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($node);
     my $chainable = $policy->{chainable};
     my $instance = $policy->{lint};
     my $grammar  = $instance->{grammar};
@@ -114,7 +113,6 @@ sub chainable {
     my ($lhs)    = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName  = $grammar->symbol_name($lhs);
     # say STDERR join ' ', __FILE__, __LINE__, $lhsName, ($chainable->{$lhsName} // 'na');
-    # say STDERR Data::Dumper::Dumper($chainable);
     return $chainable->{$lhsName};
 }
 
@@ -125,6 +123,9 @@ sub runeName {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $name     = $instance->brickName($node);
+    if ( my ($tag) = $name =~ /^optFord([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
+        return lc $tag;
+    }
     if ( my ($tag) = $name =~ /^ford([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
         return lc $tag;
     }
@@ -388,6 +389,7 @@ sub isOneLineGap {
     my $instance = $policy->{lint};
     my $start    = $gap->{start};
     my $length   = $gap->{length};
+    # say STDERR join " ", __FILE__, __LINE__,  ($options->{subpolicy} ? Data::Dumper::Dumper($options->{subpolicy}) : 'na');
     return i_isOneLineGap( $policy, $options, $start + 2, $length - 2,
         $expectedColumn, $expectedColumn2 )
       if $instance->runeGapNode($gap);
@@ -569,7 +571,6 @@ sub checkGapComments {
                         my $closestHiOffset;
                         my $closestLoOffset;
 
-                        # say STDERR Data::Dumper::Dumper(\@failedOffsets);
                         for my $failedOffset (@failedOffsets) {
                             if ( $failedOffset > $commentOffset ) {
                                 if ( not defined $closestHiOffset
@@ -644,9 +645,12 @@ sub i_isOneLineGap {
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
     $mainColumn //= -1;    # -1 will never match
 
+
     my @subpolicyElements = ();
     SET_SUBPOLICY: {
         my $subpolicyArg = $options->{subpolicy};
+    # say STDERR join " ", __FILE__, __LINE__;
+    # say STDERR Data::Dumper::Dumper($subpolicyArg);
         last SET_SUBPOLICY if not defined $subpolicyArg;
         if ( not ref $subpolicyArg ) {
             push @subpolicyElements, $subpolicyArg;
@@ -654,6 +658,9 @@ sub i_isOneLineGap {
         }
         push @subpolicyElements, @{$subpolicyArg};
     }
+
+    # say STDERR join " ", __FILE__, __LINE__;
+    # say STDERR Data::Dumper::Dumper(\@subpolicyElements);
 
     # Criss-cross TISTIS lines are a special case
     if (    $startLine == $endLine
@@ -696,6 +703,9 @@ sub i_isOneLineGap {
             push @mistakes,
               {
                 msg    => "empty line in comment",
+                subpolicy => (join ':', @subpolicyElements, 'empty-line'),
+                reportLine => $lineNum,
+                reportColumn => 0,
                 line   => $lineNum,
                 column => 0,
               };
@@ -704,167 +714,17 @@ sub i_isOneLineGap {
         if ( $type eq 'vgap-bad-comment' ) {
             my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
 
+    # say STDERR join " ", __FILE__, __LINE__;
+    # say STDERR Data::Dumper::Dumper(\@subpolicyElements);
             my $desc = "comment";
             push @mistakes,
               {
                 msg => "$desc "
                   . describeMisindent2( $offset, $expectedOffset ),
+                subpolicy => (join ':', @subpolicyElements, 'comment-indent'),
                 line   => $lineNum,
                 column => $offset,
               };
-        }
-    }
-
-    return \@mistakes;
-}
-
-# Internal version of isOneLineGap()
-# TODO: Previous version. Delete this.
-sub old_i_isOneLineGap {
-    my ( $policy, $options, $start, $length, $expectedColumn, $expectedColumn2 )
-      = @_;
-    my $tag      = $options->{tag};
-    my @mistakes = ();
-    my $instance = $policy->{lint};
-    my $end      = $start + $length;
-    my ( $startLine, $startColumn ) = $instance->line_column($start);
-    my ( $endLine,   $endColumn )   = $instance->line_column($end);
-    $expectedColumn //= -1;    # -1 will never match
-
-    # Criss-cross TISTIS lines are a special case
-    if (    $startLine == $endLine
-        and $instance->literal( $start - 2, 2 ) ne '=='
-        and $instance->literal( $start - 2, 2 ) ne '--' )
-    {
-        return [
-            {
-                msg => "missing newline "
-                  . describeLC( $startLine, $startColumn ),
-                subpolicy => 'missing-newline',
-                line      => $startLine,
-                column    => $startColumn,
-            }
-        ];
-    }
-
-    my $stairTread;    # boolean, initially FALSE
-    my $commentOffset;
-
-    my $lineNum = $startLine;
-  COMMENT1: while (1) {
-        $lineNum++;
-        last COMMENT1 if $lineNum >= $endLine;
-        my $literalLine = $instance->literalLine($lineNum);
-
-        if ( $literalLine =~ /^ [ ]* $/xms ) {
-            push @mistakes,
-              {
-                msg    => "empty line in comment",
-                line   => $lineNum,
-                column => 0,
-              };
-            next COMMENT1;
-        }
-
-      CHECK_FOR_STAIRCASE: {
-            last CHECK_FOR_STAIRCASE if $stairTread;
-            last CHECK_FOR_STAIRCASE
-              unless $literalLine =~ m/^ [ ]* ([:][:][:][:]) /x;
-            $commentOffset = $LAST_MATCH_START[1];
-            last CHECK_FOR_STAIRCASE if $commentOffset != $expectedColumn;
-            if ( length $literalLine > $commentOffset + 4 ) {
-                my $nextChar = substr $literalLine, $commentOffset + 4, 1;
-                last CHECK_FOR_STAIRCASE if $nextChar !~ m/[ \n]/xms;
-            }
-
-            # Peek ahead to make sure this really is a staircase
-            my $nextLiteralLine = $instance->literalLine( $lineNum + 1 );
-            my $wantedPrefix = ( q{ } x ( $commentOffset + 2 ) ) . q{::};
-            my $actualPrefix = substr $nextLiteralLine, 0, length $wantedPrefix;
-            last CHECK_FOR_STAIRCASE if $wantedPrefix ne $actualPrefix;
-            $stairTread = $lineNum;
-            $expectedColumn += 2;
-            next COMMENT1;
-        }
-
-        if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
-            $commentOffset = $LAST_MATCH_START[1];
-            next COMMENT1 if $commentOffset == $expectedColumn;
-            last COMMENT1
-              if defined $expectedColumn2
-              and $commentOffset >= $expectedColumn2;
-        }
-
-        # Column 1 comments are always OK
-        # next COMMENT1 if defined $commentOffset and $commentOffset == 0;
-
-        if ( defined $commentOffset and $commentOffset != $expectedColumn ) {
-            my $desc = $stairTread ? "staircase comment" : "comment";
-            push @mistakes,
-              {
-                msg => "$desc "
-                  . describeMisindent2( $commentOffset, $expectedColumn ),
-                line   => $lineNum,
-                column => $commentOffset,
-              };
-            next COMMENT1;
-        }
-
-        # TODO: These are hacks to work around the way
-        # triple quoting deals with its trailer -- the parser throws
-        # it away before even this whitespace-reading version
-        # of the parser gets to see it.  Probably, hoonlint
-        # should fork the parser and deal with this situation
-        # in a less hack-ish way.
-        die unless $literalLine =~ m/^ *'''$/ or $literalLine =~ m/^ *"""$/;
-
-    }
-
-    if (    defined $expectedColumn2
-        and defined $commentOffset
-        and $commentOffset >= $expectedColumn2 )
-    {
-      COMMENT2: while (1) {
-            $lineNum++;
-            last COMMENT2 if $lineNum >= $endLine;
-            my $literalLine = $instance->literalLine($lineNum);
-
-            if ( $literalLine =~ /^ [ ]* $/xms ) {
-                push @mistakes,
-                  {
-                    msg    => "empty line ($lineNum) in comment",
-                    line   => $lineNum,
-                    column => 0,
-                  };
-                next COMMENT2;
-            }
-
-            my $commentOffset;
-            if ( $literalLine =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x ) {
-                $commentOffset = $LAST_MATCH_START[1];
-                next COMMENT2 if $commentOffset == $expectedColumn2;
-            }
-
-            # Column 1 is always OK
-            # next COMMENT2 if defined $commentOffset and $commentOffset == 0;
-
-            if ( defined $commentOffset and $commentOffset != $expectedColumn2 )
-            {
-                my $desc = "comment";
-                push @mistakes,
-                  {
-                    msg => "$desc "
-                      . describeMisindent2( $commentOffset, $expectedColumn2 ),
-                    line   => $lineNum,
-                    column => $commentOffset,
-                  };
-                next COMMENT2;
-            }
-
-            # TODO: These are hacks to work around the way
-            # triple quoting deals with its trailer
-            die unless $literalLine =~ m/^ *'''$/ or $literalLine =~ m/^ *"""$/;
-
         }
     }
 
@@ -884,6 +744,8 @@ sub checkOneLineGap {
     my $details    = $options->{details};
     my $subpolicy  = $options->{subpolicy};
 
+    # say STDERR join " ", __FILE__, __LINE__,  'tag:', ($tag // 'na');
+    # say STDERR join " ", __FILE__, __LINE__,  ($subpolicy ? Data::Dumper::Dumper($subpolicy) : 'na');
     if (
         my @gapMistakes = @{
             $policy->isOneLineGap( $gap, { subpolicy => $subpolicy, tag => $tag },
@@ -895,6 +757,11 @@ sub checkOneLineGap {
             my $gapMistakeMsg    = $gapMistake->{msg};
             my $gapMistakeLine   = $gapMistake->{line};
             my $gapMistakeColumn = $gapMistake->{column};
+            # TODO: use this as subpolicy in @mistakes
+            my $gapMistakeSubpolicy = $gapMistake->{subpolicy};
+            # say STDERR join " ", __FILE__, __LINE__;
+            # say STDERR Data::Dumper::Dumper($gapMistake);
+            # say STDERR Data::Dumper::Dumper($gapMistakeSubpolicy);
             my $msg              = sprintf
               "%s %s; %s",
               $tag,
@@ -910,7 +777,7 @@ sub checkOneLineGap {
                 line         => $gapMistakeLine,
                 column       => $gapMistakeColumn,
                 topicLines   => $topicLines,
-                subpolicy    => $subpolicy,
+                subpolicy    => $gapMistakeSubpolicy,
                 details      => $details,
               };
         }
@@ -1031,6 +898,7 @@ sub checkSailAttribute {
             {
                 mainColumn => $expectedHeadColumn,
                 tag        => $tag,
+                subpolicy => [ 'sail attribute' ],
                 topicLines => [$headLine],
             }
         )
@@ -1136,6 +1004,7 @@ sub checkTailOfElem {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $tag ],
                 topicLines => [$tistisLine],
             }
         )
@@ -1180,6 +1049,7 @@ sub checkTailOfTop {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $tag ],
                 topicLines => [$tistisLine],
             }
         )
@@ -1245,6 +1115,7 @@ sub checkBont {
                 {
                     mainColumn => $expectedBodyColumn,
                     tag        => $tag,
+                subpolicy => [ $tag ],
                     details    => [ [$tag] ],
                 }
             )
@@ -1476,10 +1347,7 @@ sub checkRunning {
     my $anchorDetails = $options->{anchorDetails}
       // $policy->anchorDetailsBasic( $parent, $anchorColumn );
 
-    # say STDERR Data::Dumper::Dumper($options->{anchorDetails});
-    # say STDERR Data::Dumper::Dumper($anchorDetails);
-
-    my $mistakeSubpolicy = $policy->nodeSubpolicy($parent);
+    my $runeName = $policy->runeName($parent);
     my @mistakes         = ();
 
     my $skipFirst = $options->{skipFirst};
@@ -1593,7 +1461,6 @@ sub checkRunning {
 
         for my $brick (@bricks) {
             my $brickNodeIX = $brick->{IX};
-            # say STDERR join " ", __FILE__, __LINE__, $brickNodeIX, Data::Dumper::Dumper( \@runStepChildAlignments);
             $policy->{perNode}->{$brickNodeIX}->{runningAlignments} =
              \@runStepChildAlignments;
         }
@@ -1657,7 +1524,6 @@ sub checkRunning {
             my ( $pileAlignmentColumn, $pileAlignmentLines );
             my $thisAlignment = $pileAlignments[ $runStepCount - 2 ];
             if ($thisAlignment) {
-                # say STDERR Data::Dumper::Dumper($thisAlignment);
                 ( $pileAlignmentColumn, $pileAlignmentLines ) = @{$thisAlignment};
                 last CHECK_COLUMN if $pileAlignmentColumn > $tightColumn
                   and $pileAlignmentColumn == $runStepColumn;
@@ -1735,9 +1601,9 @@ sub checkRunning {
                         preColumn  => $runStepColumn,
                         tag =>
                           ( sprintf 'runstep #%d', int( 1 + $childIX / 2 ) ),
+                        subpolicy  => [ $runeName ],
                         parent     => $runStep,
                         topicLines => [$runeLine],
-                        subpolicy  => $mistakeSubpolicy . ':comment-indent',
                         details    => [
                             [
                                 $tag,
@@ -1815,7 +1681,6 @@ sub cellBodyColumn {
         $cellBodyData = $policy->cellBodyColumn( $node->{PARENT} );
     }
     $policy->{perNode}->{$nodeIX}->{cellBodyData} = $cellBodyData;
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($cellBodyData);
     return $cellBodyData;
 }
 
@@ -1898,6 +1763,7 @@ sub checkWhap5d {
                 {
                     mainColumn => $expectedColumn,
                     tag        => $tag,
+                    subpolicy => ['whap5d'],
                     details    => [ [$tag] ],
                     topicLines => [ $parentLine, $boogGapLine ],
                 }
@@ -1936,6 +1802,7 @@ sub checkWisp5d {
             {
                 mainColumn => $parentColumn,
                 tag        => $tag,
+                    subpolicy => ['wisp5d'],
                 topicLines => [$batteryLine],
                 details    => [ [$tag] ],
             }
@@ -2009,6 +1876,7 @@ sub checkSplitFascom {
     my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
 
     my @mistakes = ();
+    my $runeName      = 'fascom';
     my $tag      = 'fascom';
 
     # We deal with the elements list itself,
@@ -2024,6 +1892,7 @@ sub checkSplitFascom {
             {
                 mainColumn => $anchorColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$bodyLine],
             }
@@ -2054,7 +1923,7 @@ sub checkSplitFascom {
             {
                 mainColumn => $anchorColumn,
                 tag        => $tag,
-                topicLines => [$tistisLine],
+                subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
                 details    => [ [$tag] ],
             }
@@ -2087,6 +1956,7 @@ sub checkJoinedFascom {
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
 
     my @mistakes = ();
+    my $runeName      = 'fascom';
     my $tag      = 'fascom';
 
     # We deal with the elements list in its own node
@@ -2118,6 +1988,7 @@ sub checkJoinedFascom {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$tag] ],
             }
@@ -2198,6 +2069,7 @@ sub checkFascomElements {
                 {
                     mainColumn => $runeColumn,
                     tag        => $tag,
+                subpolicy => [ $tag ],
                     topicLines => [$runeLine],
                     details    => [ [$tag] ],
                 }
@@ -2256,6 +2128,7 @@ sub checkSeq {
                 {
                     mainColumn => $expectedColumn,
                     tag        => $tag,
+                subpolicy => [ $tag, 'sequence' ],
                     details    => [ [$tag] ],
                     topicLines => [$elementGapLine],
                 }
@@ -2287,7 +2160,8 @@ sub checkBarcab {
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
 
     my @mistakes = ();
-    my $tag      = 'barcen';
+    my $runeName      = 'barcab';
+    my $tag      = 'barcab';
 
     my $expectedColumn;
 
@@ -2358,6 +2232,7 @@ sub checkBarcab {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$batteryLine],
             }
@@ -2406,6 +2281,7 @@ sub checkBarcen {
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
 
     my @mistakes = ();
+    my $runeName      = 'barcen';
     my $tag      = 'barcen';
 
     my $gapLiteral = $instance->literalNode($gap);
@@ -2438,6 +2314,7 @@ sub checkBarcen {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [
                     [ $tag, @{ $policy->anchorDetails( $node, $anchorData ) } ]
                 ],
@@ -2480,6 +2357,7 @@ sub checkBarket {
 
     my @mistakes = ();
     my $tag      = 'barket';
+    my $runeName      = 'barket';
 
     my $expectedColumn;
 
@@ -2553,6 +2431,7 @@ sub checkBarket {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$batteryLine],
             }
@@ -2595,6 +2474,7 @@ sub checkFashep {
 
     my @mistakes = ();
     my $tag      = 'fashep';
+    my $runeName = 'fashep';
 
     my $expectedColumn;
 
@@ -2639,6 +2519,7 @@ sub checkFashep {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
             }
         )
@@ -2711,7 +2592,9 @@ sub checkFaslus {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
+                subpolicy => [ $runeName ],
             }
         )
       };
@@ -2766,6 +2649,7 @@ sub checkFord_1Gap {
                 {
                     mainColumn => $expectedBodyColumn,
                     tag        => $tag,
+                subpolicy => [ $tag ],
                     details    => [ [$tag] ],
                 }
             )
@@ -2806,6 +2690,7 @@ sub checkFaswut {
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
+    my $runeName      = 'faswut';
     my $tag      = 'faswut';
 
     my $expectedColumn;
@@ -2852,6 +2737,7 @@ sub checkFaswut {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
             }
         )
@@ -2886,6 +2772,8 @@ sub checkSplit_0Running {
     my $instance        = $policy->{lint};
     my $lineToPos       = $instance->{lineToPos};
     my $minimumRunsteps = $instance->{minSplit_0RunningSteps} // 0;
+
+    my $runeName = $policy->runeName($node);
 
     my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
@@ -2955,6 +2843,7 @@ sub checkSplit_0Running {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
             }
         )
       };
@@ -2980,6 +2869,7 @@ sub checkSplit_0Running {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
             }
         )
@@ -3006,6 +2896,7 @@ sub checkJoined_0Running {
     my $lineToPos       = $instance->{lineToPos};
     my $maximumRunsteps = $instance->{maxJoined_0RunningSteps};
 
+    my $runeName = $policy->runeName($node);
     my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
 
@@ -3061,6 +2952,7 @@ sub checkJoined_0Running {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$tag] ],
             }
@@ -3086,6 +2978,8 @@ sub check_1Running {
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
     my $tag       = '1-running';
+
+    my $runeName = $policy->runeName($node);
 
     my ( $rune, $headGap, $head, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
@@ -3142,6 +3036,7 @@ sub check_1Running {
                     mainColumn => $anchorColumn,
                     preColumn  => $runningColumn,
                     tag        => $tag,
+                subpolicy => [ $runeName ],
                 }
             )
           };
@@ -3211,6 +3106,7 @@ sub check_1Running {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
             }
         )
@@ -3241,6 +3137,7 @@ sub check_0_as_1Running {
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
+    my $runeName = $policy->runeName($node);
     my ( $rune, $headGap, $head, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
 
@@ -3262,6 +3159,7 @@ sub check_0_as_1Running {
             {
                 mainColumn => $anchorColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
             }
         )
       };
@@ -3287,6 +3185,7 @@ sub check_0_as_1Running {
       };
 
     # Needs to use lower level isOneLineGap() call
+    # say STDERR join " ", __FILE__, __LINE__,  ( $policy->nodeSubpolicy($node) );
     if (
     my @gapMistakes = @{
         $policy->isOneLineGap( $tistisGap,
@@ -3393,7 +3292,6 @@ sub findChainAlignment {
 
     
     # say STDERR join " ", __FILE__, __LINE__, $topWideColumn;
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%allAlignments);
 
     # Make sure this is actually an *alignment*, that is,
     # that there are at least 2 instances.  Otherwise,
@@ -3731,7 +3629,6 @@ sub findAlignment {
 
     # say STDERR join " ", __FILE__, __LINE__, scalar @{$nodes};
 
-    # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper(\%wideAlignments);
     return [-1, []] if not scalar %wideAlignments;
 
     # wide alignments, in order first by descending count of wide instances;
@@ -3799,6 +3696,7 @@ sub check_1Jogging {
     my $joggingRules  = $instance->{joggingRule};
 
     my @mistakes = ();
+    my $runeName = $policy->runeName($node);
     my $tag      = '1-jogging';
 
     if ( $headLine != $runeLine ) {
@@ -3842,6 +3740,7 @@ sub check_1Jogging {
             {
                 mainColumn => $runeColumn,
                 tag        => ( sprintf '1-jogging %s jogging', $chessSide ),
+                subpolicy => [ $runeName ],
                 parent     => $rune,
                 topicLines => [$joggingLine],
             }
@@ -3855,6 +3754,7 @@ sub check_1Jogging {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [$runeName],
                 topicLines => [$tistisLine],
             }
         )
@@ -3879,6 +3779,7 @@ sub check_2Jogging {
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
+    my $runeName = $policy->runeName($node);
     my (
         $rune,       $headGap, $head,      $subheadGap, $subhead,
         $joggingGap, $jogging, $tistisGap, $tistis
@@ -3978,6 +3879,7 @@ sub check_2Jogging {
                 {
                     mainColumn => $runeColumn,
                     tag        => $tag,
+                subpolicy => [ $runeName ],
                     details    => [ [$tag] ],
                     topicLines => [$subheadLine],
                 }
@@ -4009,6 +3911,7 @@ sub check_2Jogging {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$joggingLine],
             }
@@ -4022,6 +3925,7 @@ sub check_2Jogging {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [$tistisLine],
             }
         )
@@ -4046,6 +3950,7 @@ sub check_Jogging1 {
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
+    my $runeName = $policy->runeName($node);
     my ( $rune, $joggingGap, $jogging, $tistisGap, $tistis, $tailGap, $tail ) =
       @{ $policy->gapSeq($node) };
 
@@ -4098,6 +4003,7 @@ sub check_Jogging1 {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 topicLines => [$tistisLine],
                 details    => [ [$tag] ],
             }
@@ -4122,6 +4028,7 @@ sub check_Jogging1 {
             {
                 mainColumn => $runeColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$tailLine],
             }
@@ -4327,6 +4234,7 @@ sub checkFascomElement {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
+                subpolicy => [ $tag ],
                 details    => [ [$tag] ],
                 topicLines => [$runeLine],
             }
@@ -4347,6 +4255,7 @@ sub checkFastis {
     my ( $hornLine,   $hornColumn )   = $instance->nodeLC($horn);
 
     my @mistakes = ();
+    my $runeName      = 'fastis';
     my $tag      = 'fastis';
 
   CHECK_SYMBOL: {
@@ -4416,6 +4325,7 @@ sub checkFastis {
                 {
                     mainColumn => $expectedHornColumn,
                     tag        => $tag,
+                subpolicy => [ $runeName ],
                     details    => [ [$tag] ],
                 }
             )
@@ -4617,6 +4527,7 @@ sub checkKingsideJog {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
+                subpolicy => [ $tag ],
                 details    => [ [$tag] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
@@ -4751,6 +4662,7 @@ sub checkQueensideJog {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
+                subpolicy => [ $tag ],
                 details    => [ [$tag] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
@@ -4805,12 +4717,12 @@ sub checkBackdented {
     my $instance     = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
+    my $runeName = $policy->runeName($node);
     my $tag      = $elementCount . '-backdented';
 
     my $chainOffset = 0;
     my $chainAlignments;
     my $chainAlignmentData = $policy->chainAlignmentData($node);
-    # say STDERR join " ", Data::Dumper::Dumper($chainAlignmentData);
     if ($chainAlignmentData) {
         $chainOffset = $chainAlignmentData->{offset};
         $chainAlignments = $chainAlignmentData->{alignments};
@@ -4819,7 +4731,6 @@ sub checkBackdented {
     my $runningAlignments =
       $policy->{perNode}->{$nodeIX}->{runningAlignments};
             # say STDERR join " ", __FILE__, __LINE__, "nodeIX:", $nodeIX;
-    # say STDERR Data::Dumper::Dumper($runningAlignments);
 
     my $reanchorOffset;    # for re-anchoring logic
 
@@ -4893,7 +4804,6 @@ sub checkBackdented {
 
             }
 
-            # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($runningAlignments);
             # say STDERR join " ", __FILE__, __LINE__, $elementNumber;
             my ( $runningAlignmentColumn, $runningAlignmentDetails );
             if ($runningAlignments) {
@@ -5054,6 +4964,7 @@ sub checkBackdented {
                     preColumn  => $elementColumn,
                     tag =>
                       ( sprintf 'backdented element #%d,', $elementNumber ),
+                subpolicy => [ $runeName ],
                     details => [
                         [
                             $tag,
@@ -5095,6 +5006,7 @@ sub checkKetdot {
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
+    my $runeName      = 'ketdot';
     my $tag      = 'ketdot';
 
     my $anchorNode =
@@ -5156,6 +5068,7 @@ sub checkKetdot {
                     {
                         mainColumn => $anchorColumn,
                         tag        => $tag,
+                subpolicy => [ $runeName ],
                         details    => [ [$tag] ],
                     }
                 )
@@ -5220,6 +5133,7 @@ sub checkLuslus {
     my ($cellBodyColumn, $cellBodyColumnLines) = @{$policy->cellBodyColumn($battery)};
 
     my @mistakes = ();
+    my $runeName      = 'luslus';
     my $tag      = 'luslus';
 
     # LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
@@ -5341,6 +5255,7 @@ sub checkLuslus {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [ $bodyLine, $batteryLine ],
             }

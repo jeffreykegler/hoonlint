@@ -367,10 +367,28 @@ sub reportItem {
     my $inclusions      = $instance->{inclusions};
     my $suppressions    = $instance->{suppressions};
     my $reportPolicy    = $mistake->{policy};
-    my $reportSubpolicy = $mistake->{subpolicy};
+
+    # TODO: Is subpolicy everywhere?  Can the tag
+    # named argument be eliminated?
+    my $mistakeSubpolicy = $mistake->{subpolicy};
+
+    # TODO: Change subpolicy to ALWAYS be an array
+    # and eliminate the following code
+    my @reportSubpolicy = ();
+    SET_SUBPOLICY: {
+        my $refType = ref $mistakeSubpolicy;
+        if ($refType eq 'ARRAY') {
+           push @reportSubpolicy, @{$mistakeSubpolicy};
+           last SET_SUBPOLICY;
+        }
+        push @reportSubpolicy, $mistakeSubpolicy;
+    }
+    my $reportSubpolicy = join ':', @reportSubpolicy;
 
     # TODO: Usually a default of parentLine, parentColumn has already
     # been enforced.  This is a mistake and should change.
+    # Add reportLine/reportColumn to all mistakes, and do not use
+    # line/column.  (Can line/column be eliminated?)
     my $reportLine       = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn     = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC         = join ':', $reportLine, $reportColumn + 1;
