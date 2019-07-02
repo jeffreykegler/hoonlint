@@ -1752,14 +1752,6 @@ in lexical order:
 
 * The runechild.
 
-## FASCOL
-
-TODO
-
-## FASCOM
-
-TODO
-
 ## Ford hoof hoons
 
 The ford hoof hoons are FASHEP (`/-`) and FASLUS (`/+`).
@@ -1784,6 +1776,34 @@ in lexical order:
 * A ford hoof sequence.
 
 ## Ford hoof sequence
+
+TODO
+
+## FASBAR
+
+TODO
+
+## FASCOL
+
+TODO
+
+## FASCOM
+
+TODO
+
+## FASDOT
+
+TODO
+
+## FASKET
+
+TODO
+
+## FASPAM
+
+TODO
+
+## FASSEM
 
 TODO
 
