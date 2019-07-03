@@ -61,7 +61,6 @@ sub parseReportItems {
 }
 
 my $verbose;    # right now does nothing
-my $censusWhitespace;
 my $inclusionsFileName;
 my @suppressionsFileNames;
 my @policiesArg;
@@ -72,7 +71,6 @@ GetOptions(
     "verbose"               => \$verbose,
     "context|C=i"           => \$contextSize,
     "displayDetails|details=i"           => \$displayDetails,
-    "census-whitespace"     => \$censusWhitespace,
     "inclusions-file|I=s"   => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
     "policy|P=s"            => \@policiesArg,
@@ -100,7 +98,6 @@ my %config = ();
 
 $config{fileName} = $fileName;
 
-$config{censusWhitespace} = $censusWhitespace;
 $config{topicLines}       = {};
 $config{mistakeLines}     = {};
 

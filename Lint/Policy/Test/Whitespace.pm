@@ -1861,7 +1861,7 @@ sub checkWisp5d {
     return \@mistakes;
 }
 
-sub checkSplitFascom {
+sub checkSplitFord_1Seq {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -1876,8 +1876,8 @@ sub checkSplitFascom {
     my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
 
     my @mistakes = ();
-    my $runeName      = 'fascom';
-    my $tag      = 'fascom';
+    my $runeName = $policy->runeName($node);
+    my $tag      = $runeName;
 
     # We deal with the elements list itself,
     # in its own node
@@ -1944,7 +1944,7 @@ sub checkSplitFascom {
     return \@mistakes;
 }
 
-sub checkJoinedFascom {
+sub checkJoinedFord_1Seq {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -1956,8 +1956,8 @@ sub checkJoinedFascom {
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
 
     my @mistakes = ();
-    my $runeName      = 'fascom';
-    my $tag      = 'fascom';
+    my $runeName = $policy->runeName($node);
+    my $tag      = $runeName;
 
     # We deal with the elements list in its own node
 
@@ -2009,16 +2009,16 @@ sub checkJoinedFascom {
     return \@mistakes;
 }
 
-sub checkFascom {
+sub checkFord_1Seq {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my ( undef, $elements ) = @{ $policy->gapSeq0($node) };
 
     my ($runeLine)     = $instance->nodeLC($node);
     my ($elementsLine) = $instance->nodeLC($elements);
-    return checkSplitFascom( $policy, $node )
+    return checkSplitFord_1Seq( $policy, $node )
       if $elementsLine != $runeLine;
-    return checkJoinedFascom( $policy, $node );
+    return checkJoinedFord_1Seq( $policy, $node );
 }
 
 sub checkFascomElements {
@@ -5422,7 +5422,7 @@ sub validate_node {
             }
 
             if ( $lhsName eq "fordFascom" ) {
-                $mistakes = $policy->checkFascom($node);
+                $mistakes = $policy->checkFord_1Seq($node);
                 last TYPE_INDENT if @{$mistakes};
                 $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
@@ -5648,17 +5648,6 @@ sub validate_node {
             last PRINT;
         }
 
-        if ($censusWhitespace) {
-            my ( $reportLine, $reportColumn ) = $instance->line_column($start);
-            my $mistake = {
-                policy       => $policyShortName,
-                subpolicy    => $instance->diagName($node),
-                reportLine   => $reportLine,
-                reportColumn => $reportColumn
-            };
-            $instance->reportItem( $mistake, $indentDesc, $parentLine,
-                $parentLine );
-        }
     }
 
     return;

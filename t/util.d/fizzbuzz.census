@@ -1,9 +1,0 @@
-t/ast.d/fizzbuzz.hoon 1:1 Test::Whitespace tallBartis BACKDENTED
-t/ast.d/fizzbuzz.hoon 2:1 Test::Whitespace tallTislus BACKDENTED
-t/ast.d/fizzbuzz.hoon 3:1 Test::Whitespace tallBarhep CAST-STYLE
-t/ast.d/fizzbuzz.hoon 4:1 Test::Whitespace tallKethep CAST-STYLE
-t/ast.d/fizzbuzz.hoon 5:1 Test::Whitespace tallWutcol SUPPRESSION indentation is one-off
-t/ast.d/fizzbuzz.hoon 7:1 Test::Whitespace tallColhep BACKDENTED
-t/ast.d/fizzbuzz.hoon 8:3 Test::Whitespace tallWutcol BACKDENTED
-t/ast.d/fizzbuzz.hoon 10:3 Test::Whitespace tallWutcol BACKDENTED
-t/ast.d/fizzbuzz.hoon 12:3 Test::Whitespace tallWutcol BACKDENTED
