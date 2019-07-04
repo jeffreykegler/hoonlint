@@ -86,11 +86,11 @@
 <li><a href="#fasbar">FASBAR</a></li>
 <li><a href="#fascol">FASCOL</a></li>
 <li><a href="#fascom">FASCOM</a><ul>
-<li><a href="#fascom-element">FASCOM Element</a></li>
+<li><a href="#joined-fascom">Joined FASCOM</a></li>
+<li><a href="#split-fascom">Split FASCOM</a></li>
+<li><a href="#fascom-element-sequence">FASCOM Element sequence</a></li>
 </ul></li>
 <li><a href="#fasdot">FASDOT</a></li>
-<li><a href="#joined-fasdot">Joined FASDOT</a></li>
-<li><a href="#split-fasdot">Split FASDOT</a></li>
 <li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
 <li><a href="#fasket">FASKET</a></li>
 <li><a href="#faspam">FASPAM</a></li>
@@ -819,28 +819,37 @@ Also, contrary to the above
 <h2 id="fascol">FASCOL</h2>
 <p>TODO</p>
 <h2 id="fascom">FASCOM</h2>
-<p>TODO</p>
-<h3 id="fascom-element">FASCOM Element</h3>
-<p>TODO</p>
-<h2 id="fasdot">FASDOT</h2>
-<!-- There are no hoonlint-correct examples for FASDOT,
-and no examples at all of split FASDOT.
--->
-<h2 id="joined-fasdot">Joined FASDOT</h2>
-<p>A tall ford-1 hoon should consist of, in lexical order:</p>
+<h3 id="joined-fascom">Joined FASCOM</h3>
+<p><em>From <code>hoons/arvo/ren/css.hoon</code>, lines 6-8:</em></p>
+<pre><code>/,  /web/pack/css  /%   /!css/
+    /              /~  !!
+==</code></pre>
+<p>A tall joined FASCOM hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>A ford horn sequence</p></li>
+<li><p>A sequence of FASCOM elements, all of which are aligned with the first one.</p></li>
 <li><p>A vertical gap, with comments at the rune column.</p></li>
 <li><p>A TISTIS</p></li>
 </ul>
-<h2 id="split-fasdot">Split FASDOT</h2>
-<p>TODO</p>
-<!-- No examples in the arvo corpus.
-Copy this from split FASCOM.
+<h3 id="split-fascom">Split FASCOM</h3>
+<!-- The only arvo example of a split FASCOM may be
+anchored and in any case is non-standard.
 -->
+<p>TODO</p>
+<h3 id="fascom-element-sequence">FASCOM Element sequence</h3>
+<p>TODO</p>
+<h2 id="fasdot">FASDOT</h2>
+<p>A tall FASDOT hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A sequence of ford horns, all of which are aligned with the first one.</p></li>
+<li><p>A vertical gap, with comments at the rune column.</p></li>
+<li><p>A TISTIS</p></li>
+</ul>
 <h2 id="ford-horn-sequence">Ford horn sequence</h2>
+<p>TODO</p>
 <h2 id="fasket">FASKET</h2>
 <p>TODO</p>
 <h2 id="faspam">FASPAM</h2>
