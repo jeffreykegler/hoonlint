@@ -1140,3 +1140,8 @@ hoons/arvo/gen/gmail/send.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7
 hoons/arvo/gen/twit/as.hoon 5:7 Test::Whitespace fashep:hgap Fashep body @5:7 is overindented by 2
 hoons/arvo/gen/twit/feed.hoon 6:7 Test::Whitespace fashep:hgap Fashep body @6:7 is overindented by 2
 hoons/arvo/gen/pope.hoon 7:7 Test::Whitespace fashep:hgap Fashep body @7:7 is overindented by 2
+
+# Ford FASDOT two-stop gaps
+hoons/arvo/web/pack/js/tree-urb.hoon 6:9 Test::Whitespace fasdot:body-indent joined fasdot @6:9; overindented by 2
+hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace fasdot:body-indent joined fasdot @6:9; overindented by 2
+hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fasdot:body-indent joined fasdot @12:11; overindented by 2

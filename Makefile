@@ -28,3 +28,8 @@ dev:
 
 doc:
 	cd misc; make all
+
+count:
+	sed -ne 's/.* Test::Whitespace //p' Lint/arvo.lint.out | \
+	  perl -anE 'say "$$F[0]"' | \
+	  sort | uniq -c | sort -k +1n

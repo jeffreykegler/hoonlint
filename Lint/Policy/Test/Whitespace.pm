@@ -1861,11 +1861,12 @@ sub checkWisp5d {
     return \@mistakes;
 }
 
-sub checkSplitFord_1Seq {
+sub checkSplitFascom {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
+    # say STDERR join " ", __FILE__, __LINE__, $instance->literalNode($node);
     my ( $bodyGap, $body, $tistisGap, $tistis ) =
       @{ $policy->gapSeq0($node) };
 
@@ -1873,7 +1874,14 @@ sub checkSplitFord_1Seq {
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
 
-    my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
+    my $anchorLine = $runeLine;
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            fordFascen => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
@@ -1901,18 +1909,22 @@ sub checkSplitFord_1Seq {
 
     if ( $bodyColumn != $expectedColumn ) {
         my $msg = sprintf
-          "split Fascom %s; %s",
+          "split %s %s; %s",
+          $runeName,
           describeLC( $bodyLine, $bodyColumn ),
           describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'body-indent' ],
             parentLine     => $runeLine,
             parentColumn   => $runeColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
             topicLines     => [ $runeLine, $expectedLine ],
-            details        => [ [$tag] ],
+            details        => [ [$tag, @{$anchorDetails} ] ],
           };
     }
 
@@ -1925,7 +1937,7 @@ sub checkSplitFord_1Seq {
                 tag        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
-                details    => [ [$tag] ],
+                details        => [ [$tag, @{$anchorDetails} ] ],
             }
         )
       };
@@ -1944,7 +1956,7 @@ sub checkSplitFord_1Seq {
     return \@mistakes;
 }
 
-sub checkJoinedFord_1Seq {
+sub checkJoinedFascom {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -1966,18 +1978,22 @@ sub checkJoinedFord_1Seq {
 
     if ( $bodyColumn != $expectedColumn ) {
         my $msg = sprintf
-          "joined Fascom %s; %s",
+          "joined %s %s; %s",
+          $runeName,
           describeLC( $bodyLine, $bodyColumn ),
           describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            topicLines     => [ $runeLine, $expectedLine ],
-            details        => [ [$tag] ],
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'body-indent' ],
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $bodyLine,
+            column       => $bodyColumn,
+            reportLine   => $bodyLine,
+            reportColumn => $bodyColumn,
+            topicLines   => [ $runeLine, $expectedLine ],
+            details      => [ [$tag] ],
           };
     }
 
@@ -2009,16 +2025,22 @@ sub checkJoinedFord_1Seq {
     return \@mistakes;
 }
 
-sub checkFord_1Seq {
+sub checkFascom {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
+    # say STDERR join " ", __FILE__, __LINE__, $instance->literalNode($node);
     my ( undef, $elements ) = @{ $policy->gapSeq0($node) };
 
     my ($runeLine)     = $instance->nodeLC($node);
     my ($elementsLine) = $instance->nodeLC($elements);
-    return checkSplitFord_1Seq( $policy, $node )
-      if $elementsLine != $runeLine;
-    return checkJoinedFord_1Seq( $policy, $node );
+
+    my $isJoined = $elementsLine == $runeLine ? 1 : 0;
+
+    my $nodeIX = $node->{IX};
+    $policy->{perNode}->{$nodeIX}->{isJoined} = $isJoined;
+
+    return checkJoinedFascom( $policy, $node ) if $isJoined;
+    return checkSplitFascom( $policy, $node );
 }
 
 sub checkFascomElements {
@@ -2048,6 +2070,7 @@ sub checkFascomElements {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ 'fascom-element', 'indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
@@ -2078,6 +2101,95 @@ sub checkFascomElements {
 
         $childIX++;
     }
+
+    return \@mistakes;
+}
+
+sub checkFasdot {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ( $bodyGap, $body, $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+
+    my ( $runeLine,   $runeColumn )   = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+
+    my @mistakes = ();
+    my $runeName = $policy->runeName($node);
+    my $tag      = $runeName;
+
+    # We deal with the elements list in its own node
+
+    my $expectedColumn = $runeColumn + 4;
+
+  CHECK_BODY: {
+        if ( $bodyLine != $runeLine ) {
+            my $msg = sprintf
+              "%s %s; body must be on rune line",
+              $runeName, describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'body-split' ],
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                topicLines   => [$runeLine],
+                details      => [ [$tag] ],
+              };
+            last CHECK_BODY;
+        }
+
+        if ( $bodyColumn != $expectedColumn ) {
+            my $msg = sprintf
+              "joined %s %s; %s",
+              $runeName,
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent2( $bodyColumn, $expectedColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'body-indent' ],
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                topicLines   => [$runeLine],
+                details      => [ [$tag] ],
+              };
+        }
+    }
+
+    push @mistakes,
+      @{
+        $policy->checkOneLineGap(
+            $tistisGap,
+            {
+                mainColumn => $runeColumn,
+                tag        => $tag,
+                subpolicy  => [$runeName],
+                topicLines => [ $runeLine, $tistisLine ],
+                details    => [ [$tag] ],
+            }
+        )
+      };
+
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $tistis,
+            {
+                tag            => $tag,
+                expectedColumn => $runeColumn,
+            }
+        )
+      };
 
     return \@mistakes;
 }
@@ -2482,7 +2594,8 @@ sub checkFordHoofRune {
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf 'Fashep body %s; must be on rune line',
+            my $msg = sprintf '%s body %s; must be on rune line',
+              $runeName,
               describeLC( $bodyLine, $bodyColumn );
             push @mistakes,
               {
@@ -2500,7 +2613,8 @@ sub checkFordHoofRune {
         my $expectedBodyColumn = $parentColumn + 4;
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
-              sprintf 'Fashep body %s is %s',
+              sprintf '%s body %s is %s',
+              $runeName,
               describeLC( $bodyLine, $bodyColumn ),
               describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
@@ -2536,12 +2650,14 @@ sub checkFordHoofRune {
     return \@mistakes;
 }
 
-sub checkFord_1Gap {
-    my ( $policy, $node, $tag ) = @_;
+sub checkFordHoop {
+    my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
     # TODO Split is implemented, but not split Ford-1 hoon
     # is represented in the corpus AFAICT
+
+    my $tag = 'fordHoop';
 
     # fordFassig ::= (- FAS SIG GAP -) tall5d
     my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
@@ -2565,6 +2681,7 @@ sub checkFord_1Gap {
                 push @mistakes,
                   {
                     desc           => $msg,
+                subpolicy => [ $tag, 'hgap' ],
                     parentLine     => $parentLine,
                     parentColumn   => $parentColumn,
                     line           => $bodyLine,
@@ -2598,10 +2715,100 @@ sub checkFord_1Gap {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $tag, 'body-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
+sub checkFord_1 {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # TODO Split is implemented, but not split Ford-1 hoon
+    # is represented in the corpus AFAICT
+
+    my $runeName = $policy->runeName($node);
+
+    # fordFassig ::= (- FAS SIG GAP -) tall5d
+    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            fordFascen => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
+
+    my @mistakes = ();
+
+    my $expectedBodyColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine == $bodyLine ) {
+            my $expectedBodyColumn = $anchorColumn + 4;
+            if ( $bodyColumn != $expectedBodyColumn ) {
+                my $msg =
+                  sprintf 'joined %s body %s is %s',
+                  $runeName,
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent2( $bodyColumn, $expectedBodyColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    subpolicy    => [ $runeName, 'hgap' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    reportLine   => $bodyLine,
+                    reportColumn => $bodyColumn,
+                    line         => $bodyLine,
+                    column       => $bodyColumn,
+                    details      => [ [ @{$anchorDetails} ] ],
+                  };
+            }
+            last BODY_ISSUES;
+        }
+
+        # If here parent line != body line
+        $expectedBodyColumn = $anchorColumn;
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $gap,
+                {
+                    mainColumn => $expectedBodyColumn,
+                    tag        => $runeName,
+                    subpolicy  => [$runeName],
+                    details    => [ [ $runeName, @{$anchorDetails}, ], ],
+                }
+            )
+          };
+
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'split %s body %s is %s',
+              $runeName,
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'body-indent' ],
+                details      => [ [ $runeName, @{$anchorDetails} ] ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
               };
         }
     }
@@ -4052,19 +4259,31 @@ sub checkFascomElement {
     my $instance = $policy->{lint};
 
     my $runeNode = $instance->ancestorByBrickName( $node, 'fordFascom' );
+    my $runeNodeIX = $runeNode->{IX};
+    my $isJoined = $policy->{perNode}->{$runeNodeIX}->{isJoined};
+
     my ( $runeLine,   $runeColumn )   = $instance->nodeLC($runeNode);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $headLine,   $headColumn )   = ( $parentLine, $parentColumn );
     my ( $gap,        $body )         = @{ $policy->gapSeq0($node) };
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
+    my $anchorLine = $runeLine;
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $runeNode,
+        {
+            fordFascen => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
+
     my ( $fascomBodyColumn, $fascomBodyColumnDetails ) =
       @{ $policy->fascomBodyColumn( $node, { fordFascom => 1 } ) };
 
     my @mistakes = ();
-    my $tag      = 'fascom element';
+    my $tag      = 'fascom-element';
 
-    my $baseColumn = $runeColumn + 4;
+    my $baseColumn = $anchorColumn + ($isJoined ? 4 : 2);
 
     my $expectedHeadColumn = $baseColumn;
     if ( $headColumn != $expectedHeadColumn ) {
@@ -4074,6 +4293,7 @@ sub checkFascomElement {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $tag, 'head-hgap' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $headLine,
@@ -4092,6 +4312,7 @@ sub checkFascomElement {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $tag, 'body-hgap' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -4115,6 +4336,7 @@ sub checkFascomElement {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $tag, 'pseudo-comment-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -4132,6 +4354,7 @@ sub checkFascomElement {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $tag, 'pseudo-hgap' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -4152,6 +4375,7 @@ sub checkFascomElement {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $tag, 'body-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
@@ -5409,50 +5633,42 @@ sub validate_node {
 
             if ( $lhsName eq "bont5d" ) {
                 $mistakes = $policy->checkBont($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BONT';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "bonzElement" ) {
                 $mistakes = $policy->checkBonzElement($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARCAB';
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq "fordFascom" ) {
-                $mistakes = $policy->checkFord_1Seq($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASWUT';
+            if ( $lhsName eq 'fordFascom' ) {
+                $mistakes = $policy->checkFascom($node);
                 last TYPE_INDENT;
             }
 
-            for my $tag (
-                qw(fordFassig fordFasbuc fordFascab fordFascen fordFashax
-                fordHoop
-                )
-              )
-            {
-                if ( $lhsName eq $tag ) {
-                    $mistakes = $policy->checkFord_1Gap( $node, $tag );
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'FAS' . uc $tag;
-                    last TYPE_INDENT;
-                }
+            if ( $lhsName eq 'fordFasdot' ) {
+                # say STDERR join " ", __FILE__, __LINE__, $lhsName, $instance->literalNode($node);
+                $mistakes = $policy->checkFasdot($node);
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName =~ m/^fordFas(buc|cab|cen|hax|sig)$/ ) {
+                $mistakes = $policy->checkFord_1( $node );
+                last TYPE_INDENT;
+            }
+
+            if ( $lhsName eq "fordHoop" ) {
+                $mistakes = $policy->checkFordHoop( $node );
+                last TYPE_INDENT;
             }
 
             if ( $lhsName eq "fordFastis" ) {
                 $mistakes = $policy->checkFastis($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASTIS';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "fordFaswut" ) {
                 $mistakes = $policy->checkFaswut($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASWUT';
                 last TYPE_INDENT;
             }
 

@@ -7,7 +7,7 @@ use warnings;
 use Data::Dumper;
 use English qw( -no_match_vars );
 
-use Test::More tests => 24;
+use Test::More tests => 12;
 
 use Test::Differences;
 use IPC::Cmd qw[run_forked];
@@ -25,10 +25,6 @@ sub slurp {
 }
 
 my @tests = (
-    ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
-    ['t/ast.d/toe.hoon', 't/util.d/toe.census', '--census', '--sup=t/util.d/examples.hoonlint.suppressions'],
     ['t/ast.d/fizzbuzz.hoon', 't/util.d/fizzbuzz.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
     ['t/ast.d/sieve_b.hoon', 't/util.d/sieve_b.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],
     ['t/ast.d/sieve_k.hoon', 't/util.d/sieve_k.lint.out', '--sup=t/util.d/examples.hoonlint.suppressions'],

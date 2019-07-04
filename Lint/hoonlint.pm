@@ -979,7 +979,6 @@ EOS
       bonz5d
       fordFasbar
       fordFascol
-      fordFasdot
       fordFasket
       fordFassem
       tallBarcol

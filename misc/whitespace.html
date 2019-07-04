@@ -81,10 +81,20 @@
 </ul></li>
 <li><a href="#ford-hoons">Ford hoons</a><ul>
 <li><a href="#ford-1-hoons">Ford-1 hoons</a></li>
-<li><a href="#fascom">FASCOM</a></li>
-<li><a href="#fashep">FASHEP</a></li>
-<li><a href="#faslus">FASLUS</a></li>
+<li><a href="#ford-hoof-hoons">Ford hoof hoons</a></li>
 <li><a href="#ford-hoof-sequence">Ford hoof sequence</a></li>
+<li><a href="#fasbar">FASBAR</a></li>
+<li><a href="#fascol">FASCOL</a></li>
+<li><a href="#fascom">FASCOM</a><ul>
+<li><a href="#fascom-element">FASCOM Element</a></li>
+</ul></li>
+<li><a href="#fasdot">FASDOT</a></li>
+<li><a href="#joined-fasdot">Joined FASDOT</a></li>
+<li><a href="#split-fasdot">Split FASDOT</a></li>
+<li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
+<li><a href="#fasket">FASKET</a></li>
+<li><a href="#faspam">FASPAM</a></li>
+<li><a href="#fassem">FASSEM</a></li>
 <li><a href="#fastis">FASTIS</a></li>
 <li><a href="#ford-horn">Ford horn</a></li>
 </ul></li>
@@ -254,6 +264,15 @@ d</code></pre>
   ::</code></pre>
 <p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the inter-comment column. (The inter-comment column location varies, depending on the syntax which contains the comment.) The tread is four colons, aligned at the inter-comment column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the inter-comment column. A still more formal definition of a staircase is given in an appendix.</p>
 <h2 id="vertical-gaps">Vertical Gaps</h2>
+<p>When we say that a gap is</p>
+<blockquote>
+<p><strong>a vertical gap with comments at <code>X</code></strong>,</p>
+</blockquote>
+<p>if the gap's inter-comment comment location is <code>X</code>, and the gap's pre-comment comment location is not defined. When we say that a gap is</p>
+<blockquote>
+<p><strong>a vertical gap with comments at <code>X</code> and <code>Y</code></strong>,</p>
+</blockquote>
+<p>if the gap's inter-comment comment location is <code>X</code>, and the gap's pre-comment comment location is <code>Y</code>. Here, <code>X</code> and <code>Y</code> stand for phrases which may express comment location directly, or via a text block. If column location is expressed via a text block, the intended comment column location is the start column location of the text block.</p>
 <p>A vertical gap contains</p>
 <ul>
 <li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline.</p></li>
@@ -772,8 +791,7 @@ Also, contrary to the above
 </ul>
 <h1 id="ford-hoons">Ford hoons</h1>
 <h2 id="ford-1-hoons">Ford-1 hoons</h2>
-<p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>), FASHAX (<code>/#</code>) and FASWUT (<code>/?</code>).</p>
-<!-- TODO: fordHoop? -->
+<p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>), FASFAS (<code>//</code>), FASHAX (<code>/#</code>) and FASWUT (<code>/?</code>).</p>
 <p><em>From <code>arvo/app/hall.hoon</code>, line 17:</em></p>
 <pre><code>          /~  |=({t/telegram:hall bowl:gall} t)</code></pre>
 <p>A tall ford-1 hoon should consist of, in lexical order:</p>
@@ -782,23 +800,54 @@ Also, contrary to the above
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>The runechild.</p></li>
 </ul>
-<h2 id="fascom">FASCOM</h2>
-<p>TODO</p>
-<h2 id="fashep">FASHEP</h2>
-<p>TODO</p>
-<h2 id="faslus">FASLUS</h2>
+<h2 id="ford-hoof-hoons">Ford hoof hoons</h2>
+<p>The ford hoof hoons are FASHEP (<code>/-</code>) and FASLUS (<code>/+</code>).</p>
+<p><em>From <code>../hoons/arvo/app/dojo.hoon</code>, line 5:</em></p>
+<pre><code>/-  sole, lens                                          ::  console structures</code></pre>
 <p><em>From <code>hoons/arvo/mar/twit/feed.hoon</code>, line 6:</em></p>
 <pre><code>/+  twitter, httr-to-json, old-zuse</code></pre>
-<p>A tall FASLUS hoon should consist of, in lexical order:</p>
+<p>A tall Ford hoof hoon should consist of, in lexical order:</p>
 <ul>
-<li><p>The FASLUS rune.</p></li>
+<li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A ford hoof sequence.</p></li>
 </ul>
 <h2 id="ford-hoof-sequence">Ford hoof sequence</h2>
 <p>TODO</p>
-<h2 id="fastis">FASTIS</h2>
+<h2 id="fasbar">FASBAR</h2>
 <p>TODO</p>
+<h2 id="fascol">FASCOL</h2>
+<p>TODO</p>
+<h2 id="fascom">FASCOM</h2>
+<p>TODO</p>
+<h3 id="fascom-element">FASCOM Element</h3>
+<p>TODO</p>
+<h2 id="fasdot">FASDOT</h2>
+<!-- There are no hoonlint-correct examples for FASDOT,
+and no examples at all of split FASDOT.
+-->
+<h2 id="joined-fasdot">Joined FASDOT</h2>
+<p>A tall ford-1 hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A ford horn sequence</p></li>
+<li><p>A vertical gap, with comments at the rune column.</p></li>
+<li><p>A TISTIS</p></li>
+</ul>
+<h2 id="split-fasdot">Split FASDOT</h2>
+<p>TODO</p>
+<!-- No examples in the arvo corpus.
+Copy this from split FASCOM.
+-->
+<h2 id="ford-horn-sequence">Ford horn sequence</h2>
+<h2 id="fasket">FASKET</h2>
+<p>TODO</p>
+<h2 id="faspam">FASPAM</h2>
+<p>TODO</p>
+<h2 id="fassem">FASSEM</h2>
+<p>TODO</p>
+<h2 id="fastis">FASTIS</h2>
 <pre><code>/=  rfctext  /:  /%/rfc  /txt/</code></pre>
 <p>A tall FASTIS hoon should consist of, in lexical order:</p>
 <ul>
