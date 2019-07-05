@@ -1796,15 +1796,33 @@ in lexical order:
 
 * A one-stop horizontal gap.
 
-* A ford hoof sequence.
+* The runechild.
 
-## Ford hoof sequence
-
-TODO
+* A vertical gap, with comments at the anchor column.
 
 ## FASBAR
 
-TODO
+TODO: Combine FASBAR and FASDOT descriptions?
+
+*From `hoons/arvo/app/hall.hoon`, lines 16-18:*
+```
+      /|  /:  /%/filter  /!noun/
+          /~  |=({t/telegram:hall bowl:gall} t)
+      ==
+```
+
+A tall FASBAR hoon should consist of,
+in lexical order:
+
+* The rune.
+
+* A one-stop horizontal gap.
+
+* A sequence of one or more ford horns.
+
+* A vertical gap, with comments at the rune column.
+
+* A TISTIS.
 
 ## FASCOL
 
@@ -1926,9 +1944,35 @@ Comments in the vertical gaps
 should be at the anchor column
 or aligned with the heads of the FASCOM elements.
 
-TODO
+A FASCOM element is considered joined or split,
+depending on the gap between the head and the body.
+If joined, the body of the FASCOM element
+separated from the head by a one-stop gap,
+or an equivalent pseudo-join.
+
+If the FASCOM element is split, the 
+body of the FASCOM element should be separated by
+a vertical gap with comments at the body column.
+The body of a kingside FASCOM element should be
+aligned one stop **after** the head of the FASCOM element.
+The body of a queenside FASCOM element should be
+aligned one stop **before** the head of the FASCOM element.
 
 ## FASDOT
+
+<!-- No FASDOT code in the current arvo corpus is standard,
+do this is a revised example.
+-->
+*Adapted from
+`hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon`,
+lines 6-10:*
+```
+  /.  /:/===/web/lib/css/codemirror:/css/
+      /:/===/web/lib/css/fonts:/css/
+      /:/===/web/lib/css/bootstrap:/css/
+      /:/===/web/tree/main:/css/
+  ==
+```
 
 A tall FASDOT hoon should consist of,
 in lexical order:
@@ -1937,16 +1981,23 @@ in lexical order:
 
 * A one-stop horizontal gap.
 
-* A sequence of ford horns, all of which
-  are aligned with the first one.
+* A sequence of zero or more ford horns.
 
 * A vertical gap, with comments at the rune column.
 
-* A TISTIS
+* A TISTIS.
 
 ## Ford horn sequence
 
-TODO
+A Ford horn sequence is a sequence of ford hoons.
+All of the ford hoons should be at the same
+alignment.
+
+The hoons in the sequence should be
+separated by vertical gaps.
+The comments in the vertical gaps should be
+aligned with the rune of the hoon which
+directly contains the Ford horn sequence.
 
 ## FASKET
 

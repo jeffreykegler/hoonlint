@@ -2643,6 +2643,7 @@ sub checkFordHoofRune {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
     my ( $leaderGapLine,   $leaderGapColumn )   = $instance->nodeLC($leaderGap);
+    my ( $anchorLine, $anchorColumn ) = ( $parentLine, $parentColumn );
 
     my @mistakes = ();
     my $tag      = $runeName;
@@ -2690,13 +2691,13 @@ sub checkFordHoofRune {
 
     }
 
-    $expectedColumn = $parentColumn;
+    $expectedColumn = $anchorColumn;
     push @mistakes,
       @{
         $policy->checkOneLineGap(
             $trailerGap,
             {
-                mainColumn => $expectedColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
@@ -5592,7 +5593,6 @@ sub validate_node {
 
     my $mistakes   = [];
     my $start      = $node->{start};
-    my $indentDesc = '???';
 
   GATHER_MISTAKES: {
         if ( $gapiness < 0 ) {    # sequence
@@ -5602,39 +5602,29 @@ sub validate_node {
                 # Jogging problems are detected by the individual jogs --
                 # we do not run diagnostics on the sequence.
                 if ( $lhsName eq 'rick5d' ) {
-                    $indentDesc = 'JOGGING';
                     last TYPE_INDENT;
                 }
                 if ( $lhsName eq 'ruck5d' ) {
-                    $indentDesc = 'JOGGING';
                     last TYPE_INDENT;
                 }
 
                 if ( $lhsName eq 'fordFascomElements' ) {
                     $mistakes = $policy->checkFascomElements($node);
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'FASCOM ELEMENTS';
                     last TYPE_INDENT;
                 }
 
                 if ( $lhsName eq 'fordHoopSeq' ) {
                     $mistakes = $policy->checkSeq( $node, 'hoop' );
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'FORD_HOOP_SEQ';
                     last TYPE_INDENT;
                 }
 
                 if ( $lhsName eq 'hornSeq' ) {
                     $mistakes = $policy->checkSeq( $node, 'horn' );
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'HORN_SEQ';
                     last TYPE_INDENT;
                 }
 
                 if ( $lhsName eq 'optBonzElements' ) {
                     $mistakes = $policy->checkSeq( $node, 'bonz element' );
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'BONZ_ELEMENTS';
                     last TYPE_INDENT;
                 }
 
@@ -5642,19 +5632,15 @@ sub validate_node {
                 my $grandParentName = $instance->brickName($grandParent);
                 if ( $lhsName eq 'tall5dSeq' or $lhsName eq 'till5dSeq' ) {
                     if ( $grandParentName eq 'lute5d' ) {
-                        $indentDesc = 'LUTE';
                         last TYPE_INDENT;
                     }
                     if ( $tall_1RunningRule->{$grandParentName} ) {
-                        $indentDesc = '1-RUNNING';
                         last TYPE_INDENT;
                     }
                     if ( $tall_0RunningRule->{$grandParentName} ) {
-                        $indentDesc = '0-RUNNING';
                         last TYPE_INDENT;
                     }
                     if ( $tall_0_as_1RunningRule->{$grandParentName} ) {
-                        $indentDesc = '0_AS_1-RUNNING';
                         last TYPE_INDENT;
                     }
                 }
@@ -5671,8 +5657,6 @@ sub validate_node {
                       or $greatGrandParentName eq 'tallBarcen'
                       or $greatGrandParentName eq 'tallBarket';
                     $mistakes = $policy->checkWhap5d($node);
-                    last TYPE_INDENT if @{$mistakes};
-                    $indentDesc = 'CELL';
                     last TYPE_INDENT;
                 }
 
@@ -5706,7 +5690,7 @@ sub validate_node {
                 last TYPE_INDENT;
             }
 
-            if ( $lhsName eq 'fordFasdot' ) {
+            if ( $lhsName =~ '^fordFas(bar|dot)' ) {
                 # say STDERR join " ", __FILE__, __LINE__, $lhsName, $instance->literalNode($node);
                 $mistakes = $policy->checkFasdot($node);
                 last TYPE_INDENT;
@@ -5734,92 +5718,66 @@ sub validate_node {
 
             if ( $lhsName eq "fordFascomElement" ) {
                 $mistakes = $policy->checkFascomElement($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'FASCOM Element';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "lute5d" ) {
                 $mistakes = $policy->checkLute($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'LUTE';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName =~ m/optFordFas(hep|lus)/ ) {
                 $mistakes = $policy->checkFordHoofRune($lhsName, $node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'Ford hoof rune';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallAttribute" ) {
                 $mistakes = $policy->checkSailAttribute($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'Sail attribute';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallBarcab" ) {
                 $mistakes = $policy->checkBarcab($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARCAB';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallBarcen" ) {
                 $mistakes = $policy->checkBarcen($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARCEN';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallBarket" ) {
                 $mistakes = $policy->checkBarket($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BARKET';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallKetdot" ) {
                 $mistakes = $policy->checkKetdot($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'KETDOT';
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq 'tallTailOfElem' ) {
                 $mistakes = $policy->checkTailOfElem($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = $lhsName;
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq 'tallTailOfTop' ) {
                 $mistakes = $policy->checkTailOfTop($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = $lhsName;
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallKidsOfTop" ) {
                 $mistakes = $policy->checkTopKids($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = $lhsName;
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "tallTopSail" ) {
                 $mistakes = $policy->checkTopSail($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = $lhsName;
                 last TYPE_INDENT;
             }
 
             if ( $lhsName eq "wisp5d" ) {
                 $mistakes = $policy->checkWisp5d($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'WISP5D';
                 last TYPE_INDENT;
             }
 
@@ -5833,71 +5791,51 @@ sub validate_node {
 
             if ( $tallJogRule->{$lhsName} ) {
                 $mistakes = $policy->checkJog($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOG-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_0RunningRule->{$lhsName} ) {
                 $mistakes = $policy->check_0Running($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'RUNNING-0-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_0_as_1RunningRule->{$lhsName} ) {
                 $mistakes = $policy->check_0_as_1Running($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = '1_AS_0-RUNNING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1RunningRule->{$lhsName} ) {
                 $mistakes = $policy->check_1Running($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'RUNNING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_1JoggingRule->{$lhsName} ) {
                 $mistakes = $policy->check_1Jogging($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = '1-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_2JoggingRule->{$lhsName} ) {
                 $mistakes = $policy->check_2Jogging($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = '2-JOGGING-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tall_Jogging1Rule->{$lhsName} ) {
                 $mistakes = $policy->check_Jogging1($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'JOGGING-1-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallNoteRule->{$lhsName} ) {
                 $mistakes = $policy->checkBackdented($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'CAST-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $tallLuslusRule->{$lhsName} ) {
                 $mistakes = $policy->checkLuslus( $node, $lhsName );
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'LUSLUS-STYLE';
                 last TYPE_INDENT;
             }
 
             if ( $backdentedRule->{$lhsName} ) {
                 $mistakes = $policy->checkBackdented($node);
-                last TYPE_INDENT if @{$mistakes};
-                $indentDesc = 'BACKDENTED';
                 last TYPE_INDENT;
             }
 

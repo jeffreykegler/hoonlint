@@ -89,7 +89,7 @@
 <li><a href="#joined-fascom">Joined FASCOM</a></li>
 <li><a href="#kingside-split-fascom">Kingside split FASCOM</a></li>
 <li><a href="#queenside-split-fascom">Queenside split FASCOM</a></li>
-<li><a href="#fascom-element-sequence">FASCOM Element sequence</a></li>
+<li><a href="#fascom-element-sequence">FASCOM element sequence</a></li>
 </ul></li>
 <li><a href="#fasdot">FASDOT</a></li>
 <li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
@@ -881,8 +881,14 @@ I have revised it.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h3 id="fascom-element-sequence">FASCOM Element sequence</h3>
-<p>TODO</p>
+<h3 id="fascom-element-sequence">FASCOM element sequence</h3>
+<p><em>From <code>hoons/arvo/ren/css.hoon</code>, lines 6-8:</em></p>
+<pre><code>/,  /web/pack/css  /%   /!css/
+    /              /~  !!
+==</code></pre>
+<p>A FASCOM element sequence consists of a one or more <strong>FASCOM elements</strong>. The head of all the FASCOM elements should be aligned at the same column. The FASCOM elements should be separated by vertical gaps. Comments in the vertical gaps should be at the anchor column or aligned with the heads of the FASCOM elements.</p>
+<p>A FASCOM element is considered joined or split, depending on the gap between the head and the body. If joined, the body of the FASCOM element separated from the head by a one-stop gap, or an equivalent pseudo-join.</p>
+<p>If the FASCOM element is split, the body of the FASCOM element should be separated by a vertical gap with comments at the body column. The body of a kingside FASCOM element should be aligned one stop <strong>after</strong> the head of the FASCOM element. The body of a queenside FASCOM element should be aligned one stop <strong>before</strong> the head of the FASCOM element.</p>
 <h2 id="fasdot">FASDOT</h2>
 <p>A tall FASDOT hoon should consist of, in lexical order:</p>
 <ul>
