@@ -2,7 +2,7 @@
 
 .PHONY: all
 
-all: whitespace.html whitespace.pdf whitespace.tex
+all: whitespace.html whitespace.pdf
 
 whitespace.html: whitespace.md whitespace.html.yaml
 	pandoc whitespace.md whitespace.html.yaml -s --toc --output whitespace.html

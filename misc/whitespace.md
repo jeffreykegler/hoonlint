@@ -1800,9 +1800,13 @@ in lexical order:
 
 * A vertical gap, with comments at the anchor column.
 
-## FASBAR
+## 0-sequence Ford hoons
 
-TODO: Combine FASBAR and FASDOT descriptions?
+The 0-sequence Ford hoons are those whose only runechild
+is a sequence of Forn hoons.
+FASBAR (`/|`) and FASDOT (`/.`) are the 0-sequence Ford hoons.
+The "0-" prefix is for orthogonality with "0-running"
+hoons.
 
 *From `hoons/arvo/app/hall.hoon`, lines 16-18:*
 ```
@@ -1811,22 +1815,54 @@ TODO: Combine FASBAR and FASDOT descriptions?
       ==
 ```
 
-A tall FASBAR hoon should consist of,
+<!-- No FASDOT code in the current arvo corpus is standard,
+do this is a revised example.
+-->
+*Adapted from
+`hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon`,
+lines 6-10:*
+```
+  /.  /:/===/web/lib/css/codemirror:/css/
+      /:/===/web/lib/css/fonts:/css/
+      /:/===/web/lib/css/bootstrap:/css/
+      /:/===/web/tree/main:/css/
+  ==
+```
+
+A tall 0-sequence Ford hoon should consist of,
 in lexical order:
 
 * The rune.
 
 * A one-stop horizontal gap.
 
-* A sequence of one or more ford horns.
+* A sequence of ford horns.
 
-* A vertical gap, with comments at the rune column.
+* A vertical gap, with comments at the anchor column.
 
 * A TISTIS.
 
+## Ford horn sequence
+
+A Ford horn sequence is a sequence of ford hoons.
+All of the ford hoons should be at the same
+alignment.
+
+The hoons in the sequence should be
+separated by vertical gaps.
+The comments in the vertical gaps should be
+aligned with the rune of the hoon which
+directly contains the Ford horn sequence.
+
 ## FASCOL
 
-TODO
+*From `hoons/arvo/app/gmail.hoon`, line 21:*
+```
+/=  rfctext  /:  /%/rfc  /txt/
+```
+
+FASCOL, for whitespace purposes,
+is a 2-fixed backdented hoon.
 
 ## FASCOM
 
@@ -1957,47 +1993,6 @@ The body of a kingside FASCOM element should be
 aligned one stop **after** the head of the FASCOM element.
 The body of a queenside FASCOM element should be
 aligned one stop **before** the head of the FASCOM element.
-
-## FASDOT
-
-<!-- No FASDOT code in the current arvo corpus is standard,
-do this is a revised example.
--->
-*Adapted from
-`hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon`,
-lines 6-10:*
-```
-  /.  /:/===/web/lib/css/codemirror:/css/
-      /:/===/web/lib/css/fonts:/css/
-      /:/===/web/lib/css/bootstrap:/css/
-      /:/===/web/tree/main:/css/
-  ==
-```
-
-A tall FASDOT hoon should consist of,
-in lexical order:
-
-* The rune.
-
-* A one-stop horizontal gap.
-
-* A sequence of zero or more ford horns.
-
-* A vertical gap, with comments at the rune column.
-
-* A TISTIS.
-
-## Ford horn sequence
-
-A Ford horn sequence is a sequence of ford hoons.
-All of the ford hoons should be at the same
-alignment.
-
-The hoons in the sequence should be
-separated by vertical gaps.
-The comments in the vertical gaps should be
-aligned with the rune of the hoon which
-directly contains the Ford horn sequence.
 
 ## FASKET
 

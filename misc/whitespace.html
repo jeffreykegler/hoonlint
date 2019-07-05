@@ -82,8 +82,8 @@
 <li><a href="#ford-hoons">Ford hoons</a><ul>
 <li><a href="#ford-1-hoons">Ford-1 hoons</a></li>
 <li><a href="#ford-hoof-hoons">Ford hoof hoons</a></li>
-<li><a href="#ford-hoof-sequence">Ford hoof sequence</a></li>
-<li><a href="#fasbar">FASBAR</a></li>
+<li><a href="#sequence-ford-hoons">0-sequence Ford hoons</a></li>
+<li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
 <li><a href="#fascol">FASCOL</a></li>
 <li><a href="#fascom">FASCOM</a><ul>
 <li><a href="#joined-fascom">Joined FASCOM</a></li>
@@ -91,8 +91,6 @@
 <li><a href="#queenside-split-fascom">Queenside split FASCOM</a></li>
 <li><a href="#fascom-element-sequence">FASCOM element sequence</a></li>
 </ul></li>
-<li><a href="#fasdot">FASDOT</a></li>
-<li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
 <li><a href="#fasket">FASKET</a></li>
 <li><a href="#faspam">FASPAM</a></li>
 <li><a href="#fassem">FASSEM</a></li>
@@ -811,14 +809,39 @@ Also, contrary to the above
 <ul>
 <li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>A ford hoof sequence.</p></li>
+<li><p>The runechild.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 </ul>
-<h2 id="ford-hoof-sequence">Ford hoof sequence</h2>
-<p>TODO</p>
-<h2 id="fasbar">FASBAR</h2>
-<p>TODO</p>
+<h2 id="sequence-ford-hoons">0-sequence Ford hoons</h2>
+<p>The 0-sequence Ford hoons are those whose only runechild is a sequence of Forn hoons. FASBAR (<code>/|</code>) and FASDOT (<code>/.</code>) are the 0-sequence Ford hoons. The &quot;0-&quot; prefix is for orthogonality with &quot;0-running&quot; hoons.</p>
+<p><em>From <code>hoons/arvo/app/hall.hoon</code>, lines 16-18:</em></p>
+<pre><code>      /|  /:  /%/filter  /!noun/
+          /~  |=({t/telegram:hall bowl:gall} t)
+      ==</code></pre>
+<!-- No FASDOT code in the current arvo corpus is standard,
+do this is a revised example.
+-->
+<p><em>Adapted from <code>hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon</code>, lines 6-10:</em></p>
+<pre><code>  /.  /:/===/web/lib/css/codemirror:/css/
+      /:/===/web/lib/css/fonts:/css/
+      /:/===/web/lib/css/bootstrap:/css/
+      /:/===/web/tree/main:/css/
+  ==</code></pre>
+<p>A tall 0-sequence Ford hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A sequence of ford horns.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS.</p></li>
+</ul>
+<h2 id="ford-horn-sequence">Ford horn sequence</h2>
+<p>A Ford horn sequence is a sequence of ford hoons. All of the ford hoons should be at the same alignment.</p>
+<p>The hoons in the sequence should be separated by vertical gaps. The comments in the vertical gaps should be aligned with the rune of the hoon which directly contains the Ford horn sequence.</p>
 <h2 id="fascol">FASCOL</h2>
-<p>TODO</p>
+<p><em>From <code>hoons/arvo/app/gmail.hoon</code>, line 21:</em></p>
+<pre><code>/=  rfctext  /:  /%/rfc  /txt/</code></pre>
+<p>FASCOL, for whitespace purposes, is a 2-fixed backdented hoon.</p>
 <h2 id="fascom">FASCOM</h2>
 <!-- FASCOM is not well represented in the arvo
 database, and a lot of these rules are extrapolations --
@@ -889,17 +912,6 @@ I have revised it.
 <p>A FASCOM element sequence consists of a one or more <strong>FASCOM elements</strong>. The head of all the FASCOM elements should be aligned at the same column. The FASCOM elements should be separated by vertical gaps. Comments in the vertical gaps should be at the anchor column or aligned with the heads of the FASCOM elements.</p>
 <p>A FASCOM element is considered joined or split, depending on the gap between the head and the body. If joined, the body of the FASCOM element separated from the head by a one-stop gap, or an equivalent pseudo-join.</p>
 <p>If the FASCOM element is split, the body of the FASCOM element should be separated by a vertical gap with comments at the body column. The body of a kingside FASCOM element should be aligned one stop <strong>after</strong> the head of the FASCOM element. The body of a queenside FASCOM element should be aligned one stop <strong>before</strong> the head of the FASCOM element.</p>
-<h2 id="fasdot">FASDOT</h2>
-<p>A tall FASDOT hoon should consist of, in lexical order:</p>
-<ul>
-<li><p>The rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
-<li><p>A sequence of ford horns, all of which are aligned with the first one.</p></li>
-<li><p>A vertical gap, with comments at the rune column.</p></li>
-<li><p>A TISTIS</p></li>
-</ul>
-<h2 id="ford-horn-sequence">Ford horn sequence</h2>
-<p>TODO</p>
 <h2 id="fasket">FASKET</h2>
 <p>TODO</p>
 <h2 id="faspam">FASPAM</h2>
