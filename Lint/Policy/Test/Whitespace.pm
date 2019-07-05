@@ -1883,6 +1883,11 @@ sub checkSplitFascom {
     );
     my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
 
+    my $nodeIX    = $node->{IX};
+    my $chessSide = $policy->{perNode}->{$nodeIX}->{chessSide};
+    my $queenside = $chessSide eq 'queenside';
+    # say STDERR join " ", __FILE__, __LINE__, $chessSide;
+
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
     my $tag      = $runeName;
@@ -1890,8 +1895,10 @@ sub checkSplitFascom {
     # We deal with the elements list itself,
     # in its own node
 
-    my $expectedColumn = $anchorColumn + 2;
+    my $expectedColumn = $anchorColumn + $queenside ? 4 : 2;
     my $expectedLine   = $runeLine + 1;
+
+    # say STDERR join " ", __FILE__, __LINE__, $chessSide, $expectedColumn;
 
     push @mistakes,
       @{
@@ -1966,6 +1973,11 @@ sub checkJoinedFascom {
     my ( $runeLine,   $runeColumn )   = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+    my ( $anchorLine,   $anchorColumn )   = ( $runeLine,   $runeColumn );
+
+    my $nodeIX    = $node->{IX};
+
+    # Joined FASCOM is always considered queenside.
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
@@ -1973,7 +1985,7 @@ sub checkJoinedFascom {
 
     # We deal with the elements list in its own node
 
-    my $expectedColumn = $runeColumn + 4;
+    my $expectedColumn = $anchorColumn + 4;
     my $expectedLine   = $runeLine + 1;
 
     if ( $bodyColumn != $expectedColumn ) {
@@ -2002,7 +2014,7 @@ sub checkJoinedFascom {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
@@ -2017,7 +2029,7 @@ sub checkJoinedFascom {
             $tistis,
             {
                 tag            => $tag,
-                expectedColumn => $runeColumn,
+                expectedColumn => $anchorColumn,
             }
         )
       };
@@ -2031,13 +2043,30 @@ sub checkFascom {
     # say STDERR join " ", __FILE__, __LINE__, $instance->literalNode($node);
     my ( undef, $elements ) = @{ $policy->gapSeq0($node) };
 
-    my ($runeLine)     = $instance->nodeLC($node);
+    my ($runeLine, $runeColumn)     = $instance->nodeLC($node);
     my ($elementsLine) = $instance->nodeLC($elements);
 
+    my $anchorLine = $runeLine;
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            fordFascen => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
+
     my $isJoined = $elementsLine == $runeLine ? 1 : 0;
+    my $chessSide;
+    # Joined FASCOM's are always considered queenside
+    if ($isJoined) {
+        $chessSide = 'queenside';
+    } else {
+        $chessSide = $policy->chessSideOfSequence($elements, $anchorColumn);
+    }
 
     my $nodeIX = $node->{IX};
     $policy->{perNode}->{$nodeIX}->{isJoined} = $isJoined;
+    $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
 
     return checkJoinedFascom( $policy, $node ) if $isJoined;
     return checkSplitFascom( $policy, $node );
@@ -2048,35 +2077,62 @@ sub checkFascomElements {
     my $instance = $policy->{lint};
     my $children = $node->{children};
 
+#                    say STDERR join " ", __FILE__, __LINE__, 'elements', $instance->literalNode($node);
     my $rune = $instance->ancestorByBrickName( $node, 'fordFascom' );
+    my $runeNodeIX = $rune->{IX};
+    my $isJoined = $policy->{perNode}->{$runeNodeIX}->{isJoined};
+    my $chessSide = $policy->{perNode}->{$runeNodeIX}->{chessSide};
+    my $queenside = $chessSide eq 'queenside';
+
     my ( $runeLine,   $runeColumn )   = $instance->nodeLC($rune);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
+    my $anchorLine = $runeLine;
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $rune,
+        {
+            fordFascen => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
+
     my @mistakes = ();
-    my $tag      = 'fascom elements';
+    my $tag      = 'fascom-elements';
 
     my $childIX        = 0;
-    my $expectedColumn = $parentColumn;
+    my $expectedColumn = $anchorColumn + ($queenside ? 4 : 2);
   CHILD: while ( $childIX <= $#$children ) {
         my $element = $children->[$childIX];
         my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
+        # say STDERR join " ", __FILE__, __LINE__, "element head #$childIX", $instance->literalNode($element);
+        # say STDERR join " ", __FILE__, __LINE__, "element head #$childIX", 'actual v expected', $elementColumn, $expectedColumn ;
 
-        if ( $elementColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "element %d %s; %s",
-              ( $childIX / 2 ) + 1,
-              describeLC( $elementLine, $elementColumn ),
-              describeMisindent2( $elementColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                subpolicy => [ 'fascom-element', 'indent' ],
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $elementLine,
-                column         => $elementColumn,
-                topicLines     => [$runeLine],
-              };
+      CHECK_HEAD: {
+            if ( $isJoined and $childIX == 0 ) {
+                $expectedColumn = $elementColumn;
+                last CHECK_HEAD;
+            }
+
+            if ( $elementColumn != $expectedColumn ) {
+                my $msg = sprintf
+                  "element %d %s; %s",
+                  ( $childIX / 2 ) + 1,
+                  describeLC( $elementLine, $elementColumn ),
+                  describeMisindent2( $elementColumn, $expectedColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    details      => [ [ $tag, @{$anchorDetails} ] ],
+                    subpolicy    => [ $tag, 'indent' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $elementLine,
+                    column       => $elementColumn,
+                    reportLine   => $elementLine,
+                    reportColumn => $elementColumn,
+                    topicLines   => [$runeLine],
+                  };
+            }
         }
 
         $childIX++;
@@ -2090,11 +2146,12 @@ sub checkFascomElements {
             $policy->checkOneLineGap(
                 $elementGap,
                 {
-                    mainColumn => $runeColumn,
+                    mainColumn => $anchorColumn,
+                    preColumn => $expectedColumn,
                     tag        => $tag,
                 subpolicy => [ $tag ],
                     topicLines => [$runeLine],
-                    details    => [ [$tag] ],
+                    details    => [ [$tag, @{$anchorDetails} ] ],
                 }
             )
           };
@@ -3648,7 +3705,7 @@ sub chessSideOfJoggingHoon {
     die "No jogging found for ", $instance->symbol($node);
 }
 
-sub chessSideOfJogging {
+sub chessSideOfSequence {
     my ( $policy, $node, $runeColumn ) = @_;
     my $instance = $policy->{lint};
 
@@ -3675,6 +3732,11 @@ sub chessSideOfJogging {
     return $kingsideCount > $queensideCount
       ? 'kingside'
       : 'queenside';
+}
+
+sub chessSideOfJogging {
+    my ( $policy, $node, $runeColumn ) = @_;
+    return $policy->chessSideOfSequence($node, $runeColumn);
 }
 
 # Find the body column, based on alignment within
@@ -4261,10 +4323,13 @@ sub checkFascomElement {
     my $runeNode = $instance->ancestorByBrickName( $node, 'fordFascom' );
     my $runeNodeIX = $runeNode->{IX};
     my $isJoined = $policy->{perNode}->{$runeNodeIX}->{isJoined};
+    my $chessSide = $policy->{perNode}->{$runeNodeIX}->{chessSide};
+    my $queenside = $chessSide eq 'queenside';
 
     my ( $runeLine,   $runeColumn )   = $instance->nodeLC($runeNode);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my ( $headLine,   $headColumn )   = ( $parentLine, $parentColumn );
+    my ( $headLine, $headColumn ) = ( $parentLine, $parentColumn );
+
     my ( $gap,        $body )         = @{ $policy->gapSeq0($node) };
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
@@ -4283,24 +4348,7 @@ sub checkFascomElement {
     my @mistakes = ();
     my $tag      = 'fascom-element';
 
-    my $baseColumn = $anchorColumn + ($isJoined ? 4 : 2);
-
-    my $expectedHeadColumn = $baseColumn;
-    if ( $headColumn != $expectedHeadColumn ) {
-        my $msg = sprintf 'Fascom element head %s; %s',
-          describeLC( $headLine, $headColumn ),
-          describeMisindent2( $headColumn, $expectedHeadColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            subpolicy => [ $tag, 'head-hgap' ],
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $headLine,
-            column         => $headColumn,
-            topicLines     => [$runeLine],
-          };
-    }
+    my $baseColumn = $anchorColumn + ($isJoined ? 4 : 2) + ($queenside ? 2 : 0);
 
     if ( $headLine == $bodyLine ) {
         my $gapLength = $gap->{length};
@@ -4313,10 +4361,13 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'body-hgap' ],
+                details => [ [ $tag, @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                reportLine           => $bodyLine,
+                reportColumn         => $bodyColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -4337,10 +4388,13 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'pseudo-comment-indent' ],
+                details => [ [ $tag, @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                reportLine           => $bodyLine,
+                reportColumn         => $bodyColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -4355,10 +4409,13 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'pseudo-hgap' ],
+                details => [ [ $tag, @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+                reportLine           => $bodyLine,
+                reportColumn         => $bodyColumn,
                 topicLines     => [$runeLine],
               };
         }
@@ -4366,7 +4423,7 @@ sub checkFascomElement {
     }
 
     # If here, this is (or should be) a split jog
-    my $expectedBodyColumn = $headColumn - 2;
+    my $expectedBodyColumn = $headColumn + ($queenside ? -2 : 2);
 
     if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'Fascom element body %s; %s',
@@ -4376,10 +4433,13 @@ sub checkFascomElement {
           {
             desc           => $msg,
             subpolicy => [ $tag, 'body-indent' ],
+            details => [ [ $tag, @{$anchorDetails} ] ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
             topicLines     => [$runeLine],
           };
         return \@mistakes;
@@ -4393,7 +4453,7 @@ sub checkFascomElement {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
                 subpolicy => [ $tag ],
-                details    => [ [$tag] ],
+                details => [ [ $tag, @{$anchorDetails} ] ],
                 topicLines => [$runeLine],
             }
         )

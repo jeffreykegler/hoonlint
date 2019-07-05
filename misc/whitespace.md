@@ -1812,7 +1812,19 @@ TODO
 
 ## FASCOM
 
+<!-- FASCOM is not well represented in the arvo
+database, and a lot of these rules are extrapolations --
+they are not actual examples in the corpus.
+The remnants of the two-stop Ford convention in the
+corpus make extrapolation from the examples next
+to impossible.
+I use indentation-conservation heavily as the guideline
+for extrapolation.
+-->
+
 ### Joined FASCOM
+
+All joined FASCOM's are considered "queenside".
 
 *From `hoons/arvo/ren/css.hoon`, lines 6-8:*
 ```
@@ -1831,19 +1843,88 @@ in lexical order:
 * A sequence of FASCOM elements, all of which are
   aligned with the first one.
 
-* A vertical gap, with comments at the rune column.
+* A vertical gap, with comments at the anchor column.
 
-* A TISTIS
+* A TISTIS.
 
-### Split FASCOM
+### Kingside split FASCOM
 
-<!-- The only arvo example of a split FASCOM may be
-anchored and in any case is non-standard.
+<!-- The split FASCOM examples are based
+on the only arvo example of a split FASCOM.
+It was anchored and non-standard, and therefore
+I have revised it.
 -->
 
-TODO
+*Adapted from `hoons/arvo/ren/tree/elem.hoon`, lines 5-8:*
+```
+/,
+  /web  /|(/!elem/ /elem/)
+  /     /elem/
+==
+```
 
-### FASCOM Element sequence
+A tall kingside split FASCOM hoon should consist of,
+in lexical order:
+
+* The rune.
+
+* A vertical gap, with comments at the anchor column.
+
+* A sequence of FASCOM elements, all of which are
+  aligned one stop after the anchor column.
+
+* A vertical gap, with comments at the anchor column.
+
+* A TISTIS.
+
+### Queenside split FASCOM
+
+<!-- The split FASCOM examples are based
+on the only arvo example of a split FASCOM.
+It was anchored and non-standard, and therefore
+I have revised it.
+-->
+
+*Adapted from `hoons/arvo/ren/tree/elem.hoon`, lines 5-8:*
+```
+/,
+    /web  /|(/!elem/ /elem/)
+    /     /elem/
+==
+```
+
+A tall queenside split FASCOM hoon should consist of,
+in lexical order:
+
+* The rune.
+
+* A vertical gap, with comments at the anchor column.
+
+* A sequence of FASCOM elements, all of which are
+  aligned two stops after the anchor column.
+
+* A vertical gap, with comments at the anchor column.
+
+* A TISTIS.
+
+### FASCOM element sequence
+
+*From `hoons/arvo/ren/css.hoon`, lines 6-8:*
+```
+/,  /web/pack/css  /%   /!css/
+    /              /~  !!
+==
+```
+
+A FASCOM element sequence consists of a one
+or more **FASCOM elements**.
+The head of all the FASCOM elements should be
+aligned at the same column.
+The FASCOM elements
+should be separated by vertical gaps.
+Comments in the vertical gaps
+should be at the anchor column
+or aligned with the heads of the FASCOM elements.
 
 TODO
 

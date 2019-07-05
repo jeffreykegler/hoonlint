@@ -1145,3 +1145,14 @@ hoons/arvo/gen/pope.hoon 7:7 Test::Whitespace fashep:hgap Fashep body @7:7 is ov
 hoons/arvo/web/pack/js/tree-urb.hoon 6:9 Test::Whitespace fasdot:body-indent joined fasdot @6:9; overindented by 2
 hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 6:9 Test::Whitespace fasdot:body-indent joined fasdot @6:9; overindented by 2
 hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fasdot:body-indent joined fasdot @12:11; overindented by 2
+
+# Ford FASCOM aberrations
+hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fascom:body-indent joined fascom @7:15; overindented by 4
+hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fascom:body-indent joined fascom @6:11; overindented by 6
+hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fascom:tistis-indent TISTIS @8:7; overindented by 6
+hoons/arvo/ren/urb.hoon 8:11 Test::Whitespace fascom-element:body-indent Fascom element body @8:11; underindented by 2
+hoons/arvo/ren/urb.hoon 13:11 Test::Whitespace fascom-element:body-indent Fascom element body @13:11; underindented by 2
+hoons/arvo/ren/urb.hoon 22:11 Test::Whitespace fascom-elements:comment-indent fascom-elements @22:11; comment overindented by 4
+hoons/arvo/ren/urb.hoon 24:11 Test::Whitespace fascom-element:body-indent Fascom element body @24:11; underindented by 2
+hoons/arvo/ren/tree/index.hoon 7:5 Test::Whitespace fascom-element:body-indent Fascom element body @7:5; underindented by 4
+hoons/arvo/ren/tree/index.hoon 10:5 Test::Whitespace fascom-element:body-indent Fascom element body @10:5; underindented by 4

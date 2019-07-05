@@ -87,7 +87,8 @@
 <li><a href="#fascol">FASCOL</a></li>
 <li><a href="#fascom">FASCOM</a><ul>
 <li><a href="#joined-fascom">Joined FASCOM</a></li>
-<li><a href="#split-fascom">Split FASCOM</a></li>
+<li><a href="#kingside-split-fascom">Kingside split FASCOM</a></li>
+<li><a href="#queenside-split-fascom">Queenside split FASCOM</a></li>
 <li><a href="#fascom-element-sequence">FASCOM Element sequence</a></li>
 </ul></li>
 <li><a href="#fasdot">FASDOT</a></li>
@@ -819,7 +820,17 @@ Also, contrary to the above
 <h2 id="fascol">FASCOL</h2>
 <p>TODO</p>
 <h2 id="fascom">FASCOM</h2>
+<!-- FASCOM is not well represented in the arvo
+database, and a lot of these rules are extrapolations --
+they are not actual examples in the corpus.
+The remnants of the two-stop Ford convention in the
+corpus make extrapolation from the examples next
+to impossible.
+I use indentation-conservation heavily as the guideline
+for extrapolation.
+-->
 <h3 id="joined-fascom">Joined FASCOM</h3>
+<p>All joined FASCOM's are considered &quot;queenside&quot;.</p>
 <p><em>From <code>hoons/arvo/ren/css.hoon</code>, lines 6-8:</em></p>
 <pre><code>/,  /web/pack/css  /%   /!css/
     /              /~  !!
@@ -829,14 +840,47 @@ Also, contrary to the above
 <li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A sequence of FASCOM elements, all of which are aligned with the first one.</p></li>
-<li><p>A vertical gap, with comments at the rune column.</p></li>
-<li><p>A TISTIS</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS.</p></li>
 </ul>
-<h3 id="split-fascom">Split FASCOM</h3>
-<!-- The only arvo example of a split FASCOM may be
-anchored and in any case is non-standard.
+<h3 id="kingside-split-fascom">Kingside split FASCOM</h3>
+<!-- The split FASCOM examples are based
+on the only arvo example of a split FASCOM.
+It was anchored and non-standard, and therefore
+I have revised it.
 -->
-<p>TODO</p>
+<p><em>Adapted from <code>hoons/arvo/ren/tree/elem.hoon</code>, lines 5-8:</em></p>
+<pre><code>/,
+  /web  /|(/!elem/ /elem/)
+  /     /elem/
+==</code></pre>
+<p>A tall kingside split FASCOM hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The rune.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A sequence of FASCOM elements, all of which are aligned one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS.</p></li>
+</ul>
+<h3 id="queenside-split-fascom">Queenside split FASCOM</h3>
+<!-- The split FASCOM examples are based
+on the only arvo example of a split FASCOM.
+It was anchored and non-standard, and therefore
+I have revised it.
+-->
+<p><em>Adapted from <code>hoons/arvo/ren/tree/elem.hoon</code>, lines 5-8:</em></p>
+<pre><code>/,
+    /web  /|(/!elem/ /elem/)
+    /     /elem/
+==</code></pre>
+<p>A tall queenside split FASCOM hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>The rune.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A sequence of FASCOM elements, all of which are aligned two stops after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS.</p></li>
+</ul>
 <h3 id="fascom-element-sequence">FASCOM Element sequence</h3>
 <p>TODO</p>
 <h2 id="fasdot">FASDOT</h2>

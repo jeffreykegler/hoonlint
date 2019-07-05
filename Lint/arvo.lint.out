@@ -1305,16 +1305,8 @@ hoons/arvo/web/dojo.hoon 13:1 Test::Whitespace tallAttribute Sail attribute body
 === hoons/arvo/web/womb.hoon ===
 === hoons/arvo/ren/urb.hoon ===
 hoons/arvo/ren/urb.hoon 6:7 Test::Whitespace fascen:hgap joined fascen body @6:7 is overindented by 2
-hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fascom:body-indent joined fascom @7:15; overindented by 4
-hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fascom-element:head-hgap Fascom element head @7:15; overindented by 4
-hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fascom-element:body-indent Fascom element body @8:11; underindented by 2
-hoons/arvo/ren/urb.hoon 9:15 Test::Whitespace fascom-element:head-hgap Fascom element head @9:15; overindented by 4
-hoons/arvo/ren/urb.hoon 9:15 Test::Whitespace fascom-element:body-indent Fascom element body @13:11; underindented by 2
 hoons/arvo/ren/urb.hoon 17:17 Test::Whitespace tallColhep backdented element #2 @18:21; overindented by 4
 hoons/arvo/ren/urb.hoon 19:15 Test::Whitespace tallColhep backdented element #2 @20:19; overindented by 4
-hoons/arvo/ren/urb.hoon 22:11 Test::Whitespace fascom elements:comment-indent fascom elements @22:11; comment overindented by 4
-hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fascom-element:head-hgap Fascom element head @23:15; overindented by 4
-hoons/arvo/ren/urb.hoon 23:15 Test::Whitespace fascom-element:body-indent Fascom element body @24:11; underindented by 2
 === hoons/arvo/ren/rss-xml.hoon ===
 hoons/arvo/ren/rss-xml.hoon 9:7 Test::Whitespace fasbuc:hgap joined fasbuc body @9:7 is overindented by 2
 hoons/arvo/ren/rss-xml.hoon 22:11 Test::Whitespace tallCenhep backdented element #2 @23:1; underindented by 10
@@ -1327,11 +1319,6 @@ hoons/arvo/ren/tree/json.hoon 8:36 Test::Whitespace fasket:hgap joined backdent 
 hoons/arvo/ren/tree/json.hoon 9:20 Test::Whitespace fasket:hgap joined backdent element #1 of @9:14 is at @9:20; should be @9:18 (tight)
 hoons/arvo/ren/tree/json.hoon 10:20 Test::Whitespace fascab:hgap joined fascab body @10:20 is overindented by 2
 === hoons/arvo/ren/tree/index.hoon ===
-hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fascom:body-indent joined fascom @6:11; overindented by 6
-hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fascom-element:head-hgap Fascom element head @6:11; overindented by 6
-hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fascom-element:body-indent Fascom element body @7:5; underindented by 4
-hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fascom-element:head-hgap Fascom element head @9:11; overindented by 6
-hoons/arvo/ren/tree/index.hoon 9:11 Test::Whitespace fascom-element:body-indent Fascom element body @10:5; underindented by 4
 hoons/arvo/ren/tree/index.hoon 12:17 Test::Whitespace fassem:hgap joined backdent element #1 of @12:11 is at @12:17; should be @12:15 (tight)
 hoons/arvo/ren/tree/index.hoon 12:40 Test::Whitespace fassem:hgap joined backdent element #2 of @12:11 is at @12:40; should be @12:38 (tight)
 hoons/arvo/ren/tree/index.hoon 13:17 Test::Whitespace fascab:hgap joined fascab body @13:17 is overindented by 2
@@ -1341,10 +1328,6 @@ hoons/arvo/ren/tree/index.hoon 13:46 Test::Whitespace fassem:hgap joined backden
 hoons/arvo/ren/tree/include.hoon 6:7 Test::Whitespace fasbar:hgap joined backdent element #1 of @6:1 is at @6:7; should be @6:5 (tight)
 === hoons/arvo/ren/tree/elem.hoon ===
 hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fascen:hgap joined fascen body @5:7 is overindented by 2
-hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fascom:body-indent split fascom @6:5; overindented by 2
-hoons/arvo/ren/tree/elem.hoon 6:5 Test::Whitespace fascom-element:head-hgap Fascom element head @6:5; overindented by 2
-hoons/arvo/ren/tree/elem.hoon 7:5 Test::Whitespace fascom-element:head-hgap Fascom element head @7:5; overindented by 2
-hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fascom:tistis-indent TISTIS @8:7; overindented by 6
 === hoons/arvo/ren/tree/head.hoon ===
 hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fasket:hgap joined backdent element #2 of @20:17 is at @20:40; should be @20:38 (tight)
 === hoons/arvo/ren/tree/combine.hoon ===
