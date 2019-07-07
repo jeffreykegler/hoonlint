@@ -1854,15 +1854,38 @@ The comments in the vertical gaps should be
 aligned with the rune of the hoon which
 directly contains the Ford horn sequence.
 
-## FASCOL
+## Ford-2 hones
+
+The Ford-2 hoons are FASCOL (`/:`),
+FASKET (`/^`),
+FASPAM (`/&`),
+and
+FASSEM (`/;`).
+For whitespace purposes,
+these behave exactly link 2-fixed backdented hoons.
+
+<!-- Note FASPAM tall whitespacing in conjectured, based
+on parallel with FASKET. --
+no examples of tall FASPAM exist in the arvo corpus.
+-->
 
 *From `hoons/arvo/app/gmail.hoon`, line 21:*
 ```
 /=  rfctext  /:  /%/rfc  /txt/
 ```
 
-FASCOL, for whitespace purposes,
-is a 2-fixed backdented hoon.
+*From `hoons/arvo/app/hall.hoon`, lines 15-18:*
+```
+      /^  $-({telegram:hall bowl:gall} telegram:hall)
+      /|  /:  /%/filter  /!noun/
+          /~  |=({t/telegram:hall bowl:gall} t)
+      ==
+```
+
+*From `hoons/arvo/ren/tree/index.hoon`, line 7:*
+```
+    /;  (getall:tree /h1/h2/h3/h4/h5/h6)  /tree-elem/
+```
 
 ## FASCOM
 
@@ -1993,18 +2016,6 @@ The body of a kingside FASCOM element should be
 aligned one stop **after** the head of the FASCOM element.
 The body of a queenside FASCOM element should be
 aligned one stop **before** the head of the FASCOM element.
-
-## FASKET
-
-TODO
-
-## FASPAM
-
-TODO
-
-## FASSEM
-
-TODO
 
 ## FASTIS
 

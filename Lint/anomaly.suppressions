@@ -1166,3 +1166,17 @@ hoons/arvo/mar/urb.hoon 5:31 Test::Whitespace fascol:hgap joined backdent elemen
 hoons/arvo/mar/urb.hoon 5:47 Test::Whitespace fascol:hgap joined backdent element #2 of @5:25 is at @5:47; should be @5:45 (tight)
 hoons/arvo/ren/tree/comments.hoon 5:7 Test::Whitespace fascol:hgap joined backdent element #1 of @5:1 is at @5:7; should be @5:5 (tight)
 hoons/arvo/ren/tree/comments.hoon 5:1 Test::Whitespace fordFascol backdented element #2 @6:3; overindented by 2
+
+# Ford FASKET aberrations
+hoons/arvo/web/pack/js/tree-urb.hoon 5:1 Test::Whitespace fordFasket backdented element #2 @6:3; overindented by 2
+hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon 5:1 Test::Whitespace fordFasket backdented element #2 @6:3; overindented by 2
+hoons/arvo/ren/tree/json.hoon 8:20 Test::Whitespace fasket:hgap joined backdent element #1 of @8:14 is at @8:20; should be @8:18 (tight)
+hoons/arvo/ren/tree/json.hoon 8:36 Test::Whitespace fasket:hgap joined backdent element #2 of @8:14 is at @8:36; should be @8:34 (tight)
+hoons/arvo/ren/tree/json.hoon 9:20 Test::Whitespace fasket:hgap joined backdent element #1 of @9:14 is at @9:20; should be @9:18 (tight)
+hoons/arvo/ren/tree/head.hoon 20:40 Test::Whitespace fasket:hgap joined backdent element #2 of @20:17 is at @20:40; should be @20:38 (tight)
+
+# Ford FASSEM aberrations
+hoons/arvo/ren/tree/index.hoon 12:17 Test::Whitespace fassem:hgap joined backdent element #1 of @12:11 is at @12:17; should be @12:15 (tight)
+hoons/arvo/ren/tree/index.hoon 12:40 Test::Whitespace fassem:hgap joined backdent element #2 of @12:11 is at @12:40; should be @12:38 (tight)
+hoons/arvo/ren/tree/index.hoon 13:23 Test::Whitespace fassem:hgap joined backdent element #1 of @13:17 is at @13:23; should be @13:21 (tight)
+hoons/arvo/ren/tree/index.hoon 13:46 Test::Whitespace fassem:hgap joined backdent element #2 of @13:17 is at @13:46; should be @13:44 (tight)
