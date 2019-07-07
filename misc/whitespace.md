@@ -1836,15 +1836,15 @@ in lexical order:
 
 * A one-stop horizontal gap.
 
-* A sequence of ford horns.
+* A sequence of ford hoons.
 
 * A vertical gap, with comments at the anchor column.
 
 * A TISTIS.
 
-## Ford horn sequence
+## Ford hoon sequence
 
-A Ford horn sequence is a sequence of ford hoons.
+A Ford hoon sequence is a sequence of ford hoons.
 All of the ford hoons should be at the same
 alignment.
 
@@ -1852,7 +1852,7 @@ The hoons in the sequence should be
 separated by vertical gaps.
 The comments in the vertical gaps should be
 aligned with the rune of the hoon which
-directly contains the Ford horn sequence.
+directly contains the Ford hoon sequence.
 
 ## Ford-2 hones
 
@@ -1861,8 +1861,6 @@ FASKET (`/^`),
 FASPAM (`/&`),
 and
 FASSEM (`/;`).
-For whitespace purposes,
-these behave exactly link 2-fixed backdented hoons.
 
 <!-- Note FASPAM tall whitespacing in conjectured, based
 on parallel with FASKET. --
@@ -2030,11 +2028,7 @@ in lexical order:
 
 * A one-stop horizontal gap.
 
-* A ford horn
-
-## Ford horn
-
-TODO
+* A runechild.
 
 # SELGAP
 

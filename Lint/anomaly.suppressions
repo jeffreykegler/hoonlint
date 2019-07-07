@@ -1180,3 +1180,29 @@ hoons/arvo/ren/tree/index.hoon 12:17 Test::Whitespace fassem:hgap joined backden
 hoons/arvo/ren/tree/index.hoon 12:40 Test::Whitespace fassem:hgap joined backdent element #2 of @12:11 is at @12:40; should be @12:38 (tight)
 hoons/arvo/ren/tree/index.hoon 13:23 Test::Whitespace fassem:hgap joined backdent element #1 of @13:17 is at @13:23; should be @13:21 (tight)
 hoons/arvo/ren/tree/index.hoon 13:46 Test::Whitespace fassem:hgap joined backdent element #2 of @13:17 is at @13:46; should be @13:44 (tight)
+
+# Ford aberrations
+hoons/arvo/mar/gmail/req.hoon 3:1 Test::Whitespace faslus:empty-line faslus @3:1; empty line in comment
+hoons/arvo/ren/urb.hoon 6:7 Test::Whitespace fascen:hgap joined fascen body @6:7 is overindented by 2
+hoons/arvo/ren/rss-xml.hoon 9:7 Test::Whitespace fasbuc:hgap joined fasbuc body @9:7 is overindented by 2
+hoons/arvo/ren/tree/json.hoon 7:20 Test::Whitespace fasbuc:hgap joined fasbuc body @7:20 is overindented by 2
+hoons/arvo/ren/tree/json.hoon 10:20 Test::Whitespace fascab:hgap joined fascab body @10:20 is overindented by 2
+hoons/arvo/ren/tree/index.hoon 13:17 Test::Whitespace fascab:hgap joined fascab body @13:17 is overindented by 2
+hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fascen:hgap joined fascen body @5:7 is overindented by 2
+hoons/arvo/ren/urb/tree.hoon 6:19 Test::Whitespace fashax:hgap joined fashax body @6:19 is overindented by 2
+hoons/arvo/ren/urb/tree.hoon 6:24 Test::Whitespace fascen:hgap joined fascen body @6:24 is overindented by 1
+hoons/arvo/ren/urb/tree.hoon 7:19 Test::Whitespace fashax:hgap joined fashax body @7:19 is overindented by 2
+hoons/arvo/ren/urb/tree.hoon 7:24 Test::Whitespace fascen:hgap joined fascen body @7:24 is overindented by 1
+hoons/arvo/ren/css.hoon 6:25 Test::Whitespace fascen:hgap joined fascen body @6:25 is overindented by 1
+hoons/arvo/ren/run.hoon 7:21 Test::Whitespace fascen:hgap joined fascen body @7:21 is overindented by 2
+hoons/arvo/ren/js.hoon 6:24 Test::Whitespace fascen:hgap joined fascen body @6:24 is overindented by 1
+
+# Comment aberrations near Ford FASWUT
+hoons/arvo/mar/tree/json.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; comment overindented by 2
+hoons/arvo/mar/tree/json.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
+hoons/arvo/mar/json.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; comment overindented by 2
+hoons/arvo/mar/json.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
+hoons/arvo/mar/xml.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; comment overindented by 2
+hoons/arvo/mar/xml.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
+hoons/arvo/mar/html.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; comment overindented by 2
+hoons/arvo/mar/html.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
