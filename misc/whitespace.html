@@ -83,7 +83,7 @@
 <li><a href="#ford-1-hoons">Ford-1 hoons</a></li>
 <li><a href="#ford-hoof-hoons">Ford hoof hoons</a></li>
 <li><a href="#sequence-ford-hoons">0-sequence Ford hoons</a></li>
-<li><a href="#ford-horn-sequence">Ford horn sequence</a></li>
+<li><a href="#ford-hoon-sequence">Ford hoon sequence</a></li>
 <li><a href="#ford-2-hones">Ford-2 hones</a></li>
 <li><a href="#fascom">FASCOM</a><ul>
 <li><a href="#joined-fascom">Joined FASCOM</a></li>
@@ -92,7 +92,6 @@
 <li><a href="#fascom-element-sequence">FASCOM element sequence</a></li>
 </ul></li>
 <li><a href="#fastis">FASTIS</a></li>
-<li><a href="#ford-horn">Ford horn</a></li>
 </ul></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
@@ -790,6 +789,8 @@ Also, contrary to the above
 <p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>), FASFAS (<code>//</code>), FASHAX (<code>/#</code>) and FASWUT (<code>/?</code>).</p>
 <p><em>From <code>arvo/app/hall.hoon</code>, line 17:</em></p>
 <pre><code>          /~  |=({t/telegram:hall bowl:gall} t)</code></pre>
+<p><em>From <code>hoons/arvo/mar/rss-xml.hoon</code>, line 6:</em></p>
+<pre><code>//  /===/mar/xml  :: alias</code></pre>
 <p>A tall ford-1 hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
@@ -828,15 +829,15 @@ do this is a revised example.
 <ul>
 <li><p>The rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>A sequence of ford horns.</p></li>
+<li><p>A sequence of ford hoons.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h2 id="ford-horn-sequence">Ford horn sequence</h2>
-<p>A Ford horn sequence is a sequence of ford hoons. All of the ford hoons should be at the same alignment.</p>
-<p>The hoons in the sequence should be separated by vertical gaps. The comments in the vertical gaps should be aligned with the rune of the hoon which directly contains the Ford horn sequence.</p>
+<h2 id="ford-hoon-sequence">Ford hoon sequence</h2>
+<p>A Ford hoon sequence is a sequence of ford hoons. All of the ford hoons should be at the same alignment.</p>
+<p>The hoons in the sequence should be separated by vertical gaps. The comments in the vertical gaps should be aligned with the rune of the hoon which directly contains the Ford hoon sequence.</p>
 <h2 id="ford-2-hones">Ford-2 hones</h2>
-<p>The Ford-2 hoons are FASCOL (<code>/:</code>), FASKET (<code>/^</code>), FASPAM (<code>/&amp;</code>), and FASSEM (<code>/;</code>). For whitespace purposes, these behave exactly link 2-fixed backdented hoons.</p>
+<p>The Ford-2 hoons are FASCOL (<code>/:</code>), FASKET (<code>/^</code>), FASPAM (<code>/&amp;</code>), and FASSEM (<code>/;</code>).</p>
 <!-- Note FASPAM tall whitespacing in conjectured, based
 on parallel with FASKET. --
 no examples of tall FASPAM exist in the arvo corpus.
@@ -926,10 +927,8 @@ I have revised it.
 <ul>
 <li><p>The FASTIS rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
-<li><p>A ford horn</p></li>
+<li><p>A runechild.</p></li>
 </ul>
-<h2 id="ford-horn">Ford horn</h2>
-<p>TODO</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>

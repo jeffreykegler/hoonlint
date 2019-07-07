@@ -1766,6 +1766,11 @@ FASWUT (`/?`).
           /~  |=({t/telegram:hall bowl:gall} t)
 ```
 
+*From `hoons/arvo/mar/rss-xml.hoon`, line 6:*
+```
+//  /===/mar/xml  :: alias
+```
+
 A tall ford-1 hoon should consist of,
 in lexical order:
 

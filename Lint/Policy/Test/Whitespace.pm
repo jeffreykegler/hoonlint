@@ -2715,7 +2715,7 @@ sub checkFordHoop {
     # TODO Split is implemented, but not split Ford-1 hoon
     # is represented in the corpus AFAICT
 
-    my $tag = 'fordHoop';
+    my $tag = 'fasfas';
 
     # fordFassig ::= (- FAS SIG GAP -) tall5d
     my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
@@ -4479,11 +4479,12 @@ sub checkFastis {
 
   CHECK_SYMBOL: {
         if ( $symbolLine != $parentLine ) {
-            my $msg = sprintf 'Fastis symbol %s; symbol must be on rune line',
+            my $msg = sprintf 'fastis symbol %s; symbol must be on rune line',
               describeLC( $symbolLine, $symbolColumn );
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'same-line' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $symbolLine,
@@ -4496,12 +4497,13 @@ sub checkFastis {
 
         my $expectedSymbolColumn = $parentColumn + 4;
         if ( $symbolColumn != $expectedSymbolColumn ) {
-            my $msg = sprintf 'Fastis symbol %s; %s',
+            my $msg = sprintf 'fastis symbol %s; %s',
               describeLC( $symbolLine, $symbolColumn ),
               describeMisindent2( $symbolColumn, $expectedSymbolColumn );
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'head-hgap' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $symbolLine,
@@ -4517,12 +4519,13 @@ sub checkFastis {
             my $symbolLength       = $symbol->{length};
             my $expectedHornColumn = $symbolColumn + $symbolLength + 2;
             if ( $hornColumn != $expectedHornColumn ) {
-                my $msg = sprintf 'Fastis horn %s; %s',
+                my $msg = sprintf 'fastis horn %s; %s',
                   describeLC( $hornLine, $hornColumn ),
                   describeMisindent2( $hornColumn, $expectedHornColumn );
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy => [ $runeName, 'body-hgap' ],
                     parentLine   => $parentLine,
                     parentColumn => $parentColumn,
                     line         => $hornLine,
@@ -4551,12 +4554,13 @@ sub checkFastis {
           };
 
         if ( $hornColumn != $expectedHornColumn ) {
-            my $msg = sprintf 'Fastis split horn %s; %s',
+            my $msg = sprintf 'fastis split horn %s; %s',
               describeLC( $hornLine, $hornColumn ),
               describeMisindent2( $hornColumn, $expectedHornColumn );
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'body-indent' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $hornLine,
