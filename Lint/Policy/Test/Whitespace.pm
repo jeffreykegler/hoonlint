@@ -3689,33 +3689,46 @@ sub chainAlignmentData {
     return $chainAlignmentData;
 }
 
-sub chessSideOfJoggingHoon {
+# TODO: Convert this to read-only
+sub getJoggingData {
     my ( $policy, $node ) = @_;
-    my $nodeIX    = $node->{IX};
-    my $chessSide = $policy->{perNode}->{$nodeIX}->{chessSide};
-    return $chessSide if defined $chessSide;
 
+    my $instance    = $policy->{lint};
+    my $joggingRule = $instance->{joggingRule};
+
+    # Recursively check parents of this hoon
+  NODE: while (1) {
+        my $nodeName = $instance->brickName($node);
+        if ( $nodeName and $joggingRule->{$nodeName} ) {
+            my $nodeIX        = $node->{IX};
+            my $chessSide     = $policy->{perNode}->{$nodeIX}->{chessSide};
+            my $jogBaseColumn = $policy->{perNode}->{$nodeIX}->{jogBaseColumn};
+            return [ $jogBaseColumn, $chessSide ];
+        }
+        $node = $node->{PARENT};
+    }
+    die ;
+}
+
+# Assumes that $node is a jogging hoon
+sub setJoggingData {
+    my ( $policy, $node, $anchorColumn ) = @_;
+    my $nodeIX      = $node->{IX};
     my $instance    = $policy->{lint};
     my $joggingRule = $instance->{joggingRule};
     my $nodeName    = $instance->brickName($node);
 
-    # Recursively check parents of this hoon
-    if ( not $nodeName or not $joggingRule->{$nodeName} ) {
-        my $chessSide = $policy->chessSideOfJoggingHoon( $node->{PARENT} );
-        $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
-        return $chessSide;
-    }
-
-    # If here, this is a jogging hoon node.
-    my ( undef, $baseColumn ) = $instance->nodeLC($node);
     my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
         my $child  = $children->[$childIX];
         my $symbol = $instance->symbol($child);
         next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $chessSide = $policy->chessSideOfJogging( $child, $baseColumn );
+        my $chessSide = $policy->chessSideOfJogging( $child, $anchorColumn );
         $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
-        return $chessSide;
+        my $baseColumn = $anchorColumn + ( $chessSide eq 'queenside' ? 4 : 2 );
+        $policy->{perNode}->{$nodeIX}->{jogBaseColumn} =
+          $baseColumn;
+        return [ $baseColumn, $chessSide ];
     }
     die "No jogging found for ", $instance->symbol($node);
 }
@@ -3911,8 +3924,9 @@ sub check_1Jogging {
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
+    my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
 
-    my $chessSide     = $policy->chessSideOfJoggingHoon($node);
+    my ($jogBaseColumn, $chessSide)     = @{$policy->setJoggingData($node, $anchorColumn)};
     my $joggingRules  = $instance->{joggingRule};
 
     my @mistakes = ();
@@ -4012,7 +4026,7 @@ sub check_2Jogging {
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
-    my $chessSide     = $policy->chessSideOfJoggingHoon($node);
+    my ($jogBaseColumn, $chessSide)     = @{$policy->setJoggingData($node, $anchorColumn)};
     my $isKingside = $chessSide eq 'kingside';
     my $joggingRules  = $instance->{joggingRule};
 
@@ -4933,10 +4947,10 @@ sub checkJog {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
-    my $chessSide = $policy->chessSideOfJoggingHoon($node);
-    return $policy->checkQueensideJog($node)
+    my ($jogBaseColumn, $chessSide) = @{$policy->getJoggingData($node)};
+    return $policy->checkQueensideJog($node, $jogBaseColumn)
       if $chessSide eq 'queenside';
-    return $policy->checkKingsideJog($node);
+    return $policy->checkKingsideJog($node, $jogBaseColumn);
 }
 
 # not yet implemented
