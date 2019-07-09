@@ -3698,12 +3698,15 @@ sub chessSideOfJoggingHoon {
     my $instance    = $policy->{lint};
     my $joggingRule = $instance->{joggingRule};
     my $nodeName    = $instance->brickName($node);
+
+    # Recursively check parents of this hoon
     if ( not $nodeName or not $joggingRule->{$nodeName} ) {
         my $chessSide = $policy->chessSideOfJoggingHoon( $node->{PARENT} );
         $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
         return $chessSide;
     }
 
+    # If here, this is a jogging hoon node.
     my ( undef, $baseColumn ) = $instance->nodeLC($node);
     my $children = $node->{children};
   CHILD: for my $childIX ( 0 .. $#$children ) {
@@ -4176,42 +4179,52 @@ sub check_Jogging1 {
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $tailLine,    $tailColumn )    = $instance->nodeLC($tail);
+    my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
+
+    # All jogging-1 hoons are kingside
+    my $nodeIX = $node->{IX};
+    $policy->{perNode}->{$nodeIX}->{chessSide} = 'kingside';
+    my $jogBaseColumn = $anchorColumn + 4;
+    $policy->{perNode}->{$nodeIX}->{jogBaseColumn} = $jogBaseColumn;
 
     my @mistakes = ();
-    my $tag      = 'jogging-1';
+    my $tag      = $runeName;
 
     if ( $joggingLine != $runeLine ) {
         my $msg = sprintf
           "jogging %s; should be on rune line %d",
           describeLC( $joggingLine, $joggingColumn ),
           $runeLine;
-        push @mistakes,
-          {
-            desc         => $msg,
+        push @mistakes, {
+            desc => $msg,
+            subpolicy = [ $runeName, 'jogging-same-line' ];
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $joggingLine,
             column       => $joggingColumn,
+            reportLine   => $joggingLine,
+            reportColumn => $joggingColumn,
             expectedLine => $runeLine,
             details      => [ [$tag] ],
-          };
+        };
     }
 
-    my $expectedColumn = $runeColumn + 4;
     if ( $joggingColumn != $expectedColumn ) {
         my $msg = sprintf
           "jogging %s; %s",
           describeLC( $joggingLine, $joggingColumn ),
-          describeMisindent2( $joggingColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $joggingLine,
-            column         => $joggingColumn,
-            details        => [ [$tag] ],
-          };
+          describeMisindent2( $joggingColumn, $jogBaseColumn );
+        push @mistakes, {
+            desc => $msg,
+            subpolicy = [ $runeName, 'jogging-indent' ];
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $joggingLine,
+            column       => $joggingColumn,
+            reportLine   => $joggingLine,
+            reportColumn => $joggingColumn,
+            details      => [ [$tag] ],
+        };
     }
 
     push @mistakes,
@@ -4219,9 +4232,10 @@ sub check_Jogging1 {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchoreColumn,
+                preColumn  => $jobBaseColumn,
                 tag        => $tag,
-                subpolicy => [ $runeName ],
+                subpolicy  => [$runeName],
                 topicLines => [$tistisLine],
                 details    => [ [$tag] ],
             }
@@ -4234,7 +4248,7 @@ sub check_Jogging1 {
             $tistis,
             {
                 tag            => $tag,
-                expectedColumn => $runeColumn + 2,
+                expectedColumn => $anchorColumn + 2,
             }
         )
       };
@@ -4244,28 +4258,31 @@ sub check_Jogging1 {
         $policy->checkOneLineGap(
             $tailGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
-                subpolicy => [ $runeName ],
+                subpolicy  => [$runeName],
                 details    => [ [$tag] ],
                 topicLines => [$tailLine],
             }
         )
       };
 
-    $expectedColumn = $runeColumn;
-    if ( $tailColumn != $expectedColumn ) {
+    $expectedTailColumn = $anchorColumn;
+    if ( $tailColumn != $expectedTailColumn ) {
         my $msg = sprintf
           "1-jogging tail %s; %s",
           describeLC( $tailLine, $tailColumn ),
-          describeMisindent2( $tailColumn, $expectedColumn );
+          describeMisindent2( $tailColumn, $expectedTailColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $tailLine,
-            column         => $tailColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'tail-indent' ],
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $tailLine,
+            column       => $tailColumn,
+            reportLine   => $tailLine,
+            reportColumn => $tailColumn,
           };
     }
 

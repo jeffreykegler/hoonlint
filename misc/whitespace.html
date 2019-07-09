@@ -85,7 +85,7 @@
 <li><a href="#ford-hoof-hoons">Ford hoof hoons</a></li>
 <li><a href="#sequence-ford-hoons">0-sequence Ford hoons</a></li>
 <li><a href="#ford-hoon-sequence">Ford hoon sequence</a></li>
-<li><a href="#ford-2-hones">Ford-2 hones</a></li>
+<li><a href="#ford-2-hoons">Ford-2 hoons</a></li>
 <li><a href="#fascom">FASCOM</a><ul>
 <li><a href="#joined-fascom">Joined FASCOM</a></li>
 <li><a href="#kingside-split-fascom">Kingside split FASCOM</a></li>
@@ -881,7 +881,7 @@ do this is a revised example.
 <h2 id="ford-hoon-sequence">Ford hoon sequence</h2>
 <p>A Ford hoon sequence is a sequence of ford hoons. All of the ford hoons should be at the same alignment.</p>
 <p>The hoons in the sequence should be separated by vertical gaps. The comments in the vertical gaps should be aligned with the rune of the hoon which directly contains the Ford hoon sequence.</p>
-<h2 id="ford-2-hones">Ford-2 hones</h2>
+<h2 id="ford-2-hoons">Ford-2 hoons</h2>
 <p>The Ford-2 hoons are FASCOL (<code>/:</code>), FASKET (<code>/^</code>), FASPAM (<code>/&amp;</code>), and FASSEM (<code>/;</code>).</p>
 <!-- Note FASPAM tall whitespacing in conjectured, based
 on parallel with FASKET. --
@@ -896,6 +896,7 @@ no examples of tall FASPAM exist in the arvo corpus.
       ==</code></pre>
 <p><em>From <code>hoons/arvo/ren/tree/index.hoon</code>, line 7:</em></p>
 <pre><code>    /;  (getall:tree /h1/h2/h3/h4/h5/h6)  /tree-elem/</code></pre>
+<p>Whitespace conventions for the Ford-2 hoons are the same as those for backdented 2-arity hoons.</p>
 <h2 id="fascom">FASCOM</h2>
 <!-- FASCOM is not well represented in the arvo
 database, and a lot of these rules are extrapolations --
@@ -982,7 +983,7 @@ I have revised it.
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
 <p>By non-standard code, we mean code that does not follow the guidelines of this document. In non-standard code, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This appendix describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
 <h2 id="chess-sidedness-1">Chess-sidedness</h2>
-<p>A jog is considered queenside if it is aligned 2 stops or more after the base column of the joggging. Otherwise, the jog is considered kingside.</p>
+<p>A jog is considered queenside if it is aligned 2 stops or more after the base column of the jogging. Otherwise, the jog is considered kingside.</p>
 <p>The chess-sidedness of a jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a jogging hoon is that of its jogging.</p>
 <h2 id="jogging-body-column">Jogging body column</h2>
 <p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's inter-line aligned jogs. If more than one column is &quot;most common&quot;, the tie is resolved in favor of the body column that is lexically first. If there are no inter-line aligned jogs in a jogging, the jogging body column is undefined.</p>

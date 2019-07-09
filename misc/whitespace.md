@@ -1935,7 +1935,7 @@ The comments in the vertical gaps should be
 aligned with the rune of the hoon which
 directly contains the Ford hoon sequence.
 
-## Ford-2 hones
+## Ford-2 hoons
 
 The Ford-2 hoons are FASCOL (`/:`),
 FASKET (`/^`),
@@ -1965,6 +1965,9 @@ no examples of tall FASPAM exist in the arvo corpus.
 ```
     /;  (getall:tree /h1/h2/h3/h4/h5/h6)  /tree-elem/
 ```
+
+Whitespace conventions for the Ford-2 hoons are the
+same as those for backdented 2-arity hoons.
 
 ## FASCOM
 
@@ -2138,7 +2141,7 @@ This appendix describes the methods used for deciding what was
 ## Chess-sidedness
 
 A jog is considered queenside if it is aligned 2 stops or more
-after the base column of the joggging.
+after the base column of the jogging.
 Otherwise, the jog is considered kingside.
 
 The chess-sidedness of a jogging is that of the majority
