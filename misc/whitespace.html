@@ -64,9 +64,10 @@
 <li><a href="#queenside-1-jogging-hoons">Queenside 1-jogging hoons</a></li>
 </ul></li>
 <li><a href="#jogging-hoons-2">2-jogging hoons</a><ul>
-<li><a href="#kingside-2-jogging-hoons">Kingside 2-jogging hoons</a></li>
-<li><a href="#head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</a></li>
-<li><a href="#head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</a></li>
+<li><a href="#kingside-head-joined-2-jogging-hoons">Kingside head-joined 2-jogging hoons</a></li>
+<li><a href="#kingside-head-split-2-jogging-hoons">Kingside head-split 2-jogging hoons</a></li>
+<li><a href="#queenside-head-joined-2-jogging-hoons">Queenside head-joined 2-jogging hoons</a></li>
+<li><a href="#queenside-head-split-2-jogging-hoons">Queenside head-split 2-jogging hoons</a></li>
 </ul></li>
 <li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 </ul></li>
@@ -602,14 +603,13 @@ Also, contrary to the above
 </ul>
 <h2 id="jogging-hoons-2">2-jogging hoons</h2>
 <p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
-<h3 id="kingside-2-jogging-hoons">Kingside 2-jogging hoons</h3>
-<p>All kingside 2-jogging hoons are head-joined.</p>
+<h3 id="kingside-head-joined-2-jogging-hoons">Kingside head-joined 2-jogging hoons</h3>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</em></p>
 <pre><code>      ?+  p.mod  [%rock %$ 0]
         $cell  [[%rock %$ 0] [%rock %$ 0]]
         $void  [%zpzp ~]
       ==</code></pre>
-<p>A kingside 2-jogging hoon should consist of, in lexical order:</p>
+<p>A head-joined kingside 2-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
@@ -621,7 +621,31 @@ Also, contrary to the above
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
-<h3 id="head-joined-queenside-2-jogging-hoons">Head-joined queenside 2-jogging hoons</h3>
+<h3 id="kingside-head-split-2-jogging-hoons">Kingside head-split 2-jogging hoons</h3>
+<p><em>From <code>hoons/arvo/app/hall.hoon</code>, lines 1772-1781:</em></p>
+<pre><code>    ?+  -.det
+      =&lt;  sa-done
+      %.  det
+      =+  (fall (~(get by stories) nom) *story)
+      ~(sa-change sa nom -)
+    ::
+      $new      (da-create nom +.det)
+      $bear     ~&amp;(%unexpected-unsplit-bear +&gt;)
+      $remove   (da-delete nom)
+    ==</code></pre>
+<p>A head-joined kingside 2-jogging hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>Its rune.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>Its head.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>Its subhead, aligned one stop before the head.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A kingside jogging. The base column of its jogs should be aligned one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS, aligned at the anchor column.</p></li>
+</ul>
+<h3 id="queenside-head-joined-2-jogging-hoons">Queenside head-joined 2-jogging hoons</h3>
 <p><em>From <code>arvo/sys/vane/ames.hoon</code>, lines 1568-1575:</em></p>
 <pre><code>      ?+    lot  ~
           [$$ %ud @]
@@ -643,8 +667,29 @@ Also, contrary to the above
 <li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
-<h3 id="head-split-queenside-2-jogging-hoons">Head-split queenside 2-jogging hoons</h3>
-<p>TODO</p>
+<h3 id="queenside-head-split-2-jogging-hoons">Queenside head-split 2-jogging hoons</h3>
+<p><em>Adapted from <code>arvo/lib/hood/kiln.hoon</code>, starting at line 582:</em></p>
+<pre><code>    ?+    gem
+        (spam leaf+&quot;strange auto&quot; &gt;gem&lt; ~)
+    ::
+        $init
+      =+  :-  &quot;auto merge failed on strategy %init&quot;
+          &quot;I&#39;m out of ideas&quot;
+      lose:(spam leaf+-&lt; leaf+-&gt; [&gt;p.p.are&lt; q.p.are])
+    ::
+    ==</code></pre>
+<p>A head-split queenside 2-jogging hoon should consist of, in lexical order:</p>
+<ul>
+<li><p>Its rune.</p></li>
+<li><p>A 2-stop horizontal gap.</p></li>
+<li><p>Its head.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column.</p></li>
+<li><p>Its subhead, aligned one stop before the head.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column.</p></li>
+<li><p>A queenside jogging. The base column of its jogs should be aligned two stops after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
+<li><p>A TISTIS, aligned at the anchor column.</p></li>
+</ul>
 <h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
 <!-- "Split" form addressed in Github issue #31" -->
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 9720-9727:</em></p>

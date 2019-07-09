@@ -1413,9 +1413,7 @@ same line, the 2-jogging hoon is called **head-joined**.
 If the head and subhead of a 2-jogging hoon are on
 different lines, the 2-jogging hoon is called **head-split**.
 
-### Kingside 2-jogging hoons
-
-All kingside 2-jogging hoons are head-joined.
+### Kingside head-joined 2-jogging hoons
 
 *From `arvo/sys/hoon.hoon`, lines 6583-6586:*
 ```
@@ -1425,7 +1423,7 @@ All kingside 2-jogging hoons are head-joined.
       ==
 ```
 
-A kingside 2-jogging hoon should consist of,
+A head-joined kingside 2-jogging hoon should consist of,
 in lexical order:
 
 * Its rune.
@@ -1454,7 +1452,48 @@ in lexical order:
 * A TISTIS,
   aligned at the anchor column.
 
-### Head-joined queenside 2-jogging hoons
+### Kingside head-split 2-jogging hoons
+
+*From `hoons/arvo/app/hall.hoon`, lines 1772-1781:*
+```
+    ?+  -.det
+      =<  sa-done
+      %.  det
+      =+  (fall (~(get by stories) nom) *story)
+      ~(sa-change sa nom -)
+    ::
+      $new      (da-create nom +.det)
+      $bear     ~&(%unexpected-unsplit-bear +>)
+      $remove   (da-delete nom)
+    ==
+```
+
+A head-joined kingside 2-jogging hoon should consist of,
+in lexical order:
+
+* Its rune.
+
+* A one-stop horizontal gap.
+
+* Its head.
+
+* A vertical gap, with comments at the anchor column.
+
+* Its subhead, aligned one stop before the head.
+
+* A vertical gap, with comments at the anchor column.
+
+* A kingside jogging.
+  The base column of its jogs should be
+  aligned one stop after the anchor
+  column.
+
+* A vertical gap, with comments at the anchor column.
+
+* A TISTIS,
+  aligned at the anchor column.
+
+### Queenside head-joined 2-jogging hoons
 
 *From `arvo/sys/vane/ames.hoon`, lines 1568-1575:*
 ```
@@ -1497,9 +1536,46 @@ in lexical order:
 * A TISTIS,
   aligned at the anchor column.
 
-### Head-split queenside 2-jogging hoons
+### Queenside head-split 2-jogging hoons
 
-TODO
+*Adapted from `arvo/lib/hood/kiln.hoon`, starting at line 582:*
+```
+    ?+    gem
+        (spam leaf+"strange auto" >gem< ~)
+    ::
+        $init
+      =+  :-  "auto merge failed on strategy %init"
+          "I'm out of ideas"
+      lose:(spam leaf+-< leaf+-> [>p.p.are< q.p.are])
+    ::
+    ==
+```
+
+A head-split queenside 2-jogging hoon should consist of,
+in lexical order:
+
+* Its rune.
+
+* A 2-stop horizontal gap.
+
+* Its head.
+
+* A vertical gap, with comments at the the anchor column.
+
+* Its subhead, aligned one stop before the head.
+
+* A vertical gap, with comments at the the anchor column.
+
+* A queenside jogging.
+  The base column of its jogs should be aligned
+  two stops after the anchor
+  column.
+
+* A vertical gap, with comments
+  at the anchor column.
+
+* A TISTIS,
+  aligned at the anchor column.
 
 ## Jogging-1 hoons
 

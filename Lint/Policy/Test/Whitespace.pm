@@ -792,9 +792,20 @@ sub checkTistis {
     my $tag            = $options->{tag};
     my $instance       = $policy->{lint};
     my $parent         = $tistis->{PARENT};
-    my $subpolicyTag   = $options->{subpolicyTag}
-      // $policy->nodeSubpolicy($parent),
-      my @mistakes = ();
+    my @mistakes = ();
+
+    # TODO: Delete after development
+    die if defined $options->{subpolicyTag};
+
+    my @subpolicy = ();
+    SET_SUBPOLICY: {
+        my $subpolicy = $options->{subpolicy};
+        if (defined $subpolicy) {
+            push @subpolicy, @{$subpolicy};
+            last SET_SUBPOLICY;
+        }
+        push @subpolicy, $policy->nodeSubpolicy($parent);
+    }
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
@@ -809,7 +820,7 @@ sub checkTistis {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy    => $subpolicyTag . ':tistis-alone',
+            subpolicy      => [ @subpolicy, 'tistis-alone' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $tistisLine,
@@ -835,7 +846,7 @@ sub checkTistis {
         push @mistakes,
           {
             desc           => $msg,
-            subpolicy      => $subpolicyTag . ':tistis-indent',
+            subpolicy      => [ @subpolicy, 'tistis-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $tistisLine,
@@ -2061,7 +2072,7 @@ sub checkFascom {
     if ($isJoined) {
         $chessSide = 'queenside';
     } else {
-        $chessSide = $policy->chessSideOfSequence($elements, $anchorColumn);
+        $chessSide = $policy->chessSideOfPairSequence($elements, $anchorColumn);
     }
 
     my $nodeIX = $node->{IX};
@@ -3079,7 +3090,7 @@ sub checkSplit_0Running {
         $policy->checkTistis(
             $tistis,
             {
-                subpolicyTag   => $policy->nodeSubpolicy($node),
+                subpolicy => [ $policy->nodeSubpolicy($node) ],
                 tag            => $tag,
                 expectedColumn => $anchorColumn,
             }
@@ -3163,7 +3174,7 @@ sub checkJoined_0Running {
         $policy->checkTistis(
             $tistis,
             {
-                subpolicyTag   => $policy->nodeSubpolicy($node),
+                subpolicy => [ $policy->nodeSubpolicy($node) ],
                 tag            => $tag,
                 expectedColumn => $runeColumn,
             }
@@ -3430,7 +3441,7 @@ sub check_0_as_1Running {
         $policy->checkTistis(
             $tistis,
             {
-                subpolicyTag   => $policy->nodeSubpolicy($node),
+                subpolicy => [ $policy->nodeSubpolicy($node) ],
                 tag            => $tag,
                 expectedColumn => $anchorColumn,
             }
@@ -3706,7 +3717,7 @@ sub chessSideOfJoggingHoon {
     die "No jogging found for ", $instance->symbol($node);
 }
 
-sub chessSideOfSequence {
+sub chessSideOfPairSequence {
     my ( $policy, $node, $runeColumn ) = @_;
     my $instance = $policy->{lint};
 
@@ -3716,14 +3727,16 @@ sub chessSideOfSequence {
     my %bodyColumnCount = ();
     my $kingsideCount   = 0;
     my $queensideCount  = 0;
+    my $lastLine = -1;
   CHILD: for my $childIX ( 0 .. $#$children ) {
         my $jog    = $children->[$childIX];
         my $symbol = $jog->{symbol};
         next CHILD if defined $symbol and $symbolReverseDB->{$symbol}->{gap};
         my $head = $jog->{children}->[0];
-        my ( undef, $column1 ) = $instance->line_column( $head->{start} );
-
-        # say " $column1 - $runeColumn >= 4 ";
+        my ( $line1, $column1 ) = $instance->line_column( $head->{start} );
+        next CHILD if $line1 == $lastLine;
+        $lastLine = $line1;
+        # say STDERR " $column1 - $runeColumn >= 4 ";
         if ( $column1 - $runeColumn >= 4 ) {
             $queensideCount++;
             next CHILD;
@@ -3737,7 +3750,7 @@ sub chessSideOfSequence {
 
 sub chessSideOfJogging {
     my ( $policy, $node, $runeColumn ) = @_;
-    return $policy->chessSideOfSequence($node, $runeColumn);
+    return $policy->chessSideOfPairSequence($node, $runeColumn);
 }
 
 # Find the body column, based on alignment within
@@ -3990,16 +4003,21 @@ sub check_2Jogging {
     ) = @{ $policy->gapSeq($node) };
 
     my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
+    my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
     my ( $subheadLine, $subheadColumn ) = $instance->nodeLC($subhead);
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my $chessSide     = $policy->chessSideOfJoggingHoon($node);
+    my $isKingside = $chessSide eq 'kingside';
     my $joggingRules  = $instance->{joggingRule};
 
     my @mistakes = ();
     my $tag      = '2-jogging';
+
+    my $isJoined = $headLine == $subheadLine;
+    my @subpolicy = ($runeName, $chessSide, ($isJoined ? 'joined' : 'split'));
 
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
@@ -4010,68 +4028,60 @@ sub check_2Jogging {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ @subpolicy, 'head-same-line' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
             line         => $headLine,
             column       => $headColumn,
-            expectedLine => $runeLine,
           };
     }
 
-    if ( $headLine == $subheadLine ) {
-        my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
-        if ( $headColumn != $expectedColumn ) {
+        my $expectedHeadColumn = $anchorColumn + ( $isKingside ? 4 : 6 );
+        if ( $headColumn != $expectedHeadColumn ) {
             my $msg = sprintf
               "2-jogging %s head %s; %s",
               $chessSide,
               describeLC( $headLine, $headColumn ),
-              describeMisindent2( $headColumn, $expectedColumn );
+              describeMisindent2( $headColumn, $expectedHeadColumn );
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ @subpolicy, 'head-hgap' ],
                 parentLine     => $runeLine,
                 parentColumn   => $runeColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
                 line           => $headLine,
                 column         => $headColumn,
               };
         }
 
+    if ( $isJoined ) {
         if ( $subheadGap->{length} != 2 ) {
             my ( undef, $subheadGapColumn ) = $instance->nodeLC($subheadGap);
-            $expectedColumn = $subheadGapColumn + 2;
+            my $expectedSubheadColumn = $subheadGapColumn + 2;
             my $msg = sprintf
               "2-jogging %s subhead %s; %s",
               $chessSide,
               describeLC( $subheadLine, $subheadColumn ),
-              describeMisindent2( $subheadColumn, $expectedColumn );
+              describeMisindent2( $subheadColumn, $expectedSubheadColumn );
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ @subpolicy, 'subhead-hgap' ],
                 parentLine     => $runeLine,
                 parentColumn   => $runeColumn,
-                line           => $headLine,
-                column         => $headColumn,
+                reportLine           => $subheadLine,
+                reportColumn         => $subheadColumn,
+                line           => $subheadLine,
+                column         => $subheadColumn,
               };
         }
     }
 
-    if ( $headLine != $subheadLine ) {
-
-        my $expectedColumn = $runeColumn + 4;
-        if ( $headColumn != $expectedColumn ) {
-            my $msg = sprintf
-              "2-jogging split head %s; %s",
-              describeLC( $headLine, $headColumn ),
-              describeMisindent2( $headColumn, $expectedColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $runeLine,
-                parentColumn   => $runeColumn,
-                line           => $headLine,
-                column         => $headColumn,
-              };
-        }
+    if ( not $isJoined ) {
 
         # If here, we have "split heads", which should follow the "pseudo-jog"
         # format
@@ -4081,29 +4091,32 @@ sub check_2Jogging {
             $policy->checkOneLineGap(
                 $subheadGap,
                 {
-                    mainColumn => $runeColumn,
+                    mainColumn => $anchorColumn,
                     tag        => $tag,
-                subpolicy => [ $runeName ],
+                    subpolicy  => [@subpolicy],
                     details    => [ [$tag] ],
                     topicLines => [$subheadLine],
                 }
             )
           };
 
-        $expectedColumn = $headColumn - 2;
-        if ( $subheadColumn != $expectedColumn ) {
+        my $expectedSubheadColumn = $headColumn - 2;
+        if ( $subheadColumn != $expectedSubheadColumn ) {
             my $msg = sprintf
               "2-jogging %s subhead %s; %s",
               $chessSide,
               describeLC( $subheadLine, $subheadColumn ),
-              describeMisindent2( $subheadColumn, $expectedColumn );
+              describeMisindent2( $subheadColumn, $expectedSubheadColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $runeLine,
-                parentColumn   => $runeColumn,
-                line           => $subheadLine,
-                column         => $subheadColumn,
+                desc         => $msg,
+                subpolicy    => [ @subpolicy, 'subhead-hgap' ],
+                parentLine   => $runeLine,
+                parentColumn => $runeColumn,
+                reportLine   => $subheadLine,
+                reportColumn => $subheadColumn,
+                line         => $subheadLine,
+                column       => $subheadColumn,
               };
         }
     }
@@ -4113,9 +4126,9 @@ sub check_2Jogging {
         $policy->checkOneLineGap(
             $joggingGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
-                subpolicy => [ $runeName ],
+                subpolicy => [ @subpolicy ],
                 details    => [ [$tag] ],
                 topicLines => [$joggingLine],
             }
@@ -4127,9 +4140,9 @@ sub check_2Jogging {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 tag        => $tag,
-                subpolicy => [ $runeName ],
+                subpolicy => [ @subpolicy ],
                 topicLines => [$tistisLine],
             }
         )
@@ -4141,7 +4154,8 @@ sub check_2Jogging {
             $tistis,
             {
                 tag            => $tag,
-                expectedColumn => $runeColumn,
+                subpolicy => [ @subpolicy ],
+                expectedColumn => $anchorColumn,
             }
         )
       };

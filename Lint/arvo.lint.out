@@ -900,7 +900,6 @@ hoons/arvo/app/github.hoon 38:9 Test::Whitespace tallColsig runstep #2 @38:9; ov
 hoons/arvo/app/github.hoon 39:9 Test::Whitespace tallColsig runstep #3 @39:9; overindented by 2
 hoons/arvo/app/github.hoon 36:17 Test::Whitespace colsig:tistis-indent TISTIS @40:7; overindented by 2
 === hoons/arvo/app/hall.hoon ===
-hoons/arvo/app/hall.hoon 15:7 Test::Whitespace fastis:body-indent fastis split horn @15:7; overindented by 4
 hoons/arvo/app/hall.hoon 83:7 Test::Whitespace tallBucwut runstep #2 @83:7; underindented by 4
 hoons/arvo/app/hall.hoon 671:37 Test::Whitespace tallTisgal backdented element #2 @672:5; underindented by 19
 hoons/arvo/app/hall.hoon 680:37 Test::Whitespace tallTisgal backdented element #2 @681:5; underindented by 19
@@ -1076,8 +1075,6 @@ hoons/arvo/lib/oauth1.hoon 166:9 Test::Whitespace tallKethep backdented element 
 === hoons/arvo/lib/twitter.hoon ===
 hoons/arvo/lib/twitter.hoon 72:12 Test::Whitespace tallKetwut backdented element #1 @73:3; underindented by 9
 === hoons/arvo/lib/down-jet.hoon ===
-hoons/arvo/lib/down-jet.hoon 10:1 Test::Whitespace fasfas:hgap joined fasfas body @10:7 is overindented by 2
-hoons/arvo/lib/down-jet.hoon 11:1 Test::Whitespace fasfas:hgap joined fasfas body @11:7 is overindented by 2
 === hoons/arvo/lib/oauth2.hoon ===
 hoons/arvo/lib/oauth2.hoon 22:3 Test::Whitespace tallCenket backdented element #2 @23:5; underindented by 2
 hoons/arvo/lib/oauth2.hoon 22:3 Test::Whitespace tallCenket backdented element #4 @29:5; overindented by 2
@@ -1304,11 +1301,8 @@ hoons/arvo/ren/rss-xml.hoon 22:11 Test::Whitespace tallCenhep backdented element
 === hoons/arvo/ren/tree/combine.hoon ===
 === hoons/arvo/ren/tree/comments.hoon ===
 === hoons/arvo/ren/urb/tree.hoon ===
-hoons/arvo/ren/urb/tree.hoon 6:6 Test::Whitespace fastis:head-hgap fastis symbol @6:6; overindented by 1
-hoons/arvo/ren/urb/tree.hoon 7:6 Test::Whitespace fastis:head-hgap fastis symbol @7:6; overindented by 1
 === hoons/arvo/ren/css.hoon ===
 === hoons/arvo/ren/test-tree.hoon ===
-hoons/arvo/ren/test-tree.hoon 2:12 Test::Whitespace fastis:body-hgap fastis horn @2:12; overindented by 1
 === hoons/arvo/ren/run.hoon ===
 === hoons/arvo/ren/js.hoon ===
 === hoons/arvo/gen/pipe/cancel.hoon ===

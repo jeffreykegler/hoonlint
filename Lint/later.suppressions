@@ -23,9 +23,6 @@ hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:missing-newline gap @1
 hoons/arvo/sys/vane/xmas.hoon 5:5 Test::Whitespace tissig:tistis-alone TISTIS @1162:6 should only share line with other TISTIS's
 
 #  === issues/44.include ===
-hoons/arvo/sys/zuse.hoon 4602:5 Test::Whitespace tallWutlus 2-jogging queenside head @4602:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 4602:5 Test::Whitespace tallWutlus 2-jogging queenside subhead @4602:13; overindented by 1
-hoons/arvo/sys/zuse.hoon 4603:7 Test::Whitespace tallWutlus Jog queenside head @4603:7; underindented by 2
 hoons/arvo/sys/zuse.hoon 4603:15 Test::Whitespace tallWutlus Jog queenside head @4603:15; overindented by 6
 hoons/arvo/sys/zuse.hoon 4603:25 Test::Whitespace tallWutlus Jog queenside head @4603:25; overindented by 16
 hoons/arvo/sys/zuse.hoon 4603:35 Test::Whitespace tallWutlus Jog queenside head @4603:35; overindented by 26
@@ -34,14 +31,12 @@ hoons/arvo/sys/zuse.hoon 4603:45 Test::Whitespace tallWutlus Jog queenside head 
 hoons/arvo/sys/zuse.hoon 4603:55 Test::Whitespace tallWutlus Jog queenside head @4603:55; overindented by 46
 hoons/arvo/sys/zuse.hoon 4603:65 Test::Whitespace tallWutlus Jog queenside head @4603:65; overindented by 56
 hoons/arvo/sys/zuse.hoon 4603:65 Test::Whitespace tallWutlus Jog queenside body @4603:70; overindented by 40
-hoons/arvo/sys/zuse.hoon 4604:7 Test::Whitespace tallWutlus Jog queenside head @4604:7; underindented by 2
 hoons/arvo/sys/zuse.hoon 4604:15 Test::Whitespace tallWutlus Jog queenside head @4604:15; overindented by 6
 hoons/arvo/sys/zuse.hoon 4604:25 Test::Whitespace tallWutlus Jog queenside head @4604:25; overindented by 16
 hoons/arvo/sys/zuse.hoon 4604:35 Test::Whitespace tallWutlus Jog queenside head @4604:35; overindented by 26
 hoons/arvo/sys/zuse.hoon 4604:45 Test::Whitespace tallWutlus Jog queenside head @4604:45; overindented by 36
 hoons/arvo/sys/zuse.hoon 4604:55 Test::Whitespace tallWutlus Jog queenside head @4604:55; overindented by 46
 hoons/arvo/sys/zuse.hoon 4604:65 Test::Whitespace tallWutlus Jog queenside head @4604:65; overindented by 56
-hoons/arvo/sys/zuse.hoon 4605:7 Test::Whitespace tallWutlus Jog queenside head @4605:7; underindented by 2
 hoons/arvo/sys/zuse.hoon 4605:15 Test::Whitespace tallWutlus Jog queenside head @4605:15; overindented by 6
 hoons/arvo/sys/zuse.hoon 4605:15 Test::Whitespace tallWutlus Jog queenside body @4605:20; underindented by 10
 hoons/arvo/sys/zuse.hoon 4605:25 Test::Whitespace tallWutlus Jog queenside head @4605:25; overindented by 16

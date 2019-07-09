@@ -1206,3 +1206,25 @@ hoons/arvo/mar/xml.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; 
 hoons/arvo/mar/xml.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
 hoons/arvo/mar/html.hoon 5:3 Test::Whitespace faswut:comment-indent faswut @5:3; comment overindented by 2
 hoons/arvo/mar/html.hoon 7:3 Test::Whitespace faswut:comment-indent faswut @7:3; comment overindented by 2
+
+# Ford aberrations
+hoons/arvo/app/hall.hoon 15:7 Test::Whitespace fastis:body-indent fastis split horn @15:7; overindented by 4
+hoons/arvo/lib/down-jet.hoon 10:1 Test::Whitespace fasfas:hgap joined fasfas body @10:7 is overindented by 2
+hoons/arvo/lib/down-jet.hoon 11:1 Test::Whitespace fasfas:hgap joined fasfas body @11:7 is overindented by 2
+hoons/arvo/ren/urb/tree.hoon 6:6 Test::Whitespace fastis:head-hgap fastis symbol @6:6; overindented by 1
+hoons/arvo/ren/urb/tree.hoon 7:6 Test::Whitespace fastis:head-hgap fastis symbol @7:6; overindented by 1
+hoons/arvo/ren/test-tree.hoon 2:12 Test::Whitespace fastis:body-hgap fastis horn @2:12; overindented by 1
+
+# 2-Jogging aberrations
+hoons/arvo/sys/zuse.hoon 4602:13 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @4602:13; overindented by 1
+hoons/arvo/sys/hoon.hoon 4322:9 Test::Whitespace wutlus:queenside:joined:head-hgap 2-jogging queenside head @4322:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 5461:5 Test::Whitespace wutlus:queenside:split:subhead-hgap 2-jogging queenside subhead @5461:5; underindented by 2
+hoons/arvo/sys/hoon.hoon 7465:15 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @7465:15; overindented by 1
+hoons/arvo/sys/hoon.hoon 7489:9 Test::Whitespace wutlus:queenside:joined:head-hgap 2-jogging queenside head @7489:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 7489:20 Test::Whitespace wutlus:queenside:joined:subhead-hgap 2-jogging queenside subhead @7489:20; overindented by 6
+hoons/arvo/sys/hoon.hoon 8314:22 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @8314:22; overindented by 4
+hoons/arvo/sys/hoon.hoon 8322:22 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @8322:22; overindented by 4
+hoons/arvo/sys/hoon.hoon 8340:13 Test::Whitespace wutlus:kingside:joined:head-hgap 2-jogging kingside head @8340:13; overindented by 2
+hoons/arvo/sys/hoon.hoon 8340:20 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @8340:20; overindented by 2
+hoons/arvo/sys/hoon.hoon 9389:20 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @9389:20; overindented by 4
+hoons/arvo/sys/hoon.hoon 9863:20 Test::Whitespace wutlus:kingside:joined:subhead-hgap 2-jogging kingside subhead @9863:20; overindented by 4
