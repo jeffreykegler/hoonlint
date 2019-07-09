@@ -441,36 +441,6 @@ hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tiscol:tistis-indent jogg
 hoons/arvo/sys/vane/dill.hoon 498:9 Test::Whitespace tallTiscol Jog kingside body @498:19; overindented by 1
 
 # "split" TISCOL anomalies from Github issue #31
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol 1-jogging jogging @1732:11; should be on rune line 1731
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol 1-jogging jogging @1732:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tallTiscol Jog kingside head @1732:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1733:11 Test::Whitespace tallTiscol Jog kingside head @1733:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1731:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1734:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol 1-jogging jogging @1743:11; should be on rune line 1742
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol 1-jogging jogging @1743:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tallTiscol Jog kingside head @1743:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1744:11 Test::Whitespace tallTiscol Jog kingside head @1744:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1742:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1745:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol 1-jogging jogging @1759:11; should be on rune line 1758
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol 1-jogging jogging @1759:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tallTiscol Jog kingside head @1759:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1760:11 Test::Whitespace tallTiscol Jog kingside head @1760:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1758:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1761:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol 1-jogging jogging @1770:11; should be on rune line 1769
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol 1-jogging jogging @1770:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tallTiscol Jog kingside head @1770:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1771:11 Test::Whitespace tallTiscol Jog kingside head @1771:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1769:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1772:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol 1-jogging jogging @1786:11; should be on rune line 1785
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol 1-jogging jogging @1786:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tallTiscol Jog kingside head @1786:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1787:11 Test::Whitespace tallTiscol Jog kingside head @1787:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1785:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1788:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol 1-jogging jogging @1797:11; should be on rune line 1796
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol 1-jogging jogging @1797:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tallTiscol Jog kingside head @1797:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1798:11 Test::Whitespace tallTiscol Jog kingside head @1798:11; underindented by 2
-hoons/arvo/sys/zuse.hoon 1796:9 Test::Whitespace tallTiscol jogging-1 TISTIS @1799:9; underindented by 2
 
 # SEMSIG anomalies from Github issue #18
 hoons/arvo/lib/down-jet/parse.hoon 291:7 Test::Whitespace tallSemsig 1-running runstep #1 @291:7; underindented by 2

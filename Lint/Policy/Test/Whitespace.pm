@@ -4197,7 +4197,7 @@ sub check_Jogging1 {
           $runeLine;
         push @mistakes, {
             desc => $msg,
-            subpolicy = [ $runeName, 'jogging-same-line' ];
+            subpolicy => [ $runeName, 'jogging-same-line' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $joggingLine,
@@ -4209,14 +4209,14 @@ sub check_Jogging1 {
         };
     }
 
-    if ( $joggingColumn != $expectedColumn ) {
+    if ( $joggingColumn != $jogBaseColumn ) {
         my $msg = sprintf
           "jogging %s; %s",
           describeLC( $joggingLine, $joggingColumn ),
           describeMisindent2( $joggingColumn, $jogBaseColumn );
         push @mistakes, {
             desc => $msg,
-            subpolicy = [ $runeName, 'jogging-indent' ];
+            subpolicy => [ $runeName, 'jogging-indent' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $joggingLine,
@@ -4232,8 +4232,8 @@ sub check_Jogging1 {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $anchoreColumn,
-                preColumn  => $jobBaseColumn,
+                mainColumn => $anchorColumn,
+                preColumn  => $jogBaseColumn,
                 tag        => $tag,
                 subpolicy  => [$runeName],
                 topicLines => [$tistisLine],
@@ -4248,6 +4248,7 @@ sub check_Jogging1 {
             $tistis,
             {
                 tag            => $tag,
+                subpolicy => [ $runeName ],
                 expectedColumn => $anchorColumn + 2,
             }
         )
@@ -4267,7 +4268,7 @@ sub check_Jogging1 {
         )
       };
 
-    $expectedTailColumn = $anchorColumn;
+    my $expectedTailColumn = $anchorColumn;
     if ( $tailColumn != $expectedTailColumn ) {
         my $msg = sprintf
           "1-jogging tail %s; %s",
