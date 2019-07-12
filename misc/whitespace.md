@@ -1357,9 +1357,8 @@ in lexical order:
 
 * Its head.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A kingside jogging.
   The jog base column
@@ -1392,9 +1391,8 @@ in lexical order:
 
 * Its head.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A queenside jogging.
   The jog base column
@@ -1437,9 +1435,8 @@ in lexical order:
 
 * Its subhead.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A kingside jogging.
   The jog base column
@@ -1481,7 +1478,8 @@ in lexical order:
 
 * Its subhead, aligned one stop before the head.
 
-* A vertical gap, with comments at the anchor column.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A kingside jogging.
   The jog base column
@@ -1521,9 +1519,8 @@ in lexical order:
 
 * Its subhead.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A queenside jogging.
   The jog base column
@@ -1564,7 +1561,8 @@ in lexical order:
 
 * Its subhead, aligned one stop before the head.
 
-* A vertical gap, with comments at the the anchor column.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A queenside jogging.
   The jog base column
