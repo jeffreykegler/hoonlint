@@ -4013,6 +4013,7 @@ sub check_1Jogging {
             $joggingGap,
             {
                 mainColumn => $anchorColumn,
+                preColumn => $jogBaseColumn,
                 tag        => ( sprintf '1-jogging %s jogging', $chessSide ),
                 subpolicy => [ $runeName ],
                 parent     => $rune,
@@ -4185,6 +4186,7 @@ sub check_2Jogging {
             $joggingGap,
             {
                 mainColumn => $anchorColumn,
+                preColumn => $jogBaseColumn,
                 tag        => $tag,
                 subpolicy => [ @subpolicy ],
                 details    => [ [$tag] ],

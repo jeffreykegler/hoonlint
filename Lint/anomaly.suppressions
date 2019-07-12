@@ -335,9 +335,6 @@ hoons/arvo/sys/zuse.hoon 3854:7 Test::Whitespace tallCentis 1-jogging kingside h
 hoons/arvo/sys/zuse.hoon 4166:7 Test::Whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2
 
 # From Github issue #15
-hoons/arvo/app/hall.hoon 366:7 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @366:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 367:7 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @367:7; comment overindented by 2
-hoons/arvo/app/hall.hoon 415:9 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @415:9; comment overindented by 2
 hoons/arvo/app/talk.hoon 1057:11 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @1057:11; comment overindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 153:1 Test::Whitespace wuthep:empty-line 1-jogging kingside TISTIS @153:1; missing comment on line 153
 hoons/arvo/mar/txt.hoon 126:9 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @126:9; comment overindented by 2
