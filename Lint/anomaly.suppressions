@@ -112,13 +112,13 @@ hoons/arvo/sys/hoon.hoon 8452:9 Test::Whitespace tallColhep backdented element #
 
 # "Flatward" indentation, correct to lint, see:
 # https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
+hoons/arvo/lib/hood/drum.hoon 792:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @792:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 793:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @793:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 794:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @794:18; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 796:14 Test::Whitespace wuthep:jog-head-indent Jog queenside head @796:14; overindented by 5
+hoons/arvo/lib/hood/drum.hoon 797:14 Test::Whitespace wuthep:jog-head-indent Jog queenside head @797:14; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 792:9 Test::Whitespace tallWuthep 1-jogging queenside head @792:13; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 792:18 Test::Whitespace tallWuthep Jog queenside head @792:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 793:18 Test::Whitespace tallWuthep Jog queenside head @793:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 794:18 Test::Whitespace tallWuthep Jog queenside head @794:18; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 796:5 Test::Whitespace tallWuthep 1-jogging queenside head @796:9; underindented by 2
-hoons/arvo/lib/hood/drum.hoon 796:14 Test::Whitespace tallWuthep Jog queenside head @796:14; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 797:14 Test::Whitespace tallWuthep Jog queenside head @797:14; overindented by 5
 
 # "Floats", see
 # https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
@@ -163,10 +163,10 @@ hoons/arvo/gen/test.hoon 25:3 Test::Whitespace tallWuthep 1-jogging queenside he
 
 # See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
 hoons/arvo/lib/hall.hoon 138:3 Test::Whitespace tallWuthep 1-jogging queenside head @138:7; underindented by 2
-hoons/arvo/lib/hall.hoon 139:5 Test::Whitespace tallWuthep Jog queenside head @139:5; underindented by 2
-hoons/arvo/lib/hall.hoon 140:5 Test::Whitespace tallWuthep Jog queenside head @140:5; underindented by 2
-hoons/arvo/lib/hall.hoon 141:5 Test::Whitespace tallWuthep Jog queenside head @141:5; underindented by 2
-hoons/arvo/lib/hall.hoon 142:5 Test::Whitespace tallWuthep Jog queenside head @142:5; underindented by 2
+hoons/arvo/lib/hall.hoon 139:5 Test::Whitespace wuthep:jog-head-indent Jog queenside head @139:5; underindented by 2
+hoons/arvo/lib/hall.hoon 140:5 Test::Whitespace wuthep:jog-head-indent Jog queenside head @140:5; underindented by 2
+hoons/arvo/lib/hall.hoon 141:5 Test::Whitespace wuthep:jog-head-indent Jog queenside head @141:5; underindented by 2
+hoons/arvo/lib/hall.hoon 142:5 Test::Whitespace wuthep:jog-head-indent Jog queenside head @142:5; underindented by 2
 
 # See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
 hoons/arvo/lib/hall-json.hoon 76:5 Test::Whitespace tallWuthep 1-jogging queenside head @76:9; underindented by 2
@@ -195,11 +195,11 @@ hoons/arvo/sys/vane/clay.hoon 3813:3 Test::Whitespace tallWuthep 1-jogging queen
 # See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
 hoons/arvo/sys/vane/eyre.hoon 1094:7 Test::Whitespace tallWuthep 1-jogging queenside head @1094:11; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 715:7 Test::Whitespace tallWuthep 1-jogging queenside head @715:11; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 767:7 Test::Whitespace tallWuthep Jog queenside head @767:7; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 790:9 Test::Whitespace tallWuthep Jog queenside body @793:11; overindented by 4
+hoons/arvo/sys/vane/eyre.hoon 767:7 Test::Whitespace wuthep:jog-head-indent Jog queenside head @767:7; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 793:11 Test::Whitespace wuthep:jog-body-indent Jog queenside body @793:11; overindented by 4
 
 # See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
-hoons/arvo/sys/vane/ford.hoon 1704:13 Test::Whitespace tallWuthep Jog queenside body @1705:13; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 1705:13 Test::Whitespace wuthep:jog-body-indent Jog queenside body @1705:13; overindented by 2
 
 # See github issue #8: https://github.com/jeffreykegler/yahc/issues/8
 # 'probably just wants to be kingside? Agree that it's an anomaly at any rate'
@@ -212,24 +212,24 @@ hoons/arvo/sys/vane/xmas.hoon 1243:13 Test::Whitespace tallWuthep 1-jogging quee
 hoons/arvo/app/dojo.hoon 363:7 Test::Whitespace tallWuthep 1-jogging kingside head @363:13; overindented by 2
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
-hoons/arvo/app/hall.hoon 992:11 Test::Whitespace tallWuthep Jog kingside head @992:11; overindented by 2
-hoons/arvo/app/hall.hoon 992:11 Test::Whitespace tallWuthep Jog kingside body @993:9; underindented by 2
-hoons/arvo/app/hall.hoon 997:11 Test::Whitespace tallWuthep Jog kingside head @997:11; overindented by 2
-hoons/arvo/app/hall.hoon 997:11 Test::Whitespace tallWuthep Jog kingside body @999:9; underindented by 2
-hoons/arvo/app/hall.hoon 1016:11 Test::Whitespace tallWuthep Jog kingside head @1016:11; overindented by 2
-hoons/arvo/app/hall.hoon 1016:11 Test::Whitespace tallWuthep Jog kingside body @1018:9; underindented by 2
-hoons/arvo/app/hall.hoon 2678:7 Test::Whitespace tallWuthep Jog kingside head @2678:7; overindented by 2
-hoons/arvo/app/hall.hoon 2678:7 Test::Whitespace tallWuthep Jog kingside body @2679:5; underindented by 2
+hoons/arvo/app/hall.hoon 992:11 Test::Whitespace wuthep:jog-head-indent Jog kingside head @992:11; overindented by 2
+hoons/arvo/app/hall.hoon 993:9 Test::Whitespace wuthep:jog-body-indent Jog kingside body @993:9; underindented by 2
+hoons/arvo/app/hall.hoon 997:11 Test::Whitespace wuthep:jog-head-indent Jog kingside head @997:11; overindented by 2
+hoons/arvo/app/hall.hoon 999:9 Test::Whitespace wuthep:jog-body-indent Jog kingside body @999:9; underindented by 2
+hoons/arvo/app/hall.hoon 1016:11 Test::Whitespace wuthep:jog-head-indent Jog kingside head @1016:11; overindented by 2
+hoons/arvo/app/hall.hoon 1018:9 Test::Whitespace wuthep:jog-body-indent Jog kingside body @1018:9; underindented by 2
+hoons/arvo/app/hall.hoon 2678:7 Test::Whitespace wuthep:jog-head-indent Jog kingside head @2678:7; overindented by 2
+hoons/arvo/app/hall.hoon 2679:5 Test::Whitespace wuthep:jog-body-indent Jog kingside body @2679:5; underindented by 2
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "static - should be queenside instead of indented 2 stops, but yeah as discussed"
-hoons/arvo/app/static.hoon 146:5 Test::Whitespace tallWuthep Jog kingside body @147:3; underindented by 4
+hoons/arvo/app/static.hoon 147:3 Test::Whitespace wuthep:jog-body-indent Jog kingside body @147:3; underindented by 4
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "looks like there's a convention of "kingside, empty comment line, queenside"? it's like 5 occurences total so just kill it yeah"
 # " - I will note that the "underindented by 2" errors are not great, I get that this is a line that will need to be touched, but locally it's the correct thing; will probably be more clear with combined message contexts though"
-hoons/arvo/gen/capitalize.hoon 267:7 Test::Whitespace tallWuthep Jog kingside head @267:7; overindented by 2
-hoons/arvo/gen/capitalize.hoon 267:7 Test::Whitespace tallWuthep Jog kingside body @268:5; underindented by 2
+hoons/arvo/gen/capitalize.hoon 267:7 Test::Whitespace wuthep:jog-head-indent Jog kingside head @267:7; overindented by 2
+hoons/arvo/gen/capitalize.hoon 268:5 Test::Whitespace wuthep:jog-body-indent Jog kingside body @268:5; underindented by 2
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 hoons/arvo/gen/musk.hoon 62:5 Test::Whitespace tallWuthep 1-jogging kingside head @62:11; overindented by 2
@@ -237,8 +237,8 @@ hoons/arvo/gen/musk.hoon 62:5 Test::Whitespace tallWuthep 1-jogging kingside hea
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "looks like there's a convention of "kingside, empty comment line, queenside"? it's like 5 occurences total so just kill it yeah"
 # " - I will note that the "underindented by 2" errors are not great, I get that this is a line that will need to be touched, but locally it's the correct thing; will probably be more clear with combined message contexts though"
-hoons/arvo/lib/hall.hoon 194:7 Test::Whitespace tallWuthep Jog kingside body @195:5; underindented by 2
-hoons/arvo/lib/hall.hoon 194:7 Test::Whitespace tallWuthep Jog kingside head @194:7; overindented by 2
+hoons/arvo/lib/hall.hoon 194:7 Test::Whitespace wuthep:jog-head-indent Jog kingside head @194:7; overindented by 2
+hoons/arvo/lib/hall.hoon 195:5 Test::Whitespace wuthep:jog-body-indent Jog kingside body @195:5; underindented by 2
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "helm - yep"
@@ -246,7 +246,7 @@ hoons/arvo/lib/hood/helm.hoon 231:3 Test::Whitespace tallWuthep 1-jogging kingsi
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "womb - nice catch!"
-hoons/arvo/lib/hood/womb.hoon 610:7 Test::Whitespace tallWuthep Jog kingside body @610:17; underindented by 1
+hoons/arvo/lib/hood/womb.hoon 610:17 Test::Whitespace wuthep:jog-body-indent Jog kingside body @610:17; underindented by 1
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 hoons/arvo/lib/sole.hoon 15:3 Test::Whitespace tallWuthep 1-jogging kingside head @15:9; overindented by 2
@@ -263,21 +263,21 @@ hoons/arvo/sys/hoon.hoon 12621:10 Test::Whitespace wuthep:jog-head-indent Jog ki
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "clay %tabl - oof. I see what it's doing, and am probably responsible; fix it yeah(also %tabl is gone in 2019 iirc)"
 # "clay ++execute-changes - should be queenside"
-# "clay ++read-at-aeon - uh, split kingside as suggested is reasonable yeah"
-hoons/arvo/sys/vane/clay.hoon 529:9 Test::Whitespace tallWuthep Jog kingside head @529:9; underindented by 7
-hoons/arvo/sys/vane/clay.hoon 530:9 Test::Whitespace tallWuthep Jog kingside head @530:9; underindented by 7
-hoons/arvo/sys/vane/clay.hoon 531:9 Test::Whitespace tallWuthep Jog kingside head @531:9; underindented by 7
-hoons/arvo/sys/vane/clay.hoon 2161:9 Test::Whitespace tallWuthep Jog kingside body @2162:12; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 2174:9 Test::Whitespace tallWuthep Jog kingside body @2175:12; overindented by 1
-hoons/arvo/sys/vane/clay.hoon 2595:11 Test::Whitespace tallWuthep Jog kingside head @2595:11; overindented by 2
-hoons/arvo/sys/vane/clay.hoon 2595:11 Test::Whitespace tallWuthep Jog kingside body @2596:9; underindented by 2
+# "clay ++read-at-aeon - uh, split kingside as suggested is reasonable yeah"hoons/arvo/sys/vane/clay.hoon 2162:12 Test::Whitespace wuthep:jog-body-indent Jog kingside body @2162:12; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 529:9 Test::Whitespace wuthep:jog-head-indent Jog kingside head @529:9; underindented by 7
+hoons/arvo/sys/vane/clay.hoon 530:9 Test::Whitespace wuthep:jog-head-indent Jog kingside head @530:9; underindented by 7
+hoons/arvo/sys/vane/clay.hoon 531:9 Test::Whitespace wuthep:jog-head-indent Jog kingside head @531:9; underindented by 7
+hoons/arvo/sys/vane/clay.hoon 2162:12 Test::Whitespace wuthep:jog-body-indent Jog kingside body @2162:12; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 2175:12 Test::Whitespace wuthep:jog-body-indent Jog kingside body @2175:12; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 2595:11 Test::Whitespace wuthep:jog-head-indent Jog kingside head @2595:11; overindented by 2
+hoons/arvo/sys/vane/clay.hoon 2596:9 Test::Whitespace wuthep:jog-body-indent Jog kingside body @2596:9; underindented by 2
 
 # See github issue #7: https://github.com/jeffreykegler/yahc/issues/7
 # "gall - yep! (similarly 343/344 should be aligned)
 #  - tho 653 is only overindented by like, 1 space"
-hoons/arvo/sys/vane/gall.hoon 341:9 Test::Whitespace tallWuthep Jog kingside body @341:15; underindented by 1
+hoons/arvo/sys/vane/gall.hoon 341:15 Test::Whitespace wuthep:jog-body-indent Jog kingside body @341:15; underindented by 1
 hoons/arvo/sys/vane/gall.hoon 392:7 Test::Whitespace tallWuthep 1-jogging kingside head @392:13; overindented by 2
-hoons/arvo/sys/vane/gall.hoon 653:9 Test::Whitespace tallWuthep Jog kingside body @653:21; overindented by 4
+hoons/arvo/sys/vane/gall.hoon 653:21 Test::Whitespace wuthep:jog-body-indent Jog kingside body @653:21; overindented by 4
 
 # See github issue #10: https://github.com/jeffreykegler/yahc/issues/10
 hoons/arvo/app/hall.hoon 1102:9 Test::Whitespace tallCencab 1-jogging queenside head @1102:13; underindented by 2
@@ -287,17 +287,18 @@ hoons/arvo/app/hall.hoon 2010:9 Test::Whitespace tallCencab 1-jogging queenside 
 hoons/arvo/app/hall.hoon 2357:11 Test::Whitespace tallCencab 1-jogging queenside head @2357:15; underindented by 2
 hoons/arvo/app/hall.hoon 2395:5 Test::Whitespace tallCencab 1-jogging queenside head @2395:9; underindented by 2
 hoons/arvo/app/hall.hoon 2615:19 Test::Whitespace tallCencab 1-jogging queenside head @2615:23; underindented by 2
-hoons/arvo/app/hall.hoon 2615:26 Test::Whitespace tallCencab Jog queenside head @2615:26; overindented by 3
-hoons/arvo/app/hall.hoon 2616:21 Test::Whitespace tallCencab Jog queenside head @2616:21; underindented by 2
+hoons/arvo/app/hall.hoon 2615:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2615:26; overindented by 3
+hoons/arvo/app/hall.hoon 2616:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2616:21; underindented by 2
 hoons/arvo/app/hall.hoon 2618:19 Test::Whitespace tallCencab 1-jogging queenside head @2618:23; underindented by 2
-hoons/arvo/app/hall.hoon 2618:26 Test::Whitespace tallCencab Jog queenside head @2618:26; overindented by 3
-hoons/arvo/app/hall.hoon 2619:21 Test::Whitespace tallCencab Jog queenside head @2619:21; underindented by 2
+
+hoons/arvo/app/hall.hoon 2618:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2618:26; overindented by 3
+hoons/arvo/app/hall.hoon 2619:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2619:21; underindented by 2
 hoons/arvo/app/hall.hoon 2623:19 Test::Whitespace tallCencab 1-jogging queenside head @2623:23; underindented by 2
-hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace tallCencab Jog queenside head @2623:26; overindented by 3
-hoons/arvo/app/hall.hoon 2624:21 Test::Whitespace tallCencab Jog queenside head @2624:21; underindented by 2
+hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2623:26; overindented by 3
+hoons/arvo/app/hall.hoon 2624:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2624:21; underindented by 2
 hoons/arvo/app/hall.hoon 2955:7 Test::Whitespace tallCencab 1-jogging queenside head @2955:11; underindented by 2
 hoons/arvo/sys/vane/ames.hoon 865:9 Test::Whitespace tallCencab 1-jogging kingside head @865:15; overindented by 2
-hoons/arvo/sys/vane/ford.hoon 730:11 Test::Whitespace tallCencab Jog kingside body @730:17; overindented by 1
+hoons/arvo/sys/vane/ford.hoon 730:17 Test::Whitespace cencab:jog-body-indent Jog kingside body @730:17; overindented by 1
 hoons/arvo/sys/vane/gall.hoon 117:5 Test::Whitespace tallCencab 1-jogging kingside head @117:11; overindented by 2
 
 # See github issue #9: https://github.com/jeffreykegler/yahc/issues/9
@@ -327,8 +328,8 @@ hoons/arvo/sys/hoon.hoon 4059:13 Test::Whitespace centis:jog-head-indent Jog kin
 hoons/arvo/sys/hoon.hoon 5090:22 Test::Whitespace centis:jog-body-indent Jog kingside body @5090:22; overindented by 4
 # "ames:1323 is doing the "sidenote" or w/e we decided to call it stacked indentation style,
 # but should be a `%_` instead"
-hoons/arvo/sys/vane/ames.hoon 1324:21 Test::Whitespace tallCentis Jog kingside head @1324:21; underindented by 8
-hoons/arvo/sys/vane/ames.hoon 1325:21 Test::Whitespace tallCentis Jog kingside head @1325:21; underindented by 8
+hoons/arvo/sys/vane/ames.hoon 1324:21 Test::Whitespace centis:jog-head-indent Jog kingside head @1324:21; underindented by 8
+hoons/arvo/sys/vane/ames.hoon 1325:21 Test::Whitespace centis:jog-head-indent Jog kingside head @1325:21; underindented by 8
 hoons/arvo/sys/vane/xmas.hoon 863:7 Test::Whitespace tallCentis 1-jogging kingside head @863:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3854:7 Test::Whitespace tallCentis 1-jogging kingside head @3854:12; overindented by 1
 hoons/arvo/sys/zuse.hoon 4166:7 Test::Whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2
@@ -430,7 +431,7 @@ hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runst
 hoons/arvo/app/talk.hoon 544:5 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @547:5; underindented by 2
 hoons/arvo/app/talk.hoon 1122:9 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @1124:9; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @2171:12; underindented by 2
-hoons/arvo/sys/vane/dill.hoon 498:9 Test::Whitespace tallTiscol Jog kingside body @498:19; overindented by 1
+hoons/arvo/sys/vane/dill.hoon 498:19 Test::Whitespace tiscol:jog-body-indent Jog kingside body @498:19; overindented by 1
 
 # "split" TISCOL anomalies from Github issue #31
 
@@ -1295,3 +1296,71 @@ hoons/arvo/lib/hood/drum.hoon 727:13 Test::Whitespace wutlus:jogging:comment-ind
 hoons/arvo/lib/hood/drum.hoon 740:13 Test::Whitespace wutlus:jogging:comment-indent wutlus @740:13; comment overindented by 6
 hoons/arvo/lib/hood/drum.hoon 751:13 Test::Whitespace wutlus:jogging:comment-indent wutlus @751:13; comment overindented by 6
 hoons/arvo/mar/txt.hoon 59:5 Test::Whitespace wuthep:jogging:comment-indent wuthep @59:5; comment underindented by 2
+
+# Jogging hoon anomalies
+hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1732:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1733:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1733:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1743:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1744:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1744:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1759:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1760:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1760:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1770:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1771:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1771:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1786:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1787:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1787:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1797:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 1798:11 Test::Whitespace tiscol:jog-head-indent Jog kingside head @1798:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 4603:13 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:13; missing newline @4603:13
+hoons/arvo/sys/zuse.hoon 4603:23 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:23; missing newline @4603:23
+hoons/arvo/sys/zuse.hoon 4603:33 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:33; missing newline @4603:33
+hoons/arvo/sys/zuse.hoon 4603:42 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:42; missing newline @4603:42
+hoons/arvo/sys/zuse.hoon 4603:53 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:53; missing newline @4603:53
+hoons/arvo/sys/zuse.hoon 4603:63 Test::Whitespace wutlus:jogging:missing-newline wutlus @4603:63; missing newline @4603:63
+hoons/arvo/sys/zuse.hoon 4604:13 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:13; missing newline @4604:13
+hoons/arvo/sys/zuse.hoon 4604:23 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:23; missing newline @4604:23
+hoons/arvo/sys/zuse.hoon 4604:33 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:33; missing newline @4604:33
+hoons/arvo/sys/zuse.hoon 4604:43 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:43; missing newline @4604:43
+hoons/arvo/sys/zuse.hoon 4604:53 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:53; missing newline @4604:53
+hoons/arvo/sys/zuse.hoon 4604:63 Test::Whitespace wutlus:jogging:missing-newline wutlus @4604:63; missing newline @4604:63
+hoons/arvo/sys/zuse.hoon 4605:13 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:13; missing newline @4605:13
+hoons/arvo/sys/zuse.hoon 4605:22 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:22; missing newline @4605:22
+hoons/arvo/sys/zuse.hoon 4605:33 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:33; missing newline @4605:33
+hoons/arvo/sys/hoon.hoon 7530:20 Test::Whitespace wuthep:jog-head-indent Jog queenside body @7530:20; underindented by 1
+hoons/arvo/sys/hoon.hoon 7755:19 Test::Whitespace wuthep:jog-head-indent Jog queenside body @7755:19; overindented by 4
+hoons/arvo/sys/hoon.hoon 7926:16 Test::Whitespace wuthep:jog-body-indent Jog kingside body @7926:16; underindented by 1
+hoons/arvo/sys/hoon.hoon 8255:5 Test::Whitespace tallWuthep 1-jogging kingside head @8255:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8790:21 Test::Whitespace tallWuthep 1-jogging kingside head @8790:27; overindented by 2
+hoons/arvo/sys/hoon.hoon 8818:9 Test::Whitespace tallWuthep 1-jogging kingside head @8818:15; overindented by 2
+hoons/arvo/sys/hoon.hoon 8959:5 Test::Whitespace tallWuthep 1-jogging kingside head @8959:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8972:5 Test::Whitespace tallWuthep 1-jogging kingside head @8972:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 9346:7 Test::Whitespace tallWuthep 1-jogging kingside head @9346:13; overindented by 2
+hoons/arvo/sys/hoon.hoon 9590:19 Test::Whitespace wuthep:jog-body-indent Jog kingside body @9590:19; overindented by 1
+hoons/arvo/sys/hoon.hoon 12436:5 Test::Whitespace tallWuthep 1-jogging kingside head @12436:11; overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1199:18 Test::Whitespace wutlus:jog-body-indent Jog kingside body @1199:18; underindented by 16
+hoons/arvo/sys/vane/eyre.hoon 1286:26 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1286:26; overindented by 7
+hoons/arvo/sys/vane/eyre.hoon 1287:27 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1287:27; overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1290:24 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1290:24; overindented by 1
+hoons/arvo/app/gmail.hoon 161:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @161:5; underindented by 4
+hoons/arvo/app/gmail.hoon 176:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @176:5; underindented by 4
+hoons/arvo/app/gmail.hoon 209:5 Test::Whitespace wutlus:jog-head-indent Jog queenside head @209:5; underindented by 2
+hoons/arvo/app/gmail.hoon 210:3 Test::Whitespace wutlus:jog-body-indent Jog queenside body @210:3; underindented by 2
+hoons/arvo/app/gmail.hoon 275:15 Test::Whitespace wutlus:jog-body-indent Jog kingside body @275:15; overindented by 1
+hoons/arvo/app/dojo.hoon 1414:17 Test::Whitespace wutlus:jog-head-indent Jog kingside head @1414:17; overindented by 1
+hoons/arvo/app/hall.hoon 1985:18 Test::Whitespace cencab:jog-body-indent Jog kingside body @1985:18; overindented by 2
+hoons/arvo/app/hall.hoon 2026:19 Test::Whitespace wutlus:jog-body-indent Jog kingside body @2026:19; overindented by 1
+hoons/arvo/app/hall.hoon 2189:7 Test::Whitespace wutlus:comment-indent wutlus @2189:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 2389:7 Test::Whitespace wutlus:jog-head-indent Jog kingside head @2389:7; overindented by 2
+hoons/arvo/app/hall.hoon 2390:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @2390:5; underindented by 2
+hoons/arvo/app/hall.hoon 2403:7 Test::Whitespace wutlus:jog-head-indent Jog kingside head @2403:7; overindented by 2
+hoons/arvo/app/hall.hoon 2404:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @2404:5; underindented by 2
+hoons/arvo/app/hall.hoon 2408:7 Test::Whitespace wutlus:jog-head-indent Jog kingside head @2408:7; overindented by 2
+hoons/arvo/app/hall.hoon 2409:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @2409:5; underindented by 2
+hoons/arvo/lib/tester.hoon 95:16 Test::Whitespace centis:jog-body-indent Jog kingside body @95:16; overindented by 2
+hoons/arvo/lib/cram.hoon 10:11 Test::Whitespace wutlus:jog-body-indent Jog kingside body @10:11; overindented by 3
+hoons/arvo/lib/hood/drum.hoon 742:13 Test::Whitespace wutlus:jog-pseudojoin-mismatch Pseudo-joined kingside Jog @741:7; body/comment mismatch; body is underindented by 42
+hoons/arvo/lib/hood/womb.hoon 35:13 Test::Whitespace wuthep:jog-body-indent Jog kingside body @35:13; overindented by 4
+hoons/arvo/lib/hood/womb.hoon 571:9 Test::Whitespace wutlus:jog-head-indent Jog queenside head @571:9; overindented by 2
+hoons/arvo/lib/hood/womb.hoon 576:9 Test::Whitespace wutlus:jog-head-indent Jog queenside head @576:9; overindented by 2
+hoons/arvo/lib/hood/womb.hoon 581:9 Test::Whitespace wutlus:jog-head-indent Jog queenside head @581:9; overindented by 2
+hoons/arvo/mar/dill/belt.hoon 51:14 Test::Whitespace wutlus:jog-body-indent Jog kingside body @51:14; underindented by 1
+hoons/arvo/web/unmark/all.hoon 48:21 Test::Whitespace wutlus:jog-body-indent Jog kingside body @48:21; overindented by 1
