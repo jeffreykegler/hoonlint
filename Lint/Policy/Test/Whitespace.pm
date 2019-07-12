@@ -2263,6 +2263,46 @@ sub checkFasdot {
 }
 
 # Check "vanilla" sequence
+sub checkJogging {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $children = $node->{children};
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ($jogBaseColumn, $chessSide, $joggingHoonNode ) = @{$policy->getJoggingData($node)};
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($joggingHoonNode);
+    my $runeName = $policy->runeName($joggingHoonNode);
+
+    my @mistakes = ();
+
+    my $expectedColumn = $parentColumn;
+  CHILD: for ( my $childIX = 1; $childIX <= $#$children; $childIX+=2 ) {
+        my $jogGap = $children->[$childIX];
+        my ( $jogGapLine, $jogGapColumn ) =
+          $instance->nodeLC($jogGap);
+
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $jogGap,
+                {
+                    mainColumn => $anchorColumn,
+                    preColumn => $jogBaseColumn,
+                    tag        => $runeName,
+                subpolicy => [ $runeName, 'jogging' ],
+                    details    => [ [$runeName] ],
+                    topicLines => [$jogGapLine],
+                }
+            )
+          };
+
+    }
+
+    return \@mistakes;
+
+}
+
+# Check "vanilla" sequence
 sub checkSeq {
     my ( $policy, $node, $tag ) = @_;
     my $instance = $policy->{lint};
@@ -3703,7 +3743,7 @@ sub getJoggingData {
             my $nodeIX        = $node->{IX};
             my $chessSide     = $policy->{perNode}->{$nodeIX}->{chessSide};
             my $jogBaseColumn = $policy->{perNode}->{$nodeIX}->{jogBaseColumn};
-            return [ $jogBaseColumn, $chessSide ];
+            return [ $jogBaseColumn, $chessSide, $node ];
         }
         $node = $node->{PARENT};
     }
@@ -3950,7 +3990,7 @@ sub check_1Jogging {
           };
     }
 
-    my $expectedColumn = $runeColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
+    my $expectedColumn = $anchorColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
     if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
           "1-jogging %s head %s; %s",
@@ -3972,7 +4012,7 @@ sub check_1Jogging {
         $policy->checkOneLineGap(
             $joggingGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 tag        => ( sprintf '1-jogging %s jogging', $chessSide ),
                 subpolicy => [ $runeName ],
                 parent     => $rune,
@@ -3986,7 +4026,8 @@ sub check_1Jogging {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
+                preColumn => $jogBaseColumn,
                 tag        => $tag,
                 subpolicy => [$runeName],
                 topicLines => [$tistisLine],
@@ -4000,7 +4041,7 @@ sub check_1Jogging {
             $tistis,
             {
                 tag            => $tag,
-                expectedColumn => $runeColumn,
+                expectedColumn => $anchorColumn,
             }
         )
       };
@@ -4158,6 +4199,7 @@ sub check_2Jogging {
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
+                preColumn => $jogBaseColumn,
                 tag        => $tag,
                 subpolicy => [ @subpolicy ],
                 topicLines => [$tistisLine],
@@ -4622,7 +4664,7 @@ sub checkFastis {
 }
 
 sub checkKingsideJog {
-    my ( $policy, $node ) = @_;
+    my ( $policy, $node, $expectedHeadColumn ) = @_;
     my $instance          = $policy->{lint};
     my $tall_Jogging1Rule = $instance->{tallJogging1_Rule};
     my $fileName          = $instance->{fileName};
@@ -4636,10 +4678,12 @@ sub checkKingsideJog {
     $jogBodyColumn //= -1;
 
     my @mistakes = ();
-    my $tag      = 'kingside jog';
 
     # Replace inherited attribute rune LC with brick LC
     my $brickNode = $instance->brickNode($node);
+    my $runeName = $policy->runeName($brickNode);
+    my $tag      = $runeName;
+
     my ( $brickLine, $brickColumn ) = $instance->nodeLC($brickNode);
     my $brickName = $instance->brickName($brickNode);
     my $baseColumn =
@@ -4655,7 +4699,6 @@ sub checkKingsideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'kingside';
 
-    my $expectedHeadColumn = $baseColumn;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
@@ -4664,10 +4707,13 @@ sub checkKingsideJog {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'jog-head-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
+            reportLine           => $headLine,
+            reportColumn         => $headColumn,
             topicLines     => [$brickLine],
           };
     }
@@ -4707,10 +4753,13 @@ sub checkKingsideJog {
             push @mistakes,
               {
                 desc           => $msg,
+            subpolicy => [ $runeName, 'jog-body-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
                 topicLines     => \@topicLines,
                 details        => $details,
               };
@@ -4732,10 +4781,13 @@ sub checkKingsideJog {
             push @mistakes,
               {
                 desc           => $msg,
+            subpolicy => [ $runeName, 'jog-pseudojoin-mismatch' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
                 topicLines     => [$brickLine],
               };
         }
@@ -4751,10 +4803,13 @@ sub checkKingsideJog {
             push @mistakes,
               {
                 desc           => $msg,
+            subpolicy => [ $runeName, 'jog-pseudojoin-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
                 topicLines     => [$brickLine],
               };
         }
@@ -4772,10 +4827,13 @@ sub checkKingsideJog {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'jog-body-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
             topicLines     => [$brickLine],
             details        => [
                 [
@@ -4796,7 +4854,7 @@ sub checkKingsideJog {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
-                subpolicy => [ $tag ],
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
@@ -4807,7 +4865,7 @@ sub checkKingsideJog {
 }
 
 sub checkQueensideJog {
-    my ( $policy, $node ) = @_;
+    my ( $policy, $node, $expectedHeadColumn ) = @_;
     my $instance = $policy->{lint};
     my ( $parentLine, $parentColumn ) =
       $instance->line_column( $node->{start} );
@@ -4816,14 +4874,15 @@ sub checkQueensideJog {
     my $grammar  = $instance->{grammar};
 
     my @mistakes = ();
-    my $tag      = 'queenside jog';
 
     my $joggingRules = $instance->{joggingRule};
     my ($jogBodyColumn, $jogBodyColumnLines) = @{$policy->bodyColumn( $node, $joggingRules )};
     $jogBodyColumn //= -1;
 
-    # Replace inherited attribute rune LC with brick LC
-    my ( $brickLine, $brickColumn ) = $instance->brickLC($node);
+    my $brickNode = $instance->brickNode($node);
+    my $runeName = $policy->runeName($brickNode);
+    my $tag      = $runeName;
+    my ( $brickLine, $brickColumn ) = $instance->nodeLC($brickNode);
 
     my $children = $node->{children};
     my $head     = $children->[0];
@@ -4835,7 +4894,6 @@ sub checkQueensideJog {
       $instance->line_column( $body->{start} );
     my $sideDesc = 'queenside';
 
-    my $expectedHeadColumn = $brickColumn + 4;
     if ( $headColumn != $expectedHeadColumn ) {
         my $msg = sprintf 'Jog %s head %s; %s',
           $sideDesc,
@@ -4844,10 +4902,13 @@ sub checkQueensideJog {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'jog-head-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $headLine,
             column         => $headColumn,
+            reportLine           => $headLine,
+            reportColumn         => $headColumn,
             topicLines     => [$brickLine],
           };
     }
@@ -4885,10 +4946,13 @@ sub checkQueensideJog {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $runeName, 'jog-head-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
                 column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
                 topicLines     => \@topicLines,
                 details => $details,
               };
@@ -4907,10 +4971,13 @@ sub checkQueensideJog {
         push @mistakes,
           {
             desc           => $msg,
+                subpolicy => [ $runeName, 'jog-body-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
             topicLines     => [$brickLine],
             details        => [
                 [
@@ -4931,7 +4998,7 @@ sub checkQueensideJog {
             {
                 mainColumn => $expectedBodyColumn,
                 tag        => $tag,
-                subpolicy => [ $tag ],
+                subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
@@ -5649,12 +5716,12 @@ sub validate_node {
             my $previousLine = $parentLine;
           TYPE_INDENT: {
 
-                # Jogging problems are detected by the individual jogs --
-                # we do not run diagnostics on the sequence.
                 if ( $lhsName eq 'rick5d' ) {
+                    $mistakes = $policy->checkJogging($node);
                     last TYPE_INDENT;
                 }
                 if ( $lhsName eq 'ruck5d' ) {
+                    $mistakes = $policy->checkJogging($node);
                     last TYPE_INDENT;
                 }
 

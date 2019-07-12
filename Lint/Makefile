@@ -1,12 +1,14 @@
 
 
-.PHONY: all arvo_lint
+.PHONY: all arvo_lint pre_lint
 
 all:
 	echo empty default target
 
-arvo_lint: 
+pre_lint:
 	sh edit_later.sh
+
+arvo_lint: 
 	(cd ..; find hoons -name '*.hoon') | \
 	while read f; do \
 	  echo === $$f ===; \
