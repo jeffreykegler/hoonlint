@@ -1362,11 +1362,12 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A kingside jogging.
-  Its base column should be one stop after the anchor column.
+  The jog base column
+  should be
+  one stop after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   starting at the anchor column.
@@ -1396,12 +1397,12 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A queenside jogging.
-  Its base column should be aligned
+  The jog base column
+  should be
   two stops after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned at the anchor column.
@@ -1441,13 +1442,12 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A kingside jogging.
-  The base column of its jogs should be
-  aligned one stop after the anchor
-  column.
+  The jog base column
+  should be
+  one stop after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned at the anchor column.
@@ -1484,11 +1484,12 @@ in lexical order:
 * A vertical gap, with comments at the anchor column.
 
 * A kingside jogging.
-  The base column of its jogs should be
-  aligned one stop after the anchor
-  column.
+  The jog base column
+  should be
+  one stop after the anchor column.
 
-* A vertical gap, with comments at the anchor column.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned at the anchor column.
@@ -1525,13 +1526,12 @@ in lexical order:
   Its pre-comment column should be undefined.
 
 * A queenside jogging.
-  The base column of its jogs should be aligned
-  two stops after the anchor
-  column.
+  The jog base column
+  should be
+  two stops after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned at the anchor column.
@@ -1567,12 +1567,12 @@ in lexical order:
 * A vertical gap, with comments at the the anchor column.
 
 * A queenside jogging.
-  The base column of its jogs should be aligned
-  two stops after the anchor
-  column.
+  The jog base column
+  should be
+  two stops after the anchor column.
 
-* A vertical gap, with comments
-  at the anchor column.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned at the anchor column.
@@ -1602,13 +1602,12 @@ in lexical order:
 * A one-stop horizontal gap.
 
 * A kingside jogging.
-  The base column of its jogs
-  should be aligned
+  The jog base column
+  should be
   two stops after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column and the jog base column.
 
 * A TISTIS,
   aligned one stop after the anchor column.
@@ -2091,7 +2090,7 @@ If joined, the body of the FASCOM element
 separated from the head by a one-stop gap,
 or an equivalent pseudo-join.
 
-If the FASCOM element is split, the 
+If the FASCOM element is split, the
 body of the FASCOM element should be separated by
 a vertical gap with comments at the body column.
 The body of a kingside FASCOM element should be
