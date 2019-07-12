@@ -3378,118 +3378,6 @@ sub check_1Running {
     return \@mistakes;
 }
 
-# In the Hoon grammar, some 0 runnings are "punned" as 1-runnings.
-# Indentation is *not* the same however, and `hoonlint` must
-# treat them separately.
-sub check_0_as_1Running {
-    my ( $policy, $node ) = @_;
-    my $gapSeq    = $policy->gapSeq($node);
-    my $instance  = $policy->{lint};
-    my $lineToPos = $instance->{lineToPos};
-
-    my $runeName = $policy->runeName($node);
-    my ( $rune, $headGap, $head, $runningGap, $running, $tistisGap, $tistis ) =
-      @{ $policy->gapSeq($node) };
-
-    my $anchorNode = $instance->firstBrickOfLine($node);
-    my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
-    my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
-    my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
-    my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
-    my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
-
-    my @mistakes       = ();
-    my $tag            = '0as1-running';
-    my $expectedColumn = $anchorColumn;
-
-    push @mistakes,
-      @{
-        $policy->checkOneLineGap(
-            $runningGap,
-            {
-                mainColumn => $anchorColumn,
-                tag        => $tag,
-                subpolicy => [ $runeName ],
-            }
-        )
-      };
-
-    # We deal with the running list here, rather that
-    # in its own node
-
-    # "De-pun" the 0-running by prepending the
-    # fake head to the list of running children
-    my @runningChildren = ( $headGap, $head, $runningGap );
-    push @runningChildren, @{ $running->{children} };
-
-    push @mistakes,
-      @{
-        $policy->checkRunning(
-            {
-                children       => \@runningChildren,
-                tag            => $tag,
-                anchorColumn   => $anchorColumn,
-                expectedColumn => $expectedColumn
-            }
-        )
-      };
-
-    # Needs to use lower level isOneLineGap() call
-    # say STDERR join " ", __FILE__, __LINE__,  ( $policy->nodeSubpolicy($node) );
-    if (
-    my @gapMistakes = @{
-        $policy->isOneLineGap( $tistisGap,
-            { tag => $tag, subpolicy => $policy->nodeSubpolicy($node) },
-            $anchorColumn )
-      }
-    )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            my $gapSubpolicy     = $gapMistake->{subpolicy} // q{};
-            my $gapSubpolicyTail = $gapSubpolicy;
-            $gapSubpolicyTail =~ s/^.*[:]//;
-            my $msg;
-            if ( $gapSubpolicy eq 'missing-newline' ) {
-                $msg = sprintf
-                  'gap %s; vertical gap must precede TISTIS',
-                  describeLC( $gapMistakeLine, $gapMistakeColumn );
-            }
-            else {
-                $msg = sprintf
-                  "$tag TISTIS %s; $gapMistakeMsg",
-                  describeLC( $tistisLine, $tistisColumn );
-            }
-            push @mistakes,
-              {
-                desc         => $msg,
-                subpolicy    => $gapSubpolicy,
-                parentLine   => $runeLine,
-                parentColumn => $runeColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                details      => [ [$tag] ],
-                topicLines   => [ $anchorLine, $tistisLine ],
-              };
-        }
-    }
-
-    push @mistakes,
-      @{
-        $policy->checkTistis(
-            $tistis,
-            {
-                subpolicy => [ $policy->nodeSubpolicy($node) ],
-                tag            => $tag,
-                expectedColumn => $anchorColumn,
-            }
-        )
-      };
-    return \@mistakes;
-}
-
 # Find the oversize alignment for this column of elements.
 # of a chain alignment
 # $nodes must a ref to an array of repeating
@@ -5657,7 +5545,6 @@ sub validate_node {
     my $tallNoteRule           = $instance->{tallNoteRule};
     my $tallLuslusRule         = $instance->{tallLuslusRule};
     my $tall_0RunningRule      = $instance->{tall_0RunningRule};
-    my $tall_0_as_1RunningRule = $instance->{tall_0_as_1RunningRule};
     my $tall_1RunningRule      = $instance->{tall_1RunningRule};
     my $tall_1JoggingRule      = $instance->{tall_1JoggingRule};
     my $tall_2JoggingRule      = $instance->{tall_2JoggingRule};
@@ -5757,9 +5644,6 @@ sub validate_node {
                         last TYPE_INDENT;
                     }
                     if ( $tall_0RunningRule->{$grandParentName} ) {
-                        last TYPE_INDENT;
-                    }
-                    if ( $tall_0_as_1RunningRule->{$grandParentName} ) {
                         last TYPE_INDENT;
                     }
                 }
@@ -5915,11 +5799,6 @@ sub validate_node {
 
             if ( $tall_0RunningRule->{$lhsName} ) {
                 $mistakes = $policy->check_0Running($node);
-                last TYPE_INDENT;
-            }
-
-            if ( $tall_0_as_1RunningRule->{$lhsName} ) {
-                $mistakes = $policy->check_0_as_1Running($node);
                 last TYPE_INDENT;
             }
 
