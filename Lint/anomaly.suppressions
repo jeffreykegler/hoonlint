@@ -335,18 +335,12 @@ hoons/arvo/sys/zuse.hoon 3854:7 Test::Whitespace tallCentis 1-jogging kingside h
 hoons/arvo/sys/zuse.hoon 4166:7 Test::Whitespace tallCentis 1-jogging kingside head @4166:13; overindented by 2
 
 # From Github issue #15
-hoons/arvo/app/talk.hoon 1057:11 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @1057:11; comment overindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 153:1 Test::Whitespace wuthep:empty-line 1-jogging kingside TISTIS @153:1; missing comment on line 153
 hoons/arvo/mar/txt.hoon 126:9 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @126:9; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 11271:9 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @11271:9; comment underindented by 4
 hoons/arvo/sys/vane/clay.hoon 4059:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4059:5; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 4060:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4060:5; comment overindented by 2
 hoons/arvo/sys/vane/clay.hoon 4061:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4061:5; comment overindented by 2
-hoons/arvo/sys/vane/gall.hoon 501:7 Test::Whitespace wuthep:comment-indent 1-jogging kingside jogging @501:7; comment overindented by 2
-hoons/arvo/sys/vane/xmas.hoon 601:9 Test::Whitespace centis:comment-indent 1-jogging kingside jogging @601:9; comment overindented by 2
-hoons/arvo/sys/zuse.hoon 3439:11 Test::Whitespace wuthep:comment-indent 1-jogging queenside jogging @3439:11; comment overindented by 4
-hoons/arvo/sys/zuse.hoon 3493:11 Test::Whitespace wuthep:comment-indent 1-jogging queenside jogging @3493:11; comment overindented by 4
-hoons/arvo/sys/zuse.hoon 3512:11 Test::Whitespace wuthep:comment-indent 1-jogging queenside jogging @3512:11; comment overindented by 4
 
 # From Github issue #14
 # See https://github.com/jeffreykegler/yahc/issues/14#issuecomment-466734347
@@ -408,14 +402,10 @@ hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runst
 # Misc TISTIS anomalies from Github issue #20
 hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace centis:tistis-indent 1-jogging TISTIS @2331:9; underindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace wutlus:queenside:joined:tistis-indent 2-jogging TISTIS @1307:13; overindented by 2
-hoons/arvo/sys/zuse.hoon 3888:14 Test::Whitespace wuthep:tistis-indent 1-jogging TISTIS @3891:13; underindented by 1
-hoons/arvo/sys/zuse.hoon 3892:14 Test::Whitespace wuthep:tistis-indent 1-jogging TISTIS @3895:13; underindented by 1
+hoons/arvo/sys/zuse.hoon 3895:13 Test::Whitespace wuthep:tistis-indent TISTIS @3895:13; underindented by 1
 
 # Misc TISSIG anomalies from Github issue 28
 hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tallTissig 0-running runstep #1 @98:1; underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @445:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @446:1; comment underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig 0-running runstep #2 @448:1; underindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 830:7 Test::Whitespace tallTissig 0-running runstep #2 @830:7; overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 831:7 Test::Whitespace tallTissig 0-running runstep #3 @831:7; overindented by 2
 hoons/arvo/lib/down-jet/parse.hoon 832:7 Test::Whitespace tallTissig 0-running runstep #4 @832:7; overindented by 2
@@ -425,8 +415,8 @@ hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep 
 hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runstep #3 @1162:3; overindented by 2
 
 # Misc TISCOL anomalies from Github issue #17
-hoons/arvo/app/talk.hoon 544:5 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @547:5; underindented by 2
-hoons/arvo/app/talk.hoon 1122:9 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @1124:9; underindented by 2
+hoons/arvo/app/talk.hoon 547:5 Test::Whitespace tiscol:tistis-indent TISTIS @547:5; underindented by 2
+hoons/arvo/app/talk.hoon 1124:9 Test::Whitespace tiscol:tistis-indent TISTIS @1124:9; underindented by 2
 hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @2171:12; underindented by 2
 hoons/arvo/sys/vane/dill.hoon 498:19 Test::Whitespace tiscol:jog-body-indent Jog kingside body @498:19; overindented by 1
 
@@ -446,7 +436,7 @@ hoons/arvo/sys/zuse.hoon 3967:10 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/sys/zuse.hoon 3968:10 Test::Whitespace tallSemsig 1-running runstep #3 @3968:10; overindented by 1
 hoons/arvo/sys/zuse.hoon 3969:10 Test::Whitespace tallSemsig 1-running runstep #4 @3969:10; overindented by 1
 hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace tallSemsig 1-running runstep #5 @3970:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3965:7 Test::Whitespace semsig:tistis-indent 1-running TISTIS @3971:8; overindented by 1
+hoons/arvo/sys/zuse.hoon 3971:8 Test::Whitespace semsig:tistis-indent TISTIS @3971:8; overindented by 1
 hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #1 @4264:15; overindented by 2
 hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
 
@@ -1109,7 +1099,7 @@ hoons/arvo/ren/tree/index.hoon 12:11 Test::Whitespace fasdot:body-indent joined 
 # Ford FASCOM aberrations
 hoons/arvo/ren/urb.hoon 7:15 Test::Whitespace fascom:body-indent joined fascom @7:15; overindented by 4
 hoons/arvo/ren/tree/index.hoon 6:11 Test::Whitespace fascom:body-indent joined fascom @6:11; overindented by 6
-hoons/arvo/ren/tree/elem.hoon 5:7 Test::Whitespace fascom:tistis-indent TISTIS @8:7; overindented by 6
+hoons/arvo/ren/tree/elem.hoon 8:7 Test::Whitespace fascom:tistis-indent TISTIS @8:7; overindented by 6
 hoons/arvo/ren/urb.hoon 8:11 Test::Whitespace fascom-element:body-indent Fascom element body @8:11; underindented by 2
 hoons/arvo/ren/urb.hoon 13:11 Test::Whitespace fascom-element:body-indent Fascom element body @13:11; underindented by 2
 hoons/arvo/ren/urb.hoon 22:11 Test::Whitespace fascom-elements:comment-indent fascom-elements @22:11; comment overindented by 4

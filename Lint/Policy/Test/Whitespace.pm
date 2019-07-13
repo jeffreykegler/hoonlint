@@ -810,10 +810,14 @@ sub checkTistis {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
     my $literalLine = $instance->literalLine($tistisLine);
+
+    my $runeName = $policy->runeName($parent);
+
     $literalLine = $policy->deComment($literalLine);
     $literalLine =~ s/\n//g;
     $literalLine =~ s/==//g;
     if ( $literalLine =~ m/[^ ]/ ) {
+        my $runeLC = describeLC($parentLine, $parentColumn);
         my $msg =
           sprintf q{TISTIS %s should only share line with other TISTIS's},
           describeLC( $tistisLine, $tistisColumn );
@@ -825,7 +829,9 @@ sub checkTistis {
             parentColumn => $parentColumn,
             line         => $tistisLine,
             column       => $tistisColumn,
-            details      => [ [$tag] ],
+            reportLine         => $tistisLine,
+            reportColumn       => $tistisColumn,
+            details        => [ [$runeName, "Starts at $runeLC"] ],
           };
         return \@mistakes;
     }
@@ -840,6 +846,7 @@ sub checkTistis {
         $tistisIsMisaligned = $tistisLiteral ne '==';
     }
     if ($tistisIsMisaligned) {
+        my $runeLC = describeLC($parentLine, $parentColumn);
         my $msg = sprintf 'TISTIS %s; %s',
           describeLC( $tistisLine, $tistisColumn ),
           describeMisindent2( $tistisColumn, $expectedColumn );
@@ -851,7 +858,9 @@ sub checkTistis {
             parentColumn   => $parentColumn,
             line           => $tistisLine,
             column         => $tistisColumn,
-            details        => [ [$tag] ],
+            reportLine         => $tistisLine,
+            reportColumn       => $tistisColumn,
+            details        => [ [$runeName, "Starts at $runeLC"] ],
           };
     }
 
@@ -1664,12 +1673,22 @@ sub check_0Running {
     my $instance = $policy->{lint};
     my ( $rune, $runningGap, $running ) = @{ $policy->gapSeq($node) };
 
+    # What kind of gap?
     my $column = $policy->checkJoinGap($runningGap);
+    # Is column is undef, then hoon is not joined, it is split.
     return checkSplit_0Running( $policy, $node ) if not defined $column;
+    # Is column is -1, then hoon is joined.
     return checkJoined_0Running( $policy, $node, $column ) if $column == -1;
+
+    # If here, it is a pseudo-join and $column is the column indicated
+    # by gap.
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+    # Treat it as a pseudo-join if $column matches the expected join colum
     return checkJoined_0Running( $policy, $node, $column )
       if $column == $runeColumn + 4;
+    # If here the pseudo-join column is a mismatch: Treat the supposed
+    # psuedo-join as an ordinary comment and the running as if it was
+    # split.
     return checkSplit_0Running( $policy, $node );
 }
 
@@ -3024,6 +3043,7 @@ sub checkSplit_0Running {
     my $minimumRunsteps = $instance->{minSplit_0RunningSteps} // 0;
 
     my $runeName = $policy->runeName($node);
+    my $tag            = $runeName;
 
     my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
       @{ $policy->gapSeq($node) };
@@ -3048,6 +3068,7 @@ sub checkSplit_0Running {
                 'tallCollus' => 1,
                 'tallKethep' => 1,
                 'tallTisfas' => 1,
+                'tallTisgar' => 1,
             }
         );
     }
@@ -3058,7 +3079,6 @@ sub checkSplit_0Running {
     # say join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($anchorDetails);
 
     my $expectedColumn = $anchorColumn + 2;
-    my $tag            = 'split 0-running';
 
     my @mistakes = ();
 
@@ -3078,10 +3098,13 @@ sub checkSplit_0Running {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'split-runstep-count' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $runningLine,
             column       => $runningColumn,
+            reportLine         => $runningLine,
+            reportColumn       => $runningColumn,
           };
     }
 
