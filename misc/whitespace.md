@@ -607,27 +607,42 @@ given in an appendix.
 
 ## Vertical Gaps
 
-When we say that a gap is
-
->  **a vertical gap with comments at `X`**,
-
-if the gap's inter-comment comment location
-is `X`,
-and the gap's pre-comment comment location
+When we state that a vertical gap
+has comments at one location,
+we mean
+that the gap's inter-comment column location
+is the stated column location,
+and that the gap's pre-comment column location
 is not defined.
-When we say that a gap is
+When we state that a vertical gap
+has comments at two locations,
+we mean
+that the gap's inter-comment column location
+is the first location mentioned,
+and that the gap's pre-comment column location
+is the second location mentioned.
 
-> **a vertical gap with comments at `X` and `Y`**,
+For example, when we write
 
-if the gap's inter-comment comment location
-is `X`,
-and the gap's pre-comment comment location
-is `Y`.
-Here, `X` and `Y` stand for phrases
-which may express comment location directly,
-or via a text block.
-If column location is expressed via a text block,
-the intended comment column location is the start column
+> A vertical gap, with comments at the
+> the anchor column and the jog base column
+
+we mean that the inter-comment location of the vertical gap is
+the anchor column,
+and the pre-comment-location is the "jog base column".
+If instead we write
+
+> A vertical gap, with comments at the the anchor column.
+
+then we mean that the inter-comment location of the vertical gap is
+the anchor column,
+and the pre-comment-location is not defined.
+
+In describing a vertical gap's comment locations,
+we may specify them explicitly as column locations,
+or implicitly, as alignments with a text block.
+If column location is expressed implicitly via a text block,
+the implicit location is the start column
 location of the text block.
 
 A vertical gap contains
@@ -739,10 +754,9 @@ than the runechild that follows it.
 * every runechild after the first should have be aligned
 one stop before the runechild that precedes it.
 
-In the vertical gaps that belong to backdented hoons,
-the inter-comment column location should be the column
-location of the first text after the gap;
-and the pre-comment column location should be undefined.
+In the vertical gaps that belong directly to backdented hoons,
+comments should be aligned
+with the runechild immediately following the gap.
 
 ## Chaining backdented hoons
 
@@ -1226,10 +1240,8 @@ that a joined jog is allowed according to this standard.
 
 ### Split jogs
 
-The gap of split jog should be vertical.
-The inter-comment column location of the gap
-should be the column location of the jog body;
-and there should be no pre-comment column location.
+The gap of split jog should be a vertical gap
+with comments at the column location of the jog body.
 The standard column location of the body of a split jog
 varies according to the sidedness of the jog.
 
@@ -1568,9 +1580,8 @@ in lexical order:
 * A TISTIS,
   aligned one stop after the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap, with comments at the
+  the anchor column.
 
 * A tail, aligned at the anchor column.
 
@@ -1615,8 +1626,7 @@ in lexical order:
 * The arm head.
 
 * A vertical gap,
-  whose inter-comment location is the base column,
-  and whose pre-comment location is undefined.
+  with comments at the base column,
 
 * The arm body,
   aligned one stop after the arm marker.
@@ -1654,15 +1664,13 @@ in lexical order:
 
 * Its rune.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A battery whose base column is the anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A HEPHEP, aligned at the anchor column.
 
@@ -1689,9 +1697,8 @@ in lexical order:
 * A battery whose base column is
   two stops after anchor column.
 
-* A vertical gap.
-  Its inter-comment column should be the anchor column.
-  Its pre-comment column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A HEPHEP, aligned at the anchor column.
 
@@ -1723,15 +1730,13 @@ in lexical order:
 
 * Its head.
 
-* A vertical gap.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A battery, whose base column location should be the anchor column.
 
-* A vertical gap.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A HEPHEP, aligned at the anchor column.
 
@@ -1767,15 +1772,13 @@ in lexical order:
 
 * Its head.
 
-* A vertical gap.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A battery, whose base column location should be the anchor column.
 
-* A vertical gap.
-The inter-comment column location of the vertical gap should
-be the anchor column and the pre-column should be undefined.
+* A vertical gap,
+  with comments at the anchor column.
 
 * A HEPHEP, aligned at the anchor column.
 

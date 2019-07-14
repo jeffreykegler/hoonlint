@@ -259,15 +259,17 @@ d</code></pre>
   ::</code></pre>
 <p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the inter-comment column. (The inter-comment column location varies, depending on the syntax which contains the comment.) The tread is four colons, aligned at the inter-comment column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the inter-comment column. A still more formal definition of a staircase is given in an appendix.</p>
 <h2 id="vertical-gaps">Vertical Gaps</h2>
-<p>When we say that a gap is</p>
+<p>When we state that a vertical gap has comments at one location, we mean that the gap's inter-comment column location is the stated column location, and that the gap's pre-comment column location is not defined. When we state that a vertical gap has comments at two locations, we mean that the gap's inter-comment column location is the first location mentioned, and that the gap's pre-comment column location is the second location mentioned.</p>
+<p>For example, when we write</p>
 <blockquote>
-<p><strong>a vertical gap with comments at <code>X</code></strong>,</p>
+<p>A vertical gap, with comments at the the anchor column and the jog base column</p>
 </blockquote>
-<p>if the gap's inter-comment comment location is <code>X</code>, and the gap's pre-comment comment location is not defined. When we say that a gap is</p>
+<p>we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment-location is the &quot;jog base column&quot;. If instead we write</p>
 <blockquote>
-<p><strong>a vertical gap with comments at <code>X</code> and <code>Y</code></strong>,</p>
+<p>A vertical gap, with comments at the the anchor column.</p>
 </blockquote>
-<p>if the gap's inter-comment comment location is <code>X</code>, and the gap's pre-comment comment location is <code>Y</code>. Here, <code>X</code> and <code>Y</code> stand for phrases which may express comment location directly, or via a text block. If column location is expressed via a text block, the intended comment column location is the start column location of the text block.</p>
+<p>then we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment-location is not defined.</p>
+<p>In describing a vertical gap's comment locations, we may specify them explicitly as column locations, or implicitly, as alignments with a text block. If column location is expressed implicitly via a text block, the implicit location is the start column location of the text block.</p>
 <p>A vertical gap contains</p>
 <ul>
 <li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline.</p></li>
@@ -311,7 +313,7 @@ d</code></pre>
 <li><p>every runechild before the last should be aligned one stop after than the runechild that follows it.</p></li>
 <li><p>every runechild after the first should have be aligned one stop before the runechild that precedes it.</p></li>
 </ul>
-<p>In the vertical gaps that belong to backdented hoons, the inter-comment column location should be the column location of the first text after the gap; and the pre-comment column location should be undefined.</p>
+<p>In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
 <h2 id="chaining-backdented-hoons">Chaining backdented hoons</h2>
 <p>As a special case, a runechild of an backdented hoon may have an inter-line alignment, based on its <strong>silo</strong> and <strong>chain</strong>. Intuitively, if two runechildren are in the same silo of the same chain, they should have the same inter-line alignment.</p>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2950-2959:</em></p>
@@ -514,7 +516,7 @@ d</code></pre>
 <p>All inter-line aligned jogging should be aligned at the jogging body column. With each jogging, at most one column should be designated as the <strong>jogging body column</strong> of the jogging.</p>
 <p>A jog may also be pseudo-joined. The pseudo-join of pseudo-joined jog should be equivalent to the one of the horizontal gaps that a joined jog is allowed according to this standard.</p>
 <h3 id="split-jogs">Split jogs</h3>
-<p>The gap of split jog should be vertical. The inter-comment column location of the gap should be the column location of the jog body; and there should be no pre-comment column location. The standard column location of the body of a split jog varies according to the sidedness of the jog.</p>
+<p>The gap of split jog should be a vertical gap with comments at the column location of the jog body. The standard column location of the body of a split jog varies according to the sidedness of the jog.</p>
 <ul>
 <li><p>The column location of the body of a split kingside jog should be aligned one stop <strong>after</strong> the jog's head.</p></li>
 <li><p>The column location of the body of a split queenside jog should be aligned one stop <strong>before</strong> the jog's head.</p></li>
@@ -681,7 +683,7 @@ d</code></pre>
 <li><p>A kingside jogging. The jog base column should be two stops after the anchor column.</p></li>
 <li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
 <li><p>A TISTIS, aligned one stop after the anchor column.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column.</p></li>
 <li><p>A tail, aligned at the anchor column.</p></li>
 </ul>
 <h1 id="battery-hoons">Battery hoons</h1>
@@ -702,7 +704,7 @@ d</code></pre>
 <li><p>A arm marker.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>The arm head.</p></li>
-<li><p>A vertical gap, whose inter-comment location is the base column, and whose pre-comment location is undefined.</p></li>
+<li><p>A vertical gap, with comments at the base column,</p></li>
 <li><p>The arm body, aligned one stop after the arm marker.</p></li>
 </ul>
 <h2 id="barcen">BARCEN</h2>
@@ -729,9 +731,9 @@ d</code></pre>
 <p>A split BARCEN should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A battery whose base column is the anchor column.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="joined-barcen">Joined BARCEN</h3>
@@ -747,7 +749,7 @@ d</code></pre>
 <li><p>Its rune.</p></li>
 <li><p>A one stop horizontal gap.</p></li>
 <li><p>A battery whose base column is two stops after anchor column.</p></li>
-<li><p>A vertical gap. Its inter-comment column should be the anchor column. Its pre-comment column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barcab">BARCAB</h2>
@@ -769,9 +771,9 @@ d</code></pre>
 <li><p>Its rune</p></li>
 <li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
-<li><p>A vertical gap. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barket">BARKET</h2>
@@ -797,9 +799,9 @@ d</code></pre>
 <li><p>Its rune</p></li>
 <li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
-<li><p>A vertical gap. The inter-comment column location of the vertical gap should be the anchor column and the pre-column should be undefined.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h1 id="ford-hoons">Ford hoons</h1>
