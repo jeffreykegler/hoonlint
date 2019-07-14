@@ -369,7 +369,7 @@ sub checkJoinGap {
 
     # say join ' ', __FILE__, __LINE__;
     # say join q{}, '[', $gapLiteral, ']';
-    return -1 if $gapLiteral =~ m/^ *$/;
+    return -1 if $gapLiteral =~ m/\A [ ]* \z/xms;
 
     # say join ' ', __FILE__, __LINE__;
     my $column = $policy->pseudoJoinColumn($gap);
@@ -1671,25 +1671,87 @@ sub checkRunning {
 sub check_0Running {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
-    my ( $rune, $runningGap, $running ) = @{ $policy->gapSeq($node) };
+    my ( $rune, $runningGap, $tistisGap, $tistis );
+    my $runeName = $policy->runeName($node);
+    my $runningChildren = [];
+    my ( $runningLine, $runningColumn );
+   {
+        my $running;
+        if ($runeName eq 'tissig') {
+            my ( $firstRunstep, $firstRunningGap );
+            ( $rune, $runningGap, $firstRunstep, $firstRunningGap, $running, $tistisGap, $tistis ) =
+              @{ $policy->gapSeq($node) };
+            push @{$runningChildren}, $runningGap, $firstRunstep, $firstRunningGap;
+            ( $runningLine, $runningColumn ) = $instance->nodeLC($firstRunstep);
+        } else {
+            ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
+              @{ $policy->gapSeq($node) };
+            push @{$runningChildren}, $runningGap;
+            ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
+        }
+        push @{$runningChildren}, @{ $running->{children} };
+   }
+
+    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+    my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
+    my $anchorData;
+    if ( $runeName eq 'colsig' ) {
+
+        # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
+        # TODO: Cleanup after development
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallCendot' => 1,
+                'tallCenhep' => 1,
+                'tallCenlus' => 1,
+                'tallCollus' => 1,
+                'tallKethep' => 1,
+                'tallTisfas' => 1,
+                'tallTisgar' => 1,
+            }
+        );
+    }
+    my $anchorDetails;
+    $anchorDetails = $policy->anchorDetails( $node, $anchorData )
+      if $anchorData;
+
+    # Arguments for the checking methods, called by this method.
+    my $checkArgs = {
+        node => $node,
+        rune => $rune,
+        runningGap => $runningGap,
+        runningChildren => $runningChildren,
+        tistisGap => $tistisGap,
+        tistis => $tistis,
+        runningLine => $runningLine,
+        runningColumn => $runningColumn,
+        runeName => $runeName,
+        anchorLine => $anchorLine,
+        anchorColumn => $anchorColumn,
+        anchorDetails => $anchorDetails,
+    };
 
     # What kind of gap?
     my $column = $policy->checkJoinGap($runningGap);
-    # Is column is undef, then hoon is not joined, it is split.
-    return checkSplit_0Running( $policy, $node ) if not defined $column;
-    # Is column is -1, then hoon is joined.
-    return checkJoined_0Running( $policy, $node, $column ) if $column == -1;
+
+    # If column is undef, then hoon is not joined, it is split.
+    return $policy->checkSplit_0Running( $checkArgs ) if not defined $column;
+
+    # If column is -1, then hoon is joined.
+    return $policy->checkJoined_0Running( $checkArgs, $column ) if $column == -1;
 
     # If here, it is a pseudo-join and $column is the column indicated
     # by gap.
-    my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
+
     # Treat it as a pseudo-join if $column matches the expected join colum
-    return checkJoined_0Running( $policy, $node, $column )
+    return $policy->checkJoined_0Running( $checkArgs, $column )
       if $column == $runeColumn + 4;
+
     # If here the pseudo-join column is a mismatch: Treat the supposed
     # psuedo-join as an ordinary comment and the running as if it was
     # split.
-    return checkSplit_0Running( $policy, $node );
+    return $policy->checkSplit_0Running( $checkArgs );
 }
 
 # Find the cell body column, based on alignment within
@@ -3036,45 +3098,25 @@ sub checkLute {
 }
 
 sub checkSplit_0Running {
-    my ( $policy, $node ) = @_;
-    my $gapSeq          = $policy->gapSeq($node);
+    my ( $policy, $args ) = @_;
     my $instance        = $policy->{lint};
-    my $lineToPos       = $instance->{lineToPos};
     my $minimumRunsteps = $instance->{minSplit_0RunningSteps} // 0;
 
-    my $runeName = $policy->runeName($node);
-    my $tag            = $runeName;
+    my $node            = $args->{node};
+    my $rune            = $args->{rune};
+    my $runningGap      = $args->{runningGap};
+    my $runningChildren = $args->{runningChildren};
+    my $tistisGap       = $args->{tistisGap};
+    my $tistis          = $args->{tistis};
+    my $runningLine     = $args->{runningLine};
+    my $runningColumn   = $args->{runningColumn};
+    my $runeName        = $args->{runeName};
+    my $anchorLine    = $args->{anchorLine};
+    my $anchorColumn    = $args->{anchorColumn};
+    my $anchorDetails    = $args->{anchorDetails};
 
-    my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
-      @{ $policy->gapSeq($node) };
-
-    my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
-    my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
+    my ( $runeLine,    $runeColumn ) = $instance->nodeLC($rune);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
-
-    my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
-    my $lhsName = $instance->symbol($node);
-    my $anchorData;
-    if ( $lhsName eq 'tallColsig' ) {
-
-        # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
-        # TODO: Cleanup after development
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallCendot' => 1,
-                'tallCenhep' => 1,
-                'tallCenlus' => 1,
-                'tallCollus' => 1,
-                'tallKethep' => 1,
-                'tallTisfas' => 1,
-                'tallTisgar' => 1,
-            }
-        );
-    }
-    my $anchorDetails;
-    $anchorDetails = $policy->anchorDetails( $node, $anchorData )
-      if $anchorData;
 
     # say join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($anchorDetails);
 
@@ -3085,14 +3127,13 @@ sub checkSplit_0Running {
     # We deal with the running list here, rather than
     # in its own node
 
-    my $runningChildren = [ $runningGap, @{ $running->{children} } ];
     my $runStepCount = ( scalar @{$runningChildren} ) / 2;
     if ( $runStepCount < $minimumRunsteps ) {
 
         # Untested
 
         my $msg = sprintf '%s %s; too few runsteps; has %d, minimum is %d',
-          $tag,
+          $runeName,
           describeLC( $runningLine, $runningColumn ),
           $runStepCount, $minimumRunsteps;
         push @mistakes,
@@ -3115,7 +3156,7 @@ sub checkSplit_0Running {
             {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
-                tag        => $tag,
+                tag        => $runeName,
                 subpolicy => [ $runeName ],
             }
         )
@@ -3126,7 +3167,7 @@ sub checkSplit_0Running {
         $policy->checkRunning(
             {
                 children       => $runningChildren,
-                tag            => $tag,
+                tag            => $runeName,
                 anchorColumn   => $anchorColumn,
                 expectedColumn => $expectedColumn,
                 anchorDetails  => $anchorDetails,
@@ -3141,7 +3182,7 @@ sub checkSplit_0Running {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
-                tag        => $tag,
+                tag        => $runeName,
                 subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
             }
@@ -3154,7 +3195,7 @@ sub checkSplit_0Running {
             $tistis,
             {
                 subpolicy => [ $policy->nodeSubpolicy($node) ],
-                tag            => $tag,
+                tag            => $runeName,
                 expectedColumn => $anchorColumn,
             }
         )
@@ -3163,30 +3204,30 @@ sub checkSplit_0Running {
 }
 
 sub checkJoined_0Running {
-    my ( $policy, $node, $joinColumn ) = @_;
-    my $gapSeq          = $policy->gapSeq($node);
+    my ( $policy, $args, $joinColumn ) = @_;
     my $instance        = $policy->{lint};
-    my $lineToPos       = $instance->{lineToPos};
     my $maximumRunsteps = $instance->{maxJoined_0RunningSteps};
 
-    my $runeName = $policy->runeName($node);
-    my ( $rune, $runningGap, $running, $tistisGap, $tistis ) =
-      @{ $policy->gapSeq($node) };
+    my $node            = $args->{node};
+    my $rune            = $args->{rune};
+    my $runningGap      = $args->{runningGap};
+    my $runningChildren = $args->{runningChildren};
+    my $tistisGap       = $args->{tistisGap};
+    my $tistis          = $args->{tistis};
+    my $runningLine     = $args->{runningLine};
+    my $runningColumn   = $args->{runningColumn};
+    my $runeName        = $args->{runeName};
+    my $anchorLine    = $args->{anchorLine};
+    my $anchorColumn    = $args->{anchorColumn};
+    my $anchorDetails    = $args->{anchorDetails};
 
     my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
-    my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
-    my ( $runningLine, $runningColumn ) = $instance->nodeLC($running);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
     my @mistakes       = ();
-    my $tag            = 'joined 0-running';
     my $expectedColumn = $joinColumn >= 0 ? $joinColumn : $runeColumn + 4;
 
-    # We deal with the running list here, rather than
-    # in its own node
-
-    my @runningChildren = ( $runningGap, @{ $running->{children} } );
-    my $runStepCount = ( scalar @runningChildren ) / 2;
+    my $runStepCount = ( scalar @{$runningChildren} ) / 2;
     if ( defined $maximumRunsteps and $runStepCount > $maximumRunsteps ) {
 
         # Untested
@@ -3201,7 +3242,7 @@ sub checkJoined_0Running {
             parentColumn => $runeColumn,
             line         => $runningLine,
             column       => $runningColumn,
-            details      => [ [$tag] ],
+            details      => [ [$runeName] ],
           };
     }
 
@@ -3209,8 +3250,8 @@ sub checkJoined_0Running {
       @{
         $policy->checkRunning(
             {
-                children       => \@runningChildren,
-                tag            => $tag,
+                children       => $runningChildren,
+                tag            => $runeName,
                 anchorColumn   => $anchorColumn,
                 expectedColumn => $expectedColumn,
             }
@@ -3224,10 +3265,10 @@ sub checkJoined_0Running {
             {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
-                tag        => $tag,
+                tag        => $runeName,
                 subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
-                details    => [ [$tag] ],
+                details    => [ [$runeName] ],
             }
         )
       };
@@ -3238,7 +3279,7 @@ sub checkJoined_0Running {
             $tistis,
             {
                 subpolicy => [ $policy->nodeSubpolicy($node) ],
-                tag            => $tag,
+                tag            => $runeName,
                 expectedColumn => $runeColumn,
             }
         )

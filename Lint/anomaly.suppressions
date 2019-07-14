@@ -400,8 +400,6 @@ hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace tallSemcol 1-running runst
 hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runstep #7 @209:15; overindented by 2
 
 # Misc TISTIS anomalies from Github issue #20
-hoons/arvo/sys/hoon.hoon 2325:11 Test::Whitespace centis:tistis-indent 1-jogging TISTIS @2331:9; underindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1285:11 Test::Whitespace wutlus:queenside:joined:tistis-indent 2-jogging TISTIS @1307:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3895:13 Test::Whitespace wuthep:tistis-indent TISTIS @3895:13; underindented by 1
 
 # Misc TISSIG anomalies from Github issue 28
@@ -417,8 +415,8 @@ hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runst
 # Misc TISCOL anomalies from Github issue #17
 hoons/arvo/app/talk.hoon 547:5 Test::Whitespace tiscol:tistis-indent TISTIS @547:5; underindented by 2
 hoons/arvo/app/talk.hoon 1124:9 Test::Whitespace tiscol:tistis-indent TISTIS @1124:9; underindented by 2
-hoons/arvo/sys/vane/clay.hoon 2168:12 Test::Whitespace tiscol:tistis-indent jogging-1 TISTIS @2171:12; underindented by 2
 hoons/arvo/sys/vane/dill.hoon 498:19 Test::Whitespace tiscol:jog-body-indent Jog kingside body @498:19; overindented by 1
+hoons/arvo/sys/vane/clay.hoon 2171:12 Test::Whitespace tiscol:tistis-indent TISTIS @2171:12; underindented by 2
 
 # "split" TISCOL anomalies from Github issue #31
 
@@ -1351,3 +1349,21 @@ hoons/arvo/lib/hood/womb.hoon 576:9 Test::Whitespace wutlus:jog-head-indent Jog 
 hoons/arvo/lib/hood/womb.hoon 581:9 Test::Whitespace wutlus:jog-head-indent Jog queenside head @581:9; overindented by 2
 hoons/arvo/mar/dill/belt.hoon 51:14 Test::Whitespace wutlus:jog-body-indent Jog kingside body @51:14; underindented by 1
 hoons/arvo/web/unmark/all.hoon 48:21 Test::Whitespace wutlus:jog-body-indent Jog kingside body @48:21; overindented by 1
+
+# Github issue #33
+hoons/arvo/lib/down-jet/parse.hoon 96:5 Test::Whitespace tissig:tistis-alone TISTIS @96:5 should only share line with other TISTIS's
+hoons/arvo/sys/vane/ames.hoon 1512:4 Test::Whitespace tissig:missing-newline tissig @1512:4; missing newline @1512:4
+hoons/arvo/sys/vane/ames.hoon 1512:6 Test::Whitespace tissig:tistis-alone TISTIS @1512:6 should only share line with other TISTIS's
+hoons/arvo/sys/vane/behn.hoon 145:2 Test::Whitespace tissig:missing-newline tissig @145:2; missing newline @145:2
+hoons/arvo/sys/vane/behn.hoon 145:4 Test::Whitespace tissig:tistis-alone TISTIS @145:4 should only share line with other TISTIS's
+hoons/arvo/sys/vane/eyre.hoon 1983:2 Test::Whitespace tissig:missing-newline tissig @1983:2; missing newline @1983:2
+hoons/arvo/sys/vane/eyre.hoon 1983:5 Test::Whitespace tissig:tistis-alone TISTIS @1983:5 should only share line with other TISTIS's
+hoons/arvo/sys/vane/ford.hoon 1882:2 Test::Whitespace tissig:missing-newline tissig @1882:2; missing newline @1882:2
+hoons/arvo/sys/vane/ford.hoon 1882:4 Test::Whitespace tissig:tistis-alone TISTIS @1882:4 should only share line with other TISTIS's
+hoons/arvo/sys/vane/gall.hoon 97:2 Test::Whitespace tissig:missing-newline tissig @97:2; missing newline @97:2
+hoons/arvo/sys/vane/gall.hoon 97:4 Test::Whitespace tissig:tistis-alone TISTIS @97:4 should only share line with other TISTIS's
+hoons/arvo/sys/vane/xmas.hoon 1162:4 Test::Whitespace tissig:missing-newline tissig @1162:4; missing newline @1162:4
+hoons/arvo/sys/vane/xmas.hoon 1162:6 Test::Whitespace tissig:tistis-alone TISTIS @1162:6 should only share line with other TISTIS's
+
+# TODO: What if indents are too close for normal criss-cross line?
+hoons/arvo/sys/vane/eyre.hoon 1307:13 Test::Whitespace wutlus:queenside:joined:tistis-indent TISTIS @1307:13; overindented by 2

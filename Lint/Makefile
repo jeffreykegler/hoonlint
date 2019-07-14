@@ -6,7 +6,7 @@ all:
 	echo empty default target
 
 pre_lint:
-	sh edit_later.sh
+	# sh edit_later.sh
 
 arvo_lint: 
 	(cd ..; find hoons -name '*.hoon') | \
