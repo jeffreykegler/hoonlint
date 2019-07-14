@@ -175,9 +175,10 @@ sub anchorDetails {
         my $brickLiteral = $instance->literalLine($runeLine);
         my $brickLexeme = substr $brickLiteral, $brickColumn;
         $brickLexeme =~ s/[\s].*\z//xms;
-        return [qq{rune/anchor column is }
+        return [qq{anchor column is }
               . describeLC( $runeLine, $anchorColumn )
-              . qq{ "$brickLexeme"} ];
+              . qq{ "$brickLexeme" in line: "$runeLine"}
+              ];
     }
     push @desc,
       sprintf
@@ -1695,6 +1696,7 @@ sub check_0Running {
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
     my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
     my $anchorData;
+    CHECK_FOR_ANCHORING: {
     if ( $runeName eq 'colsig' ) {
 
         # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
@@ -1711,6 +1713,18 @@ sub check_0Running {
                 'tallTisgar' => 1,
             }
         );
+        last CHECK_FOR_ANCHORING;
+    }
+    if ( $runeName eq 'tissig' ) {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallTisgar' => 1,
+                'tallWutlus' => 1,
+            }
+        );
+        last CHECK_FOR_ANCHORING;
+    }
     }
     my $anchorDetails;
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )
