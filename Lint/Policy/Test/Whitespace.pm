@@ -1823,7 +1823,6 @@ sub checkWhap5d {
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
-    my @subpolicy       = ($runeName, 'whap');
 
     my $anchorNode = $instance->firstBrickOfLine($node);
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
@@ -1852,7 +1851,7 @@ sub checkWhap5d {
             push @mistakes,
               {
                 desc           => $msg,
-                    subpolicy => [@subpolicy, 'indent'],
+                    subpolicy => [$runeName, 'arm-indent'],
                 parentLine     => $boogLine,
                 parentColumn   => $boogColumn,
                 line           => $boogLine,
@@ -1860,7 +1859,7 @@ sub checkWhap5d {
                 reportLine           => $boogLine,
                 reportColumn         => $boogColumn,
                 topicLines     => [ $parentLine, $expectedLine ],
-                    details    => [ [@subpolicy] ],
+                    details    => [ [$runeName] ],
               };
         }
 
@@ -1876,8 +1875,8 @@ sub checkWhap5d {
                 {
                     mainColumn => $expectedColumn,
                     tag        => $runeName,
-                    subpolicy => [@subpolicy],
-                    details    => [ [@subpolicy] ],
+                    subpolicy => [$runeName, 'arm-vgap'],
+                    details    => [ [$runeName] ],
                     topicLines => [ $parentLine, $boogGapLine ],
                 }
             )
@@ -1909,8 +1908,6 @@ sub checkWisp5d {
     my $gapSeq = $policy->gapSeq0($node);
     my ( $gap, $hephep ) = @{$gapSeq};
 
-    my @subpolicy = ( $runeName, 'wisp' );
-
     push @mistakes,
       @{
         $policy->checkOneLineGap(
@@ -1918,9 +1915,9 @@ sub checkWisp5d {
             {
                 mainColumn => $parentColumn,
                 tag        => $runeName,
-                subpolicy  => [@subpolicy],
+                subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
-                details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
+                details      => [ [ $runeName, "Starts at $runeLC", ] ],
             }
         )
       };
@@ -1939,14 +1936,14 @@ sub checkWisp5d {
             push @mistakes,
               {
                 desc         => $msg,
-                subpolicy    => [ @subpolicy, 'hephep-alone' ],
+                subpolicy    => [ $runeName, 'hephep-alone' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $hephepLine,
                 column       => $hephepColumn,
                 reportLine   => $hephepLine,
                 reportColumn => $hephepColumn,
-                details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
+                details      => [ [ $runeName, "Starts at $runeLC", ] ],
               };
         }
     }
@@ -1968,7 +1965,7 @@ sub checkWisp5d {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy    => [ @subpolicy, 'hephep-indent' ],
+            subpolicy    => [ $runeName, 'hephep-indent' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $hephepLine,
@@ -1976,7 +1973,7 @@ sub checkWisp5d {
             reportLine   => $hephepLine,
             reportColumn => $hephepColumn,
             topicLines   => [$batteryLine],
-            details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
+            details      => [ [ $runeName, "Starts at $runeLC", ] ],
           };
     }
     return \@mistakes;
@@ -5461,6 +5458,12 @@ sub checkLuslus {
     my ( $cellBodyColumn, $cellBodyColumnLines ) =
       @{ $policy->cellBodyColumn($battery) };
 
+    my $batteryHoon = $instance->brickNode($battery);
+    my ( $batteryHoonLine, $batteryHoonColumn ) =
+      $instance->nodeLC($batteryHoon);
+    my $batteryRuneName = $policy->runeName($batteryHoon);
+    my $armDesc = join ':', $batteryRuneName, $runeName, 'arm';
+
     my @mistakes = ();
 
     # LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
@@ -5484,6 +5487,16 @@ sub checkLuslus {
             column       => $headColumn,
             reportLine   => $headLine,
             reportColumn => $headColumn,
+            topicLines   => [ $batteryLine, $batteryHoonLine ],
+            details      => [
+                [
+                    $armDesc,
+                    (
+                        sprintf 'starts at %s',
+                        describeLC( $batteryHoonLine, $batteryHoonColumn )
+                    ),
+                ]
+            ],
           };
     }
 
@@ -5491,33 +5504,36 @@ sub checkLuslus {
         my $bodyGapLength = $bodyGap->{length};
 
         if ( $bodyGapLength != 2 and $bodyColumn != $cellBodyColumn ) {
-            my @topicLines = ($batteryLine);
-            my @subpolicy  = ($runeName);
+            my @topicLines = ( $batteryLine, $batteryHoonLine );
+            my @subpolicy = ($runeName);
             my $misindent;
-            my $details;
+            my @details = (
+                $armDesc,
+                (
+                    sprintf 'starts at %s',
+                    describeLC( $batteryHoonLine, $batteryHoonColumn )
+                ),
+            );
             if ( $cellBodyColumn < 0 ) {
                 push @subpolicy, 'bad-tight-indent';
                 $misindent = describeMisindent2( $bodyGapLength, 2 );
-                $details =
-                  [ [ $runeName, "no inter-line alignment detected" ] ];
+                push @details, "no inter-line alignment detected";
             }
             else {
                 push @subpolicy, 'bad-interline-indent';
                 $misindent = describeMisindent2( $bodyColumn, $cellBodyColumn );
                 my $oneBasedColumn = $cellBodyColumn + 1;
                 push @topicLines, @{$cellBodyColumnLines};
-                $details = [
-                    [
-                        $runeName,
-                        sprintf 'inter-line alignment is %d, see %s',
-                        $oneBasedColumn,
-                        (
-                            join q{ },
-                            map { $_ . ':' . $oneBasedColumn }
-                              @{$cellBodyColumnLines}
-                        )
-                    ]
-                ];
+                push @details,
+                  (
+                    sprintf 'inter-line alignment is %d, see %s',
+                    $oneBasedColumn,
+                    (
+                        join q{ },
+                        map { $_ . ':' . $oneBasedColumn }
+                          @{$cellBodyColumnLines}
+                    )
+                  );
             }
             my $msg = sprintf 'Cell body %s; %s',
               describeLC( $bodyLine, $bodyColumn ), $misindent;
@@ -5532,7 +5548,7 @@ sub checkLuslus {
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
                 topicLines   => \@topicLines,
-                details      => $details,
+                details      => [ [@details] ],
               };
         }
         return \@mistakes;
@@ -5563,7 +5579,16 @@ sub checkLuslus {
                 column       => $bodyColumn,
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
-                topicLines   => [$batteryLine],
+                topicLines   => [ $batteryLine, $batteryHoonLine ],
+                details      => [
+                    [
+                        $armDesc,
+                        (
+                            sprintf 'starts at %s',
+                            describeLC( $batteryHoonLine, $batteryHoonColumn )
+                        ),
+                    ]
+                ],
               };
         }
         return \@mistakes;
@@ -5579,14 +5604,23 @@ sub checkLuslus {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy    => [ $runeName, 'body-indent' ],
+            subpolicy    => [ $runeName, 'arm-body-indent' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $bodyLine,
             column       => $bodyColumn,
             reportLine   => $bodyLine,
             reportColumn => $bodyColumn,
-            topicLines   => [$batteryLine],
+            topicLines   => [ $batteryLine, $batteryHoonLine ],
+            details      => [
+                [
+                    $armDesc,
+                    (
+                        sprintf 'starts at %s',
+                        describeLC( $batteryHoonLine, $batteryHoonColumn )
+                    ),
+                ]
+            ],
           };
         return \@mistakes;
     }
@@ -5600,7 +5634,16 @@ sub checkLuslus {
                 tag        => $runeName,
                 subpolicy  => [$runeName],
                 details    => [ [$runeName] ],
-                topicLines => [ $bodyLine, $batteryLine ],
+                topicLines => [ $bodyLine, $batteryLine, $batteryHoonLine ],
+                details    => [
+                    [
+                        $armDesc,
+                        (
+                            sprintf 'starts at %s',
+                            describeLC( $batteryHoonLine, $batteryHoonColumn )
+                        ),
+                    ]
+                ],
             }
         )
       };
