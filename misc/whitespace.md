@@ -888,7 +888,9 @@ WUTBAR (`?|`),
 and
 WUTPAM (`?&`).
 
-<!-- TODO: TISSIG is very problematic. -->
+<!-- TISSIG is very problematic.
+It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
+-->
 
 * A **1-running** has a head.
 The current 1-running rules are

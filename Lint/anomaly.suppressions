@@ -1367,3 +1367,33 @@ hoons/arvo/sys/vane/xmas.hoon 1162:6 Test::Whitespace tissig:tistis-alone TISTIS
 
 # TODO: What if indents are too close for normal criss-cross line?
 hoons/arvo/sys/vane/eyre.hoon 1307:13 Test::Whitespace wutlus:queenside:joined:tistis-indent TISTIS @1307:13; overindented by 2
+
+# TISSIG aberrations (mainly due to anchoring)
+hoons/arvo/sys/vane/behn.hoon 7:1 Test::Whitespace tallTissig runstep #1 @7:1; underindented by 6
+hoons/arvo/sys/vane/behn.hoon 25:1 Test::Whitespace tallTissig runstep #2 @25:1; underindented by 6
+hoons/arvo/sys/vane/behn.hoon 145:1 Test::Whitespace tallTissig runstep #3 @145:1; underindented by 6
+hoons/arvo/sys/vane/ford.hoon 10:1 Test::Whitespace tallTissig runstep #1 @10:1; underindented by 6
+hoons/arvo/sys/vane/ford.hoon 34:1 Test::Whitespace tallTissig runstep #2 @34:1; underindented by 6
+hoons/arvo/sys/vane/ford.hoon 93:1 Test::Whitespace tallTissig runstep #3 @93:1; underindented by 6
+hoons/arvo/sys/vane/ford.hoon 1882:1 Test::Whitespace tallTissig runstep #4 @1882:1; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 14:3 Test::Whitespace tallTissig runstep #2 @14:3; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 379:3 Test::Whitespace tallTissig runstep #3 @379:3; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 420:3 Test::Whitespace tallTissig runstep #4 @420:3; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 732:3 Test::Whitespace tallTissig runstep #5 @732:3; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 940:3 Test::Whitespace tallTissig runstep #6 @940:3; underindented by 6
+hoons/arvo/sys/vane/ames.hoon 1512:3 Test::Whitespace tallTissig runstep #7 @1512:3; underindented by 6
+hoons/arvo/sys/vane/gall.hoon 7:1 Test::Whitespace tallTissig runstep #1 @7:1; underindented by 6
+hoons/arvo/sys/vane/gall.hoon 22:1 Test::Whitespace tallTissig runstep #2 @22:1; underindented by 6
+hoons/arvo/sys/vane/gall.hoon 32:1 Test::Whitespace tallTissig runstep #3 @32:1; underindented by 6
+hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig runstep #4 @97:1; underindented by 6
+hoons/arvo/sys/vane/eyre.hoon 13:1 Test::Whitespace tallTissig runstep #1 @13:1; underindented by 6
+hoons/arvo/sys/vane/eyre.hoon 86:1 Test::Whitespace tallTissig runstep #2 @86:1; underindented by 6
+hoons/arvo/sys/vane/eyre.hoon 176:1 Test::Whitespace tallTissig runstep #3 @176:1; underindented by 6
+hoons/arvo/sys/vane/eyre.hoon 610:1 Test::Whitespace tallTissig runstep #4 @610:1; underindented by 6
+hoons/arvo/sys/vane/eyre.hoon 1983:1 Test::Whitespace tallTissig runstep #5 @1983:1; underindented by 6
+hoons/arvo/sys/vane/xmas.hoon 6:1 Test::Whitespace tallTissig runstep #1 @6:1; underindented by 6
+hoons/arvo/sys/vane/xmas.hoon 104:1 Test::Whitespace tallTissig runstep #2 @104:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 9:1 Test::Whitespace tallTissig runstep #1 @9:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 13:1 Test::Whitespace tallTissig runstep #2 @13:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 52:1 Test::Whitespace tallTissig runstep #3 @52:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig runstep #2 @448:1; underindented by 4
