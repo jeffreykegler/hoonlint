@@ -747,10 +747,10 @@ hoons/arvo/web/unmark/all.hoon 25:9 Test::Whitespace tiscom:hgap joined backdent
 # Cell body misindents, from tests of Sat Jun  1 15:55:16 EDT 2019
 hoons/arvo/app/ask.hoon 58:1 Test::Whitespace LuslusCell Cell body @58:16; overindented by 1
 hoons/arvo/lib/hood/kiln.hoon 471:3 Test::Whitespace LuslusCell Cell body @471:13; overindented by 1
-hoons/arvo/sur/gh.hoon 184:1 Test::Whitespace LuslusCell Cell body @184:12; overindented by 1
-hoons/arvo/sur/hall.hoon 97:1 Test::Whitespace LuslusCell Cell body @97:17; overindented by 1
+hoons/arvo/sur/gh.hoon 184:12 Test::Whitespace luslus:bad-tight-indent Cell body @184:12; overindented by 1
+hoons/arvo/sur/hall.hoon 97:17 Test::Whitespace luslus:bad-interline-indent Cell body @97:17; overindented by 1
 hoons/arvo/sys/hoon.hoon 635:1 Test::Whitespace LuslusCell Cell body @635:12; overindented by 1
-hoons/arvo/sys/zuse.hoon 1512:3 Test::Whitespace LuslusCell Cell body @1512:14; overindented by 2
+hoons/arvo/sys/zuse.hoon 1512:14 Test::Whitespace luslus:bad-tight-indent Cell body @1512:14; overindented by 2
 
 # Github issue #43
 hoons/arvo/sur/kyev.hoon 5:1 Test::Whitespace faswut:hgap body @5:7 is overindented by 2

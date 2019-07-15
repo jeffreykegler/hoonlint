@@ -123,7 +123,9 @@ sub runeName {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
     my $name     = $instance->forceBrickName($node);
-    return 'luslus' if $name eq 'LuslusCell';
+    if ( my ($tag) = $name =~ /^(Lus[b-z][aeiou][b-z])Cell$/ ) {
+        return lc $tag;
+    }
     if ( my ($tag) = $name =~ /^optFord([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
         return lc $tag;
     }
@@ -1894,6 +1896,7 @@ sub checkWisp5d {
     my $instance = $policy->{lint};
     my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my $runeLC = describeLC($parentLine, $parentColumn);
 
     my $battery =
       $instance->ancestorByLHS( $node,
@@ -1917,7 +1920,7 @@ sub checkWisp5d {
                 tag        => $runeName,
                 subpolicy  => [@subpolicy],
                 topicLines => [$batteryLine],
-                details    => [ [ $runeName, 'wisp' ] ],
+                details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
             }
         )
       };
@@ -1943,7 +1946,7 @@ sub checkWisp5d {
                 column       => $hephepColumn,
                 reportLine   => $hephepLine,
                 reportColumn => $hephepColumn,
-                details      => [ [ $runeName, 'wisp' ] ],
+                details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
               };
         }
     }
@@ -1973,7 +1976,7 @@ sub checkWisp5d {
             reportLine   => $hephepLine,
             reportColumn => $hephepColumn,
             topicLines   => [$batteryLine],
-            details      => [ [ $runeName, 'wisp' ] ],
+            details      => [ [ $runeName . 'wisp', "Starts at $runeLC", ] ],
           };
     }
     return \@mistakes;
