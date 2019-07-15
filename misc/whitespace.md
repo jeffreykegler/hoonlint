@@ -1645,7 +1645,7 @@ in lexical order:
   with comments at the base column,
 
 * The arm body,
-  aligned one stop after the arm marker.
+  aligned one stop after the anchor column.
 
 ## BARCEN
 

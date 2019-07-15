@@ -5464,6 +5464,23 @@ sub checkLuslus {
     my $batteryRuneName = $policy->runeName($batteryHoon);
     my $armDesc = join ':', $batteryRuneName, $runeName, 'arm';
 
+    my $anchorData;
+    my ( $anchorColumn, $anchorLine ) = ( $parentColumn, $parentLine );
+    if ( $parentLine == $batteryHoonLine ) {
+        if ( $runeName eq 'lushep' ) {
+            ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+                $node,
+                {
+                    'tallBarcen' => 1,
+                }
+            );
+        }
+    }
+
+    my $anchorDetails;
+    $anchorDetails = $policy->anchorDetails( $node, $anchorData )
+      if $anchorData;
+
     my @mistakes = ();
 
     # LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
@@ -5473,10 +5490,9 @@ sub checkLuslus {
 
     my $headGapLength = $headGap->{length};
     if ( $headGapLength != 2 ) {
-        my $expectedColumn = $parentColumn + 4;
         my $msg            = sprintf 'Cell head %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent2( $headColumn, $expectedColumn );
+          describeMisindent2( $headGapLength, 2 );
         push @mistakes,
           {
             desc         => $msg,
@@ -5554,6 +5570,9 @@ sub checkLuslus {
         return \@mistakes;
     }
 
+    # If here, this is (or should be) a split cell
+    my $expectedBodyColumn = $anchorColumn + 2;
+
     # If here head line != body line
   CHECK_FOR_PSEUDOJOIN: {
         my $pseudoJoinColumn = $policy->pseudoJoinColumn($bodyGap);
@@ -5564,6 +5583,11 @@ sub checkLuslus {
           if $pseudoJoinColumn != $raggedColumn
           and $pseudoJoinColumn != $cellBodyColumn;
         if ( $pseudoJoinColumn != $bodyColumn ) {
+
+            # Works as a regular split arm, so not a
+            # pseudojoing after all.
+            last CHECK_FOR_PSEUDOJOIN if $bodyColumn == $expectedBodyColumn;
+
             my $msg =
               sprintf
               'Pseudo-joined cell %s; body/comment mismatch; body is %s',
@@ -5593,9 +5617,6 @@ sub checkLuslus {
         }
         return \@mistakes;
     }
-
-    # If here, this is (or should be) a split cell
-    my $expectedBodyColumn = $parentColumn + 2;
 
     if ( $bodyColumn != $expectedBodyColumn ) {
         my $msg = sprintf 'cell body %s; %s',

@@ -1,5 +1,5 @@
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l9
-hoons/arvo/sys/hoon.hoon 944:3 Test::Whitespace barcen:whap:indent cell #63 @944:3; overindented by 2
+hoons/arvo/sys/hoon.hoon 944:3 Test::Whitespace barcen:arm-indent cell #63 @944:3; overindented by 2
 hoons/arvo/sys/hoon.hoon 945:3 Test::Whitespace luslus:arm-body-indent cell body @945:3; underindented by 2
 
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l10
@@ -498,7 +498,7 @@ hoons/arvo/app/talk.hoon 863:9 Test::Whitespace semsig:comment-indent runstep #1
 # Github issue #40
 hoons/arvo/lib/down-jet/parse.hoon 96:1 Test::Whitespace barcen:hephep-alone HEPHEP @96:1 should only share line with other HEPHEP's
 hoons/arvo/mar/recoverable-error.hoon 29:33 Test::Whitespace barcen:hephep-alone HEPHEP @29:33 should only share line with other HEPHEP's
-hoons/arvo/sys/hoon.hoon 12:1 Test::Whitespace barcen:wisp:hephep-alone HEPHEP @12:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 12:1 Test::Whitespace barcen:hephep-alone HEPHEP @12:1 should only share line with other HEPHEP's
 hoons/arvo/sys/hoon.hoon 12:5 Test::Whitespace tallTisgar backdented element #1 @13:1; underindented by 6
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1950:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1951:3; comment underindented by 2
@@ -510,8 +510,8 @@ hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1957:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1, @1958:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 1947:5 Test::Whitespace tallTisgar backdented element #1 @1959:1; underindented by 6
-hoons/arvo/sys/hoon.hoon 3664:1 Test::Whitespace barcen:wisp:hephep-alone HEPHEP @3664:1 should only share line with other HEPHEP's
-hoons/arvo/sys/hoon.hoon 360:1 Test::Whitespace barcen:wisp:hephep-alone HEPHEP @360:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 3664:1 Test::Whitespace barcen:hephep-alone HEPHEP @3664:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 360:1 Test::Whitespace barcen:hephep-alone HEPHEP @360:1 should only share line with other HEPHEP's
 hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @363:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @364:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 360:5 Test::Whitespace tallTisgar backdented element #1, @365:3; comment underindented by 2
@@ -560,14 +560,14 @@ hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #
 hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6244:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2, @6245:3; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 3664:5 Test::Whitespace tallTisgar backdented element #2 @6246:1; underindented by 4
-hoons/arvo/sys/hoon.hoon 1947:1 Test::Whitespace barcen:wisp:hephep-alone HEPHEP @1947:1 should only share line with other HEPHEP's
+hoons/arvo/sys/hoon.hoon 1947:1 Test::Whitespace barcen:hephep-alone HEPHEP @1947:1 should only share line with other HEPHEP's
 hoons/arvo/sys/vane/clay.hoon 14:1 Test::Whitespace tallTisgar backdented element #2 @321:5; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 321:1 Test::Whitespace barcen:hephep-alone HEPHEP @321:1 should only share line with other HEPHEP's
 hoons/arvo/sys/vane/clay.hoon 321:5 Test::Whitespace tallTisgar backdented element #1 @322:1; underindented by 6
 hoons/arvo/sys/vane/clay.hoon 364:1 Test::Whitespace barcen:hephep-alone HEPHEP @364:1 should only share line with other HEPHEP's
 hoons/arvo/sys/vane/clay.hoon 364:5 Test::Whitespace tallTisgar backdented element #1 @414:1; underindented by 6
 hoons/arvo/sys/vane/clay.hoon 364:5 Test::Whitespace tallTisgar backdented element #2 @3522:1; underindented by 4
-hoons/arvo/sys/vane/dill.hoon 10:1 Test::Whitespace barcen:hephep-alone HEPHEP @32:1 should only share line with other HEPHEP's
+hoons/arvo/sys/vane/dill.hoon 32:1 Test::Whitespace barcen:hephep-alone HEPHEP @32:1 should only share line with other HEPHEP's
 
 # Github issue #37
 hoons/arvo/lib/gh-parse.hoon 14:7 Test::Whitespace tallColsig runstep #1 @14:7; overindented by 2
@@ -1397,3 +1397,9 @@ hoons/arvo/lib/down-jet/parse.hoon 9:1 Test::Whitespace tallTissig runstep #1 @9
 hoons/arvo/lib/down-jet/parse.hoon 13:1 Test::Whitespace tallTissig runstep #2 @13:1; underindented by 6
 hoons/arvo/lib/down-jet/parse.hoon 52:1 Test::Whitespace tallTissig runstep #3 @52:1; underindented by 6
 hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig runstep #2 @448:1; underindented by 4
+
+# Silence LUSHEP warnings
+hoons/arvo/sys/hoon.hoon 8484:7 Test::Whitespace lushep:arm-body-indent cell body @8484:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 8541:7 Test::Whitespace lushep:arm-body-indent cell body @8541:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 8560:9 Test::Whitespace lushep:arm-body-indent cell body @8560:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 8575:5 Test::Whitespace lushep:arm-body-indent cell body @8575:5; underindented by 2
