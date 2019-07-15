@@ -472,7 +472,16 @@ sub brickName {
     return;
 }
 
-# The name of a name for diagnostics purposes.  Prefers
+# Return the name of a brick by recursively climbing,
+# and die if this fails.
+sub forceBrickName {
+    my ( $instance, $node ) = @_;
+    my $brickNode = $instance->brickNode($node);
+    return $instance->brickName($brickNode) if $brickNode;
+    die;
+}
+
+# The name of a node for diagnostics purposes.  Prefers
 # "brick" symbols over "mortar" symbols.
 sub diagName {
     my ( $instance, $node ) = @_;

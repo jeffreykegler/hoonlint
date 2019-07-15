@@ -122,7 +122,8 @@ sub chainable {
 sub runeName {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
-    my $name     = $instance->brickName($node);
+    my $name     = $instance->forceBrickName($node);
+    return 'luslus' if $name eq 'LuslusCell';
     if ( my ($tag) = $name =~ /^optFord([B-Z][aeoiu][b-z][b-z][aeiou][b-z])$/ ) {
         return lc $tag;
     }
@@ -1819,7 +1820,8 @@ sub checkWhap5d {
     my $censusWhitespace = $instance->{censusWhitespace};
 
     my @mistakes = ();
-    my $tag      = 'whap';
+    my $runeName = $policy->runeName($node);
+    my @subpolicy       = ($runeName, 'whap');
 
     my $anchorNode = $instance->firstBrickOfLine($node);
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
@@ -1848,12 +1850,15 @@ sub checkWhap5d {
             push @mistakes,
               {
                 desc           => $msg,
+                    subpolicy => [@subpolicy, 'indent'],
                 parentLine     => $boogLine,
                 parentColumn   => $boogColumn,
                 line           => $boogLine,
                 column         => $boogColumn,
+                reportLine           => $boogLine,
+                reportColumn         => $boogColumn,
                 topicLines     => [ $parentLine, $expectedLine ],
-                details        => [ [$tag] ],
+                    details    => [ [@subpolicy] ],
               };
         }
 
@@ -1868,9 +1873,9 @@ sub checkWhap5d {
                 $boogGap,
                 {
                     mainColumn => $expectedColumn,
-                    tag        => $tag,
-                    subpolicy => ['whap5d'],
-                    details    => [ [$tag] ],
+                    tag        => $runeName,
+                    subpolicy => [@subpolicy],
+                    details    => [ [@subpolicy] ],
                     topicLines => [ $parentLine, $boogGapLine ],
                 }
             )
@@ -1886,8 +1891,8 @@ sub checkWhap5d {
 sub checkWisp5d {
     my ( $policy, $node ) = @_;
     my @mistakes = ();
-    my $tag      = 'wisp';
     my $instance = $policy->{lint};
+    my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
     my $battery =
@@ -1901,16 +1906,18 @@ sub checkWisp5d {
     my $gapSeq = $policy->gapSeq0($node);
     my ( $gap, $hephep ) = @{$gapSeq};
 
+    my @subpolicy = ( $runeName, 'wisp' );
+
     push @mistakes,
       @{
         $policy->checkOneLineGap(
             $gap,
             {
                 mainColumn => $parentColumn,
-                tag        => $tag,
-                    subpolicy => ['wisp5d'],
+                tag        => $runeName,
+                subpolicy  => [@subpolicy],
                 topicLines => [$batteryLine],
-                details    => [ [$tag] ],
+                details    => [ [ $runeName, 'wisp' ] ],
             }
         )
       };
@@ -1928,13 +1935,15 @@ sub checkWisp5d {
               describeLC( $hephepLine, $hephepColumn );
             push @mistakes,
               {
-                desc      => $msg,
-                subpolicy => $policy->nodeSubpolicy($battery) . ':hephep-alone',
+                desc         => $msg,
+                subpolicy    => [ @subpolicy, 'hephep-alone' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $hephepLine,
                 column       => $hephepColumn,
-                details      => [ [$tag] ],
+                reportLine   => $hephepLine,
+                reportColumn => $hephepColumn,
+                details      => [ [ $runeName, 'wisp' ] ],
               };
         }
     }
@@ -1955,13 +1964,16 @@ sub checkWisp5d {
           describeMisindent2( $hephepColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $hephepLine,
-            column         => $hephepColumn,
-            topicLines     => [$batteryLine],
-            details        => [ [$tag] ],
+            desc         => $msg,
+            subpolicy    => [ @subpolicy, 'hephep-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $hephepLine,
+            column       => $hephepColumn,
+            reportLine   => $hephepLine,
+            reportColumn => $hephepColumn,
+            topicLines   => [$batteryLine],
+            details      => [ [ $runeName, 'wisp' ] ],
           };
     }
     return \@mistakes;
@@ -2672,7 +2684,7 @@ sub checkBarket {
 
     my @mistakes = ();
     my $tag      = 'barket';
-    my $runeName      = 'barket';
+    my $runeName = 'barket';
 
     my $expectedColumn;
 
@@ -2684,12 +2696,14 @@ sub checkBarket {
                   describeLC( $headLine, $headColumn );
                 push @mistakes,
                   {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $headLine,
-                    column         => $headColumn,
-                    details        => [ [$tag] ],
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $headLine,
+                    column       => $headColumn,
+                    reportLine   => $headLine,
+                    reportColumn => $headColumn,
+                    details      => [ [$tag] ],
                   };
                 last HEAD_ISSUES;
             }
@@ -2702,12 +2716,14 @@ sub checkBarket {
                   describeMisindent2( $headColumn, $expectedHeadColumn );
                 push @mistakes,
                   {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $headLine,
-                    column         => $headColumn,
-                    details        => [ [$tag] ],
+                    desc         => $msg,
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $headLine,
+                    column       => $headColumn,
+                    reportLine   => $headLine,
+                    reportColumn => $headColumn,
+                    details      => [ [$tag] ],
                   };
             }
             last HEAD_ISSUES;
@@ -2728,12 +2744,14 @@ sub checkBarket {
           describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $headLine,
-            column         => $headColumn,
-            details        => [ [$tag] ],
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $headLine,
+            column       => $headColumn,
+            reportLine   => $headLine,
+            reportColumn => $headColumn,
+            details      => [ [$tag] ],
           };
 
     }
@@ -2746,7 +2764,7 @@ sub checkBarket {
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
-                subpolicy => [ $runeName ],
+                subpolicy  => [$runeName],
                 details    => [ [$tag] ],
                 topicLines => [$batteryLine],
             }
@@ -2759,11 +2777,13 @@ sub checkBarket {
           describeMisindent2( $batteryColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $batteryLine,
-            column         => $batteryColumn,
+            desc         => $msg,
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $batteryLine,
+            column       => $batteryColumn,
+            reportLine   => $batteryLine,
+            reportColumn => $batteryColumn,
           };
         return \@mistakes;
     }
@@ -5429,16 +5449,16 @@ sub checkKetdot {
 sub checkLuslus {
     my ( $policy, $node, $cellLHS ) = @_;
     my $instance = $policy->{lint};
+    my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
     my $battery = $instance->ancestorByLHS( $node, { whap5d => 1 } );
     die "battery not found" if not defined $battery;
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
-    my ($cellBodyColumn, $cellBodyColumnLines) = @{$policy->cellBodyColumn($battery)};
+    my ( $cellBodyColumn, $cellBodyColumnLines ) =
+      @{ $policy->cellBodyColumn($battery) };
 
     my @mistakes = ();
-    my $runeName      = 'luslus';
-    my $tag      = 'luslus';
 
     # LuslusCell ::= (- LUS LUS GAP -) SYM4K (- GAP -) tall5d
     my ( $headGap, $head, $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
@@ -5453,11 +5473,14 @@ sub checkLuslus {
           describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $headLine,
-            column         => $headColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'hgap' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $headLine,
+            column       => $headColumn,
+            reportLine   => $headLine,
+            reportColumn => $headColumn,
           };
     }
 
@@ -5466,19 +5489,23 @@ sub checkLuslus {
 
         if ( $bodyGapLength != 2 and $bodyColumn != $cellBodyColumn ) {
             my @topicLines = ($batteryLine);
+            my @subpolicy  = ($runeName);
             my $misindent;
             my $details;
             if ( $cellBodyColumn < 0 ) {
+                push @subpolicy, 'bad-tight-indent';
                 $misindent = describeMisindent2( $bodyGapLength, 2 );
-                $details = [ [ $tag, "no inter-line alignment detected" ] ];
+                $details =
+                  [ [ $runeName, "no inter-line alignment detected" ] ];
             }
             else {
+                push @subpolicy, 'bad-interline-indent';
                 $misindent = describeMisindent2( $bodyColumn, $cellBodyColumn );
                 my $oneBasedColumn = $cellBodyColumn + 1;
                 push @topicLines, @{$cellBodyColumnLines};
                 $details = [
                     [
-                        $tag,
+                        $runeName,
                         sprintf 'inter-line alignment is %d, see %s',
                         $oneBasedColumn,
                         (
@@ -5493,13 +5520,16 @@ sub checkLuslus {
               describeLC( $bodyLine, $bodyColumn ), $misindent;
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                topicLines     => \@topicLines,
-                details        => $details,
+                desc         => $msg,
+                subpolicy    => \@subpolicy,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                topicLines   => \@topicLines,
+                details      => $details,
               };
         }
         return \@mistakes;
@@ -5522,12 +5552,15 @@ sub checkLuslus {
               describeMisindent2( $bodyColumn, $pseudoJoinColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                topicLines     => [$batteryLine],
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'pseudo-comment-indent' ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                topicLines   => [$batteryLine],
               };
         }
         return \@mistakes;
@@ -5542,12 +5575,15 @@ sub checkLuslus {
           describeMisindent2( $bodyColumn, $expectedBodyColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            topicLines     => [$batteryLine],
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'body-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $bodyLine,
+            column       => $bodyColumn,
+            reportLine   => $bodyLine,
+            reportColumn => $bodyColumn,
+            topicLines   => [$batteryLine],
           };
         return \@mistakes;
     }
@@ -5558,9 +5594,9 @@ sub checkLuslus {
             $bodyGap,
             {
                 mainColumn => $expectedBodyColumn,
-                tag        => $tag,
-                subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
+                tag        => $runeName,
+                subpolicy  => [$runeName],
+                details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $batteryLine ],
             }
         )

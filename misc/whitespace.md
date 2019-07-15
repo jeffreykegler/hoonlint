@@ -1599,11 +1599,15 @@ of the battery.
 The arms should be separated by vertical gaps,
 where the inter-column is the base column,
 and the pre-column is undefined.
-
 The base column of the battery is specified below,
 in the description of each battery hoon.
+Arms may be joined or split.
 
-arms may be joined or split.
+*From sieve_k example, line 6:*
+```
+++  abet  (sort (~(tap in fed)) lth)
+```
+
 A joined arm consists of,
 in lexical order:
 
@@ -1617,6 +1621,16 @@ in lexical order:
   or an equivalent pseudo-join.
 
 * The arm body.
+
+*From sieve_k example, lines 7-12:*
+```
+++  main
+  =+  fac=2
+  |-  ^+  ..main
+  ?:  (gth (mul fac fac) top)
+    ..main
+  $(fac +(fac), ..main (reap fac))
+```
 
 A split arm consists of,
 in lexical order:
