@@ -1033,7 +1033,7 @@ sub checkTailOfElem {
     my $expectedColumn = $tallTopSailColumn - 1;
 
     my @mistakes = ();
-    my $tag      = 'tail of elem';
+    my $runeName      = 'sail';
 
     push @mistakes,
       @{
@@ -1041,8 +1041,8 @@ sub checkTailOfElem {
             $tistisGap,
             {
                 mainColumn => $expectedColumn,
-                tag        => $tag,
-                subpolicy => [ $tag ],
+                tag        => $runeName,
+                subpolicy => [ $runeName, 'elem-tail' ],
                 topicLines => [$tistisLine],
             }
         )
@@ -1053,7 +1053,8 @@ sub checkTailOfElem {
         $policy->checkTistis(
             $tistis,
             {
-                tag            => $tag,
+                tag            => $runeName,
+                subpolicy => [ $runeName, 'elem-tail' ],
                 expectedColumn => $expectedColumn,
             }
         )
@@ -1078,7 +1079,7 @@ sub checkTailOfTop {
     my $expectedColumn = $tallTopSailColumn;
 
     my @mistakes = ();
-    my $tag      = 'tail of top';
+    my $runeName = 'sail';
 
     push @mistakes,
       @{
@@ -1086,8 +1087,8 @@ sub checkTailOfTop {
             $tistisGap,
             {
                 mainColumn => $expectedColumn,
-                tag        => $tag,
-                subpolicy => [ $tag ],
+                subpolicy => [ $runeName, 'top-tail' ],
+                tag        => $runeName,
                 topicLines => [$tistisLine],
             }
         )
@@ -1098,7 +1099,8 @@ sub checkTailOfTop {
         $policy->checkTistis(
             $tistis,
             {
-                tag            => $tag,
+                tag            => $runeName,
+                subpolicy => [ $runeName, 'top-tail' ],
                 expectedColumn => $expectedColumn,
             }
         )
@@ -1249,6 +1251,8 @@ sub checkTopSail {
 
     my @mistakes = ();
 
+    my $runeName = 'sail';
+
     my $expectedColumn;
 
   BODY_ISSUES: {
@@ -1264,10 +1268,13 @@ sub checkTopSail {
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'top-sail', 'split' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $bodyLine,
                 column       => $bodyColumn,
+                reportLine         => $bodyLine,
+                reportColumn       => $bodyColumn,
               };
             last BODY_ISSUES;
         }
@@ -1288,10 +1295,13 @@ sub checkTopSail {
         push @mistakes,
           {
             desc           => $msg,
+                subpolicy => [ $runeName, 'top-sail', 'indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+                reportLine         => $bodyLine,
+                reportColumn       => $bodyColumn,
           };
     }
 
@@ -1313,6 +1323,8 @@ sub checkTopKids {
 
     my $expectedColumn;
 
+    my $runeName = 'sail';
+
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
             last BODY_ISSUES if $instance->symbol($body) eq 'CRAM';
@@ -1326,10 +1338,13 @@ sub checkTopKids {
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'top-kids', 'kids-split' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $bodyLine,
                 column       => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
               };
             last BODY_ISSUES;
         }
@@ -1350,10 +1365,13 @@ sub checkTopKids {
         push @mistakes,
           {
             desc           => $msg,
+                subpolicy => [ $runeName, 'top-kids', 'body-indent' ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
             column         => $bodyColumn,
+            reportLine           => $bodyLine,
+            reportColumn         => $bodyColumn,
           };
     }
 
