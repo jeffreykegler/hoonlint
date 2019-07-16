@@ -1125,7 +1125,7 @@ hoons/arvo/mar/txt.hoon 170:11 Test::Whitespace colcab:indent backdented element
 === hoons/arvo/web/pack/js/tree-urb.hoon ===
 === hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon ===
 === hoons/arvo/web/dojo.hoon ===
-hoons/arvo/web/dojo.hoon 13:1 Test::Whitespace tallAttribute Sail attribute body @14:18; overindented by 1
+hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attribute body @14:18; overindented by 1
 === hoons/arvo/web/talk.hoon ===
 === hoons/arvo/web/womb.hoon ===
 === hoons/arvo/ren/urb.hoon ===

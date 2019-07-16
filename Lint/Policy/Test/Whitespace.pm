@@ -911,7 +911,9 @@ sub checkSailAttribute {
     my ($expectedBodyColumn, $expectBodyColumnDetails) = @{$policy->sailAttributeBodyAlignment($attributes)};
 
     my @mistakes = ();
-    my $tag      = 'sail atttribute';
+
+    # Not really a rune name
+    my $runeName      = 'sail';
 
     # We deal with the elements list in its own node
 
@@ -921,8 +923,8 @@ sub checkSailAttribute {
             $headGap,
             {
                 mainColumn => $expectedHeadColumn,
-                tag        => $tag,
-                subpolicy => [ 'sail attribute' ],
+                tag        => $runeName,
+                subpolicy => [ $runeName, 'head-vgap' ],
                 topicLines => [$headLine],
             }
         )
@@ -936,10 +938,13 @@ sub checkSailAttribute {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'head-indent' ],
             parentLine     => $sailApexLine,
             parentColumn   => $sailApexColumn,
             line           => $headLine,
             column         => $headColumn,
+                    reportLine         => $headLine,
+                    reportColumn       => $headColumn,
             topicLines     => [$headLine],
           };
     }
@@ -952,10 +957,13 @@ sub checkSailAttribute {
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy => [ $runeName, 'split-sail' ],
                 parentLine   => $sailApexLine,
                 parentColumn => $sailApexColumn,
                 line         => $headLine,
                 column       => $headColumn,
+                    reportLine         => $headLine,
+                    reportColumn       => $headColumn,
                 topicLines   => [$headLine],
               };
             last CHECK_BODY;
@@ -972,10 +980,13 @@ sub checkSailAttribute {
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy => [ $runeName, 'body-tight-indent' ],
                     parentLine   => $sailApexLine,
                     parentColumn => $sailApexColumn,
                     line         => $bodyLine,
                     column       => $bodyColumn,
+                    reportLine         => $bodyLine,
+                    reportColumn       => $bodyColumn,
                     topicLines   => [$bodyLine],
                   };
                 last CHECK_GAP;
@@ -988,10 +999,13 @@ sub checkSailAttribute {
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy => [ $runeName, 'body-align-indent' ],
                     parentLine   => $sailApexLine,
                     parentColumn => $sailApexColumn,
                     line         => $bodyLine,
                     column       => $bodyColumn,
+                    reportLine         => $bodyLine,
+                    reportColumn       => $bodyColumn,
                     topicLines   => [$bodyLine],
                   };
             }
