@@ -1087,7 +1087,7 @@ sub checkTailOfTop {
             $tistisGap,
             {
                 mainColumn => $expectedColumn,
-                subpolicy => [ $runeName, 'top-tail' ],
+                subpolicy  => [ $runeName, 'top-tail' ],
                 tag        => $runeName,
                 topicLines => [$tistisLine],
             }
@@ -1100,7 +1100,7 @@ sub checkTailOfTop {
             $tistis,
             {
                 tag            => $runeName,
-                subpolicy => [ $runeName, 'top-tail' ],
+                subpolicy      => [ $runeName, 'top-tail' ],
                 expectedColumn => $expectedColumn,
             }
         )

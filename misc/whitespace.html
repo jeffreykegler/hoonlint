@@ -93,6 +93,7 @@
 </ul></li>
 <li><a href="#fastis">FASTIS</a></li>
 </ul></li>
+<li><a href="#sail">Sail</a></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
@@ -960,6 +961,28 @@ I have revised it.
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A runechild.</p></li>
 </ul>
+<h1 id="sail">Sail</h1>
+<p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
+<pre><code>;module
+    =nav_title    &quot;Dojo&quot;
+    =nav_no-dpad  &quot;&quot;
+    =nav_no-sibs  &quot;&quot;
+  ;script(src &quot;//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js&quot;);
+  ;style:&#39;&#39;&#39;
+         #term { width: 100%; }
+         #term * { margin: 0px; }
+         .module pre { margin-bottom: 0; }
+         &#39;&#39;&#39;
+  ;div#err;
+  ;div#term:&quot;&quot;
+  ;script@&quot;/lib/js/sole.js&quot;;
+  ;sole(appl &quot;dojo&quot;);
+==</code></pre>
+<p>This standard does not address internal whitespace in Sail syntax.</p>
+<p>Hoon gaps do occur at the beginning and ending of sail text blocks. If these Hoon gaps are horizontal gaps, they should be exactly one stop wide. Comments in vertical Hoon gaps should be aligned with the sail text block directly contains the vertical gap.</p>
+<p>TISTIS terminators in sail text blocks should be aligned with the sail text block that they terminate. Comments in the vertical gap preceding the TISTIS terminator of a Sail text should be aligned with Sail text block.</p>
+<p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
+<p>TODO: Look up sail documentation, and finish this description. See https://urbit.org/docs/using/sail-and-udon/</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>

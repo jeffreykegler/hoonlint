@@ -2088,6 +2088,53 @@ in lexical order:
 
 * A runechild.
 
+# Sail
+
+*Adapted from `web/dojo.hoon`, lines 13-27:*
+```
+;module
+    =nav_title    "Dojo"
+    =nav_no-dpad  ""
+    =nav_no-sibs  ""
+  ;script(src "//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js");
+  ;style:'''
+         #term { width: 100%; }
+         #term * { margin: 0px; }
+         .module pre { margin-bottom: 0; }
+         '''
+  ;div#err;
+  ;div#term:""
+  ;script@"/lib/js/sole.js";
+  ;sole(appl "dojo");
+==
+```
+
+This standard does not address internal whitespace in Sail syntax.
+
+Hoon gaps do occur at the beginning and ending of sail text blocks.
+If these Hoon gaps are horizontal gaps, they should be exactly one stop wide.
+Comments in vertical Hoon gaps should be aligned with the sail text block
+directly contains the vertical gap.
+
+TISTIS terminators in sail text blocks
+should be aligned with the sail text block that they
+terminate.
+Comments in the vertical gap preceding the TISTIS terminator of a Sail text
+should be aligned with Sail text block.
+
+The sail attribute base column is two stops after start column location
+of the sail text block.
+Sail tall attributes should be separated from each other by a vertical
+gap with comments aligned at the attribute base column.
+Values in sail attributes should be on the same line
+as the sail key.
+The sail attribute values should be tightly aligned,
+or aligned with each other.
+
+TODO: Look up sail documentation, and finish this
+description.
+See https://urbit.org/docs/using/sail-and-udon/
+
 # SELGAP
 
 *From `arvo/sur/twitter.hoon`, line 85:*

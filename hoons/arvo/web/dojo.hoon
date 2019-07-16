@@ -11,7 +11,7 @@
   ::
 ^-  manx
 ;module
-    =nav_title   "Dojo"
+    =nav_title    "Dojo"
     =nav_no-dpad  ""
     =nav_no-sibs  ""
   ;script(src "//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js");
