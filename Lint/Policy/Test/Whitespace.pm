@@ -5467,14 +5467,12 @@ sub checkLuslus {
     my $anchorData;
     my ( $anchorColumn, $anchorLine ) = ( $parentColumn, $parentLine );
     if ( $parentLine == $batteryHoonLine ) {
-        if ( $runeName eq 'lushep' ) {
-            ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-                $node,
-                {
-                    'tallBarcen' => 1,
-                }
-            );
-        }
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallBarcen' => 1,
+            }
+        );
     }
 
     my $anchorDetails;

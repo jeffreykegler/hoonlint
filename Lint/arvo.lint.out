@@ -524,6 +524,7 @@ hoons/arvo/sys/vane/ford.hoon 54:5 Test::Whitespace tallBuctisMold backdented el
 hoons/arvo/sys/vane/ford.hoon 251:9 Test::Whitespace wutcol:comment-indent backdented element #3, @251:9; comment overindented by 4
 hoons/arvo/sys/vane/ford.hoon 343:11 Test::Whitespace tallTisfas backdented element #2 @344:15; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 446:15 Test::Whitespace tallZapdot backdented element #1 @447:7; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 853:17 Test::Whitespace luslus:arm-body-indent cell body @853:17; overindented by 4
 hoons/arvo/sys/vane/ford.hoon 856:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @856:11; comment underindented by 4
 hoons/arvo/sys/vane/ford.hoon 861:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @861:11; comment underindented by 4
 hoons/arvo/sys/vane/ford.hoon 866:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @866:11; comment underindented by 4
@@ -1168,7 +1169,6 @@ hoons/arvo/mar/recoverable-error.hoon 29:33 Test::Whitespace barcen:hephep-inden
 === hoons/arvo/mar/elem.hoon ===
 === hoons/arvo/mar/sole/action.hoon ===
 === hoons/arvo/mar/sole/effect.hoon ===
-hoons/arvo/mar/sole/effect.hoon 19:7 Test::Whitespace luslus:arm-body-indent cell body @19:7; underindented by 4
 hoons/arvo/mar/sole/effect.hoon 40:13 Test::Whitespace tallCenlus backdented element #3 @41:3; underindented by 10
 === hoons/arvo/mar/js.hoon ===
 === hoons/arvo/mar/markdown.hoon ===
