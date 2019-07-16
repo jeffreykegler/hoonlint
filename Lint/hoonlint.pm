@@ -478,6 +478,7 @@ sub forceBrickName {
     my ( $instance, $node ) = @_;
     my $brickNode = $instance->brickNode($node);
     return $instance->brickName($brickNode) if $brickNode;
+    $DB::single = 1;
     die;
 }
 

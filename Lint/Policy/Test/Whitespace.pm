@@ -2411,11 +2411,14 @@ sub checkJogging {
 
 # Check "vanilla" sequence
 sub checkSeq {
-    my ( $policy, $node, $tag ) = @_;
+    my ( $policy, $node, $elementDesc ) = @_;
     my $instance = $policy->{lint};
     my $children = $node->{children};
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+
+    my $brick = $instance->brickNode($node);
+    my $runeName = $brick ? $policy->runeName($brick) : 'fordfile';
 
     my @mistakes = ();
 
@@ -2428,17 +2431,21 @@ sub checkSeq {
         if ( $elementColumn != $expectedColumn ) {
             my $msg = sprintf
               '%s %d %s; %s',
-              $tag,
+              $runeName,
               ( $childIX / 2 ) + 1,
               describeLC( $elementLine, $elementColumn ),
               describeMisindent2( $elementColumn, $expectedColumn );
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $runeName, 'sequence-element-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
+                reportLine           => $elementLine,
+                reportColumn         => $elementColumn,
+                details    => [ [$runeName, $elementDesc] ],
               };
         }
 
@@ -2454,9 +2461,9 @@ sub checkSeq {
                 $elementGap,
                 {
                     mainColumn => $expectedColumn,
-                    tag        => $tag,
-                subpolicy => [ $tag, 'sequence' ],
-                    details    => [ [$tag] ],
+                    tag        => $runeName,
+                    subpolicy => [ $runeName, 'sequence-vgap' ],
+                    details    => [ [$runeName, $elementDesc] ],
                     topicLines => [$elementGapLine],
                 }
             )

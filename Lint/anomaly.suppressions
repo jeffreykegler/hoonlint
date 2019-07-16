@@ -1408,3 +1408,25 @@ hoons/arvo/lib/hood/kiln.hoon 39:5 Test::Whitespace luslus:arm-body-indent cell 
 hoons/arvo/lib/hood/kiln.hoon 44:5 Test::Whitespace luslus:arm-body-indent cell body @44:5; overindented by 2
 hoons/arvo/lib/hood/kiln.hoon 49:5 Test::Whitespace luslus:arm-body-indent cell body @49:5; overindented by 2
 hoons/arvo/mar/down.hoon 26:7 Test::Whitespace luslus:arm-body-indent cell body @26:7; overindented by 2
+
+# LUSLUS comment indent aberrations
+hoons/arvo/sys/vane/jael.hoon 1032:7 Test::Whitespace luslus:comment-indent luslus @1032:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1033:7 Test::Whitespace luslus:comment-indent luslus @1033:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1034:7 Test::Whitespace luslus:comment-indent luslus @1034:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1035:7 Test::Whitespace luslus:comment-indent luslus @1035:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1036:7 Test::Whitespace luslus:comment-indent luslus @1036:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1037:7 Test::Whitespace luslus:comment-indent luslus @1037:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1038:7 Test::Whitespace luslus:comment-indent luslus @1038:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1039:7 Test::Whitespace luslus:comment-indent luslus @1039:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1040:7 Test::Whitespace luslus:comment-indent luslus @1040:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1041:7 Test::Whitespace luslus:comment-indent luslus @1041:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1042:7 Test::Whitespace luslus:comment-indent luslus @1042:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1043:7 Test::Whitespace luslus:comment-indent luslus @1043:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1044:7 Test::Whitespace luslus:comment-indent luslus @1044:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1045:7 Test::Whitespace luslus:comment-indent luslus @1045:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1461:7 Test::Whitespace luslus:comment-indent luslus @1461:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1462:7 Test::Whitespace luslus:comment-indent luslus @1462:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1463:7 Test::Whitespace luslus:comment-indent luslus @1463:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1464:7 Test::Whitespace luslus:comment-indent luslus @1464:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1465:7 Test::Whitespace luslus:comment-indent luslus @1465:7; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 1466:7 Test::Whitespace luslus:comment-indent luslus @1466:7; comment overindented by 4
