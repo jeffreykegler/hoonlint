@@ -1,2 +1,2 @@
-t/ast.d/fizzbuzz.hoon 5:1 Test::Whitespace tallWutcol indentation is one-off
-t/ast.d/toe.hoon 57:13 Test::Whitespace tallWutcol indentation is one-off
+t/ast.d/fizzbuzz.hoon 6:4 Test::Whitespace wutcol:indent indentation is one-off
+t/ast.d/toe.hoon 58:16 Test::Whitespace wutcol:indent indentation is one-off

@@ -5042,7 +5042,6 @@ sub checkBackdented {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
-    my $tag      = $elementCount . '-backdented';
 
     my $chainOffset = 0;
     my $chainAlignments;
@@ -5080,10 +5079,13 @@ sub checkBackdented {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'element-1-split' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $elementLine,
             column       => $elementColumn,
+            reportLine         => $elementLine,
+            reportColumn       => $elementColumn,
           };
     }
 
@@ -5152,14 +5154,13 @@ sub checkBackdented {
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy    => [ $runeName, 'interline-mismatch' ],
                     parentLine   => $parentLine,
                     parentColumn => $parentColumn,
                     line         => $elementLine,
                     column       => $elementColumn,
                     reportLine   => $elementLine,
                     reportColumn => $elementColumn,
-                    subpolicy    => $policy->nodeSubpolicy($node)
-                      . ':interline-mismatch',
                   };
             }
 
@@ -5200,7 +5201,7 @@ sub checkBackdented {
                 push @topicLines, @{$chainAlignmentLines};
                 $details = [
                     [
-                        $tag,
+                        $runeName,
                         sprintf 'chain alignment is %d, see %s',
                         $oneBasedColumn,
                         (
@@ -5212,7 +5213,7 @@ sub checkBackdented {
                 ];
             }
             else {
-                $details = [ [ $tag, "no chain alignment detected" ] ];
+                $details = [ [ $runeName, "no chain alignment detected" ] ];
             }
             my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
             my $allowedDesc = join "; ",
@@ -5230,18 +5231,21 @@ sub checkBackdented {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $runeName, 'hgap' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
                 reportLine     => $elementLine,
                 reportColumn   => $elementColumn,
-                subpolicy      => $policy->nodeSubpolicy($node) . ':hgap',
+                subpolicy      => [ $runeName, 'hgap'],
                 topicLines => \@topicLines,
                 details => $details,
               };
             next ELEMENT;
         }
+
+        # If here, element is pseudo-joined or split
 
       CHECK_FOR_PSEUDOJOIN: {
             last CHECK_FOR_PSEUDOJOIN if $gapLine != $parentLine;
@@ -5263,10 +5267,13 @@ sub checkBackdented {
                 push @mistakes,
                   {
                     desc           => $msg,
+                    subpolicy => [ $runeName, 'pseudojoin-mismatch' ],
                     parentLine     => $parentLine,
                     parentColumn   => $parentColumn,
                     line           => $elementLine,
                     column         => $elementColumn,
+                    reportLine           => $elementLine,
+                    reportColumn         => $elementColumn,
                   };
             }
 
@@ -5288,10 +5295,10 @@ sub checkBackdented {
                     preColumn  => $elementColumn,
                     tag =>
                       ( sprintf 'backdented element #%d,', $elementNumber ),
-                subpolicy => [ $runeName ],
+                    subpolicy => [ $runeName ],
                     details => [
                         [
-                            $tag,
+                            $runeName,
                             @{$anchorDetails},
                             'inter-comment indent should be '
                               . ( $anchorColumn + 1 ),
@@ -5312,11 +5319,14 @@ sub checkBackdented {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $runeName, 'indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
-                details        => [ [ $tag, @{$anchorDetails}, ] ],
+                reportLine           => $elementLine,
+                reportColumn         => $elementColumn,
+                details        => [ [ $runeName, @{$anchorDetails}, ] ],
               };
         }
     }
