@@ -2109,12 +2109,10 @@ in lexical order:
 ==
 ```
 
-This standard does not address internal whitespace in Sail syntax.
-
-Hoon gaps do occur at the beginning and ending of sail text blocks.
-If these Hoon gaps are horizontal gaps, they should be exactly one stop wide.
-Comments in vertical Hoon gaps should be aligned with the sail text block
-directly contains the vertical gap.
+The runechild of the sail runes 
+SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%).
+must be on the same line as the rune,
+and separated from it by a one-stop horizontal gap.
 
 TISTIS terminators in sail text blocks
 should be aligned with the sail text block that they

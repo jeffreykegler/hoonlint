@@ -1238,6 +1238,7 @@ sub checkBonzElement {
     return \@mistakes;
 }
 
+# Deals with SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%).
 sub checkTopSail {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -1283,15 +1284,10 @@ sub checkTopSail {
         my $gapLiteral = $instance->literalNode($bodyGap);
         my $gapLength  = $bodyGap->{length};
         last BODY_ISSUES if $gapLength == 2;
-        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $bodyGapColumn + $expectedLength;
-        my $msg = sprintf 'Top Sail body %s; %s',
+        my $msg = sprintf 'sail runechild %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent2( $bodyColumn, $expectedColumn );
+          describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
             desc           => $msg,
@@ -5905,6 +5901,8 @@ sub validate_node {
         # if here, gapiness > 0
 
       TYPE_INDENT: {
+
+            # This would be faster as a hash
 
             if ( $lhsName eq "bont5d" ) {
                 $mistakes = $policy->checkBont($node);
