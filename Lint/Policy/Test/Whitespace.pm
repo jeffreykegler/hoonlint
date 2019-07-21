@@ -667,6 +667,7 @@ sub i_isOneLineGap {
     # say STDERR Data::Dumper::Dumper(\@subpolicyElements);
 
     # Criss-cross TISTIS lines are a special case
+    # say STDERR join " ", __FILE__, __LINE__, $startLine, $endLine;
     if (    $startLine == $endLine
         and $instance->literal( $start - 2, 2 ) ne '=='
         and $instance->literal( $start - 2, 2 ) ne '--' )
@@ -682,21 +683,22 @@ sub i_isOneLineGap {
         ];
     }
 
-    if ( $startLine + 1 < $#$lineToPos ) {
-        my $literalFirstLine = $instance->literalLine( $startLine + 1 );
+    my $bodyStartLine = $start == 0 ? $startLine : $startLine + 1;
+    if ( $bodyStartLine < $#$lineToPos ) {
+        my $literalFirstLine = $instance->literalLine( $bodyStartLine );
         if ( $literalFirstLine =~ /'''/ ) {
 
             # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
-            $startLine++;
+            $bodyStartLine++;
         }
         if ( $literalFirstLine =~ /"""/ ) {
 
             # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
-            $startLine++;
+            $bodyStartLine++;
         }
     }
     my $results = $policy->checkGapComments(
-        $startLine + 1,
+        $bodyStartLine,
         $endLine - 1,
         $mainColumn, $preColumn
     );
@@ -5799,32 +5801,53 @@ sub validate_node {
     my ( $lhs, @rhs ) = $grammar->rule_expand( $node->{ruleID} );
     my $lhsName = $grammar->symbol_name($lhs);
 
-    if ( $lhsName eq 'optGay4i' ) {
-        return;
-    }
-
-    my $childCount = scalar @{$children};
-    if ( $childCount <= 1 ) {
-        return;
-    }
-
-    my $firstChildIndent = $instance->column( $children->[0]->{start} ) - 1;
-
-    my $gapiness = $ruleDB->[$ruleID]->{gapiness} // 0;
-
-    my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
-
-    # TODO: In another policy, warn on tall children of wide nodes
-    if ( $gapiness == 0 ) {    # wide node
-        return;
-    }
-
     # tall node
 
     my $mistakes   = [];
     my $start      = $node->{start};
 
   GATHER_MISTAKES: {
+
+        if ( $lhsName eq 'optGay4i' ) {
+            my $gapLength = $node->{length};
+            return if $gapLength <= 0;
+            my $start = $node->{start};
+            my $literal = $instance->literalNode($node);
+
+            # Allow a file-final newline
+            return if $literal eq "\n" and ($start + $gapLength == $lineToPos->[-1]);
+
+            # say STDERR join " ", __FILE__, __LINE__, $lhsName, '[' . $instance->literalNode($node) . ']';
+            my $runeName = 'fordfile';
+            $mistakes =
+                $policy->checkOneLineGap(
+                    $node,
+                    {
+                        mainColumn => 0,
+                        tag        => $runeName,
+                        subpolicy => [ $runeName, 'vgap' ],
+                    }
+                );
+            # say STDERR join " ", __FILE__, __LINE__, Data::Dumper::Dumper($mistakes);
+            last GATHER_MISTAKES;
+        }
+
+        my $childCount = scalar @{$children};
+        if ( $childCount <= 1 ) {
+            return;
+        }
+
+        my $firstChildIndent = $instance->column( $children->[0]->{start} ) - 1;
+
+        my $gapiness = $ruleDB->[$ruleID]->{gapiness} // 0;
+
+        my $reportType = $gapiness < 0 ? 'sequence' : 'indent';
+
+        # TODO: In another policy, warn on tall children of wide nodes
+        if ( $gapiness == 0 ) {    # wide node
+            return;
+        }
+
         if ( $gapiness < 0 ) {    # sequence
             my $previousLine = $parentLine;
           TYPE_INDENT: {

@@ -877,6 +877,7 @@ hoons/arvo/app/hall.hoon 3025:7 Test::Whitespace cenlus:indent backdented elemen
 === hoons/arvo/sec/com/github.hoon ===
 === hoons/arvo/sec/com/facebook.hoon ===
 === hoons/arvo/lib/elem-to-react-json.hoon ===
+hoons/arvo/lib/elem-to-react-json.hoon 57:19 Test::Whitespace fordfile:vgap:missing-newline fordfile @57:19; missing newline @57:19
 === hoons/arvo/lib/hep-to-cab.hoon ===
 === hoons/arvo/lib/old-phon.hoon ===
 hoons/arvo/lib/old-phon.hoon 13:7 Test::Whitespace kettis:indent backdented element #2 @13:7; underindented by 4
@@ -1011,6 +1012,7 @@ hoons/arvo/mar/quri.hoon 10:11 Test::Whitespace tallBarcen joined Barcen battery
 === hoons/arvo/mar/noun.hoon ===
 === hoons/arvo/mar/gmail/req.hoon ===
 === hoons/arvo/mar/rss-xml.hoon ===
+hoons/arvo/mar/rss-xml.hoon 6:17 Test::Whitespace fordfile:vgap:missing-newline fordfile @6:17; missing newline @6:17
 === hoons/arvo/mar/tree/json.hoon ===
 === hoons/arvo/mar/tree/index.hoon ===
 === hoons/arvo/mar/tree/include.hoon ===
@@ -1211,6 +1213,7 @@ hoons/arvo/gen/hood/mv.hoon 18:1 Test::Whitespace colhep:indent backdented eleme
 === hoons/arvo/gen/hood/commit.hoon ===
 === hoons/arvo/gen/hood/reset.hoon ===
 === hoons/arvo/gen/hood/cp.hoon ===
+hoons/arvo/gen/hood/cp.hoon 17:59 Test::Whitespace fordfile:vgap:missing-newline fordfile @17:59; missing newline @17:59
 === hoons/arvo/gen/hood/obey.hoon ===
 === hoons/arvo/gen/hood/label.hoon ===
 === hoons/arvo/gen/hood/cancel.hoon ===
