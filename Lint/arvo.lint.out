@@ -1211,7 +1211,6 @@ hoons/arvo/gen/hood/mv.hoon 18:1 Test::Whitespace colhep:indent backdented eleme
 === hoons/arvo/gen/hood/commit.hoon ===
 === hoons/arvo/gen/hood/reset.hoon ===
 === hoons/arvo/gen/hood/cp.hoon ===
-Unused suppression: hoons/arvo/gen/hood/cp.hoon 17:59 Test::Whitespace fordfile:vgap:missing-newline
 === hoons/arvo/gen/hood/obey.hoon ===
 === hoons/arvo/gen/hood/label.hoon ===
 === hoons/arvo/gen/hood/cancel.hoon ===
