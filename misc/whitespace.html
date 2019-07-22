@@ -16,7 +16,9 @@
 <li><a href="#about-this-document">About this document</a></li>
 <li><a href="#terminology">Terminology</a><ul>
 <li><a href="#deontology">Deontology</a></li>
-<li><a href="#lines-columns-and-alignment">Lines, columns and alignment</a></li>
+<li><a href="#hoon-source-files">Hoon source files</a></li>
+<li><a href="#hoon-statements">Hoon statements</a></li>
+<li><a href="#runes">Runes</a></li>
 <li><a href="#hoon-expressions">Hoon expressions</a></li>
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
 <li><a href="#joined-and-split">Joined and split</a></li>
@@ -32,6 +34,7 @@
 <li><a href="#vertical-gaps">Vertical Gaps</a></li>
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
 </ul></li>
+<li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdented-hoons">Backdented hoons</a><ul>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 </ul></li>
@@ -114,16 +117,10 @@
 <h2 id="deontology">Deontology</h2>
 <p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in order to meet the standard described in this document. Code or practices that do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
 <p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as a matter of definition, or if X is Y due to a logical or a mathematical equivalence.</p>
-<h2 id="lines-columns-and-alignment">Lines, columns and alignment</h2>
-<p>In this document, <strong>rune</strong> is used in a somewhat different sense than in most Hoon documents. In most Hoon documents, &quot;rune&quot; means a digraph which acts as the keyword at the beginning of a regular hoon. In this document, we will refer to those as the &quot;regular runes&quot;.</p>
-<p>In this document, &quot;rune&quot; will mean either</p>
-<ul>
-<li><p>a regular rune; or</p></li>
-<li><p>an arm marker digraph: one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
-</ul>
-<p>Note that not all special-character digraphs are runes. In this document, HEPHEP (<code>--</code>) or TISTIS (<code>==</code>) will be called <strong>terminators</strong>, and they are not runes. The comment-marking digraph <code>::</code>, is also not a rune. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
+<h2 id="hoon-source-files">Hoon source files</h2>
 <p>This document applies to Hoon source files. A Hoon source file is divided into newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
-<p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis. For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
+<p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis.</p>
+<p>For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
 <p>When we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>siloed</strong> beginning at silo <code>x</code>&quot;, we mean that, for <code>0 &lt;= i &lt;= n</code>, <code>S[i]</code> goes into silo <code>i+x</code>. When we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>siloed</strong>&quot;, we mean that element <code>S[i]</code> goes into silo <code>i+1</code>.</p>
 <p>A <strong>whitespace character</strong> is either an ASCII space or a newline. A <strong>whitespace boundary</strong> is one of the following:</p>
 <ul>
@@ -147,6 +144,17 @@
 <p>When we speak of text blocks being aligned relative to columns or relative to other text blocks, we are refering to the column location of the text blocks. For example, if we say &quot;Text X is aligned N characters after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
 <p>Often we express distance between columns in stops instead of characters. A <strong>stop</strong> is two characters.</p>
 <p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
+<h2 id="hoon-statements">Hoon statements</h2>
+<p>A hoon source file contains one or more hoon <strong>statements</strong>. The hoon statements are separated by whitespace. Optionally, the first hoon statement may be preceded by whitespace. Also optionally, the last hoon statement may be followed by whitespace.</p>
+<p>A hoon <strong>statement</strong> is a text block which compiles to a single AST node. We sometimes refer to a hoon statement as a &quot;hoon&quot;, but strictly speaking, the &quot;hoon statement&quot; is the text block before parsing, and the &quot;hoon&quot; is the AST produced by parsing.</p>
+<h2 id="runes">Runes</h2>
+<p>In this document, <strong>rune</strong> is used in a somewhat different sense than in most Hoon documents. In most Hoon documents, &quot;rune&quot; means a digraph which acts as the keyword at the beginning of a hoon statement. In this document, we will refer to those as the &quot;statement runes&quot;.</p>
+<p>In this document, &quot;rune&quot; will mean either</p>
+<ul>
+<li><p>a statement rune; or</p></li>
+<li><p>an arm marker digraph: one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
+</ul>
+<p>Note that not all special-character digraphs are runes. In this document, HEPHEP (<code>--</code>) or TISTIS (<code>==</code>) will be called <strong>terminators</strong>, and they are not runes. The comment-marking digraph <code>::</code>, is also not a rune. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
 <p>A tall <strong>rune expression</strong> is a tall Hoon expression whose &quot;keyword&quot; is a rune.</p>
 <p>Let <code>r</code> be the rune digraph of a rune expression. The <strong>rune line</strong> of <code>r</code> is <code>Line(r)</code>. The <strong>rune column</strong> of <code>r</code> is <code>Column(r)</code>.</p>
@@ -274,7 +282,7 @@ d</code></pre>
 <p>A vertical gap contains</p>
 <ul>
 <li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline.</p></li>
-<li><p>A body of one or more full newline-terminated lines, all of them header comments or (in the case of non-standard code) blank lines.</p></li>
+<li><p>A body of zero or more full newline-terminated lines, all of them header comments or (in the case of non-standard code) blank lines.</p></li>
 <li><p>A partial line postamble. This is never newline-terminated, and may be zero-length.</p></li>
 </ul>
 <p>Informally, the body of a standard vertical gap follows these conventions:</p>
@@ -296,6 +304,10 @@ d</code></pre>
 <li><p>A tall hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated runechildren, and none of them follow the running, jogging or battery syntax.</p></li>
 <li><p>SELGAP is a tall <strong>irregular hoon</strong>. (Most irregular hoons do not contain a gap.)</p></li>
 </ul>
+<h1 id="top-level-whitespace">Top-level whitespace</h1>
+<p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. Top-level hoon statement should be separated by vertical gaps with comments at column location 1.</p>
+<p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case -- it contains a body and a (possibly zero length) postamble, but no preamble.</p>
+<p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level leader is a special-case -- it contains a body and a preamble, but no postamble.</p>
 <h1 id="backdented-hoons">Backdented hoons</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in backdented hoons. Here is a example of a backdented 4-ary hoon:</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>

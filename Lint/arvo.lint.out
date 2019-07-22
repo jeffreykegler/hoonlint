@@ -18,7 +18,6 @@ hoons/arvo/sur/twitter.hoon 36:5 Test::Whitespace tallBarcen split Barcen batter
 === hoons/arvo/sur/hall.hoon ===
 hoons/arvo/sur/hall.hoon 108:3 Test::Whitespace tallBucwut runstep #2 @108:3; underindented by 4
 === hoons/arvo/sur/gmail-label.hoon ===
-hoons/arvo/sur/gmail-label.hoon 16:1 Test::Whitespace fordfile:sequence-vgap:empty-line fordfile @16:1; empty line in comment
 hoons/arvo/sur/gmail-label.hoon 21:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @21:1; empty line in comment
 hoons/arvo/sur/gmail-label.hoon 24:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @24:1; empty line in comment
 === hoons/arvo/sur/lens.hoon ===

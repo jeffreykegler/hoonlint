@@ -38,34 +38,7 @@ This would be the case, for example,
 if X is Y as a matter of definition,
 or if X is Y due to a logical or a mathematical equivalence.
 
-## Lines, columns and alignment
-
-In this document, **rune** is used in a somewhat different
-sense than in most Hoon documents.
-In most Hoon documents, "rune"
-means a digraph which acts as the keyword at
-the beginning of a regular hoon.
-In this document, we will refer to those as the
-"regular runes".
-
-In this document,
-"rune" will mean either
-
-* a regular rune; or
-
-* an arm marker digraph:
-  one of LUSLUS (`++`), LUSHEP (`+-`), or
-  LUSTIS (`+=`).
-
-Note that not all special-character digraphs are runes.
-In this document,
-HEPHEP (`--`) or TISTIS (`==`) will be called **terminators**,
-and they are not runes.
-The comment-marking digraph `::`,
-is also not a rune.
-Comments, including the digraphs that begin them,
-are considered whitespace,
-and nothing in whitespace is considered a rune.
+## Hoon source files
 
 This document applies to Hoon source files.
 A Hoon source file is divided into newline-terminated lines
@@ -83,6 +56,7 @@ as defined above.
 When we discuss other 2-dimensional grids,
 we use the terms "row" for position on the vertical axis,
 and "silo" for position on the horizontal axis.
+
 For orthogonality with columns and lines,
 row and silo numbers are 1-based.
 There will be several definitions
@@ -170,6 +144,48 @@ Many alignments are with respect to an **anchor column**.
 Usually, the anchor column is the rune column,
 but there are important exceptions, which
 will be described below.
+
+## Hoon statements
+
+A hoon source file contains one or more hoon **statements**.
+The hoon statements are separated by whitespace.
+Optionally, the first hoon statement may be preceded by whitespace.
+Also optionally, the last hoon statement may be followed by whitespace.
+
+A hoon **statement** is a text block which compiles to a
+single AST node.
+We sometimes refer to a hoon statement as a "hoon",
+but strictly speaking, the "hoon statement" is the text block
+before parsing, and the "hoon" is the AST produced by parsing.
+
+## Runes
+
+In this document, **rune** is used in a somewhat different
+sense than in most Hoon documents.
+In most Hoon documents, "rune"
+means a digraph which acts as the keyword at
+the beginning of a hoon statement.
+In this document, we will refer to those as the
+"statement runes".
+
+In this document,
+"rune" will mean either
+
+* a statement rune; or
+
+* an arm marker digraph:
+  one of LUSLUS (`++`), LUSHEP (`+-`), or
+  LUSTIS (`+=`).
+
+Note that not all special-character digraphs are runes.
+In this document,
+HEPHEP (`--`) or TISTIS (`==`) will be called **terminators**,
+and they are not runes.
+The comment-marking digraph `::`,
+is also not a rune.
+Comments, including the digraphs that begin them,
+are considered whitespace,
+and nothing in whitespace is considered a rune.
 
 ## Hoon expressions
 
@@ -651,7 +667,7 @@ A vertical gap contains
 This preamble may be of length 1 -- that is,
 it may be just the newline.
 
-* A body of one or more full newline-terminated lines,
+* A body of zero or more full newline-terminated lines,
 all of them header comments or
 (in the case of non-standard code) blank lines.
 
@@ -703,6 +719,26 @@ battery syntax.
 
 * SELGAP is a tall **irregular hoon**.
 (Most irregular hoons do not contain a gap.)
+
+# Top-level whitespace
+
+We call a hoon statement not contained by another hoon statement,
+a **top-level** hoon statement.
+A Hoon source file is a sequence of top-level hoon statements.
+Top-level hoon statement should be separated by vertical gaps with
+comments at column location 1.
+
+The first top-level hoon statement may be preceded by a vertical gap,
+called the top-level leader.
+Comments in the top-level leader should be at column location 1.
+The top-level leader is a special-case -- it contains a body and
+a (possibly zero length) postamble, but no preamble.
+
+The last top-level hoon statement may be follows by a vertical gap,
+called the top-level trailer.
+Comments in the top-level trailer should be at column location 1.
+The top-level leader is a special-case -- it contains a body and
+a preamble, but no postamble.
 
 # Backdented hoons
 

@@ -1457,3 +1457,4 @@ hoons/arvo/sec/com/instagram.hoon 39:1 Test::Whitespace fordfile:vgap:empty-line
 hoons/arvo/sur/gmail-label.hoon 3:1 Test::Whitespace fordfile:vgap:empty-line fordfile @3:1; empty line in comment
 hoons/arvo/sur/gmail-label.hoon 4:1 Test::Whitespace fordfile:vgap:empty-line fordfile @4:1; empty line in comment
 hoons/arvo/sur/rfc.hoon 2:1 Test::Whitespace fordfile:vgap:empty-line fordfile @2:1; empty line in comment
+hoons/arvo/sur/gmail-label.hoon 16:1 Test::Whitespace fordfile:sequence-vgap:empty-line fordfile @16:1; empty line in comment
