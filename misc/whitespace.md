@@ -725,14 +725,16 @@ battery syntax.
 We call a hoon statement not contained by another hoon statement,
 a **top-level** hoon statement.
 A Hoon source file is a sequence of top-level hoon statements.
-Top-level hoon statement should be separated by vertical gaps with
+All top-level hoon statements should start at column 1.
+Successive top-level hoon statements should be separated by
+a vertical gap with
 comments at column location 1.
 
 The first top-level hoon statement may be preceded by a vertical gap,
 called the top-level leader.
 Comments in the top-level leader should be at column location 1.
 The top-level leader is a special-case -- it contains a body and
-a (possibly zero length) postamble, but no preamble.
+a zero-length postamble, but no preamble.
 
 The last top-level hoon statement may be follows by a vertical gap,
 called the top-level trailer.

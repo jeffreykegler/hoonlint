@@ -305,8 +305,8 @@ d</code></pre>
 <li><p>SELGAP is a tall <strong>irregular hoon</strong>. (Most irregular hoons do not contain a gap.)</p></li>
 </ul>
 <h1 id="top-level-whitespace">Top-level whitespace</h1>
-<p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. Top-level hoon statement should be separated by vertical gaps with comments at column location 1.</p>
-<p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case -- it contains a body and a (possibly zero length) postamble, but no preamble.</p>
+<p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. All top-level hoon statements should start at column 1. Successive top-level hoon statements should be separated by a vertical gap with comments at column location 1.</p>
+<p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case -- it contains a body and a zero-length postamble, but no preamble.</p>
 <p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level leader is a special-case -- it contains a body and a preamble, but no postamble.</p>
 <h1 id="backdented-hoons">Backdented hoons</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in backdented hoons. Here is a example of a backdented 4-ary hoon:</p>
