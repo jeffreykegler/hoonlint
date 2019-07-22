@@ -5812,10 +5812,15 @@ sub validate_node {
             my $gapLength = $node->{length};
             return if $gapLength <= 0;
             my $start = $node->{start};
-            my $literal = $instance->literalNode($node);
 
-            # Allow a file-final newline
-            return if $literal eq "\n" and ($start + $gapLength == $lineToPos->[-1]);
+            # Special case for final newline
+            HANDLE_SINGLE_LINE_TRAILER: {
+                last HANDLE_SINGLE_LINE_TRAILER if $start + $gapLength != $lineToPos->[-1];
+                my $literal = $instance->literalNode($node);
+                # say STDERR join " ", __FILE__, __LINE__, $lhsName, '[' . $literal. ']';
+                return if $literal =~ m/\A [^\n]* \n \z/xms;
+                # say STDERR join " ", __FILE__, __LINE__, $lhsName, '[' . $literal. ']';
+            }
 
             # say STDERR join " ", __FILE__, __LINE__, $lhsName, '[' . $instance->literalNode($node) . ']';
             my $runeName = 'fordfile';
