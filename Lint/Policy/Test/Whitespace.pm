@@ -1245,12 +1245,11 @@ sub checkBonzElement {
 sub checkTopSail {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
-    my $nodeIX         = $node->{IX};
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
 
-    $policy->{perNode}->{$nodeIX}->{sailAnchorColumn} = $parentColumn - 1;
+    $policy->setInheritedAttribute($node, 'sailAnchorColumn', $parentColumn - 1);
 
     # say STDERR "top sail:", '[' . $instance->literalNode($node) . ']';
     my ($tunaMode, $bodyGap, $body) = @{$node->{children}};
@@ -1321,73 +1320,138 @@ sub checkTopKids {
     my ($gapSem, $tallTopKidSeq) = @{$children};
     return [] if $instance->symbol($tallTopKidSeq) eq 'CRAM';
 
-    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
-
+    my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($tallTopKidSeq);
+    $bodyColumn -= 1; # adjust for SEM in GAP_SEM
 
     my @mistakes = ();
 
-    my $expectedColumn;
-
     my $runeName = 'sail';
+    my $isJoined = $parentLine == $bodyLine;
+    my $expectedBodyColumn = $isJoined ? $anchorColumn + 4 : $anchorColumn + 2;
 
-  BODY_ISSUES: {
-        if ( $parentLine != $bodyLine ) {
-            my $msg = join " ",
-              (
-                sprintf 'Sail kids body %s; must be on rune line',
-                describeLC( $bodyLine, $bodyColumn )
-              ),
-              ( map { $grammar->symbol_display_form($_) }
-                  $grammar->rule_expand($ruleID) );
+  FIRST_KID_ISSUES: {
+        if ( not $isJoined ) {
             push @mistakes,
-              {
-                desc         => $msg,
-                subpolicy => [ $runeName, 'top-kids', 'kids-split' ],
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $bodyLine,
-                column       => $bodyColumn,
-            reportLine           => $bodyLine,
-            reportColumn         => $bodyColumn,
+              @{
+                $policy->checkOneLineGap(
+                    $gapSem,
+                    {
+                        mainColumn => $anchorColumn,
+                        preColumn  => $expectedBodyColumn,
+                        tag        => $runeName,
+                        subpolicy  => [$runeName],
+                        details    => [
+                            [
+                                $runeName,
+                                ( sprintf 'sail elem kid #1' ),
+                                'inter-comment indent should be '
+                                  . ( $anchorColumn + 1 ),
+                                'pre-comment indent should be '
+                                  . ( $expectedBodyColumn + 1 ),
+                            ]
+                        ],
+                    }
+                )
               };
-            last BODY_ISSUES;
+
+            if ( $expectedBodyColumn != $bodyColumn ) {
+                my $msg = sprintf 'Sail elem kid #1 body %s; %s',
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent2( $bodyColumn, $expectedBodyColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    subpolicy    => [ $runeName, 'elem-kids', 'body-indent' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $bodyLine,
+                    column       => $bodyColumn,
+                    reportLine   => $bodyLine,
+                    reportColumn => $bodyColumn,
+                  };
+            }
+            last FIRST_KID_ISSUES;
         }
 
         # If here, bodyLine == parentLine
-        my $gapLiteral = $instance->literalNode($bodyGap);
-        my $gapLength  = $bodyGap->{length};
-        last BODY_ISSUES if $gapLength == 2;
-        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+        my $gapLiteral = $instance->literalNode($gapSem);
+        my $gapLength  = $gapSem->{length};
+        last FIRST_KID_ISSUES if $gapLength == 3; # length is 3 to allow for SEM in GAP_SEM
+        my ( undef, $gapSemColumn ) = $instance->nodeLC($gapSem);
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'Sail kids body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent2( $bodyColumn, $expectedColumn );
+          describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
-            desc           => $msg,
-                subpolicy => [ $runeName, 'top-kids', 'body-indent' ],
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-            reportLine           => $bodyLine,
-            reportColumn         => $bodyColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'top-kids', 'body-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $bodyLine,
+            column       => $bodyColumn,
+            reportLine   => $bodyLine,
+            reportColumn => $bodyColumn,
           };
     }
 
+    # tallTopKidSeq  ::= tallTopSail+ separator=>GAP_SEM proper=>1
     my $kids = $tallTopKidSeq->{children};
+    # say STDERR join " ", __FILE__, __LINE__, $instance->symbol($tallTopKidSeq),
+        # describeLC($instance->nodeLC($node));
+    # say STDERR join " ", __FILE__, __LINE__, $instance->symbol($tallTopKidSeq),
+      # "top kids:", ( scalar @{$kids} );
     my $childIX = 0;
-    KID: while (1) {
-        my $kid = $kids->[$childIX];
+    KID: for (my $childIX = 1; $childIX + 1 <= $#$kids; $childIX+=2) {
+        my $kidGap = $kids->[$childIX];
+        my $kid = $kids->[$childIX+1];
+        my ( $kidLine, $kidColumn ) = $instance->nodeLC($kid);
+        $kidColumn -= 1; # adjust for SEM in GAP_SEM
+
+        my $kidNumber = ($childIX + 1)/2;
         # say STDERR join " ", __FILE__, __LINE__, 'kid of top [' . $instance->literalNode($kid) . ']';
-        $childIX++;
-        last KID if $childIX > $#$kids;
+            push @mistakes,
+              @{
+                $policy->checkOneLineGap(
+                    $kidGap,
+                    {
+                        mainColumn => $anchorColumn,
+                        preColumn  => $expectedBodyColumn,
+                        tag        => $runeName,
+                        subpolicy  => [$runeName],
+                        details    => [
+                            [
+                                $runeName,
+                                ( sprintf 'sail elem kid #%d', $kidNumber),
+                                'inter-comment indent should be '
+                                  . ( $anchorColumn + 1 ),
+                                'pre-comment indent should be '
+                                  . ( $expectedBodyColumn + 1 ),
+                            ]
+                        ],
+                    }
+                )
+              };
+
+            if ( $expectedBodyColumn != $bodyColumn ) {
+                my $msg = sprintf 'Sail elem kid #%d body %s; %s',
+                  $kidNumber,
+                  describeLC( $bodyLine, $bodyColumn ),
+                  describeMisindent2( $bodyColumn, $expectedBodyColumn );
+                push @mistakes,
+                  {
+                    desc         => $msg,
+                    subpolicy    => [ $runeName, 'elem-kids', 'body-indent' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $kidLine,
+                    column       => $kidColumn,
+                    reportLine   => $kidLine,
+                    reportColumn => $kidColumn,
+                  };
+            }
     }
 
     return \@mistakes;
@@ -1406,12 +1470,10 @@ sub checkElemKids {
     my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my $anchorColumn = $policy->getSailAnchorColumn($node);
+    my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
-
-    my $expectedColumn;
 
     my $runeName = 'sail';
 
@@ -3878,17 +3940,22 @@ sub getJoggingData {
     die ;
 }
 
-sub getSailAnchorColumn {
-    my ( $policy, $node ) = @_;
+sub setInheritedAttribute {
+    my ( $policy, $node, $attribute, $value ) = @_;
+    my $nodeIX        = $node->{IX};
+    $policy->{perNode}->{$nodeIX}->{$attribute} = $value;
+}
 
-    # Recursively check parents of this hoon
-  NODE: while (1) {
-        my $nodeIX        = $node->{IX};
-        my $sailAnchorColumn = $policy->{perNode}->{$nodeIX}->{sailAnchorColumn};
-        return $sailAnchorColumn if defined $sailAnchorColumn;
-        $node = $node->{PARENT};
-    }
-    die "No sail anchor column";
+sub getInheritedAttribute {
+    my ( $policy, $node, $attribute ) = @_;
+    my $nodeIX        = $node->{IX};
+    my $value = $policy->{perNode}->{$nodeIX}->{$attribute};
+    return $value if defined $value;
+    $node = $node->{PARENT};
+    die qq{Ascended tree but did not find attributee "$attribute"} if not $node;
+    $value = $policy->getInheritedAttribute($node, $attribute);
+    $policy->getInheritedAttribute($node, $attribute, $value);
+    return $value;
 }
 
 # Assumes that $node is a jogging hoon
