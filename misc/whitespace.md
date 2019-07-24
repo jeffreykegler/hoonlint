@@ -2130,6 +2130,8 @@ in lexical order:
 
 # Sail
 
+Sail statements never participate in reanchoring.
+
 *Adapted from `web/dojo.hoon`, lines 13-27:*
 ```
 ;module
@@ -2154,6 +2156,8 @@ SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%).
 must be on the same line as the rune,
 and separated from it by a one-stop horizontal gap.
 
+TODO: SEMTIS (;=).
+
 TISTIS terminators in sail text blocks
 should be aligned with the sail text block that they
 terminate.
@@ -2172,6 +2176,11 @@ or aligned with each other.
 TODO: Look up sail documentation, and finish this
 description.
 See https://urbit.org/docs/using/sail-and-udon/
+
+# Udon
+
+This standard does not address
+Udon (Unmarkdown) whitespace conventions.
 
 # SELGAP
 

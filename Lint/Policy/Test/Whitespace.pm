@@ -1030,10 +1030,10 @@ sub checkTailOfElem {
       $instance->nodeLC($tallTopSail);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
+    my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
 
     # There is always a SEM before <tallTopSail> and this is our
     # anchor column
-    my $expectedColumn = $tallTopSailColumn - 1;
 
     my @mistakes = ();
     my $runeName      = 'sail';
@@ -1043,7 +1043,7 @@ sub checkTailOfElem {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $expectedColumn,
+                mainColumn => $anchorColumn,
                 tag        => $runeName,
                 subpolicy => [ $runeName, 'elem-tail' ],
                 topicLines => [$tistisLine],
@@ -1058,7 +1058,7 @@ sub checkTailOfElem {
             {
                 tag            => $runeName,
                 subpolicy => [ $runeName, 'elem-tail' ],
-                expectedColumn => $expectedColumn,
+                expectedColumn => $anchorColumn,
             }
         )
       };
@@ -1078,8 +1078,7 @@ sub checkTailOfTop {
       $instance->nodeLC($tallTopSail);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
-
-    my $expectedColumn = $tallTopSailColumn;
+    my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
 
     my @mistakes = ();
     my $runeName = 'sail';
@@ -1089,7 +1088,7 @@ sub checkTailOfTop {
         $policy->checkOneLineGap(
             $tistisGap,
             {
-                mainColumn => $expectedColumn,
+                mainColumn => $anchorColumn,
                 subpolicy  => [ $runeName, 'top-tail' ],
                 tag        => $runeName,
                 topicLines => [$tistisLine],
@@ -1104,7 +1103,7 @@ sub checkTailOfTop {
             {
                 tag            => $runeName,
                 subpolicy      => [ $runeName, 'top-tail' ],
-                expectedColumn => $expectedColumn,
+                expectedColumn => $anchorColumn,
             }
         )
       };
@@ -1253,6 +1252,7 @@ sub checkTopSail {
 
     # say STDERR "top sail:", '[' . $instance->literalNode($node) . ']';
     my ($tunaMode, $bodyGap, $body) = @{$node->{children}};
+    # Note: GAP before CRAM is treated as free-form
     return [] if $instance->symbol($tunaMode) ne 'tunaMode';
 
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
@@ -1319,6 +1319,7 @@ sub checkTopKids {
     my $children        = $node->{children};
     my ($gapSem, $tallTopKidSeq) = @{$children};
     return [] if $instance->symbol($tallTopKidSeq) eq 'CRAM';
+    # Note: GAP before CRAM is treated as free-form
 
     my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
