@@ -2151,18 +2151,39 @@ Sail statements never participate in reanchoring.
 ==
 ```
 
-The runechild of the sail runes 
+## Sail 1-fixed runes
+
+The sail 1-fixed runes are
 SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%).
-must be on the same line as the rune,
-and separated from it by a one-stop horizontal gap.
+They have a single runechild.
+The rune child should be on the same line as the rune,
+and should be separated from it by a one-stop horizontal gap.
 
-TODO: SEMTIS (;=).
+## SEMTIS
 
-TISTIS terminators in sail text blocks
-should be aligned with the sail text block that they
-terminate.
-Comments in the vertical gap preceding the TISTIS terminator of a Sail text
-should be aligned with Sail text block.
+SEMTIS (;=)
+takes a TISTIS-terminated list of sail statements.
+It is split or joined, depending on whether the first element
+of the list is on the same line as the SEMTIS.
+
+If joined, the first element of the list should be tightly aligned.
+If split, the first elements of the list should be aligned
+one stop after the SEMTIS,
+and the first element should be preceded by a vertical gap
+with comments aligned at the SEMTIS and with the first element.
+
+All subsequent elements should be aligned with the first element.
+For a joined SEMTIS, this implies that
+all elements after the first should be aligned two stops after the SEMTIS.
+For a split SEMTIS, this implies that
+all elements after the first should be aligned one stops after the SEMTIS.
+
+All elements after the first should be preceded by a vertical gap,
+with comments aligned at the SEMTIS and with the first element.
+The TISTIS should be preceded by a vertical gap,
+with comments aligned at the SEMTIS and with the first element.
+
+## Sail attributes
 
 The sail attribute base column is two stops after start column location
 of the sail text block.
@@ -2172,6 +2193,14 @@ Values in sail attributes should be on the same line
 as the sail key.
 The sail attribute values should be tightly aligned,
 or aligned with each other.
+
+TODO: SEMTIS (;=).
+
+TISTIS terminators in sail text blocks
+should be aligned with the sail text block that they
+terminate.
+Comments in the vertical gap preceding the TISTIS terminator of a Sail text
+should be aligned with Sail text block.
 
 TODO: Look up sail documentation, and finish this
 description.

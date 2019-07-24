@@ -1458,3 +1458,7 @@ hoons/arvo/sur/gmail-label.hoon 3:1 Test::Whitespace fordfile:vgap:empty-line fo
 hoons/arvo/sur/gmail-label.hoon 4:1 Test::Whitespace fordfile:vgap:empty-line fordfile @4:1; empty line in comment
 hoons/arvo/sur/rfc.hoon 2:1 Test::Whitespace fordfile:vgap:empty-line fordfile @2:1; empty line in comment
 hoons/arvo/sur/gmail-label.hoon 16:1 Test::Whitespace fordfile:sequence-vgap:empty-line fordfile @16:1; empty line in comment
+
+# Sail aberrations
+hoons/arvo/sys/vane/eyre.hoon 577:7 Test::Whitespace sail:top-tail:tistis-indent TISTIS @577:7; overindented by 2
+hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attribute body @14:18; overindented by 1

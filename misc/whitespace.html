@@ -96,7 +96,12 @@
 </ul></li>
 <li><a href="#fastis">FASTIS</a></li>
 </ul></li>
-<li><a href="#sail">Sail</a></li>
+<li><a href="#sail">Sail</a><ul>
+<li><a href="#sail-1-fixed-runes">Sail 1-fixed runes</a></li>
+<li><a href="#semtis">SEMTIS</a></li>
+<li><a href="#sail-attributes">Sail attributes</a></li>
+</ul></li>
+<li><a href="#udon">Udon</a></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
@@ -306,8 +311,8 @@ d</code></pre>
 </ul>
 <h1 id="top-level-whitespace">Top-level whitespace</h1>
 <p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. All top-level hoon statements should start at column 1. Successive top-level hoon statements should be separated by a vertical gap with comments at column location 1.</p>
-<p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case -- it contains a body and a zero-length postamble, but no preamble.</p>
-<p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level leader is a special-case -- it contains a body and a preamble, but no postamble.</p>
+<p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case of a vertical gap -- it contains a body and a zero-length postamble, but no preamble.</p>
+<p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
 <h1 id="backdented-hoons">Backdented hoons</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in backdented hoons. Here is a example of a backdented 4-ary hoon:</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>
@@ -974,6 +979,7 @@ I have revised it.
 <li><p>A runechild.</p></li>
 </ul>
 <h1 id="sail">Sail</h1>
+<p>Sail statements never participate in reanchoring.</p>
 <p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
 <pre><code>;module
     =nav_title    &quot;Dojo&quot;
@@ -990,10 +996,20 @@ I have revised it.
   ;script@&quot;/lib/js/sole.js&quot;;
   ;sole(appl &quot;dojo&quot;);
 ==</code></pre>
-<p>The runechild of the sail runes SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). must be on the same line as the rune, and separated from it by a one-stop horizontal gap.</p>
-<p>TISTIS terminators in sail text blocks should be aligned with the sail text block that they terminate. Comments in the vertical gap preceding the TISTIS terminator of a Sail text should be aligned with Sail text block.</p>
+<h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
+<p>The sail 1-fixed runes are SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). They have a single runechild. The rune child should be on the same line as the rune, and should be separated from it by a one-stop horizontal gap.</p>
+<h2 id="semtis">SEMTIS</h2>
+<p>SEMTIS (;=) takes a TISTIS-terminated list of sail statements. It is split or joined, depending on whether the first element of the list is on the same line as the SEMTIS.</p>
+<p>If joined, the first element of the list should be tightly aligned. If split, the first elements of the list should be aligned one stop after the SEMTIS, and the first element should be preceded by a vertical gap with comments aligned at the SEMTIS and with the first element.</p>
+<p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stops after the SEMTIS.</p>
+<p>All elements after the first should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element. The TISTIS should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
+<h2 id="sail-attributes">Sail attributes</h2>
 <p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
+<p>TODO: SEMTIS (;=).</p>
+<p>TISTIS terminators in sail text blocks should be aligned with the sail text block that they terminate. Comments in the vertical gap preceding the TISTIS terminator of a Sail text should be aligned with Sail text block.</p>
 <p>TODO: Look up sail documentation, and finish this description. See https://urbit.org/docs/using/sail-and-udon/</p>
+<h1 id="udon">Udon</h1>
+<p>This standard does not address Udon (Unmarkdown) whitespace conventions.</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>

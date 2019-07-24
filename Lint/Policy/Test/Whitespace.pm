@@ -873,6 +873,135 @@ sub checkTistis {
     return \@mistakes;
 }
 
+sub checkBont {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    # Bont's are an integral part of SIGGAR/SIGGAL which follow a
+    # basically standard backdenting scheme, so this is not really
+    # "re-anchoring".
+    my $anchor =
+      $instance->ancestorByLHS( $node, { tallSiggar => 1, tallSiggal => 1 } );
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
+
+    my @mistakes = ();
+    my $tag      = 'bont';
+
+  BODY_ISSUES: {
+        if ( $parentLine == $bodyLine ) {
+            my $msg =
+              sprintf
+              'SIGGAR/SIGGAL element 2 %s; element must not be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                details      => [ [$tag] ],
+              };
+            last BODY_ISSUES;
+        }
+
+        # If here parent line != body line
+        my $expectedBodyColumn = $anchorColumn + 2;
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $gap,
+                {
+                    mainColumn => $expectedBodyColumn,
+                    tag        => $tag,
+                subpolicy => [ $tag ],
+                    details    => [ [$tag] ],
+                }
+            )
+          };
+
+        if ( $bodyColumn != $expectedBodyColumn ) {
+            my $msg =
+              sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
+              describeLC( $bodyLine, $bodyColumn ),
+              describeMisindent2( $bodyColumn, $expectedBodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                details        => [ [$tag] ],
+              };
+        }
+    }
+
+    return \@mistakes;
+}
+
+sub checkBonzElement {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    # bonzElement ::= CEN SYM4K (- GAP -) tall5d
+    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+    my $tag      = 'bonz element';
+
+    my $expectedColumn;
+
+  BODY_ISSUES: {
+        if ( $parentLine != $bodyLine ) {
+            my $msg = sprintf 'Bonz element body %s; must be on rune line',
+              describeLC( $bodyLine, $bodyColumn );
+            push @mistakes,
+              {
+                desc           => $msg,
+                parentLine     => $parentLine,
+                parentColumn   => $parentColumn,
+                line           => $bodyLine,
+                column         => $bodyColumn,
+                details        => [ [$tag] ],
+              };
+            last BODY_ISSUES;
+        }
+
+        # If here, bodyLine == parentLine
+        my $gapLiteral = $instance->literalNode($bodyGap);
+        my $gapLength  = $bodyGap->{length};
+        last BODY_ISSUES if $gapLength == 2;
+        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
+
+        # expected length is the length if the spaces at the end
+        # of the gap-equivalent were exactly one stop.
+        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
+        $expectedColumn = $bodyGapColumn + $expectedLength;
+        my $msg = sprintf 'Bonz element body %s; %s',
+          describeLC( $bodyLine, $bodyColumn ),
+          describeMisindent2( $bodyColumn, $expectedColumn );
+        push @mistakes,
+          {
+            desc           => $msg,
+            parentLine     => $parentLine,
+            parentColumn   => $parentColumn,
+            line           => $bodyLine,
+            column         => $bodyColumn,
+          };
+    }
+
+    return \@mistakes;
+}
+
 # assumes this is a <tallAttributes> node
 sub sailAttributeBodyAlignment {
     my ( $policy, $node ) = @_;
@@ -1066,19 +1195,27 @@ sub checkTailOfElem {
     return \@mistakes;
 }
 
+sub isTopKidsJoined {
+    my ( $policy, $topKids ) = @_;
+    my $instance  = $policy->{lint};
+    my ($gapSem, $tallTopKidSeq) = @{ $topKids->{children} };
+    my ( $topKidsLine ) = $instance->nodeLC($topKids);
+    my ( $bodyLine )   = $instance->nodeLC($tallTopKidSeq);
+    return $topKidsLine == $bodyLine;
+}
+
+# tallTailOfTop ::= tallKidsOfTop (- GAP TIS TIS -)
 sub checkTailOfTop {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
-    my $lineToPos = $instance->{lineToPos};
 
-    my ( $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+    my ( $topKids, $tistisGap, $tistis ) = @{ $node->{children} };
 
-    my $tallTopSail = $instance->ancestor( $node, 2 );
-    my ( $tallTopSailLine, $tallTopSailColumn ) =
-      $instance->nodeLC($tallTopSail);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($tistis);
     my $anchorColumn = $policy->getInheritedAttribute($node, 'sailAnchorColumn');
+    my $isJoined = $policy->isTopKidsJoined($topKids);
+    my $kidColumn  = $isJoined ? $anchorColumn + 4 : $anchorColumn + 2;
 
     my @mistakes = ();
     my $runeName = 'sail';
@@ -1089,6 +1226,7 @@ sub checkTailOfTop {
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
+                preColumn => $kidColumn,
                 subpolicy  => [ $runeName, 'top-tail' ],
                 tag        => $runeName,
                 topicLines => [$tistisLine],
@@ -1107,135 +1245,6 @@ sub checkTailOfTop {
             }
         )
       };
-
-    return \@mistakes;
-}
-
-sub checkBont {
-    my ( $policy, $node ) = @_;
-    my $instance = $policy->{lint};
-
-    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
-
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
-
-    # Bont's are an integral part of SIGGAR/SIGGAL which follow a
-    # basically standard backdenting scheme, so this is not really
-    # "re-anchoring".
-    my $anchor =
-      $instance->ancestorByLHS( $node, { tallSiggar => 1, tallSiggal => 1 } );
-    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
-
-    my @mistakes = ();
-    my $tag      = 'bont';
-
-  BODY_ISSUES: {
-        if ( $parentLine == $bodyLine ) {
-            my $msg =
-              sprintf
-              'SIGGAR/SIGGAL element 2 %s; element must not be on rune line',
-              describeLC( $bodyLine, $bodyColumn );
-            push @mistakes,
-              {
-                desc         => $msg,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
-                line         => $bodyLine,
-                column       => $bodyColumn,
-                details      => [ [$tag] ],
-              };
-            last BODY_ISSUES;
-        }
-
-        # If here parent line != body line
-        my $expectedBodyColumn = $anchorColumn + 2;
-        push @mistakes,
-          @{
-            $policy->checkOneLineGap(
-                $gap,
-                {
-                    mainColumn => $expectedBodyColumn,
-                    tag        => $tag,
-                subpolicy => [ $tag ],
-                    details    => [ [$tag] ],
-                }
-            )
-          };
-
-        if ( $bodyColumn != $expectedBodyColumn ) {
-            my $msg =
-              sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
-              describeLC( $bodyLine, $bodyColumn ),
-              describeMisindent2( $bodyColumn, $expectedBodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                details        => [ [$tag] ],
-              };
-        }
-    }
-
-    return \@mistakes;
-}
-
-sub checkBonzElement {
-    my ( $policy, $node ) = @_;
-    my $instance = $policy->{lint};
-
-    # bonzElement ::= CEN SYM4K (- GAP -) tall5d
-    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
-
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
-
-    my @mistakes = ();
-    my $tag      = 'bonz element';
-
-    my $expectedColumn;
-
-  BODY_ISSUES: {
-        if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf 'Bonz element body %s; must be on rune line',
-              describeLC( $bodyLine, $bodyColumn );
-            push @mistakes,
-              {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                details        => [ [$tag] ],
-              };
-            last BODY_ISSUES;
-        }
-
-        # If here, bodyLine == parentLine
-        my $gapLiteral = $instance->literalNode($bodyGap);
-        my $gapLength  = $bodyGap->{length};
-        last BODY_ISSUES if $gapLength == 2;
-        my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
-
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $bodyGapColumn + $expectedLength;
-        my $msg = sprintf 'Bonz element body %s; %s',
-          describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent2( $bodyColumn, $expectedColumn );
-        push @mistakes,
-          {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
-          };
-    }
 
     return \@mistakes;
 }
@@ -1331,6 +1340,8 @@ sub checkTopKids {
     my $runeName = 'sail';
     my $isJoined = $parentLine == $bodyLine;
     my $expectedBodyColumn = $isJoined ? $anchorColumn + 4 : $anchorColumn + 2;
+    my $topSail = $instance->ancestorByLHS( $node, { tallTopSail => 1 } );
+    $policy->setInheritedAttribute($topSail, 'sailIsJoined', $isJoined);
 
   FIRST_KID_ISSUES: {
         if ( not $isJoined ) {

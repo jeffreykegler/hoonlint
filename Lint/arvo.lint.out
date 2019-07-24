@@ -562,7 +562,6 @@ hoons/arvo/sys/vane/eyre.hoon 50:11 Test::Whitespace tallBuccolMold runstep #2 @
 hoons/arvo/sys/vane/eyre.hoon 53:11 Test::Whitespace tallBuccolMold runstep #2 @53:11; underindented by 8
 hoons/arvo/sys/vane/eyre.hoon 57:11 Test::Whitespace tallBuccolMold runstep #2 @57:11; underindented by 8
 hoons/arvo/sys/vane/eyre.hoon 213:3 Test::Whitespace colhep:indent backdented element #2 @213:3; underindented by 12
-hoons/arvo/sys/vane/eyre.hoon 577:7 Test::Whitespace sail:top-tail:tistis-indent TISTIS @577:7; overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 721:10 Test::Whitespace wutdot:indent backdented element #2 @721:10; underindented by 1
 hoons/arvo/sys/vane/eyre.hoon 909:11 Test::Whitespace wutcol:comment-indent backdented element #3, @909:11; comment overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1185:13 Test::Whitespace tisgal:indent backdented element #2 @1185:13; overindented by 4
@@ -1124,7 +1123,6 @@ hoons/arvo/mar/txt.hoon 170:11 Test::Whitespace colcab:indent backdented element
 === hoons/arvo/web/pack/js/tree-urb.hoon ===
 === hoons/arvo/web/pack/css/codemirror-fonts-bootstrap-tree.hoon ===
 === hoons/arvo/web/dojo.hoon ===
-hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attribute body @14:18; overindented by 1
 === hoons/arvo/web/talk.hoon ===
 === hoons/arvo/web/womb.hoon ===
 === hoons/arvo/ren/urb.hoon ===
