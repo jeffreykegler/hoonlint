@@ -573,6 +573,9 @@ hoons/arvo/sys/vane/eyre.hoon 1511:11 Test::Whitespace coltar:comment-indent run
 hoons/arvo/sys/vane/eyre.hoon 1525:9 Test::Whitespace coltar:comment-indent coltar @1525:9; comment overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1821:7 Test::Whitespace kethep:indent backdented element #2 @1821:7; underindented by 12
 hoons/arvo/sys/vane/eyre.hoon 1981:5 Test::Whitespace barcen:hephep-indent battery hephep @1981:5; overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 2081:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @2081:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
+hoons/arvo/sys/vane/eyre.hoon 2081:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @2081:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
+hoons/arvo/sys/vane/eyre.hoon 2081:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @2081:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
 === hoons/arvo/sys/vane/xmas.hoon ===
 hoons/arvo/sys/vane/xmas.hoon 4:1 Test::Whitespace zapcol:indent backdented element #1 @4:1; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 388:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @388:3; comment overindented by 2
@@ -1133,11 +1136,15 @@ hoons/arvo/ren/urb.hoon 20:19 Test::Whitespace colhep:indent backdented element 
 === hoons/arvo/ren/rss-xml.hoon ===
 hoons/arvo/ren/rss-xml.hoon 23:1 Test::Whitespace cenhep:indent backdented element #2 @23:1; underindented by 10
 === hoons/arvo/ren/tree/body.hoon ===
+hoons/arvo/ren/tree/body.hoon 25:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @25:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
 === hoons/arvo/ren/tree/json.hoon ===
 === hoons/arvo/ren/tree/index.hoon ===
 === hoons/arvo/ren/tree/include.hoon ===
 === hoons/arvo/ren/tree/elem.hoon ===
 === hoons/arvo/ren/tree/head.hoon ===
+hoons/arvo/ren/tree/head.hoon 66:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @66:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
+hoons/arvo/ren/tree/head.hoon 66:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @66:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
+hoons/arvo/ren/tree/head.hoon 66:4 Test::Whitespace sail:top-kids:kids-split Sail kids body @66:4; must be on rune line tallKidsOfTop GAP_SEM tallTopKidSeq
 === hoons/arvo/ren/tree/combine.hoon ===
 === hoons/arvo/ren/tree/comments.hoon ===
 === hoons/arvo/ren/urb/tree.hoon ===

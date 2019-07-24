@@ -455,6 +455,7 @@ sub symbol {
     my $name = $node->{symbol};
     return $name if defined $name;
     my $type = $node->{type};
+    $DB::single = 1 if not $type;
     die Data::Dumper::Dumper($node)  if not $type;
     return $instance->lhsName($node) if $type eq 'node';
     return "[$type]";

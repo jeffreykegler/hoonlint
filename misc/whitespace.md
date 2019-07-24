@@ -733,13 +733,15 @@ comments at column location 1.
 The first top-level hoon statement may be preceded by a vertical gap,
 called the top-level leader.
 Comments in the top-level leader should be at column location 1.
-The top-level leader is a special-case -- it contains a body and
+The top-level leader is a special-case of a vertical gap --
+it contains a body and
 a zero-length postamble, but no preamble.
 
 The last top-level hoon statement may be follows by a vertical gap,
 called the top-level trailer.
 Comments in the top-level trailer should be at column location 1.
-The top-level leader is a special-case -- it contains a body and
+The top-level trailer is a special-case of a vertical gap --
+it contains a body and
 a preamble, but no postamble.
 
 # Backdented hoons

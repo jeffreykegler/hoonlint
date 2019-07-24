@@ -1022,7 +1022,8 @@ sub checkTailOfElem {
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
 
-    my ( $tistisGap, $tistis ) = @{ $policy->gapSeq0($node) };
+    my ( $tallKids, $tistisGap, $tistis ) = @{ $node->{children} };
+    return [] if $instance->symbol($tallKids) ne 'tallKidsOfElem';
 
     my $tallTopSail = $instance->ancestor( $node, 2 );
     my ( $tallTopSailLine, $tallTopSailColumn ) =
@@ -1244,12 +1245,17 @@ sub checkBonzElement {
 sub checkTopSail {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
+    my $nodeIX         = $node->{IX};
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
-
-    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
-
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+
+    $policy->{perNode}->{$nodeIX}->{sailAnchorColumn} = $parentColumn - 1;
+
+    # say STDERR "top sail:", '[' . $instance->literalNode($node) . ']';
+    my ($tunaMode, $bodyGap, $body) = @{$node->{children}};
+    return [] if $instance->symbol($tunaMode) ne 'tunaMode';
+
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
@@ -1260,7 +1266,6 @@ sub checkTopSail {
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
-            last BODY_ISSUES if $instance->symbol($body) eq 'CRAM';
             my $msg = join " ",
               (
                 sprintf 'Top sail body %s; must be on rune line',
@@ -1312,6 +1317,10 @@ sub checkTopKids {
     my $grammar  = $instance->{grammar};
     my $ruleID   = $node->{ruleID};
 
+    my $children        = $node->{children};
+    my ($gapSem, $tallTopKidSeq) = @{$children};
+    return [] if $instance->symbol($tallTopKidSeq) eq 'CRAM';
+
     my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
@@ -1325,7 +1334,6 @@ sub checkTopKids {
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
-            last BODY_ISSUES if $instance->symbol($body) eq 'CRAM';
             my $msg = join " ",
               (
                 sprintf 'Sail kids body %s; must be on rune line',
@@ -1371,6 +1379,103 @@ sub checkTopKids {
             reportLine           => $bodyLine,
             reportColumn         => $bodyColumn,
           };
+    }
+
+    my $kids = $tallTopKidSeq->{children};
+    my $childIX = 0;
+    KID: while (1) {
+        my $kid = $kids->[$childIX];
+        # say STDERR join " ", __FILE__, __LINE__, 'kid of top [' . $instance->literalNode($kid) . ']';
+        $childIX++;
+        last KID if $childIX > $#$kids;
+    }
+
+    return \@mistakes;
+}
+
+sub checkElemKids {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+    my $grammar  = $instance->{grammar};
+    my $ruleID   = $node->{ruleID};
+
+    my $children = $node->{children};
+    my ( $gapSem, $tallElemKidSeq ) = @{$children};
+    return [] if $instance->symbol($gapSem) ne 'GAP_SEM';
+
+    my ( $bodyGap, $body ) = @{ $policy->gapSeq0($node) };
+
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my $anchorColumn = $policy->getSailAnchorColumn($node);
+    my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
+
+    my @mistakes = ();
+
+    my $expectedColumn;
+
+    my $runeName = 'sail';
+
+    # tallKidsOfElem ::= tallKidOfElem+
+    # tallKidOfElem  ::= (- GAP_SEM -) tallTopSail
+    my $kids = $tallElemKidSeq->{children};
+    my $expectedKidColumn = $anchorColumn + 2;
+  KID: for ( my $childIX = 0 ; $childIX + 1 <= $#$kids ; $childIX += 2 ) {
+    # say STDERR join " ", __FILE__, __LINE__, $childIX;
+        my $kidGap  = $kids->[$childIX];
+        my $kidBody = $kids->[ $childIX + 1 ];
+        my ( $kidBodyLine, $kidBodyColumn ) = $instance->nodeLC($kidBody);
+        $kidBodyColumn -= 1; # Adjust for SEM in GAP_SEM
+
+# say STDERR join " ", __FILE__, __LINE__, "kidBodyColumn: $kidBodyColumn";
+# say STDERR join " ", __FILE__, __LINE__, "anchorColumn: $anchorColumn";
+# say STDERR join " ", __FILE__, __LINE__, "$childIX: [" . $instance->symbol($kidBody) . ']';
+# say STDERR join " ", __FILE__, __LINE__, "$childIX: [" . $instance->literalNode($kidBody) . ']';
+
+        push @mistakes,
+          @{
+            $policy->checkOneLineGap(
+                $kidGap,
+                {
+                    mainColumn => $anchorColumn,
+                    preColumn  => $expectedKidColumn,
+                    tag        => $runeName,
+                    subpolicy  => [$runeName],
+                    details    => [
+                        [
+                            $runeName,
+                            ( sprintf 'sail elem kid #%d', $childIX ),
+                            'inter-comment indent should be '
+                              . ( $anchorColumn + 1 ),
+                            'pre-comment indent should be '
+                              . ( $kidBodyColumn + 1 ),
+                        ]
+                    ],
+                }
+            )
+          };
+
+        if ( $expectedKidColumn != $kidBodyColumn ) {
+            my $msg = sprintf 'Sail elem kid #%d body %s; %s',
+              $childIX,
+              describeLC( $kidBodyLine, $kidBodyColumn ),
+              describeMisindent2( $kidBodyColumn, $expectedKidColumn );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'elem-kids', 'body-indent' ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $kidBodyLine,
+                column       => $kidBodyColumn,
+                reportLine   => $kidBodyLine,
+                reportColumn => $kidBodyColumn,
+              };
+        }
+
+# say STDERR join " ", __FILE__, __LINE__, $instance->symbol($kid);
+# say STDERR join " ", __FILE__, __LINE__, describeLC($instance->nodeLC($kid));
+# say STDERR join " ", __FILE__, __LINE__, '[' . $instance->literalNode($kid) . ']';
+
     }
 
     return \@mistakes;
@@ -3773,6 +3878,19 @@ sub getJoggingData {
     die ;
 }
 
+sub getSailAnchorColumn {
+    my ( $policy, $node ) = @_;
+
+    # Recursively check parents of this hoon
+  NODE: while (1) {
+        my $nodeIX        = $node->{IX};
+        my $sailAnchorColumn = $policy->{perNode}->{$nodeIX}->{sailAnchorColumn};
+        return $sailAnchorColumn if defined $sailAnchorColumn;
+        $node = $node->{PARENT};
+    }
+    die "No sail anchor column";
+}
+
 # Assumes that $node is a jogging hoon
 sub setJoggingData {
     my ( $policy, $node, $anchorColumn ) = @_;
@@ -5808,6 +5926,19 @@ sub validate_node {
 
   GATHER_MISTAKES: {
 
+        state $fnHash = {
+           tallKidsOfTop => \&checkTopKids,
+           tallKidsOfElem => \&checkElemKids,
+           tallTailOfElem => \&checkTailOfElem,
+           tallTailOfTop => \&checkTailOfTop,
+           tallTopSail => \&checkTopSail,
+        };
+        my $fn = $fnHash->{$lhsName};
+        if ($fn) {
+            $mistakes = $fn->($policy, $node);
+            last GATHER_MISTAKES;
+        }
+
         if ( $lhsName eq 'optGay4i' ) {
             my $gapLength = $node->{length};
             return if $gapLength <= 0;
@@ -6010,26 +6141,6 @@ sub validate_node {
 
             if ( $lhsName eq "tallKetdot" ) {
                 $mistakes = $policy->checkKetdot($node);
-                last TYPE_INDENT;
-            }
-
-            if ( $lhsName eq 'tallTailOfElem' ) {
-                $mistakes = $policy->checkTailOfElem($node);
-                last TYPE_INDENT;
-            }
-
-            if ( $lhsName eq 'tallTailOfTop' ) {
-                $mistakes = $policy->checkTailOfTop($node);
-                last TYPE_INDENT;
-            }
-
-            if ( $lhsName eq "tallKidsOfTop" ) {
-                $mistakes = $policy->checkTopKids($node);
-                last TYPE_INDENT;
-            }
-
-            if ( $lhsName eq "tallTopSail" ) {
-                $mistakes = $policy->checkTopSail($node);
                 last TYPE_INDENT;
             }
 
