@@ -873,6 +873,7 @@ sub checkTistis {
     return \@mistakes;
 }
 
+# SIGGAR/SIGGAL "hints"
 sub checkBont {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -885,7 +886,7 @@ sub checkBont {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
-    # Bont's are an integral part of SIGGAR/SIGGAL which follow a
+    # Hint's are an integral part of SIGGAR/SIGGAL which follow a
     # basically standard backdenting scheme, so this is not really
     # "re-anchoring".
     my $anchor =
@@ -933,7 +934,7 @@ sub checkBont {
 
         if ( $bodyColumn != $expectedBodyColumn ) {
             my $msg =
-              sprintf 'SIGGAL/SIGGAR element 2 %s; %s',
+              sprintf 'SIGGAL/SIGGAR hint body %s; %s',
               describeLC( $bodyLine, $bodyColumn ),
               describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
@@ -971,12 +972,12 @@ sub checkBonzElement {
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
-            my $msg = sprintf 'Bonz element body %s; must be on rune line',
+            my $msg = sprintf 'formula body %s; must be on rune line',
               describeLC( $bodyLine, $bodyColumn );
             push @mistakes,
               {
                 desc         => $msg,
-                subpolicy => [ $runeName, 'split' ],
+                subpolicy => [ $runeName, 'formula-split' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $bodyLine,
@@ -998,13 +999,13 @@ sub checkBonzElement {
         # of the gap-equivalent were exactly one stop.
         my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
         $expectedColumn = $bodyGapColumn + $expectedLength;
-        my $msg = sprintf 'Bonz element body %s; %s',
+        my $msg = sprintf 'formula body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
           describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'body-indent' ],
+            subpolicy => [ $runeName, 'formula-body-indent' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $bodyLine,
@@ -6111,7 +6112,7 @@ sub validate_node {
                 }
 
                 if ( $lhsName eq 'optBonzElements' ) {
-                    $mistakes = $policy->checkSeq( $node, 'bonz element' );
+                    $mistakes = $policy->checkSeq( $node, 'sigcen-formula' );
                     last TYPE_INDENT;
                 }
 

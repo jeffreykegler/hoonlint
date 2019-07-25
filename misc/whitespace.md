@@ -837,9 +837,34 @@ In a chained hoon sequence,
 when the row starts with a unary rune,
 joined hoons can be convenient.
 
-## SIGGAR/SIGGAL hoons
+## Split hints
 
-TODO: Document gapped hints.
+*From `sys/vane/clay.hoon`, lines 4022-4228:*
+```
+    ~>  %slog.
+        :^  0  %rose  [" " "[" "]"]
+        :^    leaf+"initial merge failed"
+            leaf+"my most sincere apologies"
+          >p.p.p.+.q.hin<
+        q.p.p.+.q.hin
+    [~ ..^$]
+```
+
+The first runechild of
+SIGGAL (`~<`) and
+SIGGAR (`~>`) is a "hint".
+Hints have a "split" form.
+
+A split form hint begins with its "head":
+a symbol name
+(in `%name` form) followed
+by a DOT.
+The rest of the hint is its "tail".
+
+The tail of a split form hint should be separated
+from its head by a vertical gap,
+with comments aligned with the head.
+The tail should also be aligned with the head.
 
 # Running hoons
 
@@ -2070,25 +2095,6 @@ in lexical order:
 Sail statements start with a semicolon.
 Sail statements never participate in reanchoring.
 
-*Adapted from `web/dojo.hoon`, lines 13-27:*
-```
-;module
-    =nav_title    "Dojo"
-    =nav_no-dpad  ""
-    =nav_no-sibs  ""
-  ;script(src "//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js");
-  ;style:'''
-         #term { width: 100%; }
-         #term * { margin: 0px; }
-         .module pre { margin-bottom: 0; }
-         '''
-  ;div#err;
-  ;div#term:""
-  ;script@"/lib/js/sole.js";
-  ;sole(appl "dojo");
-==
-```
-
 ## Sail 1-fixed runes
 
 *From `ren/tree/head.hoon`, lines 35-43:*
@@ -2137,7 +2143,7 @@ All subsequent elements should be aligned with the first element.
 For a joined SEMTIS, this implies that
 all elements after the first should be aligned two stops after the SEMTIS.
 For a split SEMTIS, this implies that
-all elements after the first should be aligned one stops after the SEMTIS.
+all elements after the first should be aligned one stop after the SEMTIS.
 
 All elements after the first should be preceded by a vertical gap.
 Comments should be aligned at the SEMTIS and with the first element.
@@ -2171,7 +2177,7 @@ Tagged sail statement are always split.
 The conventions for the sail attributes are described below.
 All elements should be aligned one stop after the start of the statement.
 The tagged statement is considered to start at the semicolon which
-start the tag which is its keyword.
+starts the tag that is its keyword.
 
 All elements should be preceded by a vertical gap.
 Comments in the vertical gaps
@@ -2181,7 +2187,7 @@ and with the first element.
 The TISTIS should be aligned with the tagged sail statement
 that it terminates.
 The TISTIS should be preceded by a vertical gap,
-with comments aligned with the tagged sail statement.
+with comments aligned with the tagged sail statement,
 and with the first element.
 
 ## Sail attributes
@@ -2197,7 +2203,8 @@ or aligned with each other.
 
 # Udon
 
-This standard does not address
+Currently,
+this standard does not address
 Udon (Unmarkdown) whitespace conventions.
 
 # SELGAP

@@ -36,6 +36,7 @@
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdented-hoons">Backdented hoons</a><ul>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
+<li><a href="#split-hints">Split hints</a></li>
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -349,6 +350,18 @@ d</code></pre>
 <p>In the above example, the chain contains 3 rows. (The 3rd and 4th lines are both in the last row.) There are 3 silos, but the rows are &quot;ragged&quot;, so that nothing in the first row is in the 3rd silo. In all 3 rows, the 2nd silo is tightly aligned, as is the 3rd silo in the 2nd row.</p>
 <p>The 3rd silo of the 3rd row is inter-line aligned. The <code>b</code> in the 3rd row comes after a gap of 3 spaces, but this follows the standard set forth in this document because it aligns with the <code>b</code> of the 2nd row, at column location 13.</p>
 <p>Note that the 2nd silo includes both runechild and a rune. This is an example of a &quot;joined&quot; hoon. In a chained hoon sequence, when the row starts with a unary rune, joined hoons can be convenient.</p>
+<h2 id="split-hints">Split hints</h2>
+<p><em>From <code>sys/vane/clay.hoon</code>, lines 4022-4228:</em></p>
+<pre><code>    ~&gt;  %slog.
+        :^  0  %rose  [&quot; &quot; &quot;[&quot; &quot;]&quot;]
+        :^    leaf+&quot;initial merge failed&quot;
+            leaf+&quot;my most sincere apologies&quot;
+          &gt;p.p.p.+.q.hin&lt;
+        q.p.p.+.q.hin
+    [~ ..^$]</code></pre>
+<p>The first runechild of SIGGAL (<code>~&lt;</code>) and SIGGAR (<code>~&gt;</code>) is a &quot;hint&quot;. Hints have a &quot;split&quot; form.</p>
+<p>A split form hint begins with its &quot;head&quot;: a symbol name (in <code>%name</code> form) followed by a DOT. The rest of the hint is its &quot;tail&quot;.</p>
+<p>The tail of a split form hint should be separated from its head by a vertical gap, with comments aligned with the head. The tail should also be aligned with the head.</p>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. Currently, no hoon contains more than one running.</p>
 <p>A running hoon may contain a runechild before the running. That runechild is called the <strong>head</strong> of the running hoon.</p>
@@ -955,22 +968,6 @@ I have revised it.
 </ul>
 <h1 id="sail">Sail</h1>
 <p>Sail statements start with a semicolon. Sail statements never participate in reanchoring.</p>
-<p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
-<pre><code>;module
-    =nav_title    &quot;Dojo&quot;
-    =nav_no-dpad  &quot;&quot;
-    =nav_no-sibs  &quot;&quot;
-  ;script(src &quot;//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js&quot;);
-  ;style:&#39;&#39;&#39;
-         #term { width: 100%; }
-         #term * { margin: 0px; }
-         .module pre { margin-bottom: 0; }
-         &#39;&#39;&#39;
-  ;div#err;
-  ;div#term:&quot;&quot;
-  ;script@&quot;/lib/js/sole.js&quot;;
-  ;sole(appl &quot;dojo&quot;);
-==</code></pre>
 <h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
 <p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
 <pre><code>    ;*  ?.  nopack.dbg
@@ -993,7 +990,7 @@ I have revised it.
         ==</code></pre>
 <p>SEMTIS (;=) takes a TISTIS-terminated list of sail statements. It is split or joined, depending on whether the first element of the list is on the same line as the SEMTIS.</p>
 <p>If joined, the first element of the list should be tightly aligned. If split, the first elements of the list should be aligned one stop after the SEMTIS, and the first element should be preceded by a vertical gap with comments aligned at the SEMTIS and with the first element.</p>
-<p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stops after the SEMTIS.</p>
+<p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stop after the SEMTIS.</p>
 <p>All elements after the first should be preceded by a vertical gap. Comments should be aligned at the SEMTIS and with the first element.</p>
 <p>The TISTIS should be aligned with the SEMTIS. it should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
 <h2 id="tagged-sail-statements">Tagged sail statements</h2>
@@ -1013,13 +1010,13 @@ I have revised it.
   ;script@&quot;/lib/js/sole.js&quot;;
   ;sole(appl &quot;dojo&quot;);
 ==</code></pre>
-<p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which start the tag which is its keyword.</p>
+<p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which starts the tag that is its keyword.</p>
 <p>All elements should be preceded by a vertical gap. Comments in the vertical gaps should be aligned at the start of the statement and with the first element.</p>
-<p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement. and with the first element.</p>
+<p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement, and with the first element.</p>
 <h2 id="sail-attributes">Sail attributes</h2>
 <p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
 <h1 id="udon">Udon</h1>
-<p>This standard does not address Udon (Unmarkdown) whitespace conventions.</p>
+<p>Currently, this standard does not address Udon (Unmarkdown) whitespace conventions.</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
