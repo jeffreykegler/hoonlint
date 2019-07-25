@@ -25,7 +25,6 @@
 <li><a href="#pseudo-joins">Pseudo-joins</a></li>
 <li><a href="#reanchoring">Reanchoring</a><ul>
 <li><a href="#reanchor-offset">Reanchor offset</a></li>
-<li><a href="#formal-definition-of-the-anchor-column.">Formal definition of the anchor column.</a></li>
 <li><a href="#first-example">First example</a></li>
 <li><a href="#second-example">Second example</a></li>
 </ul></li>
@@ -99,6 +98,7 @@
 <li><a href="#sail">Sail</a><ul>
 <li><a href="#sail-1-fixed-runes">Sail 1-fixed runes</a></li>
 <li><a href="#semtis">SEMTIS</a></li>
+<li><a href="#tagged-sail-statements">Tagged sail statements</a></li>
 <li><a href="#sail-attributes">Sail attributes</a></li>
 </ul></li>
 <li><a href="#udon">Udon</a></li>
@@ -109,6 +109,7 @@
 <li><a href="#inter-line-alignment">Inter-line alignment</a></li>
 </ul></li>
 <li><a href="#appendix-vertical-gap-body">Appendix: Vertical gap body</a></li>
+<li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
@@ -201,33 +202,7 @@ d</code></pre>
 <pre><code>:^  a  b
   c
 d</code></pre>
-<p>Standard alignment for the 3rd COLKET runechild placed it at column 3 in the &quot;What if?&quot; example. Column 3 is two characters after the alignment of the COLKET rune, at column 1. Therefore the per-rune-offset of the COLKET in &quot;Actual&quot; is two: <code>3 - 1 == 2</code>.</p>
-<h3 id="formal-definition-of-the-anchor-column.">Formal definition of the anchor column.</h3>
-<p>More formally, let <code>r</code> be the reanchored rune. Let <code>a</code> be the anchor rune of <code>r</code>. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
-<p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. Let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>
-<ul>
-<li><p>moves <code>Child(n, r1)</code> to <code>Line(r1)+1</code>,</p></li>
-<li><p>adjusts the whitespace as necessary to follow the standard whitespace conventions, and</p></li>
-<li><p>is minimal in all other respects.</p></li>
-</ul>
-<p>Let <code>c2</code> be <code>Child(n, r1)</code> in this rewrite, so that <code>Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1</code>. Then the per-rune offset of <code>r1</code> is <code>PerRuneOff(r1) == Column(c2) - Column(r1)</code>.</p>
-<p>Recall that <code>r</code> is the reanchored rune, and that <code>a</code> is the anchor rune of <code>r</code>. We now define a sequence of runes, <code>S</code>, such that</p>
-<ul>
-<li><p>If <code>a == r</code>, then <code>S</code> is empty.</p></li>
-<li><p>Otherwise, <code>S = S[0], S[1] ... S[n]</code>, and we have the following:</p>
-<ul>
-<li><p><code>S[0] = a</code>.</p></li>
-<li><p><code>S[n] = (Rune(Parent(Hoon(r)))</code>.</p></li>
-<li><p><code>S[i] = (Rune(Parent(Hoon(S[i+1])))</code>, for all <code>i</code> such that <code>0 &lt;= i &lt; n</code>.</p></li>
-</ul></li>
-</ul>
-<p>Note the following:</p>
-<ul>
-<li><p>By the above definition, <code>r</code> is never an element of <code>S</code>.</p></li>
-<li><p>In the trivial case, where a rune is its own anchor, <code>S</code> is always empty; the reanchor offset is always zero; and the anchor column is always the same as the rune column.</p></li>
-<li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
-</ul>
-<p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
+<p>Standard alignment for the 3rd COLKET runechild placed it at column 3 in the &quot;What if?&quot; example. Column 3 is two characters after the alignment of the COLKET rune, at column 1. Therefore the per-rune-offset of the COLKET in &quot;Actual&quot; is two: <code>3 - 1 == 2</code>. A formal definition of &quot;anchor column&quot; is given in an appendix.</p>
 <h3 id="first-example">First example</h3>
 <p><em>From <code>arvo/sys/vane/ford.hoon</code>, lines 1916-1920:</em></p>
 <pre><code>        :+  %depends  %|  :~
@@ -979,7 +954,7 @@ I have revised it.
 <li><p>A runechild.</p></li>
 </ul>
 <h1 id="sail">Sail</h1>
-<p>Sail statements never participate in reanchoring.</p>
+<p>Sail statements start with a semicolon. Sail statements never participate in reanchoring.</p>
 <p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
 <pre><code>;module
     =nav_title    &quot;Dojo&quot;
@@ -997,17 +972,52 @@ I have revised it.
   ;sole(appl &quot;dojo&quot;);
 ==</code></pre>
 <h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
+<p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
+<pre><code>    ;*  ?.  nopack.dbg
+          :_  ~
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/pack/css/codemirror-fonts-bootstrap-tree.css&quot;);
+        ;=
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/fonts.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/bootstrap.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/codemirror.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/tree/main.css&quot;);
+        ==</code></pre>
 <p>The sail 1-fixed runes are SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). They have a single runechild. The rune child should be on the same line as the rune, and should be separated from it by a one-stop horizontal gap.</p>
 <h2 id="semtis">SEMTIS</h2>
+<p><em>From <code>ren/tree/head.hoon</code>, lines 59-64:</em></p>
+<pre><code>        ;=
+::           ;script(type &quot;text/javascript&quot;, src &quot;/===/web/lib/js/hoon.js&quot;);
+          ;script(type &quot;text/javascript&quot;, src &quot;/===/web/tree/main.js&quot;);
+          ;script(type &quot;text/javascript&quot;, src &quot;{?.(aut &quot;&quot; &quot;/~~/~/at&quot;)}&quot;.
+                                              &quot;/===/web/lib/js/urb.js&quot;);
+        ==</code></pre>
 <p>SEMTIS (;=) takes a TISTIS-terminated list of sail statements. It is split or joined, depending on whether the first element of the list is on the same line as the SEMTIS.</p>
 <p>If joined, the first element of the list should be tightly aligned. If split, the first elements of the list should be aligned one stop after the SEMTIS, and the first element should be preceded by a vertical gap with comments aligned at the SEMTIS and with the first element.</p>
 <p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stops after the SEMTIS.</p>
-<p>All elements after the first should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element. The TISTIS should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
+<p>All elements after the first should be preceded by a vertical gap. Comments should be aligned at the SEMTIS and with the first element.</p>
+<p>The TISTIS should be aligned with the SEMTIS. it should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
+<h2 id="tagged-sail-statements">Tagged sail statements</h2>
+<p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
+<pre><code>;module
+    =nav_title    &quot;Dojo&quot;
+    =nav_no-dpad  &quot;&quot;
+    =nav_no-sibs  &quot;&quot;
+  ;script(src &quot;//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js&quot;);
+  ;style:&#39;&#39;&#39;
+         #term { width: 100%; }
+         #term * { margin: 0px; }
+         .module pre { margin-bottom: 0; }
+         &#39;&#39;&#39;
+  ;div#err;
+  ;div#term:&quot;&quot;
+  ;script@&quot;/lib/js/sole.js&quot;;
+  ;sole(appl &quot;dojo&quot;);
+==</code></pre>
+<p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which start the tag which is its keyword.</p>
+<p>All elements should be preceded by a vertical gap. Comments in the vertical gaps should be aligned at the start of the statement and with the first element.</p>
+<p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement. and with the first element.</p>
 <h2 id="sail-attributes">Sail attributes</h2>
 <p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
-<p>TODO: SEMTIS (;=).</p>
-<p>TISTIS terminators in sail text blocks should be aligned with the sail text block that they terminate. Comments in the vertical gap preceding the TISTIS terminator of a Sail text should be aligned with Sail text block.</p>
-<p>TODO: Look up sail documentation, and finish this description. See https://urbit.org/docs/using/sail-and-udon/</p>
 <h1 id="udon">Udon</h1>
 <p>This standard does not address Udon (Unmarkdown) whitespace conventions.</p>
 <h1 id="selgap">SELGAP</h1>
@@ -1082,5 +1092,31 @@ Exception ::= BlankLine</code></pre>
 </ul>
 <p>Comments with the same priority are treated as if they were looked for simultaneously. This means that it remains possible for terminals to be ambiguous -- that is, one line can be read as two different terminals. In these cases the BNF grammar ensures that only one of the terminals will be used.</p>
 <p>Priority 1 comments are InterComment, LowerRiser, PreComment, Tread, and UpperRiser. The priority 2 comment is MetaComment. Priority 3 comments are BadComment and BlankLine.</p>
+<h1 id="appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</h1>
+<p>Let <code>r</code> be the reanchored rune. Let <code>a</code> be the anchor rune of <code>r</code>. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
+<p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. Let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>
+<ul>
+<li><p>moves <code>Child(n, r1)</code> to <code>Line(r1)+1</code>,</p></li>
+<li><p>adjusts the whitespace as necessary to follow the standard whitespace conventions, and</p></li>
+<li><p>is minimal in all other respects.</p></li>
+</ul>
+<p>Let <code>c2</code> be <code>Child(n, r1)</code> in this rewrite, so that <code>Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1</code>. Then the per-rune offset of <code>r1</code> is <code>PerRuneOff(r1) == Column(c2) - Column(r1)</code>.</p>
+<p>Recall that <code>r</code> is the reanchored rune, and that <code>a</code> is the anchor rune of <code>r</code>. We now define a sequence of runes, <code>S</code>, such that</p>
+<ul>
+<li><p>If <code>a == r</code>, then <code>S</code> is empty.</p></li>
+<li><p>Otherwise, <code>S = S[0], S[1] ... S[n]</code>, and we have the following:</p>
+<ul>
+<li><p><code>S[0] = a</code>.</p></li>
+<li><p><code>S[n] = (Rune(Parent(Hoon(r)))</code>.</p></li>
+<li><p><code>S[i] = (Rune(Parent(Hoon(S[i+1])))</code>, for all <code>i</code> such that <code>0 &lt;= i &lt; n</code>.</p></li>
+</ul></li>
+</ul>
+<p>Note the following:</p>
+<ul>
+<li><p>By the above definition, <code>r</code> is never an element of <code>S</code>.</p></li>
+<li><p>In the trivial case, where a rune is its own anchor, <code>S</code> is always empty; the reanchor offset is always zero; and the anchor column is always the same as the rune column.</p></li>
+<li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
+</ul>
+<p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
 </body>
 </html>

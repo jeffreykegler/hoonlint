@@ -877,7 +877,10 @@ sub checkBont {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
-    my ( $gap, $body ) = @{ $policy->gapSeq0($node) };
+    # bont5d ::= CEN4H SYM4K (- DOT GAP -) tall5d
+    # bont5d ::= wideBont5d
+    my ( $cen, $sym, $dot, $gap, $body ) = @{ $node->{children} };
+    return if not defined $gap;
 
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
@@ -888,39 +891,42 @@ sub checkBont {
     my $anchor =
       $instance->ancestorByLHS( $node, { tallSiggar => 1, tallSiggal => 1 } );
     my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchor);
+    my $runeName = $policy->runeName($anchor);
 
     my @mistakes = ();
-    my $tag      = 'bont';
 
   BODY_ISSUES: {
         if ( $parentLine == $bodyLine ) {
             my $msg =
-              sprintf
-              'SIGGAR/SIGGAL element 2 %s; element must not be on rune line',
+              sprintf 'SIGGAR/SIGGAL hint body must not be on rune line',
               describeLC( $bodyLine, $bodyColumn );
             push @mistakes,
               {
                 desc         => $msg,
+                subpolicy    => [ $runeName, 'hint-body-joined' ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $bodyLine,
                 column       => $bodyColumn,
-                details      => [ [$tag] ],
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                details      => [ [$runeName] ],
               };
             last BODY_ISSUES;
         }
 
         # If here parent line != body line
-        my $expectedBodyColumn = $anchorColumn + 2;
+        my $expectedBodyColumn = $anchorColumn + 4;
         push @mistakes,
           @{
             $policy->checkOneLineGap(
                 $gap,
                 {
                     mainColumn => $expectedBodyColumn,
-                    tag        => $tag,
-                subpolicy => [ $tag ],
-                    details    => [ [$tag] ],
+                    subpolicy  => [ $runeName, 'hint' ],
+                    tag        => $runeName,
+                    subpolicy  => [$runeName],
+                    details    => [ [$runeName] ],
                 }
             )
           };
@@ -932,12 +938,15 @@ sub checkBont {
               describeMisindent2( $bodyColumn, $expectedBodyColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                details        => [ [$tag] ],
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'hint-body-indent' ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                details      => [ [$runeName] ],
               };
         }
     }
@@ -956,7 +965,7 @@ sub checkBonzElement {
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
     my @mistakes = ();
-    my $tag      = 'bonz element';
+    my $runeName      = 'sigcen';
 
     my $expectedColumn;
 
@@ -966,12 +975,15 @@ sub checkBonzElement {
               describeLC( $bodyLine, $bodyColumn );
             push @mistakes,
               {
-                desc           => $msg,
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
-                line           => $bodyLine,
-                column         => $bodyColumn,
-                details        => [ [$tag] ],
+                desc         => $msg,
+                subpolicy => [ $runeName, 'split' ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $bodyLine,
+                column       => $bodyColumn,
+                reportLine   => $bodyLine,
+                reportColumn => $bodyColumn,
+                details      => [ [$runeName] ],
               };
             last BODY_ISSUES;
         }
@@ -991,11 +1003,14 @@ sub checkBonzElement {
           describeMisindent2( $bodyColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $bodyLine,
-            column         => $bodyColumn,
+            desc         => $msg,
+            subpolicy => [ $runeName, 'body-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $bodyLine,
+            column       => $bodyColumn,
+            reportLine   => $bodyLine,
+            reportColumn => $bodyColumn,
           };
     }
 
@@ -1146,6 +1161,7 @@ sub checkSailAttribute {
     return \@mistakes;
 }
 
+# tagged sail statement
 sub checkTailOfElem {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
@@ -1167,12 +1183,15 @@ sub checkTailOfElem {
     my @mistakes = ();
     my $runeName      = 'sail';
 
+    my $elementColumn = $anchorColumn + 2;
+
     push @mistakes,
       @{
         $policy->checkOneLineGap(
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
+                preColumn => $elementColumn,
                 tag        => $runeName,
                 subpolicy => [ $runeName, 'elem-tail' ],
                 topicLines => [$tistisLine],
