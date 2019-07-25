@@ -955,6 +955,99 @@ sub checkBont {
     return \@mistakes;
 }
 
+# bonz5d ::= (- TIS TIS GAP -) optBonzElements (- GAP TIS TIS -)
+# bonz5d ::= wideBonz5d
+sub checkBonz5d {
+    my ( $policy, $node ) = @_;
+    my $instance = $policy->{lint};
+
+    my ($initialTis1, undef, $gap, $bonzElements, $tistisGap, $finalTistis) = @{$node->{children}};
+    return [] if not defined $gap;
+    my $runeName = 'sigcen';
+    my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
+    my ( $elementsLine, $elementsColumn ) = $instance->nodeLC($bonzElements);
+    my ( $tistisLine, $tistisColumn ) = $instance->nodeLC($finalTistis);
+    my $anchorColumn = $parentColumn;
+    my $expectedElementsColumn = $anchorColumn + 2;
+
+    my @mistakes = ();
+    push @mistakes,
+      @{
+        $policy->checkOneLineGap(
+            $gap,
+            {
+                mainColumn => $anchorColumn,
+                preColumn => $elementsColumn,
+                tag        => $runeName,
+                subpolicy => [ $runeName, 'formulas-initial-vgap' ],
+            }
+        )
+      };
+
+    if ( $expectedElementsColumn != $elementsColumn ) {
+
+        my $msg = sprintf 'formula %s; %s',
+          describeLC( $elementsLine, $elementsColumn ),
+          describeMisindent2( $elementsColumn, $expectedElementsColumn );
+        push @mistakes,
+          {
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'formula-body-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $elementsLine,
+            column       => $elementsColumn,
+            reportLine   => $elementsLine,
+            reportColumn => $elementsColumn,
+          };
+    }
+
+    push @mistakes,
+      @{
+        $policy->checkOneLineGap(
+            $tistisGap,
+            {
+                mainColumn => $anchorColumn,
+                preColumn => $elementsColumn,
+                tag        => $runeName,
+                subpolicy => [ $runeName, 'formulas-final-gap' ],
+                topicLines => [$tistisLine],
+            }
+        )
+      };
+
+    push @mistakes,
+      @{
+        $policy->checkTistis(
+            $finalTistis,
+            {
+                expectedColumn => $anchorColumn,
+                tag            => $runeName,
+                subpolicy => [ $runeName, 'formulas-final-tistis' ],
+            }
+        )
+      };
+
+  return \@mistakes;
+
+}
+
+# optBonzElements ::= bonzElement* separator=>GAP proper=>1
+# bonzElement ::= CEN SYM4K (- GAP -) tall5d
+sub checkBonzElements {
+    my ( $policy, $node ) = @_;
+    my $children = $node->{children};
+    my @nodesToAlign = ();
+    for (my $childIX = 0; $childIX <= $#$children; $childIX += 2) {
+        my $element = $children->[$childIX];
+        my ($cen, $sym, $gap, $body) = @{ $element->{children} };
+        push @nodesToAlign, $gap, $body;
+    }
+    my $alignmentData = $policy->findAlignment( \@nodesToAlign );
+    $policy->setInheritedAttribute($node, 'formulaAlignmentData', $alignmentData);
+    return $policy->checkSeq( $node, 'sigcen-formula' );
+}
+
 sub checkBonzElement {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -965,10 +1058,11 @@ sub checkBonzElement {
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my ( $bodyLine,   $bodyColumn )   = $instance->nodeLC($body);
 
+    my $alignmentData = $policy->getInheritedAttribute($node, 'formulaAlignmentData');
+    my $bodyAlignmentColumn = @{$alignmentData};
+
     my @mistakes = ();
     my $runeName      = 'sigcen';
-
-    my $expectedColumn;
 
   BODY_ISSUES: {
         if ( $parentLine != $bodyLine ) {
@@ -990,18 +1084,15 @@ sub checkBonzElement {
         }
 
         # If here, bodyLine == parentLine
+        last BODY_ISSUES if $bodyColumn = $bodyAlignmentColumn;
         my $gapLiteral = $instance->literalNode($bodyGap);
         my $gapLength  = $bodyGap->{length};
         last BODY_ISSUES if $gapLength == 2;
         my ( undef, $bodyGapColumn ) = $instance->nodeLC($bodyGap);
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $bodyGapColumn + $expectedLength;
         my $msg = sprintf 'formula body %s; %s',
           describeLC( $bodyLine, $bodyColumn ),
-          describeMisindent2( $bodyColumn, $expectedColumn );
+          describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
             desc         => $msg,
@@ -2598,7 +2689,6 @@ sub checkFasdot {
     return \@mistakes;
 }
 
-# Check "vanilla" sequence
 sub checkJogging {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -6112,7 +6202,7 @@ sub validate_node {
                 }
 
                 if ( $lhsName eq 'optBonzElements' ) {
-                    $mistakes = $policy->checkSeq( $node, 'sigcen-formula' );
+                    $mistakes = $policy->checkBonzElements( $node );
                     last TYPE_INDENT;
                 }
 

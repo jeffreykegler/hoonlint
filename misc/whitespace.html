@@ -37,6 +37,7 @@
 <li><a href="#backdented-hoons">Backdented hoons</a><ul>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 <li><a href="#split-hints">Split hints</a></li>
+<li><a href="#sigcen">SIGCEN</a></li>
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -362,6 +363,21 @@ d</code></pre>
 <p>The first runechild of SIGGAL (<code>~&lt;</code>) and SIGGAR (<code>~&gt;</code>) is a &quot;hint&quot;. Hints have a &quot;split&quot; form.</p>
 <p>A split form hint begins with its &quot;head&quot;: a symbol name (in <code>%name</code> form) followed by a DOT. The rest of the hint is its &quot;tail&quot;.</p>
 <p>The tail of a split form hint should be separated from its head by a vertical gap, with comments aligned with the head. The tail should also be aligned with the head.</p>
+<h2 id="sigcen">SIGCEN</h2>
+<p><em>From <code>sys/hoon.hoon</code>, lines 3684-6234:</em></p>
+<pre><code>~%    %qua
+    +
+  ==
+    %mute  mute
+    %show  show
+  ==
+|%
+:: Lines 3691-6233 are omitted
+--</code></pre>
+<p>SIGCEN statements are ununusual, and can be treated either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild. In this standard, we take the second approach.</p>
+<p>The 3rd runechild is, optionally, a list of formulas, which begin and end with a TISTIS. The initial TISTIS should be backdented appropriately for the 3rd runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
+<p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the formulas. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the formulas.</p>
+<p>Each formula has a head and a body. The head should be aligned one stop after the initial TISTIS. The body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a verticial gap with comments aligned with the formulas.</p>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. Currently, no hoon contains more than one running.</p>
 <p>A running hoon may contain a runechild before the running. That runechild is called the <strong>head</strong> of the running hoon.</p>

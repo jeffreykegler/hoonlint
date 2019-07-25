@@ -1173,7 +1173,7 @@ If there are two runechildren before the jogging, they
 are called, in order, the **head** and **subhead** of
 the jogging.
 
-There are currently three kinds of jogging hoon:
+There are currently four kinds of jogging hoon:
 
 * The current 1-jogging rules are CENTIS (`%=`), CENCAB (`%_`) and WUTHEP (`?-`).
   A 1-jogging has one head and no tail.
@@ -1183,6 +1183,9 @@ There are currently three kinds of jogging hoon:
 
 * The current jogging-1 rule is TISCOL (`=:`).
   A jogging-1 has a tail and no head.
+
+* The current 2-jogging-1 statement is SIGCEN (`~%`).
+  A 2-jogging has a head a subhead and a tail.
 
 ## Joggings
 
@@ -1588,6 +1591,49 @@ in lexical order:
   the anchor column.
 
 * A tail, aligned at the anchor column.
+
+## SIGCEN
+
+*From `sys/hoon.hoon`, lines 3684-6234:*
+```
+~%    %qua
+    +
+  ==
+    %mute  mute
+    %show  show
+  ==
+|%
+:: Lines 3691-6233 are omitted
+--
+```
+
+SIGCEN statements
+can be treated either a special form of a jogging hoon,
+or as a 4-fixed hoon with, optionally,
+an unusual 3rd runechild.
+
+SIGCEN, except for its 3rd runechild, is treated
+as an ordinary 4-ary backdented hoon.
+SIGCEN's 3rd runechild may be either `~` or a jogging
+bounded by TISTIS lines.
+The jogging is always kingside and elements are never
+split.
+
+The initial TISTIS should be backdented appropriately
+for a third runechild.
+The final TISTIS should be aligned with the initial TISTIS.
+
+The initial TISTIS should be followed by a vertical gap
+with comments aligned with the TISTIS and with the jogs.
+The final TISTIS should be followed by a vertical gap
+with comments aligned with the TISTIS and with the jogs.
+
+The jog head should be aligned one stop after the initial TISTIS.
+The jog body should be tightly aligned,
+or inter-line aligned with other bodies in the formula
+list.
+Successive formulas should be separated by a verticial
+gap with comments aligned with the jogs.
 
 # Battery hoons
 

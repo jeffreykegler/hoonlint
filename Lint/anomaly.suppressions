@@ -1463,47 +1463,5 @@ hoons/arvo/sur/gmail-label.hoon 16:1 Test::Whitespace fordfile:sequence-vgap:emp
 hoons/arvo/sys/vane/eyre.hoon 577:7 Test::Whitespace sail:top-tail:tistis-indent TISTIS @577:7; overindented by 2
 hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attribute body @14:18; overindented by 1
 
-# SIGCEN aberrations
-hoons/arvo/sys/hoon.hoon 6249:12 Test::Whitespace sigcen:formula-body-indent formula body @6249:12; overindented by 2
-hoons/arvo/sys/hoon.hoon 6250:12 Test::Whitespace sigcen:formula-body-indent formula body @6250:12; overindented by 2
-hoons/arvo/sys/hoon.hoon 6251:12 Test::Whitespace sigcen:formula-body-indent formula body @6251:12; overindented by 2
-hoons/arvo/sys/hoon.hoon 8170:15 Test::Whitespace sigcen:formula-body-indent formula body @8170:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 8171:15 Test::Whitespace sigcen:formula-body-indent formula body @8171:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 8172:15 Test::Whitespace sigcen:formula-body-indent formula body @8172:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 8173:15 Test::Whitespace sigcen:formula-body-indent formula body @8173:15; overindented by 2
-hoons/arvo/sys/hoon.hoon 8174:15 Test::Whitespace sigcen:formula-body-indent formula body @8174:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8175:15 Test::Whitespace sigcen:formula-body-indent formula body @8175:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8176:15 Test::Whitespace sigcen:formula-body-indent formula body @8176:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8177:15 Test::Whitespace sigcen:formula-body-indent formula body @8177:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8178:15 Test::Whitespace sigcen:formula-body-indent formula body @8178:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8179:15 Test::Whitespace sigcen:formula-body-indent formula body @8179:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8180:15 Test::Whitespace sigcen:formula-body-indent formula body @8180:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8181:15 Test::Whitespace sigcen:formula-body-indent formula body @8181:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8182:15 Test::Whitespace sigcen:formula-body-indent formula body @8182:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8183:15 Test::Whitespace sigcen:formula-body-indent formula body @8183:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8184:15 Test::Whitespace sigcen:formula-body-indent formula body @8184:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8185:15 Test::Whitespace sigcen:formula-body-indent formula body @8185:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8186:15 Test::Whitespace sigcen:formula-body-indent formula body @8186:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8187:15 Test::Whitespace sigcen:formula-body-indent formula body @8187:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8188:15 Test::Whitespace sigcen:formula-body-indent formula body @8188:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8189:15 Test::Whitespace sigcen:formula-body-indent formula body @8189:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8190:15 Test::Whitespace sigcen:formula-body-indent formula body @8190:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8191:15 Test::Whitespace sigcen:formula-body-indent formula body @8191:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8192:15 Test::Whitespace sigcen:formula-body-indent formula body @8192:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8193:15 Test::Whitespace sigcen:formula-body-indent formula body @8193:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8194:15 Test::Whitespace sigcen:formula-body-indent formula body @8194:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8195:15 Test::Whitespace sigcen:formula-body-indent formula body @8195:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8196:15 Test::Whitespace sigcen:formula-body-indent formula body @8196:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8197:15 Test::Whitespace sigcen:formula-body-indent formula body @8197:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8198:15 Test::Whitespace sigcen:formula-body-indent formula body @8198:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8199:15 Test::Whitespace sigcen:formula-body-indent formula body @8199:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8200:15 Test::Whitespace sigcen:formula-body-indent formula body @8200:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8201:15 Test::Whitespace sigcen:formula-body-indent formula body @8201:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8202:15 Test::Whitespace sigcen:formula-body-indent formula body @8202:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8203:15 Test::Whitespace sigcen:formula-body-indent formula body @8203:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8204:15 Test::Whitespace sigcen:formula-body-indent formula body @8204:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8205:15 Test::Whitespace sigcen:formula-body-indent formula body @8205:15; overindented by 1
-hoons/arvo/sys/hoon.hoon 8206:15 Test::Whitespace sigcen:formula-body-indent formula body @8206:15; overindented by 1
-
 # Hint aberrations
 hoons/arvo/sys/vane/eyre.hoon 1945:9 Test::Whitespace siggar:hint-body-indent SIGGAL/SIGGAR hint body @1945:9; underindented by 2
