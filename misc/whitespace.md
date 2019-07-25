@@ -1751,7 +1751,7 @@ in lexical order:
       --  ::as                                          ::
 ```
 
-A split BARCEN should consist of,
+A joined BARCEN should consist of,
 in lexical order:
 
 * Its rune.

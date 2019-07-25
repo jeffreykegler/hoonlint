@@ -2935,7 +2935,6 @@ sub checkBarcen {
 
     my @mistakes = ();
     my $runeName      = 'barcen';
-    my $tag      = 'barcen';
 
     my $gapLiteral = $instance->literalNode($gap);
     my $expectedColumn;
@@ -2950,10 +2949,13 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'hgap' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $batteryLine,
             column       => $batteryColumn,
+            reportLine         => $batteryLine,
+            reportColumn       => $batteryColumn,
           };
         return \@mistakes;
     }
@@ -2966,10 +2968,10 @@ sub checkBarcen {
             $gap,
             {
                 mainColumn => $expectedColumn,
-                tag        => $tag,
+                tag        => $runeName,
                 subpolicy => [ $runeName ],
                 details    => [
-                    [ $tag, @{ $policy->anchorDetails( $node, $anchorData ) } ]
+                    [ $runeName, @{ $policy->anchorDetails( $node, $anchorData ) } ]
                 ],
             }
         )
@@ -2982,10 +2984,13 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'battery-split' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $batteryLine,
             column       => $batteryColumn,
+            reportLine         => $batteryLine,
+            reportColumn       => $batteryColumn,
             anchorDetails  => $policy->anchorDetails( $node, $anchorData ),
           };
         return \@mistakes;
@@ -6121,6 +6126,7 @@ sub validate_node {
            tallTailOfElem => \&checkTailOfElem,
            tallTailOfTop => \&checkTailOfTop,
            tallTopSail => \&checkTopSail,
+           bonz5d => \&checkBonz5d,
         };
         my $fn = $fnHash->{$lhsName};
         if ($fn) {

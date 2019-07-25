@@ -37,7 +37,6 @@
 <li><a href="#backdented-hoons">Backdented hoons</a><ul>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 <li><a href="#split-hints">Split hints</a></li>
-<li><a href="#sigcen">SIGCEN</a></li>
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -73,6 +72,7 @@
 <li><a href="#queenside-head-split-2-jogging-hoons">Queenside head-split 2-jogging hoons</a></li>
 </ul></li>
 <li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
+<li><a href="#sigcen">SIGCEN</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#batteries">Batteries</a></li>
@@ -363,21 +363,6 @@ d</code></pre>
 <p>The first runechild of SIGGAL (<code>~&lt;</code>) and SIGGAR (<code>~&gt;</code>) is a &quot;hint&quot;. Hints have a &quot;split&quot; form.</p>
 <p>A split form hint begins with its &quot;head&quot;: a symbol name (in <code>%name</code> form) followed by a DOT. The rest of the hint is its &quot;tail&quot;.</p>
 <p>The tail of a split form hint should be separated from its head by a vertical gap, with comments aligned with the head. The tail should also be aligned with the head.</p>
-<h2 id="sigcen">SIGCEN</h2>
-<p><em>From <code>sys/hoon.hoon</code>, lines 3684-6234:</em></p>
-<pre><code>~%    %qua
-    +
-  ==
-    %mute  mute
-    %show  show
-  ==
-|%
-:: Lines 3691-6233 are omitted
---</code></pre>
-<p>SIGCEN statements are ununusual, and can be treated either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild. In this standard, we take the second approach.</p>
-<p>The 3rd runechild is, optionally, a list of formulas, which begin and end with a TISTIS. The initial TISTIS should be backdented appropriately for the 3rd runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
-<p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the formulas. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the formulas.</p>
-<p>Each formula has a head and a body. The head should be aligned one stop after the initial TISTIS. The body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a verticial gap with comments aligned with the formulas.</p>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. Currently, no hoon contains more than one running.</p>
 <p>A running hoon may contain a runechild before the running. That runechild is called the <strong>head</strong> of the running hoon.</p>
@@ -521,11 +506,12 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <h1 id="jogging-hoons">Jogging hoons</h1>
 <p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
 <p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
-<p>There are currently three kinds of jogging hoon:</p>
+<p>There are currently four kinds of jogging hoon:</p>
 <ul>
 <li><p>The current 1-jogging rules are CENTIS (<code>%=</code>), CENCAB (<code>%_</code>) and WUTHEP (<code>?-</code>). A 1-jogging has one head and no tail.</p></li>
 <li><p>The current 2-jogging rules are CENTAR (<code>%*</code>) and WUTLUS (<code>?+</code>). A 2-jogging has a head and a subhead and no tail.</p></li>
 <li><p>The current jogging-1 rule is TISCOL (<code>=:</code>). A jogging-1 has a tail and no head.</p></li>
+<li><p>The current 2-jogging-1 statement is SIGCEN (<code>~%</code>). A 2-jogging has a head a subhead and a tail.</p></li>
 </ul>
 <h2 id="joggings">Joggings</h2>
 <p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
@@ -710,6 +696,22 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A vertical gap, with comments at the the anchor column.</p></li>
 <li><p>A tail, aligned at the anchor column.</p></li>
 </ul>
+<h2 id="sigcen">SIGCEN</h2>
+<p><em>From <code>sys/hoon.hoon</code>, lines 3684-6234:</em></p>
+<pre><code>~%    %qua
+    +
+  ==
+    %mute  mute
+    %show  show
+  ==
+|%
+:: Lines 3691-6233 are omitted
+--</code></pre>
+<p>SIGCEN statements can be treated either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild.</p>
+<p>SIGCEN, except for its 3rd runechild, is treated as an ordinary 4-ary backdented hoon. SIGCEN's 3rd runechild may be either <code>~</code> or a jogging bounded by TISTIS lines. The jogging is always kingside and elements are never split.</p>
+<p>The initial TISTIS should be backdented appropriately for a third runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
+<p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs.</p>
+<p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a verticial gap with comments aligned with the jogs.</p>
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
@@ -776,7 +778,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
           ++  tear  |~  {a/pass b/@}                    ::  accept from a
                     *(unit {p/@ q/@})                   ::
       --  ::as                                          ::</code></pre>
-<p>A split BARCEN should consist of, in lexical order:</p>
+<p>A joined BARCEN should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
 <li><p>A one stop horizontal gap.</p></li>
