@@ -2213,6 +2213,7 @@ sub checkWisp5d {
     my ( $policy, $node ) = @_;
     my @mistakes = ();
     my $instance = $policy->{lint};
+    my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my $runeLC = describeLC($parentLine, $parentColumn);
 
@@ -2220,7 +2221,6 @@ sub checkWisp5d {
       $instance->ancestorByLHS( $node,
         { tallBarcab => 1, tallBarcen => 1, tallBarket => 1 } );
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
-    my $runeName = $policy->runeName($battery);
     my $batteryNodeIX = $battery->{IX};
     my $anchorColumn  = $policy->{perNode}->{$batteryNodeIX}->{anchorColumn};
     $anchorColumn //= $batteryColumn;
@@ -2233,9 +2233,9 @@ sub checkWisp5d {
         $policy->checkOneLineGap(
             $gap,
             {
-                mainColumn => $anchorColumn,
+                mainColumn => $parentColumn,
                 tag        => $runeName,
-                subpolicy  => [$runeName, 'hephep-vgap' ],
+                subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
                 details      => [ [ $runeName, "Starts at $runeLC", ] ],
             }
