@@ -660,8 +660,8 @@ hoons/arvo/app/gmail.hoon 212:7 Test::Whitespace sigpam:indent backdented elemen
 hoons/arvo/app/gmail.hoon 224:5 Test::Whitespace wutdot:indent backdented element #3 @224:5; overindented by 2
 hoons/arvo/app/gmail.hoon 257:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @257:5; comment overindented by 2
 hoons/arvo/app/gmail.hoon 264:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @264:5; comment overindented by 2
-hoons/arvo/app/gmail.hoon 280:1 Test::Whitespace barcen:hephep-vgap:empty-line barcen @280:1; empty line in comment
-hoons/arvo/app/gmail.hoon 293:5 Test::Whitespace barcen:hephep-vgap:comment-indent barcen @293:5; comment overindented by 2
+hoons/arvo/app/gmail.hoon 280:1 Test::Whitespace barcen:empty-line barcen @280:1; empty line in comment
+hoons/arvo/app/gmail.hoon 293:5 Test::Whitespace barcen:comment-indent barcen @293:5; comment overindented by 2
 === hoons/arvo/app/test.hoon ===
 hoons/arvo/app/test.hoon 62:5 Test::Whitespace tallColsig runstep #2 @62:5; underindented by 2
 hoons/arvo/app/test.hoon 87:5 Test::Whitespace tallColsig runstep #2 @87:5; underindented by 2
@@ -671,7 +671,7 @@ hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent ele
 === hoons/arvo/app/gmail/split.hoon ===
 hoons/arvo/app/gmail/split.hoon 36:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @36:1; empty line in comment
 hoons/arvo/app/gmail/split.hoon 53:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @53:1; empty line in comment
-hoons/arvo/app/gmail/split.hoon 67:1 Test::Whitespace barcen:hephep-vgap:empty-line barcen @67:1; empty line in comment
+hoons/arvo/app/gmail/split.hoon 67:1 Test::Whitespace barcen:empty-line barcen @67:1; empty line in comment
 === hoons/arvo/app/twit.hoon ===
 hoons/arvo/app/twit.hoon 42:3 Test::Whitespace tallBucwut runstep #2 @42:3; underindented by 4
 hoons/arvo/app/twit.hoon 175:7 Test::Whitespace kethep:indent backdented element #2 @175:7; overindented by 4
@@ -1040,7 +1040,7 @@ hoons/arvo/mar/snip.hoon 27:7 Test::Whitespace kethep:indent backdented element 
 === hoons/arvo/mar/xml.hoon ===
 === hoons/arvo/mar/recoverable-error.hoon ===
 hoons/arvo/mar/recoverable-error.hoon 12:1 Test::Whitespace tallBarcab Barcab head @12:6; overindented by 1
-hoons/arvo/mar/recoverable-error.hoon 29:31 Test::Whitespace barcen:hephep-vgap:missing-newline barcen @29:31; missing newline @29:31
+hoons/arvo/mar/recoverable-error.hoon 29:31 Test::Whitespace barcen:missing-newline barcen @29:31; missing newline @29:31
 hoons/arvo/mar/recoverable-error.hoon 29:33 Test::Whitespace barcen:hephep-indent battery hephep @29:33; overindented by 22
 === hoons/arvo/mar/jam.hoon ===
 === hoons/arvo/mar/txt-diff.hoon ===
