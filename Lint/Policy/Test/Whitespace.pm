@@ -409,9 +409,18 @@ sub checkGapComments {
     my $instance  = $policy->{lint};
     my $pSource   = $instance->{pHoonSource};
     my $lineToPos = $instance->{lineToPos};
-    if ( defined $preOffset and $preOffset == $interOffset ) {
-        $preOffset =
-          undef;    # Do not allow pre-offset to be equal to inter-offset
+  SET_PREOFFSET: {
+        last SET_PREOFFSET if not defined $preOffset;
+        if ( $preOffset < 0 ) {
+            $preOffset = undef;    # negative offset == undefined
+            last SET_PREOFFSET;
+        }
+        if ( $preOffset == $interOffset ) {
+
+            # Do not allow pre-offset to be equal to inter-offset
+            $preOffset = undef;
+            last SET_PREOFFSET;
+        }
     }
     my @mistakes = ();
 
@@ -2091,26 +2100,16 @@ sub check_0Running {
     return $policy->checkSplit_0Running( $checkArgs );
 }
 
-# Find the cell body column, based on alignment within
-# a parent hoon.
-sub cellBodyColumn {
+# assumes this is a <wisp5d> node
+# wisp5d ::= (- HEP HEP -)
+# wisp5d ::= whap5d GAP (- HEP HEP -)
+sub wispCellBodyAlignment {
     my ( $policy, $node ) = @_;
-    my $instance       = $policy->{lint};
-    my $nodeIX         = $node->{IX};
-    my $cellBodyData = $policy->{perNode}->{$nodeIX}->{cellBodyData};
-    return $cellBodyData if $cellBodyData;
-
-  FIND_CELL_BODY_COLUMN: {
-        my $instance = $policy->{lint};
-        my $lhsName  = $instance->lhsName($node);
-        if ( $lhsName and $lhsName eq 'whap5d' ) {
-            $cellBodyData = $policy->whapCellBodyAlignment($node);
-            last FIND_CELL_BODY_COLUMN;
-        }
-        $cellBodyData = $policy->cellBodyColumn( $node->{PARENT} );
-    }
-    $policy->{perNode}->{$nodeIX}->{cellBodyData} = $cellBodyData;
-    return $cellBodyData;
+    my $instance = $policy->{lint};
+    my ($whap) = @{ $node->{children} };
+    return [ -1, [] ]
+      if 'whap5d' ne $instance->symbol($whap);
+    return $policy->whapCellBodyAlignment($whap);
 }
 
 # assumes this is a <whap5d> node
@@ -2209,6 +2208,8 @@ sub checkWhap5d {
 
 }
 
+# wisp5d ::= (- HEP HEP -)
+# wisp5d ::= whap5d GAP (- HEP HEP -)
 sub checkWisp5d {
     my ( $policy, $node ) = @_;
     my @mistakes = ();
@@ -2225,8 +2226,11 @@ sub checkWisp5d {
     my $anchorColumn  = $policy->{perNode}->{$batteryNodeIX}->{anchorColumn};
     $anchorColumn //= $batteryColumn;
 
-    my $gapSeq = $policy->gapSeq0($node);
-    my ( $gap, $hephep ) = @{$gapSeq};
+    my ( $cellBodyColumn, $cellBodyColumnLines ) =
+      @{ $policy->getInheritedAttribute($node, 'cellBodyAlignmentData') };
+
+    my ( $whap, $gap, $hep ) = @{$node->{children}};
+    return [] if $instance->symbol($whap) ne 'whap5d';
 
     push @mistakes,
       @{
@@ -2234,6 +2238,7 @@ sub checkWisp5d {
             $gap,
             {
                 mainColumn => $parentColumn,
+                preColumn => $anchorColumn+2,
                 tag        => $runeName,
                 subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
@@ -2242,7 +2247,7 @@ sub checkWisp5d {
         )
       };
 
-    my ( $hephepLine, $hephepColumn ) = $instance->nodeLC($hephep);
+    my ( $hephepLine, $hephepColumn ) = $instance->nodeLC($hep);
 
     {
         my $literalLine = $instance->literalLine($hephepLine);
@@ -2804,13 +2809,16 @@ sub checkBarcab {
     # BARCAB is special, so we need to find the components using low-level
     # techniques.
     # tallBarcab ::= (- BAR CAB GAP -) till5d (- GAP -) wasp5d wisp5d
-    my ( undef, undef, $headGap, $head, $batteryGap, undef, $battery ) =
+    my ( undef, undef, $headGap, $head, $wispGap, undef, $wisp ) =
       @{ $node->{children} };
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my $anchorNode = $node;
     my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
-    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+    my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
+
+    my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
+    $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
 
     my @mistakes = ();
     my $runeName      = 'barcab';
@@ -2881,28 +2889,28 @@ sub checkBarcab {
     push @mistakes,
       @{
         $policy->checkOneLineGap(
-            $batteryGap,
+            $wispGap,
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
-                topicLines => [$batteryLine],
+                topicLines => [$wispLine],
             }
         )
       };
 
-    if ( $batteryColumn != $expectedColumn ) {
+    if ( $wispColumn != $expectedColumn ) {
         my $msg = sprintf 'Barcab battery %s; %s',
-          describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent2( $batteryColumn, $expectedColumn );
+          describeLC( $wispLine, $wispColumn ),
+          describeMisindent2( $wispColumn, $expectedColumn );
         push @mistakes,
           {
             desc           => $msg,
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
-            line           => $batteryLine,
-            column         => $batteryColumn,
+            line           => $wispLine,
+            column         => $wispColumn,
           };
         return \@mistakes;
     }
@@ -2910,9 +2918,11 @@ sub checkBarcab {
     return \@mistakes;
 }
 
+# tallBarcen ::= (- BAR CEN GAP -) wisp5d
 sub checkBarcen {
     my ( $policy, $node )    = @_;
-    my ( $gap,    $battery ) = @{ $policy->gapSeq0($node) };
+    my ( $rune, undef, $gap,    $wisp ) = @{ $node->{children} };
+    my $wispNodeIX = $wisp->{IX};
     my $instance = $policy->{lint};
     my ( $parentLine,   $parentColumn ) = $instance->nodeLC($node);
     my ( $anchorColumn, $anchorData )   = $policy->reanchorInc(
@@ -2926,12 +2936,13 @@ sub checkBarcen {
             tallKetwut => 1,
         }
     );
+    $policy->{perNode}->{$wispNodeIX}->{anchorColumn} = $anchorColumn;
     my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
 
-    my $batteryNodeIX = $battery->{IX};
-    $policy->{perNode}->{$batteryNodeIX}->{anchorColumn} = $anchorColumn;
+    my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
+    $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
 
-    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+    my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
 
     my @mistakes = ();
     my $runeName      = 'barcen';
@@ -2939,12 +2950,12 @@ sub checkBarcen {
     my $gapLiteral = $instance->literalNode($gap);
     my $expectedColumn;
 
-    if ( $parentLine == $batteryLine ) {
+    if ( $parentLine == $wispLine ) {
         my $gapLength = $gap->{length};
         return [] if length $gapLiteral == 2;
 
         my $msg = sprintf 'joined Barcen battery %s; %s',
-          describeLC( $batteryLine, $batteryColumn ),
+          describeLC( $wispLine, $wispColumn ),
           describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
@@ -2952,10 +2963,10 @@ sub checkBarcen {
             subpolicy => [ $runeName, 'hgap' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
-            line         => $batteryLine,
-            column       => $batteryColumn,
-            reportLine         => $batteryLine,
-            reportColumn       => $batteryColumn,
+            line         => $wispLine,
+            column       => $wispColumn,
+            reportLine         => $wispLine,
+            reportColumn       => $wispColumn,
           };
         return \@mistakes;
     }
@@ -2977,20 +2988,20 @@ sub checkBarcen {
         )
       };
 
-    if ( $batteryColumn != $expectedColumn ) {
+    if ( $wispColumn != $expectedColumn ) {
         my $msg = sprintf 'split Barcen battery %s; %s',
-          describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent2( $batteryColumn, $expectedColumn );
+          describeLC( $wispLine, $wispColumn ),
+          describeMisindent2( $wispColumn, $expectedColumn );
         push @mistakes,
           {
             desc         => $msg,
             subpolicy => [ $runeName, 'battery-split' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
-            line         => $batteryLine,
-            column       => $batteryColumn,
-            reportLine         => $batteryLine,
-            reportColumn       => $batteryColumn,
+            line         => $wispLine,
+            column       => $wispColumn,
+            reportLine         => $wispLine,
+            reportColumn       => $wispColumn,
             anchorDetails  => $policy->anchorDetails( $node, $anchorData ),
           };
         return \@mistakes;
@@ -2999,19 +3010,23 @@ sub checkBarcen {
     return \@mistakes;
 }
 
+# tallBarket ::= (- BAR KET GAP -) tall5d (- GAP -) wisp5d
 sub checkBarket {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
 
     # TODO: reanchoring logic, memoize anchorColumn for checkWisp5d()
 
-    my ( $headGap, $head, $batteryGap, $battery ) =
-      @{ $policy->gapSeq0($node) };
+    my ( $rune, undef, $headGap, $head, $wispGap, $wisp ) =
+      @{ $node->{children} };
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my $anchorNode = $node;
     my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
-    my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
+    my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
+
+    my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
+    $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
 
     my @mistakes = ();
     my $tag      = 'barket';
@@ -3091,30 +3106,30 @@ sub checkBarket {
     push @mistakes,
       @{
         $policy->checkOneLineGap(
-            $batteryGap,
+            $wispGap,
             {
                 mainColumn => $expectedColumn,
                 tag        => $tag,
                 subpolicy  => [$runeName],
                 details    => [ [$tag] ],
-                topicLines => [$batteryLine],
+                topicLines => [$wispLine],
             }
         )
       };
 
-    if ( $batteryColumn != $expectedColumn ) {
+    if ( $wispColumn != $expectedColumn ) {
         my $msg = sprintf 'Barket battery %s; %s',
-          describeLC( $batteryLine, $batteryColumn ),
-          describeMisindent2( $batteryColumn, $expectedColumn );
+          describeLC( $wispLine, $wispColumn ),
+          describeMisindent2( $wispColumn, $expectedColumn );
         push @mistakes,
           {
             desc         => $msg,
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
-            line         => $batteryLine,
-            column       => $batteryColumn,
-            reportLine   => $batteryLine,
-            reportColumn => $batteryColumn,
+            line         => $wispLine,
+            column       => $wispColumn,
+            reportLine   => $wispLine,
+            reportColumn => $wispColumn,
           };
         return \@mistakes;
     }
@@ -5815,7 +5830,7 @@ sub checkLuslus {
     die "battery not found" if not defined $battery;
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
     my ( $cellBodyColumn, $cellBodyColumnLines ) =
-      @{ $policy->cellBodyColumn($battery) };
+      @{ $policy->getInheritedAttribute($node, 'cellBodyAlignmentData') };
 
     my $batteryHoon = $instance->brickNode($battery);
     my ( $batteryHoonLine, $batteryHoonColumn ) =

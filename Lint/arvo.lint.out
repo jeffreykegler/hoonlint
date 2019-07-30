@@ -661,7 +661,6 @@ hoons/arvo/app/gmail.hoon 224:5 Test::Whitespace wutdot:indent backdented elemen
 hoons/arvo/app/gmail.hoon 257:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @257:5; comment overindented by 2
 hoons/arvo/app/gmail.hoon 264:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @264:5; comment overindented by 2
 hoons/arvo/app/gmail.hoon 280:1 Test::Whitespace barcen:empty-line barcen @280:1; empty line in comment
-hoons/arvo/app/gmail.hoon 293:5 Test::Whitespace barcen:comment-indent barcen @293:5; comment overindented by 2
 === hoons/arvo/app/test.hoon ===
 hoons/arvo/app/test.hoon 62:5 Test::Whitespace tallColsig runstep #2 @62:5; underindented by 2
 hoons/arvo/app/test.hoon 87:5 Test::Whitespace tallColsig runstep #2 @87:5; underindented by 2
