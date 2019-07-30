@@ -407,10 +407,7 @@ sub reportItem {
     }
 
     return if $excludeThisItem;
-    if ($suppressThisItem) {
-        return unless $instance->{censusWhitespace};
-        $mistakeDesc = "SUPPRESSION $suppression";
-    }
+    return if $suppressThisItem;
 
     my $fileName     = $instance->{fileName};
     my $mistakeLines = $instance->{mistakeLines};
