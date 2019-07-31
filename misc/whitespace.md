@@ -1646,7 +1646,7 @@ same column, called the **base column**
 of the battery.
 The arms should be separated by vertical gaps,
 where the inter-column is the base column,
-and the pre-column is undefined.
+and the pre-column is two stops after the base column.
 The base column of the battery is specified below,
 in the description of each battery hoon.
 Arms may be joined or split.
