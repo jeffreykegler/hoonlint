@@ -2148,7 +2148,6 @@ sub checkWhap5d {
     my ( $policy, $node ) = @_;
     my $gapSeq           = $policy->gapSeq($node);
     my $instance         = $policy->{lint};
-    my $censusWhitespace = $instance->{censusWhitespace};
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
@@ -2171,7 +2170,7 @@ sub checkWhap5d {
         my $boog = $children->[$childIX];
         my ( $boogLine, $boogColumn ) = $instance->nodeLC($boog);
 
-        if ( $boogColumn != $expectedBoogColumn or $censusWhitespace ) {
+        if ( $boogColumn != $expectedBoogColumn ) {
             my $msg = sprintf
               "cell #%d %s; %s",
               ( $childIX / 2 ) + 1,
@@ -6119,7 +6118,6 @@ sub validate_node {
     my $ruleDB           = $instance->{ruleDB};
     my $lineToPos        = $instance->{lineToPos};
     my $symbolReverseDB  = $instance->{symbolReverseDB};
-    my $censusWhitespace = $instance->{censusWhitespace};
 
     my $parentSymbol = $node->{symbol};
     my $parentStart  = $node->{start};
