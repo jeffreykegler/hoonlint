@@ -1467,3 +1467,21 @@ hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attr
 hoons/arvo/sys/vane/eyre.hoon 1945:9 Test::Whitespace siggar:hint-body-indent SIGGAL/SIGGAR hint body @1945:9; underindented by 2
 
 # BARCEN aberrations
+hoons/arvo/app/ask.hoon 8:3 Test::Whitespace barcen:battery-indent split Barcen battery @8:3; overindented by 2
+hoons/arvo/app/gmail.hoon 280:1 Test::Whitespace barcen:empty-line barcen @280:1; empty line in comment
+hoons/arvo/app/gmail/split.hoon 36:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @36:1; empty line in comment
+hoons/arvo/app/gmail/split.hoon 53:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @53:1; empty line in comment
+hoons/arvo/app/gmail/split.hoon 67:1 Test::Whitespace barcen:empty-line barcen @67:1; empty line in comment
+hoons/arvo/lib/down-jet/parse.hoon 915:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @915:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 916:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @916:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 917:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @917:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 918:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @918:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 919:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @919:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 920:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @920:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 921:9 Test::Whitespace barcen:arm-vgap:comment-indent barcen @921:9; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 1006:3 Test::Whitespace barcen:hephep-indent battery hephep @1006:3; underindented by 2
+hoons/arvo/lib/new-hoon.hoon 310:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @310:1; empty line in comment
+hoons/arvo/lib/new-hoon.hoon 1179:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1179:3; comment underindented by 2
+hoons/arvo/lib/new-hoon.hoon 1180:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1180:3; comment underindented by 2
+hoons/arvo/lib/new-hoon.hoon 1181:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1181:3; comment underindented by 2
+hoons/arvo/lib/new-hoon.hoon 1182:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1182:3; comment underindented by 2
