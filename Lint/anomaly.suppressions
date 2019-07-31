@@ -1465,3 +1465,5 @@ hoons/arvo/web/dojo.hoon 14:18 Test::Whitespace sail:body-tight-indent Sail attr
 
 # Hint aberrations
 hoons/arvo/sys/vane/eyre.hoon 1945:9 Test::Whitespace siggar:hint-body-indent SIGGAL/SIGGAR hint body @1945:9; underindented by 2
+
+# BARCEN aberrations

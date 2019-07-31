@@ -1100,13 +1100,14 @@ Exception ::= BlankLine</code></pre>
 <li><p>Tread -- a comment that starts at the inter-comment column, whose first four characters are colons, and whose fifth character is either a space or a newline.</p></li>
 <li><p>UpperRiser -- a comment that starts at the inter-comment column.</p></li>
 </ul>
-<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using &quot;priorities&quot;. Each terminal has a numerical priority: 1, 2 or 3. Comments are read as if looked for in numerical order by priority. This has the slightly counter-intuitive effect that the highest priority is the lowest numbered one. These definitions imply that</p>
+<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using &quot;priorities&quot;. Each terminal has a numerical priority: 1, 2, 3 or 4. Comments are read as if looked for in numerical order by priority. This has the slightly counter-intuitive effect that the highest priority is the lowest numbered one. These definitions imply that</p>
 <ul>
+<li><p>No comment is read as a Priority 4 comment if it can be lexed as a Priority 1, 2 or 3 comment.</p></li>
 <li><p>No comment is read as a Priority 3 comment if it can be lexed as a Priority 1 or 2 comment.</p></li>
 <li><p>No comment is read as a Priority 2 comment if it can be lexed as a Priority 1 comment.</p></li>
 </ul>
 <p>Comments with the same priority are treated as if they were looked for simultaneously. This means that it remains possible for terminals to be ambiguous -- that is, one line can be read as two different terminals. In these cases the BNF grammar ensures that only one of the terminals will be used.</p>
-<p>Priority 1 comments are InterComment, LowerRiser, PreComment, Tread, and UpperRiser. The priority 2 comment is MetaComment. Priority 3 comments are BadComment and BlankLine.</p>
+<p>Priority 1 comments are InterComment, LowerRiser, Tread, and UpperRiser. The priority 2 comment is PreComment. The priority 3 comment is MetaComment. Priority 4 comments are BadComment and BlankLine.</p>
 <h1 id="appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</h1>
 <p>Let <code>r</code> be the reanchored rune. Let <code>a</code> be the anchor rune of <code>r</code>. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
 <p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. Let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>

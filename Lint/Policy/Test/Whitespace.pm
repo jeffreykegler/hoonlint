@@ -475,23 +475,6 @@ sub checkGapComments {
                     push @failedOffsets, $interOffset;
                     next TIER1;
                 }
-                if ( $terminal eq 'PreComment' ) {
-                    next TIER1 if not defined $preOffset;
-                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
-                    my $commentOffset = $LAST_MATCH_START[1];
-                    $commentOffset //= -1;
-
-                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
-                    if ( $commentOffset == $preOffset ) {
-
-                        # say STDERR join ' ', __FILE__, __LINE__;
-                        $recce->lexeme_alternative( $terminal, $line );
-                        $tier1_ok = 1;
-                        next TIER1;
-                    }
-                    push @failedOffsets, $preOffset;
-                    next TIER1;
-                }
                 if ( $terminal eq 'Tread' ) {
                     $line =~ m/^ [ ]* ([:][:][:][:][ \n]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
@@ -547,12 +530,39 @@ sub checkGapComments {
             # lexemes on the other tiers
             last FIND_ALTERNATIVES if $tier1_ok;
 
+            my $tier2_ok;
             my @tier3 = ();
           TIER2: for my $terminal (@tier2) {
+                if ( $terminal eq 'PreComment' ) {
+                    next TIER2 if not defined $preOffset;
+                    $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
+                    my $commentOffset = $LAST_MATCH_START[1];
+                    $commentOffset //= -1;
+
+                    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset;
+                    if ( $commentOffset == $preOffset ) {
+
+                        # say STDERR join ' ', __FILE__, __LINE__;
+                        $recce->lexeme_alternative( $terminal, $line );
+                        $tier2_ok = 1;
+                        next TIER2;
+                    }
+                    push @failedOffsets, $preOffset;
+                    next TIER2;
+                }
+                push @tier3, $terminal;
+            }
+
+            # If we found a tier 2 lexeme, do not look for the "backup"
+            # lexemes on the other tiers
+            last FIND_ALTERNATIVES if $tier2_ok;
+
+            my @tier4 = ();
+          TIER3: for my $terminal (@tier3) {
                 if ( $terminal eq 'MetaComment' ) {
                     $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
                     my $commentOffset = $LAST_MATCH_START[1];
-                    next TIER2 if not defined $commentOffset;
+                    next TIER3 if not defined $commentOffset;
                     if ( $commentOffset == 0 ) {
                         $recce->lexeme_alternative( $terminal, $line );
 
@@ -561,10 +571,10 @@ sub checkGapComments {
                     }
                     push @failedOffsets, $interOffset;
                 }
-                push @tier3, $terminal;
+                push @tier4, $terminal;
             }
 
-          TIER3: for my $terminal (@tier3) {
+          TIER4: for my $terminal (@tier4) {
                 if ( $terminal eq 'BlankLine' ) {
 
                # say STDERR join ' ', __FILE__, __LINE__, $lineNum, qq{"$line"};
@@ -2154,19 +2164,19 @@ sub checkWhap5d {
       ( $anchorLine == $parentLine and $anchorColumn != $parentColumn );
     my $children       = $node->{children};
     my $childIX        = 0;
-    my $expectedColumn = $joined ? $parentColumn : $anchorColumn;
+    my $expectedBoogColumn = $joined ? $parentColumn : $anchorColumn;
     my $expectedLine   = $joined ? $parentLine : $anchorLine + 1;
 
   CHILD: while ( $childIX <= $#$children ) {
         my $boog = $children->[$childIX];
         my ( $boogLine, $boogColumn ) = $instance->nodeLC($boog);
 
-        if ( $boogColumn != $expectedColumn or $censusWhitespace ) {
+        if ( $boogColumn != $expectedBoogColumn or $censusWhitespace ) {
             my $msg = sprintf
               "cell #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $boogLine, $boogColumn ),
-              describeMisindent2( $boogColumn, $expectedColumn );
+              describeMisindent2( $boogColumn, $expectedBoogColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2192,7 +2202,8 @@ sub checkWhap5d {
             $policy->checkOneLineGap(
                 $boogGap,
                 {
-                    mainColumn => $expectedColumn,
+                    mainColumn => $expectedBoogColumn,
+                    preColumn => $expectedBoogColumn+2,
                     tag        => $runeName,
                     subpolicy => [$runeName, 'arm-vgap'],
                     details    => [ [$runeName] ],
@@ -2931,7 +2942,9 @@ sub checkBarcen {
             # LustisCell => 1, # should NOT reanchor at Lustis
             # LushepCell => 1, # should NOT reanchor at Lushep
             # LuslusCell => 1, # should NOT reanchor at Luslus, per experiment
-            # tallTisgar => 1, # should NOT reanchor at TISGAR, per experiment
+            # Reanchor at TISGAR would make sense in a lot of places in arvo corpus,
+            # would not work in toe.hoon
+            # tallTisgar => 1,
             tallKetbar => 1,
             tallKetwut => 1,
         }
@@ -2960,7 +2973,7 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'hgap' ],
+            subpolicy => [ $runeName, 'battery-hgap' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $wispLine,
@@ -2995,7 +3008,7 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'battery-split' ],
+            subpolicy => [ $runeName, 'battery-indent' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $wispLine,
