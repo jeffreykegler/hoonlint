@@ -443,6 +443,15 @@ hoons/arvo/sys/vane/ford.hoon 55:7 Test::Whitespace buctis:indent backdented ele
 hoons/arvo/sys/vane/ford.hoon 251:9 Test::Whitespace wutcol:comment-indent backdented element #3, @251:9; comment overindented by 4
 hoons/arvo/sys/vane/ford.hoon 344:15 Test::Whitespace tisfas:indent backdented element #2 @344:15; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 447:7 Test::Whitespace zapdot:indent backdented element #1 @447:7; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 856:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @856:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 861:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @861:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 866:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @866:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 871:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @871:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 875:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @875:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 880:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @880:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 886:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @886:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 891:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @891:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 896:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @896:11; comment underindented by 4
 hoons/arvo/sys/vane/ford.hoon 932:13 Test::Whitespace colcab:indent backdented element #2 @932:13; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 975:13 Test::Whitespace colcab:indent backdented element #2 @975:13; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 1013:13 Test::Whitespace kethep:indent backdented element #2 @1013:13; overindented by 4
