@@ -1837,12 +1837,14 @@ in lexical order:
 * Its head.
 
 * A vertical gap,
-  with comments at the anchor column.
+  with comments at the anchor column,
+  and one stop after the anchor column.
 
 * A battery, whose base column location should be the anchor column.
 
 * A vertical gap,
-  with comments at the anchor column.
+  with comments at the anchor column,
+  and one stop after the anchor column.
 
 * A HEPHEP, aligned at the anchor column.
 

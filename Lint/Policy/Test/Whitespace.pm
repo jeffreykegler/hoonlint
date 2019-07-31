@@ -3059,6 +3059,7 @@ sub checkBarket {
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy  => [$runeName, 'head-split'],
                     parentLine   => $parentLine,
                     parentColumn => $parentColumn,
                     line         => $headLine,
@@ -3079,6 +3080,7 @@ sub checkBarket {
                 push @mistakes,
                   {
                     desc         => $msg,
+                    subpolicy  => [$runeName, 'head-pseudojoin-match'],
                     parentLine   => $parentLine,
                     parentColumn => $parentColumn,
                     line         => $headLine,
@@ -3097,16 +3099,13 @@ sub checkBarket {
         last HEAD_ISSUES if $gapLength == 2;
         my ( undef, $headGapColumn ) = $instance->nodeLC($headGap);
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $headGapColumn + $expectedLength;
         my $msg = sprintf 'Barket head %s; %s',
           describeLC( $headLine, $headColumn ),
-          describeMisindent2( $headColumn, $expectedColumn );
+          describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy  => [$runeName, 'head-hgap'],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $headLine,
@@ -3125,8 +3124,9 @@ sub checkBarket {
             $wispGap,
             {
                 mainColumn => $expectedColumn,
+                preColumn => $expectedColumn + 2,
                 tag        => $tag,
-                subpolicy  => [$runeName],
+                subpolicy  => [$runeName, 'battery-vgap'],
                 details    => [ [$tag] ],
                 topicLines => [$wispLine],
             }
@@ -3140,6 +3140,7 @@ sub checkBarket {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy  => [$runeName, 'battery-indent'],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $wispLine,
