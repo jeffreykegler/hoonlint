@@ -1485,3 +1485,59 @@ hoons/arvo/lib/new-hoon.hoon 1179:3 Test::Whitespace barcen:arm-vgap:comment-ind
 hoons/arvo/lib/new-hoon.hoon 1180:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1180:3; comment underindented by 2
 hoons/arvo/lib/new-hoon.hoon 1181:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1181:3; comment underindented by 2
 hoons/arvo/lib/new-hoon.hoon 1182:3 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1182:3; comment underindented by 2
+hoons/arvo/mar/purl.hoon 8:17 Test::Whitespace barcen:battery-hgap joined Barcen battery @8:17; overindented by 2
+hoons/arvo/mar/quri.hoon 10:17 Test::Whitespace barcen:battery-hgap joined Barcen battery @10:17; overindented by 2
+hoons/arvo/mar/recoverable-error.hoon 29:31 Test::Whitespace barcen:missing-newline barcen @29:31; missing newline @29:31
+hoons/arvo/mar/recoverable-error.hoon 29:33 Test::Whitespace barcen:hephep-indent battery hephep @29:33; overindented by 22
+hoons/arvo/mar/snip.hoon 7:3 Test::Whitespace barcen:battery-indent split Barcen battery @7:3; overindented by 2
+hoons/arvo/sur/gmail-label.hoon 21:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @21:1; empty line in comment
+hoons/arvo/sur/gmail-label.hoon 24:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @24:1; empty line in comment
+hoons/arvo/sur/sole.hoon 81:1 Test::Whitespace barcen:arm-vgap:empty-line barcen @81:1; empty line in comment
+hoons/arvo/sur/twitter.hoon 37:7 Test::Whitespace barcen:battery-indent split Barcen battery @37:7; overindented by 2
+hoons/arvo/sys/hoon.hoon 7278:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @7278:5; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 8509:9 Test::Whitespace barcen:hephep-indent battery hephep @8509:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 8536:11 Test::Whitespace barcen:hephep-indent battery hephep @8536:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 8545:13 Test::Whitespace barcen:battery-indent split Barcen battery @8545:13; underindented by 6
+hoons/arvo/sys/hoon.hoon 8548:9 Test::Whitespace barcen:hephep-indent battery hephep @8548:9; underindented by 10
+hoons/arvo/sys/hoon.hoon 8551:13 Test::Whitespace barcen:battery-indent split Barcen battery @8551:13; underindented by 6
+hoons/arvo/sys/hoon.hoon 8554:9 Test::Whitespace barcen:hephep-indent battery hephep @8554:9; underindented by 10
+hoons/arvo/sys/hoon.hoon 8570:19 Test::Whitespace barcen:hephep-indent battery hephep @8570:19; overindented by 14
+hoons/arvo/sys/hoon.hoon 8570:7 Test::Whitespace barcen:hephep-indent battery hephep @8570:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 11614:7 Test::Whitespace barcen:arm-vgap:comment-indent barcen @11614:7; comment underindented by 2
+hoons/arvo/sys/vane/clay.hoon 15:1 Test::Whitespace barcen:battery-indent split Barcen battery @15:1; underindented by 4
+hoons/arvo/sys/vane/clay.hoon 321:1 Test::Whitespace barcen:hephep-indent battery hephep @321:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 7:1 Test::Whitespace barcen:battery-indent split Barcen battery @7:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 8:1 Test::Whitespace barcen:hephep-indent battery hephep @8:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 10:1 Test::Whitespace barcen:battery-indent split Barcen battery @10:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 32:1 Test::Whitespace barcen:hephep-indent battery hephep @32:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 1981:5 Test::Whitespace barcen:hephep-indent battery hephep @1981:5; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 856:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @856:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 861:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @861:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 866:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @866:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 871:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @871:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 875:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @875:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 880:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @880:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 886:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @886:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 891:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @891:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 896:11 Test::Whitespace barcen:arm-vgap:comment-indent barcen @896:11; comment underindented by 4
+hoons/arvo/sys/vane/ford.hoon 1551:7 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1551:7; comment underindented by 2
+hoons/arvo/sys/vane/ford.hoon 1552:7 Test::Whitespace barcen:arm-vgap:comment-indent barcen @1552:7; comment underindented by 2
+hoons/arvo/sys/vane/gall.hoon 8:5 Test::Whitespace barcen:comment-indent barcen @8:5; comment overindented by 4
+hoons/arvo/sys/vane/gall.hoon 23:5 Test::Whitespace barcen:comment-indent barcen @23:5; comment overindented by 4
+hoons/arvo/sys/vane/gall.hoon 33:5 Test::Whitespace barcen:comment-indent barcen @33:5; comment overindented by 4
+hoons/arvo/sys/vane/gall.hoon 35:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @35:5; comment overindented by 2
+hoons/arvo/sys/vane/gall.hoon 36:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @36:5; comment overindented by 2
+hoons/arvo/sys/vane/gall.hoon 105:5 Test::Whitespace barcen:comment-indent barcen @105:5; comment overindented by 4
+hoons/arvo/sys/vane/jael.hoon 43:1 Test::Whitespace barcen:battery-indent split Barcen battery @43:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 84:1 Test::Whitespace barcen:hephep-indent battery hephep @84:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 90:1 Test::Whitespace barcen:battery-indent split Barcen battery @90:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 361:1 Test::Whitespace barcen:hephep-indent battery hephep @361:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 368:3 Test::Whitespace barcen:comment-indent barcen @368:3; comment underindented by 2
+hoons/arvo/sys/vane/jael.hoon 369:1 Test::Whitespace barcen:battery-indent split Barcen battery @369:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 854:1 Test::Whitespace barcen:hephep-indent battery hephep @854:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 861:3 Test::Whitespace barcen:comment-indent barcen @861:3; comment underindented by 2
+hoons/arvo/sys/vane/jael.hoon 862:1 Test::Whitespace barcen:battery-indent split Barcen battery @862:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 1889:7 Test::Whitespace barcen:hephep-indent battery hephep @1889:7; overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1890:5 Test::Whitespace barcen:hephep-indent battery hephep @1890:5; overindented by 2
+hoons/arvo/sys/vane/jael.hoon 1937:1 Test::Whitespace barcen:hephep-indent battery hephep @1937:1; underindented by 4
+hoons/arvo/sys/vane/xmas.hoon 390:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @390:5; comment overindented by 2
