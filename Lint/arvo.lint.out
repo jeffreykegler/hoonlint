@@ -11,7 +11,7 @@ hoons/arvo/sur/sole.hoon 81:1 Test::Whitespace barcen:arm-vgap:empty-line barcen
 === hoons/arvo/sur/recoverable-error.hoon ===
 hoons/arvo/sur/recoverable-error.hoon 7:3 Test::Whitespace tallBuccen runstep #1 @7:3; underindented by 2
 === hoons/arvo/sur/twitter.hoon ===
-hoons/arvo/sur/twitter.hoon 37:7 Test::Whitespace barcen:battery-split split Barcen battery @37:7; overindented by 2
+hoons/arvo/sur/twitter.hoon 37:7 Test::Whitespace barcen:battery-indent split Barcen battery @37:7; overindented by 2
 === hoons/arvo/sur/rfc.hoon ===
 === hoons/arvo/sur/markdown.hoon ===
 === hoons/arvo/sur/unicode-data.hoon ===
@@ -362,9 +362,9 @@ hoons/arvo/sys/hoon.hoon 7816:25 Test::Whitespace collus:indent backdented eleme
 hoons/arvo/sys/hoon.hoon 8241:19 Test::Whitespace cenlus:indent backdented element #3 @8241:19; underindented by 2
 hoons/arvo/sys/hoon.hoon 8509:9 Test::Whitespace barcen:hephep-indent battery hephep @8509:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 8536:11 Test::Whitespace barcen:hephep-indent battery hephep @8536:11; overindented by 2
-hoons/arvo/sys/hoon.hoon 8545:13 Test::Whitespace barcen:battery-split split Barcen battery @8545:13; underindented by 6
+hoons/arvo/sys/hoon.hoon 8545:13 Test::Whitespace barcen:battery-indent split Barcen battery @8545:13; underindented by 6
 hoons/arvo/sys/hoon.hoon 8548:9 Test::Whitespace barcen:hephep-indent battery hephep @8548:9; underindented by 10
-hoons/arvo/sys/hoon.hoon 8551:13 Test::Whitespace barcen:battery-split split Barcen battery @8551:13; underindented by 6
+hoons/arvo/sys/hoon.hoon 8551:13 Test::Whitespace barcen:battery-indent split Barcen battery @8551:13; underindented by 6
 hoons/arvo/sys/hoon.hoon 8554:9 Test::Whitespace barcen:hephep-indent battery hephep @8554:9; underindented by 10
 hoons/arvo/sys/hoon.hoon 8570:19 Test::Whitespace barcen:hephep-indent battery hephep @8570:19; overindented by 14
 hoons/arvo/sys/hoon.hoon 8570:7 Test::Whitespace barcen:hephep-indent battery hephep @8570:7; underindented by 2
@@ -423,9 +423,9 @@ hoons/arvo/sys/arvo.hoon 619:3 Test::Whitespace bartis:indent backdented element
 === hoons/arvo/sys/vane/behn.hoon ===
 hoons/arvo/sys/vane/behn.hoon 46:11 Test::Whitespace wutgar:indent backdented element #2 @46:11; overindented by 2
 === hoons/arvo/sys/vane/dill.hoon ===
-hoons/arvo/sys/vane/dill.hoon 7:1 Test::Whitespace barcen:battery-split split Barcen battery @7:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 7:1 Test::Whitespace barcen:battery-indent split Barcen battery @7:1; underindented by 4
 hoons/arvo/sys/vane/dill.hoon 8:1 Test::Whitespace barcen:hephep-indent battery hephep @8:1; underindented by 4
-hoons/arvo/sys/vane/dill.hoon 10:1 Test::Whitespace barcen:battery-split split Barcen battery @10:1; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 10:1 Test::Whitespace barcen:battery-indent split Barcen battery @10:1; underindented by 4
 hoons/arvo/sys/vane/dill.hoon 32:5 Test::Whitespace tisgar:indent backdented element #2 @32:5; overindented by 4
 hoons/arvo/sys/vane/dill.hoon 32:1 Test::Whitespace barcen:hephep-indent battery hephep @32:1; underindented by 4
 hoons/arvo/sys/vane/dill.hoon 33:1 Test::Whitespace tisgar:indent backdented element #1 @33:1; underindented by 6
@@ -523,7 +523,7 @@ hoons/arvo/sys/vane/xmas.hoon 1158:11 Test::Whitespace tallColtar runstep #3 @11
 hoons/arvo/sys/vane/xmas.hoon 1228:13 Test::Whitespace kethep:indent backdented element #2 @1228:13; overindented by 4
 hoons/arvo/sys/vane/xmas.hoon 1239:11 Test::Whitespace kethep:indent backdented element #2 @1239:11; overindented by 2
 === hoons/arvo/sys/vane/clay.hoon ===
-hoons/arvo/sys/vane/clay.hoon 15:1 Test::Whitespace barcen:battery-split split Barcen battery @15:1; underindented by 4
+hoons/arvo/sys/vane/clay.hoon 15:1 Test::Whitespace barcen:battery-indent split Barcen battery @15:1; underindented by 4
 hoons/arvo/sys/vane/clay.hoon 321:1 Test::Whitespace barcen:hephep-indent battery hephep @321:1; underindented by 4
 hoons/arvo/sys/vane/clay.hoon 326:3 Test::Whitespace tallBuccolMold runstep #2 @326:3; underindented by 8
 hoons/arvo/sys/vane/clay.hoon 329:3 Test::Whitespace tallBuccolMold runstep #2 @329:3; underindented by 8
@@ -591,16 +591,16 @@ hoons/arvo/sys/vane/clay.hoon 3901:9 Test::Whitespace kethep:indent backdented e
 hoons/arvo/sys/vane/clay.hoon 4008:11 Test::Whitespace kethep:indent backdented element #2 @4008:11; overindented by 4
 hoons/arvo/sys/vane/clay.hoon 4079:9 Test::Whitespace kethep:indent backdented element #2 @4079:9; overindented by 4
 === hoons/arvo/sys/vane/jael.hoon ===
-hoons/arvo/sys/vane/jael.hoon 43:1 Test::Whitespace barcen:battery-split split Barcen battery @43:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 43:1 Test::Whitespace barcen:battery-indent split Barcen battery @43:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 51:9 Test::Whitespace buctis:indent backdented element #2 @51:9; overindented by 2
 hoons/arvo/sys/vane/jael.hoon 56:9 Test::Whitespace buctis:indent backdented element #2 @56:9; overindented by 2
 hoons/arvo/sys/vane/jael.hoon 62:9 Test::Whitespace buctis:indent backdented element #2 @62:9; overindented by 2
 hoons/arvo/sys/vane/jael.hoon 65:9 Test::Whitespace buctis:indent backdented element #2 @65:9; overindented by 2
 hoons/arvo/sys/vane/jael.hoon 84:1 Test::Whitespace barcen:hephep-indent battery hephep @84:1; underindented by 4
-hoons/arvo/sys/vane/jael.hoon 90:1 Test::Whitespace barcen:battery-split split Barcen battery @90:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 90:1 Test::Whitespace barcen:battery-indent split Barcen battery @90:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 361:1 Test::Whitespace barcen:hephep-indent battery hephep @361:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 368:3 Test::Whitespace barcen:comment-indent barcen @368:3; comment underindented by 2
-hoons/arvo/sys/vane/jael.hoon 369:1 Test::Whitespace barcen:battery-split split Barcen battery @369:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 369:1 Test::Whitespace barcen:battery-indent split Barcen battery @369:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 552:11 Test::Whitespace colhep:indent backdented element #2 @552:11; overindented by 4
 hoons/arvo/sys/vane/jael.hoon 576:11 Test::Whitespace colhep:indent backdented element #2 @576:11; overindented by 4
 hoons/arvo/sys/vane/jael.hoon 599:11 Test::Whitespace colhep:indent backdented element #2 @599:11; overindented by 4
@@ -608,7 +608,7 @@ hoons/arvo/sys/vane/jael.hoon 606:11 Test::Whitespace colhep:indent backdented e
 hoons/arvo/sys/vane/jael.hoon 613:11 Test::Whitespace colhep:indent backdented element #2 @613:11; overindented by 4
 hoons/arvo/sys/vane/jael.hoon 854:1 Test::Whitespace barcen:hephep-indent battery hephep @854:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 861:3 Test::Whitespace barcen:comment-indent barcen @861:3; comment underindented by 2
-hoons/arvo/sys/vane/jael.hoon 862:1 Test::Whitespace barcen:battery-split split Barcen battery @862:1; underindented by 4
+hoons/arvo/sys/vane/jael.hoon 862:1 Test::Whitespace barcen:battery-indent split Barcen battery @862:1; underindented by 4
 hoons/arvo/sys/vane/jael.hoon 1096:12 Test::Whitespace wutsig:indent backdented element #2 @1096:12; overindented by 1
 hoons/arvo/sys/vane/jael.hoon 1097:10 Test::Whitespace wutsig:indent backdented element #3 @1097:10; overindented by 1
 hoons/arvo/sys/vane/jael.hoon 1155:9 Test::Whitespace colcab:indent backdented element #2 @1155:9; underindented by 7
@@ -696,7 +696,7 @@ hoons/arvo/app/dojo.hoon 1664:9 Test::Whitespace kethep:indent backdented elemen
 hoons/arvo/app/gh.hoon 84:7 Test::Whitespace kethep:indent backdented element #2 @84:7; overindented by 4
 hoons/arvo/app/gh.hoon 118:9 Test::Whitespace tislus:comment-indent backdented element #2, @118:9; comment underindented by 2
 === hoons/arvo/app/ask.hoon ===
-hoons/arvo/app/ask.hoon 8:3 Test::Whitespace barcen:battery-split split Barcen battery @8:3; overindented by 2
+hoons/arvo/app/ask.hoon 8:3 Test::Whitespace barcen:battery-indent split Barcen battery @8:3; overindented by 2
 === hoons/arvo/app/pipe.hoon ===
 hoons/arvo/app/pipe.hoon 38:11 Test::Whitespace tallColsig runstep #1 @38:11; overindented by 2
 hoons/arvo/app/pipe.hoon 39:11 Test::Whitespace tallColsig runstep #2 @39:11; overindented by 2
@@ -939,7 +939,7 @@ hoons/arvo/lib/hall.hoon 178:15 Test::Whitespace dottis:indent backdented elemen
 === hoons/arvo/mar/urb.hoon ===
 === hoons/arvo/mar/mime.hoon ===
 === hoons/arvo/mar/quri.hoon ===
-hoons/arvo/mar/quri.hoon 10:17 Test::Whitespace barcen:hgap joined Barcen battery @10:17; overindented by 2
+hoons/arvo/mar/quri.hoon 10:17 Test::Whitespace barcen:battery-hgap joined Barcen battery @10:17; overindented by 2
 === hoons/arvo/mar/plan-diff.hoon ===
 === hoons/arvo/mar/noun.hoon ===
 === hoons/arvo/mar/gmail/req.hoon ===
@@ -952,7 +952,7 @@ hoons/arvo/mar/quri.hoon 10:17 Test::Whitespace barcen:hgap joined Barcen batter
 === hoons/arvo/mar/tree/comments.hoon ===
 === hoons/arvo/mar/ships.hoon ===
 === hoons/arvo/mar/purl.hoon ===
-hoons/arvo/mar/purl.hoon 8:17 Test::Whitespace barcen:hgap joined Barcen battery @8:17; overindented by 2
+hoons/arvo/mar/purl.hoon 8:17 Test::Whitespace barcen:battery-hgap joined Barcen battery @8:17; overindented by 2
 === hoons/arvo/mar/hoon.hoon ===
 === hoons/arvo/mar/lens/command.hoon ===
 === hoons/arvo/mar/lens/json.hoon ===
@@ -991,7 +991,7 @@ hoons/arvo/mar/tang.hoon 14:5 Test::Whitespace kethep:indent backdented element 
 === hoons/arvo/mar/atom.hoon ===
 === hoons/arvo/mar/path.hoon ===
 === hoons/arvo/mar/snip.hoon ===
-hoons/arvo/mar/snip.hoon 7:3 Test::Whitespace barcen:battery-split split Barcen battery @7:3; overindented by 2
+hoons/arvo/mar/snip.hoon 7:3 Test::Whitespace barcen:battery-indent split Barcen battery @7:3; overindented by 2
 hoons/arvo/mar/snip.hoon 27:7 Test::Whitespace kethep:indent backdented element #2 @27:7; overindented by 2
 === hoons/arvo/mar/urbit.hoon ===
 === hoons/arvo/mar/md.hoon ===

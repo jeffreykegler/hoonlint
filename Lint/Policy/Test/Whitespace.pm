@@ -531,8 +531,8 @@ sub checkGapComments {
             last FIND_ALTERNATIVES if $tier1_ok;
 
             my $tier2_ok;
-            my @tier3         = ();
-          TIER2: for my $terminal ( @tier2 ) {
+            my @tier3 = ();
+          TIER2: for my $terminal (@tier2) {
                 if ( $terminal eq 'PreComment' ) {
                     next TIER2 if not defined $preOffset;
                     $line =~ m/^ [ ]* ([+][|]|[:][:]|[:][<]|[:][>]) /x;
@@ -651,7 +651,7 @@ sub checkGapComments {
         say STDERR $recce->show_progress( 0, -1 );
         say STDERR $input;
 
-        say STDERR join " ", 'first,last,inter,pre', $firstLine, $lastLine, $interOffset, $preOffset;
+# say STDERR join " ", __FILE__, __LINE__,  $policy, $firstLine, $lastLine, $interOffset, $preOffset;
         die "Bad gap combinator parse: $issue\n";
     }
     return \@mistakes;
@@ -2163,19 +2163,19 @@ sub checkWhap5d {
       ( $anchorLine == $parentLine and $anchorColumn != $parentColumn );
     my $children       = $node->{children};
     my $childIX        = 0;
-    my $expectedColumn = $joined ? $parentColumn : $anchorColumn;
+    my $expectedBoogColumn = $joined ? $parentColumn : $anchorColumn;
     my $expectedLine   = $joined ? $parentLine : $anchorLine + 1;
 
   CHILD: while ( $childIX <= $#$children ) {
         my $boog = $children->[$childIX];
         my ( $boogLine, $boogColumn ) = $instance->nodeLC($boog);
 
-        if ( $boogColumn != $expectedColumn ) {
+        if ( $boogColumn != $expectedBoogColumn ) {
             my $msg = sprintf
               "cell #%d %s; %s",
               ( $childIX / 2 ) + 1,
               describeLC( $boogLine, $boogColumn ),
-              describeMisindent2( $boogColumn, $expectedColumn );
+              describeMisindent2( $boogColumn, $expectedBoogColumn );
             push @mistakes,
               {
                 desc           => $msg,
@@ -2201,8 +2201,8 @@ sub checkWhap5d {
             $policy->checkOneLineGap(
                 $boogGap,
                 {
-                    mainColumn => $anchorColumn,
-                    preColumn => $anchorColumn+2,
+                    mainColumn => $expectedBoogColumn,
+                    preColumn => $expectedBoogColumn+2,
                     tag        => $runeName,
                     subpolicy => [$runeName, 'arm-vgap'],
                     details    => [ [$runeName] ],
@@ -2941,7 +2941,9 @@ sub checkBarcen {
             # LustisCell => 1, # should NOT reanchor at Lustis
             # LushepCell => 1, # should NOT reanchor at Lushep
             # LuslusCell => 1, # should NOT reanchor at Luslus, per experiment
-            # tallTisgar => 1, # should NOT reanchor at TISGAR, per experiment
+            # Reanchor at TISGAR would make sense in a lot of places in arvo corpus,
+            # would not work in toe.hoon
+            # tallTisgar => 1,
             tallKetbar => 1,
             tallKetwut => 1,
         }
@@ -2970,7 +2972,7 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'hgap' ],
+            subpolicy => [ $runeName, 'battery-hgap' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $wispLine,
@@ -3005,7 +3007,7 @@ sub checkBarcen {
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'battery-split' ],
+            subpolicy => [ $runeName, 'battery-indent' ],
             parentLine   => $parentLine,
             parentColumn => $parentColumn,
             line         => $wispLine,

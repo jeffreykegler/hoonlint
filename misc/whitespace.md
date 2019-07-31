@@ -2404,12 +2404,15 @@ and whose fifth character is either a space or a newline.
 
 Terminals are ambiguous -- a given line may match more than one terminal.
 The lexer limits this ambiguity using "priorities".
-Each terminal has a numerical priority: 1, 2 or 3.
+Each terminal has a numerical priority: 1, 2, 3 or 4.
 Comments are read as if looked for
 in numerical order by priority.
 This has the slightly counter-intuitive effect
 that the highest priority is the lowest numbered one.
 These definitions imply that
+
+* No comment is read as a Priority 4 comment if it can be
+  lexed as a Priority 1, 2 or 3 comment.
 
 * No comment is read as a Priority 3 comment if it can be
   lexed as a Priority 1 or 2 comment.
@@ -2425,10 +2428,11 @@ two different terminals.
 In these cases the BNF grammar ensures that only
 one of the terminals will be used.
 
-Priority 1 comments are InterComment, LowerRiser, PreComment, Tread,
+Priority 1 comments are InterComment, LowerRiser, Tread,
 and UpperRiser.
-The priority 2 comment is MetaComment.
-Priority 3 comments are BadComment and BlankLine.
+The priority 2 comment is PreComment.
+The priority 3 comment is MetaComment.
+Priority 4 comments are BadComment and BlankLine.
 
 # Appendix: Formal definition of "anchor column"
 
