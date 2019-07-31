@@ -2226,14 +2226,14 @@ sub checkWisp5d {
     my $instance = $policy->{lint};
     my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
-    my $runeLC = describeLC($parentLine, $parentColumn);
 
     my $battery =
       $instance->ancestorByLHS( $node,
         { tallBarcab => 1, tallBarcen => 1, tallBarket => 1 } );
     my ( $batteryLine, $batteryColumn ) = $instance->nodeLC($battery);
-    my $batteryNodeIX = $battery->{IX};
-    my $anchorColumn  = $policy->{perNode}->{$batteryNodeIX}->{anchorColumn};
+    my $batteryLC = describeLC($batteryLine, $batteryColumn);
+
+    my $anchorColumn  = $policy->getInheritedAttribute($node, 'anchorColumn');
     $anchorColumn //= $batteryColumn;
 
     my ( $cellBodyColumn, $cellBodyColumnLines ) =
@@ -2252,7 +2252,7 @@ sub checkWisp5d {
                 tag        => $runeName,
                 subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
-                details      => [ [ $runeName, "Starts at $runeLC", ] ],
+                details      => [ [ $runeName, "Starts at $batteryLC", ] ],
             }
         )
       };
@@ -2278,7 +2278,7 @@ sub checkWisp5d {
                 column       => $hephepColumn,
                 reportLine   => $hephepLine,
                 reportColumn => $hephepColumn,
-                details      => [ [ $runeName, "Starts at $runeLC", ] ],
+                details      => [ [ $runeName, "Starts at $batteryLC", ] ],
               };
         }
     }
@@ -2308,7 +2308,7 @@ sub checkWisp5d {
             reportLine   => $hephepLine,
             reportColumn => $hephepColumn,
             topicLines   => [$batteryLine],
-            details      => [ [ $runeName, "Starts at $runeLC", ] ],
+            details      => [ [ $runeName, "Starts at $batteryLC", ] ],
           };
     }
     return \@mistakes;
@@ -2827,6 +2827,8 @@ sub checkBarcab {
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
     my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
 
+    $policy->setInheritedAttribute($node, 'anchorColumn', $anchorColumn);
+
     my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
     $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
 
@@ -2948,7 +2950,7 @@ sub checkBarcen {
             tallKetwut => 1,
         }
     );
-    $policy->{perNode}->{$wispNodeIX}->{anchorColumn} = $anchorColumn;
+    $policy->setInheritedAttribute($node, 'anchorColumn', $anchorColumn);
     my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
 
     my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
@@ -3036,6 +3038,8 @@ sub checkBarket {
     my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
     my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
+
+    $policy->setInheritedAttribute($node, 'anchorColumn', $anchorColumn);
 
     my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
     $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
