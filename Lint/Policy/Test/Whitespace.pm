@@ -2810,6 +2810,7 @@ sub checkSeq {
 
 }
 
+# tallBarcab ::= (- BAR CAB GAP -) till5d (- GAP -) wasp5d wisp5d
 sub checkBarcab {
     my ( $policy, $node ) = @_;
     my $instance = $policy->{lint};
@@ -2823,18 +2824,18 @@ sub checkBarcab {
       @{ $node->{children} };
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
     my $anchorNode = $node;
-    my ( $anchorLine,  $anchorColumn )  = $instance->nodeLC($anchorNode);
-    my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
-    my ( $wispLine, $wispColumn ) = $instance->nodeLC($wisp);
+    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    my ( $headLine,   $headColumn )   = $instance->nodeLC($head);
+    my ( $wispLine,   $wispColumn )   = $instance->nodeLC($wisp);
 
-    $policy->setInheritedAttribute($node, 'anchorColumn', $anchorColumn);
+    $policy->setInheritedAttribute( $node, 'anchorColumn', $anchorColumn );
 
     my $cellBodyAlignmentData = $policy->wispCellBodyAlignment($wisp);
-    $policy->setInheritedAttribute($node, 'cellBodyAlignmentData', $cellBodyAlignmentData);
+    $policy->setInheritedAttribute( $node, 'cellBodyAlignmentData',
+        $cellBodyAlignmentData );
 
     my @mistakes = ();
-    my $runeName      = 'barcab';
-    my $tag      = 'barcab';
+    my $runeName = 'barcab';
 
     my $expectedColumn;
 
@@ -2846,11 +2847,14 @@ sub checkBarcab {
                   describeLC( $headLine, $headColumn );
                 push @mistakes,
                   {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $headLine,
-                    column         => $headColumn,
+                    desc         => $msg,
+                    subpolicy    => [ $runeName, 'head-split' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    line         => $headLine,
+                    column       => $headColumn,
+                    reportLine   => $headLine,
+                    reportColumn => $headColumn,
                   };
                 last HEAD_ISSUES;
             }
@@ -2863,11 +2867,12 @@ sub checkBarcab {
                   describeMisindent2( $headColumn, $expectedHeadColumn );
                 push @mistakes,
                   {
-                    desc           => $msg,
-                    parentLine     => $parentLine,
-                    parentColumn   => $parentColumn,
-                    line           => $headLine,
-                    column         => $headColumn,
+                    desc         => $msg,
+                    subpolicy    => [ $runeName, 'head-pseudojoin-mismatch' ],
+                    parentLine   => $parentLine,
+                    parentColumn => $parentColumn,
+                    reportLine   => $headLine,
+                    reportColumn => $headColumn,
                   };
             }
             last HEAD_ISSUES;
@@ -2879,20 +2884,19 @@ sub checkBarcab {
         last HEAD_ISSUES if $gapLength == 2;
         my ( undef, $headGapColumn ) = $instance->nodeLC($headGap);
 
-        # expected length is the length if the spaces at the end
-        # of the gap-equivalent were exactly one stop.
-        my $expectedLength = $gapLength + ( 2 - length $gapLiteral );
-        $expectedColumn = $headGapColumn + $expectedLength;
         my $msg = sprintf 'Barcab head %s; %s',
           describeLC( $headLine, $headColumn ),
-          describeMisindent2( $headColumn, $expectedColumn );
+          describeMisindent2( $gapLength, 2 );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $headLine,
-            column         => $headColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'head-hgap' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $headLine,
+            column       => $headColumn,
+            reportLine   => $headLine,
+            reportColumn => $headColumn,
           };
 
     }
@@ -2903,10 +2907,11 @@ sub checkBarcab {
         $policy->checkOneLineGap(
             $wispGap,
             {
-                mainColumn => $expectedColumn,
-                tag        => $tag,
-                subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
+                mainColumn => $anchorColumn,
+                preColumn => $anchorColumn + 2,
+                tag        => $runeName,
+                subpolicy  => [ $runeName, 'battery-vgap' ],
+                details    => [ [$runeName] ],
                 topicLines => [$wispLine],
             }
         )
@@ -2918,11 +2923,14 @@ sub checkBarcab {
           describeMisindent2( $wispColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            parentLine     => $parentLine,
-            parentColumn   => $parentColumn,
-            line           => $wispLine,
-            column         => $wispColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'battery-indent' ],
+            parentLine   => $parentLine,
+            parentColumn => $parentColumn,
+            line         => $wispLine,
+            column       => $wispColumn,
+            reportLine   => $wispLine,
+            reportColumn => $wispColumn,
           };
         return \@mistakes;
     }

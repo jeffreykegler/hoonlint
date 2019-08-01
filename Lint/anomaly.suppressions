@@ -1543,7 +1543,7 @@ hoons/arvo/sys/vane/jael.hoon 1937:1 Test::Whitespace barcen:hephep-indent batte
 hoons/arvo/sys/vane/xmas.hoon 390:5 Test::Whitespace barcen:arm-vgap:comment-indent barcen @390:5; comment overindented by 2
 
 # BARCAB aberrations
-hoons/arvo/app/gmail.hoon 65:1 Test::Whitespace barcab:empty-line barcab @65:1; empty line in comment
+hoons/arvo/app/gmail.hoon 65:1 Test::Whitespace barcab:battery-vgap:empty-line barcab @65:1; empty line in comment
 hoons/arvo/app/gmail.hoon 129:1 Test::Whitespace barcab:arm-vgap:empty-line barcab @129:1; empty line in comment
 hoons/arvo/app/hall.hoon 1127:5 Test::Whitespace barcab:arm-vgap:comment-indent barcab @1127:5; comment underindented by 2
 hoons/arvo/app/hall.hoon 1128:5 Test::Whitespace barcab:arm-vgap:comment-indent barcab @1128:5; comment underindented by 2
@@ -1554,7 +1554,16 @@ hoons/arvo/app/hall.hoon 1132:5 Test::Whitespace barcab:arm-vgap:comment-indent 
 hoons/arvo/app/hall.hoon 1133:5 Test::Whitespace barcab:arm-vgap:comment-indent barcab @1133:5; comment underindented by 2
 hoons/arvo/app/hall.hoon 2124:1 Test::Whitespace barcab:hephep-indent battery hephep @2124:1; underindented by 2
 hoons/arvo/sys/vane/gall.hoon 458:3 Test::Whitespace barcab:arm-vgap:comment-indent barcab @458:3; comment underindented by 2
+hoons/arvo/mar/recoverable-error.hoon 12:6 Test::Whitespace barcab:head-hgap Barcab head @12:6; overindented by 1
 
 # BARKET aberrations
 hoons/arvo/lib/down-jet/parse.hoon 1007:1 Test::Whitespace barket:hephep-indent battery hephep @1007:1; underindented by 2
 hoons/arvo/lib/down-jet/rend.hoon 98:3 Test::Whitespace barket:arm-vgap:comment-indent barket @98:3; comment underindented by 2
+hoons/arvo/sys/zuse.hoon 3165:9 Test::Whitespace barket:head-split Barket head @3165:9; must be on rune line
+hoons/arvo/sys/vane/clay.hoon 904:7 Test::Whitespace barket:head-split Barket head @904:7; must be on rune line
+hoons/arvo/sys/vane/clay.hoon 1860:7 Test::Whitespace barket:head-split Barket head @1860:7; must be on rune line
+hoons/arvo/sys/vane/clay.hoon 3578:7 Test::Whitespace barket:head-split Barket head @3578:7; must be on rune line
+hoons/arvo/sys/vane/clay.hoon 3819:7 Test::Whitespace barket:head-split Barket head @3819:7; must be on rune line
+hoons/arvo/app/talk.hoon 159:7 Test::Whitespace barket:head-split Barket head @159:7; must be on rune line
+hoons/arvo/mar/txt.hoon 42:5 Test::Whitespace barket:head-split Barket head @42:5; must be on rune line
+hoons/arvo/mar/txt.hoon 103:5 Test::Whitespace barket:head-split Barket head @103:5; must be on rune line
