@@ -1179,13 +1179,14 @@ There are currently four kinds of jogging hoon:
   A 1-jogging has one head and no tail.
 
 * The current 2-jogging rules are CENTAR (`%*`) and WUTLUS (`?+`).
-  A 2-jogging has a head and a subhead and no tail.
+  A 2-jogging has a head and a subhead but no tail.
 
 * The current jogging-1 rule is TISCOL (`=:`).
   A jogging-1 has a tail and no head.
 
 * The current 2-jogging-1 statement is SIGCEN (`~%`).
-  A 2-jogging has a head a subhead and a tail.
+  A 2-jogging-1 statement has
+  a head, a subhead, and a tail.
 
 ## Joggings
 
