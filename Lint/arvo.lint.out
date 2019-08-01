@@ -919,7 +919,6 @@ hoons/arvo/mar/snip.hoon 27:7 Test::Whitespace kethep:indent backdented element 
 === hoons/arvo/mar/ask-mail.hoon ===
 === hoons/arvo/mar/xml.hoon ===
 === hoons/arvo/mar/recoverable-error.hoon ===
-hoons/arvo/mar/recoverable-error.hoon 12:1 Test::Whitespace tallBarcab Barcab head @12:6; overindented by 1
 === hoons/arvo/mar/jam.hoon ===
 === hoons/arvo/mar/txt-diff.hoon ===
 === hoons/arvo/mar/umd.hoon ===
