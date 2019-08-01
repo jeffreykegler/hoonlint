@@ -110,7 +110,7 @@
 <li><a href="#jogging-body-column">Jogging body column</a></li>
 <li><a href="#inter-line-alignment">Inter-line alignment</a></li>
 </ul></li>
-<li><a href="#appendix-vertical-gap-body">Appendix: Vertical gap body</a></li>
+<li><a href="#appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
 <li><a href="#appendix-reanchoring-futures">Appendix: Reanchoring futures</a></li>
 </ul>
@@ -698,6 +698,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A tail, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="sigcen">SIGCEN</h2>
+<p>SIGCEN does not reanchor.</p>
 <p><em>From <code>sys/hoon.hoon</code>, lines 3684-6234:</em></p>
 <pre><code>~%    %qua
     +
@@ -712,7 +713,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>SIGCEN, except for its 3rd runechild, is treated as an ordinary 4-ary backdented hoon. SIGCEN's 3rd runechild may be either <code>~</code> or a jogging bounded by TISTIS lines. The jogging is always kingside and elements are never split.</p>
 <p>The initial TISTIS should be backdented appropriately for a third runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
 <p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs.</p>
-<p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a verticial gap with comments aligned with the jogs.</p>
+<p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a vertical gap with comments aligned with the jogs.</p>
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
 <h2 id="batteries">Batteries</h2>
@@ -1057,7 +1058,7 @@ I have revised it.
 <p>If there are no floating lexemes, the inter-line alignment column location is irrelevant and undefined. Also, the inter-line alignment column location is undefined unless it also has a total text block count of at least 2 -- in other words an inter-line alignment column location must be the column location of at least two of the text blocks in the silo.</p>
 <p>Each silo is examined separately. For each silo, only rows with an element in that silo participate in the calculation.</p>
 <p>If a running could have both a runestep alignment, and a running-inherited alignment, the runestep alignment takes precedence. In other words, if a running has runestep alignment, the running-inherited alignment is undefined.</p>
-<h1 id="appendix-vertical-gap-body">Appendix: Vertical gap body</h1>
+<h1 id="appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</h1>
 <p>The format of a vertical gap body obeys the BNF</p>
 <pre><code>:start ::= gapComments
 gapComments ::= OptExceptions Body

@@ -3696,7 +3696,6 @@ sub check_1Running {
     my ( $policy, $node ) = @_;
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
-    my $tag       = '1-running';
 
     my $runeName = $policy->runeName($node);
 
@@ -3712,7 +3711,7 @@ sub check_1Running {
     my @mistakes = ();
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
-          "$tag head %s; should be on rune line %d",
+          "$runeName head %s; should be on rune line %d",
           describeLC( $headLine, $headColumn ),
           $runeLine;
         push @mistakes,
@@ -3729,7 +3728,7 @@ sub check_1Running {
     my $expectedColumn = $runeColumn + 4;
     if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
-          "$tag head %s; %s",
+          "$runeName head %s; %s",
           describeLC( $headLine, $headColumn ),
           describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
@@ -3754,7 +3753,7 @@ sub check_1Running {
                 {
                     mainColumn => $anchorColumn,
                     preColumn  => $runningColumn,
-                    tag        => $tag,
+                    tag        => $runeName,
                 subpolicy => [ $runeName ],
                 }
             )
@@ -3767,7 +3766,7 @@ sub check_1Running {
             $policy->checkRunning(
                 {
                     children       => \@runningChildren,
-                    tag            => $tag,
+                    tag            => $runeName,
                     anchorColumn   => $anchorColumn,
                     expectedColumn => $expectedColumn,
                 }
@@ -3805,7 +3804,7 @@ sub check_1Running {
                 {
                     skipFirst      => 1,
                     children       => \@runningChildren,
-                    tag            => $tag,
+                    tag            => $runeName,
                     anchorColumn   => $anchorColumn,
                     expectedColumn => $expectedColumn
                 }
@@ -3824,7 +3823,7 @@ sub check_1Running {
             {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
-                tag        => $tag,
+                tag        => $runeName,
                 subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
             }
@@ -3838,7 +3837,7 @@ sub check_1Running {
         $policy->checkTistis(
             $tistis,
             {
-                tag            => $tag,
+                tag            => $runeName,
                 expectedColumn => $runeColumn,
             }
         )
@@ -4346,7 +4345,6 @@ sub check_1Jogging {
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
-    my $tag      = '1-jogging';
 
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
@@ -4357,10 +4355,13 @@ sub check_1Jogging {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'split' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $headLine,
             column       => $headColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
             expectedLine => $runeLine,
           };
     }
@@ -4375,10 +4376,13 @@ sub check_1Jogging {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'head-hgap' ],
             parentLine     => $runeLine,
             parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
           };
     }
 
@@ -4390,7 +4394,7 @@ sub check_1Jogging {
                 mainColumn => $anchorColumn,
                 preColumn => $jogBaseColumn,
                 tag        => ( sprintf '1-jogging %s jogging', $chessSide ),
-                subpolicy => [ $runeName ],
+                subpolicy => [ $runeName, 'jogging-gap' ],
                 parent     => $rune,
                 topicLines => [$joggingLine],
             }
@@ -4404,7 +4408,8 @@ sub check_1Jogging {
             {
                 mainColumn => $anchorColumn,
                 preColumn => $jogBaseColumn,
-                tag        => $tag,
+                tag        => $runeName,
+                subpolicy => [ $runeName, 'tistis-gap' ],
                 subpolicy => [$runeName],
                 topicLines => [$tistisLine],
             }
@@ -4416,7 +4421,7 @@ sub check_1Jogging {
         $policy->checkTistis(
             $tistis,
             {
-                tag            => $tag,
+                tag            => $runeName,
                 expectedColumn => $anchorColumn,
             }
         )

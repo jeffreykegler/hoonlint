@@ -1595,6 +1595,8 @@ in lexical order:
 
 ## SIGCEN
 
+SIGCEN does not reanchor.
+
 *From `sys/hoon.hoon`, lines 3684-6234:*
 ```
 ~%    %qua
@@ -1633,7 +1635,7 @@ The jog head should be aligned one stop after the initial TISTIS.
 The jog body should be tightly aligned,
 or inter-line aligned with other bodies in the formula
 list.
-Successive formulas should be separated by a verticial
+Successive formulas should be separated by a vertical
 gap with comments aligned with the jogs.
 
 # Battery hoons
@@ -2350,7 +2352,7 @@ In other words,
 if a running has runestep alignment,
 the running-inherited alignment is undefined.
 
-# Appendix: Vertical gap body
+# Appendix: Formal definition of "vertical gap body"
 
 The format of a vertical gap body obeys the BNF
 
