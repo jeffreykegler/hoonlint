@@ -1768,6 +1768,8 @@ in lexical order:
 
 ## BARCAB
 
+BARCAB runes do not reanchor.
+
 *From `sys/vane/jael.hoon`, lines 697-827:*
 ```
   |_  pig/safe
@@ -1807,6 +1809,8 @@ in lexical order:
 * A HEPHEP, aligned at the anchor column.
 
 ## BARKET
+
+BARKET runes do not reanchor.
 
 *From `arvo/sys/zuse.hoon`, lines 3975-4025:*
 ```
@@ -2505,3 +2509,24 @@ by defining `Offset(r)`:
 `Offset(r)` is the sum of `PerRuneOff(S[i])`
 for all `i` such that `0 <= i <= n`.
 
+# Appendix: Reanchoring futures
+
+The reanchoring in this document is based, first on the examples,
+and second, on the `arvo/` corpus.
+The approach is conservative -- reanchoring is only in this
+standard if it is exemplified in the `arvo/` corpus
+or the examples.
+Reanchorings which cause inconsistences with the `arvo/` corpus are accepted
+as part of this standard,
+if it seems reasonable to consider the exceptions to be aberrations.
+But no inconsistencies with the examples are accepted as part of this standard.
+
+In future,
+it may be best to revise this document to 
+treat more reanchorings as standard than
+currently.
+
+The `arvo/` corpus suggests that BARCEN reanchoring at TISGAR should
+be considered standard,
+but accepting BARCEN-to-TISGAR reanchoring as standard
+would make the tic-tac-toe example non-standard.

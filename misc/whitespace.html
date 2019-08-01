@@ -112,6 +112,7 @@
 </ul></li>
 <li><a href="#appendix-vertical-gap-body">Appendix: Vertical gap body</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
+<li><a href="#appendix-reanchoring-futures">Appendix: Reanchoring futures</a></li>
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
@@ -787,6 +788,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barcab">BARCAB</h2>
+<p>BARCAB runes do not reanchor.</p>
 <p><em>From <code>sys/vane/jael.hoon</code>, lines 697-827:</em></p>
 <pre><code>  |_  pig/safe
   ::                                                    ::  ++delete:up
@@ -811,6 +813,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barket">BARKET</h2>
+<p>BARKET runes do not reanchor.</p>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 3975-4025:</em></p>
 <pre><code>    |^  |=(val/json (apex val &quot;&quot;))
     ::                                                  ::  ++apex:en-json:html
@@ -1134,5 +1137,9 @@ Exception ::= BlankLine</code></pre>
 <li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
 </ul>
 <p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
+<h1 id="appendix-reanchoring-futures">Appendix: Reanchoring futures</h1>
+<p>The reanchoring in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- reanchoring is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Reanchorings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
+<p>In future, it may be best to revise this document to treat more reanchorings as standard than currently.</p>
+<p>The <code>arvo/</code> corpus suggests that BARCEN reanchoring at TISGAR should be considered standard, but accepting BARCEN-to-TISGAR reanchoring as standard would make the tic-tac-toe example non-standard.</p>
 </body>
 </html>
