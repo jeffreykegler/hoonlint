@@ -1651,6 +1651,8 @@ The base column of the battery is specified below,
 in the description of each battery hoon.
 Arms may be joined or split.
 
+A battery arm reanchors at BARCEN.
+
 *From sieve_k example, line 6:*
 ```
 ++  abet  (sort (~(tap in fed)) lth)
