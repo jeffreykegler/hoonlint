@@ -4133,11 +4133,16 @@ sub setJoggingData {
     my $nodeName    = $instance->brickName($node);
 
     my $children = $node->{children};
+    my $previousChild;
   CHILD: for my $childIX ( 0 .. $#$children ) {
         my $child  = $children->[$childIX];
         my $symbol = $instance->symbol($child);
-        next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
-        my $chessSide = $policy->chessSideOfJogging( $child, $anchorColumn );
+        if ($symbol ne 'rick5d' and $symbol ne 'ruck5d') {
+            $previousChild = $child;
+            next CHILD;
+        }
+        my ($previousChildLine) = $instance->nodeLC( $previousChild );
+        my $chessSide = $policy->chessSideOfJogging( $child, $anchorColumn, $previousChildLine+1 );
         $policy->{perNode}->{$nodeIX}->{chessSide} = $chessSide;
         my $baseColumn = $anchorColumn + ( $chessSide eq 'queenside' ? 4 : 2 );
         $policy->{perNode}->{$nodeIX}->{jogBaseColumn} =
@@ -4179,8 +4184,37 @@ sub chessSideOfPairSequence {
 }
 
 sub chessSideOfJogging {
-    my ( $policy, $node, $runeColumn ) = @_;
-    return $policy->chessSideOfPairSequence($node, $runeColumn);
+    my ( $policy, $node, $runeColumn, $firstLine ) = @_;
+    my $instance = $policy->{lint};
+
+    my $symbolReverseDB = $instance->{symbolReverseDB};
+    my $children        = $node->{children};
+    my %sideCount       = ();
+    my %bodyColumnCount = ();
+    my $kingsideCount   = 0;
+    my $queensideCount  = 0;
+    my $lastLine = -1;
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $jog    = $children->[$childIX];
+        my $symbol = $jog->{symbol};
+        next CHILD if defined $symbol and $symbolReverseDB->{$symbol}->{gap};
+        my $head = $jog->{children}->[0];
+        my ( $line1, $column1 ) = $instance->line_column( $head->{start} );
+        # Enforce a "first line" to disallow first line of joggings
+        # which are not preceded by a vertical gap.
+        next CHILD if $line1 < $firstLine;
+        next CHILD if $line1 == $lastLine;
+        $lastLine = $line1;
+        # say STDERR " $column1 - $runeColumn >= 4 ";
+        if ( $column1 - $runeColumn >= 4 ) {
+            $queensideCount++;
+            next CHILD;
+        }
+        $kingsideCount++;
+    }
+    return $kingsideCount > $queensideCount
+      ? 'kingside'
+      : 'queenside';
 }
 
 # Find the body column, based on alignment within
@@ -4198,7 +4232,7 @@ sub bodyColumn {
     if ( not $nodeName or not $joggingRule->{$nodeName} ) {
         my $jogBodyData =
           $policy->bodyColumn( $node->{PARENT}, $joggingRules );
-        $policy->{perNode}->{$nodeIX}->{jogBodyData} = $jogBodyData;
+        $policy->setInheritedAttribute($node, 'oldJogBodyData', $jogBodyData);
         return $jogBodyData;
     }
 
@@ -4208,7 +4242,7 @@ sub bodyColumn {
         my $symbol = $instance->symbol($child);
         next CHILD if $symbol ne 'rick5d' and $symbol ne 'ruck5d';
         my $jogBodyData = $policy->joggingBodyAlignment($child);
-        $policy->{perNode}->{$nodeIX}->{jogBodyData} = $jogBodyData;
+        $policy->setInheritedAttribute($node, 'oldJogBodyData', $jogBodyData);
         return $jogBodyData;
     }
     die "No jogging found for ", $instance->symbol($node);
@@ -4347,6 +4381,7 @@ sub check_1Jogging {
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
 
+    CHECK_HEAD: {
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
           "%s %s head %s; should be on rune line %d",
@@ -4366,6 +4401,7 @@ sub check_1Jogging {
             reportColumn => $headColumn,
             expectedLine => $runeLine,
           };
+          last CHECK_HEAD;
     }
 
     my $expectedColumn = $anchorColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
@@ -4387,6 +4423,7 @@ sub check_1Jogging {
             reportLine   => $headLine,
             reportColumn => $headColumn,
           };
+    }
     }
 
     push @mistakes,
@@ -5336,7 +5373,7 @@ sub checkQueensideJog {
             push @mistakes,
               {
                 desc           => $msg,
-                subpolicy => [ $runeName, 'jog-head-indent' ],
+                subpolicy => [ $runeName, 'jog-body-indent' ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,

@@ -179,7 +179,7 @@ hoons/arvo/sys/hoon.hoon 6397:7 Test::Whitespace wuthep:head-hgap 1-jogging quee
 hoons/arvo/sys/hoon.hoon 6401:9 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @6401:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 6450:7 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @6450:7; underindented by 2
 hoons/arvo/sys/hoon.hoon 6483:7 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @6483:7; underindented by 2
-hoons/arvo/sys/hoon.hoon 6384:17 Test::Whitespace wuthep:jog-head-indent Jog queenside body @6384:17; underindented by 2
+hoons/arvo/sys/hoon.hoon 6384:17 Test::Whitespace wuthep:jog-body-indent Jog queenside body @6384:17; underindented by 2
 hoons/arvo/sys/hoon.hoon 7754:11 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @7754:11; underindented by 2
 # From issue #8: 'seem consistently indented by 3 spaces instead of 2,
 # I wonder if this is related to the inconsistent indent by 3 spaces in other places?'
@@ -286,7 +286,6 @@ hoons/arvo/app/hall.hoon 1939:13 Test::Whitespace cencab:head-hgap 1-jogging que
 hoons/arvo/app/hall.hoon 2010:13 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2010:13; underindented by 2
 hoons/arvo/app/hall.hoon 2357:15 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2357:15; underindented by 2
 hoons/arvo/app/hall.hoon 2395:9 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2395:9; underindented by 2
-hoons/arvo/app/hall.hoon 2624:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2624:21; underindented by 2
 hoons/arvo/app/hall.hoon 2955:11 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2955:11; underindented by 2
 hoons/arvo/sys/vane/ames.hoon 865:15 Test::Whitespace cencab:head-hgap 1-jogging kingside head @865:15; overindented by 2
 hoons/arvo/sys/vane/ford.hoon 730:17 Test::Whitespace cencab:jog-body-indent Jog kingside body @730:17; overindented by 1
@@ -1244,8 +1243,8 @@ hoons/arvo/sys/zuse.hoon 4604:63 Test::Whitespace wutlus:jogging:missing-newline
 hoons/arvo/sys/zuse.hoon 4605:13 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:13; missing newline @4605:13
 hoons/arvo/sys/zuse.hoon 4605:22 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:22; missing newline @4605:22
 hoons/arvo/sys/zuse.hoon 4605:33 Test::Whitespace wutlus:jogging:missing-newline wutlus @4605:33; missing newline @4605:33
-hoons/arvo/sys/hoon.hoon 7530:20 Test::Whitespace wuthep:jog-head-indent Jog queenside body @7530:20; underindented by 1
-hoons/arvo/sys/hoon.hoon 7755:19 Test::Whitespace wuthep:jog-head-indent Jog queenside body @7755:19; overindented by 4
+hoons/arvo/sys/hoon.hoon 7530:20 Test::Whitespace wuthep:jog-body-indent Jog queenside body @7530:20; underindented by 1
+hoons/arvo/sys/hoon.hoon 7755:19 Test::Whitespace wuthep:jog-body-indent Jog queenside body @7755:19; overindented by 4
 hoons/arvo/sys/hoon.hoon 7926:16 Test::Whitespace wuthep:jog-body-indent Jog kingside body @7926:16; underindented by 1
 hoons/arvo/sys/hoon.hoon 8255:11 Test::Whitespace wuthep:head-hgap 1-jogging kingside head @8255:11; overindented by 2
 hoons/arvo/sys/hoon.hoon 8818:15 Test::Whitespace wuthep:head-hgap 1-jogging kingside head @8818:15; overindented by 2
@@ -1255,9 +1254,9 @@ hoons/arvo/sys/hoon.hoon 9346:13 Test::Whitespace wuthep:head-hgap 1-jogging kin
 hoons/arvo/sys/hoon.hoon 9590:19 Test::Whitespace wuthep:jog-body-indent Jog kingside body @9590:19; overindented by 1
 hoons/arvo/sys/hoon.hoon 12436:11 Test::Whitespace wuthep:head-hgap 1-jogging kingside head @12436:11; overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 1199:18 Test::Whitespace wutlus:jog-body-indent Jog kingside body @1199:18; underindented by 16
-hoons/arvo/sys/vane/eyre.hoon 1286:26 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1286:26; overindented by 7
-hoons/arvo/sys/vane/eyre.hoon 1287:27 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1287:27; overindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1290:24 Test::Whitespace wutlus:jog-head-indent Jog queenside body @1290:24; overindented by 1
+hoons/arvo/sys/vane/eyre.hoon 1286:26 Test::Whitespace wutlus:jog-body-indent Jog queenside body @1286:26; overindented by 7
+hoons/arvo/sys/vane/eyre.hoon 1287:27 Test::Whitespace wutlus:jog-body-indent Jog queenside body @1287:27; overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1290:24 Test::Whitespace wutlus:jog-body-indent Jog queenside body @1290:24; overindented by 1
 hoons/arvo/app/gmail.hoon 161:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @161:5; underindented by 4
 hoons/arvo/app/gmail.hoon 176:5 Test::Whitespace wutlus:jog-body-indent Jog kingside body @176:5; underindented by 4
 hoons/arvo/app/gmail.hoon 209:5 Test::Whitespace wutlus:jog-head-indent Jog queenside head @209:5; underindented by 2
