@@ -1390,6 +1390,8 @@ same line, the 2-jogging hoon is called **head-joined**.
 If the head and subhead of a 2-jogging hoon are on
 different lines, the 2-jogging hoon is called **head-split**.
 
+2-jogging hoon statements do not reanchor.
+
 ### Kingside head-joined 2-jogging hoons
 
 *From `arvo/sys/hoon.hoon`, lines 6583-6586:*
