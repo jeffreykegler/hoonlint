@@ -327,12 +327,12 @@ hoons/arvo/sys/zuse.hoon 3854:12 Test::Whitespace centis:head-hgap 1-jogging kin
 hoons/arvo/sys/zuse.hoon 4166:13 Test::Whitespace centis:head-hgap 1-jogging kingside head @4166:13; overindented by 2
 
 # From Github issue #15
-hoons/arvo/lib/down-jet/rend.hoon 153:1 Test::Whitespace wuthep:empty-line 1-jogging kingside TISTIS @153:1; missing comment on line 153
-hoons/arvo/mar/txt.hoon 126:9 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @126:9; comment overindented by 2
+hoons/arvo/lib/down-jet/rend.hoon 153:1 Test::Whitespace wuthep:tistis-gap:empty-line wuthep @153:1; empty line in comment
+hoons/arvo/mar/txt.hoon 126:9 Test::Whitespace wuthep:tistis-gap:comment-indent wuthep @126:9; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 11271:9 Test::Whitespace wuthep:jogging-gap:comment-indent 1-jogging kingside jogging @11271:9; comment underindented by 4
-hoons/arvo/sys/vane/clay.hoon 4059:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4059:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 4060:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4060:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 4061:5 Test::Whitespace wuthep:comment-indent 1-jogging queenside TISTIS @4061:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 4059:5 Test::Whitespace wuthep:tistis-gap:comment-indent wuthep @4059:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 4060:5 Test::Whitespace wuthep:tistis-gap:comment-indent wuthep @4060:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 4061:5 Test::Whitespace wuthep:tistis-gap:comment-indent wuthep @4061:5; comment overindented by 2
 
 # From Github issue #14
 # See https://github.com/jeffreykegler/yahc/issues/14#issuecomment-466734347

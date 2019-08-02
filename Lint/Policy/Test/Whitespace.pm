@@ -4340,28 +4340,30 @@ sub check_1Jogging {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
 
-    my ($jogBaseColumn, $chessSide)     = @{$policy->setJoggingData($node, $anchorColumn)};
-    my $joggingRules  = $instance->{joggingRule};
+    my ( $jogBaseColumn, $chessSide ) =
+      @{ $policy->setJoggingData( $node, $anchorColumn ) };
+    my $joggingRules = $instance->{joggingRule};
 
     my @mistakes = ();
     my $runeName = $policy->runeName($node);
 
     if ( $headLine != $runeLine ) {
         my $msg = sprintf
-          "1-jogging %s head %s; should be on rune line %d",
+          "%s %s head %s; should be on rune line %d",
           $chessSide,
+          $runeName,
           describeLC( $headLine, $headColumn ),
           $runeLine;
         push @mistakes,
           {
             desc         => $msg,
-            subpolicy => [ $runeName, 'split' ],
+            subpolicy    => [ $runeName, 'split' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $headLine,
             column       => $headColumn,
-            reportLine         => $headLine,
-            reportColumn       => $headColumn,
+            reportLine   => $headLine,
+            reportColumn => $headColumn,
             expectedLine => $runeLine,
           };
     }
@@ -4369,20 +4371,21 @@ sub check_1Jogging {
     my $expectedColumn = $anchorColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
     if ( $headColumn != $expectedColumn ) {
         my $msg = sprintf
-          "1-jogging %s head %s; %s",
+          "%s %s head %s; %s",
           $chessSide,
+          $runeName,
           describeLC( $headLine, $headColumn ),
           describeMisindent2( $headColumn, $expectedColumn );
         push @mistakes,
           {
-            desc           => $msg,
-            subpolicy => [ $runeName, 'head-hgap' ],
-            parentLine     => $runeLine,
-            parentColumn   => $runeColumn,
-            line           => $headLine,
-            column         => $headColumn,
-            reportLine         => $headLine,
-            reportColumn       => $headColumn,
+            desc         => $msg,
+            subpolicy    => [ $runeName, 'head-hgap' ],
+            parentLine   => $runeLine,
+            parentColumn => $runeColumn,
+            line         => $headLine,
+            column       => $headColumn,
+            reportLine   => $headLine,
+            reportColumn => $headColumn,
           };
     }
 
@@ -4392,9 +4395,9 @@ sub check_1Jogging {
             $joggingGap,
             {
                 mainColumn => $anchorColumn,
-                preColumn => $jogBaseColumn,
-                tag        => ( sprintf '1-jogging %s jogging', $chessSide ),
-                subpolicy => [ $runeName, 'jogging-gap' ],
+                preColumn  => $jogBaseColumn,
+                tag        => $runeName,
+                subpolicy  => [ $runeName, 'jogging-gap' ],
                 parent     => $rune,
                 topicLines => [$joggingLine],
             }
@@ -4407,10 +4410,9 @@ sub check_1Jogging {
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
-                preColumn => $jogBaseColumn,
+                preColumn  => $jogBaseColumn,
                 tag        => $runeName,
-                subpolicy => [ $runeName, 'tistis-gap' ],
-                subpolicy => [$runeName],
+                subpolicy  => [ $runeName, 'tistis-gap' ],
                 topicLines => [$tistisLine],
             }
         )
@@ -4422,6 +4424,7 @@ sub check_1Jogging {
             $tistis,
             {
                 tag            => $runeName,
+                subpolicy      => [$runeName],
                 expectedColumn => $anchorColumn,
             }
         )

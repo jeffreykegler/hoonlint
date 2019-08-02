@@ -692,16 +692,16 @@ hoons/arvo/app/hall.hoon 2540:42 Test::Whitespace wutdot:missing-newline backden
 hoons/arvo/app/hall.hoon 2540:55 Test::Whitespace wutdot:indent backdented element #2 @2540:55; overindented by 48
 hoons/arvo/app/hall.hoon 2542:11 Test::Whitespace wutbar:comment-indent runstep #2 @2542:11; comment overindented by 2
 hoons/arvo/app/hall.hoon 2603:5 Test::Whitespace kethep:indent backdented element #2 @2603:5; overindented by 2
-hoons/arvo/app/hall.hoon 2615:23 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2615:23; underindented by 2
-hoons/arvo/app/hall.hoon 2615:24 Test::Whitespace cencab:jogging-gap:missing-newline 1-jogging queenside jogging @2615:24; missing newline @2615:24
+hoons/arvo/app/hall.hoon 2615:23 Test::Whitespace cencab:head-hgap queenside cencab head @2615:23; underindented by 2
+hoons/arvo/app/hall.hoon 2615:24 Test::Whitespace cencab:jogging-gap:missing-newline cencab @2615:24; missing newline @2615:24
 hoons/arvo/app/hall.hoon 2615:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2615:26; overindented by 3
 hoons/arvo/app/hall.hoon 2616:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2616:21; underindented by 2
-hoons/arvo/app/hall.hoon 2618:23 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2618:23; underindented by 2
-hoons/arvo/app/hall.hoon 2618:24 Test::Whitespace cencab:jogging-gap:missing-newline 1-jogging queenside jogging @2618:24; missing newline @2618:24
+hoons/arvo/app/hall.hoon 2618:23 Test::Whitespace cencab:head-hgap queenside cencab head @2618:23; underindented by 2
+hoons/arvo/app/hall.hoon 2618:24 Test::Whitespace cencab:jogging-gap:missing-newline cencab @2618:24; missing newline @2618:24
 hoons/arvo/app/hall.hoon 2618:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2618:26; overindented by 3
 hoons/arvo/app/hall.hoon 2619:21 Test::Whitespace cencab:jog-head-indent Jog queenside head @2619:21; underindented by 2
-hoons/arvo/app/hall.hoon 2623:23 Test::Whitespace cencab:head-hgap 1-jogging queenside head @2623:23; underindented by 2
-hoons/arvo/app/hall.hoon 2623:24 Test::Whitespace cencab:jogging-gap:missing-newline 1-jogging queenside jogging @2623:24; missing newline @2623:24
+hoons/arvo/app/hall.hoon 2623:23 Test::Whitespace cencab:head-hgap queenside cencab head @2623:23; underindented by 2
+hoons/arvo/app/hall.hoon 2623:24 Test::Whitespace cencab:jogging-gap:missing-newline cencab @2623:24; missing newline @2623:24
 hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace cencab:jog-head-indent Jog queenside head @2623:26; overindented by 3
 hoons/arvo/app/hall.hoon 2649:11 Test::Whitespace tallColsig runstep #1 @2649:11; overindented by 2
 hoons/arvo/app/hall.hoon 2650:11 Test::Whitespace tallColsig runstep #2 @2650:11; overindented by 2
@@ -811,8 +811,8 @@ hoons/arvo/lib/hood/helm.hoon 160:3 Test::Whitespace tisdot:indent backdented el
 hoons/arvo/lib/hood/helm.hoon 251:7 Test::Whitespace kethep:indent backdented element #2 @251:7; overindented by 4
 === hoons/arvo/lib/hood/drum.hoon ===
 hoons/arvo/lib/hood/drum.hoon 63:9 Test::Whitespace buctis:indent backdented element #2 @63:9; overindented by 2
-hoons/arvo/lib/hood/drum.hoon 792:16 Test::Whitespace wuthep:jogging-gap:missing-newline 1-jogging queenside jogging @792:16; missing newline @792:16
-hoons/arvo/lib/hood/drum.hoon 796:12 Test::Whitespace wuthep:jogging-gap:missing-newline 1-jogging queenside jogging @796:12; missing newline @796:12
+hoons/arvo/lib/hood/drum.hoon 792:16 Test::Whitespace wuthep:jogging-gap:missing-newline wuthep @792:16; missing newline @792:16
+hoons/arvo/lib/hood/drum.hoon 796:12 Test::Whitespace wuthep:jogging-gap:missing-newline wuthep @796:12; missing newline @796:12
 hoons/arvo/lib/hood/drum.hoon 830:9 Test::Whitespace tisfas:indent backdented element #2 @830:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 938:5 Test::Whitespace cenlus:indent backdented element #2 @938:5; underindented by 2
 hoons/arvo/lib/hood/drum.hoon 940:5 Test::Whitespace cenlus:indent backdented element #3 @940:5; underindented by 10
