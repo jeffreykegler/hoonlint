@@ -1443,7 +1443,7 @@ in lexical order:
     ==
 ```
 
-A head-joined kingside 2-jogging hoon should consist of,
+A head-split kingside 2-jogging hoon should consist of,
 in lexical order:
 
 * Its rune.
