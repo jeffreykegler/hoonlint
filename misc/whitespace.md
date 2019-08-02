@@ -1557,6 +1557,8 @@ in lexical order:
 
 <!-- "Split" form addressed in Github issue #31" -->
 
+Jogging-1 hoons do not reanchor.
+
 *From `arvo/sys/hoon.hoon`, lines 9720-9727:*
 ```
           =:  hos  ~

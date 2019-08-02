@@ -70,22 +70,22 @@ hoons/arvo/sys/zuse.hoon 1407:8 Test::Whitespace wutcol:indent backdented elemen
 hoons/arvo/sys/zuse.hoon 1506:3 Test::Whitespace ketwut:indent backdented element #1 @1506:3; underindented by 10
 hoons/arvo/sys/zuse.hoon 1513:5 Test::Whitespace zapdot:indent backdented element #1 @1513:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 1523:15 Test::Whitespace ketwut:indent backdented element #1 @1523:15; underindented by 8
-hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tiscol:jogging-same-line jogging @1732:11; should be on rune line 1731
+hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tiscol:jogging:split jogging @1732:11; should be on rune line 1731
 hoons/arvo/sys/zuse.hoon 1732:11 Test::Whitespace tiscol:jogging-indent jogging @1732:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1734:9 Test::Whitespace tiscol:tistis-indent TISTIS @1734:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tiscol:jogging-same-line jogging @1743:11; should be on rune line 1742
+hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tiscol:jogging:split jogging @1743:11; should be on rune line 1742
 hoons/arvo/sys/zuse.hoon 1743:11 Test::Whitespace tiscol:jogging-indent jogging @1743:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1745:9 Test::Whitespace tiscol:tistis-indent TISTIS @1745:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tiscol:jogging-same-line jogging @1759:11; should be on rune line 1758
+hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tiscol:jogging:split jogging @1759:11; should be on rune line 1758
 hoons/arvo/sys/zuse.hoon 1759:11 Test::Whitespace tiscol:jogging-indent jogging @1759:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1761:9 Test::Whitespace tiscol:tistis-indent TISTIS @1761:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tiscol:jogging-same-line jogging @1770:11; should be on rune line 1769
+hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tiscol:jogging:split jogging @1770:11; should be on rune line 1769
 hoons/arvo/sys/zuse.hoon 1770:11 Test::Whitespace tiscol:jogging-indent jogging @1770:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1772:9 Test::Whitespace tiscol:tistis-indent TISTIS @1772:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tiscol:jogging-same-line jogging @1786:11; should be on rune line 1785
+hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tiscol:jogging:split jogging @1786:11; should be on rune line 1785
 hoons/arvo/sys/zuse.hoon 1786:11 Test::Whitespace tiscol:jogging-indent jogging @1786:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1788:9 Test::Whitespace tiscol:tistis-indent TISTIS @1788:9; underindented by 2
-hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jogging-same-line jogging @1797:11; should be on rune line 1796
+hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jogging:split jogging @1797:11; should be on rune line 1796
 hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jogging-indent jogging @1797:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1799:9 Test::Whitespace tiscol:tistis-indent TISTIS @1799:9; underindented by 2
 hoons/arvo/sys/zuse.hoon 1947:13 Test::Whitespace colhep:indent backdented element #2 @1947:13; overindented by 4

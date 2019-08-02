@@ -4626,7 +4626,6 @@ sub check_Jogging1 {
     $policy->{perNode}->{$nodeIX}->{jogBaseColumn} = $jogBaseColumn;
 
     my @mistakes = ();
-    my $tag      = $runeName;
 
     if ( $joggingLine != $runeLine ) {
         my $msg = sprintf
@@ -4635,7 +4634,7 @@ sub check_Jogging1 {
           $runeLine;
         push @mistakes, {
             desc => $msg,
-            subpolicy => [ $runeName, 'jogging-same-line' ],
+            subpolicy => [ $runeName, 'jogging', 'split' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $joggingLine,
@@ -4643,7 +4642,7 @@ sub check_Jogging1 {
             reportLine   => $joggingLine,
             reportColumn => $joggingColumn,
             expectedLine => $runeLine,
-            details      => [ [$tag] ],
+            details      => [ [$runeName] ],
         };
     }
 
@@ -4661,7 +4660,7 @@ sub check_Jogging1 {
             column       => $joggingColumn,
             reportLine   => $joggingLine,
             reportColumn => $joggingColumn,
-            details      => [ [$tag] ],
+            details      => [ [$runeName] ],
         };
     }
 
@@ -4672,10 +4671,10 @@ sub check_Jogging1 {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $jogBaseColumn,
-                tag        => $tag,
-                subpolicy  => [$runeName],
+                tag        => $runeName,
+                subpolicy  => [$runeName, 'tistis-gap'],
                 topicLines => [$tistisLine],
-                details    => [ [$tag] ],
+                details    => [ [$runeName] ],
             }
         )
       };
@@ -4685,7 +4684,7 @@ sub check_Jogging1 {
         $policy->checkTistis(
             $tistis,
             {
-                tag            => $tag,
+                tag            => $runeName,
                 subpolicy => [ $runeName ],
                 expectedColumn => $anchorColumn + 2,
             }
@@ -4698,9 +4697,9 @@ sub check_Jogging1 {
             $tailGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $tag,
-                subpolicy  => [$runeName],
-                details    => [ [$tag] ],
+                tag        => $runeName,
+                subpolicy  => [$runeName, 'tail-vgap'],
+                details    => [ [$runeName] ],
                 topicLines => [$tailLine],
             }
         )
