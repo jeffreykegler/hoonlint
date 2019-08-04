@@ -87,6 +87,27 @@ sub describeMisindent2 {
     return describeMisindent( $got - $sought );
 }
 
+sub setInheritedAttribute {
+    my ( $policy, $node, $attribute, $value ) = @_;
+    my $nodeIX        = $node->{IX};
+    $policy->{perNode}->{$nodeIX}->{$attribute} = $value;
+}
+
+# For efficiency, this caches inherited attributes in the nodes
+# between the querent node and the node with the attribute.  Because
+# of this inherited attributes *CANNOT* be changed, once accessed.
+sub getInheritedAttribute {
+    my ( $policy, $node, $attribute ) = @_;
+    my $nodeIX        = $node->{IX};
+    my $value = $policy->{perNode}->{$nodeIX}->{$attribute};
+    return $value if defined $value;
+    $node = $node->{PARENT};
+    die qq{Ascended tree but did not find attributee "$attribute"} if not $node;
+    $value = $policy->getInheritedAttribute($node, $attribute);
+    $policy->setInheritedAttribute($node, $attribute, $value);
+    return $value;
+}
+
 sub new {
     my ( $class, $lintInstance ) = @_;
     my $policy = {};
@@ -4085,7 +4106,7 @@ sub chainAlignmentData {
     return $chainAlignmentData;
 }
 
-# TODO: Convert this to read-only
+# TODO: Delete after development
 sub getJoggingData {
     my ( $policy, $node ) = @_;
 
@@ -4106,24 +4127,7 @@ sub getJoggingData {
     die ;
 }
 
-sub setInheritedAttribute {
-    my ( $policy, $node, $attribute, $value ) = @_;
-    my $nodeIX        = $node->{IX};
-    $policy->{perNode}->{$nodeIX}->{$attribute} = $value;
-}
-
-sub getInheritedAttribute {
-    my ( $policy, $node, $attribute ) = @_;
-    my $nodeIX        = $node->{IX};
-    my $value = $policy->{perNode}->{$nodeIX}->{$attribute};
-    return $value if defined $value;
-    $node = $node->{PARENT};
-    die qq{Ascended tree but did not find attributee "$attribute"} if not $node;
-    $value = $policy->getInheritedAttribute($node, $attribute);
-    $policy->getInheritedAttribute($node, $attribute, $value);
-    return $value;
-}
-
+# TODO: Delete after development?
 # Assumes that $node is a jogging hoon
 sub setJoggingData {
     my ( $policy, $node, $anchorColumn ) = @_;
@@ -4148,6 +4152,35 @@ sub setJoggingData {
         $policy->{perNode}->{$nodeIX}->{jogBaseColumn} =
           $baseColumn;
         return [ $baseColumn, $chessSide ];
+    }
+    die "No jogging found for ", $instance->symbol($node);
+}
+
+sub joggingHoonData {
+    my ( $policy, $node, $anchorColumn ) = @_;
+    my %result = ();
+    my $nodeIX      = $node->{IX};
+    my $instance    = $policy->{lint};
+    my $joggingRule = $instance->{joggingRule};
+    my $nodeName    = $instance->brickName($node);
+
+    my $children = $node->{children};
+    my $previousChild;
+  CHILD: for my $childIX ( 0 .. $#$children ) {
+        my $child  = $children->[$childIX];
+        my $symbol = $instance->symbol($child);
+        if ($symbol ne 'rick5d' and $symbol ne 'ruck5d') {
+            $previousChild = $child;
+            next CHILD;
+        }
+        my ($previousChildLine) = $instance->nodeLC( $previousChild );
+        my $chessSide = $policy->chessSideOfJogging( $child, $anchorColumn, $previousChildLine+1 );
+        $result{chessSide} = $chessSide;
+        my $baseColumn = $anchorColumn + ( $chessSide eq 'queenside' ? 4 : 2 );
+        $result{jogBaseColumn} = $baseColumn;
+        my $jogBodyData = $policy->joggingBodyAlignment($child);
+        ($result{bodyAlignment}, $result{alignments}) = @{$jogBodyData};
+        return \%result;
     }
     die "No jogging found for ", $instance->symbol($node);
 }
@@ -4217,6 +4250,7 @@ sub chessSideOfJogging {
       : 'queenside';
 }
 
+# TODO: Delete after development
 # Find the body column, based on alignment within
 # a parent hoon.
 sub bodyColumn {
@@ -4374,6 +4408,9 @@ sub check_1Jogging {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
 
+    my $joggingHoonData = $policy->joggingHoonData($node, $anchorColumn);
+    $policy->setInheritedAttribute($node, 'joggingHoonData', $joggingHoonData);
+
     my ( $jogBaseColumn, $chessSide ) =
       @{ $policy->setJoggingData( $node, $anchorColumn ) };
     my $joggingRules = $instance->{joggingRule};
@@ -4487,6 +4524,9 @@ sub check_2Jogging {
     my ( $subheadLine, $subheadColumn ) = $instance->nodeLC($subhead);
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
+
+    my $joggingHoonData = $policy->joggingHoonData($node, $anchorColumn);
+    $policy->setInheritedAttribute($node, 'joggingHoonData', $joggingHoonData);
 
     my ( $jogBaseColumn, $chessSide ) =
       @{ $policy->setJoggingData( $node, $anchorColumn ) };
@@ -4664,6 +4704,9 @@ sub check_Jogging1 {
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
     my ( $tailLine,    $tailColumn )    = $instance->nodeLC($tail);
     my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
+
+    my $joggingHoonData = $policy->joggingHoonData($node, $anchorColumn);
+    $policy->setInheritedAttribute($node, 'joggingHoonData', $joggingHoonData);
 
     # All jogging-1 hoons are kingside
     my $nodeIX = $node->{IX};
