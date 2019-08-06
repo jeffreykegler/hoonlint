@@ -3737,10 +3737,13 @@ sub check_1Running {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'head-split' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $headLine,
             column       => $headColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
             expectedLine => $runeLine,
           };
     }
@@ -3754,10 +3757,13 @@ sub check_1Running {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ $runeName, 'head-hgap' ],
             parentLine     => $runeLine,
             parentColumn   => $runeColumn,
             line           => $headLine,
             column         => $headColumn,
+            reportLine         => $headLine,
+            reportColumn       => $headColumn,
           };
     }
 
@@ -3774,7 +3780,7 @@ sub check_1Running {
                     mainColumn => $anchorColumn,
                     preColumn  => $runningColumn,
                     tag        => $runeName,
-                subpolicy => [ $runeName ],
+                    subpolicy => [ $runeName ],
                 }
             )
           };
@@ -3797,22 +3803,22 @@ sub check_1Running {
     else {
         # joined, that is, $headLine == $runningLine
         my $gapLength = $runningGap->{length};
-        my ( $runningGapLine, $runningGapColumn ) =
-          $instance->nodeLC($runningGap);
-        my $nextExpectedColumn = $runningGapColumn + 2;
 
-        if ( $nextExpectedColumn != $runningColumn ) {
+        if ( $gapLength != 2 ) {
             my $msg = sprintf
               "1-jogging running 1 %s; %s",
               describeLC( $runningLine, $runningColumn ),
-              describeMisindent( $runningColumn - $nextExpectedColumn );
+              describeMisindent2( $gapLength, 2 );
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ $runeName, 'running-hgap' ],
                 parentLine     => $runeLine,
                 parentColumn   => $runeColumn,
                 line           => $runningLine,
                 column         => $runningColumn,
+                reportLine           => $runningLine,
+                reportColumn         => $runningColumn,
               };
         }
 
@@ -3844,7 +3850,7 @@ sub check_1Running {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
                 tag        => $runeName,
-                subpolicy => [ $runeName ],
+                subpolicy => [ $runeName, 'tistis-gap' ],
                 topicLines => [ $runeLine, $tistisLine ],
             }
         )
@@ -3858,6 +3864,7 @@ sub check_1Running {
             $tistis,
             {
                 tag            => $runeName,
+                subpolicy      => [$runeName],
                 expectedColumn => $runeColumn,
             }
         )

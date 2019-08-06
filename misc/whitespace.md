@@ -1314,7 +1314,7 @@ part of a terminator, or part of a gap.
 ## 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
-1-jogging hoons are reanchor at KETLUS (`^+`).
+1-jogging hoons reanchor at KETLUS (`^+`).
 
 ### Kingside 1-jogging hoons
 

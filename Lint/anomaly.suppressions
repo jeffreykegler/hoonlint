@@ -429,8 +429,8 @@ hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #
 hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam joined 0-running runstep #2 @414:9; underindented by 2
 
 # "One-line" runnings in hoon.hoon -- Github issue #32
-hoons/arvo/sys/hoon.hoon 5329:43 Test::Whitespace semsig:missing-newline 1-running TISTIS @5329:45; missing newline @5329:43
-hoons/arvo/sys/hoon.hoon 5347:45 Test::Whitespace semsig:missing-newline 1-running TISTIS @5347:47; missing newline @5347:45
+hoons/arvo/sys/hoon.hoon 5329:43 Test::Whitespace semsig:tistis-gap:missing-newline 1-running TISTIS @5329:45; missing newline @5329:43
+hoons/arvo/sys/hoon.hoon 5347:45 Test::Whitespace semsig:tistis-gap:missing-newline 1-running TISTIS @5347:47; missing newline @5347:45
 
 # Github issue #34
 hoons/arvo/app/fora.hoon 64:5 Test::Whitespace colsig:comment-indent runstep #2 @64:5; comment overindented by 2

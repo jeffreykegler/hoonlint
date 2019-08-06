@@ -946,9 +946,8 @@ EOS
       tallWutbar tallWutpam);
     $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
 
-    # Will include CencolMold?
     my %tall_1RunningRule =
-      map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig );
+      map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig tallCencolMold );
     $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
 
     my %tall_1JoggingRule =
