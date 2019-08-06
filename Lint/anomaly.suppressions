@@ -111,10 +111,8 @@ hoons/arvo/sys/hoon.hoon 8453:13 Test::Whitespace colhep:indent backdented eleme
 
 # "Flatward" indentation, correct to lint, see:
 # https://github.com/jeffreykegler/yahc/issues/4#issuecomment-459867919
-hoons/arvo/lib/hood/drum.hoon 792:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @792:18; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 793:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @793:18; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 794:18 Test::Whitespace wuthep:jog-head-indent Jog queenside head @794:18; overindented by 5
-hoons/arvo/lib/hood/drum.hoon 796:14 Test::Whitespace wuthep:jog-head-indent Jog queenside head @796:14; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 797:14 Test::Whitespace wuthep:jog-head-indent Jog queenside head @797:14; overindented by 5
 hoons/arvo/lib/hood/drum.hoon 792:13 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @792:13; underindented by 2
 hoons/arvo/lib/hood/drum.hoon 796:9 Test::Whitespace wuthep:head-hgap 1-jogging queenside head @796:9; underindented by 2
