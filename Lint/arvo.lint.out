@@ -131,7 +131,6 @@ hoons/arvo/sys/zuse.hoon 3373:5 Test::Whitespace ketwut:indent backdented elemen
 hoons/arvo/sys/zuse.hoon 3563:11 Test::Whitespace kethep:indent backdented element #2 @3563:11; overindented by 4
 hoons/arvo/sys/zuse.hoon 3738:11 Test::Whitespace kethep:indent backdented element #2 @3738:11; overindented by 4
 hoons/arvo/sys/zuse.hoon 3763:3 Test::Whitespace ketwut:indent backdented element #1 @3763:3; underindented by 10
-hoons/arvo/sys/zuse.hoon 3891:13 Test::Whitespace wuthep:tistis-indent TISTIS @3891:13; underindented by 1
 hoons/arvo/sys/zuse.hoon 3921:3 Test::Whitespace ketwut:pseudojoin-mismatch Pseudo-joined backdented element 1; element/comment mismatch; element is @3921:3
 hoons/arvo/sys/zuse.hoon 3927:5 Test::Whitespace ketwut:indent backdented element #1 @3927:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 3951:7 Test::Whitespace kettis:indent backdented element #2 @3951:7; underindented by 4
@@ -222,7 +221,6 @@ hoons/arvo/sys/hoon.hoon 2314:9 Test::Whitespace wutcol:indent backdented elemen
 hoons/arvo/sys/hoon.hoon 2320:7 Test::Whitespace wutcol:indent backdented element #3 @2320:7; underindented by 4
 hoons/arvo/sys/hoon.hoon 2321:9 Test::Whitespace wutcol:indent backdented element #2 @2321:9; underindented by 4
 hoons/arvo/sys/hoon.hoon 2322:7 Test::Whitespace wutcol:indent backdented element #3 @2322:7; underindented by 4
-hoons/arvo/sys/hoon.hoon 2331:9 Test::Whitespace centis:tistis-indent TISTIS @2331:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 2334:9 Test::Whitespace kettis:indent backdented element #2 @2334:9; underindented by 2
 hoons/arvo/sys/hoon.hoon 2507:5 Test::Whitespace wutcol:indent backdented element #3 @2507:5; underindented by 24
 hoons/arvo/sys/hoon.hoon 2690:5 Test::Whitespace sigfas:indent backdented element #2 @2690:5; underindented by 7
@@ -359,7 +357,6 @@ hoons/arvo/sys/hoon.hoon 11238:13 Test::Whitespace tisdot:comment-indent backden
 hoons/arvo/sys/hoon.hoon 11247:9 Test::Whitespace wutdot:comment-indent backdented element #3, @11247:9; comment underindented by 2
 hoons/arvo/sys/hoon.hoon 11249:7 Test::Whitespace tisdot:comment-indent backdented element #3, @11249:7; comment underindented by 4
 hoons/arvo/sys/hoon.hoon 11257:9 Test::Whitespace tisdot:comment-indent backdented element #3, @11257:9; comment underindented by 2
-hoons/arvo/sys/hoon.hoon 11283:11 Test::Whitespace wuthep:tistis-indent TISTIS @11283:11; underindented by 2
 hoons/arvo/sys/hoon.hoon 11319:11 Test::Whitespace ketlus:indent backdented element #2 @11319:11; underindented by 8
 hoons/arvo/sys/hoon.hoon 11752:5 Test::Whitespace zapcol:indent backdented element #1 @11752:5; underindented by 8
 hoons/arvo/sys/hoon.hoon 11934:9 Test::Whitespace cenlus:indent backdented element #2 @11934:9; underindented by 9
@@ -427,7 +424,6 @@ hoons/arvo/sys/vane/ames.hoon 976:7 Test::Whitespace zapcol:indent backdented el
 hoons/arvo/sys/vane/ames.hoon 1154:15 Test::Whitespace kethep:indent backdented element #2 @1154:15; overindented by 4
 hoons/arvo/sys/vane/ames.hoon 1279:19 Test::Whitespace kethep:indent backdented element #2 @1279:19; overindented by 2
 hoons/arvo/sys/vane/ames.hoon 1314:19 Test::Whitespace tisket:indent backdented element #3 @1314:19; overindented by 2
-hoons/arvo/sys/vane/ames.hoon 1326:19 Test::Whitespace centis:tistis-indent TISTIS @1326:19; underindented by 8
 hoons/arvo/sys/vane/ames.hoon 1341:19 Test::Whitespace tislus:comment-indent backdented element #2, @1341:19; comment overindented by 4
 hoons/arvo/sys/vane/ames.hoon 1387:15 Test::Whitespace tisdot:indent backdented element #2 @1387:15; overindented by 2
 hoons/arvo/sys/vane/ames.hoon 1425:15 Test::Whitespace tisdot:indent backdented element #2 @1425:15; overindented by 2
@@ -692,9 +688,6 @@ hoons/arvo/app/hall.hoon 2540:42 Test::Whitespace wutdot:missing-newline backden
 hoons/arvo/app/hall.hoon 2540:55 Test::Whitespace wutdot:indent backdented element #2 @2540:55; overindented by 48
 hoons/arvo/app/hall.hoon 2542:11 Test::Whitespace wutbar:comment-indent runstep #2 @2542:11; comment overindented by 2
 hoons/arvo/app/hall.hoon 2603:5 Test::Whitespace kethep:indent backdented element #2 @2603:5; overindented by 2
-hoons/arvo/app/hall.hoon 2615:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2615:26 should not be joined
-hoons/arvo/app/hall.hoon 2618:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2618:26 should not be joined
-hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2623:26 should not be joined
 hoons/arvo/app/hall.hoon 2649:11 Test::Whitespace tallColsig runstep #1 @2649:11; overindented by 2
 hoons/arvo/app/hall.hoon 2650:11 Test::Whitespace tallColsig runstep #2 @2650:11; overindented by 2
 hoons/arvo/app/hall.hoon 2651:11 Test::Whitespace tallColsig runstep #3 @2651:11; overindented by 2
@@ -803,8 +796,6 @@ hoons/arvo/lib/hood/helm.hoon 160:3 Test::Whitespace tisdot:indent backdented el
 hoons/arvo/lib/hood/helm.hoon 251:7 Test::Whitespace kethep:indent backdented element #2 @251:7; overindented by 4
 === hoons/arvo/lib/hood/drum.hoon ===
 hoons/arvo/lib/hood/drum.hoon 63:9 Test::Whitespace buctis:indent backdented element #2 @63:9; overindented by 2
-hoons/arvo/lib/hood/drum.hoon 792:18 Test::Whitespace wuthep:jogging-joined queenside wuthep jogging @792:18 should not be joined
-hoons/arvo/lib/hood/drum.hoon 796:14 Test::Whitespace wuthep:jogging-joined queenside wuthep jogging @796:14 should not be joined
 hoons/arvo/lib/hood/drum.hoon 830:9 Test::Whitespace tisfas:indent backdented element #2 @830:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 938:5 Test::Whitespace cenlus:indent backdented element #2 @938:5; underindented by 2
 hoons/arvo/lib/hood/drum.hoon 940:5 Test::Whitespace cenlus:indent backdented element #3 @940:5; underindented by 10

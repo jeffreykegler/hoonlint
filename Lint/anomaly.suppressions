@@ -317,8 +317,6 @@ hoons/arvo/sys/hoon.hoon 4059:13 Test::Whitespace centis:jog-head-indent Jog kin
 hoons/arvo/sys/hoon.hoon 5090:22 Test::Whitespace centis:jog-body-indent Jog kingside body @5090:22; overindented by 4
 # "ames:1323 is doing the "sidenote" or w/e we decided to call it stacked indentation style,
 # but should be a `%_` instead"
-hoons/arvo/sys/vane/ames.hoon 1324:21 Test::Whitespace centis:jog-head-indent Jog kingside head @1324:21; underindented by 8
-hoons/arvo/sys/vane/ames.hoon 1325:21 Test::Whitespace centis:jog-head-indent Jog kingside head @1325:21; underindented by 8
 hoons/arvo/sys/vane/xmas.hoon 863:13 Test::Whitespace centis:head-hgap 1-jogging kingside head @863:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 3854:12 Test::Whitespace centis:head-hgap 1-jogging kingside head @3854:12; overindented by 1
 hoons/arvo/sys/zuse.hoon 4166:13 Test::Whitespace centis:head-hgap 1-jogging kingside head @4166:13; overindented by 2
@@ -1561,6 +1559,10 @@ hoons/arvo/mar/txt.hoon 103:5 Test::Whitespace barket:head-split Barket head @10
 hoons/arvo/sys/vane/ford.hoon 1246:11 Test::Whitespace sigcen:indent backdented element #4 @1246:11; overindented by 2
 
 # WUTHEP aberrations
+hoons/arvo/lib/hood/drum.hoon 792:18 Test::Whitespace wuthep:jogging-joined queenside wuthep jogging @792:18 should not be joined
+hoons/arvo/lib/hood/drum.hoon 796:14 Test::Whitespace wuthep:jogging-joined queenside wuthep jogging @796:14 should not be joined
+hoons/arvo/sys/hoon.hoon 11283:11 Test::Whitespace wuthep:tistis-indent TISTIS @11283:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 3891:13 Test::Whitespace wuthep:tistis-indent TISTIS @3891:13; underindented by 1
 hoons/arvo/sys/hoon.hoon 8790:27 Test::Whitespace wuthep:head-hgap 1-jogging kingside head @8790:27; overindented by 2
 
 # TISCOL aberrations
@@ -1582,3 +1584,11 @@ hoons/arvo/sys/zuse.hoon 1788:9 Test::Whitespace tiscol:tistis-indent TISTIS @17
 hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jogging:split jogging @1797:11; should be on rune line 1796
 hoons/arvo/sys/zuse.hoon 1797:11 Test::Whitespace tiscol:jogging-indent jogging @1797:11; underindented by 2
 hoons/arvo/sys/zuse.hoon 1799:9 Test::Whitespace tiscol:tistis-indent TISTIS @1799:9; underindented by 2
+
+# CENCAB aberrations
+hoons/arvo/app/hall.hoon 2615:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2615:26 should not be joined
+hoons/arvo/app/hall.hoon 2618:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2618:26 should not be joined
+hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace cencab:jogging-joined kingside cencab jogging @2623:26 should not be joined
+
+# CENTIS aberrations
+hoons/arvo/sys/hoon.hoon 2331:9 Test::Whitespace centis:tistis-indent TISTIS @2331:9; underindented by 2

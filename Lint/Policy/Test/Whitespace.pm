@@ -4307,10 +4307,19 @@ sub check_1Jogging {
     my ( $headLine,    $headColumn )    = $instance->nodeLC($head);
     my ( $joggingLine, $joggingColumn ) = $instance->nodeLC($jogging);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
-    my ( $anchorLine,  $anchorColumn )  = ( $runeLine, $runeColumn );
 
-    my $joggingHoonData =
-      $policy->joggingHoonData( { firstOKJogLine => $headLine + 1 }, $node );
+    my $anchorLine = $runeLine;
+    my ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallKetlus => 1,
+        }
+    );
+    my $anchorDetails = $policy->anchorDetails( $node, $anchorData );
+
+    my $joggingHoonData = $policy->joggingHoonData(
+        { anchorColumn => $anchorColumn, firstOKJogLine => $headLine + 1 },
+        $node );
     $policy->setInheritedAttribute( $node, 'joggingHoonData',
         $joggingHoonData );
     my $jogBaseColumn = $joggingHoonData->{jogBaseColumn};
@@ -4340,19 +4349,20 @@ sub check_1Jogging {
                 reportLine   => $headLine,
                 reportColumn => $headColumn,
                 expectedLine => $runeLine,
+                details => [ [ $runeName, @{$anchorDetails}  ]],
               };
             last CHECK_HEAD;
         }
 
-        my $expectedColumn =
-          $anchorColumn + ( $chessSide eq 'kingside' ? 4 : 6 );
-        if ( $headColumn != $expectedColumn ) {
+        my $gapLength = $headGap->{length};
+        my $expectedLength = ( $chessSide eq 'kingside' ? 2 : 4 );
+        if ( $gapLength != $expectedLength ) {
             my $msg = sprintf
               "%s %s head %s; %s",
               $chessSide,
               $runeName,
               describeLC( $headLine, $headColumn ),
-              describeMisindent2( $headColumn, $expectedColumn );
+              describeMisindent2( $gapLength, $expectedLength );
             push @mistakes,
               {
                 desc         => $msg,
@@ -4363,6 +4373,7 @@ sub check_1Jogging {
                 column       => $headColumn,
                 reportLine   => $headLine,
                 reportColumn => $headColumn,
+                details => [ [ $runeName, @{$anchorDetails}  ]],
               };
         }
     }
@@ -4384,6 +4395,7 @@ sub check_1Jogging {
                 column       => $joggingColumn,
                 reportLine   => $joggingLine,
                 reportColumn => $joggingColumn,
+                details => [ [ $runeName, @{$anchorDetails}  ]],
               };
             last CHECK_JOGGING_GAP;
         }
@@ -4398,6 +4410,7 @@ sub check_1Jogging {
                     subpolicy  => [ $runeName, 'jogging-gap' ],
                     parent     => $rune,
                     topicLines => [$joggingLine],
+                details => [ [ $runeName, @{$anchorDetails}  ]],
                 }
             )
           };
@@ -4413,6 +4426,7 @@ sub check_1Jogging {
                 tag        => $runeName,
                 subpolicy  => [ $runeName, 'tistis-gap' ],
                 topicLines => [$tistisLine],
+                details => [ [ $runeName, @{$anchorDetails}  ]],
             }
         )
       };
@@ -4425,6 +4439,7 @@ sub check_1Jogging {
                 tag            => $runeName,
                 subpolicy      => [$runeName],
                 expectedColumn => $anchorColumn,
+                details => [ [ $runeName, @{$anchorDetails}  ]],
             }
         )
       };
