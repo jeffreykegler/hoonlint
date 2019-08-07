@@ -34,3 +34,10 @@ count:
 	sed -ne 's/.* Test::Whitespace //p' | \
 	  perl -anE 'say "$$F[0]"' | \
 	  sort | uniq -c | sort -k +1n
+
+count_hoon:
+	egrep -v 'Unused suppression:' Lint/arvo.lint.out | \
+	sed -ne 's/.* Test::Whitespace //p' | \
+	  perl -anE 'say "$$F[0]"' | \
+	  sed -e 's/:.*$$//' | \
+	  sort | uniq -c | sort -k +1n

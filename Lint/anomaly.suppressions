@@ -1589,3 +1589,22 @@ hoons/arvo/app/hall.hoon 2623:26 Test::Whitespace cencab:jogging-joined kingside
 
 # CENTIS aberrations
 hoons/arvo/sys/hoon.hoon 2331:9 Test::Whitespace centis:tistis-indent TISTIS @2331:9; underindented by 2
+
+# 1-Running aberrations
+hoons/arvo/sys/zuse.hoon 3971:8 Test::Whitespace semsig:tistis-indent TISTIS @3971:8; overindented by 1
+hoons/arvo/sys/hoon.hoon 5098:14 Test::Whitespace semcol:tistis-indent TISTIS @5098:14; underindented by 1
+hoons/arvo/sys/hoon.hoon 5329:45 Test::Whitespace semsig:tistis-alone TISTIS @5329:45 should only share line with other TISTIS's
+hoons/arvo/sys/hoon.hoon 5347:47 Test::Whitespace semsig:tistis-alone TISTIS @5347:47 should only share line with other TISTIS's
+hoons/arvo/app/dojo.hoon 1005:17 Test::Whitespace semcol:runstep-indent runstep #1 @1005:17; underindented by 8
+hoons/arvo/app/dojo.hoon 1006:17 Test::Whitespace semcol:runstep-indent runstep #2 @1006:17; underindented by 8
+hoons/arvo/app/dojo.hoon 1009:17 Test::Whitespace semcol:runstep-indent runstep #3 @1009:17; underindented by 8
+hoons/arvo/app/dojo.hoon 1012:17 Test::Whitespace semcol:runstep-indent runstep #4 @1012:17; underindented by 8
+hoons/arvo/app/dojo.hoon 1013:15 Test::Whitespace semcol:tistis-indent TISTIS @1013:15; underindented by 8
+hoons/arvo/app/dojo.hoon 1067:11 Test::Whitespace semcol:runstep-indent runstep #1 @1067:11; underindented by 12
+hoons/arvo/app/dojo.hoon 1068:11 Test::Whitespace semcol:runstep-indent runstep #2 @1068:11; underindented by 12
+hoons/arvo/app/dojo.hoon 1069:11 Test::Whitespace semcol:runstep-indent runstep #3 @1069:11; underindented by 12
+hoons/arvo/app/dojo.hoon 1070:9 Test::Whitespace semcol:tistis-indent TISTIS @1070:9; underindented by 12
+hoons/arvo/app/hall.hoon 2900:9 Test::Whitespace dotket:runstep-indent runstep #1 @2900:9; overindented by 2
+hoons/arvo/app/hall.hoon 2901:9 Test::Whitespace dotket:runstep-indent runstep #2 @2901:9; overindented by 2
+hoons/arvo/app/hall.hoon 2920:9 Test::Whitespace dotket:runstep-indent runstep #1 @2920:9; overindented by 2
+hoons/arvo/app/hall.hoon 2921:9 Test::Whitespace dotket:runstep-indent runstep #2 @2921:9; overindented by 2
