@@ -2,19 +2,6 @@
 hoons/arvo/sys/hoon.hoon 944:3 Test::Whitespace barcen:arm-indent cell #63 @944:3; overindented by 2
 hoons/arvo/sys/hoon.hoon 945:3 Test::Whitespace luslus:arm-body-indent cell body @945:3; underindented by 2
 
-# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l10
-hoons/arvo/sys/hoon.hoon 4801:14 Test::Whitespace tallSemsig 1-running runstep #1 @4801:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4802:14 Test::Whitespace tallSemsig 1-running runstep #2 @4802:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4803:14 Test::Whitespace tallSemsig 1-running runstep #3 @4803:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4844:14 Test::Whitespace tallSemsig 1-running runstep #1 @4844:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4845:14 Test::Whitespace tallSemsig 1-running runstep #2 @4845:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4848:14 Test::Whitespace tallSemsig 1-running runstep #1 @4848:14; overindented by 2
-hoons/arvo/sys/hoon.hoon 4849:14 Test::Whitespace tallSemsig 1-running runstep #2 @4849:14; overindented by 2
-
-hoons/arvo/sys/hoon.hoon 12272:22 Test::Whitespace tallSemsig 1-running runstep #1 @12272:22; overindented by 1
-hoons/arvo/sys/hoon.hoon 12278:22 Test::Whitespace tallSemsig 1-running runstep #2 @12278:22; overindented by 1
-hoons/arvo/sys/hoon.hoon 12279:22 Test::Whitespace tallSemsig 1-running runstep #3 @12279:22; overindented by 1
-
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l9
 hoons/arvo/sys/hoon.hoon 2096:5 Test::Whitespace kethep:indent backdented element #2 @2096:5; overindented by 2
 

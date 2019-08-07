@@ -2540,3 +2540,12 @@ The `arvo/` corpus suggests that BARCEN reanchoring at TISGAR should
 be considered standard,
 but accepting BARCEN-to-TISGAR reanchoring as standard
 would make the tic-tac-toe example non-standard.
+
+On the other hand, lines 1323-1326 from `sys/vane/ames.hoon`
+suggest that TISGAR resists being an anchoring target:
+```
+=>  ^+  .   %=  .
+      q.r.neb  (~(put by q.r.neb) q.fud t.fud)
+      q.neb    +(q.neb)
+    ==
+```
