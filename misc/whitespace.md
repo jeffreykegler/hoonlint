@@ -876,7 +876,7 @@ a runechild before the running.
 That runechild
 is called the **head** of the running hoon.
 
-There are current three kinds of running hoons:
+There are two kinds of running hoons:
 
 * A **0-running** has no head.
 The current 0-running rules are

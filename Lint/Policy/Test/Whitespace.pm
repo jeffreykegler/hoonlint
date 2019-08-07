@@ -1711,9 +1711,12 @@ sub checkRunning {
     my ( $policy, $options ) = @_;
     my $instance        = $policy->{lint};
     my $runningChildren = $options->{children};
-    my $tag             = $options->{tag} or die "No tag";
     my $anchorColumn    = $options->{anchorColumn};
     my $expectedColumn  = $options->{expectedColumn};
+
+    my @subpolicy = ();
+    my $subpolicy = $options->{subpolicy};
+    push @subpolicy, @{$subpolicy} if defined $subpolicy;
 
     # by default, in fact always at this point, the running can be
     # found as the parent of the last running child, and the parent
@@ -1866,12 +1869,15 @@ sub checkRunning {
         push @mistakes,
           {
             desc           => $msg,
+            subpolicy => [ @subpolicy, 'runstep-indent' ],
             parentLine     => $thisRunStepLine,
             parentColumn   => $runStepColumn,
             line           => $thisRunStepLine,
             column         => $runStepColumn,
+            reportLine           => $thisRunStepLine,
+            reportColumn         => $runStepColumn,
             topicLines     => [$runeLine],
-            details        => [ [ $tag, @{$anchorDetails} ] ],
+            details        => [ [ $runeName, @{$anchorDetails} ] ],
           };
     }
 
@@ -1919,7 +1925,7 @@ sub checkRunning {
                 push @topicLines, @{$pileAlignmentLines};
                 $details = [
                     [
-                        $tag,
+                        $runeName,
                         sprintf 'runstep alignment is %d, see %s',
                         $oneBasedColumn,
                         (
@@ -1931,7 +1937,7 @@ sub checkRunning {
                 ];
             }
             else {
-                $details = [ [ $tag, "no runstep alignment detected" ] ];
+                $details = [ [ $runeName, "no runstep alignment detected" ] ];
             }
 
             my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
@@ -1951,13 +1957,13 @@ sub checkRunning {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy      => [ @subpolicy, 'runstep-hgap' ],
                 parentLine     => $runeLine,
                 parentColumn   => $runeColumn,
                 line           => $thisRunStepLine,
                 column         => $runStepColumn,
                 reportLine     => $thisRunStepLine,
                 reportColumn   => $runStepColumn,
-                subpolicy      => $policy->nodeSubpolicy($parent) . ':hgap',
                 topicLines => \@topicLines,
                 details => $details,
               };
@@ -1979,14 +1985,13 @@ sub checkRunning {
                     {
                         mainColumn => $anchorColumn,
                         preColumn  => $runStepColumn,
-                        tag =>
-                          ( sprintf 'runstep #%d', int( 1 + $childIX / 2 ) ),
-                        subpolicy  => [ $runeName ],
+                        tag => $runeName,
+                        subpolicy  => [ @subpolicy, 'runstep-vgap' ],
                         parent     => $runStep,
                         topicLines => [$runeLine],
                         details    => [
                             [
-                                $tag,
+                                $runeName,
                                 'inter-comment indent should be '
                                   . ( $anchorColumn + 1 ),
                                 'pre-comment indent should be '
@@ -2008,12 +2013,15 @@ sub checkRunning {
             push @mistakes,
               {
                 desc           => $msg,
+                subpolicy => [ @subpolicy, 'runstep-indent' ],
                 parentLine     => $thisRunStepLine,
                 parentColumn   => $runStepColumn,
                 line           => $thisRunStepLine,
                 column         => $runStepColumn,
+                reportLine           => $thisRunStepLine,
+                reportColumn         => $runStepColumn,
                 topicLines     => [$runeLine],
-                details        => [ [ $tag, @{$anchorDetails} ] ],
+                details        => [ [ $runeName, @{$anchorDetails} ] ],
               };
         }
 
@@ -3592,7 +3600,7 @@ sub checkSplit_0Running {
         $policy->checkRunning(
             {
                 children       => $runningChildren,
-                tag            => $runeName,
+                subpolicy => [ $runeName ],
                 anchorColumn   => $anchorColumn,
                 expectedColumn => $expectedColumn,
                 anchorDetails  => $anchorDetails,
@@ -3676,7 +3684,7 @@ sub checkJoined_0Running {
         $policy->checkRunning(
             {
                 children       => $runningChildren,
-                tag            => $runeName,
+                subpolicy => [ $runeName ],
                 anchorColumn   => $anchorColumn,
                 expectedColumn => $expectedColumn,
             }
@@ -3792,7 +3800,7 @@ sub check_1Running {
             $policy->checkRunning(
                 {
                     children       => \@runningChildren,
-                    tag            => $runeName,
+                subpolicy => [ $runeName ],
                     anchorColumn   => $anchorColumn,
                     expectedColumn => $expectedColumn,
                 }
@@ -3830,7 +3838,7 @@ sub check_1Running {
                 {
                     skipFirst      => 1,
                     children       => \@runningChildren,
-                    tag            => $runeName,
+                subpolicy => [ $runeName ],
                     anchorColumn   => $anchorColumn,
                     expectedColumn => $expectedColumn
                 }

@@ -331,73 +331,74 @@ hoons/arvo/sys/vane/clay.hoon 4061:5 Test::Whitespace wuthep:tistis-gap:comment-
 
 # From Github issue #14
 # See https://github.com/jeffreykegler/yahc/issues/14#issuecomment-466734347
-hoons/arvo/lib/hood/drum.hoon 970:9 Test::Whitespace tallSemcol 1-running runstep #1 @970:9; overindented by 2
-hoons/arvo/lib/hood/drum.hoon 971:9 Test::Whitespace tallSemcol 1-running runstep #2 @971:9; overindented by 2
-hoons/arvo/lib/hood/drum.hoon 972:9 Test::Whitespace tallSemcol 1-running runstep #3 @972:9; overindented by 2
-hoons/arvo/mar/gh/issue-comment.hoon 13:13 Test::Whitespace tallSemcol 1-running runstep #1 @13:13; overindented by 2
-hoons/arvo/mar/gh/issue-comment.hoon 14:13 Test::Whitespace tallSemcol 1-running runstep #2 @14:13; overindented by 2
-hoons/arvo/mar/gh/issue-comment.hoon 15:13 Test::Whitespace tallSemcol 1-running runstep #3 @15:13; overindented by 2
-hoons/arvo/mar/gh/issue-comment.hoon 16:13 Test::Whitespace tallSemcol 1-running runstep #4 @16:13; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 15:15 Test::Whitespace tallSemcol 1-running runstep #1 @15:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 16:15 Test::Whitespace tallSemcol 1-running runstep #2 @16:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 17:15 Test::Whitespace tallSemcol 1-running runstep #3 @17:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 18:15 Test::Whitespace tallSemcol 1-running runstep #4 @18:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 19:15 Test::Whitespace tallSemcol 1-running runstep #5 @19:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 20:15 Test::Whitespace tallSemcol 1-running runstep #6 @20:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 21:15 Test::Whitespace tallSemcol 1-running runstep #7 @21:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 26:15 Test::Whitespace tallSemcol 1-running runstep #1 @26:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 27:15 Test::Whitespace tallSemcol 1-running runstep #2 @27:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 28:15 Test::Whitespace tallSemcol 1-running runstep #3 @28:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 29:15 Test::Whitespace tallSemcol 1-running runstep #4 @29:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 30:15 Test::Whitespace tallSemcol 1-running runstep #5 @30:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 31:15 Test::Whitespace tallSemcol 1-running runstep #6 @31:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 32:15 Test::Whitespace tallSemcol 1-running runstep #7 @32:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 37:15 Test::Whitespace tallSemcol 1-running runstep #1 @37:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 38:15 Test::Whitespace tallSemcol 1-running runstep #2 @38:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 39:15 Test::Whitespace tallSemcol 1-running runstep #3 @39:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 40:15 Test::Whitespace tallSemcol 1-running runstep #4 @40:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 41:15 Test::Whitespace tallSemcol 1-running runstep #5 @41:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 42:15 Test::Whitespace tallSemcol 1-running runstep #6 @42:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 43:15 Test::Whitespace tallSemcol 1-running runstep #7 @43:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 48:15 Test::Whitespace tallSemcol 1-running runstep #1 @48:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 49:15 Test::Whitespace tallSemcol 1-running runstep #2 @49:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 50:15 Test::Whitespace tallSemcol 1-running runstep #3 @50:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 51:15 Test::Whitespace tallSemcol 1-running runstep #4 @51:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 52:15 Test::Whitespace tallSemcol 1-running runstep #5 @52:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 53:15 Test::Whitespace tallSemcol 1-running runstep #6 @53:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 54:15 Test::Whitespace tallSemcol 1-running runstep #7 @54:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 59:15 Test::Whitespace tallSemcol 1-running runstep #1 @59:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 60:15 Test::Whitespace tallSemcol 1-running runstep #2 @60:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 61:15 Test::Whitespace tallSemcol 1-running runstep #3 @61:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 62:15 Test::Whitespace tallSemcol 1-running runstep #4 @62:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 67:15 Test::Whitespace tallSemcol 1-running runstep #1 @67:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 68:15 Test::Whitespace tallSemcol 1-running runstep #2 @68:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 69:15 Test::Whitespace tallSemcol 1-running runstep #3 @69:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 70:15 Test::Whitespace tallSemcol 1-running runstep #4 @70:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 75:15 Test::Whitespace tallSemcol 1-running runstep #1 @75:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 76:15 Test::Whitespace tallSemcol 1-running runstep #2 @76:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 77:15 Test::Whitespace tallSemcol 1-running runstep #3 @77:15; overindented by 2
-hoons/arvo/mar/gh/issues.hoon 78:15 Test::Whitespace tallSemcol 1-running runstep #4 @78:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 202:15 Test::Whitespace tallSemcol 1-running runstep #1 @202:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 204:15 Test::Whitespace tallSemcol 1-running runstep #2 @204:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 205:15 Test::Whitespace tallSemcol 1-running runstep #3 @205:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 206:15 Test::Whitespace tallSemcol 1-running runstep #4 @206:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 207:15 Test::Whitespace tallSemcol 1-running runstep #5 @207:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace tallSemcol 1-running runstep #6 @208:15; overindented by 2
-hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace tallSemcol 1-running runstep #7 @209:15; overindented by 2
+hoons/arvo/lib/hood/drum.hoon 970:9 Test::Whitespace semcol:runstep-indent runstep #1 @970:9; overindented by 2
+hoons/arvo/lib/hood/drum.hoon 971:9 Test::Whitespace semcol:runstep-indent runstep #2 @971:9; overindented by 2
+hoons/arvo/lib/hood/drum.hoon 972:9 Test::Whitespace semcol:runstep-indent runstep #3 @972:9; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 13:13 Test::Whitespace semcol:runstep-indent runstep #1 @13:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 14:13 Test::Whitespace semcol:runstep-indent runstep #2 @14:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 15:13 Test::Whitespace semcol:runstep-indent runstep #3 @15:13; overindented by 2
+hoons/arvo/mar/gh/issue-comment.hoon 16:13 Test::Whitespace semcol:runstep-indent runstep #4 @16:13; overindented by 2
+
+hoons/arvo/mar/gh/issues.hoon 15:15 Test::Whitespace semcol:runstep-indent runstep #1 @15:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 16:15 Test::Whitespace semcol:runstep-indent runstep #2 @16:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 17:15 Test::Whitespace semcol:runstep-indent runstep #3 @17:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 18:15 Test::Whitespace semcol:runstep-indent runstep #4 @18:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 19:15 Test::Whitespace semcol:runstep-indent runstep #5 @19:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 20:15 Test::Whitespace semcol:runstep-indent runstep #6 @20:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 21:15 Test::Whitespace semcol:runstep-indent runstep #7 @21:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 26:15 Test::Whitespace semcol:runstep-indent runstep #1 @26:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 27:15 Test::Whitespace semcol:runstep-indent runstep #2 @27:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 28:15 Test::Whitespace semcol:runstep-indent runstep #3 @28:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 29:15 Test::Whitespace semcol:runstep-indent runstep #4 @29:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 30:15 Test::Whitespace semcol:runstep-indent runstep #5 @30:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 31:15 Test::Whitespace semcol:runstep-indent runstep #6 @31:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 32:15 Test::Whitespace semcol:runstep-indent runstep #7 @32:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 37:15 Test::Whitespace semcol:runstep-indent runstep #1 @37:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 38:15 Test::Whitespace semcol:runstep-indent runstep #2 @38:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 39:15 Test::Whitespace semcol:runstep-indent runstep #3 @39:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 40:15 Test::Whitespace semcol:runstep-indent runstep #4 @40:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 41:15 Test::Whitespace semcol:runstep-indent runstep #5 @41:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 42:15 Test::Whitespace semcol:runstep-indent runstep #6 @42:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 43:15 Test::Whitespace semcol:runstep-indent runstep #7 @43:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 48:15 Test::Whitespace semcol:runstep-indent runstep #1 @48:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 49:15 Test::Whitespace semcol:runstep-indent runstep #2 @49:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 50:15 Test::Whitespace semcol:runstep-indent runstep #3 @50:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 51:15 Test::Whitespace semcol:runstep-indent runstep #4 @51:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 52:15 Test::Whitespace semcol:runstep-indent runstep #5 @52:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 53:15 Test::Whitespace semcol:runstep-indent runstep #6 @53:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 54:15 Test::Whitespace semcol:runstep-indent runstep #7 @54:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 59:15 Test::Whitespace semcol:runstep-indent runstep #1 @59:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 60:15 Test::Whitespace semcol:runstep-indent runstep #2 @60:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 61:15 Test::Whitespace semcol:runstep-indent runstep #3 @61:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 62:15 Test::Whitespace semcol:runstep-indent runstep #4 @62:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 67:15 Test::Whitespace semcol:runstep-indent runstep #1 @67:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 68:15 Test::Whitespace semcol:runstep-indent runstep #2 @68:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 69:15 Test::Whitespace semcol:runstep-indent runstep #3 @69:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 70:15 Test::Whitespace semcol:runstep-indent runstep #4 @70:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 75:15 Test::Whitespace semcol:runstep-indent runstep #1 @75:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 76:15 Test::Whitespace semcol:runstep-indent runstep #2 @76:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 77:15 Test::Whitespace semcol:runstep-indent runstep #3 @77:15; overindented by 2
+hoons/arvo/mar/gh/issues.hoon 78:15 Test::Whitespace semcol:runstep-indent runstep #4 @78:15; overindented by 2
+
+hoons/arvo/sys/vane/dill.hoon 202:15 Test::Whitespace semcol:runstep-indent runstep #1 @202:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 204:15 Test::Whitespace semcol:runstep-indent runstep #2 @204:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 205:15 Test::Whitespace semcol:runstep-indent runstep #3 @205:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 206:15 Test::Whitespace semcol:runstep-indent runstep #4 @206:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 207:15 Test::Whitespace semcol:runstep-indent runstep #5 @207:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 208:15 Test::Whitespace semcol:runstep-indent runstep #6 @208:15; overindented by 2
+hoons/arvo/sys/vane/dill.hoon 209:15 Test::Whitespace semcol:runstep-indent runstep #7 @209:15; overindented by 2
 
 # Misc TISTIS anomalies from Github issue #20
 hoons/arvo/sys/zuse.hoon 3895:13 Test::Whitespace wuthep:tistis-indent TISTIS @3895:13; underindented by 1
 
 # Misc TISSIG anomalies from Github issue 28
-hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tallTissig 0-running runstep #1 @98:1; underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 830:7 Test::Whitespace tallTissig 0-running runstep #2 @830:7; overindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 831:7 Test::Whitespace tallTissig 0-running runstep #3 @831:7; overindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 832:7 Test::Whitespace tallTissig 0-running runstep #4 @832:7; overindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 833:7 Test::Whitespace tallTissig 0-running runstep #5 @833:7; overindented by 2
-hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @5:1; comment underindented by 2
-hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tallTissig 0-running runstep #1 @6:1; underindented by 2
-hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tallTissig 0-running runstep #3 @1162:3; overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 98:1 Test::Whitespace tissig:runstep-indent runstep #1 @98:1; underindented by 4
+hoons/arvo/lib/down-jet/parse.hoon 830:7 Test::Whitespace tissig:runstep-indent runstep #2 @830:7; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 831:7 Test::Whitespace tissig:runstep-indent runstep #3 @831:7; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 832:7 Test::Whitespace tissig:runstep-indent runstep #4 @832:7; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 833:7 Test::Whitespace tissig:runstep-indent runstep #5 @833:7; underindented by 2
+hoons/arvo/sys/vane/ames.hoon 6:1 Test::Whitespace tissig:runstep-indent runstep #1 @6:1; underindented by 6
+hoons/arvo/sys/vane/xmas.hoon 1162:3 Test::Whitespace tissig:runstep-indent runstep #3 @1162:3; underindented by 2
 
 # Misc TISCOL anomalies from Github issue #17
 hoons/arvo/app/talk.hoon 547:5 Test::Whitespace tiscol:tistis-indent TISTIS @547:5; underindented by 2
@@ -408,79 +409,88 @@ hoons/arvo/sys/vane/clay.hoon 2171:12 Test::Whitespace tiscol:tistis-indent TIST
 # "split" TISCOL anomalies from Github issue #31
 
 # SEMSIG anomalies from Github issue #18
-hoons/arvo/lib/down-jet/parse.hoon 291:7 Test::Whitespace tallSemsig 1-running runstep #1 @291:7; underindented by 2
-hoons/arvo/lib/down-jet/parse.hoon 505:20 Test::Whitespace tallSemsig 1-running runstep #1 @505:20; underindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 506:20 Test::Whitespace tallSemsig 1-running runstep #2 @506:20; underindented by 1
-hoons/arvo/lib/down-jet/parse.hoon 507:20 Test::Whitespace tallSemsig 1-running runstep #3 @507:20; underindented by 1
-hoons/arvo/mar/lens/command.hoon 37:13 Test::Whitespace tallSemsig 1-running runstep #1 @37:13; overindented by 2
-hoons/arvo/mar/lens/command.hoon 38:13 Test::Whitespace tallSemsig 1-running runstep #2 @38:13; overindented by 2
-hoons/arvo/mar/lens/command.hoon 55:13 Test::Whitespace tallSemsig 1-running runstep #1 @55:13; overindented by 2
-hoons/arvo/mar/lens/command.hoon 56:13 Test::Whitespace tallSemsig 1-running runstep #2 @56:13; overindented by 2
-hoons/arvo/sys/zuse.hoon 3966:10 Test::Whitespace tallSemsig 1-running runstep #1 @3966:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3967:10 Test::Whitespace tallSemsig 1-running runstep #2 @3967:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3968:10 Test::Whitespace tallSemsig 1-running runstep #3 @3968:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3969:10 Test::Whitespace tallSemsig 1-running runstep #4 @3969:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace tallSemsig 1-running runstep #5 @3970:10; overindented by 1
-hoons/arvo/sys/zuse.hoon 3971:8 Test::Whitespace semsig:tistis-indent TISTIS @3971:8; overindented by 1
-hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace tallSemsig 1-running runstep #1 @4264:15; overindented by 2
-hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace tallSemsig 1-running runstep #2 @4265:15; overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 291:7 Test::Whitespace semsig:runstep-indent runstep #1 @291:7; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 505:20 Test::Whitespace semsig:runstep-indent runstep #1 @505:20; underindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 506:20 Test::Whitespace semsig:runstep-indent runstep #2 @506:20; underindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 507:20 Test::Whitespace semsig:runstep-indent runstep #3 @507:20; underindented by 1
+hoons/arvo/mar/lens/command.hoon 37:13 Test::Whitespace semsig:runstep-indent runstep #1 @37:13; overindented by 2
+hoons/arvo/mar/lens/command.hoon 38:13 Test::Whitespace semsig:runstep-indent runstep #2 @38:13; overindented by 2
+hoons/arvo/mar/lens/command.hoon 55:13 Test::Whitespace semsig:runstep-indent runstep #1 @55:13; overindented by 2
+hoons/arvo/mar/lens/command.hoon 56:13 Test::Whitespace semsig:runstep-indent runstep #2 @56:13; overindented by 2
+hoons/arvo/sys/zuse.hoon 3966:10 Test::Whitespace semsig:runstep-indent runstep #1 @3966:10; overindented by 1
+hoons/arvo/sys/zuse.hoon 3967:10 Test::Whitespace semsig:runstep-indent runstep #2 @3967:10; overindented by 1
+hoons/arvo/sys/zuse.hoon 3968:10 Test::Whitespace semsig:runstep-indent runstep #3 @3968:10; overindented by 1
+hoons/arvo/sys/zuse.hoon 3969:10 Test::Whitespace semsig:runstep-indent runstep #4 @3969:10; overindented by 1
+hoons/arvo/sys/zuse.hoon 3970:10 Test::Whitespace semsig:runstep-indent runstep #5 @3970:10; overindented by 1
+hoons/arvo/sys/zuse.hoon 4264:15 Test::Whitespace semsig:runstep-indent runstep #1 @4264:15; overindented by 2
+hoons/arvo/sys/zuse.hoon 4265:15 Test::Whitespace semsig:runstep-indent runstep #2 @4265:15; overindented by 2
+hoons/arvo/sys/hoon.hoon 4801:14 Test::Whitespace semsig:runstep-indent runstep #1 @4801:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4802:14 Test::Whitespace semsig:runstep-indent runstep #2 @4802:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4803:14 Test::Whitespace semsig:runstep-indent runstep #3 @4803:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4844:14 Test::Whitespace semsig:runstep-indent runstep #1 @4844:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4845:14 Test::Whitespace semsig:runstep-indent runstep #2 @4845:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4848:14 Test::Whitespace semsig:runstep-indent runstep #1 @4848:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 4849:14 Test::Whitespace semsig:runstep-indent runstep #2 @4849:14; overindented by 2
+hoons/arvo/sys/hoon.hoon 12272:22 Test::Whitespace semsig:runstep-indent runstep #1 @12272:22; overindented by 1
+hoons/arvo/sys/hoon.hoon 12278:22 Test::Whitespace semsig:runstep-indent runstep #2 @12278:22; overindented by 1
+hoons/arvo/sys/hoon.hoon 12279:22 Test::Whitespace semsig:runstep-indent runstep #3 @12279:22; overindented by 1
 
 # WUTBAR, WUTPAM anomalies from Github issue #19
-hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace tallWutpam joined 0-running runstep #2 @414:9; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 414:9 Test::Whitespace wutpam:runstep-indent runstep #2 @414:9; underindented by 2
 
 # "One-line" runnings in hoon.hoon -- Github issue #32
 hoons/arvo/sys/hoon.hoon 5329:43 Test::Whitespace semsig:tistis-gap:missing-newline 1-running TISTIS @5329:45; missing newline @5329:43
 hoons/arvo/sys/hoon.hoon 5347:45 Test::Whitespace semsig:tistis-gap:missing-newline 1-running TISTIS @5347:47; missing newline @5347:45
 
 # Github issue #34
-hoons/arvo/app/fora.hoon 64:5 Test::Whitespace colsig:comment-indent runstep #2 @64:5; comment overindented by 2
-hoons/arvo/app/fora.hoon 97:5 Test::Whitespace colsig:comment-indent runstep #2 @97:5; comment overindented by 2
-hoons/arvo/app/gh.hoon 145:9 Test::Whitespace coltar:comment-indent runstep #3 @145:9; comment overindented by 2
-hoons/arvo/app/gh.hoon 152:9 Test::Whitespace coltar:comment-indent runstep #4 @152:9; comment overindented by 2
-hoons/arvo/app/gh.hoon 158:9 Test::Whitespace coltar:comment-indent runstep #5 @158:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1188:9 Test::Whitespace colsig:comment-indent runstep #2 @1188:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1192:9 Test::Whitespace colsig:comment-indent runstep #3 @1192:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1196:9 Test::Whitespace colsig:comment-indent runstep #4 @1196:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1199:9 Test::Whitespace colsig:comment-indent runstep #5 @1199:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1202:9 Test::Whitespace colsig:comment-indent runstep #6 @1202:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 1206:9 Test::Whitespace colsig:comment-indent runstep #7 @1206:9; comment overindented by 2
-hoons/arvo/app/hall.hoon 2253:5 Test::Whitespace colsig:comment-indent runstep #2 @2253:5; comment overindented by 2
-hoons/arvo/app/talk.hoon 283:5 Test::Whitespace coltar:comment-indent runstep #5 @283:5; comment overindented by 2
-hoons/arvo/lib/gh-parse.hoon 200:5 Test::Whitespace coltar:comment-indent runstep #6 @200:5; comment overindented by 2
-hoons/arvo/lib/gh-parse.hoon 206:5 Test::Whitespace coltar:comment-indent runstep #7 @206:5; comment overindented by 2
-hoons/arvo/lib/hood/helm.hoon 255:5 Test::Whitespace colsig:comment-indent runstep #2 @255:5; comment overindented by 2
-hoons/arvo/lib/hood/helm.hoon 260:5 Test::Whitespace colsig:comment-indent runstep #3 @260:5; comment overindented by 2
-hoons/arvo/lib/hood/helm.hoon 276:5 Test::Whitespace colsig:comment-indent runstep #2 @276:5; comment overindented by 2
-hoons/arvo/sys/vane/clay.hoon 752:9 Test::Whitespace wutpam:comment-indent runstep #3 @752:9; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 101:5 Test::Whitespace colsig:comment-indent runstep #2 @101:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 105:5 Test::Whitespace colsig:comment-indent runstep #3 @105:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 109:5 Test::Whitespace colsig:comment-indent runstep #4 @109:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 113:5 Test::Whitespace colsig:comment-indent runstep #5 @113:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 117:5 Test::Whitespace colsig:comment-indent runstep #6 @117:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 121:5 Test::Whitespace colsig:comment-indent runstep #7 @121:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 132:5 Test::Whitespace colsig:comment-indent runstep #2 @132:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 136:5 Test::Whitespace colsig:comment-indent runstep #3 @136:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 140:5 Test::Whitespace colsig:comment-indent runstep #4 @140:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 144:5 Test::Whitespace colsig:comment-indent runstep #5 @144:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 148:5 Test::Whitespace colsig:comment-indent runstep #6 @148:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 152:5 Test::Whitespace colsig:comment-indent runstep #7 @152:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 164:5 Test::Whitespace colsig:comment-indent runstep #2 @164:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 169:5 Test::Whitespace colsig:comment-indent runstep #3 @169:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 174:5 Test::Whitespace colsig:comment-indent runstep #4 @174:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 179:5 Test::Whitespace colsig:comment-indent runstep #5 @179:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 184:5 Test::Whitespace colsig:comment-indent runstep #6 @184:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 189:5 Test::Whitespace colsig:comment-indent runstep #7 @189:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 203:5 Test::Whitespace colsig:comment-indent runstep #2 @203:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 209:5 Test::Whitespace colsig:comment-indent runstep #3 @209:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 215:5 Test::Whitespace colsig:comment-indent runstep #4 @215:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 221:5 Test::Whitespace colsig:comment-indent runstep #5 @221:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 227:5 Test::Whitespace colsig:comment-indent runstep #6 @227:5; comment overindented by 2
-hoons/arvo/tests/zuse/crypto/keccak.hoon 233:5 Test::Whitespace colsig:comment-indent runstep #7 @233:5; comment overindented by 2
+hoons/arvo/app/fora.hoon 64:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @64:5; comment overindented by 2
+hoons/arvo/app/fora.hoon 97:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @97:5; comment overindented by 2
+hoons/arvo/app/gh.hoon 145:9 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @145:9; comment overindented by 2
+hoons/arvo/app/gh.hoon 152:9 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @152:9; comment overindented by 2
+hoons/arvo/app/gh.hoon 158:9 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @158:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1188:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1188:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1192:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1192:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1196:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1196:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1199:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1199:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1202:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1202:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1206:9 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @1206:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 2253:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @2253:5; comment overindented by 2
+hoons/arvo/app/talk.hoon 283:5 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @283:5; comment overindented by 2
+hoons/arvo/lib/gh-parse.hoon 200:5 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @200:5; comment overindented by 2
+hoons/arvo/lib/gh-parse.hoon 206:5 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @206:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 255:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @255:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 260:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @260:5; comment overindented by 2
+hoons/arvo/lib/hood/helm.hoon 276:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @276:5; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 752:9 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @752:9; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 101:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @101:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 105:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @105:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 109:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @109:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 113:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @113:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 117:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @117:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 121:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @121:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 132:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @132:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 136:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @136:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 140:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @140:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 144:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @144:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 148:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @148:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 152:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @152:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 164:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @164:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 169:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @169:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 174:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @174:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 179:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @179:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 184:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @184:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 189:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @189:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 203:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @203:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 209:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @209:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 215:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @215:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 221:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @221:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 227:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @227:5; comment overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 233:5 Test::Whitespace colsig:runstep-vgap:comment-indent colsig @233:5; comment overindented by 2
 
 # Github issue #36
-hoons/arvo/app/talk.hoon 861:9 Test::Whitespace semsig:comment-indent runstep #11 @861:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 862:9 Test::Whitespace semsig:comment-indent runstep #11 @862:9; comment underindented by 2
-hoons/arvo/app/talk.hoon 863:9 Test::Whitespace semsig:comment-indent runstep #11 @863:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 861:9 Test::Whitespace semsig:runstep-vgap:comment-indent semsig @861:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 862:9 Test::Whitespace semsig:runstep-vgap:comment-indent semsig @862:9; comment underindented by 2
+hoons/arvo/app/talk.hoon 863:9 Test::Whitespace semsig:runstep-vgap:comment-indent semsig @863:9; comment underindented by 2
 
 # Github issue #40
 hoons/arvo/lib/down-jet/parse.hoon 96:1 Test::Whitespace barcen:hephep-alone HEPHEP @96:1 should only share line with other HEPHEP's
@@ -499,137 +509,137 @@ hoons/arvo/sys/vane/clay.hoon 3522:1 Test::Whitespace tisgar:indent backdented e
 hoons/arvo/sys/vane/dill.hoon 32:1 Test::Whitespace barcen:hephep-alone HEPHEP @32:1 should only share line with other HEPHEP's
 
 # Github issue #37
-hoons/arvo/lib/gh-parse.hoon 14:7 Test::Whitespace tallColsig runstep #1 @14:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 15:7 Test::Whitespace tallColsig runstep #2 @15:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 16:7 Test::Whitespace tallColsig runstep #3 @16:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 17:7 Test::Whitespace tallColsig runstep #4 @17:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 18:7 Test::Whitespace tallColsig runstep #5 @18:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 19:7 Test::Whitespace tallColsig runstep #6 @19:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 20:7 Test::Whitespace tallColsig runstep #7 @20:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 21:7 Test::Whitespace tallColsig runstep #8 @21:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 22:7 Test::Whitespace tallColsig runstep #9 @22:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 23:7 Test::Whitespace tallColsig runstep #10 @23:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 24:7 Test::Whitespace tallColsig runstep #11 @24:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 25:7 Test::Whitespace tallColsig runstep #12 @25:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 26:7 Test::Whitespace tallColsig runstep #13 @26:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 27:7 Test::Whitespace tallColsig runstep #14 @27:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 28:7 Test::Whitespace tallColsig runstep #15 @28:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 29:7 Test::Whitespace tallColsig runstep #16 @29:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 30:7 Test::Whitespace tallColsig runstep #17 @30:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 31:7 Test::Whitespace tallColsig runstep #18 @31:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 32:7 Test::Whitespace tallColsig runstep #19 @32:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 33:7 Test::Whitespace tallColsig runstep #20 @33:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 34:7 Test::Whitespace tallColsig runstep #21 @34:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 35:7 Test::Whitespace tallColsig runstep #22 @35:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 36:7 Test::Whitespace tallColsig runstep #23 @36:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 37:7 Test::Whitespace tallColsig runstep #24 @37:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 38:7 Test::Whitespace tallColsig runstep #25 @38:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 39:7 Test::Whitespace tallColsig runstep #26 @39:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 40:7 Test::Whitespace tallColsig runstep #27 @40:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 41:7 Test::Whitespace tallColsig runstep #28 @41:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 42:7 Test::Whitespace tallColsig runstep #29 @42:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 43:7 Test::Whitespace tallColsig runstep #30 @43:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 44:7 Test::Whitespace tallColsig runstep #31 @44:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 45:7 Test::Whitespace tallColsig runstep #32 @45:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 46:7 Test::Whitespace tallColsig runstep #33 @46:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 47:7 Test::Whitespace tallColsig runstep #34 @47:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 48:7 Test::Whitespace tallColsig runstep #35 @48:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 49:7 Test::Whitespace tallColsig runstep #36 @49:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 50:7 Test::Whitespace tallColsig runstep #37 @50:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 51:7 Test::Whitespace tallColsig runstep #38 @51:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 52:7 Test::Whitespace tallColsig runstep #39 @52:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 53:7 Test::Whitespace tallColsig runstep #40 @53:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 54:7 Test::Whitespace tallColsig runstep #41 @54:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 55:7 Test::Whitespace tallColsig runstep #42 @55:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 56:7 Test::Whitespace tallColsig runstep #43 @56:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 57:7 Test::Whitespace tallColsig runstep #44 @57:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 58:7 Test::Whitespace tallColsig runstep #45 @58:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 59:7 Test::Whitespace tallColsig runstep #46 @59:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 60:7 Test::Whitespace tallColsig runstep #47 @60:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 61:7 Test::Whitespace tallColsig runstep #48 @61:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 62:7 Test::Whitespace tallColsig runstep #49 @62:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 63:7 Test::Whitespace tallColsig runstep #50 @63:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 64:7 Test::Whitespace tallColsig runstep #51 @64:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 65:7 Test::Whitespace tallColsig runstep #52 @65:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 66:7 Test::Whitespace tallColsig runstep #53 @66:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 67:7 Test::Whitespace tallColsig runstep #54 @67:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 68:7 Test::Whitespace tallColsig runstep #55 @68:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 69:7 Test::Whitespace tallColsig runstep #56 @69:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 70:7 Test::Whitespace tallColsig runstep #57 @70:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 71:7 Test::Whitespace tallColsig runstep #58 @71:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 72:7 Test::Whitespace tallColsig runstep #59 @72:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 73:7 Test::Whitespace tallColsig runstep #60 @73:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 74:7 Test::Whitespace tallColsig runstep #61 @74:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 75:7 Test::Whitespace tallColsig runstep #62 @75:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 76:7 Test::Whitespace tallColsig runstep #63 @76:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 77:7 Test::Whitespace tallColsig runstep #64 @77:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 78:7 Test::Whitespace tallColsig runstep #65 @78:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 79:7 Test::Whitespace tallColsig runstep #66 @79:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 80:7 Test::Whitespace tallColsig runstep #67 @80:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 86:7 Test::Whitespace tallColsig runstep #1 @86:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 87:7 Test::Whitespace tallColsig runstep #2 @87:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 88:7 Test::Whitespace tallColsig runstep #3 @88:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 89:7 Test::Whitespace tallColsig runstep #4 @89:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 90:7 Test::Whitespace tallColsig runstep #5 @90:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 91:7 Test::Whitespace tallColsig runstep #6 @91:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 92:7 Test::Whitespace tallColsig runstep #7 @92:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 93:7 Test::Whitespace tallColsig runstep #8 @93:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 99:7 Test::Whitespace tallColsig runstep #1 @99:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 100:7 Test::Whitespace tallColsig runstep #2 @100:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 101:7 Test::Whitespace tallColsig runstep #3 @101:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 102:7 Test::Whitespace tallColsig runstep #4 @102:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 103:7 Test::Whitespace tallColsig runstep #5 @103:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 104:7 Test::Whitespace tallColsig runstep #6 @104:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 105:7 Test::Whitespace tallColsig runstep #7 @105:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 106:7 Test::Whitespace tallColsig runstep #8 @106:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 107:7 Test::Whitespace tallColsig runstep #9 @107:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 108:7 Test::Whitespace tallColsig runstep #10 @108:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 109:7 Test::Whitespace tallColsig runstep #11 @109:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 110:7 Test::Whitespace tallColsig runstep #12 @110:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 111:7 Test::Whitespace tallColsig runstep #13 @111:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 112:7 Test::Whitespace tallColsig runstep #14 @112:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 113:7 Test::Whitespace tallColsig runstep #15 @113:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 114:7 Test::Whitespace tallColsig runstep #16 @114:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 115:7 Test::Whitespace tallColsig runstep #17 @115:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 124:7 Test::Whitespace tallColsig runstep #1 @124:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 125:7 Test::Whitespace tallColsig runstep #2 @125:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 126:7 Test::Whitespace tallColsig runstep #3 @126:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 127:7 Test::Whitespace tallColsig runstep #4 @127:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 128:7 Test::Whitespace tallColsig runstep #5 @128:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 129:7 Test::Whitespace tallColsig runstep #6 @129:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 130:7 Test::Whitespace tallColsig runstep #7 @130:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 131:7 Test::Whitespace tallColsig runstep #8 @131:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 132:7 Test::Whitespace tallColsig runstep #9 @132:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 133:7 Test::Whitespace tallColsig runstep #10 @133:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 134:7 Test::Whitespace tallColsig runstep #11 @134:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 135:7 Test::Whitespace tallColsig runstep #12 @135:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 136:7 Test::Whitespace tallColsig runstep #13 @136:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 137:7 Test::Whitespace tallColsig runstep #14 @137:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 138:7 Test::Whitespace tallColsig runstep #15 @138:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 139:7 Test::Whitespace tallColsig runstep #16 @139:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 140:7 Test::Whitespace tallColsig runstep #17 @140:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 141:7 Test::Whitespace tallColsig runstep #18 @141:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 142:7 Test::Whitespace tallColsig runstep #19 @142:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 148:7 Test::Whitespace tallColsig runstep #1 @148:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 149:7 Test::Whitespace tallColsig runstep #2 @149:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 150:7 Test::Whitespace tallColsig runstep #3 @150:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 156:7 Test::Whitespace tallColsig runstep #1 @156:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 157:7 Test::Whitespace tallColsig runstep #2 @157:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 163:7 Test::Whitespace tallColsig runstep #1 @163:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 164:7 Test::Whitespace tallColsig runstep #2 @164:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 165:7 Test::Whitespace tallColsig runstep #3 @165:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 166:7 Test::Whitespace tallColsig runstep #4 @166:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 172:7 Test::Whitespace tallColsig runstep #1 @172:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 173:7 Test::Whitespace tallColsig runstep #2 @173:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 174:7 Test::Whitespace tallColsig runstep #3 @174:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 180:7 Test::Whitespace tallColsig runstep #1 @180:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 181:7 Test::Whitespace tallColsig runstep #2 @181:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 182:7 Test::Whitespace tallColsig runstep #3 @182:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 183:7 Test::Whitespace tallColsig runstep #4 @183:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 184:7 Test::Whitespace tallColsig runstep #5 @184:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 185:7 Test::Whitespace tallColsig runstep #6 @185:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 186:7 Test::Whitespace tallColsig runstep #7 @186:7; overindented by 2
-hoons/arvo/lib/gh-parse.hoon 187:7 Test::Whitespace tallColsig runstep #8 @187:7; overindented by 2
+
+hoons/arvo/lib/gh-parse.hoon 14:7 Test::Whitespace colsig:runstep-indent runstep #1 @14:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 15:7 Test::Whitespace colsig:runstep-indent runstep #2 @15:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 16:7 Test::Whitespace colsig:runstep-indent runstep #3 @16:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 17:7 Test::Whitespace colsig:runstep-indent runstep #4 @17:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 18:7 Test::Whitespace colsig:runstep-indent runstep #5 @18:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 19:7 Test::Whitespace colsig:runstep-indent runstep #6 @19:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 20:7 Test::Whitespace colsig:runstep-indent runstep #7 @20:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 21:7 Test::Whitespace colsig:runstep-indent runstep #8 @21:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 22:7 Test::Whitespace colsig:runstep-indent runstep #9 @22:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 23:7 Test::Whitespace colsig:runstep-indent runstep #10 @23:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 24:7 Test::Whitespace colsig:runstep-indent runstep #11 @24:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 25:7 Test::Whitespace colsig:runstep-indent runstep #12 @25:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 26:7 Test::Whitespace colsig:runstep-indent runstep #13 @26:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 27:7 Test::Whitespace colsig:runstep-indent runstep #14 @27:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 28:7 Test::Whitespace colsig:runstep-indent runstep #15 @28:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 29:7 Test::Whitespace colsig:runstep-indent runstep #16 @29:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 30:7 Test::Whitespace colsig:runstep-indent runstep #17 @30:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 31:7 Test::Whitespace colsig:runstep-indent runstep #18 @31:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 32:7 Test::Whitespace colsig:runstep-indent runstep #19 @32:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 33:7 Test::Whitespace colsig:runstep-indent runstep #20 @33:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 34:7 Test::Whitespace colsig:runstep-indent runstep #21 @34:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 35:7 Test::Whitespace colsig:runstep-indent runstep #22 @35:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 36:7 Test::Whitespace colsig:runstep-indent runstep #23 @36:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 37:7 Test::Whitespace colsig:runstep-indent runstep #24 @37:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 38:7 Test::Whitespace colsig:runstep-indent runstep #25 @38:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 39:7 Test::Whitespace colsig:runstep-indent runstep #26 @39:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 40:7 Test::Whitespace colsig:runstep-indent runstep #27 @40:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 41:7 Test::Whitespace colsig:runstep-indent runstep #28 @41:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 42:7 Test::Whitespace colsig:runstep-indent runstep #29 @42:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 43:7 Test::Whitespace colsig:runstep-indent runstep #30 @43:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 44:7 Test::Whitespace colsig:runstep-indent runstep #31 @44:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 45:7 Test::Whitespace colsig:runstep-indent runstep #32 @45:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 46:7 Test::Whitespace colsig:runstep-indent runstep #33 @46:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 47:7 Test::Whitespace colsig:runstep-indent runstep #34 @47:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 48:7 Test::Whitespace colsig:runstep-indent runstep #35 @48:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 49:7 Test::Whitespace colsig:runstep-indent runstep #36 @49:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 50:7 Test::Whitespace colsig:runstep-indent runstep #37 @50:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 51:7 Test::Whitespace colsig:runstep-indent runstep #38 @51:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 52:7 Test::Whitespace colsig:runstep-indent runstep #39 @52:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 53:7 Test::Whitespace colsig:runstep-indent runstep #40 @53:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 54:7 Test::Whitespace colsig:runstep-indent runstep #41 @54:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 55:7 Test::Whitespace colsig:runstep-indent runstep #42 @55:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 56:7 Test::Whitespace colsig:runstep-indent runstep #43 @56:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 57:7 Test::Whitespace colsig:runstep-indent runstep #44 @57:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 58:7 Test::Whitespace colsig:runstep-indent runstep #45 @58:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 59:7 Test::Whitespace colsig:runstep-indent runstep #46 @59:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 60:7 Test::Whitespace colsig:runstep-indent runstep #47 @60:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 61:7 Test::Whitespace colsig:runstep-indent runstep #48 @61:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 62:7 Test::Whitespace colsig:runstep-indent runstep #49 @62:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 63:7 Test::Whitespace colsig:runstep-indent runstep #50 @63:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 64:7 Test::Whitespace colsig:runstep-indent runstep #51 @64:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 65:7 Test::Whitespace colsig:runstep-indent runstep #52 @65:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 66:7 Test::Whitespace colsig:runstep-indent runstep #53 @66:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 67:7 Test::Whitespace colsig:runstep-indent runstep #54 @67:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 69:7 Test::Whitespace colsig:runstep-indent runstep #56 @69:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 70:7 Test::Whitespace colsig:runstep-indent runstep #57 @70:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 71:7 Test::Whitespace colsig:runstep-indent runstep #58 @71:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 72:7 Test::Whitespace colsig:runstep-indent runstep #59 @72:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 73:7 Test::Whitespace colsig:runstep-indent runstep #60 @73:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 74:7 Test::Whitespace colsig:runstep-indent runstep #61 @74:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 75:7 Test::Whitespace colsig:runstep-indent runstep #62 @75:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 76:7 Test::Whitespace colsig:runstep-indent runstep #63 @76:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 77:7 Test::Whitespace colsig:runstep-indent runstep #64 @77:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 78:7 Test::Whitespace colsig:runstep-indent runstep #65 @78:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 79:7 Test::Whitespace colsig:runstep-indent runstep #66 @79:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 80:7 Test::Whitespace colsig:runstep-indent runstep #67 @80:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 86:7 Test::Whitespace colsig:runstep-indent runstep #1 @86:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 87:7 Test::Whitespace colsig:runstep-indent runstep #2 @87:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 88:7 Test::Whitespace colsig:runstep-indent runstep #3 @88:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 89:7 Test::Whitespace colsig:runstep-indent runstep #4 @89:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 90:7 Test::Whitespace colsig:runstep-indent runstep #5 @90:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 91:7 Test::Whitespace colsig:runstep-indent runstep #6 @91:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 92:7 Test::Whitespace colsig:runstep-indent runstep #7 @92:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 93:7 Test::Whitespace colsig:runstep-indent runstep #8 @93:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 99:7 Test::Whitespace colsig:runstep-indent runstep #1 @99:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 100:7 Test::Whitespace colsig:runstep-indent runstep #2 @100:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 101:7 Test::Whitespace colsig:runstep-indent runstep #3 @101:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 102:7 Test::Whitespace colsig:runstep-indent runstep #4 @102:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 103:7 Test::Whitespace colsig:runstep-indent runstep #5 @103:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 104:7 Test::Whitespace colsig:runstep-indent runstep #6 @104:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 105:7 Test::Whitespace colsig:runstep-indent runstep #7 @105:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 106:7 Test::Whitespace colsig:runstep-indent runstep #8 @106:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 107:7 Test::Whitespace colsig:runstep-indent runstep #9 @107:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 108:7 Test::Whitespace colsig:runstep-indent runstep #10 @108:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 109:7 Test::Whitespace colsig:runstep-indent runstep #11 @109:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 110:7 Test::Whitespace colsig:runstep-indent runstep #12 @110:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 111:7 Test::Whitespace colsig:runstep-indent runstep #13 @111:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 112:7 Test::Whitespace colsig:runstep-indent runstep #14 @112:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 113:7 Test::Whitespace colsig:runstep-indent runstep #15 @113:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 114:7 Test::Whitespace colsig:runstep-indent runstep #16 @114:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 115:7 Test::Whitespace colsig:runstep-indent runstep #17 @115:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 124:7 Test::Whitespace colsig:runstep-indent runstep #1 @124:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 125:7 Test::Whitespace colsig:runstep-indent runstep #2 @125:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 126:7 Test::Whitespace colsig:runstep-indent runstep #3 @126:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 127:7 Test::Whitespace colsig:runstep-indent runstep #4 @127:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 128:7 Test::Whitespace colsig:runstep-indent runstep #5 @128:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 129:7 Test::Whitespace colsig:runstep-indent runstep #6 @129:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 130:7 Test::Whitespace colsig:runstep-indent runstep #7 @130:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 131:7 Test::Whitespace colsig:runstep-indent runstep #8 @131:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 132:7 Test::Whitespace colsig:runstep-indent runstep #9 @132:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 133:7 Test::Whitespace colsig:runstep-indent runstep #10 @133:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 134:7 Test::Whitespace colsig:runstep-indent runstep #11 @134:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 135:7 Test::Whitespace colsig:runstep-indent runstep #12 @135:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 136:7 Test::Whitespace colsig:runstep-indent runstep #13 @136:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 137:7 Test::Whitespace colsig:runstep-indent runstep #14 @137:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 138:7 Test::Whitespace colsig:runstep-indent runstep #15 @138:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 139:7 Test::Whitespace colsig:runstep-indent runstep #16 @139:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 140:7 Test::Whitespace colsig:runstep-indent runstep #17 @140:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 141:7 Test::Whitespace colsig:runstep-indent runstep #18 @141:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 142:7 Test::Whitespace colsig:runstep-indent runstep #19 @142:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 148:7 Test::Whitespace colsig:runstep-indent runstep #1 @148:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 149:7 Test::Whitespace colsig:runstep-indent runstep #2 @149:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 150:7 Test::Whitespace colsig:runstep-indent runstep #3 @150:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 156:7 Test::Whitespace colsig:runstep-indent runstep #1 @156:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 157:7 Test::Whitespace colsig:runstep-indent runstep #2 @157:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 163:7 Test::Whitespace colsig:runstep-indent runstep #1 @163:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 164:7 Test::Whitespace colsig:runstep-indent runstep #2 @164:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 165:7 Test::Whitespace colsig:runstep-indent runstep #3 @165:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 166:7 Test::Whitespace colsig:runstep-indent runstep #4 @166:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 172:7 Test::Whitespace colsig:runstep-indent runstep #1 @172:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 173:7 Test::Whitespace colsig:runstep-indent runstep #2 @173:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 174:7 Test::Whitespace colsig:runstep-indent runstep #3 @174:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 180:7 Test::Whitespace colsig:runstep-indent runstep #1 @180:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 181:7 Test::Whitespace colsig:runstep-indent runstep #2 @181:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 182:7 Test::Whitespace colsig:runstep-indent runstep #3 @182:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 183:7 Test::Whitespace colsig:runstep-indent runstep #4 @183:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 184:7 Test::Whitespace colsig:runstep-indent runstep #5 @184:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 185:7 Test::Whitespace colsig:runstep-indent runstep #6 @185:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 186:7 Test::Whitespace colsig:runstep-indent runstep #7 @186:7; overindented by 2
+hoons/arvo/lib/gh-parse.hoon 187:7 Test::Whitespace colsig:runstep-indent runstep #8 @187:7; overindented by 2
 
 # Github issue #41
 hoons/arvo/app/dojo.hoon 1573:18 Test::Whitespace tisdot:hgap joined backdent @1573:18 element #2 of @1573:7; overindented by 1
@@ -1297,34 +1307,34 @@ hoons/arvo/sys/vane/xmas.hoon 1162:6 Test::Whitespace tissig:tistis-alone TISTIS
 hoons/arvo/sys/vane/eyre.hoon 1307:13 Test::Whitespace wutlus:queenside:joined:tistis-indent TISTIS @1307:13; overindented by 2
 
 # TISSIG aberrations (mainly due to anchoring)
-hoons/arvo/sys/vane/behn.hoon 7:1 Test::Whitespace tallTissig runstep #1 @7:1; underindented by 6
-hoons/arvo/sys/vane/behn.hoon 25:1 Test::Whitespace tallTissig runstep #2 @25:1; underindented by 6
-hoons/arvo/sys/vane/behn.hoon 145:1 Test::Whitespace tallTissig runstep #3 @145:1; underindented by 6
-hoons/arvo/sys/vane/ford.hoon 10:1 Test::Whitespace tallTissig runstep #1 @10:1; underindented by 6
-hoons/arvo/sys/vane/ford.hoon 34:1 Test::Whitespace tallTissig runstep #2 @34:1; underindented by 6
-hoons/arvo/sys/vane/ford.hoon 93:1 Test::Whitespace tallTissig runstep #3 @93:1; underindented by 6
-hoons/arvo/sys/vane/ford.hoon 1882:1 Test::Whitespace tallTissig runstep #4 @1882:1; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 14:3 Test::Whitespace tallTissig runstep #2 @14:3; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 379:3 Test::Whitespace tallTissig runstep #3 @379:3; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 420:3 Test::Whitespace tallTissig runstep #4 @420:3; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 732:3 Test::Whitespace tallTissig runstep #5 @732:3; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 940:3 Test::Whitespace tallTissig runstep #6 @940:3; underindented by 6
-hoons/arvo/sys/vane/ames.hoon 1512:3 Test::Whitespace tallTissig runstep #7 @1512:3; underindented by 6
-hoons/arvo/sys/vane/gall.hoon 7:1 Test::Whitespace tallTissig runstep #1 @7:1; underindented by 6
-hoons/arvo/sys/vane/gall.hoon 22:1 Test::Whitespace tallTissig runstep #2 @22:1; underindented by 6
-hoons/arvo/sys/vane/gall.hoon 32:1 Test::Whitespace tallTissig runstep #3 @32:1; underindented by 6
-hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tallTissig runstep #4 @97:1; underindented by 6
-hoons/arvo/sys/vane/eyre.hoon 13:1 Test::Whitespace tallTissig runstep #1 @13:1; underindented by 6
-hoons/arvo/sys/vane/eyre.hoon 86:1 Test::Whitespace tallTissig runstep #2 @86:1; underindented by 6
-hoons/arvo/sys/vane/eyre.hoon 176:1 Test::Whitespace tallTissig runstep #3 @176:1; underindented by 6
-hoons/arvo/sys/vane/eyre.hoon 610:1 Test::Whitespace tallTissig runstep #4 @610:1; underindented by 6
-hoons/arvo/sys/vane/eyre.hoon 1983:1 Test::Whitespace tallTissig runstep #5 @1983:1; underindented by 6
-hoons/arvo/sys/vane/xmas.hoon 6:1 Test::Whitespace tallTissig runstep #1 @6:1; underindented by 6
-hoons/arvo/sys/vane/xmas.hoon 104:1 Test::Whitespace tallTissig runstep #2 @104:1; underindented by 6
-hoons/arvo/lib/down-jet/parse.hoon 9:1 Test::Whitespace tallTissig runstep #1 @9:1; underindented by 6
-hoons/arvo/lib/down-jet/parse.hoon 13:1 Test::Whitespace tallTissig runstep #2 @13:1; underindented by 6
-hoons/arvo/lib/down-jet/parse.hoon 52:1 Test::Whitespace tallTissig runstep #3 @52:1; underindented by 6
-hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tallTissig runstep #2 @448:1; underindented by 4
+hoons/arvo/sys/vane/behn.hoon 7:1 Test::Whitespace tissig:runstep-indent runstep #1 @7:1; underindented by 4
+hoons/arvo/sys/vane/behn.hoon 25:1 Test::Whitespace tissig:runstep-indent runstep #2 @25:1; underindented by 4
+hoons/arvo/sys/vane/behn.hoon 145:1 Test::Whitespace tissig:runstep-indent runstep #3 @145:1; underindented by 4
+hoons/arvo/sys/vane/ford.hoon 10:1 Test::Whitespace tissig:runstep-indent runstep #1 @10:1; underindented by 4
+hoons/arvo/sys/vane/ford.hoon 34:1 Test::Whitespace tissig:runstep-indent runstep #2 @34:1; underindented by 4
+hoons/arvo/sys/vane/ford.hoon 93:1 Test::Whitespace tissig:runstep-indent runstep #3 @93:1; underindented by 4
+hoons/arvo/sys/vane/ford.hoon 1882:1 Test::Whitespace tissig:runstep-indent runstep #4 @1882:1; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 14:3 Test::Whitespace tissig:runstep-indent runstep #2 @14:3; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 379:3 Test::Whitespace tissig:runstep-indent runstep #3 @379:3; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 420:3 Test::Whitespace tissig:runstep-indent runstep #4 @420:3; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 732:3 Test::Whitespace tissig:runstep-indent runstep #5 @732:3; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 940:3 Test::Whitespace tissig:runstep-indent runstep #6 @940:3; underindented by 4
+hoons/arvo/sys/vane/ames.hoon 1512:3 Test::Whitespace tissig:runstep-indent runstep #7 @1512:3; underindented by 4
+hoons/arvo/sys/vane/gall.hoon 7:1 Test::Whitespace tissig:runstep-indent runstep #1 @7:1; underindented by 4
+hoons/arvo/sys/vane/gall.hoon 22:1 Test::Whitespace tissig:runstep-indent runstep #2 @22:1; underindented by 4
+hoons/arvo/sys/vane/gall.hoon 32:1 Test::Whitespace tissig:runstep-indent runstep #3 @32:1; underindented by 4
+hoons/arvo/sys/vane/gall.hoon 97:1 Test::Whitespace tissig:runstep-indent runstep #4 @97:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 13:1 Test::Whitespace tissig:runstep-indent runstep #1 @13:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 86:1 Test::Whitespace tissig:runstep-indent runstep #2 @86:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 176:1 Test::Whitespace tissig:runstep-indent runstep #3 @176:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 610:1 Test::Whitespace tissig:runstep-indent runstep #4 @610:1; underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 1983:1 Test::Whitespace tissig:runstep-indent runstep #5 @1983:1; underindented by 4
+hoons/arvo/sys/vane/xmas.hoon 6:1 Test::Whitespace tissig:runstep-indent runstep #1 @6:1; underindented by 4
+hoons/arvo/sys/vane/xmas.hoon 104:1 Test::Whitespace tissig:runstep-indent runstep #2 @104:1; underindented by 4
+hoons/arvo/lib/down-jet/parse.hoon 9:1 Test::Whitespace tissig:runstep-indent runstep #1 @9:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 13:1 Test::Whitespace tissig:runstep-indent runstep #2 @13:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 52:1 Test::Whitespace tissig:runstep-indent runstep #3 @52:1; underindented by 6
+hoons/arvo/lib/down-jet/parse.hoon 448:1 Test::Whitespace tissig:runstep-indent runstep #2 @448:1; underindented by 4
 
 # Silence LUSHEP warnings
 hoons/arvo/sys/hoon.hoon 8484:7 Test::Whitespace lushep:arm-body-indent cell body @8484:7; underindented by 2
