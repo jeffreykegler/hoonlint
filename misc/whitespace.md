@@ -963,22 +963,18 @@ in lexical order:
 
 * Its rune.
 
-* A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned at the runstep lines.
+* A vertical gap, with comments at the anchor column,
+  and aligned at the runstep lines.
 
-* A running where
+* A running where runstep lines are aligned one stop
+  after the anchor column.
+  The runstep lines are separated by
+  vertical gaps with comments
+  at the anchor column and
+  aligned with the runstep lines.
 
-    * runstep lines are aligned one stop
-      after the anchor column;
-
-    * the inter-column of the vertical gaps is
-      aligned at the anchor column; and
-
-    * the pre-column of the vertical gaps is
-      aligned at the runstep lines.
-
-* A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned at the runstep lines.
+* A vertical gap, with comments at the anchor column,
+  and aligned at the runstep lines.
 
 * A TISTIS aligned at the anchor column.
 
@@ -1012,24 +1008,22 @@ in lexical order:
 
 * The first runstep line.
 
-* A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned one stop after
+* A vertical gap with comments at the anchor column,
+  and aligned one stop after
   the anchor column.
 
 * The remainder of the running, where
+  runstep lines are aligned one stop
+  after the anchor column.
+  The runsteps lines should be separated by
+  vertical gaps with comments
+  at the anchor column and
+  aligned one stop after the anchor column.
 
-    - runstep lines are aligned one stop
-      after the anchor column;
-
-    - the inter-column of the vertical gaps is
-      aligned at the anchor column; and
-
-    - the pre-column of the vertical gaps is
-      aligned one stop after the anchor column.
-
-* A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned one stop after the
-  the anchor column.
+* A vertical gap 
+  with comments
+  at the anchor column and
+  aligned one stop after the anchor column.
 
 * A TISTIS aligned at the anchor column.
 
