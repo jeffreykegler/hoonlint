@@ -987,6 +987,7 @@ in lexical order:
 
 ## 1-running hoons
 
+1-running hoon statements do not reanchor.
 1-running hoons can be joined or split.
 
 ### Joined 1-running hoons

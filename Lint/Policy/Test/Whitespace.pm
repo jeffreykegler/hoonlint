@@ -1693,10 +1693,6 @@ sub checkElemKids {
               };
         }
 
-# say STDERR join " ", __FILE__, __LINE__, $instance->symbol($kid);
-# say STDERR join " ", __FILE__, __LINE__, describeLC($instance->nodeLC($kid));
-# say STDERR join " ", __FILE__, __LINE__, '[' . $instance->literalNode($kid) . ']';
-
     }
 
     return \@mistakes;
@@ -1747,15 +1743,11 @@ sub checkRunning {
         # in a row (or line) is at index 0.
         my $pileIX = 0;
       RUNSTEP: while (1) {
-        # say STDERR join " ", __FILE__, __LINE__, $childIX, $pileIX;
             last RUNNING_LINE if $childIX + 1 > $#$runningChildren;
             my $gap       = $runningChildren->[$childIX];
             my $runStep   = $runningChildren->[ $childIX + 1 ];
             my ($gapLine) = $instance->nodeLC($gap);
             my ( $runStepLine, $runStepColumn ) = $instance->nodeLC($runStep);
-        # say STDERR sprintf q{Gap: "%s"}, $instance->literalNode($gap);
-        # say STDERR sprintf q{Runstep: "%s"}, $instance->literalNode($runStep);
-        # say STDERR join " ", __FILE__, __LINE__, "gapline vs. run step line", $gapLine, $runStepLine;
             last RUNSTEP if $gapLine != $runStepLine;
 
             # Uses Perl's autoinstantiation
@@ -1795,35 +1787,27 @@ sub checkRunning {
         {
             my $runStep = $runningChildren->[$runStepIX];
 
-            # say STDERR "Child $runStepIX: ", $instance->literalNode($runStep);
             my $brickDescendant = $instance->brickDescendant($runStep);
             last RUNSTEP if not $brickDescendant;
 
-            # say STDERR "Brick $runStepIX: ",
               $instance->literalNode($brickDescendant);
             next RUNSTEP if not $policy->chainable($brickDescendant);
 
             push @bricks, $brickDescendant;
-            # say STDERR "Chainable Child $runStepIX: ",
               $instance->literalNode($brickDescendant);
             my $gapSeq = $policy->gapSeq0($brickDescendant);
           BRICK_ELEMENT: for ( my $elementIX = 0 ; ; $elementIX++ ) {
-                # say STDERR join " ", __FILE__, __LINE__;
                 my $seqIX = $elementIX * 2;
                 last BRICK_ELEMENT if $seqIX >= $#$gapSeq;
                 my $gap     = $gapSeq->[$seqIX];
                 my $element = $gapSeq->[ $seqIX + 1 ];
-                # say STDERR join " ", __FILE__, __LINE__;
                 push @{ $nodesToAlignByElement[$elementIX] }, $gap, $element;
             }
-            # say STDERR join " ", __FILE__, __LINE__;
         }
 
         last RUNNING_CHILD_ALIGNMENTS unless scalar @nodesToAlignByElement;
 
-        # say STDERR join " ", __FILE__, __LINE__;
         my @runStepChildAlignments = ();
-        # say STDERR join " ", __FILE__, __LINE__;
       ELEMENT:
         for (
             my $elementIX = 0 ;
@@ -1831,7 +1815,6 @@ sub checkRunning {
             $elementIX++
           )
         {
-            # say STDERR join " ", __FILE__, __LINE__;
             my $nodesToAlign = $nodesToAlignByElement[$elementIX];
             if ( not $nodesToAlign ) {
                 $runStepChildAlignments[$elementIX] = [ -1, [] ];
@@ -1917,7 +1900,6 @@ sub checkRunning {
 
             my $details;
             my @topicLines = ();
-            # say STDERR qq{$pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn};
             if (defined $pileAlignmentColumn and $pileAlignmentColumn >= $tightColumn) {
                 push @allowedColumns, [ $pileAlignmentColumn => 'runstep' ];
                 my $oneBasedColumn = $pileAlignmentColumn + 1;
@@ -2029,8 +2011,6 @@ sub checkRunning {
         $runStepCount = 2;
 
     }
-
-    # say join " ", __FILE__, __LINE__, 'childIX', $childIX, $#$runningChildren;
 
     return \@mistakes;
 
