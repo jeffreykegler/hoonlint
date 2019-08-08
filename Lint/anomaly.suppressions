@@ -1635,3 +1635,30 @@ hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace colsig:runstep-indent runstep #2
 hoons/arvo/app/pipe.hoon 69:9 Test::Whitespace colsig:tistis-indent TISTIS @69:9; overindented by 2
 hoons/arvo/app/test.hoon 62:5 Test::Whitespace colsig:runstep-indent runstep #2 @62:5; underindented by 2
 hoons/arvo/app/test.hoon 87:5 Test::Whitespace colsig:runstep-indent runstep #2 @87:5; underindented by 2
+hoons/arvo/sys/zuse.hoon 2469:41 Test::Whitespace colsig:missing-newline colsig @2469:41; missing newline @2469:41
+hoons/arvo/sys/zuse.hoon 2469:43 Test::Whitespace colsig:tistis-alone TISTIS @2469:43 should only share line with other TISTIS's
+hoons/arvo/sys/zuse.hoon 2481:41 Test::Whitespace colsig:missing-newline colsig @2481:41; missing newline @2481:41
+hoons/arvo/sys/zuse.hoon 2481:43 Test::Whitespace colsig:tistis-alone TISTIS @2481:43 should only share line with other TISTIS's
+hoons/arvo/sys/zuse.hoon 3275:14 Test::Whitespace colsig:runstep-indent runstep #1 @3275:14; overindented by 1
+hoons/arvo/sys/zuse.hoon 3276:22 Test::Whitespace colsig:runstep-hgap runstep #3 of running @3275:9, line 3276 is at @3276:22; should be @3276:21 (tight)
+hoons/arvo/sys/zuse.hoon 3277:14 Test::Whitespace colsig:runstep-indent runstep #11 @3277:14; overindented by 1
+hoons/arvo/sys/zuse.hoon 3278:30 Test::Whitespace colsig:runstep-hgap runstep #5 of running @3275:9, line 3278 is at @3278:30; should be @3278:29 (tight)
+hoons/arvo/sys/zuse.hoon 4193:43 Test::Whitespace colsig:runstep-hgap runstep #5 of running @4191:34, line 4193 is at @4193:43; should be @4193:40 (tight)
+hoons/arvo/sys/zuse.hoon 4193:53 Test::Whitespace colsig:runstep-hgap runstep #6 of running @4191:34, line 4193 is at @4193:53; should be @4193:52 (tight)
+hoons/arvo/sys/zuse.hoon 4819:15 Test::Whitespace colsig:runstep-indent runstep #1 @4819:15; overindented by 2
+hoons/arvo/sys/zuse.hoon 4820:15 Test::Whitespace colsig:runstep-indent runstep #2 @4820:15; overindented by 2
+hoons/arvo/sys/zuse.hoon 4821:15 Test::Whitespace colsig:runstep-indent runstep #3 @4821:15; overindented by 2
+hoons/arvo/sys/zuse.hoon 4822:15 Test::Whitespace colsig:runstep-indent runstep #4 @4822:15; overindented by 2
+hoons/arvo/sys/hoon.hoon 3396:16 Test::Whitespace colsig:runstep-indent runstep #1 @3396:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 3397:16 Test::Whitespace colsig:runstep-indent runstep #2 @3397:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 3398:16 Test::Whitespace colsig:runstep-indent runstep #3 @3398:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 3399:16 Test::Whitespace colsig:runstep-indent runstep #4 @3399:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 3400:16 Test::Whitespace colsig:runstep-indent runstep #5 @3400:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 11964:13 Test::Whitespace colsig:runstep-indent runstep #2 @11964:13; underindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 493:20 Test::Whitespace colsig:runstep-hgap runstep #2 of running @493:5, line 493 is at @493:20; should be @493:19 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:38 Test::Whitespace colsig:runstep-hgap runstep #4 of running @493:5, line 497 is at @497:38; should be @497:36 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:47 Test::Whitespace colsig:runstep-hgap runstep #5 of running @493:5, line 497 is at @497:47; should be @497:46 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:56 Test::Whitespace colsig:runstep-hgap runstep #6 of running @493:5, line 497 is at @497:56; should be @497:55 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 497:74 Test::Whitespace colsig:runstep-hgap runstep #8 of running @493:5, line 497 is at @497:74; should be @497:72 (tight)
+hoons/arvo/lib/down-jet/parse.hoon 498:15 Test::Whitespace colsig:runstep-hgap runstep #2 of running @493:5, line 498 is at @498:15; should be one of @498:14 (tight); @498:18 (runstep)
+hoons/arvo/gen/solid.hoon 65:1 Test::Whitespace colsig:empty-line colsig @65:1; empty line in comment
