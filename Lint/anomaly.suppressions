@@ -1702,3 +1702,31 @@ hoons/arvo/sys/vane/clay.hoon 351:11 Test::Whitespace buccol:runstep-indent runs
 hoons/arvo/sys/vane/clay.hoon 356:11 Test::Whitespace buccol:runstep-indent runstep #2 @356:11; underindented by 8
 hoons/arvo/sys/vane/clay.hoon 359:11 Test::Whitespace buccol:runstep-indent runstep #2 @359:11; underindented by 8
 hoons/arvo/sys/vane/clay.hoon 362:11 Test::Whitespace buccol:runstep-indent runstep #2 @362:11; underindented by 8
+
+# BUCWUT aberrations
+hoons/arvo/sur/hall.hoon 108:3 Test::Whitespace bucwut:runstep-indent runstep #2 @108:3; underindented by 4
+hoons/arvo/sys/zuse.hoon 5081:3 Test::Whitespace bucwut:runstep-indent runstep #2 @5081:3; underindented by 4
+hoons/arvo/sys/hoon.hoon 10995:19 Test::Whitespace bucwut:runstep-indent runstep #2 @10995:19; overindented by 4
+hoons/arvo/sys/hoon.hoon 10996:19 Test::Whitespace bucwut:runstep-indent runstep #3 @10996:19; overindented by 4
+hoons/arvo/sys/hoon.hoon 10997:15 Test::Whitespace bucwut:tistis-indent TISTIS @10997:15; overindented by 4
+hoons/arvo/sys/vane/dill.hoon 63:3 Test::Whitespace bucwut:runstep-indent runstep #2 @63:3; underindented by 4
+hoons/arvo/sys/vane/dill.hoon 88:3 Test::Whitespace bucwut:runstep-indent runstep #2 @88:3; underindented by 4
+hoons/arvo/app/twit.hoon 42:3 Test::Whitespace bucwut:runstep-indent runstep #2 @42:3; underindented by 4
+hoons/arvo/app/hall.hoon 83:7 Test::Whitespace bucwut:runstep-indent runstep #2 @83:7; underindented by 4
+
+# COLTAR aberrations
+hoons/arvo/sys/vane/eyre.hoon 1511:11 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @1511:11; comment underindented by 4
+hoons/arvo/sys/vane/eyre.hoon 1525:9 Test::Whitespace coltar:comment-indent coltar @1525:9; comment overindented by 2
+hoons/arvo/sys/vane/xmas.hoon 1157:11 Test::Whitespace coltar:runstep-indent runstep #2 @1157:11; underindented by 2
+hoons/arvo/sys/vane/xmas.hoon 1158:11 Test::Whitespace coltar:runstep-indent runstep #3 @1158:11; underindented by 2
+hoons/arvo/app/dojo.hoon 1624:12 Test::Whitespace coltar:tistis-indent TISTIS @1624:12; overindented by 1
+
+# WUTBAR, WUTPAM
+hoons/arvo/sys/vane/clay.hoon 711:9 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @711:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 729:9 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @729:9; comment overindented by 2
+hoons/arvo/sys/vane/clay.hoon 2421:11 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @2421:11; comment overindented by 2
+hoons/arvo/app/hall.hoon 1144:13 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @1144:13; comment overindented by 2
+hoons/arvo/app/hall.hoon 1148:17 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @1148:17; comment overindented by 2
+hoons/arvo/app/hall.hoon 1327:13 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @1327:13; comment overindented by 2
+hoons/arvo/app/hall.hoon 2496:7 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @2496:7; comment overindented by 2
+hoons/arvo/app/hall.hoon 2542:11 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @2542:11; comment overindented by 2
