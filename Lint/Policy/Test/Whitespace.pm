@@ -3567,7 +3567,7 @@ sub checkSplit_0Running {
         $policy->checkOneLineGap(
             $runningGap,
             {
-                mainColumn => $runeColumn,
+                mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
                 tag        => $runeName,
                 subpolicy => [ $runeName ],

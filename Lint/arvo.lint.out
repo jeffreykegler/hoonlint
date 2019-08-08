@@ -558,7 +558,6 @@ hoons/arvo/app/gmail.hoon 179:9 Test::Whitespace kethep:indent backdented elemen
 hoons/arvo/app/gmail.hoon 212:7 Test::Whitespace sigpam:indent backdented element #2 @212:7; overindented by 2
 hoons/arvo/app/gmail.hoon 224:5 Test::Whitespace wutdot:indent backdented element #3 @224:5; overindented by 2
 === hoons/arvo/app/test.hoon ===
-hoons/arvo/app/test.hoon 148:3 Test::Whitespace colsig:comment-indent colsig @148:3; comment underindented by 2
 hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent element #2 of @149:5 is at @149:29; should be one of @149:20 (tight); @149:35 (running)
 hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent element #2 of @150:5 is at @150:29; should be one of @150:26 (tight); @150:35 (running)
 === hoons/arvo/app/gmail/split.hoon ===
