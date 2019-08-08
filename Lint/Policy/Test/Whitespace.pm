@@ -2043,35 +2043,44 @@ sub check_0Running {
     my ( $runeLine, $runeColumn ) = $instance->nodeLC($rune);
     my ( $anchorLine, $anchorColumn ) = ( $runeLine, $runeColumn );
     my $anchorData;
-    CHECK_FOR_ANCHORING: {
-    if ( $runeName eq 'colsig' ) {
+  CHECK_FOR_ANCHORING: {
+        if ( $runeName eq 'colsig' ) {
 
-        # say join " ", __FILE__, __LINE__, $runeLine, $runeColumn;
-        # TODO: Cleanup after development
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallCendot' => 1,
-                'tallCenhep' => 1,
-                'tallCenlus' => 1,
-                'tallCollus' => 1,
-                'tallKethep' => 1,
-                'tallTisfas' => 1,
-                'tallTisgar' => 1,
-            }
-        );
-        last CHECK_FOR_ANCHORING;
-    }
-    if ( $runeName eq 'tissig' ) {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallTisgar' => 1,
-                'tallWutlus' => 1,
-            }
-        );
-        last CHECK_FOR_ANCHORING;
-    }
+            ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+                $node,
+                {
+                    'tallCendot' => 1,
+                    'tallCenhep' => 1,
+                    'tallCenlus' => 1,
+                    'tallCollus' => 1,
+                    'tallKethep' => 1,
+                    'tallTisfas' => 1,
+                    'tallTisgar' => 1,
+                }
+            );
+            last CHECK_FOR_ANCHORING;
+        }
+        if ( $runeName eq 'coltar' ) {
+
+            # TODO: Cleanup after development
+            ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+                $node,
+                {
+                    'tallCenhep' => 1,
+                }
+            );
+            last CHECK_FOR_ANCHORING;
+        }
+        if ( $runeName eq 'tissig' ) {
+            ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+                $node,
+                {
+                    'tallTisgar' => 1,
+                    'tallWutlus' => 1,
+                }
+            );
+            last CHECK_FOR_ANCHORING;
+        }
     }
     my $anchorDetails;
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )

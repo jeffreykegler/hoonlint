@@ -1662,3 +1662,43 @@ hoons/arvo/lib/down-jet/parse.hoon 497:56 Test::Whitespace colsig:runstep-hgap r
 hoons/arvo/lib/down-jet/parse.hoon 497:74 Test::Whitespace colsig:runstep-hgap runstep #8 of running @493:5, line 497 is at @497:74; should be @497:72 (tight)
 hoons/arvo/lib/down-jet/parse.hoon 498:15 Test::Whitespace colsig:runstep-hgap runstep #2 of running @493:5, line 498 is at @498:15; should be one of @498:14 (tight); @498:18 (runstep)
 hoons/arvo/gen/solid.hoon 65:1 Test::Whitespace colsig:empty-line colsig @65:1; empty line in comment
+
+# BUCCOL aberrations
+hoons/arvo/sys/zuse.hoon 121:7 Test::Whitespace buccol:runstep-indent runstep #2 @121:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 124:7 Test::Whitespace buccol:runstep-indent runstep #2 @124:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 127:7 Test::Whitespace buccol:runstep-indent runstep #2 @127:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 130:7 Test::Whitespace buccol:runstep-indent runstep #2 @130:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 143:7 Test::Whitespace buccol:runstep-indent runstep #2 @143:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 148:7 Test::Whitespace buccol:runstep-indent runstep #2 @148:7; underindented by 8
+hoons/arvo/sys/zuse.hoon 1013:8 Test::Whitespace buccol:tistis-indent TISTIS @1013:8; overindented by 1
+hoons/arvo/sys/hoon.hoon 10994:11 Test::Whitespace buccol:runstep-indent runstep #2 @10994:11; underindented by 8
+hoons/arvo/sys/hoon.hoon 10999:15 Test::Whitespace buccol:runstep-indent runstep #2 @10999:15; underindented by 4
+hoons/arvo/sys/vane/ford.hoon 15:11 Test::Whitespace buccol:runstep-indent runstep #2 @15:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 18:11 Test::Whitespace buccol:runstep-indent runstep #2 @18:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 21:11 Test::Whitespace buccol:runstep-indent runstep #2 @21:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 25:11 Test::Whitespace buccol:runstep-indent runstep #2 @25:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 28:11 Test::Whitespace buccol:runstep-indent runstep #2 @28:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 31:11 Test::Whitespace buccol:runstep-indent runstep #2 @31:11; underindented by 8
+hoons/arvo/sys/vane/ford.hoon 54:5 Test::Whitespace buccol:runstep-indent runstep #2 @54:5; underindented by 2
+hoons/arvo/sys/vane/eyre.hoon 17:11 Test::Whitespace buccol:runstep-indent runstep #2 @17:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 20:11 Test::Whitespace buccol:runstep-indent runstep #2 @20:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 24:11 Test::Whitespace buccol:runstep-indent runstep #2 @24:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 27:11 Test::Whitespace buccol:runstep-indent runstep #2 @27:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 32:11 Test::Whitespace buccol:runstep-indent runstep #2 @32:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 36:11 Test::Whitespace buccol:runstep-indent runstep #2 @36:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 40:11 Test::Whitespace buccol:runstep-indent runstep #2 @40:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 44:11 Test::Whitespace buccol:runstep-indent runstep #2 @44:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 47:11 Test::Whitespace buccol:runstep-indent runstep #2 @47:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 50:11 Test::Whitespace buccol:runstep-indent runstep #2 @50:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 53:11 Test::Whitespace buccol:runstep-indent runstep #2 @53:11; underindented by 8
+hoons/arvo/sys/vane/eyre.hoon 57:11 Test::Whitespace buccol:runstep-indent runstep #2 @57:11; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 326:3 Test::Whitespace buccol:runstep-indent runstep #2 @326:3; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 329:3 Test::Whitespace buccol:runstep-indent runstep #2 @329:3; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 335:3 Test::Whitespace buccol:runstep-indent runstep #2 @335:3; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 338:3 Test::Whitespace buccol:runstep-indent runstep #2 @338:3; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 341:3 Test::Whitespace buccol:runstep-indent runstep #2 @341:3; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 347:11 Test::Whitespace buccol:runstep-indent runstep #2 @347:11; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 351:11 Test::Whitespace buccol:runstep-indent runstep #2 @351:11; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 356:11 Test::Whitespace buccol:runstep-indent runstep #2 @356:11; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 359:11 Test::Whitespace buccol:runstep-indent runstep #2 @359:11; underindented by 8
+hoons/arvo/sys/vane/clay.hoon 362:11 Test::Whitespace buccol:runstep-indent runstep #2 @362:11; underindented by 8
