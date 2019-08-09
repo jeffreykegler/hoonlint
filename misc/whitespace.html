@@ -379,6 +379,11 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 </ul>
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined.</p>
+<ul>
+<li><p>COLSIG (<code>:~</code>) runes reanchor at CENDOT (<code>%.</code>), CENHEP (<code>%-</code>), CENLUS (<code>%+</code>), COLLUS (<code>:+</code>), KETHEP (<code>^-</code>), TISFAS (<code>~/</code>) and TISGAR (<code>~&gt;</code>).</p></li>
+<li><p>COLTAR (<code>:*</code>) runes reanchor at CENHEP (<code>%-</code>).</p></li>
+<li><p>TISSIG (<code>=~</code>) runes reanchor at TISGAR (<code>~&gt;</code>) and WUTLUS (<code>?+</code>).</p></li>
+</ul>
 <h3 id="joined-0-running-hoons">Joined 0-running hoons</h3>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2399-2402:</em></p>
 <pre><code>              :~  [b er]
@@ -388,14 +393,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A joined 0-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
-<li><p>A running where</p>
-<ul>
-<li><p>runstep lines are aligned two stops after the anchor column;</p></li>
-<li><p>the inter-column of the vertical gaps is aligned at the anchor column; and</p></li>
-<li><p>the pre-column of the vertical gaps is aligned at the runstep lines.</p></li>
-</ul></li>
-<li><p>A vertical gap, whose inter-column is the anchor column, and whose pre-column is aligned at the runstep lines.</p></li>
+<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
+<li><p>A running where runstep lines are aligned two stops after the anchor column. Runstep lines should be separated by vertical gaps with comments at at the anchor column or aligned at the runstep lines.</p></li>
+<li><p>A vertical gap with comments at is the anchor column, or aligned at the runstep lines.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
 <h3 id="split-0-running-hoons">Split 0-running hoons</h3>
@@ -415,9 +415,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A split 0-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and aligned at the runstep lines.</p></li>
-<li><p>A running where runstep lines are aligned one stop after the anchor column. The runstep lines are separated by vertical gaps with comments at the anchor column and aligned with the runstep lines.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and aligned at the runstep lines.</p></li>
+<li><p>A vertical gap, with comments at the anchor column or aligned at the runstep lines.</p></li>
+<li><p>A running where runstep lines are aligned one stop after the anchor column. The runstep lines are separated by vertical gaps with comments at the anchor column or aligned with the runstep lines.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, or aligned at the runstep lines.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
 <!-- TODO: check all uses of runeColumn to be sure that

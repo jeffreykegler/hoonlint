@@ -906,6 +906,23 @@ SEMSIG (`;~`).
 
 0-running hoons may be either split or joined.
 
+* COLSIG (`:~`) runes reanchor
+at
+CENDOT (`%.`),
+CENHEP (`%-`),
+CENLUS (`%+`),
+COLLUS (`:+`),
+KETHEP (`^-`),
+TISFAS (`~/`) and
+TISGAR (`~>`).
+
+* COLTAR (`:*`) runes reanchor
+at CENHEP (`%-`).
+
+* TISSIG (`=~`) runes reanchor at
+TISGAR (`~>`) and
+WUTLUS (`?+`).
+
 ### Joined 0-running hoons
 
 *From `arvo/sys/zuse.hoon`, lines 2399-2402:*
@@ -921,21 +938,19 @@ in lexical order:
 
 * Its rune.
 
-* A one-stop horizontal gap.
+* A one-stop horizontal gap,
+  or an equivalent pseudo-join.
 
 * A running where
+  runstep lines are aligned two stops
+  after the anchor column.
+  Runstep lines should be separated by
+  vertical gaps with comments at
+  at the anchor column or
+  aligned at the runstep lines.
 
-    * runstep lines are aligned two stops
-      after the anchor column;
-
-    * the inter-column of the vertical gaps is
-      aligned at the anchor column; and
-
-    * the pre-column of the vertical gaps is
-      aligned at the runstep lines.
-
-* A vertical gap, whose inter-column is the anchor column,
-  and whose pre-column is aligned at the runstep lines.
+* A vertical gap with comments at is the anchor column,
+  or aligned at the runstep lines.
 
 * A TISTIS aligned at the anchor column.
 
@@ -963,18 +978,18 @@ in lexical order:
 
 * Its rune.
 
-* A vertical gap, with comments at the anchor column,
-  and aligned at the runstep lines.
+* A vertical gap, with comments at the anchor column
+  or aligned at the runstep lines.
 
 * A running where runstep lines are aligned one stop
   after the anchor column.
   The runstep lines are separated by
   vertical gaps with comments
-  at the anchor column and
+  at the anchor column or
   aligned with the runstep lines.
 
 * A vertical gap, with comments at the anchor column,
-  and aligned at the runstep lines.
+  or aligned at the runstep lines.
 
 * A TISTIS aligned at the anchor column.
 
