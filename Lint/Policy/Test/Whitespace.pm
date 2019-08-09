@@ -1709,6 +1709,7 @@ sub checkRunning {
     my $runningChildren = $options->{children};
     my $anchorColumn    = $options->{anchorColumn};
     my $expectedColumn  = $options->{expectedColumn};
+    my $pseudojoin  = $options->{pseudojoin};
 
     my @subpolicy = ();
     my $subpolicy = $options->{subpolicy};
@@ -1844,6 +1845,8 @@ sub checkRunning {
   CHECK_FIRST_RUNNING: {
         last CHECK_FIRST_RUNNING if $skipFirst;
         last CHECK_FIRST_RUNNING if $runStepColumn == $expectedColumn;
+        my @pseudojoin = ();
+        push @pseudojoin, 'pseudojoin' if $pseudojoin;
         my $msg = sprintf
           "runstep #%d %s; %s",
           $runStepCount,
@@ -1860,7 +1863,7 @@ sub checkRunning {
             reportLine           => $thisRunStepLine,
             reportColumn         => $runStepColumn,
             topicLines     => [$runeLine],
-            details        => [ [ $runeName, @{$anchorDetails} ] ],
+            details        => [ [ $runeName, @pseudojoin, @{$anchorDetails} ] ],
           };
     }
 
@@ -2113,13 +2116,14 @@ sub check_0Running {
 
     # If here, it is a pseudo-join and $column is the column indicated
     # by gap.
+    $checkArgs->{pseudojoin} = 1;
 
     # Treat it as a pseudo-join if $column matches the expected join colum
     return $policy->checkJoined_0Running( $checkArgs, $column )
       if $column == $runeColumn + 4;
 
     # If here the pseudo-join column is a mismatch: Treat the supposed
-    # psuedo-join as an ordinary comment and the running as if it was
+    # pseudo-join as an ordinary comment and the running as if it was
     # split.
     return $policy->checkSplit_0Running( $checkArgs );
 }
@@ -3540,8 +3544,6 @@ sub checkSplit_0Running {
     my ( $runeLine,    $runeColumn ) = $instance->nodeLC($rune);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
 
-    # say join ' ', __FILE__, __LINE__, Data::Dumper::Dumper($anchorDetails);
-
     my $expectedColumn = $anchorColumn + 2;
 
     my @mistakes = ();
@@ -3579,7 +3581,7 @@ sub checkSplit_0Running {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
                 tag        => $runeName,
-                subpolicy => [ $runeName ],
+                subpolicy => [ $runeName, 'running-vgap' ],
             }
         )
       };
@@ -3605,7 +3607,7 @@ sub checkSplit_0Running {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
                 tag        => $runeName,
-                subpolicy => [ $runeName ],
+                subpolicy => [ $runeName, 'tistis-vgap' ],
                 topicLines => [ $anchorLine, $tistisLine ],
             }
         )
@@ -3616,7 +3618,7 @@ sub checkSplit_0Running {
         $policy->checkTistis(
             $tistis,
             {
-                subpolicy => [ $policy->nodeSubpolicy($node) ],
+                subpolicy => [ $runeName ],
                 tag            => $runeName,
                 expectedColumn => $anchorColumn,
             }
@@ -3642,6 +3644,7 @@ sub checkJoined_0Running {
     my $anchorLine    = $args->{anchorLine};
     my $anchorColumn    = $args->{anchorColumn};
     my $anchorDetails    = $args->{anchorDetails};
+    my $pseudojoin    = $args->{pseudojoin};
 
     my ( $runeLine,    $runeColumn )    = $instance->nodeLC($rune);
     my ( $tistisLine,  $tistisColumn )  = $instance->nodeLC($tistis);
@@ -3660,10 +3663,13 @@ sub checkJoined_0Running {
         push @mistakes,
           {
             desc         => $msg,
+            subpolicy => [ $runeName, 'joined-runstep-count' ],
             parentLine   => $runeLine,
             parentColumn => $runeColumn,
             line         => $runningLine,
             column       => $runningColumn,
+            reportLine         => $runningLine,
+            reportColumn       => $runningColumn,
             details      => [ [$runeName] ],
           };
     }
@@ -3676,6 +3682,7 @@ sub checkJoined_0Running {
                 subpolicy => [ $runeName ],
                 anchorColumn   => $anchorColumn,
                 expectedColumn => $expectedColumn,
+                pseudojoin => $pseudojoin,
             }
         )
       };
@@ -3688,7 +3695,7 @@ sub checkJoined_0Running {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
                 tag        => $runeName,
-                subpolicy => [ $runeName ],
+                subpolicy => [ $runeName, 'tistis-vgap' ],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$runeName] ],
             }
@@ -3700,7 +3707,7 @@ sub checkJoined_0Running {
         $policy->checkTistis(
             $tistis,
             {
-                subpolicy => [ $policy->nodeSubpolicy($node) ],
+                subpolicy => [ $runeName ],
                 tag            => $runeName,
                 expectedColumn => $runeColumn,
             }

@@ -8,7 +8,6 @@
 === hoons/arvo/sur/gh.hoon ===
 === hoons/arvo/sur/tree-include.hoon ===
 === hoons/arvo/sur/recoverable-error.hoon ===
-hoons/arvo/sur/recoverable-error.hoon 7:3 Test::Whitespace buccen:runstep-indent runstep #1 @7:3; underindented by 2
 === hoons/arvo/sur/twitter.hoon ===
 === hoons/arvo/sur/rfc.hoon ===
 === hoons/arvo/sur/markdown.hoon ===

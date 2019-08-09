@@ -1278,17 +1278,17 @@ hoons/arvo/web/unmark/all.hoon 48:21 Test::Whitespace wutlus:jog-body-indent Jog
 
 # Github issue #33
 hoons/arvo/lib/down-jet/parse.hoon 96:5 Test::Whitespace tissig:tistis-alone TISTIS @96:5 should only share line with other TISTIS's
-hoons/arvo/sys/vane/ames.hoon 1512:4 Test::Whitespace tissig:missing-newline tissig @1512:4; missing newline @1512:4
+hoons/arvo/sys/vane/ames.hoon 1512:4 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @1512:4; missing newline @1512:4
 hoons/arvo/sys/vane/ames.hoon 1512:6 Test::Whitespace tissig:tistis-alone TISTIS @1512:6 should only share line with other TISTIS's
-hoons/arvo/sys/vane/behn.hoon 145:2 Test::Whitespace tissig:missing-newline tissig @145:2; missing newline @145:2
+hoons/arvo/sys/vane/behn.hoon 145:2 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @145:2; missing newline @145:2
 hoons/arvo/sys/vane/behn.hoon 145:4 Test::Whitespace tissig:tistis-alone TISTIS @145:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/eyre.hoon 1983:2 Test::Whitespace tissig:missing-newline tissig @1983:2; missing newline @1983:2
+hoons/arvo/sys/vane/eyre.hoon 1983:2 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @1983:2; missing newline @1983:2
 hoons/arvo/sys/vane/eyre.hoon 1983:5 Test::Whitespace tissig:tistis-alone TISTIS @1983:5 should only share line with other TISTIS's
-hoons/arvo/sys/vane/ford.hoon 1882:2 Test::Whitespace tissig:missing-newline tissig @1882:2; missing newline @1882:2
+hoons/arvo/sys/vane/ford.hoon 1882:2 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @1882:2; missing newline @1882:2
 hoons/arvo/sys/vane/ford.hoon 1882:4 Test::Whitespace tissig:tistis-alone TISTIS @1882:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/gall.hoon 97:2 Test::Whitespace tissig:missing-newline tissig @97:2; missing newline @97:2
+hoons/arvo/sys/vane/gall.hoon 97:2 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @97:2; missing newline @97:2
 hoons/arvo/sys/vane/gall.hoon 97:4 Test::Whitespace tissig:tistis-alone TISTIS @97:4 should only share line with other TISTIS's
-hoons/arvo/sys/vane/xmas.hoon 1162:4 Test::Whitespace tissig:missing-newline tissig @1162:4; missing newline @1162:4
+hoons/arvo/sys/vane/xmas.hoon 1162:4 Test::Whitespace tissig:tistis-vgap:missing-newline tissig @1162:4; missing newline @1162:4
 hoons/arvo/sys/vane/xmas.hoon 1162:6 Test::Whitespace tissig:tistis-alone TISTIS @1162:6 should only share line with other TISTIS's
 
 # TODO: What if indents are too close for normal criss-cross line?
@@ -1635,9 +1635,9 @@ hoons/arvo/app/pipe.hoon 68:11 Test::Whitespace colsig:runstep-indent runstep #2
 hoons/arvo/app/pipe.hoon 69:9 Test::Whitespace colsig:tistis-indent TISTIS @69:9; overindented by 2
 hoons/arvo/app/test.hoon 62:5 Test::Whitespace colsig:runstep-indent runstep #2 @62:5; underindented by 2
 hoons/arvo/app/test.hoon 87:5 Test::Whitespace colsig:runstep-indent runstep #2 @87:5; underindented by 2
-hoons/arvo/sys/zuse.hoon 2469:41 Test::Whitespace colsig:missing-newline colsig @2469:41; missing newline @2469:41
+hoons/arvo/sys/zuse.hoon 2469:41 Test::Whitespace colsig:tistis-vgap:missing-newline colsig @2469:41; missing newline @2469:41
 hoons/arvo/sys/zuse.hoon 2469:43 Test::Whitespace colsig:tistis-alone TISTIS @2469:43 should only share line with other TISTIS's
-hoons/arvo/sys/zuse.hoon 2481:41 Test::Whitespace colsig:missing-newline colsig @2481:41; missing newline @2481:41
+hoons/arvo/sys/zuse.hoon 2481:41 Test::Whitespace colsig:tistis-vgap:missing-newline colsig @2481:41; missing newline @2481:41
 hoons/arvo/sys/zuse.hoon 2481:43 Test::Whitespace colsig:tistis-alone TISTIS @2481:43 should only share line with other TISTIS's
 hoons/arvo/sys/zuse.hoon 3275:14 Test::Whitespace colsig:runstep-indent runstep #1 @3275:14; overindented by 1
 hoons/arvo/sys/zuse.hoon 3276:22 Test::Whitespace colsig:runstep-hgap runstep #3 of running @3275:9, line 3276 is at @3276:22; should be @3276:21 (tight)
@@ -1661,7 +1661,7 @@ hoons/arvo/lib/down-jet/parse.hoon 497:47 Test::Whitespace colsig:runstep-hgap r
 hoons/arvo/lib/down-jet/parse.hoon 497:56 Test::Whitespace colsig:runstep-hgap runstep #6 of running @493:5, line 497 is at @497:56; should be @497:55 (tight)
 hoons/arvo/lib/down-jet/parse.hoon 497:74 Test::Whitespace colsig:runstep-hgap runstep #8 of running @493:5, line 497 is at @497:74; should be @497:72 (tight)
 hoons/arvo/lib/down-jet/parse.hoon 498:15 Test::Whitespace colsig:runstep-hgap runstep #2 of running @493:5, line 498 is at @498:15; should be one of @498:14 (tight); @498:18 (runstep)
-hoons/arvo/gen/solid.hoon 65:1 Test::Whitespace colsig:empty-line colsig @65:1; empty line in comment
+hoons/arvo/gen/solid.hoon 65:1 Test::Whitespace colsig:tistis-vgap:empty-line colsig @65:1; empty line in comment
 
 # BUCCOL aberrations
 hoons/arvo/sys/zuse.hoon 121:7 Test::Whitespace buccol:runstep-indent runstep #2 @121:7; underindented by 8
@@ -1716,7 +1716,7 @@ hoons/arvo/app/hall.hoon 83:7 Test::Whitespace bucwut:runstep-indent runstep #2 
 
 # COLTAR aberrations
 hoons/arvo/sys/vane/eyre.hoon 1511:11 Test::Whitespace coltar:runstep-vgap:comment-indent coltar @1511:11; comment underindented by 4
-hoons/arvo/sys/vane/eyre.hoon 1525:9 Test::Whitespace coltar:comment-indent coltar @1525:9; comment overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 1525:9 Test::Whitespace coltar:tistis-vgap:comment-indent coltar @1525:9; comment overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1157:11 Test::Whitespace coltar:runstep-indent runstep #2 @1157:11; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1158:11 Test::Whitespace coltar:runstep-indent runstep #3 @1158:11; underindented by 2
 hoons/arvo/app/dojo.hoon 1624:12 Test::Whitespace coltar:tistis-indent TISTIS @1624:12; overindented by 1
@@ -1730,3 +1730,6 @@ hoons/arvo/app/hall.hoon 1148:17 Test::Whitespace wutpam:runstep-vgap:comment-in
 hoons/arvo/app/hall.hoon 1327:13 Test::Whitespace wutpam:runstep-vgap:comment-indent wutpam @1327:13; comment overindented by 2
 hoons/arvo/app/hall.hoon 2496:7 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @2496:7; comment overindented by 2
 hoons/arvo/app/hall.hoon 2542:11 Test::Whitespace wutbar:runstep-vgap:comment-indent wutbar @2542:11; comment overindented by 2
+
+# BUCCEN aberrations
+hoons/arvo/sur/recoverable-error.hoon 7:3 Test::Whitespace buccen:runstep-indent runstep #1 @7:3; underindented by 2
