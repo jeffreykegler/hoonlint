@@ -5535,6 +5535,8 @@ sub checkBackdented {
                 'tallBarhep' => 1, # Needed for examples to work
                 'tallBartis' => 1,
                 'tallCenhep' => 1,
+                'tallTistar' => 1,
+
                 # =+ ^= [...] ^- occurs a lot, and the reanchoring
                 # seems to want to be at the KETTIS, not the TISLUS.
                 # But where not followed by KETTIS, reanchoring
