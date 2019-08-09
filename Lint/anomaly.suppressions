@@ -1733,3 +1733,20 @@ hoons/arvo/app/hall.hoon 2542:11 Test::Whitespace wutbar:runstep-vgap:comment-in
 
 # BUCCEN aberrations
 hoons/arvo/sur/recoverable-error.hoon 7:3 Test::Whitespace buccen:runstep-indent runstep #1 @7:3; underindented by 2
+
+# TISLUS [...] KETHEP aberrations
+#
+# =+ ^= [...] ^- occurs a lot, and the reanchoring
+# seems to want to be at the KETTIS, not the TISLUS.
+# But where not followed by KETTIS, reanchoring
+# at TISLUS seems to be indicated in a lot of places.
+# This accounts for a lot of aberrations.
+hoons/arvo/app/hall.hoon 2603:5 Test::Whitespace kethep:indent backdented element #2 @2603:5; underindented by 2
+hoons/arvo/lib/hall.hoon 53:5 Test::Whitespace kethep:indent backdented element #2 @53:5; underindented by 2
+hoons/arvo/mar/snip.hoon 27:7 Test::Whitespace kethep:indent backdented element #2 @27:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 12686:7 Test::Whitespace kethep:indent backdented element #2 @12686:7; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 674:7 Test::Whitespace kethep:indent backdented element #2 @674:7; underindented by 2
+hoons/arvo/sys/vane/clay.hoon 3279:11 Test::Whitespace kethep:indent backdented element #2 @3279:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 2495:19 Test::Whitespace kethep:indent backdented element #2 @2495:19; overindented by 8
+hoons/arvo/sys/zuse.hoon 2551:18 Test::Whitespace kethep:indent backdented element #2 @2551:18; overindented by 7
+hoons/arvo/sys/zuse.hoon 2596:11 Test::Whitespace kethep:indent backdented element #2 @2596:11; underindented by 14

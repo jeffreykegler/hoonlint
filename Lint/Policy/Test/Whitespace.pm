@@ -5524,10 +5524,38 @@ sub checkBackdented {
           };
     }
 
-    my $anchorNode = $instance->anchorNode($node);
-    my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
-    my $anchorDetails =
-      $policy->anchorDetailsBasic( $anchorNode, $anchorColumn );
+    # my $anchorNode = $instance->anchorNode($node);
+    # my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
+    my ( $anchorLine, $anchorColumn ) = ( $parentLine, $parentColumn );
+    my $anchorData;
+    if ($runeName eq 'kethep') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallBarhep' => 1, # Needed for examples to work
+                'tallBartis' => 1,
+                'tallCenhep' => 1,
+                # =+ ^= [...] ^- occurs a lot, and the reanchoring
+                # seems to want to be at the KETTIS, not the TISLUS.
+                # But where not followed by KETTIS, reanchoring
+                # at TISLUS seems to be indicated in a lot of places.
+                # This accounts for a lot of aberrations.
+                'tallKettis' => 1,
+                # 'tallTislus' => 1, # fixes 30, breaks 76
+            }
+        );
+    }
+    if ($runeName eq 'ketlus') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallBarhep' => 1, # Needed for examples to work
+            }
+        );
+    }
+    my $anchorDetails = [];
+    $anchorDetails = $policy->anchorDetails( $node, $anchorData )
+       if $anchorData;
 
     # say Data::Dumper::Dumper($anchorDetails);
   ELEMENT:

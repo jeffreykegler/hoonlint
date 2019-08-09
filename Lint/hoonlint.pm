@@ -839,45 +839,6 @@ sub nearestBrickOfLineExc {
     return $node;
 }
 
-sub anchorNode {
-    my ( $instance, $node ) = @_;
-
-    # say STDERR join " ", __FILE__, __LINE__, "calling anchorNode()";
-    my $isTallRuneRule = $instance->{tallRuneRule};
-    my $isTallNoteRule = $instance->{tallNoteRule};
-    my ($currentLine)  = $instance->nodeLC($node);
-    my $brickParent;
-    my $tallRuneParent;
-    my $thisNode = $node;
-  NODE: while ($thisNode) {
-        my ($thisLine) = $instance->nodeLC($thisNode);
-        last NODE if $thisLine != $currentLine;
-
-        # say join " ", __FILE__, __LINE__, $thisLine;
-      SEEK_ANCHOR: {
-
-# say STDERR join " ", __FILE__, __LINE__, "this node", $instance->nodeLC($thisNode);
-            my $brickName = $instance->brickName($thisNode);
-            last SEEK_ANCHOR unless $brickName;
-
-            # say STDERR join " ", __FILE__, __LINE__, "brick name", $brickName;
-            $brickParent //= $thisNode;
-
-# say STDERR join " ", __FILE__, __LINE__, "brick parent", $instance->nodeLC($brickParent);
-            last SEEK_ANCHOR unless $isTallRuneRule->{$brickName};
-            $tallRuneParent = $thisNode;
-
-# say STDERR join " ", __FILE__, __LINE__, "tall rune parent", $instance->nodeLC($tallRuneParent);
-            last SEEK_ANCHOR if $isTallNoteRule->{$brickName};
-
-# say STDERR join " ", __FILE__, __LINE__, "returning this node", $instance->nodeLC($thisNode);
-            return $thisNode;
-        }
-        $thisNode = $thisNode->{PARENT};
-    }
-    return $tallRuneParent // $brickParent;
-}
-
 sub new {
     my ( $class, $config ) = (@_);
     my $fileName     = $config->{fileName};
