@@ -5545,7 +5545,7 @@ sub checkBackdented {
                 'tallKethep' => 1, # fixes 4, breaks 0
                 'tallTishep' => 1, # partially fixes one
                 'tallTisgal' => 1, # partially fixes one
-                # 'tallTisdot' => 1,
+                'tallTisdot' => 1,
                 # 'tallTislus' => 1,
                 # 'tallBarket' => 1,
                 # 'tallZapgar' => 1,

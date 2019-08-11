@@ -181,7 +181,6 @@ hoons/arvo/sys/zuse.hoon 2552:18 Test::Whitespace wutsig:indent backdented eleme
 hoons/arvo/sys/zuse.hoon 2565:8 Test::Whitespace cenlus:indent backdented element #3 @2565:8; underindented by 10
 hoons/arvo/sys/zuse.hoon 2588:11 Test::Whitespace wutsig:indent backdented element #2 @2588:11; underindented by 9
 hoons/arvo/sys/zuse.hoon 2589:9 Test::Whitespace wutsig:indent backdented element #3 @2589:9; underindented by 9
-hoons/arvo/sys/zuse.hoon 2593:9 Test::Whitespace kethep:indent backdented element #2 @2593:9; underindented by 5
 hoons/arvo/sys/zuse.hoon 2599:9 Test::Whitespace tisdot:indent backdented element #3 @2599:9; underindented by 9
 hoons/arvo/sys/zuse.hoon 2619:19 Test::Whitespace cenlus:indent backdented element #2 @2619:19; overindented by 2
 hoons/arvo/sys/zuse.hoon 2620:17 Test::Whitespace cenlus:indent backdented element #3 @2620:17; overindented by 2
