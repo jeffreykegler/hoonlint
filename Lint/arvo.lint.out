@@ -504,7 +504,6 @@ hoons/arvo/sys/vane/ford.hoon 1911:9 Test::Whitespace cenhep:indent backdented e
 hoons/arvo/sys/vane/ford.hoon 1958:4 Test::Whitespace wutsig:indent backdented element #2 @1958:4; underindented by 1
 === hoons/arvo/sys/vane/ames.hoon ===
 hoons/arvo/sys/vane/ames.hoon 72:5 Test::Whitespace zapcol:indent backdented element #1 @72:5; underindented by 8
-hoons/arvo/sys/vane/ames.hoon 116:5 Test::Whitespace kethep:indent backdented element #2 @116:5; underindented by 10
 hoons/arvo/sys/vane/ames.hoon 626:15 Test::Whitespace colhep:indent backdented element #2 @626:15; overindented by 2
 hoons/arvo/sys/vane/ames.hoon 689:7 Test::Whitespace zapcol:indent backdented element #1 @689:7; underindented by 6
 hoons/arvo/sys/vane/ames.hoon 820:11 Test::Whitespace tisket:indent backdented element #3 @820:11; overindented by 2
@@ -852,8 +851,6 @@ hoons/arvo/lib/hood/drum.hoon 253:3 Test::Whitespace ketlus:indent backdented el
 hoons/arvo/lib/hood/drum.hoon 265:3 Test::Whitespace ketlus:indent backdented element #2 @265:3; underindented by 36
 hoons/arvo/lib/hood/drum.hoon 273:3 Test::Whitespace ketlus:indent backdented element #2 @273:3; underindented by 32
 hoons/arvo/lib/hood/drum.hoon 389:3 Test::Whitespace ketlus:indent backdented element #2 @389:3; underindented by 24
-hoons/arvo/lib/hood/drum.hoon 713:13 Test::Whitespace kethep:indent backdented element #2 @713:13; underindented by 15
-hoons/arvo/lib/hood/drum.hoon 750:13 Test::Whitespace kethep:indent backdented element #2 @750:13; underindented by 15
 hoons/arvo/lib/hood/drum.hoon 830:9 Test::Whitespace tisfas:indent backdented element #2 @830:9; overindented by 2
 hoons/arvo/lib/hood/drum.hoon 938:5 Test::Whitespace cenlus:indent backdented element #2 @938:5; underindented by 2
 hoons/arvo/lib/hood/drum.hoon 940:5 Test::Whitespace cenlus:indent backdented element #3 @940:5; underindented by 10
@@ -963,7 +960,6 @@ hoons/arvo/mar/plan.hoon 76:5 Test::Whitespace ketlus:indent backdented element 
 === hoons/arvo/mar/down.hoon ===
 === hoons/arvo/mar/httr.hoon ===
 === hoons/arvo/mar/tang.hoon ===
-hoons/arvo/mar/tang.hoon 14:5 Test::Whitespace kethep:indent backdented element #2 @14:5; underindented by 10
 === hoons/arvo/mar/atom.hoon ===
 === hoons/arvo/mar/path.hoon ===
 === hoons/arvo/mar/snip.hoon ===

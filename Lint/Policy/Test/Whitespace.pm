@@ -5542,6 +5542,14 @@ sub checkBackdented {
                 'tallKetsig' => 1,
                 'tallTisfas' => 1,
 
+                'tallKethep' => 1, # fixes 4, breaks 0
+                'tallTisgal' => 1,
+                # 'tallTishep' => 1,
+                # 'tallTisdot' => 1,
+                # 'tallTislus' => 1,
+                # 'tallBarket' => 1,
+                # 'tallZapgar' => 1,
+
                 # =+ ^= [...] ^- occurs a lot, and the reanchoring
                 # seems to want to be at the KETTIS, not the TISLUS.
                 # But where not followed by KETTIS, reanchoring
