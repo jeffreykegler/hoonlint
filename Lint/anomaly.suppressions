@@ -5,10 +5,6 @@ hoons/arvo/sys/hoon.hoon 945:3 Test::Whitespace luslus:arm-body-indent cell body
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-10#l9
 hoons/arvo/sys/hoon.hoon 2096:5 Test::Whitespace kethep:indent backdented element #2 @2096:5; overindented by 2
 
-# See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l18
-hoons/arvo/sys/hoon.hoon 7123:7 Test::Whitespace kethep:indent backdented element #2 @7123:7; underindented by 35
-hoons/arvo/sys/hoon.hoon 7167:7 Test::Whitespace kethep:indent backdented element #2 @7167:7; underindented by 35
-
 # See https://colabti.org/irclogger/irclogger_log/marpa?date=2019-01-12#l37
 hoons/arvo/sys/hoon.hoon 8743:19 Test::Whitespace tisket:indent backdented element #3 @8743:19; overindented by 2
 hoons/arvo/sys/hoon.hoon 10029:13 Test::Whitespace tisket:indent backdented element #3 @10029:13; overindented by 2
@@ -1763,3 +1759,9 @@ hoons/arvo/sys/hoon.hoon 11136:11 Test::Whitespace kethep:indent backdented elem
 hoons/arvo/sys/vane/ford.hoon 1899:9 Test::Whitespace kethep:indent backdented element #2 @1899:9; overindented by 2
 hoons/arvo/sys/vane/xmas.hoon 1228:13 Test::Whitespace kethep:indent backdented element #2 @1228:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 4580:9 Test::Whitespace kethep:indent backdented element #2 @4580:9; overindented by 2
+hoons/arvo/sys/hoon.hoon 10386:11 Test::Whitespace kethep:indent backdented element #2 @10386:11; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 1013:13 Test::Whitespace kethep:indent backdented element #2 @1013:13; overindented by 2
+
+hoons/arvo/sys/hoon.hoon 9002:5 Test::Whitespace kethep:indent backdented element #2 @9002:5; underindented by 4
+hoons/arvo/sys/hoon.hoon 9178:5 Test::Whitespace kethep:indent backdented element #2 @9178:5; underindented by 4
+hoons/arvo/sys/zuse.hoon 3085:9 Test::Whitespace kethep:indent backdented element #2 @3085:9; underindented by 2
