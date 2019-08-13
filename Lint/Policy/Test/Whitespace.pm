@@ -5552,6 +5552,8 @@ sub checkBackdented {
                 tallCenlus => 1, # fixes 3, breaks 0
                 tallBardot => 1, # fixes 1, breaks 0
 
+                # LuslusCell => 1, # breaks tic-tac-toe, line 55
+
                 # =+ ^= [...] ^- occurs a lot, and the reanchoring
                 # seems to want to be at the KETTIS, not the TISLUS.
                 # But where not followed by KETTIS, reanchoring

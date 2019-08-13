@@ -1765,3 +1765,6 @@ hoons/arvo/sys/vane/ford.hoon 1013:13 Test::Whitespace kethep:indent backdented 
 hoons/arvo/sys/hoon.hoon 9002:5 Test::Whitespace kethep:indent backdented element #2 @9002:5; underindented by 4
 hoons/arvo/sys/hoon.hoon 9178:5 Test::Whitespace kethep:indent backdented element #2 @9178:5; underindented by 4
 hoons/arvo/sys/zuse.hoon 3085:9 Test::Whitespace kethep:indent backdented element #2 @3085:9; underindented by 2
+
+hoons/arvo/sys/vane/eyre.hoon 1821:7 Test::Whitespace kethep:indent backdented element #2 @1821:7; underindented by 12
+hoons/arvo/lib/down-jet/parse.hoon 29:3 Test::Whitespace kethep:indent backdented element #2 @29:3; underindented by 12
