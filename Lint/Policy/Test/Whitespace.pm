@@ -5569,6 +5569,7 @@ sub checkBackdented {
             $node,
             {
                 'tallBarhep' => 1, # Needed for examples to work
+                tallBartis => 1, # fixes 97, breaks 0
             }
         );
     }
