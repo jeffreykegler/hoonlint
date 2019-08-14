@@ -5695,17 +5695,20 @@ sub checkBackdented {
             if ($interlineAlignmentColumn and $interlineAlignmentColumn >= $tightColumn) {
                 push @allowedColumns, [ $interlineAlignmentColumn => $interlineAlignmentType ];
                 my $oneBasedColumn = $interlineAlignmentColumn + 1;
-                my $chainAlignmentLines = $chainAlignmentDetails->{lines};
-                push @topicLines, @{$chainAlignmentLines};
+                my $alignmentLines =
+                    $interlineAlignmentType eq 'running'
+                  ? $runningAlignmentDetails
+                  : $chainAlignmentDetails->{lines};
+                push @topicLines, @{$alignmentLines};
                 $details = [
                     [
                         $runeName,
-                        sprintf 'chain alignment is %d, see %s',
+                        sprintf '%s alignment is %d, see %s',
+                        $interlineAlignmentType,
                         $oneBasedColumn,
                         (
                             join q{ },
-                            map { $_ . ':' . $oneBasedColumn }
-                              @{$chainAlignmentLines}
+                            map { $_ . ':' . $oneBasedColumn } @{$alignmentLines}
                         )
                     ]
                 ];
