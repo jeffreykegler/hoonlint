@@ -111,7 +111,6 @@ hoons/arvo/sys/zuse.hoon 3373:5 Test::Whitespace ketwut:indent backdented elemen
 hoons/arvo/sys/zuse.hoon 3701:7 Test::Whitespace colcab:indent backdented element #2 @3701:7; underindented by 8
 hoons/arvo/sys/zuse.hoon 3763:3 Test::Whitespace ketwut:indent backdented element #1 @3763:3; underindented by 10
 hoons/arvo/sys/zuse.hoon 3878:5 Test::Whitespace tisgal:indent backdented element #2 @3878:5; underindented by 10
-hoons/arvo/sys/zuse.hoon 3921:3 Test::Whitespace ketwut:pseudojoin-mismatch Pseudo-joined backdented element 1; element/comment mismatch; element is @3921:3
 hoons/arvo/sys/zuse.hoon 3927:5 Test::Whitespace ketwut:indent backdented element #1 @3927:5; underindented by 9
 hoons/arvo/sys/zuse.hoon 3951:7 Test::Whitespace kettis:indent backdented element #2 @3951:7; underindented by 4
 hoons/arvo/sys/zuse.hoon 4037:7 Test::Whitespace siglus:indent backdented element #1 @4037:7; underindented by 21
@@ -762,7 +761,6 @@ hoons/arvo/mar/sole/effect.hoon 41:3 Test::Whitespace cenlus:indent backdented e
 === hoons/arvo/mar/jam-crub.hoon ===
 === hoons/arvo/mar/html.hoon ===
 === hoons/arvo/mar/txt.hoon ===
-hoons/arvo/mar/txt.hoon 163:1 Test::Whitespace colhep:empty-line backdented element #2, @163:1; empty line in comment
 === hoons/arvo/mar/hall/action.hoon ===
 === hoons/arvo/mar/hall/rumor.hoon ===
 === hoons/arvo/mar/hall/telegrams.hoon ===

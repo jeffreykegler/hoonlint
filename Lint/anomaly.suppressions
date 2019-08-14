@@ -1747,6 +1747,10 @@ hoons/arvo/sys/zuse.hoon 2495:19 Test::Whitespace kethep:indent backdented eleme
 hoons/arvo/sys/zuse.hoon 2551:18 Test::Whitespace kethep:indent backdented element #2 @2551:18; overindented by 7
 hoons/arvo/sys/zuse.hoon 2596:11 Test::Whitespace kethep:indent backdented element #2 @2596:11; underindented by 14
 
+# Backdented hoon aberrations
+hoons/arvo/mar/txt.hoon 163:1 Test::Whitespace colhep:empty-line backdented element #2, @163:1; empty line in comment
+hoons/arvo/sys/zuse.hoon 3921:3 Test::Whitespace ketwut:pseudojoin-mismatch Pseudo-joined backdented element 1; element/comment mismatch; element is @3921:3
+
 # Matching reanchoring to indentation in some cases often causes mismatches in other cases.
 # I adopt a statistics term for these: "outliers".  I also handle them the way statisticians do --
 # by arbitrarily ignoring them.
