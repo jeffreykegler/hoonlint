@@ -35,6 +35,7 @@
 </ul></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdented-hoons">Backdented hoons</a><ul>
+<li><a href="#backdenting-and-vertical-gaps">Backdenting and vertical gaps</a></li>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 <li><a href="#split-hints">Split hints</a></li>
 </ul></li>
@@ -300,8 +301,10 @@ d</code></pre>
         [%rock %f &amp;]
 </code></pre>
 <p>A backdented hoon of arity 3 or more should be joined. A backdented hoon of arity 2 or less should be split.</p>
-<p>The first runechild of a joined backdented hoon should be on the same line as the rune, separated by a horizontal gap. Subsequent runechildren of a joined backdented hoon should be separated by a vertical gap.</p>
-<p>The first runechild of a split backdented hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined backdented hoon should also be separated by a vertical gap.</p>
+<p>The first runechild of a joined backdented hoon should be on the same line as the rune, separated by a horizontal gap. Subsequent runechildren of a joined backdented hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
+<p>The first runechild of a split backdented hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined backdented hoon should also be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
+<h3 id="backdenting-and-vertical-gaps">Backdenting and vertical gaps</h3>
+<p>As stated, vertical backdenting is the flagship whitespace convention in Hoon, so in this section we will work out its implications in detail. For the purposes of this section, it is assumed that tight (horizontal) alignment is not being used.</p>
 <p>In an backdented <code>n</code>-arity hoon, the <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. For example, in an 3-runechild hoon, the first runechild should be aligned 2 stops after than the anchor column; a second runechild should be aligned 1 stop after than the anchor column; and the third runechild be aligned at the anchor column.</p>
 <p>This implies that, regardless of the number of runechildren in a backdented hoon,</p>
 <ul>

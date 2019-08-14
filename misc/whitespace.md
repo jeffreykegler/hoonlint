@@ -700,12 +700,23 @@ A backdented hoon of arity 2 or less should be split.
 The first runechild of a joined backdented hoon should be
 on the same line as the rune, separated by a horizontal gap.
 Subsequent runechildren of a joined backdented hoon should be
-separated by a vertical gap.
+tightly aligned with the previous runechild,
+or separated from the previous runechild by a vertical gap.
 
 The first runechild of a split backdented hoon should be
 separated from the rune by a vertical gap.
 Subsequent runechildren of a joined backdented hoon should also be
-separated by a vertical gap.
+tightly aligned with the previous runechild,
+or separated from the previous runechild by a vertical gap.
+
+### Backdenting and vertical gaps
+
+As stated,
+vertical backdenting is the flagship whitespace convention
+in Hoon, so 
+in this section we will work out its implications in detail.
+For the purposes of this section, it is assumed that tight
+(horizontal) alignment is not being used.
 
 In an backdented `n`-arity hoon,
 the `m`'th runechild should be aligned `n-m` stops after than the anchor column.

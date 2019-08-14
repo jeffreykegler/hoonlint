@@ -5570,14 +5570,28 @@ sub checkBackdented {
             {
                 'tallBarhep' => 1, # Needed for examples to work
                 tallBartis => 1, # fixes 97, breaks 0
+                tallTisgal => 1, # fixes 8, breaks 0
+                tallBardot => 1, # fixes 8, breaks 0
+                tallBartar => 1, # fixes 4, breaks 0
+                tallCenhep => 1, # fixes 2, breaks 0
             }
         );
+    }
+    if ($runeName eq 'zapgar') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallCenhep => 1, # fixes 89, breaks 0
+            }
+        );
+    }
+    if ($runeName eq 'zapgar') {
     }
     my $anchorDetails = [];
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )
        if $anchorData;
 
-    # say Data::Dumper::Dumper($anchorDetails);
+    my ( $elementLine, $elementColumn );
   ELEMENT:
     for (
         my $elementNumber = 1 ;
@@ -5587,7 +5601,8 @@ sub checkBackdented {
     {
 
         my $element = $gapSeq[ $elementNumber * 2 - 1 ];
-        my ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
+        my $previousElementLine = $elementLine // -1;
+        ( $elementLine, $elementColumn ) = $instance->nodeLC($element);
         my $gap = $gapSeq[ $elementNumber * 2 - 2 ];
         my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
         my $backdentColumn =
@@ -5770,6 +5785,29 @@ sub checkBackdented {
             $policy->{perNode}->{$nodeIX}->{reanchorOffset} = $reanchorOffset;
         }
 
+        if ( $elementLine == $previousElementLine ) {
+            my $gapLength = $gap->{length};
+            next ELEMENT if $gapLength == 2;
+            my $msg       = sprintf
+              'backdented element #%d %s; %s',
+              $elementNumber,
+              describeLC( $elementLine, $elementColumn ),
+              describeMisindent2( $gapLength, 2 );
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => [ $runeName, 'hgap' ],
+                parentLine   => $parentLine,
+                parentColumn => $parentColumn,
+                line         => $elementLine,
+                column       => $elementColumn,
+                reportLine   => $elementLine,
+                reportColumn => $elementColumn,
+                details      => [ [ $runeName, @{$anchorDetails}, ] ],
+              };
+            next ELEMENT;
+        }
+
         push @mistakes, @{
             $policy->checkOneLineGap(
                 $gap,
@@ -5786,7 +5824,7 @@ sub checkBackdented {
                             'inter-comment indent should be '
                               . ( $anchorColumn + 1 ),
 
-                     # 'pre-comment indent should be ' . ( $runStepColumn + 1 ),
+                     'pre-comment indent should be ' . ( $elementColumn + 1 ),
                         ]
                     ],
                 }
