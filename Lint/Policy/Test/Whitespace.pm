@@ -712,13 +712,20 @@ sub i_isOneLineGap {
         and $instance->literal( $start - 2, 2 ) ne '=='
         and $instance->literal( $start - 2, 2 ) ne '--' )
     {
+            my $msg              = sprintf
+              "%s %s; %s %s",
+              $tag,
+              describeLC( $startLine, $startColumn ),
+                 "missing newline ",
+                  , describeLC( $startLine, $startColumn );
         return [
             {
-                msg => "missing newline "
-                  . describeLC( $startLine, $startColumn ),
+                desc => $msg,
                 subpolicy => (join ':', @subpolicyElements, 'missing-newline'),
                 line      => $startLine,
                 column    => $startColumn,
+                reportLine      => $startLine,
+                reportColumn    => $startColumn,
             }
         ];
     }
@@ -746,30 +753,39 @@ sub i_isOneLineGap {
         my $type = $result->[0];
         if ( $type eq 'vgap-blank-line' ) {
             my ( undef, $lineNum, $offset ) = @{$result};
+            my $msg = sprintf
+              "%s %s; %s",
+              $tag,
+              describeLC( $lineNum, 0 ),
+              "empty line in comment";
             push @mistakes,
               {
-                msg    => "empty line in comment",
-                subpolicy => (join ':', @subpolicyElements, 'empty-line'),
-                reportLine => $lineNum,
+                desc         => $msg,
+                subpolicy    => ( join ':', @subpolicyElements, 'empty-line' ),
+                reportLine   => $lineNum,
                 reportColumn => 0,
-                line   => $lineNum,
-                column => 0,
+                line         => $lineNum,
+                column       => 0,
               };
             next RESULT;
         }
         if ( $type eq 'vgap-bad-comment' ) {
             my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
 
-    # say STDERR join " ", __FILE__, __LINE__;
-    # say STDERR Data::Dumper::Dumper(\@subpolicyElements);
-            my $desc = "comment";
+            my $msg = sprintf
+              "%s %s; %s %s",
+              $tag,
+              describeLC( $lineNum, $offset ),
+              "comment",
+              describeMisindent2( $offset, $expectedOffset );
             push @mistakes,
               {
-                msg => "$desc "
-                  . describeMisindent2( $offset, $expectedOffset ),
-                subpolicy => (join ':', @subpolicyElements, 'comment-indent'),
-                line   => $lineNum,
-                column => $offset,
+                desc      => $msg,
+                subpolicy => ( join ':', @subpolicyElements, 'comment-indent' ),
+                reportLine   => $lineNum,
+                reportColumn => $offset,
+                line      => $lineNum,
+                column    => $offset,
               };
         }
     }
@@ -790,8 +806,6 @@ sub checkOneLineGap {
     my $details    = $options->{details};
     my $subpolicy  = $options->{subpolicy};
 
-    # say STDERR join " ", __FILE__, __LINE__,  'tag:', ($tag // 'na');
-    # say STDERR join " ", __FILE__, __LINE__,  ($subpolicy ? Data::Dumper::Dumper($subpolicy) : 'na');
     if (
         my @gapMistakes = @{
             $policy->isOneLineGap( $gap, $options )
@@ -799,22 +813,14 @@ sub checkOneLineGap {
       )
     {
         for my $gapMistake (@gapMistakes) {
-            my $gapMistakeMsg    = $gapMistake->{msg};
+            my $gapMistakeDesc    = $gapMistake->{desc};
             my $gapMistakeLine   = $gapMistake->{line};
             my $gapMistakeColumn = $gapMistake->{column};
             # TODO: use this as subpolicy in @mistakes
             my $gapMistakeSubpolicy = $gapMistake->{subpolicy};
-            # say STDERR join " ", __FILE__, __LINE__;
-            # say STDERR Data::Dumper::Dumper($gapMistake);
-            # say STDERR Data::Dumper::Dumper($gapMistakeSubpolicy);
-            my $msg              = sprintf
-              "%s %s; %s",
-              $tag,
-              describeLC( $gapMistakeLine, $gapMistakeColumn ),
-              $gapMistakeMsg;
             push @mistakes,
               {
-                desc         => $msg,
+                desc         => $gapMistakeDesc,
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 reportLine   => $gapMistakeLine,
