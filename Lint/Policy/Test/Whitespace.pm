@@ -673,7 +673,14 @@ sub checkGapComments {
 
 sub i_isOneLineGap {
     my ( $policy, $options, $start, $length ) = @_;
-    my $tag       = $options->{tag};
+    my $runeName      = $options->{runeName};
+    my $details       = $options->{details};
+    my $elementNumber = $options->{elementNumber};
+
+    my @topicLines = ();
+    my $topicLines = $options->{topicLines};
+    push @topicLines, @{$topicLines} if $topicLines;
+
     my @mistakes  = ();
     my $instance  = $policy->{lint};
     my $lineToPos = $instance->{lineToPos};
@@ -683,20 +690,20 @@ sub i_isOneLineGap {
 
     # say STDERR Data::Dumper::Dumper($options);
 
-    my ($mainLine, $mainColumn);
-    if (my $mainNode = $options->{mainNode}) {
+    my ( $mainLine, $mainColumn );
+    if ( my $mainNode = $options->{mainNode} ) {
         ( $mainLine, $mainColumn ) = $instance->nodeLC($mainNode);
     }
     $mainColumn //= $options->{mainColumn} // -1;
 
-    my ($preLine, $preColumn);
-    if (my $preNode = $options->{preNode}) {
+    my ( $preLine, $preColumn );
+    if ( my $preNode = $options->{preNode} ) {
         ( $preLine, $preColumn ) = $instance->nodeLC($preNode);
     }
     $preColumn //= $options->{preColumn} // -1;
 
     my @subpolicyElements = ();
-    SET_SUBPOLICY: {
+  SET_SUBPOLICY: {
         my $subpolicyArg = $options->{subpolicy};
         last SET_SUBPOLICY if not defined $subpolicyArg;
         if ( not ref $subpolicyArg ) {
@@ -712,27 +719,31 @@ sub i_isOneLineGap {
         and $instance->literal( $start - 2, 2 ) ne '=='
         and $instance->literal( $start - 2, 2 ) ne '--' )
     {
-            my $msg              = sprintf
-              "%s %s; %s %s",
-              $tag,
-              describeLC( $startLine, $startColumn ),
-                 "missing newline ",
-                  , describeLC( $startLine, $startColumn );
+        my $msg = sprintf
+          "%s %s; %s %s",
+          $runeName,
+          describeLC( $startLine, $startColumn ),
+          "missing newline ",
+          , describeLC( $startLine, $startColumn );
         return [
             {
                 desc => $msg,
-                subpolicy => (join ':', @subpolicyElements, 'missing-newline'),
-                line      => $startLine,
-                column    => $startColumn,
-                reportLine      => $startLine,
-                reportColumn    => $startColumn,
+                subpolicy =>
+                  ( join ':', @subpolicyElements, 'missing-newline' ),
+                runeName     => $runeName,
+                line         => $startLine,
+                column       => $startColumn,
+                reportLine   => $startLine,
+                reportColumn => $startColumn,
+                topicLines   => \@topicLines,
+                details      => $details,
             }
         ];
     }
 
     my $bodyStartLine = $start == 0 ? $startLine : $startLine + 1;
     if ( $bodyStartLine < $#$lineToPos ) {
-        my $literalFirstLine = $instance->literalLine( $bodyStartLine );
+        my $literalFirstLine = $instance->literalLine($bodyStartLine);
         if ( $literalFirstLine =~ /'''/ ) {
 
             # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
@@ -744,48 +755,63 @@ sub i_isOneLineGap {
             $bodyStartLine++;
         }
     }
-    my $results = $policy->checkGapComments(
-        $bodyStartLine,
-        $endLine - 1,
-        $mainColumn, $preColumn
-    );
+    my $results = $policy->checkGapComments( $bodyStartLine, $endLine - 1,
+        $mainColumn, $preColumn );
   RESULT: for my $result ( @{$results} ) {
         my $type = $result->[0];
         if ( $type eq 'vgap-blank-line' ) {
             my ( undef, $lineNum, $offset ) = @{$result};
             my $msg = sprintf
               "%s %s; %s",
-              $tag,
+              $runeName,
               describeLC( $lineNum, 0 ),
               "empty line in comment";
             push @mistakes,
               {
                 desc         => $msg,
                 subpolicy    => ( join ':', @subpolicyElements, 'empty-line' ),
+                runeName     => $runeName,
                 reportLine   => $lineNum,
                 reportColumn => 0,
                 line         => $lineNum,
                 column       => 0,
+                topicLines   => \@topicLines,
+                details      => $details,
               };
             next RESULT;
         }
         if ( $type eq 'vgap-bad-comment' ) {
             my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
 
-            my $msg = sprintf
-              "%s %s; %s %s",
-              $tag,
-              describeLC( $lineNum, $offset ),
-              "comment",
-              describeMisindent2( $offset, $expectedOffset );
+            my $msg;
+            if ( defined $elementNumber ) {
+                $msg = sprintf
+                  "%s child %d %s; %s %s",
+                  $runeName,
+                  $elementNumber,
+                  describeLC( $lineNum, $offset ),
+                  "comment",
+                  describeMisindent2( $offset, $expectedOffset );
+            }
+            else {
+                $msg = sprintf
+                  "%s d %s; %s %s",
+                  $runeName,
+                  describeLC( $lineNum, $offset ),
+                  "comment",
+                  describeMisindent2( $offset, $expectedOffset );
+            }
             push @mistakes,
               {
                 desc      => $msg,
                 subpolicy => ( join ':', @subpolicyElements, 'comment-indent' ),
+                runeName  => $runeName,
                 reportLine   => $lineNum,
                 reportColumn => $offset,
-                line      => $lineNum,
-                column    => $offset,
+                line         => $lineNum,
+                column       => $offset,
+                topicLines   => \@topicLines,
+                details      => $details,
               };
         }
     }
@@ -797,11 +823,8 @@ sub checkOneLineGap {
     my ( $policy, $gap, $options ) = @_;
     my $instance   = $policy->{lint};
     my @mistakes   = ();
-    my $tag        = $options->{tag} or die "No tag";
     my $mainColumn = $options->{mainColumn};
     my $preColumn  = $options->{preColumn};
-    my $parent     = $options->{parent} // $gap->{PARENT};
-    my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
     my $topicLines = $options->{topicLines} // [];
     my $details    = $options->{details};
     my $subpolicy  = $options->{subpolicy};
@@ -821,8 +844,6 @@ sub checkOneLineGap {
             push @mistakes,
               {
                 desc         => $gapMistakeDesc,
-                parentLine   => $parentLine,
-                parentColumn => $parentColumn,
                 reportLine   => $gapMistakeLine,
                 reportColumn => $gapMistakeColumn,
                 line         => $gapMistakeLine,
@@ -970,7 +991,7 @@ sub checkBont {
                 {
                     mainColumn => $expectedBodyColumn,
                     subpolicy  => [ $runeName, 'hint' ],
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy  => [$runeName],
                     details    => [ [$runeName] ],
                 }
@@ -1023,7 +1044,7 @@ sub checkBonz5d {
             {
                 mainColumn => $anchorColumn,
                 preColumn => $elementsColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'formulas-initial-vgap' ],
             }
         )
@@ -1054,7 +1075,7 @@ sub checkBonz5d {
             {
                 mainColumn => $anchorColumn,
                 preColumn => $elementsColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'formulas-final-gap' ],
                 topicLines => [$tistisLine],
             }
@@ -1206,7 +1227,7 @@ sub checkSailAttribute {
             $headGap,
             {
                 mainColumn => $expectedHeadColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'head-vgap' ],
                 topicLines => [$headLine],
             }
@@ -1329,7 +1350,7 @@ sub checkTailOfElem {
             {
                 mainColumn => $anchorColumn,
                 preColumn => $elementColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'elem-tail' ],
                 topicLines => [$tistisLine],
             }
@@ -1384,7 +1405,7 @@ sub checkTailOfTop {
                 mainColumn => $anchorColumn,
                 preColumn => $kidColumn,
                 subpolicy  => [ $runeName, 'top-tail' ],
-                tag        => $runeName,
+                runeName        => $runeName,
                 topicLines => [$tistisLine],
             }
         )
@@ -1508,7 +1529,7 @@ sub checkTopKids {
                     {
                         mainColumn => $anchorColumn,
                         preColumn  => $expectedBodyColumn,
-                        tag        => $runeName,
+                        runeName        => $runeName,
                         subpolicy  => [$runeName],
                         details    => [
                             [
@@ -1587,7 +1608,7 @@ sub checkTopKids {
                     {
                         mainColumn => $anchorColumn,
                         preColumn  => $expectedBodyColumn,
-                        tag        => $runeName,
+                        runeName        => $runeName,
                         subpolicy  => [$runeName],
                         details    => [
                             [
@@ -1668,7 +1689,7 @@ sub checkElemKids {
                 {
                     mainColumn => $anchorColumn,
                     preColumn  => $expectedKidColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy  => [$runeName],
                     details    => [
                         [
@@ -1979,7 +2000,7 @@ sub checkRunning {
                     {
                         mainColumn => $anchorColumn,
                         preColumn  => $runStepColumn,
-                        tag => $runeName,
+                        runeName => $runeName,
                         subpolicy  => [ @subpolicy, 'runstep-vgap' ],
                         parent     => $runStep,
                         topicLines => [$runeLine],
@@ -2230,7 +2251,7 @@ sub checkWhap5d {
                 {
                     mainColumn => $expectedBoogColumn,
                     preColumn => $expectedBoogColumn+2,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy => [$runeName, 'arm-vgap'],
                     details    => [ [$runeName] ],
                     topicLines => [ $parentLine, $boogGapLine ],
@@ -2276,7 +2297,7 @@ sub checkWisp5d {
             {
                 mainColumn => $parentColumn,
                 preColumn => $anchorColumn+2,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
                 details      => [ [ $runeName, "Starts at $batteryLC", ] ],
@@ -2386,7 +2407,7 @@ sub checkSplitFascom {
             $bodyGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
                 topicLines => [$bodyLine],
@@ -2421,7 +2442,7 @@ sub checkSplitFascom {
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
                 details        => [ [$tag, @{$anchorDetails} ] ],
@@ -2495,7 +2516,7 @@ sub checkJoinedFascom {
             $tistisGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$tag] ],
@@ -2628,7 +2649,7 @@ sub checkFascomElements {
                 {
                     mainColumn => $anchorColumn,
                     preColumn => $expectedColumn,
-                    tag        => $tag,
+                    runeName        => $tag,
                 subpolicy => [ $tag ],
                     topicLines => [$runeLine],
                     details    => [ [$tag, @{$anchorDetails} ] ],
@@ -2709,7 +2730,7 @@ sub checkFasdot {
             $tistisGap,
             {
                 mainColumn => $runeColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy  => [$runeName],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$tag] ],
@@ -2759,7 +2780,7 @@ sub checkJogging {
                 {
                     mainColumn => $anchorColumn,
                     preColumn => $jogBaseColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                 subpolicy => [ $runeName, 'jogging' ],
                     details    => [ [$runeName] ],
                     topicLines => [$jogGapLine],
@@ -2825,7 +2846,7 @@ sub checkSeq {
                 $elementGap,
                 {
                     mainColumn => $expectedColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy => [ $runeName, 'sequence-vgap' ],
                     details    => [ [$runeName, $elementDesc] ],
                     topicLines => [$elementGapLine],
@@ -2939,7 +2960,7 @@ sub checkBarcab {
             {
                 mainColumn => $anchorColumn,
                 preColumn => $anchorColumn + 2,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [ $runeName, 'battery-vgap' ],
                 details    => [ [$runeName] ],
                 topicLines => [$wispLine],
@@ -3031,7 +3052,7 @@ sub checkBarcen {
             $gap,
             {
                 mainColumn => $expectedColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName ],
                 details    => [
                     [ $runeName, @{ $policy->anchorDetails( $node, $anchorData ) } ]
@@ -3163,7 +3184,7 @@ sub checkBarket {
             {
                 mainColumn => $expectedColumn,
                 preColumn => $expectedColumn + 2,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy  => [$runeName, 'battery-vgap'],
                 details    => [ [$tag] ],
                 topicLines => [$wispLine],
@@ -3265,7 +3286,7 @@ sub checkFordHoofRune {
             $trailerGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
             }
@@ -3324,7 +3345,7 @@ sub checkFordHoop {
                 $gap,
                 {
                     mainColumn => $expectedBodyColumn,
-                    tag        => $tag,
+                    runeName        => $tag,
                 subpolicy => [ $tag ],
                     details    => [ [$tag] ],
                 }
@@ -3412,7 +3433,7 @@ sub checkFord_1 {
                 $gap,
                 {
                     mainColumn => $expectedBodyColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy  => [$runeName],
                     details    => [ [ $runeName, @{$anchorDetails}, ], ],
                 }
@@ -3502,7 +3523,7 @@ sub checkFaswut {
             $trailerGap,
             {
                 mainColumn => $expectedColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $runeName ],
                 details    => [ [$tag] ],
             }
@@ -3589,7 +3610,7 @@ sub checkSplit_0Running {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'running-vgap' ],
             }
         )
@@ -3615,7 +3636,7 @@ sub checkSplit_0Running {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $expectedColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'tistis-vgap' ],
                 topicLines => [ $anchorLine, $tistisLine ],
             }
@@ -3703,7 +3724,7 @@ sub checkJoined_0Running {
             {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'tistis-vgap' ],
                 topicLines => [ $runeLine, $tistisLine ],
                 details    => [ [$runeName] ],
@@ -3792,7 +3813,7 @@ sub check_1Running {
                 {
                     mainColumn => $anchorColumn,
                     preColumn  => $runningColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy => [ $runeName ],
                 }
             )
@@ -3862,7 +3883,7 @@ sub check_1Running {
             {
                 mainColumn => $runeColumn,
                 preColumn  => $expectedColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName, 'tistis-gap' ],
                 topicLines => [ $runeLine, $tistisLine ],
             }
@@ -4426,7 +4447,7 @@ sub check_1Jogging {
                 {
                     mainColumn => $anchorColumn,
                     preColumn  => $jogBaseColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy  => [ $runeName, 'jogging-gap' ],
                     parent     => $rune,
                     topicLines => [$joggingLine],
@@ -4443,7 +4464,7 @@ sub check_1Jogging {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $jogBaseColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [ $runeName, 'tistis-gap' ],
                 topicLines => [$tistisLine],
                 details => [ [ $runeName, @{$anchorDetails}  ]],
@@ -4576,7 +4597,7 @@ sub check_2Jogging {
                 $subheadGap,
                 {
                     mainColumn => $anchorColumn,
-                    tag        => $runeName,
+                    runeName        => $runeName,
                     subpolicy  => [ @subpolicy, 'subhead-vgap' ],
                     details    => [ [$runeName] ],
                     topicLines => [$subheadLine],
@@ -4613,7 +4634,7 @@ sub check_2Jogging {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $jogBaseColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [@subpolicy, 'jogging-vgap'],
                 details    => [ [$runeName] ],
                 topicLines => [$joggingLine],
@@ -4628,7 +4649,7 @@ sub check_2Jogging {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $jogBaseColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [@subpolicy, 'tistis-vgap'],
                 topicLines => [$tistisLine],
             }
@@ -4716,7 +4737,7 @@ sub check_Jogging1 {
             {
                 mainColumn => $anchorColumn,
                 preColumn  => $jogBaseColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [$runeName, 'tistis-gap'],
                 topicLines => [$tistisLine],
                 details    => [ [$runeName] ],
@@ -4742,7 +4763,7 @@ sub check_Jogging1 {
             $tailGap,
             {
                 mainColumn => $anchorColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [$runeName, 'tail-vgap'],
                 details    => [ [$runeName] ],
                 topicLines => [$tailLine],
@@ -4966,7 +4987,7 @@ sub checkFascomElement {
             $gap,
             {
                 mainColumn => $expectedBodyColumn,
-                tag        => $tag,
+                runeName        => $tag,
                 subpolicy => [ $tag ],
                 details => [ [ $tag, @{$anchorDetails} ] ],
                 topicLines => [$runeLine],
@@ -5060,7 +5081,7 @@ sub checkFastis {
                 $hornGap,
                 {
                     mainColumn => $expectedHornColumn,
-                    tag        => $tag,
+                    runeName        => $tag,
                 subpolicy => [ $runeName ],
                     details    => [ [$tag] ],
                 }
@@ -5273,7 +5294,7 @@ sub checkKingsideJog {
             $gap,
             {
                 mainColumn => $expectedBodyColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName ],
                 details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $brickLine ],
@@ -5418,7 +5439,7 @@ sub checkQueensideJog {
             $gap,
             {
                 mainColumn => $expectedBodyColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy => [ $runeName ],
                 details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $brickLine ],
@@ -5825,9 +5846,9 @@ sub checkBackdented {
                 $gap,
                 {
                     mainColumn => $anchorColumn,
+                    elementNumber => $elementNumber,
                     preColumn  => $elementColumn,
-                    tag =>
-                      ( sprintf 'backdented element #%d,', $elementNumber ),
+                    runeName => $runeName,
                     subpolicy => [ $runeName ],
                     details => [
                         [
@@ -5835,7 +5856,6 @@ sub checkBackdented {
                             @{$anchorDetails},
                             'inter-comment indent should be '
                               . ( $anchorColumn + 1 ),
-
                      'pre-comment indent should be ' . ( $elementColumn + 1 ),
                         ]
                     ],
@@ -5934,7 +5954,7 @@ sub checkKetdot {
                     $gap2,
                     {
                         mainColumn => $anchorColumn,
-                        tag        => $tag,
+                        runeName        => $runeName,
                 subpolicy => [ $runeName ],
                         details    => [ [$tag] ],
                     }
@@ -6193,7 +6213,7 @@ sub checkLuslus {
             $bodyGap,
             {
                 mainColumn => $expectedBodyColumn,
-                tag        => $runeName,
+                runeName        => $runeName,
                 subpolicy  => [$runeName],
                 details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $batteryLine, $batteryHoonLine ],
@@ -6338,7 +6358,7 @@ sub validate_node {
                     $node,
                     {
                         mainColumn => 0,
-                        tag        => $runeName,
+                        runeName        => $runeName,
                         subpolicy => [ $runeName, 'vgap' ],
                     }
                 );
