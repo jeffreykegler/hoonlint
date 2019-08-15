@@ -406,22 +406,19 @@ sub deComment {
 
 # Is this a one-line gap, or its equivalent?
 sub isOneLineGap {
-    my ( $policy, $gap, $options, $expectedColumn, $expectedColumn2 ) = @_;
+    my ( $policy, $gap, $options ) = @_;
     my $instance = $policy->{lint};
     my $start    = $gap->{start};
     my $length   = $gap->{length};
     # say STDERR join " ", __FILE__, __LINE__,  ($options->{subpolicy} ? Data::Dumper::Dumper($options->{subpolicy}) : 'na');
-    return i_isOneLineGap( $policy, $options, $start + 2, $length - 2,
-        $expectedColumn, $expectedColumn2 )
+    return i_isOneLineGap( $policy, $options, $start + 2, $length - 2)
       if $instance->runeGapNode($gap);
-    return i_isOneLineGap( $policy, $options, $start, $length, $expectedColumn,
-        $expectedColumn2 );
+    return i_isOneLineGap( $policy, $options, $start, $length)
 }
 
 sub checkGapComments {
     my ( $policy, $firstLine, $lastLine, $interOffset, $preOffset ) = @_;
 
-# say STDERR join " ", __FILE__, __LINE__,  $policy, $firstLine, $lastLine, $interOffset, $preOffset;
     return if $lastLine < $firstLine;
     my $instance  = $policy->{lint};
     my $pSource   = $instance->{pHoonSource};
@@ -675,7 +672,7 @@ sub checkGapComments {
 }
 
 sub i_isOneLineGap {
-    my ( $policy, $options, $start, $length, $mainColumn, $preColumn ) = @_;
+    my ( $policy, $options, $start, $length ) = @_;
     my $tag       = $options->{tag};
     my @mistakes  = ();
     my $instance  = $policy->{lint};
@@ -683,14 +680,24 @@ sub i_isOneLineGap {
     my $end       = $start + $length;
     my ( $startLine, $startColumn ) = $instance->line_column($start);
     my ( $endLine,   $endColumn )   = $instance->line_column($end);
-    $mainColumn //= -1;    # -1 will never match
 
+    # say STDERR Data::Dumper::Dumper($options);
+
+    my ($mainLine, $mainColumn);
+    if (my $mainNode = $options->{mainNode}) {
+        ( $mainLine, $mainColumn ) = $instance->nodeLC($mainNode);
+    }
+    $mainColumn //= $options->{mainColumn} // -1;
+
+    my ($preLine, $preColumn);
+    if (my $preNode = $options->{preNode}) {
+        ( $preLine, $preColumn ) = $instance->nodeLC($preNode);
+    }
+    $preColumn //= $options->{preColumn} // -1;
 
     my @subpolicyElements = ();
     SET_SUBPOLICY: {
         my $subpolicyArg = $options->{subpolicy};
-    # say STDERR join " ", __FILE__, __LINE__;
-    # say STDERR Data::Dumper::Dumper($subpolicyArg);
         last SET_SUBPOLICY if not defined $subpolicyArg;
         if ( not ref $subpolicyArg ) {
             push @subpolicyElements, $subpolicyArg;
@@ -698,9 +705,6 @@ sub i_isOneLineGap {
         }
         push @subpolicyElements, @{$subpolicyArg};
     }
-
-    # say STDERR join " ", __FILE__, __LINE__;
-    # say STDERR Data::Dumper::Dumper(\@subpolicyElements);
 
     # Criss-cross TISTIS lines are a special case
     # say STDERR join " ", __FILE__, __LINE__, $startLine, $endLine;
@@ -790,8 +794,7 @@ sub checkOneLineGap {
     # say STDERR join " ", __FILE__, __LINE__,  ($subpolicy ? Data::Dumper::Dumper($subpolicy) : 'na');
     if (
         my @gapMistakes = @{
-            $policy->isOneLineGap( $gap, { subpolicy => $subpolicy, tag => $tag },
-                $mainColumn, $preColumn )
+            $policy->isOneLineGap( $gap, $options )
         }
       )
     {
