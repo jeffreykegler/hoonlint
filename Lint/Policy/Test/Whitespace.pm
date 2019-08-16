@@ -5566,6 +5566,14 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'tisgar') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallTisgar => 1,
+            }
+        );
+    }
     if ($runeName eq 'zapgar') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
