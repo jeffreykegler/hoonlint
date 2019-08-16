@@ -195,9 +195,9 @@ sub anchorDetails {
         my $brickLiteral = $instance->literalLine($runeLine);
         my $brickLexeme = substr $brickLiteral, $brickColumn;
         $brickLexeme =~ s/[\s].*\z//xms;
-        return [qq{anchor column is }
-              . describeLC( $runeLine, $anchorColumn )
-              . qq{ "$brickLexeme" in line: "$runeLine"}
+        return [sprintf 'anchor column is "%s" @%s',
+               $brickLexeme,
+              describeLC( $runeLine, $anchorColumn )
               ];
     }
     push @desc,
@@ -5572,6 +5572,15 @@ sub checkBackdented {
                 tallBardot => 1, # fixes 8, breaks 0
                 tallBartar => 1, # fixes 4, breaks 0
                 tallCenhep => 1, # fixes 2, breaks 0
+            }
+        );
+    }
+    if ($runeName eq 'tisgal') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallBartis => 1, # fixes 20, breaks 0
+                tallTisgal => 1, # fixes 14, breaks 0
             }
         );
     }

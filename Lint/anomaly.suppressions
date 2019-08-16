@@ -1848,6 +1848,49 @@ hoons/arvo/sys/hoon.hoon 6244:3 Test::Whitespace tisgar:comment-indent tisgar ch
 hoons/arvo/sys/hoon.hoon 6245:3 Test::Whitespace tisgar:comment-indent tisgar child 2 @6245:3; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 11235:13 Test::Whitespace tisgar:comment-indent tisgar child 2 @11235:13; comment overindented by 2
 
+# CENLUS aberrations
+hoons/arvo/app/dojo.hoon 718:13 Test::Whitespace cenlus:indent backdented element #3 @718:13; overindented by 2
+hoons/arvo/app/dojo.hoon 789:11 Test::Whitespace cenlus:indent backdented element #3 @789:11; overindented by 2
+hoons/arvo/app/dojo.hoon 844:11 Test::Whitespace cenlus:indent backdented element #3 @844:11; overindented by 2
+hoons/arvo/app/dojo.hoon 937:11 Test::Whitespace cenlus:indent backdented element #3 @937:11; overindented by 2
+hoons/arvo/app/dojo.hoon 941:13 Test::Whitespace cenlus:indent backdented element #3 @941:13; overindented by 2
+hoons/arvo/app/dojo.hoon 964:11 Test::Whitespace cenlus:indent backdented element #3 @964:11; overindented by 2
+hoons/arvo/app/dojo.hoon 977:13 Test::Whitespace cenlus:indent backdented element #3 @977:13; overindented by 2
+hoons/arvo/app/dojo.hoon 982:11 Test::Whitespace cenlus:indent backdented element #3 @982:11; overindented by 2
+hoons/arvo/app/gh.hoon 275:13 Test::Whitespace cenlus:indent backdented element #2 @275:13; overindented by 2
+hoons/arvo/app/gh.hoon 276:11 Test::Whitespace cenlus:indent backdented element #3 @276:11; overindented by 2
+hoons/arvo/app/hall.hoon 1721:7 Test::Whitespace cenlus:indent backdented element #2 @1721:7; underindented by 2
+hoons/arvo/app/hall.hoon 1986:18 Test::Whitespace cenlus:indent backdented element #2 @1986:18; underindented by 2
+hoons/arvo/app/hall.hoon 2005:11 Test::Whitespace cenlus:indent backdented element #2 @2005:11; underindented by 2
+hoons/arvo/app/static.hoon 45:3 Test::Whitespace cenlus:indent backdented element #2 @45:3; underindented by 2
+hoons/arvo/app/static.hoon 66:3 Test::Whitespace cenlus:indent backdented element #2 @66:3; underindented by 2
+hoons/arvo/app/static.hoon 78:7 Test::Whitespace cenlus:indent backdented element #2 @78:7; underindented by 2
+hoons/arvo/app/static.hoon 86:5 Test::Whitespace cenlus:indent backdented element #2 @86:5; underindented by 2
+hoons/arvo/app/talk.hoon 559:7 Test::Whitespace cenlus:indent backdented element #2 @559:7; underindented by 2
+hoons/arvo/lib/hood/drum.hoon 938:5 Test::Whitespace cenlus:indent backdented element #2 @938:5; underindented by 2
+hoons/arvo/sys/hoon.hoon 841:11 Test::Whitespace cenlus:indent backdented element #3 @841:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 858:11 Test::Whitespace cenlus:indent backdented element #3 @858:11; overindented by 2
+hoons/arvo/sys/hoon.hoon 4974:16 Test::Whitespace cenlus:indent backdented element #3 @4974:16; overindented by 2
+hoons/arvo/sys/hoon.hoon 8241:19 Test::Whitespace cenlus:indent backdented element #3 @8241:19; underindented by 2
+hoons/arvo/sys/hoon.hoon 10441:7 Test::Whitespace cenlus:indent backdented element #3 @10441:7; overindented by 2
+hoons/arvo/sys/hoon.hoon 10443:7 Test::Whitespace cenlus:indent backdented element #3 @10443:7; overindented by 2
+hoons/arvo/sys/hoon.hoon 12163:15 Test::Whitespace cenlus:indent backdented element #2 @12163:15; overindented by 2
+hoons/arvo/sys/hoon.hoon 12172:15 Test::Whitespace cenlus:indent backdented element #2 @12172:15; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 1248:11 Test::Whitespace cenlus:indent backdented element #3 @1248:11; overindented by 2
+hoons/arvo/sys/vane/ford.hoon 1733:23 Test::Whitespace cenlus:indent backdented element #2 @1733:23; overindented by 1
+hoons/arvo/sys/zuse.hoon 2123:11 Test::Whitespace cenlus:indent backdented element #3 @2123:11; overindented by 2
+hoons/arvo/sys/zuse.hoon 2127:16 Test::Whitespace cenlus:indent backdented element #3 @2127:16; overindented by 2
+hoons/arvo/sys/zuse.hoon 2143:11 Test::Whitespace cenlus:indent backdented element #3 @2143:11; overindented by 2
+hoons/arvo/sys/zuse.hoon 2147:16 Test::Whitespace cenlus:indent backdented element #3 @2147:16; overindented by 2
+hoons/arvo/sys/zuse.hoon 2163:11 Test::Whitespace cenlus:indent backdented element #3 @2163:11; overindented by 2
+hoons/arvo/sys/zuse.hoon 2167:16 Test::Whitespace cenlus:indent backdented element #3 @2167:16; overindented by 2
+hoons/arvo/sys/zuse.hoon 2284:22 Test::Whitespace cenlus:indent backdented element #3 @2284:22; overindented by 9
+hoons/arvo/sys/zuse.hoon 2565:8 Test::Whitespace cenlus:indent backdented element #3 @2565:8; underindented by 1
+hoons/arvo/sys/zuse.hoon 2619:19 Test::Whitespace cenlus:indent backdented element #2 @2619:19; overindented by 2
+hoons/arvo/sys/zuse.hoon 2620:17 Test::Whitespace cenlus:indent backdented element #3 @2620:17; overindented by 2
+hoons/arvo/sys/zuse.hoon 4207:11 Test::Whitespace cenlus:indent backdented element #3 @4207:11; overindented by 2
+hoons/arvo/tests/new-hoon/mp.hoon 275:5 Test::Whitespace cenlus:indent backdented element #3 @275:5; overindented by 2
+
 # Matching reanchoring to indentation in some cases often causes mismatches in other cases.
 # I adopt a statistics term for these: "outliers".  I also handle them the way statisticians do --
 # by arbitrarily ignoring them.
