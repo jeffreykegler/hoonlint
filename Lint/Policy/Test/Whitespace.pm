@@ -5517,6 +5517,15 @@ sub checkBackdented {
     # my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
     my ( $anchorLine, $anchorColumn ) = ( $parentLine, $parentColumn );
     my $anchorData;
+    if ($runeName eq 'cenlus') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallCenhep' => 1, # fixes 8, breaks 0
+                'tallTislus' => 1, # fixes 11, breaks 2
+            }
+        );
+    }
     if ($runeName eq 'kethep') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
@@ -5846,6 +5855,7 @@ sub checkBackdented {
                 column         => $elementColumn,
                 reportLine           => $elementLine,
                 reportColumn         => $elementColumn,
+                topicLines => [ $anchorLine ],
                 details        => [ [ $runeName, @{$anchorDetails}, ] ],
               };
         }
