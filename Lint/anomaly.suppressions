@@ -1754,6 +1754,44 @@ hoons/arvo/sys/hoon.hoon 909:13 Test::Whitespace tisfas:hgap joined backdent ele
 hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent element #2 of @149:5 is at @149:29; should be one of @149:20 (tight); @149:35 (running)
 hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent element #2 of @150:5 is at @150:29; should be one of @150:26 (tight); @150:35 (running)
 hoons/arvo/app/hall.hoon 2540:42 Test::Whitespace wutdot:missing-newline backdented element #2, @2540:42; missing newline @2540:42
+hoons/arvo/app/gh.hoon 118:9 Test::Whitespace tislus:comment-indent tislus child 2 @118:9; comment underindented by 2
+hoons/arvo/app/hall.hoon 965:9 Test::Whitespace tisdot:comment-indent tisdot child 3 @965:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 966:9 Test::Whitespace tisdot:comment-indent tisdot child 3 @966:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 967:9 Test::Whitespace tisdot:comment-indent tisdot child 3 @967:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 968:9 Test::Whitespace tisdot:comment-indent tisdot child 3 @968:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1232:9 Test::Whitespace tiswut:comment-indent tiswut child 4 @1232:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1233:9 Test::Whitespace tiswut:comment-indent tiswut child 4 @1233:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1234:9 Test::Whitespace tiswut:comment-indent tiswut child 4 @1234:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1235:9 Test::Whitespace tiswut:comment-indent tiswut child 4 @1235:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 1236:9 Test::Whitespace tiswut:comment-indent tiswut child 4 @1236:9; comment overindented by 2
+hoons/arvo/app/hall.hoon 2738:5 Test::Whitespace tisket:comment-indent tisket child 4 @2738:5; comment overindented by 2
+hoons/arvo/app/hall.hoon 2739:5 Test::Whitespace tisket:comment-indent tisket child 4 @2739:5; comment overindented by 2
+hoons/arvo/app/hall.hoon 2740:5 Test::Whitespace tisket:comment-indent tisket child 4 @2740:5; comment overindented by 2
+hoons/arvo/app/hall.hoon 2764:5 Test::Whitespace tisket:comment-indent tisket child 4 @2764:5; comment overindented by 2
+hoons/arvo/app/hall.hoon 2765:5 Test::Whitespace tisket:comment-indent tisket child 4 @2765:5; comment overindented by 2
+hoons/arvo/app/twit.hoon 178:7 Test::Whitespace tislus:comment-indent tislus child 2 @178:7; comment overindented by 4
+hoons/arvo/gen/curl/url.hoon 10:3 Test::Whitespace tiscom:comment-indent tiscom child 2 @10:3; comment overindented by 2
+hoons/arvo/lib/down-jet/parse.hoon 765:6 Test::Whitespace wutgar:comment-indent wutgar child 2 @765:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 766:6 Test::Whitespace wutgar:comment-indent wutgar child 2 @766:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 810:6 Test::Whitespace sigwut:comment-indent sigwut child 4 @810:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 811:6 Test::Whitespace sigwut:comment-indent sigwut child 4 @811:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 812:6 Test::Whitespace sigwut:comment-indent sigwut child 4 @812:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 813:6 Test::Whitespace sigwut:comment-indent sigwut child 4 @813:6; comment overindented by 1
+hoons/arvo/lib/down-jet/parse.hoon 882:11 Test::Whitespace wutsig:comment-indent wutsig child 3 @882:11; comment overindented by 2
+hoons/arvo/lib/down-jet/rend.hoon 231:9 Test::Whitespace tislus:comment-indent tislus child 2 @231:9; comment overindented by 2
+hoons/arvo/lib/hood/kiln.hoon 247:7 Test::Whitespace wutcol:comment-indent wutcol child 3 @247:7; comment overindented by 2
+hoons/arvo/sys/hoon.hoon 11139:11 Test::Whitespace tisdot:comment-indent tisdot child 3 @11139:11; comment overindented by 2
+hoons/arvo/sys/hoon.hoon 11238:13 Test::Whitespace tisdot:comment-indent tisdot child 3 @11238:13; comment overindented by 2
+hoons/arvo/sys/hoon.hoon 11247:9 Test::Whitespace wutdot:comment-indent wutdot child 3 @11247:9; comment underindented by 2
+hoons/arvo/sys/hoon.hoon 11249:7 Test::Whitespace tisdot:comment-indent tisdot child 3 @11249:7; comment underindented by 4
+hoons/arvo/sys/hoon.hoon 11257:9 Test::Whitespace tisdot:comment-indent tisdot child 3 @11257:9; comment underindented by 2
+hoons/arvo/sys/vane/ames.hoon 1341:19 Test::Whitespace tislus:comment-indent tislus child 2 @1341:19; comment overindented by 4
+hoons/arvo/sys/vane/clay.hoon 1433:39 Test::Whitespace tisket:comment-indent tisket child 4 @1433:39; comment overindented by 34
+hoons/arvo/sys/vane/clay.hoon 2241:57 Test::Whitespace wutsig:comment-indent wutsig child 3 @2241:57; comment overindented by 48
+hoons/arvo/sys/vane/dill.hoon 538:7 Test::Whitespace wutcol:comment-indent wutcol child 3 @538:7; comment overindented by 2
+hoons/arvo/sys/vane/eyre.hoon 909:11 Test::Whitespace wutcol:comment-indent wutcol child 3 @909:11; comment overindented by 2
+hoons/arvo/sys/vane/ford.hoon 251:9 Test::Whitespace wutcol:comment-indent wutcol child 3 @251:9; comment overindented by 4
+hoons/arvo/sys/zuse.hoon 1203:5 Test::Whitespace ketwut:comment-indent ketwut child 1 @1203:5; comment overindented by 2
 
 # Matching reanchoring to indentation in some cases often causes mismatches in other cases.
 # I adopt a statistics term for these: "outliers".  I also handle them the way statisticians do --

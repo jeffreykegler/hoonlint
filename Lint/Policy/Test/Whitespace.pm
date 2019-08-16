@@ -5809,14 +5809,16 @@ sub checkBackdented {
                     preColumn  => $elementColumn,
                     runeName => $runeName,
                     subpolicy => [ $runeName ],
+                    topicLines => [ $anchorLine, $elementLine ],
                     details => [
                         [
                             $runeName,
                             @{$anchorDetails},
-                            'inter-comment indent should be '
-                              . ( $anchorColumn + 1 ),
-                     'pre-comment indent should be ' . ( $elementColumn + 1 ),
-                        ]
+                            (sprintf 'inter-comment indent should be %d; see line %d',
+                              ( $anchorColumn + 1 ), $anchorLine),
+                            (sprintf 'pre-comment indent should be %d; see line %d',
+                              ( $elementColumn + 1 ), $elementLine)
+                       ]
                     ],
                 }
             )
@@ -5832,8 +5834,6 @@ sub checkBackdented {
               {
                 desc           => $msg,
                 subpolicy => [ $runeName, 'indent' ],
-                parentLine     => $parentLine,
-                parentColumn   => $parentColumn,
                 line           => $elementLine,
                 column         => $elementColumn,
                 reportLine           => $elementLine,
