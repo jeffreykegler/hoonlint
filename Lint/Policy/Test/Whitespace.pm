@@ -5581,6 +5581,10 @@ sub checkBackdented {
             {
                 tallBartis => 1, # fixes 20, breaks 0
                 tallTisgal => 1, # fixes 14, breaks 0
+                tallCenhep => 1, # fixes 7, breaks 0
+                # tallKetlus => 1, # fixes 0, breaks 0
+                tallTisgar => 1, # fixes 2, breaks 0
+                tallCenlus => 1, # fixes 1, breaks 1
             }
         );
     }
