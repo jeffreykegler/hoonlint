@@ -405,16 +405,161 @@ sub deComment {
 }
 
 # Is this a one-line gap, or its equivalent?
-sub isOneLineGap {
+sub checkOneLineGap {
     my ( $policy, $gap, $options ) = @_;
     my $instance = $policy->{lint};
     my $start    = $gap->{start};
     my $length   = $gap->{length};
-    # say STDERR join " ", __FILE__, __LINE__,  ($options->{subpolicy} ? Data::Dumper::Dumper($options->{subpolicy}) : 'na');
-    return i_isOneLineGap( $policy, $options, $start + 2, $length - 2)
-      if $instance->runeGapNode($gap);
-    return i_isOneLineGap( $policy, $options, $start, $length)
+    if ( $instance->runeGapNode($gap) ) {
+        $start += 2;
+        $length -= 2;
+    }
+
+    my $runeName      = $options->{runeName};
+    my $details       = $options->{details};
+    my $elementNumber = $options->{elementNumber};
+
+    my @topicLines = ();
+    my $topicLines = $options->{topicLines};
+    push @topicLines, @{$topicLines} if $topicLines;
+
+    my @mistakes  = ();
+    my $end       = $start + $length;
+    my ( $startLine, $startColumn ) = $instance->line_column($start);
+    my ( $endLine,   $endColumn )   = $instance->line_column($end);
+
+    # say STDERR Data::Dumper::Dumper($options);
+
+    my ( $mainLine, $mainColumn );
+    if ( my $mainNode = $options->{mainNode} ) {
+        ( $mainLine, $mainColumn ) = $instance->nodeLC($mainNode);
+    }
+    $mainColumn //= $options->{mainColumn} // -1;
+
+    my ( $preLine, $preColumn );
+    if ( my $preNode = $options->{preNode} ) {
+        ( $preLine, $preColumn ) = $instance->nodeLC($preNode);
+    }
+    $preColumn //= $options->{preColumn} // -1;
+
+    my @subpolicyElements = ();
+  SET_SUBPOLICY: {
+        my $subpolicyArg = $options->{subpolicy};
+        last SET_SUBPOLICY if not defined $subpolicyArg;
+        if ( not ref $subpolicyArg ) {
+            push @subpolicyElements, $subpolicyArg;
+            last SET_SUBPOLICY;
+        }
+        push @subpolicyElements, @{$subpolicyArg};
+    }
+
+    # Criss-cross TISTIS lines are a special case
+    # say STDERR join " ", __FILE__, __LINE__, $startLine, $endLine;
+    if (    $startLine == $endLine
+        and $instance->literal( $start - 2, 2 ) ne '=='
+        and $instance->literal( $start - 2, 2 ) ne '--' )
+    {
+        my $msg = sprintf
+          "%s %s; %s %s",
+          $runeName,
+          describeLC( $startLine, $startColumn ),
+          "missing newline ",
+          , describeLC( $startLine, $startColumn );
+        return [
+            {
+                desc => $msg,
+                subpolicy =>
+                  ( join ':', @subpolicyElements, 'missing-newline' ),
+                runeName     => $runeName,
+                line         => $startLine,
+                column       => $startColumn,
+                reportLine   => $startLine,
+                reportColumn => $startColumn,
+                topicLines   => \@topicLines,
+                details      => $details,
+            }
+        ];
+    }
+
+    my $bodyStartLine = $start == 0 ? $startLine : $startLine + 1;
+    my $lineToPos = $instance->{lineToPos};
+    if ( $bodyStartLine < $#$lineToPos ) {
+        my $literalFirstLine = $instance->literalLine($bodyStartLine);
+        if ( $literalFirstLine =~ /'''/ ) {
+
+            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
+            $bodyStartLine++;
+        }
+        if ( $literalFirstLine =~ /"""/ ) {
+
+            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
+            $bodyStartLine++;
+        }
+    }
+    my $results = $policy->checkGapComments( $bodyStartLine, $endLine - 1,
+        $mainColumn, $preColumn );
+  RESULT: for my $result ( @{$results} ) {
+        my $type = $result->[0];
+        if ( $type eq 'vgap-blank-line' ) {
+            my ( undef, $lineNum, $offset ) = @{$result};
+            my $msg = sprintf
+              "%s %s; %s",
+              $runeName,
+              describeLC( $lineNum, 0 ),
+              "empty line in comment";
+            push @mistakes,
+              {
+                desc         => $msg,
+                subpolicy    => ( join ':', @subpolicyElements, 'empty-line' ),
+                runeName     => $runeName,
+                reportLine   => $lineNum,
+                reportColumn => 0,
+                line         => $lineNum,
+                column       => 0,
+                topicLines   => \@topicLines,
+                details      => $details,
+              };
+            next RESULT;
+        }
+        if ( $type eq 'vgap-bad-comment' ) {
+            my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
+
+            my $msg;
+            if ( defined $elementNumber ) {
+                $msg = sprintf
+                  "%s child %d %s; %s %s",
+                  $runeName,
+                  $elementNumber,
+                  describeLC( $lineNum, $offset ),
+                  "comment",
+                  describeMisindent2( $offset, $expectedOffset );
+            }
+            else {
+                $msg = sprintf
+                  "%s d %s; %s %s",
+                  $runeName,
+                  describeLC( $lineNum, $offset ),
+                  "comment",
+                  describeMisindent2( $offset, $expectedOffset );
+            }
+            push @mistakes,
+              {
+                desc      => $msg,
+                subpolicy => ( join ':', @subpolicyElements, 'comment-indent' ),
+                runeName  => $runeName,
+                reportLine   => $lineNum,
+                reportColumn => $offset,
+                line         => $lineNum,
+                column       => $offset,
+                topicLines   => \@topicLines,
+                details      => $details,
+              };
+        }
+    }
+
+    return \@mistakes;
 }
+
 
 sub checkGapComments {
     my ( $policy, $firstLine, $lastLine, $interOffset, $preOffset ) = @_;
@@ -667,192 +812,6 @@ sub checkGapComments {
 
 # say STDERR join " ", __FILE__, __LINE__,  $policy, $firstLine, $lastLine, $interOffset, $preOffset;
         die "Bad gap combinator parse: $issue\n";
-    }
-    return \@mistakes;
-}
-
-sub i_isOneLineGap {
-    my ( $policy, $options, $start, $length ) = @_;
-    my $runeName      = $options->{runeName};
-    my $details       = $options->{details};
-    my $elementNumber = $options->{elementNumber};
-
-    my @topicLines = ();
-    my $topicLines = $options->{topicLines};
-    push @topicLines, @{$topicLines} if $topicLines;
-
-    my @mistakes  = ();
-    my $instance  = $policy->{lint};
-    my $lineToPos = $instance->{lineToPos};
-    my $end       = $start + $length;
-    my ( $startLine, $startColumn ) = $instance->line_column($start);
-    my ( $endLine,   $endColumn )   = $instance->line_column($end);
-
-    # say STDERR Data::Dumper::Dumper($options);
-
-    my ( $mainLine, $mainColumn );
-    if ( my $mainNode = $options->{mainNode} ) {
-        ( $mainLine, $mainColumn ) = $instance->nodeLC($mainNode);
-    }
-    $mainColumn //= $options->{mainColumn} // -1;
-
-    my ( $preLine, $preColumn );
-    if ( my $preNode = $options->{preNode} ) {
-        ( $preLine, $preColumn ) = $instance->nodeLC($preNode);
-    }
-    $preColumn //= $options->{preColumn} // -1;
-
-    my @subpolicyElements = ();
-  SET_SUBPOLICY: {
-        my $subpolicyArg = $options->{subpolicy};
-        last SET_SUBPOLICY if not defined $subpolicyArg;
-        if ( not ref $subpolicyArg ) {
-            push @subpolicyElements, $subpolicyArg;
-            last SET_SUBPOLICY;
-        }
-        push @subpolicyElements, @{$subpolicyArg};
-    }
-
-    # Criss-cross TISTIS lines are a special case
-    # say STDERR join " ", __FILE__, __LINE__, $startLine, $endLine;
-    if (    $startLine == $endLine
-        and $instance->literal( $start - 2, 2 ) ne '=='
-        and $instance->literal( $start - 2, 2 ) ne '--' )
-    {
-        my $msg = sprintf
-          "%s %s; %s %s",
-          $runeName,
-          describeLC( $startLine, $startColumn ),
-          "missing newline ",
-          , describeLC( $startLine, $startColumn );
-        return [
-            {
-                desc => $msg,
-                subpolicy =>
-                  ( join ':', @subpolicyElements, 'missing-newline' ),
-                runeName     => $runeName,
-                line         => $startLine,
-                column       => $startColumn,
-                reportLine   => $startLine,
-                reportColumn => $startColumn,
-                topicLines   => \@topicLines,
-                details      => $details,
-            }
-        ];
-    }
-
-    my $bodyStartLine = $start == 0 ? $startLine : $startLine + 1;
-    if ( $bodyStartLine < $#$lineToPos ) {
-        my $literalFirstLine = $instance->literalLine($bodyStartLine);
-        if ( $literalFirstLine =~ /'''/ ) {
-
-            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
-            $bodyStartLine++;
-        }
-        if ( $literalFirstLine =~ /"""/ ) {
-
-            # say join ' ', __FILE__, __LINE__, qq{"$literalFirstLine"};
-            $bodyStartLine++;
-        }
-    }
-    my $results = $policy->checkGapComments( $bodyStartLine, $endLine - 1,
-        $mainColumn, $preColumn );
-  RESULT: for my $result ( @{$results} ) {
-        my $type = $result->[0];
-        if ( $type eq 'vgap-blank-line' ) {
-            my ( undef, $lineNum, $offset ) = @{$result};
-            my $msg = sprintf
-              "%s %s; %s",
-              $runeName,
-              describeLC( $lineNum, 0 ),
-              "empty line in comment";
-            push @mistakes,
-              {
-                desc         => $msg,
-                subpolicy    => ( join ':', @subpolicyElements, 'empty-line' ),
-                runeName     => $runeName,
-                reportLine   => $lineNum,
-                reportColumn => 0,
-                line         => $lineNum,
-                column       => 0,
-                topicLines   => \@topicLines,
-                details      => $details,
-              };
-            next RESULT;
-        }
-        if ( $type eq 'vgap-bad-comment' ) {
-            my ( undef, $lineNum, $offset, $expectedOffset ) = @{$result};
-
-            my $msg;
-            if ( defined $elementNumber ) {
-                $msg = sprintf
-                  "%s child %d %s; %s %s",
-                  $runeName,
-                  $elementNumber,
-                  describeLC( $lineNum, $offset ),
-                  "comment",
-                  describeMisindent2( $offset, $expectedOffset );
-            }
-            else {
-                $msg = sprintf
-                  "%s d %s; %s %s",
-                  $runeName,
-                  describeLC( $lineNum, $offset ),
-                  "comment",
-                  describeMisindent2( $offset, $expectedOffset );
-            }
-            push @mistakes,
-              {
-                desc      => $msg,
-                subpolicy => ( join ':', @subpolicyElements, 'comment-indent' ),
-                runeName  => $runeName,
-                reportLine   => $lineNum,
-                reportColumn => $offset,
-                line         => $lineNum,
-                column       => $offset,
-                topicLines   => \@topicLines,
-                details      => $details,
-              };
-        }
-    }
-
-    return \@mistakes;
-}
-
-sub checkOneLineGap {
-    my ( $policy, $gap, $options ) = @_;
-    my $instance   = $policy->{lint};
-    my @mistakes   = ();
-    my $mainColumn = $options->{mainColumn};
-    my $preColumn  = $options->{preColumn};
-    my $topicLines = $options->{topicLines} // [];
-    my $details    = $options->{details};
-    my $subpolicy  = $options->{subpolicy};
-
-    if (
-        my @gapMistakes = @{
-            $policy->isOneLineGap( $gap, $options )
-        }
-      )
-    {
-        for my $gapMistake (@gapMistakes) {
-            my $gapMistakeDesc    = $gapMistake->{desc};
-            my $gapMistakeLine   = $gapMistake->{line};
-            my $gapMistakeColumn = $gapMistake->{column};
-            # TODO: use this as subpolicy in @mistakes
-            my $gapMistakeSubpolicy = $gapMistake->{subpolicy};
-            push @mistakes,
-              {
-                desc         => $gapMistakeDesc,
-                reportLine   => $gapMistakeLine,
-                reportColumn => $gapMistakeColumn,
-                line         => $gapMistakeLine,
-                column       => $gapMistakeColumn,
-                topicLines   => $topicLines,
-                subpolicy    => $gapMistakeSubpolicy,
-                details      => $details,
-              };
-        }
     }
     return \@mistakes;
 }
