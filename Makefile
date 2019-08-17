@@ -1,7 +1,7 @@
 
 
 .PHONY: all test test_suite undoc_tests \
-  msg count_todo
+  msg count_todo count subpolicy
 
 all: test
 
@@ -30,6 +30,11 @@ doc:
 	cd misc; make all
 
 count:
+	egrep -v 'Unused suppression:' Lint/arvo.lint.out | \
+	sed -ne 's/.* Test::Whitespace //p' | \
+	  wc -l
+
+subpolicy:
 	egrep -v 'Unused suppression:' Lint/arvo.lint.out | \
 	sed -ne 's/.* Test::Whitespace //p' | \
 	  perl -anE 'say "$$F[0]"' | \

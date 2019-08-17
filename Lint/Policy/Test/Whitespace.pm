@@ -5584,6 +5584,14 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'sigfas') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+               LuslusCell => 1,
+            }
+        );
+    }
     if ($runeName eq 'tisgal') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,

@@ -1915,3 +1915,9 @@ hoons/arvo/lib/down-jet/parse.hoon 791:5 Test::Whitespace ketlus:indent backdent
 hoons/arvo/sys/hoon.hoon 11109:9 Test::Whitespace ketlus:indent backdented element #2 @11109:9; underindented by 14
 hoons/arvo/sys/hoon.hoon 11206:9 Test::Whitespace ketlus:indent backdented element #2 @11206:9; underindented by 8
 hoons/arvo/sys/hoon.hoon 11319:11 Test::Whitespace ketlus:indent backdented element #2 @11319:11; underindented by 8
+
+# SIGFAS reanchoring outliers
+hoons/arvo/sys/hoon.hoon 3732:12 Test::Whitespace sigfas:indent backdented element #2 @3732:12; overindented by 7
+hoons/arvo/sys/hoon.hoon 3737:12 Test::Whitespace sigfas:indent backdented element #2 @3737:12; overindented by 7
+hoons/arvo/sys/hoon.hoon 3742:12 Test::Whitespace sigfas:indent backdented element #2 @3742:12; overindented by 7
+hoons/arvo/sys/hoon.hoon 3744:12 Test::Whitespace sigfas:indent backdented element #2 @3744:12; overindented by 7
