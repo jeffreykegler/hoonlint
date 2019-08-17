@@ -5575,6 +5575,15 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'ketwut') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+               LuslusCell => 1,
+               tallBuccab => 1,
+            }
+        );
+    }
     if ($runeName eq 'tisgal') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
@@ -6001,6 +6010,7 @@ sub checkKetdot {
 
 sub checkLuslus {
     my ( $policy, $node, $cellLHS ) = @_;
+    my $nodeIX       = $node->{IX};
     my $instance = $policy->{lint};
     my $runeName = $policy->runeName($node);
     my ( $parentLine, $parentColumn ) = $instance->nodeLC($node);
@@ -6031,6 +6041,8 @@ sub checkLuslus {
     my $anchorDetails;
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )
       if $anchorData;
+
+    $policy->{perNode}->{$nodeIX}->{reanchorOffset} = 2;
 
     my @mistakes = ();
 

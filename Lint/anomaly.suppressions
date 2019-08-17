@@ -1791,7 +1791,6 @@ hoons/arvo/sys/vane/clay.hoon 2241:57 Test::Whitespace wutsig:comment-indent wut
 hoons/arvo/sys/vane/dill.hoon 538:7 Test::Whitespace wutcol:comment-indent wutcol child 3 @538:7; comment overindented by 2
 hoons/arvo/sys/vane/eyre.hoon 909:11 Test::Whitespace wutcol:comment-indent wutcol child 3 @909:11; comment overindented by 2
 hoons/arvo/sys/vane/ford.hoon 251:9 Test::Whitespace wutcol:comment-indent wutcol child 3 @251:9; comment overindented by 4
-hoons/arvo/sys/zuse.hoon 1203:5 Test::Whitespace ketwut:comment-indent ketwut child 1 @1203:5; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 363:3 Test::Whitespace tisgar:comment-indent tisgar child 1 @363:3; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 364:3 Test::Whitespace tisgar:comment-indent tisgar child 1 @364:3; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 365:3 Test::Whitespace tisgar:comment-indent tisgar child 1 @365:3; comment overindented by 2

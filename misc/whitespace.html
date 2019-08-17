@@ -198,6 +198,7 @@
 <p>Some runechildren of the curried runes are included in the reanchor block, and they therefore must be included in the currying. Those runechildren not in the reanchor block are &quot;left over&quot;, and are not included in the currying.</p>
 <p>The &quot;left over&quot; runechildren can be thought of as the runechildren of the curried rune. For it to look as if the children of this curried rune were backdented normally, the whitespace conventions must account for curried versus &quot;left over&quot; runechildren.</p>
 <p>Intuitively, if not all the runechildren of a curried rune are on the rune line, not only are some of the runechildren &quot;left over&quot;, the appropriate amount of indentation is also &quot;left over&quot;. This &quot;left over&quot; indentation of each rune is the &quot;per-rune offset&quot; of that rune.</p>
+<p>An arm marker can be curried, but it must be the anchor rune. As a special case, an arm marker has a per-rune offset of one stop.</p>
 <p>The <strong>reanchor offset</strong> of <code>r</code> is the sum of all the per-rune offsets between the <code>a</code> and <code>r</code>, including <code>a</code> but not including <code>r</code>. <code>r</code>'s per-rune offset is not included in the calculation of the reanchor offset, because the rune-children of <code>r</code> are not curried. In effect, all of <code>r</code>'s children are &quot;left over&quot;.</p>
 <p>There will be examples below that show the calculation of per-rune-offsets in a reanchoring context. But, for a first example, it will be easiest to see how the definition of the per-rune-offset applies to a simple backdented hoon. Call the following Hoon fragment, &quot;Actual&quot;:</p>
 <pre><code>:^  a  b  c
@@ -1110,7 +1111,8 @@ Exception ::= BlankLine</code></pre>
 <p>Priority 1 comments are InterComment, LowerRiser, Tread, and UpperRiser. The priority 2 comment is PreComment. The priority 3 comment is MetaComment. Priority 4 comments are BadComment and BlankLine.</p>
 <h1 id="appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</h1>
 <p>Let <code>r</code> be the reanchored rune. Let <code>a</code> be the anchor rune of <code>r</code>. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
-<p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. Let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>
+<p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. If <code>r</code> is an arm marker, <code>PerRuneOff(r)</code> is 2 -- one stop.</p>
+<p>In the usual case, <code>r</code> is not an arm marker. In this usual case, let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>
 <ul>
 <li><p>moves <code>Child(n, r1)</code> to <code>Line(r1)+1</code>,</p></li>
 <li><p>adjusts the whitespace as necessary to follow the standard whitespace conventions, and</p></li>

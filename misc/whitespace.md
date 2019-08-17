@@ -374,6 +374,11 @@ the appropriate amount of indentation is also "left over".
 This "left over" indentation of each rune is the "per-rune offset"
 of that rune.
 
+An arm marker can be curried,
+but it must be the anchor rune.
+As a special case, an arm marker has a per-rune offset of
+one stop.
+
 The **reanchor offset** of `r` is the sum of all the
 per-rune offsets between the `a`
 and `r`, including `a` but not including `r`.
@@ -2486,7 +2491,13 @@ devoted to defining `Offset(r)`.
 
 We first define `PerRuneOff(r)`,
 the per-rune-offset.
-Let `Child(n, r1)`,
+If `r` is an arm marker,
+`PerRuneOff(r)` is 2 -- one stop.
+
+In the usual case, `r`
+is not an arm marker.
+In  this usual case,
+let `Child(n, r1)`,
 the `n`'th runechild of a `r1`,
 be the last runechild of `r1` on `Line(r1)`.
 Consider a rewrite of Hoon source that
