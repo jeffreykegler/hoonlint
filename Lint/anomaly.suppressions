@@ -1925,3 +1925,32 @@ hoons/arvo/sys/hoon.hoon 3744:12 Test::Whitespace sigfas:indent backdented eleme
 # COLCAB reanchoring outliers
 hoons/arvo/sys/vane/jael.hoon 1155:9 Test::Whitespace colcab:indent backdented element #2 @1155:9; underindented by 7
 hoons/arvo/gen/moon.hoon 22:3 Test::Whitespace colcab:indent backdented element #2 @22:3; underindented by 11
+
+# KETTIS reanchoring outliers
+# None of the KETTIS statements reanchor according to the conventions
+hoons/arvo/sys/zuse.hoon 2057:9 Test::Whitespace kettis:indent backdented element #2 @2057:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2061:9 Test::Whitespace kettis:indent backdented element #2 @2061:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2077:9 Test::Whitespace kettis:indent backdented element #2 @2077:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2081:9 Test::Whitespace kettis:indent backdented element #2 @2081:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2097:9 Test::Whitespace kettis:indent backdented element #2 @2097:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2101:9 Test::Whitespace kettis:indent backdented element #2 @2101:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2195:11 Test::Whitespace kettis:indent backdented element #2 @2195:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 2224:11 Test::Whitespace kettis:indent backdented element #2 @2224:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 2254:11 Test::Whitespace kettis:indent backdented element #2 @2254:11; underindented by 2
+hoons/arvo/sys/zuse.hoon 2268:16 Test::Whitespace kettis:indent backdented element #2 @2268:16; overindented by 1
+hoons/arvo/sys/zuse.hoon 2444:9 Test::Whitespace kettis:indent backdented element #2 @2444:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2447:9 Test::Whitespace kettis:indent backdented element #2 @2447:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2629:9 Test::Whitespace kettis:indent backdented element #2 @2629:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 3325:7 Test::Whitespace kettis:indent backdented element #2 @3325:7; underindented by 2
+hoons/arvo/sys/zuse.hoon 3951:7 Test::Whitespace kettis:indent backdented element #2 @3951:7; underindented by 4
+hoons/arvo/sys/hoon.hoon 2218:13 Test::Whitespace kettis:indent backdented element #2 @2218:13; underindented by 2
+hoons/arvo/sys/hoon.hoon 2334:9 Test::Whitespace kettis:indent backdented element #2 @2334:9; underindented by 2
+hoons/arvo/sys/hoon.hoon 3591:5 Test::Whitespace kettis:indent backdented element #2 @3591:5; underindented by 4
+hoons/arvo/sys/hoon.hoon 3602:5 Test::Whitespace kettis:indent backdented element #2 @3602:5; underindented by 4
+hoons/arvo/sys/hoon.hoon 3697:7 Test::Whitespace kettis:indent backdented element #2 @3697:7; underindented by 4
+hoons/arvo/sys/hoon.hoon 5150:11 Test::Whitespace kettis:indent backdented element #2 @5150:11; underindented by 2
+hoons/arvo/sys/hoon.hoon 5321:7 Test::Whitespace kettis:indent backdented element #2 @5321:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 5325:7 Test::Whitespace kettis:indent backdented element #2 @5325:7; underindented by 2
+hoons/arvo/sys/hoon.hoon 5368:7 Test::Whitespace kettis:indent backdented element #2 @5368:7; underindented by 2
+hoons/arvo/sys/arvo.hoon 155:9 Test::Whitespace kettis:indent backdented element #2 @155:9; underindented by 2
+hoons/arvo/lib/old-phon.hoon 13:7 Test::Whitespace kettis:indent backdented element #2 @13:7; underindented by 4

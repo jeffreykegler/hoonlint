@@ -5586,6 +5586,14 @@ sub checkBackdented {
             }
         );
     }
+    # if ($runeName eq 'kettis') {
+        # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            # $node,
+            # {
+                # tallTislus => 1, # breaks 109, fixes 24
+            # }
+        # );
+    # }
     if ($runeName eq 'ketwut') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
@@ -5600,6 +5608,14 @@ sub checkBackdented {
             $node,
             {
                LuslusCell => 1, # fixes 44, breaks 4
+            }
+        );
+    }
+    if ($runeName eq 'siglus') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+               tallCenlus => 1, # fixes 26, breaks 0
             }
         );
     }
