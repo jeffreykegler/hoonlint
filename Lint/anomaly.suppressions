@@ -1921,3 +1921,7 @@ hoons/arvo/sys/hoon.hoon 3732:12 Test::Whitespace sigfas:indent backdented eleme
 hoons/arvo/sys/hoon.hoon 3737:12 Test::Whitespace sigfas:indent backdented element #2 @3737:12; overindented by 7
 hoons/arvo/sys/hoon.hoon 3742:12 Test::Whitespace sigfas:indent backdented element #2 @3742:12; overindented by 7
 hoons/arvo/sys/hoon.hoon 3744:12 Test::Whitespace sigfas:indent backdented element #2 @3744:12; overindented by 7
+
+# COLCAB reanchoring outliers
+hoons/arvo/sys/vane/jael.hoon 1155:9 Test::Whitespace colcab:indent backdented element #2 @1155:9; underindented by 7
+hoons/arvo/gen/moon.hoon 22:3 Test::Whitespace colcab:indent backdented element #2 @22:3; underindented by 11

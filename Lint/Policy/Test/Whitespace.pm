@@ -5526,6 +5526,17 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'colcab') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                'tallColcab' => 1, # fixes 13, breaks 0
+                'tallCenhep' => 1, # fixes 12, breaks 0
+                'tallCenlus' => 1, # fixes 6, breaks 0
+                # 'tallColhep' => 1, # fixes 1, breaks 2
+            }
+        );
+    }
     if ($runeName eq 'kethep') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
