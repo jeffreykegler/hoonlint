@@ -1890,6 +1890,24 @@ hoons/arvo/sys/zuse.hoon 2620:17 Test::Whitespace cenlus:indent backdented eleme
 hoons/arvo/sys/zuse.hoon 4207:11 Test::Whitespace cenlus:indent backdented element #3 @4207:11; overindented by 2
 hoons/arvo/tests/new-hoon/mp.hoon 275:5 Test::Whitespace cenlus:indent backdented element #3 @275:5; overindented by 2
 
+# COLHEP aberrations
+hoons/arvo/app/static.hoon 153:5 Test::Whitespace colhep:indent backdented element #2 @153:5; overindented by 2
+hoons/arvo/app/talk.hoon 1770:11 Test::Whitespace colhep:indent backdented element #2 @1770:11; overindented by 4
+hoons/arvo/ren/urb.hoon 18:21 Test::Whitespace colhep:indent backdented element #2 @18:21; overindented by 4
+hoons/arvo/ren/urb.hoon 20:19 Test::Whitespace colhep:indent backdented element #2 @20:19; overindented by 4
+hoons/arvo/sys/vane/ames.hoon 626:15 Test::Whitespace colhep:indent backdented element #2 @626:15; overindented by 2
+hoons/arvo/sys/vane/clay.hoon 3690:9 Test::Whitespace colhep:indent backdented element #2 @3690:9; overindented by 4
+hoons/arvo/sys/vane/jael.hoon 552:11 Test::Whitespace colhep:indent backdented element #2 @552:11; overindented by 4
+hoons/arvo/sys/vane/jael.hoon 576:11 Test::Whitespace colhep:indent backdented element #2 @576:11; overindented by 4
+hoons/arvo/sys/vane/jael.hoon 599:11 Test::Whitespace colhep:indent backdented element #2 @599:11; overindented by 4
+hoons/arvo/sys/vane/jael.hoon 606:11 Test::Whitespace colhep:indent backdented element #2 @606:11; overindented by 4
+hoons/arvo/sys/vane/jael.hoon 613:11 Test::Whitespace colhep:indent backdented element #2 @613:11; overindented by 4
+hoons/arvo/sys/zuse.hoon 1947:13 Test::Whitespace colhep:indent backdented element #2 @1947:13; overindented by 4
+hoons/arvo/sys/zuse.hoon 1971:13 Test::Whitespace colhep:indent backdented element #2 @1971:13; overindented by 4
+hoons/arvo/sys/zuse.hoon 1995:13 Test::Whitespace colhep:indent backdented element #2 @1995:13; overindented by 4
+hoons/arvo/tests/zuse/crypto/keccak.hoon 57:7 Test::Whitespace colhep:indent backdented element #2 @57:7; overindented by 2
+hoons/arvo/tests/zuse/crypto/keccak.hoon 268:5 Test::Whitespace colhep:indent backdented element #2 @268:5; overindented by 2
+
 # Matching reanchoring to indentation in some cases often causes mismatches in other cases.
 # I adopt a statistics term for these: "outliers".  I also handle them the way statisticians do --
 # by arbitrarily ignoring them.
