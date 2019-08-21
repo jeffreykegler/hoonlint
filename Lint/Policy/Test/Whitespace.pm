@@ -5822,7 +5822,10 @@ sub checkBackdented {
             $node,
             {
                 tallBarhep => 1, # fixes 6, breaks 0
-                tallWutcol => 1, # fixes 8, breaks 0
+                tallWutcol => 1, # fixes 3, breaks 0
+                # tallTisdot => 1, # fixes 0, breaks 8
+                # tallTislus => 1, # fixes 0, breaks 1
+                tallCenhep => 1, # fixes 1, breaks 0
             }
         );
     }
