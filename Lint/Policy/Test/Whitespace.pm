@@ -5829,6 +5829,14 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'zapcol') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                LuslusCell => 1, # fixes 2, breaks 1
+            }
+        );
+    }
     if ($runeName eq 'zapgar') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,

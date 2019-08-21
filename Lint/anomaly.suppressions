@@ -1996,3 +1996,7 @@ hoons/arvo/lib/old-phon.hoon 13:7 Test::Whitespace kettis:indent backdented elem
 hoons/arvo/gen/hood/mv.hoon 18:1 Test::Whitespace colhep:indent backdented element #2 @18:1; underindented by 13
 hoons/arvo/sys/vane/clay.hoon 3770:9 Test::Whitespace colhep:indent backdented element #2 @3770:9; underindented by 19
 hoons/arvo/tests/zuse/crypto/keccak.hoon 199:8 Test::Whitespace colhep:indent backdented element #2 @199:8; overindented by 1
+
+# WUTCOL reanchoring outliers
+hoons/arvo/sys/hoon.hoon 2168:7 Test::Whitespace wutcol:indent backdented element #3 @2168:7; underindented by 7
+hoons/arvo/sys/hoon.hoon 2178:11 Test::Whitespace wutcol:indent backdented element #3 @2178:11; underindented by 2
