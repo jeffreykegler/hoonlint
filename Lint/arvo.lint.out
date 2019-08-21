@@ -52,7 +52,6 @@ hoons/arvo/sys/hoon.hoon 382:1 Test::Whitespace tisgar:indent backdented element
 hoons/arvo/sys/hoon.hoon 636:3 Test::Whitespace zapdot:indent backdented element #1 @636:3; underindented by 9
 hoons/arvo/sys/hoon.hoon 879:3 Test::Whitespace bartis:indent backdented element #2 @879:3; underindented by 7
 hoons/arvo/sys/hoon.hoon 899:5 Test::Whitespace barhep:indent backdented element #1 @899:5; underindented by 18
-hoons/arvo/sys/hoon.hoon 1063:3 Test::Whitespace wutcol:indent backdented element #3 @1063:3; underindented by 4
 hoons/arvo/sys/hoon.hoon 1074:3 Test::Whitespace barhep:indent backdented element #1 @1074:3; underindented by 7
 hoons/arvo/sys/hoon.hoon 1245:5 Test::Whitespace wutsig:indent backdented element #3 @1245:5; underindented by 4
 hoons/arvo/sys/hoon.hoon 1910:7 Test::Whitespace wutgal:indent backdented element #2 @1910:7; underindented by 4
@@ -66,15 +65,8 @@ hoons/arvo/sys/hoon.hoon 2154:9 Test::Whitespace wutdot:indent backdented elemen
 hoons/arvo/sys/hoon.hoon 2155:7 Test::Whitespace wutdot:indent backdented element #3 @2155:7; underindented by 4
 hoons/arvo/sys/hoon.hoon 2168:7 Test::Whitespace wutcol:indent backdented element #3 @2168:7; underindented by 7
 hoons/arvo/sys/hoon.hoon 2178:11 Test::Whitespace wutcol:indent backdented element #3 @2178:11; underindented by 2
-hoons/arvo/sys/hoon.hoon 2188:7 Test::Whitespace wutcol:indent backdented element #3 @2188:7; underindented by 16
-hoons/arvo/sys/hoon.hoon 2209:7 Test::Whitespace wutcol:indent backdented element #3 @2209:7; underindented by 4
 hoons/arvo/sys/hoon.hoon 2242:9 Test::Whitespace wutcol:indent backdented element #3 @2242:9; underindented by 12
 hoons/arvo/sys/hoon.hoon 2287:9 Test::Whitespace wutdot:indent backdented element #3 @2287:9; underindented by 5
-hoons/arvo/sys/hoon.hoon 2314:9 Test::Whitespace wutcol:indent backdented element #2 @2314:9; underindented by 4
-hoons/arvo/sys/hoon.hoon 2320:7 Test::Whitespace wutcol:indent backdented element #3 @2320:7; underindented by 4
-hoons/arvo/sys/hoon.hoon 2321:9 Test::Whitespace wutcol:indent backdented element #2 @2321:9; underindented by 4
-hoons/arvo/sys/hoon.hoon 2322:7 Test::Whitespace wutcol:indent backdented element #3 @2322:7; underindented by 4
-hoons/arvo/sys/hoon.hoon 2507:5 Test::Whitespace wutcol:indent backdented element #3 @2507:5; underindented by 24
 hoons/arvo/sys/hoon.hoon 2716:5 Test::Whitespace sigcab:indent backdented element #2 @2716:5; underindented by 22
 hoons/arvo/sys/hoon.hoon 3684:1 Test::Whitespace tisgar:indent backdented element #1 @3684:1; underindented by 6
 hoons/arvo/sys/hoon.hoon 3750:7 Test::Whitespace siglus:indent backdented element #1 @3750:7; underindented by 13

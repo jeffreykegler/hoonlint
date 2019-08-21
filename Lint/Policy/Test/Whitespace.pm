@@ -5817,6 +5817,15 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'wutcol') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallBarhep => 1, # fixes 6, breaks 0
+                tallWutcol => 1, # fixes 8, breaks 0
+            }
+        );
+    }
     if ($runeName eq 'zapgar') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
@@ -5824,8 +5833,6 @@ sub checkBackdented {
                 tallCenhep => 1, # fixes 89, breaks 0
             }
         );
-    }
-    if ($runeName eq 'zapgar') {
     }
     my $anchorDetails = [];
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )
