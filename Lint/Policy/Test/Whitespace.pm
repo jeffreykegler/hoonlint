@@ -345,6 +345,11 @@ sub pseudojoinColumn {
     my $gapStart   = $gap->{start};
     my $gapEnd     = $gap->{start} + $gap->{length};
 
+    if ($instance->runeGapNode($gap)) {
+        $gapLiteral = substr( $gapLiteral, 2 );
+        $gapStart += 2;
+    }
+
     my ( $startLine, $startColumn ) = $instance->line_column($gapStart);
     my ( $endLine,   $endColumn )   = $instance->line_column($gapEnd);
 
@@ -359,7 +364,9 @@ sub pseudojoinColumn {
           $instance->line_column( $gapStart + $firstColon );
     }
 
+    # say STDERR join ' ', __FILE__, __LINE__;
     return -1 if not $commentColumn;
+    # say STDERR join ' ', __FILE__, __LINE__;
 
     # If the last line of the gap does not end in a newline,
     # it **cannot** contain a comment, because the parser would
@@ -373,9 +380,13 @@ sub pseudojoinColumn {
         my $literalLine = $instance->literalLine($lineNum);
         my $commentOffset = index $literalLine, ':';
 
+    # say STDERR join ' ', __FILE__, __LINE__;
         return -1 if $commentOffset < 0;
+    # say STDERR join ' ', __FILE__, __LINE__, $commentOffset, $commentColumn;
         return -1 if $commentOffset != $commentColumn;
+    # say STDERR join ' ', __FILE__, __LINE__;
     }
+    # say STDERR join ' ', __FILE__, __LINE__;
     return $commentColumn;
 }
 
@@ -882,12 +893,13 @@ sub checkHGap {
 # TODO: refactor all pseudojoins to call the
 # checkPseudojoin() method.
 
-# If a horizontal gap or equivalent pseudo-join,
+# If a pseudo-join,
 # return a (possible empty) list of mistakes.
 # Otherwise, return undef.
 sub checkPseudojoin {
     my ( $policy, $gap, $options ) = @_;
     my $instance  = $policy->{lint};
+        # say STDERR '[' . $instance->literalNode($gap) . ']';
     my @mistakes = ();
 
     # Assume that the gap is not the top of the tree.
@@ -904,8 +916,13 @@ sub checkPseudojoin {
 
     my $gapLength = $gap->{length};
     my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
+    my $nextLexemeOffset = $gap->{start} + $gapLength;
+    if ($instance->runeGapNode($gap)) {
+       $gapColumn += 2;
+       $gapLength -= 2;
+    }
     my ( $nextLexemeLine, $nextLexemeColumn ) =
-      $instance->line_column( $gap->{start} + $gapLength );
+      $instance->line_column( $nextLexemeOffset );
 
     if ( not $expected ) {
 
@@ -916,12 +933,16 @@ sub checkPseudojoin {
     my @expectedColumns = ();
   LENGTH: for my $expectedItem ( @{$expected} ) {
         my ($alignDesc, $column, $isLength ) = @{$expectedItem};
+        # say STDERR "alignDesc, column, isLength; $alignDesc, $column, $isLength ";
+        # say STDERR "gap L,C: $gapLine, $gapColumn";
         $column += $gapColumn if $isLength;
+        # say STDERR "alignDesc, column, isLength; $alignDesc, $column, $isLength ";
         push @expectedColumns, [ $alignDesc, $column ];
     }
 
     # If here, we are checking for pseudojoin
     my $pseudojoinColumn = $policy->pseudojoinColumn($gap);
+    # say STDERR "pseudojoinColumn ", Data::Dumper::Dumper($pseudojoinColumn);
 
     # Return undef to show vertical gap is not a pseudojoin
     return if not defined $pseudojoinColumn;
@@ -931,12 +952,15 @@ sub checkPseudojoin {
     my $isPseudojoin;
     TEST_FOR_PSEUDOJOIN: for my $expectedColumnItem (@expectedColumns) {
         my ($alignDesc, $alignColumn) = @{$expectedColumnItem};
-        # say STDERR "pseudojoinColumn expectedColumn; $pseudojoinColumn, $alignColumn";
-        next TEST_FOR_PSEUDOJOIN if $pseudojoinColumn != $alignColumn;
-        $isPseudojoin = 1;
+        # say STDERR "pseudojoinColumn alignColumn; $pseudojoinColumn, $alignColumn";
+        if ($pseudojoinColumn == $alignColumn) {
+            $isPseudojoin = 1;
+            last TEST_FOR_PSEUDOJOIN;
+        }
     }
 
     return if not $isPseudojoin;
+    return [] if $nextLexemeColumn == $pseudojoinColumn;
 
     # If here, it is a problematic pseudojoin
     my $msg = sprintf
@@ -5962,9 +5986,9 @@ sub checkBackdented {
             next ELEMENT;
         }
 
-        # If here, element is pseudo-joined or split
-
-        if ( $gapLine != $parentLine ) {
+        CHECK_FOR_PSEUDOJOIN: {
+            last CHECK_FOR_PSEUDOJOIN if $gapLine != $parentLine;
+            last CHECK_FOR_PSEUDOJOIN if $backdentColumn == $elementColumn;
             my $msg =
               sprintf
               'Pseudo-joined backdented element %d; element/comment mismatch',
@@ -5976,7 +6000,6 @@ sub checkBackdented {
                     subpolicy => [ $runeName, 'pseudojoin-mismatch' ],
                     expected  => [
                         [ 'tight',    $parentColumn + 4 ],
-                        [ 'backdent', $backdentColumn ],
                     ]
                 }
             );

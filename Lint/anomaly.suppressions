@@ -1749,7 +1749,6 @@ hoons/arvo/sys/zuse.hoon 2596:11 Test::Whitespace kethep:indent backdented eleme
 
 # Backdented hoon aberrations
 hoons/arvo/mar/txt.hoon 163:1 Test::Whitespace colhep:empty-line backdented element #2, @163:1; empty line in comment
-hoons/arvo/sys/zuse.hoon 3921:3 Test::Whitespace ketwut:pseudojoin-mismatch Pseudo-joined backdented element 1; element/comment mismatch; element is @3921:3
 hoons/arvo/sys/hoon.hoon 909:13 Test::Whitespace tisfas:hgap joined backdent element #2 of @909:3 is at @909:13; should be one of @909:11 (tight); @909:16 (chain)
 hoons/arvo/app/test.hoon 149:29 Test::Whitespace colhep:hgap joined backdent element #2 of @149:5 is at @149:29; should be one of @149:20 (tight); @149:35 (running)
 hoons/arvo/app/test.hoon 150:29 Test::Whitespace colhep:hgap joined backdent element #2 of @150:5 is at @150:29; should be one of @150:26 (tight); @150:35 (running)
