@@ -33,7 +33,6 @@ hoons/arvo/sys/zuse.hoon 2243:11 Test::Whitespace collus:indent backdented eleme
 hoons/arvo/sys/zuse.hoon 2324:13 Test::Whitespace dottis:indent backdented element #2 @2324:13; overindented by 4
 hoons/arvo/sys/zuse.hoon 2599:9 Test::Whitespace tisdot:indent backdented element #3 @2599:9; underindented by 9
 hoons/arvo/sys/zuse.hoon 2625:9 Test::Whitespace tislus:indent backdented element #2 @2625:9; underindented by 9
-hoons/arvo/sys/zuse.hoon 2630:13 Test::Whitespace wutsig:indent backdented element #3 @2630:13; overindented by 2
 hoons/arvo/sys/zuse.hoon 2744:9 Test::Whitespace wutgar:indent backdented element #2 @2744:9; underindented by 22
 hoons/arvo/sys/zuse.hoon 2751:9 Test::Whitespace wutgar:indent backdented element #2 @2751:9; underindented by 22
 hoons/arvo/sys/zuse.hoon 2961:11 Test::Whitespace cenhep:indent backdented element #2 @2961:11; underindented by 12
@@ -46,7 +45,6 @@ hoons/arvo/sys/hoon.hoon 636:3 Test::Whitespace zapdot:indent backdented element
 hoons/arvo/sys/hoon.hoon 879:3 Test::Whitespace bartis:indent backdented element #2 @879:3; underindented by 7
 hoons/arvo/sys/hoon.hoon 899:5 Test::Whitespace barhep:indent backdented element #1 @899:5; underindented by 18
 hoons/arvo/sys/hoon.hoon 1074:3 Test::Whitespace barhep:indent backdented element #1 @1074:3; underindented by 7
-hoons/arvo/sys/hoon.hoon 1245:5 Test::Whitespace wutsig:indent backdented element #3 @1245:5; underindented by 4
 hoons/arvo/sys/hoon.hoon 1910:7 Test::Whitespace wutgal:indent backdented element #2 @1910:7; underindented by 4
 hoons/arvo/sys/hoon.hoon 1959:1 Test::Whitespace tisgar:indent backdented element #1 @1959:1; underindented by 6
 hoons/arvo/sys/hoon.hoon 2123:7 Test::Whitespace wutdot:indent backdented element #3 @2123:7; underindented by 4
@@ -61,8 +59,6 @@ hoons/arvo/sys/hoon.hoon 2716:5 Test::Whitespace sigcab:indent backdented elemen
 hoons/arvo/sys/hoon.hoon 3684:1 Test::Whitespace tisgar:indent backdented element #1 @3684:1; underindented by 6
 hoons/arvo/sys/hoon.hoon 3750:7 Test::Whitespace siglus:indent backdented element #1 @3750:7; underindented by 13
 hoons/arvo/sys/hoon.hoon 4502:3 Test::Whitespace bartar:indent backdented element #2 @4502:3; underindented by 8
-hoons/arvo/sys/hoon.hoon 4517:3 Test::Whitespace wutsig:indent backdented element #3 @4517:3; underindented by 4
-hoons/arvo/sys/hoon.hoon 4833:3 Test::Whitespace wutsig:indent backdented element #3 @4833:3; underindented by 4
 hoons/arvo/sys/hoon.hoon 5015:3 Test::Whitespace zapdot:indent backdented element #1 @5015:3; underindented by 6
 hoons/arvo/sys/hoon.hoon 6246:1 Test::Whitespace tisgar:indent backdented element #2 @6246:1; underindented by 4
 hoons/arvo/sys/hoon.hoon 7207:7 Test::Whitespace tisgar:indent backdented element #2 @7207:7; underindented by 25
@@ -82,17 +78,11 @@ hoons/arvo/sys/hoon.hoon 12399:9 Test::Whitespace bardot:indent backdented eleme
 hoons/arvo/sys/hoon.hoon 12474:5 Test::Whitespace siglus:indent backdented element #1 @12474:5; underindented by 4
 === hoons/arvo/sys/arvo.hoon ===
 hoons/arvo/sys/arvo.hoon 10:1 Test::Whitespace tisgar:indent backdented element #1 @10:1; underindented by 2
-hoons/arvo/sys/arvo.hoon 118:5 Test::Whitespace bardot:indent backdented element #1 @118:5; underindented by 19
-hoons/arvo/sys/arvo.hoon 328:3 Test::Whitespace bardot:indent backdented element #1 @328:3; underindented by 19
-hoons/arvo/sys/arvo.hoon 558:3 Test::Whitespace bardot:indent backdented element #1 @558:3; underindented by 19
-hoons/arvo/sys/arvo.hoon 577:3 Test::Whitespace bardot:indent backdented element #1 @577:3; underindented by 19
-hoons/arvo/sys/arvo.hoon 595:3 Test::Whitespace bardot:indent backdented element #1 @595:3; underindented by 19
 hoons/arvo/sys/arvo.hoon 611:7 Test::Whitespace wutdot:indent backdented element #3 @611:7; overindented by 2
 hoons/arvo/sys/arvo.hoon 612:5 Test::Whitespace sigpam:indent backdented element #2 @612:5; underindented by 2
 hoons/arvo/sys/arvo.hoon 619:3 Test::Whitespace bartis:indent backdented element #2 @619:3; overindented by 1
 === hoons/arvo/sys/vane/behn.hoon ===
 hoons/arvo/sys/vane/behn.hoon 46:11 Test::Whitespace wutgar:indent backdented element #2 @46:11; overindented by 2
-hoons/arvo/sys/vane/behn.hoon 116:9 Test::Whitespace wutsig:indent backdented element #3 @116:9; overindented by 2
 === hoons/arvo/sys/vane/dill.hoon ===
 hoons/arvo/sys/vane/dill.hoon 32:5 Test::Whitespace tisgar:indent backdented element #2 @32:5; overindented by 4
 hoons/arvo/sys/vane/dill.hoon 33:1 Test::Whitespace tisgar:indent backdented element #1 @33:1; underindented by 6
@@ -118,14 +108,9 @@ hoons/arvo/sys/vane/gall.hoon 980:11 Test::Whitespace tisket:indent backdented e
 hoons/arvo/sys/vane/gall.hoon 993:11 Test::Whitespace tisket:indent backdented element #3 @993:11; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 1032:11 Test::Whitespace tisket:indent backdented element #3 @1032:11; overindented by 2
 hoons/arvo/sys/vane/gall.hoon 1089:11 Test::Whitespace tisket:indent backdented element #3 @1089:11; overindented by 2
-hoons/arvo/sys/vane/gall.hoon 1180:11 Test::Whitespace bardot:indent backdented element #1 @1180:11; underindented by 19
 === hoons/arvo/sys/vane/eyre.hoon ===
 hoons/arvo/sys/vane/eyre.hoon 721:10 Test::Whitespace wutdot:indent backdented element #2 @721:10; underindented by 1
 hoons/arvo/sys/vane/eyre.hoon 1379:11 Test::Whitespace barhep:indent backdented element #1 @1379:11; overindented by 2
-hoons/arvo/sys/vane/eyre.hoon 1898:7 Test::Whitespace bardot:indent backdented element #1 @1898:7; underindented by 20
-hoons/arvo/sys/vane/eyre.hoon 1906:7 Test::Whitespace bardot:indent backdented element #1 @1906:7; underindented by 25
-hoons/arvo/sys/vane/eyre.hoon 1914:7 Test::Whitespace bardot:indent backdented element #1 @1914:7; underindented by 25
-hoons/arvo/sys/vane/eyre.hoon 1918:7 Test::Whitespace bardot:indent backdented element #1 @1918:7; underindented by 25
 === hoons/arvo/sys/vane/xmas.hoon ===
 === hoons/arvo/sys/vane/clay.hoon ===
 hoons/arvo/sys/vane/clay.hoon 1279:11 Test::Whitespace tisdot:indent backdented element #2 @1279:11; overindented by 4
@@ -375,7 +360,6 @@ hoons/arvo/gen/glass.hoon 124:7 Test::Whitespace tiswut:indent backdented elemen
 === hoons/arvo/gen/hello.hoon ===
 === hoons/arvo/gen/al.hoon ===
 === hoons/arvo/gen/solid.hoon ===
-hoons/arvo/gen/solid.hoon 27:5 Test::Whitespace bardot:indent backdented element #1 @27:5; underindented by 19
 === hoons/arvo/gen/ticket.hoon ===
 hoons/arvo/gen/ticket.hoon 9:1 Test::Whitespace zapdot:indent backdented element #1 @9:1; underindented by 2
 === hoons/arvo/gen/ivory.hoon ===
