@@ -5829,6 +5829,17 @@ sub checkBackdented {
             }
         );
     }
+    if ($runeName eq 'wutsig') {
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallWutsig => 1, # fixes 3, breaks 0
+                tallTislus => 1, # fixes 2, break 1
+                # TO HERE
+                # tallBarhep => 1, # fixes 3, breaks 4
+            }
+        );
+    }
     if ($runeName eq 'zapcol') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
