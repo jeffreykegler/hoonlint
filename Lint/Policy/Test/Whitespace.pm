@@ -5833,7 +5833,7 @@ sub checkBackdented {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
             {
-                LuslusCell => 1, # fixes 2, breaks 1
+                LuslusCell => 1, # fixes 8, breaks 1
             }
         );
     }

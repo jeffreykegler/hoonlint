@@ -1918,6 +1918,14 @@ hoons/arvo/sys/hoon.hoon 9879:19 Test::Whitespace wutcol:indent backdented eleme
 hoons/arvo/sys/hoon.hoon 12331:26 Test::Whitespace wutcol:indent backdented element #2 @12331:26; overindented by 1
 hoons/arvo/sys/zuse.hoon 1407:8 Test::Whitespace wutcol:indent backdented element #2 @1407:8; overindented by 1
 
+# WUTSIG aberrations
+hoons/arvo/sys/hoon.hoon 7066:9 Test::Whitespace wutsig:indent backdented element #3 @7066:9; overindented by 2
+hoons/arvo/sys/vane/clay.hoon 933:8 Test::Whitespace wutsig:indent backdented element #2 @933:8; underindented by 1
+hoons/arvo/sys/vane/clay.hoon 1915:8 Test::Whitespace wutsig:indent backdented element #2 @1915:8; underindented by 1
+hoons/arvo/sys/vane/ford.hoon 1958:4 Test::Whitespace wutsig:indent backdented element #2 @1958:4; underindented by 1
+hoons/arvo/sys/vane/jael.hoon 1096:12 Test::Whitespace wutsig:indent backdented element #2 @1096:12; overindented by 1
+hoons/arvo/sys/vane/jael.hoon 1097:10 Test::Whitespace wutsig:indent backdented element #3 @1097:10; overindented by 1
+
 # ZAPCOL aberrations
 hoons/arvo/gen/brass.hoon 8:1 Test::Whitespace zapcol:indent backdented element #1 @8:1; underindented by 2
 hoons/arvo/gen/hood/nuke.hoon 9:1 Test::Whitespace zapcol:indent backdented element #1 @9:1; underindented by 2
