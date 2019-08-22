@@ -5689,8 +5689,21 @@ sub checkBackdented {
             {
                 'tallKettis' => 1, # fixes 6, breaks 0
                 'tallCenlus' => 1, # fixes 4, breaks 0
+                LuslusCell => 1, # fixes 3, breaks 2
+                tallCenhep => 1, # fixes 1, breaks 0
+            }
+        );
+    }
+    if ($runeName eq 'cenhep') {
+      # 6 %-
+      # 4 =+
+      # 1 =<
+      # 1 :-
+        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+            $node,
+            {
+                tallCenhep => 1, # fixes 6, breaks 1
                 # TO HERE
-                # LuslusCell => 1, # breaks 2
             }
         );
     }

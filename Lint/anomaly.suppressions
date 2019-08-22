@@ -1935,6 +1935,10 @@ hoons/arvo/gen/metal.hoon 10:1 Test::Whitespace zapcol:indent backdented element
 hoons/arvo/gen/solid.hoon 12:1 Test::Whitespace zapcol:indent backdented element #1 @12:1; underindented by 2
 hoons/arvo/sys/vane/xmas.hoon 4:1 Test::Whitespace zapcol:indent backdented element #1 @4:1; underindented by 2
 
+# CENHEP aberrations
+hoons/arvo/sys/vane/ford.hoon 1911:9 Test::Whitespace cenhep:indent backdented element #2 @1911:9; underindented by 2
+hoons/arvo/sys/zuse.hoon 2961:11 Test::Whitespace cenhep:indent backdented element #2 @2961:11; underindented by 12
+
 # Matching reanchoring to indentation in some cases often causes mismatches in other cases.
 # I adopt a statistics term for these: "outliers".  I also handle them the way statisticians do --
 # by arbitrarily ignoring them.
@@ -2015,3 +2019,7 @@ hoons/arvo/sys/hoon.hoon 1245:5 Test::Whitespace wutsig:indent backdented elemen
 hoons/arvo/sys/hoon.hoon 4517:3 Test::Whitespace wutsig:indent backdented element #3 @4517:3; underindented by 4
 hoons/arvo/sys/hoon.hoon 4833:3 Test::Whitespace wutsig:indent backdented element #3 @4833:3; underindented by 4
 hoons/arvo/sys/vane/behn.hoon 116:9 Test::Whitespace wutsig:indent backdented element #3 @116:9; overindented by 2
+
+# BARDOT reanchoring outliers
+hoons/arvo/sys/hoon.hoon 12376:15 Test::Whitespace bardot:indent backdented element #1 @12376:15; overindented by 8
+hoons/arvo/sys/hoon.hoon 12399:9 Test::Whitespace bardot:indent backdented element #1 @12399:9; overindented by 2
