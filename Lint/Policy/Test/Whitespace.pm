@@ -5705,8 +5705,8 @@ sub checkBackdented {
                 tallCenhep => 1, # fixes 6, breaks 1
                 tallTislus => 1, # fixes 4, breaks 2
                 tallTisgal => 1, # fixes 1, breaks 0
+                tallColhep => 1, # fixes 1, breaks 0
                 # TO HERE
-                tallColhep => 1,
             }
         );
     }
