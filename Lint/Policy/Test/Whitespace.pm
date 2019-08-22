@@ -5693,7 +5693,8 @@ if ( $runeName eq q{barhep} ) {
         $node,
         {
             tallKettis => 1, # fixes 1, breaks 0
-            # TODO: TO HERE
+            tallTisdot => 1, # fixes 1, breaks 0
+            # FINISHED
         }
     );
 }
@@ -5722,6 +5723,7 @@ if ( $runeName eq q{bartis} ) {
         $node,
         {
             tallColhep => 1, # fixes 2, breaks 0
+            # tallCenlus => 1, # fixes 2, breaks 6
             # TODO: TO HERE
         }
     );
@@ -5750,6 +5752,7 @@ if ( $runeName eq q{cendot} ) {
         $node,
         {
             tallBartis => 1, # fixes 7, breaks 0
+            # tallTisgal => 1, # fixes 1, breaks 2
             # TODO: TO HERE
         }
     );
@@ -5816,6 +5819,7 @@ if ( 0 and $runeName eq q{siglus} ) {
         $node,
         {
             # tallTislus => 1, # fixes 0, breaks 0
+            # tallBartis => 1, # fixes 0, breaks 0
             # TODO: TO HERE
         }
     );
@@ -5830,7 +5834,8 @@ if ( $runeName eq q{tisbar} ) {
         $node,
         {
             tallBartis => 1, # fixes 1, breaks 0
-            # TODO: TO HERE
+            tallBuccab => 1, # fixes 1, breaks 0
+            # FINISHED
         }
     );
 }
@@ -5862,18 +5867,19 @@ if ( $runeName eq q{tisdot} ) {
 }
 
 # tisgar
-if ( 0 and $runeName eq q{tisgar} ) {
+# if ( $runeName eq q{tisgar} ) {
 
     #       1 =>
     #       1 %+
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
             # tallTisgar => 1, # fixes 0, breaks 0
-            # TODO: TO HERE
-        }
-    );
-}
+            # tallCenlus => 1, # fixes 0, breaks 0
+            # FINISHED
+        # }
+    # );
+# }
 
 # tislus
 # if ( $runeName eq q{tislus} ) {
@@ -5898,6 +5904,7 @@ if ( $runeName eq q{wutdot} ) {
         $node,
         {
             tallBarhep => 1, # fixes 5, breaks 0
+            # tallTisdot => 1, # fixes 1, breaks 3
             # TODO: TO HERE
         }
     );
