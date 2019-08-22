@@ -5683,6 +5683,265 @@ sub checkBackdented {
     # my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
     my ( $anchorLine, $anchorColumn ) = ( $parentLine, $parentColumn );
     my $anchorData;
+
+# barhep
+if ( $runeName eq q{barhep} ) {
+
+    #       1 ^=
+    #       1 =.
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallKettis => 1, # fixes 1, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# bartar
+# if ( $runeName eq q{bartar} ) {
+
+    #       1 ++
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
+            # LuslusCell => 1, # fixes 1, breaks 14
+            # FINISHED
+        # }
+    # );
+# }
+
+# bartis
+if ( $runeName eq q{bartis} ) {
+
+    #       2 :-
+    #       2 %+
+    #       1 %-
+    #       1 ++
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallColhep => 1, # fixes 2, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# buctis
+# if ( $runeName eq q{buctis} ) {
+    #       1 $:
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
+            # tallBuccol => 1, # fixes 1, breaks 2
+            # FINISHED
+        # }
+    # );
+# }
+
+# cendot
+if ( $runeName eq q{cendot} ) {
+
+    #       4 |=
+    #       3 =<
+    #       1 =-
+    #       1 %-
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallBartis => 1, # fixes 7, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# cenket
+# if ( $runeName eq q{cenket} ) {
+    #       1 =.
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
+            # tallCendot => 1, # fixes 0, breaks 0
+            # FINISHED
+        # }
+    # );
+# }
+
+# dottis
+# if ( $runeName eq q{dottis} ) {
+
+    #       1 ?.
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
+            # FINISHED
+        # }
+    # );
+# }
+
+# ketsig
+if ( $runeName eq q{ketsig} ) {
+
+    #       1 %+
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallCenlus => 1, # fixes 1, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# sigcab
+if ( $runeName eq q{sigcab} ) {
+
+    #       1 |=
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallBartis => 1, # fixes 1, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# siglus
+if ( 0 and $runeName eq q{siglus} ) {
+
+    #       1 =+
+    #       1 |=
+    #       1 |.
+    #       1 ++
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            # tallTislus => 1, # fixes 0, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# tisbar
+if ( $runeName eq q{tisbar} ) {
+
+    #       1 |=
+    #       1 $_
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallBartis => 1, # fixes 1, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# tiscom
+if ( $runeName eq q{tiscom} ) {
+
+    #       1 =,
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallTiscom => 1, # fixes 1, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# tisdot
+if ( $runeName eq q{tisdot} ) {
+
+    #       1 =+
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallTislus => 1, # fixes 1, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# tisgar
+if ( 0 and $runeName eq q{tisgar} ) {
+
+    #       1 =>
+    #       1 %+
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            # tallTisgar => 1, # fixes 0, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# tislus
+# if ( $runeName eq q{tislus} ) {
+
+    #       1 =+
+    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        # $node,
+        # {
+            # tallTislus => 1, # fixes 1, breaks 4
+            # FINISHED
+        # }
+    # );
+# }
+
+# wutdot
+if ( $runeName eq q{wutdot} ) {
+
+    #       3 |-
+    #       1 =.
+    #       1 ?.
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallBarhep => 1, # fixes 5, breaks 0
+            # TODO: TO HERE
+        }
+    );
+}
+
+# wutgal
+if ( $runeName eq q{wutgal} ) {
+
+    #       1 |-
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallBarhep => 1, # fixes 1, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# wutgar
+if ( $runeName eq q{wutgar} ) {
+
+    #       2 ~|
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            tallSigbar => 1, # fixes 2, breaks 0
+            # FINISHED
+        }
+    );
+}
+
+# zapdot
+if ( $runeName eq q{zapdot} ) {
+
+    #       6 ++
+    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
+        $node,
+        {
+            LuslusCell => 1, # fixes 6, breaks 0
+            # FINISHED
+        }
+    );
+}
+
     if ($runeName eq 'bardot') {
         ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
             $node,
