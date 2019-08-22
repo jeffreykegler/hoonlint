@@ -5724,6 +5724,7 @@ if ( $runeName eq q{bartis} ) {
         {
             tallColhep => 1, # fixes 2, breaks 0
             # tallCenlus => 1, # fixes 2, breaks 6
+            # tallCenhep => 1, # fixes 1, breaks 3
             # TODO: TO HERE
         }
     );
@@ -5753,6 +5754,7 @@ if ( $runeName eq q{cendot} ) {
         {
             tallBartis => 1, # fixes 7, breaks 0
             # tallTisgal => 1, # fixes 1, breaks 2
+            # tallTishep => 1, # fixes 0, breaks 1
             # TODO: TO HERE
         }
     );
@@ -5820,6 +5822,7 @@ if ( 0 and $runeName eq q{siglus} ) {
         {
             # tallTislus => 1, # fixes 0, breaks 0
             # tallBartis => 1, # fixes 0, breaks 0
+            # tallBardot => 1, # fixes 0, breaks 0
             # TODO: TO HERE
         }
     );
@@ -5905,7 +5908,8 @@ if ( $runeName eq q{wutdot} ) {
         {
             tallBarhep => 1, # fixes 5, breaks 0
             # tallTisdot => 1, # fixes 1, breaks 3
-            # TODO: TO HERE
+            # tallWutdot => 1, # fixes 0, breaks 0
+            # FINISHED
         }
     );
 }
