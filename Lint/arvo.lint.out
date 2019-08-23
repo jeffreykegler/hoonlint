@@ -182,7 +182,6 @@ hoons/arvo/lib/hall.hoon 178:15 Test::Whitespace dottis:indent backdented elemen
 === hoons/arvo/mar/umd.hoon ===
 === hoons/arvo/mar/elem.hoon ===
 === hoons/arvo/mar/sole/action.hoon ===
-hoons/arvo/mar/sole/action.hoon 19:5 Test::Whitespace cendot:indent backdented element #2 @19:5; underindented by 10
 === hoons/arvo/mar/sole/effect.hoon ===
 === hoons/arvo/mar/js.hoon ===
 === hoons/arvo/mar/markdown.hoon ===
