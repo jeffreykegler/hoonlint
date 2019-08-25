@@ -139,7 +139,7 @@ siglus:
   #    2 |=
   #    1 =+
   #    1 |.
-  # TODO: Redo this
+  # TODO: REDO
 # tisbar
 tisbar:
   #       1 |=
@@ -163,17 +163,12 @@ tisgal:
   cenlus # fixes 1, breaks 1
 # tisgar
 tisgar:
-  tisgar
-tisgar:
-  #       1 =>
-  #       1 %+
-  # $node,
-  # {
-  # tallTisgar # fixes 0, breaks 0
-  # tallCenlus # fixes 0, breaks 0
-  # }
-  # );
-# }
+    # 3 %+
+    # 2 ++
+    # 2 =+
+    # 1 =>
+    # 1 =-
+    # TODO: REDO
 # tislus
 tislus:
   #       1 =+

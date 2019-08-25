@@ -25,6 +25,7 @@ hoons/arvo/sys/zuse.hoon 4037:7 Test::Whitespace siglus:indent backdented elemen
 hoons/arvo/sys/zuse.hoon 4204:7 Test::Whitespace siglus:indent backdented element #1 @4204:7; underindented by 21
 hoons/arvo/sys/zuse.hoon 4213:7 Test::Whitespace siglus:indent backdented element #1 @4213:7; underindented by 21
 === hoons/arvo/sys/hoon.hoon ===
+hoons/arvo/sys/hoon.hoon 8:3 Test::Whitespace tisgar:comment-indent tisgar child 1 @8:3; comment overindented by 2
 hoons/arvo/sys/hoon.hoon 5301:5 Test::Whitespace siglus:indent backdented element #1 @5301:5; underindented by 21
 hoons/arvo/sys/hoon.hoon 10769:7 Test::Whitespace siglus:indent backdented element #1 @10769:7; underindented by 43
 hoons/arvo/sys/hoon.hoon 10777:7 Test::Whitespace siglus:indent backdented element #1 @10777:7; underindented by 43
