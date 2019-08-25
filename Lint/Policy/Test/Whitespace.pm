@@ -134,12 +134,13 @@ sigfas:
   luslus # fixes 44, breaks 4
 # siglus
 siglus:
-  #   25 %+
-  #    3 ++
-  #    2 |=
-  #    1 =+
-  #    1 |.
-  # TODO: REDO
+    #   25 %+
+    #    3 ++
+    #    2 |=
+    #    1 =+
+    #    1 |.
+    cenlus # fixes 26, breaks 0
+    # TODO: REDO
 # tisbar
 tisbar:
   #       1 |=
@@ -168,6 +169,7 @@ tisgar:
     # 2 =+
     # 1 =>
     # 1 =-
+    cenlus # fixes 1, breaks 0
     # TODO: REDO
 # tislus
 tislus:
