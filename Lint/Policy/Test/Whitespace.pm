@@ -18,6 +18,11 @@ my %reanchorings = ();
 
 my $reanchorings = \<<'EOS';
 # barhep
+bardot:
+  kettis # fixes 6, breaks 0
+  cenlus # fixes 4, breaks 0
+  luslus # fixes 3, breaks 2
+  cenhep # fixes 1, breaks 0
 barhep:
   #       1 ^=
   #       1 =.
@@ -50,88 +55,6 @@ cendot:
   # tallTisgal # fixes 1, breaks 2
   # tallTishep # fixes 0, breaks 1
   cenhep
-# cenket
-cenket:
-  #       1 =.
-  # tallCendot # fixes 0, breaks 0
-# dottis
-dottis:
-  #       1 ?.
-# ketsig
-ketsig:
-  #       1 %+
-  cenlus # fixes 1, breaks 0
-# sigcab
-sigcab:
-  #       1 |=
-  bartis # fixes 1, breaks 0
-# siglus
-siglus:
-  #   25 %+
-  #    3 ++
-  #    2 |=
-  #    1 =+
-  #    1 |.
-  # TODO: Redo this
-# tisbar
-tisbar:
-  #       1 |=
-  #       1 $_
-  bartis # fixes 1, breaks 0
-  buccab # fixes 1, breaks 0
-# tiscom
-tiscom:
-  #       1 =,
-  tiscom # fixes 1, breaks 0
-# tisdot
-tisdot:
-  #       1 =+
-  tislus # fixes 1, breaks 0
-# tisgar
-tisgar:
-  #       1 =>
-  #       1 %+
-  # $node,
-  # {
-  # tallTisgar # fixes 0, breaks 0
-  # tallCenlus # fixes 0, breaks 0
-  # }
-  # );
-# }
-# tislus
-tislus:
-  #       1 =+
-  # $node,
-  # {
-  # tallTislus # fixes 1, breaks 4
-  # }
-  # );
-# }
-# wutdot
-wutdot:
-  #       3 |-
-  #       1 =.
-  #       1 ?.
-  barhep # fixes 5, breaks 0
-  # tallTisdot # fixes 1, breaks 3
-  # tallWutdot # fixes 0, breaks 0
-# wutgal
-wutgal:
-  #       1 |-
-  barhep # fixes 1, breaks 0
-# wutgar
-wutgar:
-  #       2 ~|
-  sigbar # fixes 2, breaks 0
-# zapdot
-zapdot:
-  #       6 ++
-  luslus # fixes 6, breaks 0
-bardot:
-  kettis # fixes 6, breaks 0
-  cenlus # fixes 4, breaks 0
-  luslus # fixes 3, breaks 2
-  cenhep # fixes 1, breaks 0
 cenhep:
   # 6 %-
   # 4 =+
@@ -141,6 +64,11 @@ cenhep:
   tislus # fixes 4, breaks 2
   tisgal # fixes 1, breaks 0
   colhep # fixes 1, breaks 0
+# cenket
+cenket:
+  #       1 =.
+  # tallCendot # fixes 0, breaks 0
+# dottis
 cenlus:
   cenhep # fixes 8, breaks 0
   tislus # fixes 11, breaks 2
@@ -154,6 +82,8 @@ colhep:
   cenlus # fixes 3, breaks 0
   colcab # fixes 3, breaks 0
   # 'tallColsig' # fixes 0, breaks 5
+dottis:
+  #       1 ?.
 kethep:
   barhep # Needed for examples to work
   bartis
@@ -187,13 +117,43 @@ ketlus:
   bardot # fixes 8, breaks 0
   bartar # fixes 4, breaks 0
   cenhep # fixes 2, breaks 0
+# ketsig
+ketsig:
+  #       1 %+
+  cenlus # fixes 1, breaks 0
+# sigcab
 kettis:
   # tallTislus # breaks 109, fixes 24
 ketwut:
   luslus
   buccab
+sigcab:
+  #       1 |=
+  bartis # fixes 1, breaks 0
 sigfas:
   luslus # fixes 44, breaks 4
+# siglus
+siglus:
+  #   25 %+
+  #    3 ++
+  #    2 |=
+  #    1 =+
+  #    1 |.
+  # TODO: Redo this
+# tisbar
+tisbar:
+  #       1 |=
+  #       1 $_
+  bartis # fixes 1, breaks 0
+  buccab # fixes 1, breaks 0
+# tiscom
+tiscom:
+  #       1 =,
+  tiscom # fixes 1, breaks 0
+# tisdot
+tisdot:
+  #       1 =+
+  tislus # fixes 1, breaks 0
 tisgal:
   bartis # fixes 20, breaks 0
   tisgal # fixes 14, breaks 0
@@ -201,20 +161,60 @@ tisgal:
   ketlus # fixes 4, breaks 0
   tisgar # fixes 2, breaks 0
   cenlus # fixes 1, breaks 1
+# tisgar
 tisgar:
   tisgar
+tisgar:
+  #       1 =>
+  #       1 %+
+  # $node,
+  # {
+  # tallTisgar # fixes 0, breaks 0
+  # tallCenlus # fixes 0, breaks 0
+  # }
+  # );
+# }
+# tislus
+tislus:
+  #       1 =+
+  # $node,
+  # {
+  # tallTislus # fixes 1, breaks 4
+  # }
+  # );
+# }
 wutcol:
   barhep # fixes 6, breaks 0
   wutcol # fixes 3, breaks 0
   # tallTisdot # fixes 0, breaks 8
   # tallTislus # fixes 0, breaks 1
   cenhep # fixes 1, breaks 0
+# wutdot
+wutdot:
+  #       3 |-
+  #       1 =.
+  #       1 ?.
+  barhep # fixes 5, breaks 0
+  # tallTisdot # fixes 1, breaks 3
+  # tallWutdot # fixes 0, breaks 0
+# wutgal
+wutgal:
+  #       1 |-
+  barhep # fixes 1, breaks 0
+# wutgar
+wutgar:
+  #       2 ~|
+  sigbar # fixes 2, breaks 0
 wutsig:
   wutsig # fixes 3, breaks 0
   tislus # fixes 2, break 1
   # tallBarhep # fixes 3, breaks 5
 zapcol:
   luslus # fixes 8, breaks 1
+# zapdot
+zapdot:
+  #       6 ++
+  luslus # fixes 6, breaks 0
 zapgar:
   cenhep # fixes 89, breaks 0
 EOS
