@@ -14,6 +14,253 @@ use Scalar::Util qw(looks_like_number weaken);
 
 # say STDERR join " ", __FILE__, __LINE__, "hi";
 
+my %reanchorings = ();
+
+my $reanchorings = \<<'EOS';
+# barhep
+barhep:
+  #       1 ^=
+  #       1 =.
+  kettis # fixes 1, breaks 0
+  tisdot # fixes 1, breaks 0
+# bartar
+bartar:
+  #       1 ++
+  # luslus # fixes 1, breaks 14
+# bartis
+bartis:
+  #       2 :-
+  #       2 %+
+  #       1 %-
+  #       1 ++
+  colhep # fixes 2, breaks 0
+  # tallCenlus # fixes 2, breaks 6
+  # tallCenhep # fixes 1, breaks 3
+  # luslus # fixes 1, breaks 24
+# buctis
+buctis:
+  # tallBuccol # fixes 1, breaks 2
+# cendot
+cendot:
+  #       4 |=
+  #       3 =<
+  #       1 =-
+  #       1 %-
+  bartis # fixes 7, breaks 0
+  # tallTisgal # fixes 1, breaks 2
+  # tallTishep # fixes 0, breaks 1
+  cenhep
+# cenket
+cenket:
+  #       1 =.
+  # tallCendot # fixes 0, breaks 0
+# dottis
+dottis:
+  #       1 ?.
+# ketsig
+ketsig:
+  #       1 %+
+  cenlus # fixes 1, breaks 0
+# sigcab
+sigcab:
+  #       1 |=
+  bartis # fixes 1, breaks 0
+# siglus
+siglus:
+  #   25 %+
+  #    3 ++
+  #    2 |=
+  #    1 =+
+  #    1 |.
+  # TODO: Redo this
+# tisbar
+tisbar:
+  #       1 |=
+  #       1 $_
+  bartis # fixes 1, breaks 0
+  buccab # fixes 1, breaks 0
+# tiscom
+tiscom:
+  #       1 =,
+  tiscom # fixes 1, breaks 0
+# tisdot
+tisdot:
+  #       1 =+
+  tislus # fixes 1, breaks 0
+# tisgar
+tisgar:
+  #       1 =>
+  #       1 %+
+  # $node,
+  # {
+  # tallTisgar # fixes 0, breaks 0
+  # tallCenlus # fixes 0, breaks 0
+  # }
+  # );
+# }
+# tislus
+tislus:
+  #       1 =+
+  # $node,
+  # {
+  # tallTislus # fixes 1, breaks 4
+  # }
+  # );
+# }
+# wutdot
+wutdot:
+  #       3 |-
+  #       1 =.
+  #       1 ?.
+  barhep # fixes 5, breaks 0
+  # tallTisdot # fixes 1, breaks 3
+  # tallWutdot # fixes 0, breaks 0
+# wutgal
+wutgal:
+  #       1 |-
+  barhep # fixes 1, breaks 0
+# wutgar
+wutgar:
+  #       2 ~|
+  sigbar # fixes 2, breaks 0
+# zapdot
+zapdot:
+  #       6 ++
+  luslus # fixes 6, breaks 0
+bardot:
+  kettis # fixes 6, breaks 0
+  cenlus # fixes 4, breaks 0
+  luslus # fixes 3, breaks 2
+  cenhep # fixes 1, breaks 0
+cenhep:
+  # 6 %-
+  # 4 =+
+  # 1 =<
+  # 1 :-
+  cenhep # fixes 6, breaks 1
+  tislus # fixes 4, breaks 2
+  tisgal # fixes 1, breaks 0
+  colhep # fixes 1, breaks 0
+cenlus:
+  cenhep # fixes 8, breaks 0
+  tislus # fixes 11, breaks 2
+colcab:
+  colcab # fixes 13, breaks 0
+  cenhep # fixes 12, breaks 0
+  cenlus # fixes 6, breaks 0
+  # 'tallColhep' # fixes 1, breaks 2
+colhep:
+  # 'tallColhep' # fixes 2, breaks 4
+  cenlus # fixes 3, breaks 0
+  colcab # fixes 3, breaks 0
+  # 'tallColsig' # fixes 0, breaks 5
+kethep:
+  barhep # Needed for examples to work
+  bartis
+  cenhep
+  colhep # fixes 3, breaks 2
+  tistar
+  barsig
+  ketsig
+  tisfas
+  kethep # fixes 4, breaks 0
+  tishep # partially fixes one
+  tisgal # partially fixes one
+  tisdot # fixes 1, breaks 0
+  # 'tallBarket' # fixes 3, breaks 9
+  siglus # fixes 1, breaks 0
+  zapgar # fixes 1, breaks 0
+  cenlus # fixes 3, breaks 0
+  bardot # fixes 1, breaks 0
+  # luslus # breaks tic-tac-toe, line 55
+  # =+ ^= [...] ^- occurs a lot, and the reanchoring
+  # seems to want to be at the KETTIS, not the TISLUS.
+  # But where not followed by KETTIS, reanchoring
+  # at TISLUS seems to be indicated in a lot of places.
+  # This accounts for a lot of aberrations.
+  kettis
+  # 'tallTislus' # fixes 30, breaks 76
+ketlus:
+  barhep # Needed for examples to work
+  bartis # fixes 97, breaks 0
+  tisgal # fixes 8, breaks 0
+  bardot # fixes 8, breaks 0
+  bartar # fixes 4, breaks 0
+  cenhep # fixes 2, breaks 0
+kettis:
+  # tallTislus # breaks 109, fixes 24
+ketwut:
+  luslus
+  buccab
+sigfas:
+  luslus # fixes 44, breaks 4
+tisgal:
+  bartis # fixes 20, breaks 0
+  tisgal # fixes 14, breaks 0
+  cenhep # fixes 7, breaks 0
+  ketlus # fixes 4, breaks 0
+  tisgar # fixes 2, breaks 0
+  cenlus # fixes 1, breaks 1
+tisgar:
+  tisgar
+wutcol:
+  barhep # fixes 6, breaks 0
+  wutcol # fixes 3, breaks 0
+  # tallTisdot # fixes 0, breaks 8
+  # tallTislus # fixes 0, breaks 1
+  cenhep # fixes 1, breaks 0
+wutsig:
+  wutsig # fixes 3, breaks 0
+  tislus # fixes 2, break 1
+  # tallBarhep # fixes 3, breaks 5
+zapcol:
+  luslus # fixes 8, breaks 1
+zapgar:
+  cenhep # fixes 89, breaks 0
+EOS
+
+{
+
+    # special cases for grammar names
+    my %grammarNames = (
+       luslus => 'LuslusCell',
+       lustis => 'LustisCell',
+       lushep => 'LushepCell',
+    );
+
+    my $currentSource;
+
+  ITEM: for my $itemLine ( split "\n", ${$reanchorings} ) {
+        my $rawItemLine = $itemLine;
+        $itemLine =~ s/\s*[#].*$//;   # remove comments and preceding whitespace
+        $itemLine =~ s/^\s*//;        # remove leading whitespace
+        $itemLine =~ s/\s*$//;        # remove trailing whitespace
+        next ITEM unless $itemLine;
+
+        if (my ($source) = $itemLine =~ m/^(.*) *:$/) {
+            $currentSource = $source;
+            next ITEM;
+        }
+
+        die qq{Error in inline reanchorings: No source rune\n}
+          . qq{  Problem with line: $rawItemLine\n}
+          if not $currentSource;
+
+        chomp $itemLine;
+        my $target = $itemLine;
+
+        my $grammarName = $grammarNames{$target};
+        if (not defined $grammarName) {
+            $grammarName = 'tall' . ucfirst $target;
+        }
+
+        $reanchorings{$currentSource}{$grammarName} = 1;
+
+    }
+}
+
+# die Data::Dumper::Dumper(\%reanchorings);
+
 # TODO: delete indents in favor of tree traversal
 
 my $gapCommentDSL = <<'END_OF_DSL';
@@ -5683,478 +5930,11 @@ sub checkBackdented {
     # my ( $anchorLine, $anchorColumn ) = $instance->nodeLC($anchorNode);
     my ( $anchorLine, $anchorColumn ) = ( $parentLine, $parentColumn );
     my $anchorData;
-
-# barhep
-if ( $runeName eq q{barhep} ) {
-
-    #       1 ^=
-    #       1 =.
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallKettis => 1, # fixes 1, breaks 0
-            tallTisdot => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# bartar
-# if ( $runeName eq q{bartar} ) {
-
-    #       1 ++
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # LuslusCell => 1, # fixes 1, breaks 14
-            # FINISHED
-        # }
-    # );
-# }
-
-# bartis
-if ( $runeName eq q{bartis} ) {
-
-    #       2 :-
-    #       2 %+
-    #       1 %-
-    #       1 ++
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallColhep => 1, # fixes 2, breaks 0
-            # tallCenlus => 1, # fixes 2, breaks 6
-            # tallCenhep => 1, # fixes 1, breaks 3
-            # LuslusCell => 1, # fixes 1, breaks 24
-            # FINISHED
-        }
-    );
-}
-
-# buctis
-# if ( $runeName eq q{buctis} ) {
-    #       1 $:
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # tallBuccol => 1, # fixes 1, breaks 2
-            # FINISHED
-        # }
-    # );
-# }
-
-# cendot
-if ( $runeName eq q{cendot} ) {
-
-    #       4 |=
-    #       3 =<
-    #       1 =-
-    #       1 %-
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallBartis => 1, # fixes 7, breaks 0
-            # tallTisgal => 1, # fixes 1, breaks 2
-            # tallTishep => 1, # fixes 0, breaks 1
-            # TODO: TO HERE
-            tallCenhep => 1,
-        }
-    );
-}
-
-# cenket
-# if ( $runeName eq q{cenket} ) {
-    #       1 =.
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # tallCendot => 1, # fixes 0, breaks 0
-            # FINISHED
-        # }
-    # );
-# }
-
-# dottis
-# if ( $runeName eq q{dottis} ) {
-
-    #       1 ?.
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # FINISHED
-        # }
-    # );
-# }
-
-# ketsig
-if ( $runeName eq q{ketsig} ) {
-
-    #       1 %+
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallCenlus => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# sigcab
-if ( $runeName eq q{sigcab} ) {
-
-    #       1 |=
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallBartis => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# siglus
-if ( $runeName eq q{siglus} ) {
-
-    #       1 =+
-    #       1 |=
-    #       1 |.
-    #       1 ++
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            # tallTislus => 1, # fixes 0, breaks 0
-            # tallBartis => 1, # fixes 0, breaks 0
-            # tallBardot => 1, # fixes 0, breaks 0
-            # TODO: TO HERE
-            LuslusCell => 1,
-        }
-    );
-}
-
-# tisbar
-if ( $runeName eq q{tisbar} ) {
-
-    #       1 |=
-    #       1 $_
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallBartis => 1, # fixes 1, breaks 0
-            tallBuccab => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# tiscom
-if ( $runeName eq q{tiscom} ) {
-
-    #       1 =,
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallTiscom => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# tisdot
-if ( $runeName eq q{tisdot} ) {
-
-    #       1 =+
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallTislus => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# tisgar
-# if ( $runeName eq q{tisgar} ) {
-
-    #       1 =>
-    #       1 %+
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # tallTisgar => 1, # fixes 0, breaks 0
-            # tallCenlus => 1, # fixes 0, breaks 0
-            # FINISHED
-        # }
-    # );
-# }
-
-# tislus
-# if ( $runeName eq q{tislus} ) {
-
-    #       1 =+
-    # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        # $node,
-        # {
-            # tallTislus => 1, # fixes 1, breaks 4
-            # FINISHED
-        # }
-    # );
-# }
-
-# wutdot
-if ( $runeName eq q{wutdot} ) {
-
-    #       3 |-
-    #       1 =.
-    #       1 ?.
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallBarhep => 1, # fixes 5, breaks 0
-            # tallTisdot => 1, # fixes 1, breaks 3
-            # tallWutdot => 1, # fixes 0, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# wutgal
-if ( $runeName eq q{wutgal} ) {
-
-    #       1 |-
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallBarhep => 1, # fixes 1, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# wutgar
-if ( $runeName eq q{wutgar} ) {
-
-    #       2 ~|
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            tallSigbar => 1, # fixes 2, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-# zapdot
-if ( $runeName eq q{zapdot} ) {
-
-    #       6 ++
-    ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-        $node,
-        {
-            LuslusCell => 1, # fixes 6, breaks 0
-            # FINISHED
-        }
-    );
-}
-
-    if ($runeName eq 'bardot') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallKettis' => 1, # fixes 6, breaks 0
-                'tallCenlus' => 1, # fixes 4, breaks 0
-                LuslusCell => 1, # fixes 3, breaks 2
-                tallCenhep => 1, # fixes 1, breaks 0
-            }
-        );
+    if ( my $sources = $reanchorings{$runeName} ) {
+        ( $anchorColumn, $anchorData ) =
+          $policy->reanchorInc( $node, $sources );
     }
-    if ($runeName eq 'cenhep') {
-      # 6 %-
-      # 4 =+
-      # 1 =<
-      # 1 :-
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallCenhep => 1, # fixes 6, breaks 1
-                tallTislus => 1, # fixes 4, breaks 2
-                tallTisgal => 1, # fixes 1, breaks 0
-                tallColhep => 1, # fixes 1, breaks 0
-                # TO HERE
-            }
-        );
-    }
-    if ($runeName eq 'cenlus') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallCenhep' => 1, # fixes 8, breaks 0
-                'tallTislus' => 1, # fixes 11, breaks 2
-            }
-        );
-    }
-    if ($runeName eq 'colcab') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallColcab' => 1, # fixes 13, breaks 0
-                'tallCenhep' => 1, # fixes 12, breaks 0
-                'tallCenlus' => 1, # fixes 6, breaks 0
-                # 'tallColhep' => 1, # fixes 1, breaks 2
-            }
-        );
-    }
-    if ($runeName eq 'colhep') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                # 'tallColhep' => 1, fixes 2, breaks 4
-                'tallCenlus' => 1, # fixes 3, breaks 0
-                'tallColcab' => 1, # fixes 3, breaks 0
-                # 'tallColsig' => 1, # fixes 0, breaks 5
-            }
-        );
-    }
-    if ($runeName eq 'kethep') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallBarhep' => 1, # Needed for examples to work
-                'tallBartis' => 1,
-                'tallCenhep' => 1,
-                'tallColhep' => 1, # fixes 3, breaks 2
-                'tallTistar' => 1,
 
-                'tallBarsig' => 1,
-                'tallKetsig' => 1,
-                'tallTisfas' => 1,
-
-                'tallKethep' => 1, # fixes 4, breaks 0
-                'tallTishep' => 1, # partially fixes one
-                'tallTisgal' => 1, # partially fixes one
-                'tallTisdot' => 1, # fixes 1, breaks 0
-                # 'tallBarket' => 1, # fixes 3, breaks 9
-                tallSiglus => 1, # fixes 1, breaks 0
-                tallZapgar => 1, # fixes 1, breaks 0
-                tallCenlus => 1, # fixes 3, breaks 0
-                tallBardot => 1, # fixes 1, breaks 0
-
-                # LuslusCell => 1, # breaks tic-tac-toe, line 55
-
-                # =+ ^= [...] ^- occurs a lot, and the reanchoring
-                # seems to want to be at the KETTIS, not the TISLUS.
-                # But where not followed by KETTIS, reanchoring
-                # at TISLUS seems to be indicated in a lot of places.
-                # This accounts for a lot of aberrations.
-                'tallKettis' => 1,
-                # 'tallTislus' => 1, # fixes 30, breaks 76
-            }
-        );
-    }
-    if ($runeName eq 'ketlus') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                'tallBarhep' => 1, # Needed for examples to work
-                tallBartis => 1, # fixes 97, breaks 0
-                tallTisgal => 1, # fixes 8, breaks 0
-                tallBardot => 1, # fixes 8, breaks 0
-                tallBartar => 1, # fixes 4, breaks 0
-                tallCenhep => 1, # fixes 2, breaks 0
-            }
-        );
-    }
-    # if ($runeName eq 'kettis') {
-        # ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            # $node,
-            # {
-                # tallTislus => 1, # breaks 109, fixes 24
-            # }
-        # );
-    # }
-    if ($runeName eq 'ketwut') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-               LuslusCell => 1,
-               tallBuccab => 1,
-            }
-        );
-    }
-    if ($runeName eq 'sigfas') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-               LuslusCell => 1, # fixes 44, breaks 4
-            }
-        );
-    }
-    if ($runeName eq 'siglus') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-               tallCenlus => 1, # fixes 26, breaks 0
-            }
-        );
-    }
-    if ($runeName eq 'tisgal') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallBartis => 1, # fixes 20, breaks 0
-                tallTisgal => 1, # fixes 14, breaks 0
-                tallCenhep => 1, # fixes 7, breaks 0
-                tallKetlus => 1, # fixes 4, breaks 0
-                tallTisgar => 1, # fixes 2, breaks 0
-                tallCenlus => 1, # fixes 1, breaks 1
-            }
-        );
-    }
-    if ($runeName eq 'tisgar') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallTisgar => 1,
-            }
-        );
-    }
-    if ($runeName eq 'wutcol') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallBarhep => 1, # fixes 6, breaks 0
-                tallWutcol => 1, # fixes 3, breaks 0
-                # tallTisdot => 1, # fixes 0, breaks 8
-                # tallTislus => 1, # fixes 0, breaks 1
-                tallCenhep => 1, # fixes 1, breaks 0
-            }
-        );
-    }
-    if ($runeName eq 'wutsig') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallWutsig => 1, # fixes 3, breaks 0
-                tallTislus => 1, # fixes 2, break 1
-                # tallBarhep => 1, # fixes 3, breaks 5
-            }
-        );
-    }
-    if ($runeName eq 'zapcol') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                LuslusCell => 1, # fixes 8, breaks 1
-            }
-        );
-    }
-    if ($runeName eq 'zapgar') {
-        ( $anchorColumn, $anchorData ) = $policy->reanchorInc(
-            $node,
-            {
-                tallCenhep => 1, # fixes 89, breaks 0
-            }
-        );
-    }
     my $anchorDetails = [];
     $anchorDetails = $policy->anchorDetails( $node, $anchorData )
        if $anchorData;

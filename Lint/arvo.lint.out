@@ -21,11 +21,26 @@
 === hoons/arvo/tests/new-hoon/myb.hoon ===
 === hoons/arvo/tests/zuse/crypto/keccak.hoon ===
 === hoons/arvo/sys/zuse.hoon ===
+hoons/arvo/sys/zuse.hoon 4037:7 Test::Whitespace siglus:indent backdented element #1 @4037:7; underindented by 21
+hoons/arvo/sys/zuse.hoon 4204:7 Test::Whitespace siglus:indent backdented element #1 @4204:7; underindented by 21
+hoons/arvo/sys/zuse.hoon 4213:7 Test::Whitespace siglus:indent backdented element #1 @4213:7; underindented by 21
 === hoons/arvo/sys/hoon.hoon ===
+hoons/arvo/sys/hoon.hoon 5301:5 Test::Whitespace siglus:indent backdented element #1 @5301:5; underindented by 21
+hoons/arvo/sys/hoon.hoon 10769:7 Test::Whitespace siglus:indent backdented element #1 @10769:7; underindented by 43
+hoons/arvo/sys/hoon.hoon 10777:7 Test::Whitespace siglus:indent backdented element #1 @10777:7; underindented by 43
+hoons/arvo/sys/hoon.hoon 10899:7 Test::Whitespace siglus:indent backdented element #1 @10899:7; underindented by 43
+hoons/arvo/sys/hoon.hoon 11449:9 Test::Whitespace siglus:indent backdented element #1 @11449:9; underindented by 28
+hoons/arvo/sys/hoon.hoon 11538:9 Test::Whitespace siglus:indent backdented element #1 @11538:9; underindented by 21
+hoons/arvo/sys/hoon.hoon 11681:5 Test::Whitespace siglus:indent backdented element #1 @11681:5; underindented by 21
+hoons/arvo/sys/hoon.hoon 11753:5 Test::Whitespace siglus:indent backdented element #1 @11753:5; underindented by 21
+hoons/arvo/sys/hoon.hoon 12145:7 Test::Whitespace siglus:indent backdented element #1 @12145:7; underindented by 45
+hoons/arvo/sys/hoon.hoon 12266:15 Test::Whitespace siglus:indent backdented element #1 @12266:15; underindented by 21
+hoons/arvo/sys/hoon.hoon 12448:5 Test::Whitespace siglus:indent backdented element #1 @12448:5; underindented by 21
 === hoons/arvo/sys/arvo.hoon ===
 === hoons/arvo/sys/vane/behn.hoon ===
 === hoons/arvo/sys/vane/dill.hoon ===
 === hoons/arvo/sys/vane/ford.hoon ===
+hoons/arvo/sys/vane/ford.hoon 826:11 Test::Whitespace siglus:indent backdented element #1 @826:11; underindented by 22
 === hoons/arvo/sys/vane/ames.hoon ===
 === hoons/arvo/sys/vane/gall.hoon ===
 === hoons/arvo/sys/vane/eyre.hoon ===
@@ -40,11 +55,14 @@
 === hoons/arvo/app/static.hoon ===
 === hoons/arvo/app/hood.hoon ===
 === hoons/arvo/app/dojo.hoon ===
+hoons/arvo/app/dojo.hoon 143:7 Test::Whitespace siglus:indent backdented element #1 @143:7; underindented by 29
+hoons/arvo/app/dojo.hoon 228:7 Test::Whitespace siglus:indent backdented element #1 @228:7; underindented by 27
 === hoons/arvo/app/time.hoon ===
 === hoons/arvo/app/gh.hoon ===
 === hoons/arvo/app/ask.hoon ===
 === hoons/arvo/app/pipe.hoon ===
 === hoons/arvo/app/talk.hoon ===
+hoons/arvo/app/talk.hoon 826:9 Test::Whitespace siglus:indent backdented element #1 @826:9; underindented by 22
 === hoons/arvo/app/curl.hoon ===
 === hoons/arvo/app/github.hoon ===
 === hoons/arvo/app/hall.hoon ===
@@ -68,9 +86,14 @@
 === hoons/arvo/lib/old-zuse.hoon ===
 === hoons/arvo/lib/tester.hoon ===
 === hoons/arvo/lib/hall-json.hoon ===
+hoons/arvo/lib/hall-json.hoon 372:5 Test::Whitespace siglus:indent backdented element #1 @372:5; underindented by 19
+hoons/arvo/lib/hall-json.hoon 554:5 Test::Whitespace siglus:indent backdented element #1 @554:5; underindented by 21
+hoons/arvo/lib/hall-json.hoon 580:5 Test::Whitespace siglus:indent backdented element #1 @580:5; underindented by 22
 === hoons/arvo/lib/prey.hoon ===
 === hoons/arvo/lib/down-jet/rend.hoon ===
 === hoons/arvo/lib/down-jet/parse.hoon ===
+hoons/arvo/lib/down-jet/parse.hoon 133:7 Test::Whitespace siglus:indent backdented element #1 @133:7; underindented by 21
+hoons/arvo/lib/down-jet/parse.hoon 274:7 Test::Whitespace siglus:indent backdented element #1 @274:7; underindented by 21
 === hoons/arvo/lib/time-to-id.hoon ===
 === hoons/arvo/lib/httr-to-json.hoon ===
 === hoons/arvo/lib/sole.hoon ===
@@ -85,6 +108,8 @@
 === hoons/arvo/lib/oauth2.hoon ===
 === hoons/arvo/lib/basic-auth.hoon ===
 === hoons/arvo/lib/hall-legacy.hoon ===
+hoons/arvo/lib/hall-legacy.hoon 132:5 Test::Whitespace siglus:indent backdented element #1 @132:5; underindented by 21
+hoons/arvo/lib/hall-legacy.hoon 145:5 Test::Whitespace siglus:indent backdented element #1 @145:5; underindented by 20
 === hoons/arvo/lib/new-hoon.hoon ===
 === hoons/arvo/lib/show-dir.hoon ===
 === hoons/arvo/lib/hood/helm.hoon ===
@@ -163,6 +188,7 @@
 === hoons/arvo/mar/umd.hoon ===
 === hoons/arvo/mar/elem.hoon ===
 === hoons/arvo/mar/sole/action.hoon ===
+hoons/arvo/mar/sole/action.hoon 40:7 Test::Whitespace siglus:indent backdented element #1 @40:7; underindented by 24
 === hoons/arvo/mar/sole/effect.hoon ===
 === hoons/arvo/mar/js.hoon ===
 === hoons/arvo/mar/markdown.hoon ===
