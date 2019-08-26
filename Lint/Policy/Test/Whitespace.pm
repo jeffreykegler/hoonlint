@@ -143,7 +143,7 @@ siglus:
     # luslus # fixes 1, breaks 1
     bartis # fixes 1, breaks 0
     # tislus # fixes 0, breaks 0
-    # TODO: REDO
+    bardot # fixes 1, breaks 0
 # tisbar
 tisbar:
   #       1 |=
@@ -176,7 +176,7 @@ tisgar:
     # luslus # fixes 0, breaks 1
     # tislus # fixes 0, breaks 1
     tisgar # fixes 1, breaks 0
-    # TODO: REDO
+    # tishep # fixes 0, breaks 1
 # tislus
 tislus:
   #       1 =+
