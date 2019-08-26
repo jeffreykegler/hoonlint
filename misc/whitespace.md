@@ -2551,6 +2551,140 @@ by defining `Offset(r)`:
 `Offset(r)` is the sum of `PerRuneOff(S[i])`
 for all `i` such that `0 <= i <= n`.
 
+# Appendix: Reanchoring fixed-arity hoons
+
+The fixed-arity hoons reanchor as follows:
+
+* BARDOT reanchors to
+  KETTIS,
+  CENLUS,
+  LUSLUS, and
+  CENHEP.
+
+* BARHEP reanchors to
+  KETTIS and
+  TISDOT.
+
+* BARTIS reanchors to
+  COLHEP.
+
+* CENDOT reanchors to
+  BARTIS and
+  CENHEP.
+
+* CENHEP reanchors to
+  CENHEP,
+  TISLUS,
+  TISGAL, and
+  COLHEP.
+
+* CENLUS reanchors to
+  CENHEP and
+  TISLUS.
+
+* COLCAB reanchors to
+  COLCAB,
+  CENHEP, and
+  CENLUS.
+
+* COLHEP reanchors to
+  CENLUS and
+  COLCAB.
+
+* KETHEP reanchors to
+  BARHEP,
+  BARTIS,
+  CENHEP,
+  COLHEP,
+  TISTAR,
+  BARSIG,
+  KETSIG,
+  TISFAS,
+  KETHEP,
+  TISHEP,
+  TISGAL,
+  TISDOT,
+  SIGLUS,
+  ZAPGAR,
+  CENLUS,
+  BARDOT and
+  KETTIS.
+
+* KETLUS reanchors to
+  BARHEP,
+  BARTIS,
+  TISGAL,
+  BARDOT,
+  BARTAR and
+  CENHEP.
+
+* KETSIG reanchors to
+  CENLUS.
+
+* KETWUT reanchors to
+  LUSLUS and
+  BUCCAB.
+
+* SIGCAB reanchors to
+  BARTIS.
+
+* SIGFAS reanchors to
+  LUSLUS.
+
+* SIGLUS reanchors to
+    CENLUS,
+    BARTIS and
+    BARDOT.
+
+* TISBAR reanchors to
+  BARTIS and
+  BUCCAB.
+
+* TISCOM reanchors to
+  TISCOM.
+
+* TISDOT reanchors to
+  TISLUS.
+
+* TISGAL reanchors to
+  BARTIS,
+  TISGAL,
+  CENHEP,
+  KETLUS,
+  TISGAR, and
+  CENLUS.
+
+* TISGAR reanchors to
+    CENLUS and
+    TISGAR.
+
+* WUTCOL reanchors to
+  BARHEP,
+  WUTCOL, and
+  CENHEP.
+
+* WUTDOT reanchors to
+  BARHEP.
+
+* WUTGAL reanchors to
+  BARHEP.
+
+* WUTGAR reanchors to
+  SIGBAR.
+
+* WUTSIG reanchors to
+  WUTSIG and
+  TISLUS.
+
+* ZAPCOL reanchors to
+  LUSLUS.
+
+* ZAPDOT reanchors to
+  LUSLUS.
+
+* ZAPGAR reanchors to
+  CENHEP.
+
 # Appendix: Reanchoring futures
 
 The reanchoring in this document is based, first on the examples,

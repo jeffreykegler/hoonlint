@@ -113,6 +113,7 @@
 </ul></li>
 <li><a href="#appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
+<li><a href="#appendix-reanchoring-fixed-arity-hoons">Appendix: Reanchoring fixed-arity hoons</a></li>
 <li><a href="#appendix-reanchoring-futures">Appendix: Reanchoring futures</a></li>
 </ul>
 </div>
@@ -1136,6 +1137,38 @@ Exception ::= BlankLine</code></pre>
 <li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
 </ul>
 <p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
+<h1 id="appendix-reanchoring-fixed-arity-hoons">Appendix: Reanchoring fixed-arity hoons</h1>
+<p>The fixed-arity hoons reanchor as follows:</p>
+<ul>
+<li><p>BARDOT reanchors to KETTIS, CENLUS, LUSLUS, and CENHEP.</p></li>
+<li><p>BARHEP reanchors to KETTIS and TISDOT.</p></li>
+<li><p>BARTIS reanchors to COLHEP.</p></li>
+<li><p>CENDOT reanchors to BARTIS and CENHEP.</p></li>
+<li><p>CENHEP reanchors to CENHEP, TISLUS, TISGAL, and COLHEP.</p></li>
+<li><p>CENLUS reanchors to CENHEP and TISLUS.</p></li>
+<li><p>COLCAB reanchors to COLCAB, CENHEP, and CENLUS.</p></li>
+<li><p>COLHEP reanchors to CENLUS and COLCAB.</p></li>
+<li><p>KETHEP reanchors to BARHEP, BARTIS, CENHEP, COLHEP, TISTAR, BARSIG, KETSIG, TISFAS, KETHEP, TISHEP, TISGAL, TISDOT, SIGLUS, ZAPGAR, CENLUS, BARDOT and KETTIS.</p></li>
+<li><p>KETLUS reanchors to BARHEP, BARTIS, TISGAL, BARDOT, BARTAR and CENHEP.</p></li>
+<li><p>KETSIG reanchors to CENLUS.</p></li>
+<li><p>KETWUT reanchors to LUSLUS and BUCCAB.</p></li>
+<li><p>SIGCAB reanchors to BARTIS.</p></li>
+<li><p>SIGFAS reanchors to LUSLUS.</p></li>
+<li><p>SIGLUS reanchors to CENLUS, BARTIS and BARDOT.</p></li>
+<li><p>TISBAR reanchors to BARTIS and BUCCAB.</p></li>
+<li><p>TISCOM reanchors to TISCOM.</p></li>
+<li><p>TISDOT reanchors to TISLUS.</p></li>
+<li><p>TISGAL reanchors to BARTIS, TISGAL, CENHEP, KETLUS, TISGAR, and CENLUS.</p></li>
+<li><p>TISGAR reanchors to CENLUS and TISGAR.</p></li>
+<li><p>WUTCOL reanchors to BARHEP, WUTCOL, and CENHEP.</p></li>
+<li><p>WUTDOT reanchors to BARHEP.</p></li>
+<li><p>WUTGAL reanchors to BARHEP.</p></li>
+<li><p>WUTGAR reanchors to SIGBAR.</p></li>
+<li><p>WUTSIG reanchors to WUTSIG and TISLUS.</p></li>
+<li><p>ZAPCOL reanchors to LUSLUS.</p></li>
+<li><p>ZAPDOT reanchors to LUSLUS.</p></li>
+<li><p>ZAPGAR reanchors to CENHEP.</p></li>
+</ul>
 <h1 id="appendix-reanchoring-futures">Appendix: Reanchoring futures</h1>
 <p>The reanchoring in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- reanchoring is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Reanchorings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
 <p>In future, it may be best to revise this document to treat more reanchorings as standard than currently.</p>
