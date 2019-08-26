@@ -34,10 +34,11 @@
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
 </ul></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
-<li><a href="#backdented-hoons">Backdented hoons</a><ul>
+<li><a href="#fixed-arity-hoons">Fixed-arity hoons</a><ul>
 <li><a href="#backdenting-and-vertical-gaps">Backdenting and vertical gaps</a></li>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 <li><a href="#split-hints">Split hints</a></li>
+<li><a href="#reanchoring-fixed-arity-hoons">Reanchoring fixed-arity hoons</a></li>
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -113,7 +114,6 @@
 </ul></li>
 <li><a href="#appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
-<li><a href="#appendix-reanchoring-fixed-arity-hoons">Appendix: Reanchoring fixed-arity hoons</a></li>
 <li><a href="#appendix-reanchoring-futures">Appendix: Reanchoring futures</a></li>
 </ul>
 </div>
@@ -294,8 +294,8 @@ d</code></pre>
 <p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. All top-level hoon statements should start at column 1. Successive top-level hoon statements should be separated by a vertical gap with comments at column location 1.</p>
 <p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case of a vertical gap -- it contains a body and a zero-length postamble, but no preamble.</p>
 <p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
-<h1 id="backdented-hoons">Backdented hoons</h1>
-<p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in backdented hoons. Here is a example of a backdented 4-ary hoon:</p>
+<h1 id="fixed-arity-hoons">Fixed-arity hoons</h1>
+<p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in fixed-arity hoons. Here is a example of a 4-ary hoon:</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>
 <pre><code>        :^    %wtcl
             [%dtts [%rock %$ |] [%$ axe]]
@@ -369,6 +369,38 @@ d</code></pre>
 <p>The first runechild of SIGGAL (<code>~&lt;</code>) and SIGGAR (<code>~&gt;</code>) is a &quot;hint&quot;. Hints have a &quot;split&quot; form.</p>
 <p>A split form hint begins with its &quot;head&quot;: a symbol name (in <code>%name</code> form) followed by a DOT. The rest of the hint is its &quot;tail&quot;.</p>
 <p>The tail of a split form hint should be separated from its head by a vertical gap, with comments aligned with the head. The tail should also be aligned with the head.</p>
+<h2 id="reanchoring-fixed-arity-hoons">Reanchoring fixed-arity hoons</h2>
+<p>The fixed-arity hoons reanchor as follows:</p>
+<ul>
+<li><p>BARDOT reanchors to CENHEP, CENLUS, KETTIS, and LUSLUS.</p></li>
+<li><p>BARHEP reanchors to KETTIS and TISDOT.</p></li>
+<li><p>BARTIS reanchors to COLHEP.</p></li>
+<li><p>CENDOT reanchors to BARTIS and CENHEP.</p></li>
+<li><p>CENHEP reanchors to CENHEP, COLHEP, TISLUS, and TISGAL.</p></li>
+<li><p>CENLUS reanchors to CENHEP and TISLUS.</p></li>
+<li><p>COLCAB reanchors to CENHEP, CENLUS, and COLCAB.</p></li>
+<li><p>COLHEP reanchors to CENLUS and COLCAB.</p></li>
+<li><p>KETHEP reanchors to BARDOT, BARHEP, BARSIG, BARTIS, CENHEP, CENLUS, COLHEP, KETHEP, KETSIG, KETTIS, TISFAS, TISGAL, TISHEP, TISTAR, TISDOT, SIGLUS, and ZAPGAR.</p></li>
+<li><p>KETLUS reanchors to BARDOT, BARHEP, BARTIS, BARTAR, CENHEP, and TISGAL,</p></li>
+<li><p>KETSIG reanchors to CENLUS.</p></li>
+<li><p>KETWUT reanchors to BUCCAB and LUSLUS.</p></li>
+<li><p>SIGCAB reanchors to BARTIS.</p></li>
+<li><p>SIGFAS reanchors to LUSLUS.</p></li>
+<li><p>SIGLUS reanchors to BARDOT, BARTIS, and CENLUS.</p></li>
+<li><p>TISBAR reanchors to BUCCAB and BARTIS.</p></li>
+<li><p>TISCOM reanchors to TISCOM.</p></li>
+<li><p>TISDOT reanchors to TISLUS.</p></li>
+<li><p>TISGAL reanchors to BARTIS, CENHEP, CENLUS, KETLUS, TISGAL, and TISGAR.</p></li>
+<li><p>TISGAR reanchors to CENLUS and TISGAR.</p></li>
+<li><p>WUTCOL reanchors to BARHEP, CENHEP, and WUTCOL.</p></li>
+<li><p>WUTDOT reanchors to BARHEP.</p></li>
+<li><p>WUTGAL reanchors to BARHEP.</p></li>
+<li><p>WUTGAR reanchors to SIGBAR.</p></li>
+<li><p>WUTSIG reanchors to TISLUS and WUTSIG.</p></li>
+<li><p>ZAPCOL reanchors to LUSLUS.</p></li>
+<li><p>ZAPDOT reanchors to LUSLUS.</p></li>
+<li><p>ZAPGAR reanchors to CENHEP.</p></li>
+</ul>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. Currently, no hoon contains more than one running.</p>
 <p>A running hoon may contain a runechild before the running. That runechild is called the <strong>head</strong> of the running hoon.</p>
@@ -1137,38 +1169,6 @@ Exception ::= BlankLine</code></pre>
 <li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
 </ul>
 <p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
-<h1 id="appendix-reanchoring-fixed-arity-hoons">Appendix: Reanchoring fixed-arity hoons</h1>
-<p>The fixed-arity hoons reanchor as follows:</p>
-<ul>
-<li><p>BARDOT reanchors to KETTIS, CENLUS, LUSLUS, and CENHEP.</p></li>
-<li><p>BARHEP reanchors to KETTIS and TISDOT.</p></li>
-<li><p>BARTIS reanchors to COLHEP.</p></li>
-<li><p>CENDOT reanchors to BARTIS and CENHEP.</p></li>
-<li><p>CENHEP reanchors to CENHEP, TISLUS, TISGAL, and COLHEP.</p></li>
-<li><p>CENLUS reanchors to CENHEP and TISLUS.</p></li>
-<li><p>COLCAB reanchors to COLCAB, CENHEP, and CENLUS.</p></li>
-<li><p>COLHEP reanchors to CENLUS and COLCAB.</p></li>
-<li><p>KETHEP reanchors to BARHEP, BARTIS, CENHEP, COLHEP, TISTAR, BARSIG, KETSIG, TISFAS, KETHEP, TISHEP, TISGAL, TISDOT, SIGLUS, ZAPGAR, CENLUS, BARDOT and KETTIS.</p></li>
-<li><p>KETLUS reanchors to BARHEP, BARTIS, TISGAL, BARDOT, BARTAR and CENHEP.</p></li>
-<li><p>KETSIG reanchors to CENLUS.</p></li>
-<li><p>KETWUT reanchors to LUSLUS and BUCCAB.</p></li>
-<li><p>SIGCAB reanchors to BARTIS.</p></li>
-<li><p>SIGFAS reanchors to LUSLUS.</p></li>
-<li><p>SIGLUS reanchors to CENLUS, BARTIS and BARDOT.</p></li>
-<li><p>TISBAR reanchors to BARTIS and BUCCAB.</p></li>
-<li><p>TISCOM reanchors to TISCOM.</p></li>
-<li><p>TISDOT reanchors to TISLUS.</p></li>
-<li><p>TISGAL reanchors to BARTIS, TISGAL, CENHEP, KETLUS, TISGAR, and CENLUS.</p></li>
-<li><p>TISGAR reanchors to CENLUS and TISGAR.</p></li>
-<li><p>WUTCOL reanchors to BARHEP, WUTCOL, and CENHEP.</p></li>
-<li><p>WUTDOT reanchors to BARHEP.</p></li>
-<li><p>WUTGAL reanchors to BARHEP.</p></li>
-<li><p>WUTGAR reanchors to SIGBAR.</p></li>
-<li><p>WUTSIG reanchors to WUTSIG and TISLUS.</p></li>
-<li><p>ZAPCOL reanchors to LUSLUS.</p></li>
-<li><p>ZAPDOT reanchors to LUSLUS.</p></li>
-<li><p>ZAPGAR reanchors to CENHEP.</p></li>
-</ul>
 <h1 id="appendix-reanchoring-futures">Appendix: Reanchoring futures</h1>
 <p>The reanchoring in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- reanchoring is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Reanchorings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
 <p>In future, it may be best to revise this document to treat more reanchorings as standard than currently.</p>

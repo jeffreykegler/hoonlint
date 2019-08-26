@@ -682,13 +682,13 @@ The top-level trailer is a special-case of a vertical gap --
 it contains a body and
 a preamble, but no postamble.
 
-# Backdented hoons
+# Fixed-arity hoons
 
 The flagship Hoon whitespace strategy is backdenting.
 Variations on the idea of backdenting appear throughout,
 but the archetypal case of backdenting is its use in
-backdented hoons.
-Here is a example of a backdented 4-ary hoon:
+fixed-arity hoons.
+Here is a example of a 4-ary hoon:
 
 *From `arvo/sys/hoon.hoon`, 6752-6755:*
 ```
@@ -881,6 +881,140 @@ The tail of a split form hint should be separated
 from its head by a vertical gap,
 with comments aligned with the head.
 The tail should also be aligned with the head.
+
+## Reanchoring fixed-arity hoons
+
+The fixed-arity hoons reanchor as follows:
+
+* BARDOT reanchors to
+  CENHEP,
+  CENLUS,
+  KETTIS, and
+  LUSLUS.
+
+* BARHEP reanchors to
+  KETTIS and
+  TISDOT.
+
+* BARTIS reanchors to
+  COLHEP.
+
+* CENDOT reanchors to
+  BARTIS and
+  CENHEP.
+
+* CENHEP reanchors to
+  CENHEP,
+  COLHEP,
+  TISLUS, and
+  TISGAL.
+
+* CENLUS reanchors to
+  CENHEP and
+  TISLUS.
+
+* COLCAB reanchors to
+  CENHEP,
+  CENLUS, and
+  COLCAB.
+
+* COLHEP reanchors to
+  CENLUS and
+  COLCAB.
+
+* KETHEP reanchors to
+  BARDOT,
+  BARHEP,
+  BARSIG,
+  BARTIS,
+  CENHEP,
+  CENLUS,
+  COLHEP,
+  KETHEP,
+  KETSIG,
+  KETTIS,
+  TISFAS,
+  TISGAL,
+  TISHEP,
+  TISTAR,
+  TISDOT,
+  SIGLUS, and
+  ZAPGAR.
+
+* KETLUS reanchors to
+  BARDOT,
+  BARHEP,
+  BARTIS,
+  BARTAR,
+  CENHEP, and
+  TISGAL,
+
+* KETSIG reanchors to
+  CENLUS.
+
+* KETWUT reanchors to
+  BUCCAB and
+  LUSLUS.
+
+* SIGCAB reanchors to
+  BARTIS.
+
+* SIGFAS reanchors to
+  LUSLUS.
+
+* SIGLUS reanchors to
+    BARDOT,
+    BARTIS, and
+    CENLUS.
+
+* TISBAR reanchors to
+  BUCCAB and
+  BARTIS.
+
+* TISCOM reanchors to
+  TISCOM.
+
+* TISDOT reanchors to
+  TISLUS.
+
+* TISGAL reanchors to
+  BARTIS,
+  CENHEP,
+  CENLUS,
+  KETLUS,
+  TISGAL, and
+  TISGAR.
+
+* TISGAR reanchors to
+    CENLUS and
+    TISGAR.
+
+* WUTCOL reanchors to
+  BARHEP,
+  CENHEP, and
+  WUTCOL.
+
+* WUTDOT reanchors to
+  BARHEP.
+
+* WUTGAL reanchors to
+  BARHEP.
+
+* WUTGAR reanchors to
+  SIGBAR.
+
+* WUTSIG reanchors to
+  TISLUS and
+  WUTSIG.
+
+* ZAPCOL reanchors to
+  LUSLUS.
+
+* ZAPDOT reanchors to
+  LUSLUS.
+
+* ZAPGAR reanchors to
+  CENHEP.
 
 # Running hoons
 
@@ -2550,140 +2684,6 @@ We can now finish our definition of anchor column,
 by defining `Offset(r)`:
 `Offset(r)` is the sum of `PerRuneOff(S[i])`
 for all `i` such that `0 <= i <= n`.
-
-# Appendix: Reanchoring fixed-arity hoons
-
-The fixed-arity hoons reanchor as follows:
-
-* BARDOT reanchors to
-  KETTIS,
-  CENLUS,
-  LUSLUS, and
-  CENHEP.
-
-* BARHEP reanchors to
-  KETTIS and
-  TISDOT.
-
-* BARTIS reanchors to
-  COLHEP.
-
-* CENDOT reanchors to
-  BARTIS and
-  CENHEP.
-
-* CENHEP reanchors to
-  CENHEP,
-  TISLUS,
-  TISGAL, and
-  COLHEP.
-
-* CENLUS reanchors to
-  CENHEP and
-  TISLUS.
-
-* COLCAB reanchors to
-  COLCAB,
-  CENHEP, and
-  CENLUS.
-
-* COLHEP reanchors to
-  CENLUS and
-  COLCAB.
-
-* KETHEP reanchors to
-  BARHEP,
-  BARTIS,
-  CENHEP,
-  COLHEP,
-  TISTAR,
-  BARSIG,
-  KETSIG,
-  TISFAS,
-  KETHEP,
-  TISHEP,
-  TISGAL,
-  TISDOT,
-  SIGLUS,
-  ZAPGAR,
-  CENLUS,
-  BARDOT and
-  KETTIS.
-
-* KETLUS reanchors to
-  BARHEP,
-  BARTIS,
-  TISGAL,
-  BARDOT,
-  BARTAR and
-  CENHEP.
-
-* KETSIG reanchors to
-  CENLUS.
-
-* KETWUT reanchors to
-  LUSLUS and
-  BUCCAB.
-
-* SIGCAB reanchors to
-  BARTIS.
-
-* SIGFAS reanchors to
-  LUSLUS.
-
-* SIGLUS reanchors to
-    CENLUS,
-    BARTIS and
-    BARDOT.
-
-* TISBAR reanchors to
-  BARTIS and
-  BUCCAB.
-
-* TISCOM reanchors to
-  TISCOM.
-
-* TISDOT reanchors to
-  TISLUS.
-
-* TISGAL reanchors to
-  BARTIS,
-  TISGAL,
-  CENHEP,
-  KETLUS,
-  TISGAR, and
-  CENLUS.
-
-* TISGAR reanchors to
-    CENLUS and
-    TISGAR.
-
-* WUTCOL reanchors to
-  BARHEP,
-  WUTCOL, and
-  CENHEP.
-
-* WUTDOT reanchors to
-  BARHEP.
-
-* WUTGAL reanchors to
-  BARHEP.
-
-* WUTGAR reanchors to
-  SIGBAR.
-
-* WUTSIG reanchors to
-  WUTSIG and
-  TISLUS.
-
-* ZAPCOL reanchors to
-  LUSLUS.
-
-* ZAPDOT reanchors to
-  LUSLUS.
-
-* ZAPGAR reanchors to
-  CENHEP.
 
 # Appendix: Reanchoring futures
 
