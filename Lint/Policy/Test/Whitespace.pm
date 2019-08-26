@@ -142,6 +142,7 @@ siglus:
     cenlus # fixes 26, breaks 0
     # luslus # fixes 1, breaks 1
     bartis # fixes 1, breaks 0
+    # tislus # fixes 0, breaks 0
     # TODO: REDO
 # tisbar
 tisbar:
@@ -174,6 +175,7 @@ tisgar:
     cenlus # fixes 1, breaks 0
     # luslus # fixes 0, breaks 1
     # tislus # fixes 0, breaks 1
+    tisgar # fixes 1, breaks 0
     # TODO: REDO
 # tislus
 tislus:

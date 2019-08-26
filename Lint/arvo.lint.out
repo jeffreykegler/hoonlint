@@ -22,7 +22,6 @@
 === hoons/arvo/tests/zuse/crypto/keccak.hoon ===
 === hoons/arvo/sys/zuse.hoon ===
 === hoons/arvo/sys/hoon.hoon ===
-hoons/arvo/sys/hoon.hoon 8:3 Test::Whitespace tisgar:comment-indent tisgar child 1 @8:3; comment overindented by 2
 === hoons/arvo/sys/arvo.hoon ===
 === hoons/arvo/sys/vane/behn.hoon ===
 === hoons/arvo/sys/vane/dill.hoon ===
