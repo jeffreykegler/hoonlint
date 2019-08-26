@@ -17,7 +17,6 @@ use Scalar::Util qw(looks_like_number weaken);
 my %reanchorings = ();
 
 my $reanchorings = \<<'EOS';
-# barhep
 bardot:
   kettis # fixes 6, breaks 0
   cenlus # fixes 4, breaks 0
@@ -68,7 +67,6 @@ cenhep:
 cenket:
   #       1 =.
   # tallCendot # fixes 0, breaks 0
-# dottis
 cenlus:
   cenhep # fixes 8, breaks 0
   tislus # fixes 11, breaks 2
@@ -121,7 +119,6 @@ ketlus:
 ketsig:
   #       1 %+
   cenlus # fixes 1, breaks 0
-# sigcab
 kettis:
   # tallTislus # breaks 109, fixes 24
 ketwut:
@@ -179,13 +176,6 @@ tisgar:
     # tishep # fixes 0, breaks 1
 # tislus
 tislus:
-  #       1 =+
-  # $node,
-  # {
-  # tallTislus # fixes 1, breaks 4
-  # }
-  # );
-# }
 wutcol:
   barhep # fixes 6, breaks 0
   wutcol # fixes 3, breaks 0
@@ -1075,69 +1065,6 @@ sub checkGapComments {
         die "Bad gap combinator parse: $issue\n";
     }
     return \@mistakes;
-}
-
-sub checkHGap {
-    my ( $policy, $gap, $options ) = @_;
-    my $instance = $policy->{lint};
-    my @mistakes = ();
-    die "NYI";
-    my $gapLength = $gap->{length};
-    my ( $gapLine, $gapColumn ) = $instance->nodeLC($gap);
-    my ( $nextLexemeLine, $nextLexemeColumn ) =
-      $instance->line_column( $gap->{start} + $gapLength );
-
-  CHECK_HGAP: {
-        last CHECK_HGAP if $gapLine != $nextLexemeLine;
-
-        # Assume that the gap is not the top of the tree.
-        my $parent    = $gap->{PARENT};
-        my ( $parentLine, $parentColumn ) = $instance->nodeLC($parent);
-        my $expected  = $options->{lengths};
-        my $desc      = $options->{desc};
-        my $details   = $options->{details};
-        my $runeName  = $options->{runeName} // $policy->runeName($parent);
-        my $subpolicy = $options->{subpolicy} // [$runeName];
-
-        if ( not $expected ) {
-
-            # default is to be tightly aligned
-            $expected = [ 'tight', 2, 1 ];
-        }
-
-        # TODO: a hash to detect duplicates?
-        # my %expectedColumns = {};
-        my @expectedColumns = ();
-      LENGTH: for my $expectedItem ( @{$expected} ) {
-            my ( $alignDesc, $column, $isLength ) = @{$expectedItem};
-            $column += $gapColumn if $isLength;
-            push @expectedColumns, [ $alignDesc, $column ];
-        }
-
-        # Horizontal gap of desired length
-        for my $column (@expectedColumns) {
-            return [] if $nextLexemeColumn == $column;
-        }
-
-        my $msg = sprintf
-          '%s %s; %s',
-          $desc,
-          describeLC( $nextLexemeLine, $nextLexemeColumn ),
-          describeMisindent2( $gapColumn, $expectedColumns[0] );
-        push @mistakes,
-          {
-            desc         => $msg,
-            subpolicy    => [ @{$subpolicy}, 'hgap' ],
-            line         => $nextLexemeLine,
-            column       => $nextLexemeColumn,
-            reportLine   => $nextLexemeLine,
-            reportColumn => $nextLexemeColumn,
-            topicLines   => [$parentLine],
-            details      => $details,
-          };
-        return \@mistakes;
-    }
-    return $policy->checkPseudojoin( $gap, $options );
 }
 
 # TODO: refactor all pseudojoins to call the
