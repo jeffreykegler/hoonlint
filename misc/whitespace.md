@@ -947,7 +947,7 @@ The fixed-arity hoons reanchor as follows:
   BARTIS,
   BARTAR,
   CENHEP, and
-  TISGAL,
+  TISGAL.
 
 * KETSIG reanchors to
   CENLUS.
