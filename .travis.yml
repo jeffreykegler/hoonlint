@@ -22,9 +22,8 @@ branches:
 install:
   # for debugging, output available perls
   - perlbrew list
-  - cpanm Marpa::R2
-  # install dependencies without testing, for speed
-  - (cd cpan/ && cpanm --installdeps --quiet --notest .)
+  - (cd cpan/ && cpanm Marpa::R2)
+  - (cd cpan/ && cpanm --quiet .)
 
 # build Marpa and execute tests
 script:
