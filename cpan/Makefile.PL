@@ -25,31 +25,28 @@ $VERSION = eval $VERSION;
 # It's here for convenience in working on this file.
 # perl -MModule::CoreList -E 'print $Module::CoreList::version{5.010001}{Carp};'
 
-my @always_required            = qw(
-    Carp
-    Cwd
-    Data::Dumper
-    DynaLoader
-    English
-    Exporter
-    ExtUtils::CBuilder
-    ExtUtils::MakeMaker
-    ExtUtils::Manifest
-    ExtUtils::Mkbootstrap
-    Fatal
-    File::Copy
-    File::Spec
-    IPC::Cmd
-    List::Util
-    Scalar::Util
-    Test::More
-    Time::Piece
-    XSLoader
-);
-
-my %requires =
-    map { ( $_, 0 ) }
-    @always_required;
+my $requires            = {
+    'Carp' => 0,
+    'Cwd' => 0,
+    'Data::Dumper' => 0,
+    'DynaLoader' => 0,
+    'English' => 0,
+    'Exporter' => 0,
+    'ExtUtils::CBuilder' => 0,
+    'ExtUtils::MakeMaker' => 0,
+    'ExtUtils::Manifest' => 0,
+    'ExtUtils::Mkbootstrap' => 0,
+    'Fatal' => 0,
+    'File::Copy' => 0,
+    'File::Spec' => 0,
+    'IPC::Cmd' => 0,
+    'List::Util' => 0,
+    'Marpa::R2' => 6.000_000,
+    'Scalar::Util' => 0,
+    'Test::More' => 0,
+    'Time::Piece' => 0,
+    'XSLoader' => 0,
+};
 
 my @files_to_cleanup = (
 );
@@ -62,9 +59,9 @@ WriteMakefile(
     ABSTRACT => 'Hoonlint',
 
     # Let the three of these be the same.
-    CONFIGURE_REQUIRES => \%requires,
-    BUILD_REQUIRES => \%requires,
-    PREREQ_PM => \%requires,
+    CONFIGURE_REQUIRES => $requires,
+    BUILD_REQUIRES => $requires,
+    PREREQ_PM => $requires,
 
     MIN_PERL_VERSION => '5.10.1',
     META_MERGE => {
