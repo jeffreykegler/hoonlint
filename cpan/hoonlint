@@ -112,8 +112,7 @@ for my $shortPolicyName (@policies) {
 
   # "require policy name" is a hack until I create the full directory
   # structure required to make this a Perl module
-  my $requirePolicyName = 'Policy::' . $shortPolicyName;
-  my $eval_ok = eval "require $requirePolicyName";
+  my $eval_ok = eval "require $fullPolicyName";
   die $EVAL_ERROR if not $eval_ok;
   $policies{$shortPolicyName} = $fullPolicyName;
 }

@@ -136,7 +136,7 @@ sub getTripleQuote {
     my $terminatorPos = index ${$input}, $terminator, $nextNL;
     my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL);
 
-    say STDERR "Left main READ loop" if $MarpaX::Hoonlint::DEBUG;
+    say STDERR "Left main READ loop" if $MarpaX::Hoonlint::YAHC::DEBUG;
 
     # Return ref to value and new offset
     return \$value, $terminatorPos + length $terminator;
@@ -173,7 +173,7 @@ sub getTripleDoubleQuote {
     my $terminatorPos = index ${$input}, $terminator, $nextNL;
     my $value = substr ${$input}, $nextNL+1, ($terminatorPos - $nextNL);
 
-    say STDERR "Left main READ loop" if $MarpaX::Hoonlint::DEBUG;
+    say STDERR "Left main READ loop" if $MarpaX::Hoonlint::YAHC::DEBUG;
 
     # Return ref to value and new offset
     return \$value, $terminatorPos + length $terminator;
@@ -264,7 +264,7 @@ sub getCram {
 # copy in this file lexically, losing the advantage of updates,
 # but guaranteeing stability.
 sub new {
-    my @argHashes = @_;
+    my ($class, @argHashes) = @_;
     my $self      = {};
     for my $argHash (@argHashes) {
       ARG_NAME: for my $argName ( keys %{$argHash} ) {
@@ -276,7 +276,7 @@ sub new {
                 $self->{semantics} = $argHash->{semantics};
                 next ARG_NAME;
             }
-            die "MarpaX::Hoonlint::new() called with unknown arg name: $argName";
+            die "MarpaX::Hoonlint::YAHC::new() called with unknown arg name: $argName";
         }
     }
     my $semantics = $self->{semantics} // $defaultSemantics;
@@ -295,12 +295,12 @@ sub new {
     my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
     $self->{dsl} = $dsl;
     $self->{grammar} = $grammar;
-    return bless $self, 'MarpaX::Hoonlint';
+    return bless $self, $class;
 }
 
 sub recceStart {
     my ($self) = @_;
-    my $debug = $MarpaX::Hoonlint::DEBUG;
+    my $debug = $MarpaX::Hoonlint::YAHC::DEBUG;
     my $recce = Marpa::R2::Scanless::R->new(
         {
             grammar         => $self->{grammar},
@@ -332,7 +332,7 @@ sub read {
     my ($self, $input) = @_;
     $self->recceStart();
     my $recce = $self->{recce};
-    my $debug = $MarpaX::Hoonlint::DEBUG;
+    my $debug = $MarpaX::Hoonlint::YAHC::DEBUG;
     my $input_length = length ${$input};
     my $this_pos;
     my $ok = eval { $this_pos = $recce->read( $input ) ; 1; };
@@ -369,7 +369,7 @@ sub read {
         my $event = $events->[0];
         my $eventName  = $event->[0];
 
-	say STDERR "$eventName event" if $MarpaX::Hoonlint::DEBUG;
+	say STDERR "$eventName event" if $MarpaX::Hoonlint::YAHC::DEBUG;
 
         if ( $eventName eq 'tripleQuote' ) {
             my $value_ref;
@@ -383,7 +383,7 @@ sub read {
             );
             say STDERR "lexeme_read('TRIPLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
-              if $MarpaX::Hoonlint::DEBUG;
+              if $MarpaX::Hoonlint::YAHC::DEBUG;
         }
 
 	# TODO: tripeDoubleQuote must allow sump(5d)
@@ -400,7 +400,7 @@ sub read {
             );
             say STDERR "lexeme_read('TRIPLE_DOUBLE_QUOTE_STRING',...) returned ",
               Data::Dumper::Dumper( \$result )
-              if $MarpaX::Hoonlint::DEBUG;
+              if $MarpaX::Hoonlint::YAHC::DEBUG;
 	}
 
         if ( $eventName eq '^CRAM' ) {
@@ -421,7 +421,7 @@ sub read {
             );
             say STDERR "lexeme_read('CRAM',...) returned ",
               Data::Dumper::Dumper( \$result )
-              if $MarpaX::Hoonlint::DEBUG;
+              if $MarpaX::Hoonlint::YAHC::DEBUG;
 	}
 
 	if (not $resume_pos) {
@@ -447,8 +447,8 @@ sub read {
 
 sub parse {
     my ($input) = @_;
-    my $debug = $MarpaX::Hoonlint::DEBUG;
-    my $self = MarpaX::Hoonlint::new();
+    my $debug = $MarpaX::Hoonlint::YAHC::DEBUG;
+    my $self = MarpaX::Hoonlint::YAHC->new();
     $self->read($input);
     my $recce = $self->{recce};
 
@@ -1984,7 +1984,7 @@ moldInfixCol2 ::= rope5d+ separator=>COL proper=>1
 # '='
 # Differs from scat(5d)
 scad5d ::= moldPrefixTis
-moldPrefixTis ::= (- TIS -) wyde5d (- PER -) action=>MarpaX::Hoonlint::deprecated
+moldPrefixTis ::= (- TIS -) wyde5d (- PER -) action=>MarpaX::Hoonlint::YAHC::deprecated
 
 # ['a' 'z']
 # Differs from scat(5d)

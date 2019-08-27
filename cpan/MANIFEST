@@ -1,3 +1,4 @@
+hoonlint
 hoons/arvo/app/ask.hoon
 hoons/arvo/app/curl.hoon
 hoons/arvo/app/dojo.hoon
@@ -314,11 +315,19 @@ hoons/examples/sieve_b.hoon
 hoons/examples/sieve_k.hoon
 hoons/examples/toe.hoon
 lib/MarpaX/Hoonlint.pm
-lib/MarpaX/Hoonlint/hoonlint.pl
 lib/MarpaX/Hoonlint/Policy/Test/Whitespace.pm
 lib/MarpaX/Hoonlint/yahc.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.bak
 README
+suppressions/anomaly.suppressions
+suppressions/arvo.suppressions
+suppressions/examples.suppressions
 t/00-load.t
+t/examples.d/fizzbuzz.lint.out
+t/examples.d/sieve_b.lint.out
+t/examples.d/sieve_k.lint.out
+t/examples.d/toe.lint.out
+t/examples.t

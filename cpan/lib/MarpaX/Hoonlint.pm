@@ -864,7 +864,7 @@ lexeme default = latm => 1 action=>[start,length,name]
 EOS
 
     my $parser =
-      MarpaX::Hoonlint::new( { semantics => $semantics, all_symbols => 1 } );
+      MarpaX::Hoonlint::YAHC->new( { semantics => $semantics, all_symbols => 1 } );
     my $dsl = $parser->dsl();
 
     $MarpaX::Hoonlint::grammar = $parser->rawGrammar();

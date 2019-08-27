@@ -24,7 +24,7 @@ sub slurp {
 
 my @tests = (
     ['hoons/examples/fizzbuzz.hoon', 't/examples.d/fizzbuzz.lint.out', '--sup=suppressions/examples.suppressions'],
-    ['hoons/examples/sieve_b.hoon', 't/examples.d/sieve_b.lint.out', '--sup=suppressions/examples..suppressions'],
+    ['hoons/examples/sieve_b.hoon', 't/examples.d/sieve_b.lint.out', '--sup=suppressions/examples.suppressions'],
     ['hoons/examples/sieve_k.hoon', 't/examples.d/sieve_k.lint.out', '--sup=suppressions/examples.suppressions'],
     ['hoons/examples/toe.hoon', 't/examples.d/toe.lint.out', '--sup=suppressions/examples.suppressions'],
 );
