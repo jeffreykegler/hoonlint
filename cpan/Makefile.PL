@@ -63,6 +63,8 @@ WriteMakefile(
     BUILD_REQUIRES => $requires,
     PREREQ_PM => $requires,
 
+    EXE_FILES = [ 'hoonlint' ],
+
     MIN_PERL_VERSION => '5.10.1',
     META_MERGE => {
         resources =>
