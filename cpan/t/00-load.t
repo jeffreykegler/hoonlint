@@ -39,8 +39,8 @@ my $marpa_string_version_desc = "Marpa::R3 version is " . $Marpa::R3::STRING_VER
 Test::More::ok( $marpa_string_version_ok, $marpa_string_version_desc );
 
 Test::More::diag($hoonlint_string_version_desc);
+Test::More::diag($hoonlint_version_desc);
 Test::More::diag($marpa_string_version_desc);
-Test::More::diag($libmarpa_version_desc);
-Test::More::diag('Libmarpa tag: ' . Marpa::R3::Thin::tag());
+Test::More::diag($marpa_version_desc);
 
 # vim: expandtab shiftwidth=4:
