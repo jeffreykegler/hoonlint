@@ -7,7 +7,7 @@ use POSIX qw(setlocale LC_ALL);
 
 POSIX::setlocale(LC_ALL, "C");
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 if (not eval { require MarpaX::Hoonlint; 1; }) {
     Test::More::diag($EVAL_ERROR);

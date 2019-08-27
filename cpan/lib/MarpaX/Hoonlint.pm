@@ -5,14 +5,14 @@ use strict;
 use warnings;
 no warnings 'recursion';
 
-package MarpaX::Hoonlint::Lint;
+package MarpaX::Hoonlint;
 
 use Data::Dumper;
 use English qw( -no_match_vars );
 use Scalar::Util qw(looks_like_number weaken);
 use Getopt::Long;
 
-require "yahc.pm";
+use MarpaX::Hoonlint::yahc;
 
 my %separator = qw(
   hyf4jSeq DOT
