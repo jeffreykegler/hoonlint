@@ -1,6 +1,6 @@
 # Hoon whitespace "test" policy
 
-package MarpaX::YAHC::Lint::Policy::Test::Whitespace;
+package MarpaX::Hoonlint::Policy::Test::Whitespace;
 
 use 5.010;
 use strict;

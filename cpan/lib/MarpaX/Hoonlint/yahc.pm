@@ -11,7 +11,8 @@ use Marpa::R2 6.000;
 # File sys/hoon.hoon: https://github.com/urbit/arvo/blob/master/sys/hoon.hoon
 # as of commit 7dc3eb1cfacaaafd917697a544bdcf7f22e09eeb
 
-package MarpaX::Hoonlint;
+package MarpaX::Hoonlint::YAHC;
+
 use English qw( -no_match_vars );
 
 sub deprecated {
