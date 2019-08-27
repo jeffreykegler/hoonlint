@@ -5,7 +5,7 @@ use strict;
 use warnings;
 no warnings 'recursion';
 
-package MarpaX::YAHC::Lint;
+package MarpaX::Hoonlint::Lint;
 
 use Data::Dumper;
 use English qw( -no_match_vars );
@@ -70,11 +70,11 @@ sub doNode {
     my $ruleID = $Marpa::R2::Context::rule;
     use warnings;
     my ( $lhs, @rhs ) =
-      map { $MarpaX::YAHC::Lint::grammar->symbol_display_form($_) }
-      $MarpaX::YAHC::Lint::grammar->rule_expand($ruleID);
+      map { $MarpaX::Hoonlint::Lint::grammar->symbol_display_form($_) }
+      $MarpaX::Hoonlint::Lint::grammar->rule_expand($ruleID);
     my ( $first_g1, $last_g1 ) = Marpa::R2::Context::location();
     my ($lhsStart) =
-      $MarpaX::YAHC::Lint::recce->g1_location_to_span( $first_g1 + 1 );
+      $MarpaX::Hoonlint::Lint::recce->g1_location_to_span( $first_g1 + 1 );
 
     my $node;
   CREATE_NODE: {
@@ -88,7 +88,7 @@ sub doNode {
             last CREATE_NODE;
         }
         my ( $last_g1_start, $last_g1_length ) =
-          $MarpaX::YAHC::Lint::recce->g1_location_to_span($last_g1);
+          $MarpaX::Hoonlint::Lint::recce->g1_location_to_span($last_g1);
         my $lhsLength = $last_g1_start + $last_g1_length - $lhsStart;
       RESULT: {
           CHILD: for my $childIX ( 0 .. $#argChildren ) {
@@ -844,23 +844,23 @@ sub new {
     my $fileName     = $config->{fileName};
     my %lint         = %{$config};
     my $lintInstance = \%lint;
-    bless $lintInstance, "MarpaX::YAHC::Lint";
+    bless $lintInstance, "MarpaX::Hoonlint::Lint";
     my $policies = $lintInstance->{policies};
     my $pSource  = $lintInstance->{pHoonSource};
 
     my @data = ();
 
     my $semantics = <<'EOS';
-:default ::= action=>MarpaX::YAHC::Lint::doNode
+:default ::= action=>MarpaX::Hoonlint::Lint::doNode
 lexeme default = latm => 1 action=>[start,length,name]
 EOS
 
     my $parser =
-      MarpaX::YAHC::new( { semantics => $semantics, all_symbols => 1 } );
+      MarpaX::Hoonlint::new( { semantics => $semantics, all_symbols => 1 } );
     my $dsl = $parser->dsl();
 
-    $MarpaX::YAHC::Lint::grammar = $parser->rawGrammar();
-    $lintInstance->{grammar} = $MarpaX::YAHC::Lint::grammar;
+    $MarpaX::Hoonlint::Lint::grammar = $parser->rawGrammar();
+    $lintInstance->{grammar} = $MarpaX::Hoonlint::Lint::grammar;
 
     my %NYI_Rule = ();
     $NYI_Rule{$_} = 1 for qw();
@@ -869,8 +869,8 @@ EOS
     my %tallRuneRule = map { +( $_, 1 ) } grep {
              /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
           or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
-    } map { $MarpaX::YAHC::Lint::grammar->symbol_name($_); }
-      $MarpaX::YAHC::Lint::grammar->symbol_ids();
+    } map { $MarpaX::Hoonlint::Lint::grammar->symbol_name($_); }
+      $MarpaX::Hoonlint::Lint::grammar->symbol_ids();
     $lintInstance->{tallRuneRule} = \%tallRuneRule;
 
     # TODO: Check that these are all backdented,
@@ -1001,12 +1001,12 @@ EOS
 
     $parser->read($pSource);
 
-    $MarpaX::YAHC::Lint::recce = $parser->rawRecce();
-    $lintInstance->{recce}     = $MarpaX::YAHC::Lint::recce;
+    $MarpaX::Hoonlint::Lint::recce = $parser->rawRecce();
+    $lintInstance->{recce}     = $MarpaX::Hoonlint::Lint::recce;
     $lintInstance->{nodeCount} = 0;
 
     $parser = undef;    # free up memory
-    my $astRef = $MarpaX::YAHC::Lint::recce->value($lintInstance);
+    my $astRef = $MarpaX::Hoonlint::Lint::recce->value($lintInstance);
 
     my @lineToPos = ( -1, 0 );
     {
