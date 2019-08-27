@@ -1,43 +1,35 @@
 language: perl
 perl:
-  - "5.26-shrplib"
   - "5.26"
-  - "5.24-shrplib"
-  - "5.24-extras"
   - "5.24"
-  - "5.22-shrplib"
-  - "5.22-extras"
+  - "5.24-shrplib"
   - "5.22"
-  - "5.20-shrplib"
+  - "5.22-shrplib"
   - "5.20"
-  - "5.18-shrplib"
+  - "5.20-shrplib"
   - "5.18"
+  - "5.18-shrplib"
   - "5.16"
   - "5.14"
   - "5.12"
-  - "5.10"
+  - "5.10"  # minimum supported version
 
 branches:
   only:
   - travis
 
-before_install:
-    - cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-    - cpanm IPC::Cmd
-    - cpanm Test::Differences
-    - cpanm Getopt::Long
-    - cpanm Marpa::R2
-
 # install prerequisites
 install:
   # for debugging, output available perls
   - perlbrew list
+  # install dependencies without testing, for speed
+  - (cd cpan/ && cpanm --installdeps --quiet --notest .)
+
+# build Marpa and execute tests
+script:
+  - (cd cpan/ && perl Makefile.PL && make && make test)
 
 sudo: false  # faster builds using containers
-
-# build libmarpa and execute tests
-script:
-  - (make test)
 
 notifications:
   irc: "irc.freenode.net#marpa"
