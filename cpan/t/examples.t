@@ -23,10 +23,10 @@ sub slurp {
 }
 
 my @tests = (
-    ['hoon/examples/fizzbuzz.hoon', 't/examples.d/fizzbuzz.lint.out', '--sup=suppressions/examples.suppressions'],
-    ['hoon/examples/sieve_b.hoon', 't/examples.d/sieve_b.lint.out', '--sup=suppressions/examples..suppressions'],
-    ['hoon/examples/sieve_k.hoon', 't/examples.d/sieve_k.lint.out', '--sup=suppressions/examples.suppressions'],
-    ['hoon/examples/toe.hoon', 't/examples.d/toe.lint.out', '--sup=suppressions/examples.suppressions'],
+    ['hoons/examples/fizzbuzz.hoon', 't/examples.d/fizzbuzz.lint.out', '--sup=suppressions/examples.suppressions'],
+    ['hoons/examples/sieve_b.hoon', 't/examples.d/sieve_b.lint.out', '--sup=suppressions/examples..suppressions'],
+    ['hoons/examples/sieve_k.hoon', 't/examples.d/sieve_k.lint.out', '--sup=suppressions/examples.suppressions'],
+    ['hoons/examples/toe.hoon', 't/examples.d/toe.lint.out', '--sup=suppressions/examples.suppressions'],
 );
 
 local $Data::Dumper::Deepcopy    = 1;
@@ -37,7 +37,7 @@ for my $testData (@tests) {
 
     my ($stdinName, $stdoutName, @options) = @{$testData};
 
-    my $cmd = [ 'perl', '-I', 'lib/MarpaX/Hoonlint', 'hoonlint', @options, $stdinName ];
+    my $cmd = [ 'perl', '-Ilib', 'hoonlint', @options, $stdinName ];
 
     my @stdout       = ();
     my $gatherStdout = sub {
