@@ -1,0 +1,70 @@
+# Copyright 2018 Jeffrey Kegler
+# Marpa::R3 is Copyright (C) 2018, Jeffrey Kegler.
+#
+# This module is free software; you can redistribute it and/or modify it
+# under the same terms as Perl 5.10.1. For more details, see the full text
+# of the licenses in the directory LICENSES.
+#
+# This program is distributed in the hope that it will be
+# useful, but it is provided "as is" and without any express
+# or implied warranties. For details, see the full text of
+# of the licenses in the directory LICENSES.
+
+# Temporary
+
+# Permanent
+
+# LC_ALL=C sort
+/[.]gdb_history$
+/errs$
+/junk$
+/junk2$
+[.]DS_Store$
+[.]a$
+[.]gitignore$
+[.]swp$
+[.]tar.gz$
+[/]nogit_
+^MANIFEST[.]SKIP$
+^MYMETA.
+^Makefile$
+^Makefile[.]doit$
+^Makefile[.]old$
+^MarpaX-Hoonlint-[0-9]+[.][0-9]{3}_[0-9]{3}/
+^MarpaX-Hoonlint-[0-9]+[.][0-9]{6}/
+^TOUCH$
+^[.]build[.]
+^[.]gdb_history$
+^[.]gdbinit$
+^[.]git/
+^[.]gitattributes$
+^[.]inputrc$
+^blib/
+^blib_shared/
+^doit$
+^doit[.]out$
+^errs$
+^hide/
+^junk$
+^junk[.]
+^lib/MYMETA.
+^lib/Makefile$
+^lib/Makefile[.]old$
+^lib/Marpa/.*[.]xsh
+^lib/Marpa/MYMETA.
+^lib/Marpa/Makefile$
+^lib/Marpa/Makefile[.]old$
+^lib/MarpaX/Hoonlint/MYMETA.
+^lib/MarpaX/Hoonlint/Makefile$
+^lib/MarpaX/Hoonlint/Makefile[.]old$
+^lib/MarpaX/Hoonlint/pm_to_blib$
+^lib/Marpa/pm_to_blib$
+^lib/pm_to_blib$
+^nogit
+^nogit/
+^nytprof/
+^nytprof[.]out$
+^pm_to_blib$
+^pod2htmd[.]tmp
+^pod2htmi[.]tmp
+^test[.]out$
