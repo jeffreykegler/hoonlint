@@ -7,7 +7,7 @@ use English qw( -no_match_vars );
 use Scalar::Util qw(looks_like_number weaken);
 use Getopt::Long;
 
-require "hoonlint.pm";
+use MarpaX::Hoonlint;
 
 sub slurp {
     my ($fileName) = @_;
