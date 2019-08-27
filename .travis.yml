@@ -23,8 +23,7 @@ install:
   # for debugging, output available perls
   - perlbrew list
   - cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-  - cpanm Marpa::R2
-  - (cd cpan/ && cpanm --quiet .)
+  - (cd cpan/ && cpanm --installdeps .)
 
 # build Marpa and execute tests
 script:
