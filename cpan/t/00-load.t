@@ -26,16 +26,16 @@ my $hoonlint_string_version_desc = "MarpaX::Hoonlint version is " . $MarpaX::Hoo
     // 'No MarpaX::Hoonlint::STRING_VERSION';
 Test::More::ok( $hoonlint_string_version_ok, $hoonlint_string_version_desc );
 
-my $marpa_version_ok = defined $Marpa::R3::VERSION;
+my $marpa_version_ok = defined $Marpa::R2::VERSION;
 my $marpa_version_desc =
     $marpa_version_ok
-    ? 'Marpa::R3 version is ' . $Marpa::R3::VERSION
-    : 'No Marpa::R3::VERSION';
+    ? 'Marpa::R2 version is ' . $Marpa::R2::VERSION
+    : 'No Marpa::R2::VERSION';
 Test::More::ok( $marpa_version_ok, $marpa_version_desc );
 
-my $marpa_string_version_ok   = defined $Marpa::R3::STRING_VERSION;
-my $marpa_string_version_desc = "Marpa::R3 version is " . $Marpa::R3::STRING_VERSION
-    // 'No Marpa::R3::STRING_VERSION';
+my $marpa_string_version_ok   = defined $Marpa::R2::STRING_VERSION;
+my $marpa_string_version_desc = "Marpa::R2 version is " . $Marpa::R2::STRING_VERSION
+    // 'No Marpa::R2::STRING_VERSION';
 Test::More::ok( $marpa_string_version_ok, $marpa_string_version_desc );
 
 Test::More::diag($hoonlint_string_version_desc);

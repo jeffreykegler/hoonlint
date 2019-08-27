@@ -108,7 +108,7 @@ push @policies, @policiesArg;
 die "Multiple policies not yet implemented" if scalar @policies != 1;
 my %policies = ();
 for my $shortPolicyName (@policies) {
-  my $fullPolicyName = 'MarpaX::Hoonlint::Lint::Policy::' . $shortPolicyName;
+  my $fullPolicyName = 'MarpaX::Hoonlint::Policy::' . $shortPolicyName;
 
   # "require policy name" is a hack until I create the full directory
   # structure required to make this a Perl module
@@ -162,6 +162,6 @@ SET_DISPLAY_DETAILS: {
     $config{displayDetails} = $displayDetails;
 }
 
-MarpaX::Hoonlint::Lint->new(\%config);
+MarpaX::Hoonlint->new(\%config);
 
 # vim: expandtab shiftwidth=4:
