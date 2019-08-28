@@ -25,6 +25,7 @@
 [.]swp$
 [.]tar.gz$
 [/]nogit_
+^MANIFEST[.]bak$
 ^MANIFEST[.]SKIP$
 ^MYMETA.
 ^Makefile$
