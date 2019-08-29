@@ -176,9 +176,37 @@ hoonlint - lint equivalent for the Hoon language
 
     hoonlint [options] FILE
 
-=head1 DESCRIPTION
+=head1 Description
 
-TODO
+=head1 Options
+
+=over 4
+
+=item * B<-C I<NUM>>, B<--context=I<NUM>>
+
+=item * B<--displayDetails=I<NUM>> B<--details=I<NUM>>
+
+=back
+
+=head1 SUPPORT
+
+Support for and information about F<hoonlint> can be found at:
+
+=over 4
+
+=item * Source repository
+
+L<https://github.com/jeffreykegler/hoonlint>
+
+=item * The Marpa IRC Channel
+
+#marpa at freenode.net
+
+=item * The Marpa mailing list
+
+L<http://groups.google.com/group/marpa-parser>
+
+=back
 
 =head1 AUTHOR
 
