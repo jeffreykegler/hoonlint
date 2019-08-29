@@ -64,13 +64,13 @@ my $verbose;    # right now does nothing
 my $inclusionsFileName;
 my @suppressionsFileNames;
 my @policiesArg;
-my $contextSize = 0;
-my $displayDetails;
+my $contextSize = 2;
+my $displayDetails = 1;
 
 GetOptions(
     "verbose"               => \$verbose,
-    "context|C=i"           => \$contextSize,
-    "displayDetails|details=i"           => \$displayDetails,
+    "context|C:i"           => \$contextSize,
+    "displayDetails|details:i"           => \$displayDetails,
     "inclusions-file|I=s"   => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
     "policy|P=s"            => \@policiesArg,

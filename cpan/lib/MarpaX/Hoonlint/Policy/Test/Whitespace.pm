@@ -1205,7 +1205,7 @@ sub checkTistis {
             column       => $tistisColumn,
             reportLine         => $tistisLine,
             reportColumn       => $tistisColumn,
-            details        => [ [$runeName, "Starts at $runeLC"] ],
+            details        => [ ["Starts at $runeLC"] ],
           };
         return \@mistakes;
     }
@@ -1234,7 +1234,7 @@ sub checkTistis {
             column         => $tistisColumn,
             reportLine         => $tistisLine,
             reportColumn       => $tistisColumn,
-            details        => [ [$runeName, "Starts at $runeLC"] ],
+            details        => [ ["Starts at $runeLC"] ],
           };
     }
 
@@ -1279,7 +1279,6 @@ sub checkBont {
                 column       => $bodyColumn,
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
-                details      => [ [$runeName] ],
               };
             last BODY_ISSUES;
         }
@@ -1295,7 +1294,6 @@ sub checkBont {
                     subpolicy  => [ $runeName, 'hint' ],
                     runeName        => $runeName,
                     subpolicy  => [$runeName],
-                    details    => [ [$runeName] ],
                 }
             )
           };
@@ -1315,7 +1313,6 @@ sub checkBont {
                 column       => $bodyColumn,
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
-                details      => [ [$runeName] ],
               };
         }
     }
@@ -1446,7 +1443,6 @@ sub checkBonzElement {
                 column       => $bodyColumn,
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
-                details      => [ [$runeName] ],
               };
             last BODY_ISSUES;
         }
@@ -1835,7 +1831,6 @@ sub checkTopKids {
                         subpolicy  => [$runeName],
                         details    => [
                             [
-                                $runeName,
                                 ( sprintf 'sail elem kid #1' ),
                                 'inter-comment indent should be '
                                   . ( $anchorColumn + 1 ),
@@ -1914,7 +1909,6 @@ sub checkTopKids {
                         subpolicy  => [$runeName],
                         details    => [
                             [
-                                $runeName,
                                 ( sprintf 'sail elem kid #%d', $kidNumber),
                                 'inter-comment indent should be '
                                   . ( $anchorColumn + 1 ),
@@ -1995,7 +1989,6 @@ sub checkElemKids {
                     subpolicy  => [$runeName],
                     details    => [
                         [
-                            $runeName,
                             ( sprintf 'sail elem kid #%d', $childIX ),
                             'inter-comment indent should be '
                               . ( $anchorColumn + 1 ),
@@ -2195,7 +2188,7 @@ sub checkRunning {
             reportLine           => $thisRunStepLine,
             reportColumn         => $runStepColumn,
             topicLines     => [$runeLine],
-            details        => [ [ $runeName, @pseudojoin, @{$anchorDetails} ] ],
+            details        => [ [ @pseudojoin, @{$anchorDetails} ] ],
           };
     }
 
@@ -2242,7 +2235,6 @@ sub checkRunning {
                 push @topicLines, @{$pileAlignmentLines};
                 $details = [
                     [
-                        $runeName,
                         sprintf 'runstep alignment is %d, see %s',
                         $oneBasedColumn,
                         (
@@ -2254,7 +2246,7 @@ sub checkRunning {
                 ];
             }
             else {
-                $details = [ [ $runeName, "no runstep alignment detected" ] ];
+                $details = [ [ "no runstep alignment detected" ] ];
             }
 
             my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
@@ -2308,7 +2300,6 @@ sub checkRunning {
                         topicLines => [$runeLine],
                         details    => [
                             [
-                                $runeName,
                                 'inter-comment indent should be '
                                   . ( $anchorColumn + 1 ),
                                 'pre-comment indent should be '
@@ -2338,7 +2329,7 @@ sub checkRunning {
                 reportLine           => $thisRunStepLine,
                 reportColumn         => $runStepColumn,
                 topicLines     => [$runeLine],
-                details        => [ [ $runeName, @{$anchorDetails} ] ],
+                details        => [ [ @{$anchorDetails} ] ],
               };
         }
 
@@ -2537,7 +2528,6 @@ sub checkWhap5d {
                 reportLine           => $boogLine,
                 reportColumn         => $boogColumn,
                 topicLines     => [ $parentLine, $expectedLine ],
-                    details    => [ [$runeName] ],
               };
         }
 
@@ -2555,7 +2545,6 @@ sub checkWhap5d {
                     preColumn => $expectedBoogColumn+2,
                     runeName        => $runeName,
                     subpolicy => [$runeName, 'arm-vgap'],
-                    details    => [ [$runeName] ],
                     topicLines => [ $parentLine, $boogGapLine ],
                 }
             )
@@ -2602,7 +2591,7 @@ sub checkWisp5d {
                 runeName        => $runeName,
                 subpolicy  => [$runeName],
                 topicLines => [$batteryLine],
-                details      => [ [ $runeName, "Starts at $batteryLC", ] ],
+                details      => [ [ "Starts at $batteryLC", ] ],
             }
         )
       };
@@ -2628,7 +2617,7 @@ sub checkWisp5d {
                 column       => $hephepColumn,
                 reportLine   => $hephepLine,
                 reportColumn => $hephepColumn,
-                details      => [ [ $runeName, "Starts at $batteryLC", ] ],
+                details      => [ [ "Starts at $batteryLC", ] ],
               };
         }
     }
@@ -2658,7 +2647,7 @@ sub checkWisp5d {
             reportLine   => $hephepLine,
             reportColumn => $hephepColumn,
             topicLines   => [$batteryLine],
-            details      => [ [ $runeName, "Starts at $batteryLC", ] ],
+            details      => [ [ "Starts at $batteryLC", ] ],
           };
     }
     return \@mistakes;
@@ -2711,7 +2700,6 @@ sub checkSplitFascom {
                 mainColumn => $anchorColumn,
                 runeName        => $tag,
                 subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
                 topicLines => [$bodyLine],
             }
         )
@@ -2734,7 +2722,7 @@ sub checkSplitFascom {
             reportLine           => $bodyLine,
             reportColumn         => $bodyColumn,
             topicLines     => [ $runeLine, $expectedLine ],
-            details        => [ [$tag, @{$anchorDetails} ] ],
+            details        => [ [ @{$anchorDetails} ] ],
           };
     }
 
@@ -2747,7 +2735,7 @@ sub checkSplitFascom {
                 runeName        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $anchorLine, $tistisLine ],
-                details        => [ [$tag, @{$anchorDetails} ] ],
+                details        => [ [ @{$anchorDetails} ] ],
             }
         )
       };
@@ -2808,7 +2796,6 @@ sub checkJoinedFascom {
             reportLine   => $bodyLine,
             reportColumn => $bodyColumn,
             topicLines   => [ $runeLine, $expectedLine ],
-            details      => [ [$tag] ],
           };
     }
 
@@ -2821,7 +2808,6 @@ sub checkJoinedFascom {
                 runeName        => $tag,
                 subpolicy => [ $runeName ],
                 topicLines => [ $runeLine, $tistisLine ],
-                details    => [ [$tag] ],
             }
         )
       };
@@ -2925,7 +2911,7 @@ sub checkFascomElements {
                 push @mistakes,
                   {
                     desc         => $msg,
-                    details      => [ [ $tag, @{$anchorDetails} ] ],
+                    details      => [ [ @{$anchorDetails} ] ],
                     subpolicy    => [ $tag, 'indent' ],
                     parentLine   => $parentLine,
                     parentColumn => $parentColumn,
@@ -2954,7 +2940,7 @@ sub checkFascomElements {
                     runeName        => $tag,
                 subpolicy => [ $tag ],
                     topicLines => [$runeLine],
-                    details    => [ [$tag, @{$anchorDetails} ] ],
+                    details    => [ [ @{$anchorDetails} ] ],
                 }
             )
           };
@@ -2999,7 +2985,6 @@ sub checkFasdot {
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
                 topicLines   => [$runeLine],
-                details      => [ [$tag] ],
               };
             last CHECK_BODY;
         }
@@ -3021,7 +3006,6 @@ sub checkFasdot {
                 reportLine   => $bodyLine,
                 reportColumn => $bodyColumn,
                 topicLines   => [$runeLine],
-                details      => [ [$tag] ],
               };
         }
     }
@@ -3035,7 +3019,6 @@ sub checkFasdot {
                 runeName        => $tag,
                 subpolicy  => [$runeName],
                 topicLines => [ $runeLine, $tistisLine ],
-                details    => [ [$tag] ],
             }
         )
       };
@@ -3084,7 +3067,6 @@ sub checkJogging {
                     preColumn => $jogBaseColumn,
                     runeName        => $runeName,
                 subpolicy => [ $runeName, 'jogging' ],
-                    details    => [ [$runeName] ],
                     topicLines => [$jogGapLine],
                 }
             )
@@ -3132,7 +3114,7 @@ sub checkSeq {
                 column         => $elementColumn,
                 reportLine           => $elementLine,
                 reportColumn         => $elementColumn,
-                details    => [ [$runeName, $elementDesc] ],
+                details    => [ [ $elementDesc] ],
               };
         }
 
@@ -3150,7 +3132,7 @@ sub checkSeq {
                     mainColumn => $expectedColumn,
                     runeName        => $runeName,
                     subpolicy => [ $runeName, 'sequence-vgap' ],
-                    details    => [ [$runeName, $elementDesc] ],
+                    details    => [ [ $elementDesc] ],
                     topicLines => [$elementGapLine],
                 }
             )
@@ -3264,7 +3246,6 @@ sub checkBarcab {
                 preColumn => $anchorColumn + 2,
                 runeName        => $runeName,
                 subpolicy  => [ $runeName, 'battery-vgap' ],
-                details    => [ [$runeName] ],
                 topicLines => [$wispLine],
             }
         )
@@ -3357,7 +3338,7 @@ sub checkBarcen {
                 runeName        => $runeName,
                 subpolicy => [ $runeName ],
                 details    => [
-                    [ $runeName, @{ $policy->anchorDetails( $node, $anchorData ) } ]
+                    [ @{ $policy->anchorDetails( $node, $anchorData ) } ]
                 ],
             }
         )
@@ -3427,7 +3408,6 @@ sub checkBarket {
                     column       => $headColumn,
                     reportLine   => $headLine,
                     reportColumn => $headColumn,
-                    details      => [ [$tag] ],
                   };
                 last HEAD_ISSUES;
             }
@@ -3448,7 +3428,6 @@ sub checkBarket {
                     column       => $headColumn,
                     reportLine   => $headLine,
                     reportColumn => $headColumn,
-                    details      => [ [$tag] ],
                   };
             }
             last HEAD_ISSUES;
@@ -3473,7 +3452,6 @@ sub checkBarket {
             column       => $headColumn,
             reportLine   => $headLine,
             reportColumn => $headColumn,
-            details      => [ [$tag] ],
           };
 
     }
@@ -3488,7 +3466,6 @@ sub checkBarket {
                 preColumn => $expectedColumn + 2,
                 runeName        => $tag,
                 subpolicy  => [$runeName, 'battery-vgap'],
-                details    => [ [$tag] ],
                 topicLines => [$wispLine],
             }
         )
@@ -3590,7 +3567,6 @@ sub checkFordHoofRune {
                 mainColumn => $anchorColumn,
                 runeName        => $tag,
                 subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
             }
         )
       };
@@ -3649,7 +3625,6 @@ sub checkFordHoop {
                     mainColumn => $expectedBodyColumn,
                     runeName        => $tag,
                 subpolicy => [ $tag ],
-                    details    => [ [$tag] ],
                 }
             )
           };
@@ -3737,7 +3712,7 @@ sub checkFord_1 {
                     mainColumn => $expectedBodyColumn,
                     runeName        => $runeName,
                     subpolicy  => [$runeName],
-                    details    => [ [ $runeName, @{$anchorDetails}, ], ],
+                    details    => [ [ @{$anchorDetails}, ], ],
                 }
             )
           };
@@ -3752,7 +3727,7 @@ sub checkFord_1 {
               {
                 desc         => $msg,
                 subpolicy    => [ $runeName, 'body-indent' ],
-                details      => [ [ $runeName, @{$anchorDetails} ] ],
+                details      => [ [ @{$anchorDetails} ] ],
                 parentLine   => $parentLine,
                 parentColumn => $parentColumn,
                 line         => $bodyLine,
@@ -3827,7 +3802,6 @@ sub checkFaswut {
                 mainColumn => $expectedColumn,
                 runeName        => $tag,
                 subpolicy => [ $runeName ],
-                details    => [ [$tag] ],
             }
         )
       };
@@ -4002,7 +3976,6 @@ sub checkJoined_0Running {
             column       => $runningColumn,
             reportLine         => $runningLine,
             reportColumn       => $runningColumn,
-            details      => [ [$runeName] ],
           };
     }
 
@@ -4029,7 +4002,6 @@ sub checkJoined_0Running {
                 runeName        => $runeName,
                 subpolicy => [ $runeName, 'tistis-vgap' ],
                 topicLines => [ $runeLine, $tistisLine ],
-                details    => [ [$runeName] ],
             }
         )
       };
@@ -4692,7 +4664,7 @@ sub check_1Jogging {
                 reportLine   => $headLine,
                 reportColumn => $headColumn,
                 expectedLine => $runeLine,
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
               };
             last CHECK_HEAD;
         }
@@ -4716,7 +4688,7 @@ sub check_1Jogging {
                 column       => $headColumn,
                 reportLine   => $headLine,
                 reportColumn => $headColumn,
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
               };
         }
     }
@@ -4738,7 +4710,7 @@ sub check_1Jogging {
                 column       => $joggingColumn,
                 reportLine   => $joggingLine,
                 reportColumn => $joggingColumn,
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
               };
             last CHECK_JOGGING_GAP;
         }
@@ -4753,7 +4725,7 @@ sub check_1Jogging {
                     subpolicy  => [ $runeName, 'jogging-gap' ],
                     parent     => $rune,
                     topicLines => [$joggingLine],
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
                 }
             )
           };
@@ -4769,7 +4741,7 @@ sub check_1Jogging {
                 runeName        => $runeName,
                 subpolicy  => [ $runeName, 'tistis-gap' ],
                 topicLines => [$tistisLine],
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
             }
         )
       };
@@ -4782,7 +4754,7 @@ sub check_1Jogging {
                 tag            => $runeName,
                 subpolicy      => [$runeName],
                 expectedColumn => $anchorColumn,
-                details => [ [ $runeName, @{$anchorDetails}  ]],
+                details => [ [ @{$anchorDetails}  ]],
             }
         )
       };
@@ -4901,7 +4873,6 @@ sub check_2Jogging {
                     mainColumn => $anchorColumn,
                     runeName        => $runeName,
                     subpolicy  => [ @subpolicy, 'subhead-vgap' ],
-                    details    => [ [$runeName] ],
                     topicLines => [$subheadLine],
                 }
             )
@@ -4938,7 +4909,6 @@ sub check_2Jogging {
                 preColumn  => $jogBaseColumn,
                 runeName        => $runeName,
                 subpolicy  => [@subpolicy, 'jogging-vgap'],
-                details    => [ [$runeName] ],
                 topicLines => [$joggingLine],
             }
         )
@@ -5010,7 +4980,6 @@ sub check_Jogging1 {
             reportLine   => $joggingLine,
             reportColumn => $joggingColumn,
             expectedLine => $runeLine,
-            details      => [ [$runeName] ],
         };
     }
 
@@ -5028,7 +4997,6 @@ sub check_Jogging1 {
             column       => $joggingColumn,
             reportLine   => $joggingLine,
             reportColumn => $joggingColumn,
-            details      => [ [$runeName] ],
         };
     }
 
@@ -5042,7 +5010,6 @@ sub check_Jogging1 {
                 runeName        => $runeName,
                 subpolicy  => [$runeName, 'tistis-gap'],
                 topicLines => [$tistisLine],
-                details    => [ [$runeName] ],
             }
         )
       };
@@ -5067,7 +5034,6 @@ sub check_Jogging1 {
                 mainColumn => $anchorColumn,
                 runeName        => $runeName,
                 subpolicy  => [$runeName, 'tail-vgap'],
-                details    => [ [$runeName] ],
                 topicLines => [$tailLine],
             }
         )
@@ -5199,7 +5165,7 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'body-hgap' ],
-                details => [ [ $tag, @{$anchorDetails} ] ],
+                details => [ [ @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -5226,7 +5192,7 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'pseudo-comment-indent' ],
-                details => [ [ $tag, @{$anchorDetails} ] ],
+                details => [ [ @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -5247,7 +5213,7 @@ sub checkFascomElement {
               {
                 desc           => $msg,
                 subpolicy => [ $tag, 'pseudo-hgap' ],
-                details => [ [ $tag, @{$anchorDetails} ] ],
+                details => [ [ @{$anchorDetails} ] ],
                 parentLine     => $parentLine,
                 parentColumn   => $parentColumn,
                 line           => $bodyLine,
@@ -5271,7 +5237,7 @@ sub checkFascomElement {
           {
             desc           => $msg,
             subpolicy => [ $tag, 'body-indent' ],
-            details => [ [ $tag, @{$anchorDetails} ] ],
+            details => [ [ @{$anchorDetails} ] ],
             parentLine     => $parentLine,
             parentColumn   => $parentColumn,
             line           => $bodyLine,
@@ -5291,7 +5257,7 @@ sub checkFascomElement {
                 mainColumn => $expectedBodyColumn,
                 runeName        => $tag,
                 subpolicy => [ $tag ],
-                details => [ [ $tag, @{$anchorDetails} ] ],
+                details => [ [ @{$anchorDetails} ] ],
                 topicLines => [$runeLine],
             }
         )
@@ -5385,7 +5351,6 @@ sub checkFastis {
                     mainColumn => $expectedHornColumn,
                     runeName        => $tag,
                 subpolicy => [ $runeName ],
-                    details    => [ [$tag] ],
                 }
             )
           };
@@ -5470,7 +5435,7 @@ sub checkKingsideJog {
             my @topicLines = ($brickLine);
             if ( $jogBodyColumn < 0 ) {
               $misindent = describeMisindent2( $gapLength, 2 );
-                $details = [ [ $runeName, "no inter-line alignment detected" ] ];
+                $details = [ [ "no inter-line alignment detected" ] ];
             }
             else {
               $misindent = describeMisindent2( $bodyColumn, $jogBodyColumn );
@@ -5478,7 +5443,6 @@ sub checkKingsideJog {
                 push @topicLines, @{$jogBodyColumnLines};
                 $details = [
                     [
-                        $runeName,
                         sprintf 'inter-line alignment is %d, see %s',
                         $oneBasedColumn,
                         (
@@ -5580,7 +5544,6 @@ sub checkKingsideJog {
             topicLines     => [$brickLine],
             details        => [
                 [
-                    $runeName,
                     sprintf qq{lexeme "%s" %s},
                     $instance->lexeme( $brickLine, $brickColumn ),
                     describeLC( $brickLine, $brickColumn )
@@ -5598,7 +5561,6 @@ sub checkKingsideJog {
                 mainColumn => $expectedBodyColumn,
                 runeName        => $runeName,
                 subpolicy => [ $runeName ],
-                details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
         )
@@ -5668,7 +5630,7 @@ sub checkQueensideJog {
             if ($jogBodyColumn < 0) {
               $misindent = describeMisindent2( $gapLength, 2 );
                $details = [
-                  [ $runeName,
+                  [
                   "no inter-line alignment detected"
                   ]
                ];
@@ -5677,7 +5639,7 @@ sub checkQueensideJog {
                my $oneBasedColumn = $jogBodyColumn+1;
                push @topicLines, @{$jogBodyColumnLines};
                $details = [
-                  [ $runeName,
+                  [
                   sprintf 'inter-line alignment is %d, see %s', $oneBasedColumn,
                   (join q{ }, map { $_ . ':' . $oneBasedColumn } @{$jogBodyColumnLines})
                   ]
@@ -5725,7 +5687,6 @@ sub checkQueensideJog {
             topicLines     => [$brickLine],
             details        => [
                 [
-                    $runeName,
                     sprintf qq{lexeme "%s" %s},
                     $instance->lexeme( $brickLine, $brickColumn ),
                     describeLC( $brickLine, $brickColumn )
@@ -5743,7 +5704,6 @@ sub checkQueensideJog {
                 mainColumn => $expectedBodyColumn,
                 runeName        => $runeName,
                 subpolicy => [ $runeName ],
-                details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $brickLine ],
             }
         )
@@ -5980,7 +5940,6 @@ sub checkBackdented {
                 push @topicLines, @{$alignmentLines};
                 $details = [
                     [
-                        $runeName,
                         sprintf '%s alignment is %d, see %s',
                         $interlineAlignmentType,
                         $oneBasedColumn,
@@ -5992,7 +5951,7 @@ sub checkBackdented {
                 ];
             }
             else {
-                $details = [ [ $runeName, "no chain alignment detected" ] ];
+                $details = [ [ "no chain alignment detected" ] ];
             }
             my @sortedColumns = sort { $a->[0] <=> $b->[0] } @allowedColumns;
             my $allowedDesc = join "; ",
@@ -6072,7 +6031,7 @@ sub checkBackdented {
                 column       => $elementColumn,
                 reportLine   => $elementLine,
                 reportColumn => $elementColumn,
-                details      => [ [ $runeName, @{$anchorDetails}, ] ],
+                details      => [ [ @{$anchorDetails}, ] ],
               };
             next ELEMENT;
         }
@@ -6089,7 +6048,6 @@ sub checkBackdented {
                     topicLines => [ $anchorLine, $elementLine ],
                     details => [
                         [
-                            $runeName,
                             @{$anchorDetails},
                             (sprintf 'inter-comment indent should be %d; see line %d',
                               ( $anchorColumn + 1 ), $anchorLine),
@@ -6116,7 +6074,7 @@ sub checkBackdented {
                 reportLine           => $elementLine,
                 reportColumn         => $elementColumn,
                 topicLines => [ $anchorLine ],
-                details        => [ [ $runeName, @{$anchorDetails}, ] ],
+                details        => [ [ @{$anchorDetails}, ] ],
               };
         }
     }
@@ -6193,7 +6151,6 @@ sub checkKetdot {
                         mainColumn => $anchorColumn,
                         runeName        => $runeName,
                 subpolicy => [ $runeName ],
-                        details    => [ [$tag] ],
                     }
                 )
               };
@@ -6455,7 +6412,6 @@ sub checkLuslus {
                 mainColumn => $expectedBodyColumn,
                 runeName        => $runeName,
                 subpolicy  => [$runeName],
-                details    => [ [$runeName] ],
                 topicLines => [ $bodyLine, $batteryLine, $batteryHoonLine ],
                 details    => [
                     [
