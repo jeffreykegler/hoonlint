@@ -186,6 +186,8 @@ and subject to change without notice.
 
 =head1 Description
 
+=head2 Simple example
+
 The command
 
     hoonlint hoons/examples/toe.hoon
@@ -209,10 +211,13 @@ In this
   the 2nd runechild of a WUTCOL hoon statement (which is located at line 58, column 16)
   is overindented by 1.
 
-This message becomes a little more understandable, if we ask hoonlint to show the code.
+=head2 Example with context
+
+The message of the simple example
+becomes a little more understandable, if we ask hoonlint to show the code.
 The C<-C 5> option request 5 lines of context, so that the command
 
-    hoonlint -C 5 hoons/examples/toe.hoon
+    hoonlint -C 5 toe.hoon
 
 produces the following output:
 
@@ -246,6 +251,27 @@ an issue, but which is relevant to a lint issue.
 In this case, line 57 contains the beginning of the hoon statement
 which has the backdenting issue.
 
+=head2 Example with context
+
+It is also possible to have context without details.
+The command
+
+    hoonlint -C 5 --details=0 fizzbuzz.hoon
+
+produces the following output:
+
+ 1  |=  end/atom
+ 2  =+  count=1
+ 3  |-
+ 4  ^-  (list tape)
+ 5> ?:  =(end count)
+[ fizzbuzz.hoon 6:4 Test::Whitespace wutcol:indent backdented element #2 @6:4; overindented by 1 ]
+ 6!    ~
+ 7  :-
+ 8    ?:  =(0 (mod count 15))
+ 9      "FizzBuzz"
+10    ?:  =(0 (mod count 5))
+
 =head1 Options
 
 =over 4
@@ -277,6 +303,56 @@ L<https://github.com/jeffreykegler/hoonlint>
 L<http://groups.google.com/group/marpa-parser>
 
 =back
+
+=head1 FAQ
+
+=head2 How do I install hoonlint?
+
+MarpaX::Hoonlint is an ordinary Perl CPAN module,
+and installs in the usual ways.
+However, since many in hoonlint's intended audience
+will be new to Perl, here is
+what you do.
+By the way,
+CPAN.org has
+L<a page on installing modules|https://www.cpan.org/modules/INSTALL.html>,
+which contains more than you need to know.
+
+If you are on UNIX, here is the TL;DR
+
+* First, install Perl.  You need at least Perl 5.10.1.
+Almost every UNIX system will come with such a Perl.
+
+* Second, run this command:
+
+    cpan App::cpanminus
+
+* Third, run this command:
+
+    cpanm MarpaX::Hoonlint
+
+That's it.
+
+=head2 How do I install hoonlint from the Git repo?
+
+* First, clone the git repo.
+
+* Second, install Perl.  You need at least Perl 5.10.1.
+Almost every UNIX system will come with such a Perl.
+
+* Third, download the L<cpanm> command.
+
+    cpan App::cpanminus
+
+* From the directory of the downloaded git repo,
+  run this command
+
+    cpanm ./cpan
+
+=head1 ACKNOWLEDGEMENTS
+
+C<hoonlint> was made possible by the generous support of
+an anonymous member of the Hoon community.
 
 =head1 AUTHOR
 
