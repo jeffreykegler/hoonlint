@@ -1,3 +1,5 @@
+#!perl
+
 use 5.010;
 use strict;
 use warnings;
@@ -64,7 +66,7 @@ my $verbose;    # right now does nothing
 my $inclusionsFileName;
 my @suppressionsFileNames;
 my @policiesArg;
-my $contextSize = 2;
+my $contextSize = 0;
 my $displayDetails = 1;
 
 GetOptions(
@@ -170,21 +172,89 @@ MarpaX::Hoonlint->new(\%config);
 
 =head1 NAME
 
-hoonlint - lint equivalent for the Hoon language
+hoonlint - lint utility for the Hoon language
 
 =head1 SYNOPSIS
 
     hoonlint [options] FILE
 
+=head1 Status
+
+This software is alpha -- it should be useable,
+but features are evolving
+and subject to change without notice.
+
 =head1 Description
+
+The command
+
+    hoonlint hoons/examples/toe.hoon
+
+produces the following output:
+
+    hoons/examples/toe.hoon 58:16 Test::Whitespace wutcol:indent backdented element #2 @58:16; overindented by 1
+
+In this
+
+* C<hoon/examples/toe.hoon> is the name of the file.
+
+* C<58:16> is the line number and column of the problem, both 1-based.
+
+* C<Test::Whitespace> is the policy name.
+
+* C<wutcol:indent> is the subpolicy name.
+
+* The rest of the line is a brief human-readable description of the lint issue.
+  In this case,
+  the 2nd runechild of a WUTCOL hoon statement (which is located at line 58, column 16)
+  is overindented by 1.
+
+This message becomes a little more understandable, if we ask hoonlint to show the code.
+The C<-C 5> option request 5 lines of context, so that the command
+
+    hoonlint -C 5 hoons/examples/toe.hoon
+
+produces the following output:
+
+    53              ==                                          ::  53
+    54      ++  mo  ^-  {(unit fact) ^game}                     ::  54
+    55              ?<  is                                      ::  55
+    56              =/  next/side  (~(set bo a.game) here)      ::  56
+    57>             ?:  ~(win bo next)                          ::  57
+    [ hoons/examples/toe.hoon 58:16 Test::Whitespace wutcol:indent backdented element #2 @58:16; overindented by 1
+      anchor column is "?:" @@57:13
+    ]
+    58!                [[~ %win ?:(w.game %x %o)] nu]           ::  58
+    59              [~ game(w !w.game, a z.game, z next)]       ::  59
+    60      --                                                  ::  60
+    61    --                                                    ::  62
+    62  --                                                      ::  63
+
+In the above, the original lint message is shown in square brackets, just before the line
+(58) to which it refers.
+Following the original lint message in square brackets are additional details,
+if available.
+In this case, we are told that C<anchor column is "?:" @@57:13>.
+Backdenting is relative to an anchor column, and this detail tells
+us where C<hoonlint> thought the anchor column was.
+
+Each line of code is preceded by its line number and an optional tag,
+either a zap (C<!>) or a gar (C<< > >>).
+A zap indicates a line with a lint issue.
+A gar indicates a "topic" line -- a lint which does not actually contain
+an issue, but which is relevant to a lint issue.
+In this case, line 57 contains the beginning of the hoon statement
+which has the backdenting issue.
 
 =head1 Options
 
 =over 4
 
-=item * B<-C I<NUM>>, B<--context=I<NUM>>
+=item B<-C I<NUM>>, B<--context=I<NUM>>
 
-=item * B<--displayDetails=I<NUM>> B<--details=I<NUM>>
+=item B<--displayDetails=I<NUM>> B<--details=I<NUM>>
+
+=item B<-P I<policy>>, B<--policy=I<policy>>
 
 =back
 
