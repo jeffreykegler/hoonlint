@@ -1,0 +1,64 @@
+#!perl
+
+use 5.010001;
+use strict;
+use warnings FATAL => 'all';
+use autodie;
+use English qw( -no_match_vars );
+use IPC::Cmd;
+
+my $latest;
+LINE: {
+    open my $changes_fh, q{<}, 'cpan/Changes';
+    while ( my $line = <$changes_fh> ) {
+        if ( $line =~ m/ \A \d /xms ) {
+            $latest = $line;
+            chomp $latest;
+            last LINE;
+        }
+    } ## end while ( my $line = <$changes_fh> )
+} ## end LINE:
+
+die "Could not find latest change" if not defined $latest;
+warn "Bumping -> $latest\n";
+
+my ( $major, $minor, $underscore, $micro) = (
+    $latest =~ m/\A (\d+) [.] (\d\d\d) ([_]?) (\d\d\d) /xms
+    );
+
+if ( not defined $micro ) {
+    die "bump_version Cannot handle new version number: $latest";
+}
+
+$major += 0;
+$minor += 0;
+$micro += 0;
+my $perlish_version = sprintf '%d%s%.3d%s%.3d', $major, q{.}, $minor,
+    $underscore, $micro;
+
+my @versioned_files = split /\n/xms, <<'END_OF_LIST';
+cpan/lib/MarpaX/Hoonlint.pm
+cpan/Makefile.PL
+END_OF_LIST
+
+for my $versioned_file (@versioned_files) {
+    say STDERR $versioned_file;
+    my $file = do { local ( @ARGV, $/ ) = ($versioned_file); <> };
+    $file =~ s/(\$VERSION \s+ =  \s+ ['] ) \d+ [.] \d\d\d [_]? \d\d\d /$1${perlish_version}/xms;
+    open my $out, '>', $versioned_file;
+    print $out $file;
+} ## end for my $versioned_file (@versioned_files)
+
+chdir 'cpan';
+die qq{"perl Makefile.PL" failed: $!}
+    if not IPC::Cmd::run(
+    command => [ $EXECUTABLE_NAME, 'Makefile.PL' ],
+    verbose => 1
+    );
+die qq{"./make distmeta" failed: $!}
+    if
+    not IPC::Cmd::run( command => [ 'make', 'distmeta' ], verbose => 1 );
+my $distdir = "Marpa-R3-$perlish_version";
+die qq{cp of META files failed: $!}
+    if
+    not IPC::Cmd::run( command => [ 'cp', "$distdir/META.yml", "$distdir/META.json", '.' ], verbose => 1 );
