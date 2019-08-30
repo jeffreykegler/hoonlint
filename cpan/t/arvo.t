@@ -339,12 +339,13 @@ END_OF_LIST
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
+my @Iflags = map { '-I' . $_ } @INC;
 
 FILE: for my $fileName (split "\n", $fileList) {
     my $origName = $fileName;
     chomp $fileName;
 
-    my $cmd = [ 'perl', '-Ilib', 'hoonlint',
+    my $cmd = [ $^X, @Iflags, 'hoonlint',
     '--sup=suppressions/aberration.suppressions',
     $fileName ];
 

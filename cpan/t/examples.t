@@ -32,12 +32,14 @@ my @tests = (
 local $Data::Dumper::Deepcopy    = 1;
 local $Data::Dumper::Terse    = 1;
 
+my @Iflags = map { '-I' . $_ } @INC;
+
 
 for my $testData (@tests) {
 
     my ($stdinName, $stdoutName, @options) = @{$testData};
 
-    my $cmd = [ 'perl', '-Ilib', 'hoonlint', @options, $stdinName ];
+    my $cmd = [ 'perl', @Iflags, 'hoonlint', @options, $stdinName ];
 
     my @stdout       = ();
     my $gatherStdout = sub {

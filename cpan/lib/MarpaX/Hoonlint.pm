@@ -15,7 +15,7 @@ use Getopt::Long;
 use MarpaX::Hoonlint::yahc;
 
 use vars qw($VERSION $STRING_VERSION @ISA $DEBUG);
-$VERSION        = '0.001_000';
+$VERSION        = '0.001_001';
 $STRING_VERSION = $VERSION;
 ## no critic (BuiltinFunctions::ProhibitStringyEval)
 $VERSION = eval $VERSION;
