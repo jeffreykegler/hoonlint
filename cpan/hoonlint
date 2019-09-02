@@ -184,6 +184,17 @@ This software is alpha -- it should be useable,
 but features are evolving
 and subject to change without notice.
 
+=head2 Updates
+
+Once MarpaX::Hoonlint leaves alpha,
+users should consult Marpa::R2's "updates" page,
+which contains notes, errata, etc.,
+added since the most recent release.
+The "updates" page is C<UPDATES.md> in the
+current repo.
+At this point, the link is
+L<https://github.com/jeffreykegler/Marpa--R2/blob/master/UPDATES.md>.
+
 =head1 Description
 
 =head2 Simple example
