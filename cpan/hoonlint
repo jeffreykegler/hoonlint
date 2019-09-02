@@ -204,8 +204,8 @@ The command
     hoonlint hoons/examples/toe.hoon
 
 lint the Tic-tac-toe example for Hoon
-(which can be found
-L<here|https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/toe.hoon>)
+(which can be found at
+L<https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/toe.hoon>)
 and produces the following output:
 
     hoons/examples/toe.hoon 58:16 Test::Whitespace wutcol:indent backdented element #2 @58:16; overindented by 1
@@ -283,8 +283,8 @@ The command
 runs on Hoon's fizzbuzz example.
 It asks for 2 context lines,
 with no details.
-(The fizzbuzz example can be found
-L<here|https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/fizzbuzz.hoon>.)
+(The fizzbuzz example can be found at
+L<https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/fizzbuzz.hoon>.)
 It produces the following output:
 
  4  ^-  (list tape)

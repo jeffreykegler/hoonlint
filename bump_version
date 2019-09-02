@@ -58,7 +58,7 @@ die qq{"perl Makefile.PL" failed: $!}
 die qq{"./make distmeta" failed: $!}
     if
     not IPC::Cmd::run( command => [ 'make', 'distmeta' ], verbose => 1 );
-my $distdir = "Marpa-R3-$perlish_version";
+my $distdir = "MarpaX-Hoonlint-$perlish_version";
 die qq{cp of META files failed: $!}
     if
     not IPC::Cmd::run( command => [ 'cp', "$distdir/META.yml", "$distdir/META.json", '.' ], verbose => 1 );
