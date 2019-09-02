@@ -1,3 +1,4 @@
+Changes
 hoonlint
 hoons/arvo/app/ask.hoon
 hoons/arvo/app/curl.hoon
@@ -320,13 +321,15 @@ lib/MarpaX/Hoonlint/yahc.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
+META.json
+META.yml
 README
 suppressions/aberration.suppressions
 suppressions/examples.suppressions
 t/00-load.t
+t/05-examples.t
 t/arvo.t
 t/examples.d/fizzbuzz.lint.out
 t/examples.d/sieve_b.lint.out
 t/examples.d/sieve_k.lint.out
 t/examples.d/toe.lint.out
-t/05-examples.t
