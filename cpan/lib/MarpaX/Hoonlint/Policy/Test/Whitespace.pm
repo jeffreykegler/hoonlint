@@ -435,7 +435,7 @@ sub anchorDetails {
         my $brickLiteral = $instance->literalLine($runeLine);
         my $brickLexeme = substr $brickLiteral, $brickColumn;
         $brickLexeme =~ s/[\s].*\z//xms;
-        return [sprintf 'anchor column is "%s" @%s',
+        return [sprintf 'anchor column is "%s" %s',
                $brickLexeme,
               describeLC( $runeLine, $anchorColumn )
               ];

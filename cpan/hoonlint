@@ -193,7 +193,7 @@ added since the most recent release.
 The "updates" page is C<UPDATES.md> in the
 current repo.
 At this point, the link is
-L<https://github.com/jeffreykegler/Marpa--R2/blob/master/UPDATES.md>.
+L<https://github.com/jeffreykegler/hoonlint/blob/master/UPDATES.md>.
 
 =head1 Description
 
@@ -203,11 +203,16 @@ The command
 
     hoonlint hoons/examples/toe.hoon
 
-produces the following output:
+lint the Tic-tac-toe example for Hoon
+(which can be found
+L<here|https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/toe.hoon>)
+and produces the following output:
 
     hoons/examples/toe.hoon 58:16 Test::Whitespace wutcol:indent backdented element #2 @58:16; overindented by 1
 
 In this
+
+=over 4
 
 * C<hoon/examples/toe.hoon> is the name of the file.
 
@@ -217,10 +222,13 @@ In this
 
 * C<wutcol:indent> is the subpolicy name.
 
-* The rest of the line is a brief human-readable description of the lint issue.
+* A human-readable description of the lint issue.
+  The rest of the line is describes the lint issue.
   In this case,
   the 2nd runechild of a WUTCOL hoon statement (which is located at line 58, column 16)
   is overindented by 1.
+
+=back
 
 =head2 Example with context
 
@@ -238,7 +246,7 @@ produces the following output:
     56              =/  next/side  (~(set bo a.game) here)      ::  56
     57>             ?:  ~(win bo next)                          ::  57
     [ hoons/examples/toe.hoon 58:16 Test::Whitespace wutcol:indent backdented element #2 @58:16; overindented by 1
-      anchor column is "?:" @@57:13
+      anchor column is "?:" @57:13
     ]
     58!                [[~ %win ?:(w.game %x %o)] nu]           ::  58
     59              [~ game(w !w.game, a z.game, z next)]       ::  59
@@ -248,9 +256,12 @@ produces the following output:
 
 In the above, the original lint message is shown in square brackets, just before the line
 (58) to which it refers.
-Following the original lint message in square brackets are additional details,
-if available.
-In this case, we are told that C<anchor column is "?:" @@57:13>.
+Following the original lint message,
+also within the square brackets,
+are additional details:
+
+    anchor column is "?:" @57:13
+
 Backdenting is relative to an anchor column, and this detail tells
 us where C<hoonlint> thought the anchor column was.
 
@@ -262,26 +273,25 @@ an issue, but which is relevant to a lint issue.
 In this case, line 57 contains the beginning of the hoon statement
 which has the backdenting issue.
 
-=head2 Example with context
+=head2 Example without details
 
 It is also possible to have context without details.
 The command
 
-    hoonlint -C 5 --details=0 fizzbuzz.hoon
+    hoonlint -C 2 --details=0 fizzbuzz.hoon
 
-produces the following output:
+runs on Hoon's fizzbuzz example.
+It asks for 2 context lines,
+with no details.
+(The fizzbuzz example can be found
+L<here|https://github.com/jeffreykegler/hoonlint/blob/cf60f1d5eeb8a0270c9d5a80f096e17fabe6a8b8/cpan/hoons/examples/fizzbuzz.hoon>.)
+It produces the following output:
 
- 1  |=  end/atom
- 2  =+  count=1
- 3  |-
  4  ^-  (list tape)
  5> ?:  =(end count)
 [ fizzbuzz.hoon 6:4 Test::Whitespace wutcol:indent backdented element #2 @6:4; overindented by 1 ]
  6!    ~
  7  :-
- 8    ?:  =(0 (mod count 15))
- 9      "FizzBuzz"
-10    ?:  =(0 (mod count 5))
 
 =head1 Options
 
@@ -289,9 +299,28 @@ produces the following output:
 
 =item B<-C I<NUM>>, B<--context=I<NUM>>
 
+Display I<NUM> lines of context before and after
+the issue message.
+If I<NUM> is 0, no context is displayed.
+By default, I<NUM> is 0.
+
 =item B<--displayDetails=I<NUM>> B<--details=I<NUM>>
 
+Display I<NUM> levels of detail for the error message.
+(Currently at most 1 level of detail is implemented.)
+Some issue messages have no details available.
+I<NUM> defaults to 1 if more than one line of context
+is being displayed.
+I<NUM> defaults to 0 is no lines of context are being
+displayed.
+
 =item B<-P I<policy>>, B<--policy=I<policy>>
+
+Set the policy that C<hoonlint>
+is running to I<policy>.
+C<Test::Whitespace> is the default and,
+in fact,
+the only policy currently implemented.
 
 =back
 
@@ -321,15 +350,14 @@ L<http://groups.google.com/group/marpa-parser>
 
 MarpaX::Hoonlint is an ordinary Perl CPAN module,
 and installs in the usual ways.
-However, since many in hoonlint's intended audience
-will be new to Perl, here is
-what you do.
-By the way,
 CPAN.org has
 L<a page on installing modules|https://www.cpan.org/modules/INSTALL.html>,
 which contains more than you need to know.
+However, since many in hoonlint's intended audience
+will be new to Perl, here is
+what most newcomers need to know:
 
-If you are on UNIX, here is the TL;DR
+=over 4
 
 * First, install Perl.  You need at least Perl 5.10.1.
 Almost every UNIX system will come with such a Perl.
@@ -342,9 +370,15 @@ Almost every UNIX system will come with such a Perl.
 
     cpanm MarpaX::Hoonlint
 
+=back
+
 That's it.
 
 =head2 How do I install hoonlint from the Git repo?
+
+Do the following:
+
+=over 4
 
 * First, clone the git repo.
 
@@ -356,9 +390,11 @@ Almost every UNIX system will come with such a Perl.
     cpan App::cpanminus
 
 * From the directory of the downloaded git repo,
-  run this command
+run this command
 
     cpanm ./cpan
+
+=back
 
 =head1 ACKNOWLEDGEMENTS
 
