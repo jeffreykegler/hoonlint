@@ -345,7 +345,7 @@ FILE: for my $fileName (split "\n", $fileList) {
     my $origName = $fileName;
     chomp $fileName;
 
-    my $cmd = [ $^X, @Iflags, 'hoonlint',
+    my $cmd = [ $^X, @Iflags, './hoonlint',
     '--sup=suppressions/aberration.suppressions',
     $fileName ];
 

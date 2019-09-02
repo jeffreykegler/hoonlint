@@ -39,7 +39,7 @@ for my $testData (@tests) {
 
     my ($stdinName, $stdoutName, @options) = @{$testData};
 
-    my $cmd = [ $^X, @Iflags, 'hoonlint', @options, $stdinName ];
+    my $cmd = [ $^X, @Iflags, './hoonlint', @options, $stdinName ];
 
     my @stdout       = ();
     my $gatherStdout = sub {
