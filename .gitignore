@@ -6,4 +6,6 @@ sieve_b[.]ast[.]try
 sieve_k[.]ast[.]try
 toe[.]ast[.]try
 recognize[.]try
+releng[.]out
+full_test[.]out
 perltidy.LOG
