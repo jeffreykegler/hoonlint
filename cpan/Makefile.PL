@@ -15,7 +15,7 @@ use Config;
 use ExtUtils::MakeMaker;
 
 use vars qw($VERSION $STRING_VERSION);
-$VERSION        = '1.002000';
+$VERSION        = '1.004000';
 $STRING_VERSION = $VERSION;
 ## no critic (BuiltinFunctions::ProhibitStringyEval)
 $VERSION = eval $VERSION;
@@ -43,6 +43,7 @@ my $requires            = {
     'List::Util' => 0,
     'Marpa::R2' => 8.000000,
     'Scalar::Util' => 0,
+    'Test::Differences' => 0,
     'Test::More' => 0,
     'Time::Piece' => 0,
     'XSLoader' => 0,

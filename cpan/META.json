@@ -39,6 +39,7 @@
             "List::Util" : "0",
             "Marpa::R2" : "8",
             "Scalar::Util" : "0",
+            "Test::Differences" : "0",
             "Test::More" : "0",
             "Time::Piece" : "0",
             "XSLoader" : "0"
@@ -63,6 +64,7 @@
             "List::Util" : "0",
             "Marpa::R2" : "8",
             "Scalar::Util" : "0",
+            "Test::Differences" : "0",
             "Test::More" : "0",
             "Time::Piece" : "0",
             "XSLoader" : "0"
@@ -87,6 +89,7 @@
             "List::Util" : "0",
             "Marpa::R2" : "8",
             "Scalar::Util" : "0",
+            "Test::Differences" : "0",
             "Test::More" : "0",
             "Time::Piece" : "0",
             "XSLoader" : "0",
@@ -101,6 +104,6 @@
          "url" : "git://github.com/jeffreykegler/hoonlint.git"
       }
    },
-   "version" : "1.002000",
+   "version" : "1.004000",
    "x_serialization_backend" : "JSON::PP version 2.97001"
 }
