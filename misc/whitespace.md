@@ -314,11 +314,11 @@ Let `H` be the column location immediately after `G` in `file2`.
 The pseudo-join and the horizontal gap are **equivalent**
 if and only if `J == H`.
 
-## Backdenting: TODO
+# Backdenting: TODO
 
 TODO: Move backdenting description here.
 
-## Curried backdenting
+# Curried backdenting
 
 Curried backdenting is a method of conserving indentation.
 In curried backdenting,
@@ -503,7 +503,7 @@ This is what we see in the example.
 The last three lines of the example are the last runechild of the
 TISFAS.
 
-## Header and inline comments
+# Header and inline comments
 
 Comments count as whitespace.
 A comment is a **header comment** if it is on a line
@@ -577,7 +577,7 @@ one stop greater than the inter-comment column.
 A still more formal definition of a staircase is
 given in an appendix.
 
-## Vertical Gaps
+# Vertical Gaps
 
 When we state that a vertical gap
 has comments at one location,
@@ -655,7 +655,7 @@ if it can be parsed as structural comment.
 A more formal description of a vertical gap body is
 given in an appendix.
 
-## Types of tall hoons
+# Types of tall hoons
 
 Every tall hoon falls into one of 8 disjoint classes:
 running, jogging, battery, irregular,
@@ -1095,7 +1095,7 @@ should be aligned one stop
 should be aligned one stop
 **before** the jog's head.
 
-## Criss-cross lines
+# Criss-cross lines
 
 *From `arvo/sys/zuse.hoon`, lines 906-918 :*
 ```
@@ -1145,7 +1145,7 @@ Only one kind of boundary should appear in a criss-cross line.
 Every character in a criss-cross line should be
 part of a boundary, or part of a gap.
 
-## Batteries
+# Batteries
 
 The arms of a battery should all align at the
 same column, called the **base column**
@@ -1888,20 +1888,20 @@ list.
 Successive formulas should be separated by a vertical
 gap with comments aligned with the jogs.
 
-# Battery hoons
+## Battery hoons
 
 The battery hoons are BARCAB, BARCEN and BARKET.
 
-## Battery arm currying
+### Battery arm currying
 
 A battery arm curries at BARCEN.
 
-## BARCEN
+### BARCEN
 
 BARCEN may curry with KETBAR or KETWUT.
 It may be joined or split.
 
-### Split BARCEN
+#### Split BARCEN
 
 *From the sieve_k example:*
 ```
@@ -1940,7 +1940,7 @@ in lexical order:
 * A HEPHEP, aligned at the anchor column.
 
 
-### Joined BARCEN
+#### Joined BARCEN
 
 *From `arvo/sys/zuse.hoon`, lines 176-181:*
 ```
@@ -1967,7 +1967,7 @@ in lexical order:
 
 * A HEPHEP, aligned at the anchor column.
 
-## BARCAB
+### BARCAB
 
 BARCAB runes do not curry.
 
@@ -2009,7 +2009,7 @@ in lexical order:
 
 * A HEPHEP, aligned at the anchor column.
 
-## BARKET
+### BARKET
 
 BARKET runes do not curry.
 
@@ -2055,9 +2055,9 @@ in lexical order:
 
 * A HEPHEP, aligned at the anchor column.
 
-# Ford hoons
+## Ford hoons
 
-## Ford-1 hoons
+### Ford-1 hoons
 
 The ford-1 hoons are a set of unary ford hoons:
 FASSIG (`/~`),
@@ -2087,7 +2087,7 @@ in lexical order:
 
 * The runechild.
 
-## Ford hoof hoons
+### Ford hoof hoons
 
 The ford hoof hoons are FASHEP (`/-`) and FASLUS (`/+`).
 
@@ -2112,7 +2112,7 @@ in lexical order:
 
 * A vertical gap, with comments at the anchor column.
 
-## 0-sequence Ford hoons
+### 0-sequence Ford hoons
 
 The 0-sequence Ford hoons are those whose only runechild
 is a sequence of Forn hoons.
@@ -2154,7 +2154,7 @@ in lexical order:
 
 * A TISTIS.
 
-## Ford hoon sequence
+### Ford hoon sequence
 
 A Ford hoon sequence is a sequence of ford hoons.
 All of the ford hoons should be at the same
@@ -2166,7 +2166,7 @@ The comments in the vertical gaps should be
 aligned with the rune of the hoon which
 directly contains the Ford hoon sequence.
 
-## Ford-2 hoons
+### Ford-2 hoons
 
 The Ford-2 hoons are FASCOL (`/:`),
 FASKET (`/^`),
@@ -2200,7 +2200,7 @@ no examples of tall FASPAM exist in the arvo corpus.
 Whitespace conventions for the Ford-2 hoons are the
 same as those for backdented 2-arity hoons.
 
-## FASCOM
+### FASCOM
 
 <!-- FASCOM is not well represented in the arvo
 database, and a lot of these rules are extrapolations --
@@ -2212,7 +2212,7 @@ I use indentation-conservation heavily as the guideline
 for extrapolation.
 -->
 
-### Joined FASCOM
+#### Joined FASCOM
 
 All joined FASCOM's are considered "queenside".
 
@@ -2237,7 +2237,7 @@ in lexical order:
 
 * A TISTIS.
 
-### Kingside split FASCOM
+#### Kingside split FASCOM
 
 <!-- The split FASCOM examples are based
 on the only arvo example of a split FASCOM.
@@ -2267,7 +2267,7 @@ in lexical order:
 
 * A TISTIS.
 
-### Queenside split FASCOM
+#### Queenside split FASCOM
 
 <!-- The split FASCOM examples are based
 on the only arvo example of a split FASCOM.
@@ -2297,7 +2297,7 @@ in lexical order:
 
 * A TISTIS.
 
-### FASCOM element sequence
+#### FASCOM element sequence
 
 *From `hoons/arvo/ren/css.hoon`, lines 6-8:*
 ```
@@ -2330,7 +2330,7 @@ aligned one stop **after** the head of the FASCOM element.
 The body of a queenside FASCOM element should be
 aligned one stop **before** the head of the FASCOM element.
 
-## FASTIS
+### FASTIS
 
 ```
 /=  rfctext  /:  /%/rfc  /txt/
@@ -2345,12 +2345,12 @@ in lexical order:
 
 * A runechild.
 
-# Sail
+## Sail
 
 Sail statements start with a semicolon.
 Sail statements do not curry.
 
-## Sail 1-fixed runes
+### Sail 1-fixed runes
 
 *From `ren/tree/head.hoon`, lines 35-43:*
 ```
@@ -2371,7 +2371,7 @@ They have a single runechild.
 The rune child should be on the same line as the rune,
 and should be separated from it by a one-stop horizontal gap.
 
-## SEMTIS
+### SEMTIS
 
 *From `ren/tree/head.hoon`, lines 59-64:*
 ```
@@ -2407,7 +2407,7 @@ The TISTIS should be aligned with the SEMTIS.
 it should be preceded by a vertical gap,
 with comments aligned at the SEMTIS and with the first element.
 
-## Tagged sail statements
+### Tagged sail statements
 
 *Adapted from `web/dojo.hoon`, lines 13-27:*
 ```
@@ -2445,7 +2445,7 @@ The TISTIS should be preceded by a vertical gap,
 with comments aligned with the tagged sail statement,
 and with the first element.
 
-## Sail attributes
+### Sail attributes
 
 The sail attribute base column is two stops after start column location
 of the sail text block.
@@ -2456,7 +2456,7 @@ as the sail key.
 The sail attribute values should be tightly aligned,
 or aligned with each other.
 
-# SELGAP
+## SELGAP
 
 *From `arvo/sur/twitter.hoon`, line 85:*
 ```

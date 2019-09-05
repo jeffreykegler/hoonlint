@@ -23,17 +23,18 @@
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
 <li><a href="#joined-and-split">Joined and split</a></li>
 <li><a href="#pseudo-joins">Pseudo-joins</a></li>
+</ul></li>
 <li><a href="#backdenting-todo">Backdenting: TODO</a></li>
 <li><a href="#curried-backdenting">Curried backdenting</a><ul>
 <li><a href="#reanchor-offset">Reanchor offset</a></li>
 <li><a href="#first-example">First example</a></li>
 <li><a href="#second-example">Second example</a></li>
 </ul></li>
-<li><a href="#header-and-inline-comments">Header and inline comments</a></li>
+<li><a href="#header-and-inline-comments">Header and inline comments</a><ul>
 <li><a href="#staircase-comments">Staircase comments</a></li>
+</ul></li>
 <li><a href="#vertical-gaps">Vertical Gaps</a></li>
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
-</ul></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdenting">Backdenting</a><ul>
 <li><a href="#backdenting-and-vertical-gaps">Backdenting and vertical gaps</a></li>
@@ -55,9 +56,9 @@
 <li><a href="#joined-jogs">Joined jogs</a></li>
 <li><a href="#split-jogs">Split jogs</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
 <li><a href="#batteries">Batteries</a></li>
-</ul></li>
 <li><a href="#details">Details</a><ul>
 <li><a href="#currying-basic-syntax-hoons">Currying basic syntax hoons</a></li>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -81,13 +82,9 @@
 </ul></li>
 <li><a href="#jogging-1-hoons">Jogging-1 hoons</a></li>
 <li><a href="#sigcen">SIGCEN</a></li>
-</ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
 <li><a href="#battery-arm-currying">Battery arm currying</a></li>
-<li><a href="#barcen">BARCEN</a><ul>
-<li><a href="#split-barcen">Split BARCEN</a></li>
-<li><a href="#joined-barcen">Joined BARCEN</a></li>
-</ul></li>
+<li><a href="#barcen">BARCEN</a></li>
 <li><a href="#barcab">BARCAB</a></li>
 <li><a href="#barket">BARKET</a></li>
 </ul></li>
@@ -97,12 +94,7 @@
 <li><a href="#sequence-ford-hoons">0-sequence Ford hoons</a></li>
 <li><a href="#ford-hoon-sequence">Ford hoon sequence</a></li>
 <li><a href="#ford-2-hoons">Ford-2 hoons</a></li>
-<li><a href="#fascom">FASCOM</a><ul>
-<li><a href="#joined-fascom">Joined FASCOM</a></li>
-<li><a href="#kingside-split-fascom">Kingside split FASCOM</a></li>
-<li><a href="#queenside-split-fascom">Queenside split FASCOM</a></li>
-<li><a href="#fascom-element-sequence">FASCOM element sequence</a></li>
-</ul></li>
+<li><a href="#fascom">FASCOM</a></li>
 <li><a href="#fastis">FASTIS</a></li>
 </ul></li>
 <li><a href="#sail">Sail</a><ul>
@@ -112,6 +104,7 @@
 <li><a href="#sail-attributes">Sail attributes</a></li>
 </ul></li>
 <li><a href="#selgap">SELGAP</a></li>
+</ul></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
 <li><a href="#jogging-body-column">Jogging body column</a></li>
@@ -195,9 +188,9 @@
 <p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment aligned at <code>J</code>.</p>
 <p>Visually, the pseudo-join's comments look like &quot;place holders&quot; for the text that follows the pseudo-join.</p>
 <p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2</code>, by lexically replacing the pseudo-join with a horizontal gap. Call that horizontal gap, <code>G</code>. Let <code>H</code> be the column location immediately after <code>G</code> in <code>file2</code>. The pseudo-join and the horizontal gap are <strong>equivalent</strong> if and only if <code>J == H</code>.</p>
-<h2 id="backdenting-todo">Backdenting: TODO</h2>
+<h1 id="backdenting-todo">Backdenting: TODO</h1>
 <p>TODO: Move backdenting description here.</p>
-<h2 id="curried-backdenting">Curried backdenting</h2>
+<h1 id="curried-backdenting">Curried backdenting</h1>
 <p>Curried backdenting is a method of conserving indentation. In curried backdenting, one or more runes are &quot;curried&quot;, or treated as a single rune, for backdenting purposes. (Pedantically, a single rune is considered to be a curried rune consisting only of itself.)</p>
 <p>When a rune is curried, its anchor column is moved back to the first rune of the curried text block. This is called reanchoring. We call the original rune, the one that is to be reanchored, the <strong>reanchored rune</strong>.</p>
 <p>Typically, a rune is its own &quot;anchor&quot; rune for indentation purposes, but curried backdenting allows Hoon to move the anchor column closer to the left margin. Not all runes participate in reanchoring. Which do, and which do not, is specified in the &quot;Details&quot;.</p>
@@ -244,7 +237,7 @@ d</code></pre>
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
 <p>Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop after the anchor rune column.</p>
 <p>COLSIG again is 0-running, so that its runsteps should be aligned one stop after the anchor column, which is two stops after the TISFAS column. By the same logic, the TISTIS should be aligned at the anchor column -- one stop after the TISFAS. This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
-<h2 id="header-and-inline-comments">Header and inline comments</h2>
+<h1 id="header-and-inline-comments">Header and inline comments</h1>
 <p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more characters. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <p>In standard code, header comments are</p>
 <ul>
@@ -264,7 +257,7 @@ d</code></pre>
   ::
   ::</code></pre>
 <p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the inter-comment column. (The inter-comment column location varies, depending on the syntax which contains the comment.) The tread is four colons, aligned at the inter-comment column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the inter-comment column. A still more formal definition of a staircase is given in an appendix.</p>
-<h2 id="vertical-gaps">Vertical Gaps</h2>
+<h1 id="vertical-gaps">Vertical Gaps</h1>
 <p>When we state that a vertical gap has comments at one location, we mean that the gap's inter-comment column location is the stated column location, and that the gap's pre-comment column location is not defined. When we state that a vertical gap has comments at two locations, we mean that the gap's inter-comment column location is the first location mentioned, and that the gap's pre-comment column location is the second location mentioned.</p>
 <p>For example, when we write</p>
 <blockquote>
@@ -292,7 +285,7 @@ d</code></pre>
 <li><p>A comment is not regarded as a meta-comment if it can be parsed as structural comment.</p></li>
 </ul>
 <p>A more formal description of a vertical gap body is given in an appendix.</p>
-<h2 id="types-of-tall-hoons">Types of tall hoons</h2>
+<h1 id="types-of-tall-hoons">Types of tall hoons</h1>
 <p>Every tall hoon falls into one of 8 disjoint classes: running, jogging, battery, irregular, ford, sail, udon and basic syntax.</p>
 <ul>
 <li><p>A tall hoon is a <strong>running hoon</strong> if it contains an runechild that uses the running syntax.</p></li>
@@ -435,7 +428,7 @@ d</code></pre>
 <li><p>The column location of the body of a split kingside jog should be aligned one stop <strong>after</strong> the jog's head.</p></li>
 <li><p>The column location of the body of a split queenside jog should be aligned one stop <strong>before</strong> the jog's head.</p></li>
 </ul>
-<h2 id="criss-cross-lines">Criss-cross lines</h2>
+<h1 id="criss-cross-lines">Criss-cross lines</h1>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 906-918 :</em></p>
 <pre><code>          $:  $:  our/ship                              ::  host
                   src/ship                              ::  guest
@@ -454,7 +447,7 @@ d</code></pre>
 <p>Note, however, that since every boundary on the line requires some boundary to be aligned according to this standard, all of the boundaries end up with an alignment requirement. In the example above, the two boundaries on line 918 stand in for each other, and each imposes an alignment requirement on the other.</p>
 <p>Criss-cross lines are so called because if you draw a line from each boundary on the criss-cross line to the rune that it matches syntactically, you end up with a set of lines, each of which crosses all the others.</p>
 <p>Only one kind of boundary should appear in a criss-cross line. Every character in a criss-cross line should be part of a boundary, or part of a gap.</p>
-<h2 id="batteries">Batteries</h2>
+<h1 id="batteries">Batteries</h1>
 <p>The arms of a battery should all align at the same column, called the <strong>base column</strong> of the battery. The arms should be separated by vertical gaps, where the comments are at the base column, as well as two stops after the base column. The base column of the battery is specified below, in the description of each battery hoon. Arms may be joined or split.</p>
 <p><em>From sieve_k example, line 6:</em></p>
 <pre><code>++  abet  (sort (~(tap in fed)) lth)</code></pre>
@@ -777,13 +770,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>The initial TISTIS should be backdented appropriately for a third runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
 <p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs.</p>
 <p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a vertical gap with comments aligned with the jogs.</p>
-<h1 id="battery-hoons">Battery hoons</h1>
+<h2 id="battery-hoons">Battery hoons</h2>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
-<h2 id="battery-arm-currying">Battery arm currying</h2>
+<h3 id="battery-arm-currying">Battery arm currying</h3>
 <p>A battery arm curries at BARCEN.</p>
-<h2 id="barcen">BARCEN</h2>
+<h3 id="barcen">BARCEN</h3>
 <p>BARCEN may curry with KETBAR or KETWUT. It may be joined or split.</p>
-<h3 id="split-barcen">Split BARCEN</h3>
+<h4 id="split-barcen">Split BARCEN</h4>
 <p><em>From the sieve_k example:</em></p>
 <pre><code>|%
 ++  abet  (sort (~(tap in fed)) lth)
@@ -810,7 +803,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
-<h3 id="joined-barcen">Joined BARCEN</h3>
+<h4 id="joined-barcen">Joined BARCEN</h4>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 176-181:</em></p>
 <pre><code>      |%  ++  seal  |~({a/pass b/@ c/@} *@)             ::  encrypt to a
           ++  sign  |~({a/@ b/@} *@)                    ::  certify as us
@@ -826,7 +819,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
-<h2 id="barcab">BARCAB</h2>
+<h3 id="barcab">BARCAB</h3>
 <p>BARCAB runes do not curry.</p>
 <p><em>From <code>sys/vane/jael.hoon</code>, lines 697-827:</em></p>
 <pre><code>  |_  pig/safe
@@ -851,7 +844,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
-<h2 id="barket">BARKET</h2>
+<h3 id="barket">BARKET</h3>
 <p>BARKET runes do not curry.</p>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 3975-4025:</em></p>
 <pre><code>    |^  |=(val/json (apex val &quot;&quot;))
@@ -880,8 +873,8 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
-<h1 id="ford-hoons">Ford hoons</h1>
-<h2 id="ford-1-hoons">Ford-1 hoons</h2>
+<h2 id="ford-hoons">Ford hoons</h2>
+<h3 id="ford-1-hoons">Ford-1 hoons</h3>
 <p>The ford-1 hoons are a set of unary ford hoons: FASSIG (<code>/~</code>), FASBUC (<code>/$</code>), FASCAB (<code>/_</code>), FASCEN (<code>/%</code>), FASFAS (<code>//</code>), FASHAX (<code>/#</code>) and FASWUT (<code>/?</code>).</p>
 <p><em>From <code>arvo/app/hall.hoon</code>, line 17:</em></p>
 <pre><code>          /~  |=({t/telegram:hall bowl:gall} t)</code></pre>
@@ -893,7 +886,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>The runechild.</p></li>
 </ul>
-<h2 id="ford-hoof-hoons">Ford hoof hoons</h2>
+<h3 id="ford-hoof-hoons">Ford hoof hoons</h3>
 <p>The ford hoof hoons are FASHEP (<code>/-</code>) and FASLUS (<code>/+</code>).</p>
 <p><em>From <code>../hoons/arvo/app/dojo.hoon</code>, line 5:</em></p>
 <pre><code>/-  sole, lens                                          ::  console structures</code></pre>
@@ -906,7 +899,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>The runechild.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 </ul>
-<h2 id="sequence-ford-hoons">0-sequence Ford hoons</h2>
+<h3 id="sequence-ford-hoons">0-sequence Ford hoons</h3>
 <p>The 0-sequence Ford hoons are those whose only runechild is a sequence of Forn hoons. FASBAR (<code>/|</code>) and FASDOT (<code>/.</code>) are the 0-sequence Ford hoons. The &quot;0-&quot; prefix is for orthogonality with &quot;0-running&quot; hoons.</p>
 <p><em>From <code>hoons/arvo/app/hall.hoon</code>, lines 16-18:</em></p>
 <pre><code>      /|  /:  /%/filter  /!noun/
@@ -929,10 +922,10 @@ do this is a revised example.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h2 id="ford-hoon-sequence">Ford hoon sequence</h2>
+<h3 id="ford-hoon-sequence">Ford hoon sequence</h3>
 <p>A Ford hoon sequence is a sequence of ford hoons. All of the ford hoons should be at the same alignment.</p>
 <p>The hoons in the sequence should be separated by vertical gaps. The comments in the vertical gaps should be aligned with the rune of the hoon which directly contains the Ford hoon sequence.</p>
-<h2 id="ford-2-hoons">Ford-2 hoons</h2>
+<h3 id="ford-2-hoons">Ford-2 hoons</h3>
 <p>The Ford-2 hoons are FASCOL (<code>/:</code>), FASKET (<code>/^</code>), FASPAM (<code>/&amp;</code>), and FASSEM (<code>/;</code>).</p>
 <!-- Note FASPAM tall whitespacing in conjectured, based
 on parallel with FASKET. --
@@ -948,7 +941,7 @@ no examples of tall FASPAM exist in the arvo corpus.
 <p><em>From <code>hoons/arvo/ren/tree/index.hoon</code>, line 7:</em></p>
 <pre><code>    /;  (getall:tree /h1/h2/h3/h4/h5/h6)  /tree-elem/</code></pre>
 <p>Whitespace conventions for the Ford-2 hoons are the same as those for backdented 2-arity hoons.</p>
-<h2 id="fascom">FASCOM</h2>
+<h3 id="fascom">FASCOM</h3>
 <!-- FASCOM is not well represented in the arvo
 database, and a lot of these rules are extrapolations --
 they are not actual examples in the corpus.
@@ -958,7 +951,7 @@ to impossible.
 I use indentation-conservation heavily as the guideline
 for extrapolation.
 -->
-<h3 id="joined-fascom">Joined FASCOM</h3>
+<h4 id="joined-fascom">Joined FASCOM</h4>
 <p>All joined FASCOM's are considered &quot;queenside&quot;.</p>
 <p><em>From <code>hoons/arvo/ren/css.hoon</code>, lines 6-8:</em></p>
 <pre><code>/,  /web/pack/css  /%   /!css/
@@ -972,7 +965,7 @@ for extrapolation.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h3 id="kingside-split-fascom">Kingside split FASCOM</h3>
+<h4 id="kingside-split-fascom">Kingside split FASCOM</h4>
 <!-- The split FASCOM examples are based
 on the only arvo example of a split FASCOM.
 It was anchored and non-standard, and therefore
@@ -991,7 +984,7 @@ I have revised it.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h3 id="queenside-split-fascom">Queenside split FASCOM</h3>
+<h4 id="queenside-split-fascom">Queenside split FASCOM</h4>
 <!-- The split FASCOM examples are based
 on the only arvo example of a split FASCOM.
 It was anchored and non-standard, and therefore
@@ -1010,7 +1003,7 @@ I have revised it.
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
 </ul>
-<h3 id="fascom-element-sequence">FASCOM element sequence</h3>
+<h4 id="fascom-element-sequence">FASCOM element sequence</h4>
 <p><em>From <code>hoons/arvo/ren/css.hoon</code>, lines 6-8:</em></p>
 <pre><code>/,  /web/pack/css  /%   /!css/
     /              /~  !!
@@ -1018,7 +1011,7 @@ I have revised it.
 <p>A FASCOM element sequence consists of a one or more <strong>FASCOM elements</strong>. The head of all the FASCOM elements should be aligned at the same column. The FASCOM elements should be separated by vertical gaps. Comments in the vertical gaps should be at the anchor column or aligned with the heads of the FASCOM elements.</p>
 <p>A FASCOM element is considered joined or split, depending on the gap between the head and the body. If joined, the body of the FASCOM element separated from the head by a one-stop gap, or an equivalent pseudo-join.</p>
 <p>If the FASCOM element is split, the body of the FASCOM element should be separated by a vertical gap with comments at the body column. The body of a kingside FASCOM element should be aligned one stop <strong>after</strong> the head of the FASCOM element. The body of a queenside FASCOM element should be aligned one stop <strong>before</strong> the head of the FASCOM element.</p>
-<h2 id="fastis">FASTIS</h2>
+<h3 id="fastis">FASTIS</h3>
 <pre><code>/=  rfctext  /:  /%/rfc  /txt/</code></pre>
 <p>A tall FASTIS hoon should consist of, in lexical order:</p>
 <ul>
@@ -1026,9 +1019,9 @@ I have revised it.
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A runechild.</p></li>
 </ul>
-<h1 id="sail">Sail</h1>
+<h2 id="sail">Sail</h2>
 <p>Sail statements start with a semicolon. Sail statements do not curry.</p>
-<h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
+<h3 id="sail-1-fixed-runes">Sail 1-fixed runes</h3>
 <p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
 <pre><code>    ;*  ?.  nopack.dbg
           :_  ~
@@ -1040,7 +1033,7 @@ I have revised it.
           ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/tree/main.css&quot;);
         ==</code></pre>
 <p>The sail 1-fixed runes are SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). They have a single runechild. The rune child should be on the same line as the rune, and should be separated from it by a one-stop horizontal gap.</p>
-<h2 id="semtis">SEMTIS</h2>
+<h3 id="semtis">SEMTIS</h3>
 <p><em>From <code>ren/tree/head.hoon</code>, lines 59-64:</em></p>
 <pre><code>        ;=
 ::           ;script(type &quot;text/javascript&quot;, src &quot;/===/web/lib/js/hoon.js&quot;);
@@ -1053,7 +1046,7 @@ I have revised it.
 <p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stop after the SEMTIS.</p>
 <p>All elements after the first should be preceded by a vertical gap. Comments should be aligned at the SEMTIS and with the first element.</p>
 <p>The TISTIS should be aligned with the SEMTIS. it should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
-<h2 id="tagged-sail-statements">Tagged sail statements</h2>
+<h3 id="tagged-sail-statements">Tagged sail statements</h3>
 <p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
 <pre><code>;module
     =nav_title    &quot;Dojo&quot;
@@ -1073,9 +1066,9 @@ I have revised it.
 <p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which starts the tag that is its keyword.</p>
 <p>All elements should be preceded by a vertical gap. Comments in the vertical gaps should be aligned at the start of the statement and with the first element.</p>
 <p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement, and with the first element.</p>
-<h2 id="sail-attributes">Sail attributes</h2>
+<h3 id="sail-attributes">Sail attributes</h3>
 <p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
-<h1 id="selgap">SELGAP</h1>
+<h2 id="selgap">SELGAP</h2>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
 <p>Whitespace in one-line SELGAP's is free-form -- <code>hoonlint</code> never generates a warning for them.</p>
