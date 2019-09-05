@@ -23,7 +23,8 @@
 <li><a href="#horizontal-alignment">Horizontal Alignment</a></li>
 <li><a href="#joined-and-split">Joined and split</a></li>
 <li><a href="#pseudo-joins">Pseudo-joins</a></li>
-<li><a href="#reanchoring">Reanchoring</a><ul>
+<li><a href="#backdenting-todo">Backdenting: TODO</a></li>
+<li><a href="#curried-backdenting">Curried backdenting</a><ul>
 <li><a href="#reanchor-offset">Reanchor offset</a></li>
 <li><a href="#first-example">First example</a></li>
 <li><a href="#second-example">Second example</a></li>
@@ -34,24 +35,16 @@
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
 </ul></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
-<li><a href="#fixed-arity-hoons">Fixed-arity hoons</a><ul>
+<li><a href="#backdenting">Backdenting</a><ul>
 <li><a href="#backdenting-and-vertical-gaps">Backdenting and vertical gaps</a></li>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 <li><a href="#split-hints">Split hints</a></li>
-<li><a href="#reanchoring-fixed-arity-hoons">Reanchoring fixed-arity hoons</a></li>
 </ul></li>
 <li><a href="#running-hoons">Running hoons</a><ul>
-<li><a href="#running-hoons-1">0-running hoons</a><ul>
-<li><a href="#joined-0-running-hoons">Joined 0-running hoons</a></li>
-<li><a href="#split-0-running-hoons">Split 0-running hoons</a></li>
-</ul></li>
-<li><a href="#running-hoons-2">1-running hoons</a><ul>
-<li><a href="#joined-1-running-hoons">Joined 1-running hoons</a></li>
-<li><a href="#split-1-running-hoons">Split 1-running hoons</a></li>
-</ul></li>
 <li><a href="#runnings">Runnings</a><ul>
 <li><a href="#runstep-inter-line-alignment">Runstep inter-line alignment</a></li>
-<li><a href="#running-inherited-inter-line-alignment">Running-inherited inter-line alignment</a></li>
+<li><a href="#running-shared-inter-line-alignment">Running-shared inter-line alignment</a></li>
+<li><a href="#mixed-inter-line-alignments-in-a-running">Mixed inter-line alignments in a running</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#jogging-hoons">Jogging hoons</a><ul>
@@ -63,11 +56,24 @@
 <li><a href="#split-jogs">Split jogs</a></li>
 </ul></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
-<li><a href="#jogging-hoons-1">1-jogging hoons</a><ul>
+<li><a href="#batteries">Batteries</a></li>
+</ul></li>
+<li><a href="#details">Details</a><ul>
+<li><a href="#currying-basic-syntax-hoons">Currying basic syntax hoons</a></li>
+<li><a href="#running-hoons-1">0-running hoons</a><ul>
+<li><a href="#joined-0-running-hoons">Joined 0-running hoons</a></li>
+<li><a href="#split-0-running-hoons">Split 0-running hoons</a></li>
+</ul></li>
+<li><a href="#running-hoons-2">1-running hoons</a><ul>
+<li><a href="#joined-1-running-hoons">Joined 1-running hoons</a></li>
+<li><a href="#split-1-running-hoons">Split 1-running hoons</a></li>
+</ul></li>
+<li><a href="#jogging-hoons-1">Jogging hoons</a></li>
+<li><a href="#jogging-hoons-2">1-jogging hoons</a><ul>
 <li><a href="#kingside-1-jogging-hoons">Kingside 1-jogging hoons</a></li>
 <li><a href="#queenside-1-jogging-hoons">Queenside 1-jogging hoons</a></li>
 </ul></li>
-<li><a href="#jogging-hoons-2">2-jogging hoons</a><ul>
+<li><a href="#jogging-hoons-3">2-jogging hoons</a><ul>
 <li><a href="#kingside-head-joined-2-jogging-hoons">Kingside head-joined 2-jogging hoons</a></li>
 <li><a href="#kingside-head-split-2-jogging-hoons">Kingside head-split 2-jogging hoons</a></li>
 <li><a href="#queenside-head-joined-2-jogging-hoons">Queenside head-joined 2-jogging hoons</a></li>
@@ -77,7 +83,7 @@
 <li><a href="#sigcen">SIGCEN</a></li>
 </ul></li>
 <li><a href="#battery-hoons">Battery hoons</a><ul>
-<li><a href="#batteries">Batteries</a></li>
+<li><a href="#battery-arm-currying">Battery arm currying</a></li>
 <li><a href="#barcen">BARCEN</a><ul>
 <li><a href="#split-barcen">Split BARCEN</a></li>
 <li><a href="#joined-barcen">Joined BARCEN</a></li>
@@ -105,7 +111,6 @@
 <li><a href="#tagged-sail-statements">Tagged sail statements</a></li>
 <li><a href="#sail-attributes">Sail attributes</a></li>
 </ul></li>
-<li><a href="#udon">Udon</a></li>
 <li><a href="#selgap">SELGAP</a></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
@@ -114,7 +119,7 @@
 </ul></li>
 <li><a href="#appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
-<li><a href="#appendix-reanchoring-futures">Appendix: Reanchoring futures</a></li>
+<li><a href="#appendix-currying-futures">Appendix: Currying futures</a></li>
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
@@ -126,13 +131,13 @@
 <p>Whitespace in other Hoon expressions is always an &quot;ace&quot; -- a single space. For these Hoon expressions in which all whitespace is an ace, there is no latitude in the use of whitespace, and no need for conventions of the kind described in this document.</p>
 <h1 id="terminology">Terminology</h1>
 <h2 id="deontology">Deontology</h2>
-<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in order to meet the standard described in this document. Code or practices that do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>. It is expected that, even in carefully written Hoon code, non-standard practices will occur.</p>
-<p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as a matter of definition, or if X is Y due to a logical or a mathematical equivalence.</p>
+<p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in order to meet the standard described in this document. Code or practices that do not meet this standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>.</p>
+<p>In this document, we say &quot;<code>X</code> must be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in both standard and non-standard code. This would be the case, for example, if X is Y as a matter of definition; if X is Y due to a logical or a mathematical equivalence; or if the Hoon syntax requires that X be Y.</p>
 <h2 id="hoon-source-files">Hoon source files</h2>
 <p>This document applies to Hoon source files. A Hoon source file is divided into newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
 <p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis.</p>
-<p>For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
-<p>When we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>siloed</strong> beginning at silo <code>x</code>&quot;, we mean that, for <code>0 &lt;= i &lt;= n</code>, <code>S[i]</code> goes into silo <code>i+x</code>. When we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>siloed</strong>&quot;, we mean that element <code>S[i]</code> goes into silo <code>i+1</code>.</p>
+<p>A row-silo grid is a 2-dimensional grid of <strong>slots</strong>, where the row is the position of the slot on the vertical axis, and the silo is the position of the slot on the horizontal axis. For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
+<p>When, for a given row, we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong> beginning at slot <code>x</code>&quot;, we mean that, for <code>0 &lt;= i &lt;= n</code>, <code>S[i]</code> goes into slot <code>i+x</code>. When, for a given row, we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong>&quot;, we mean that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong> beginning at slot 1&quot;,</p>
 <p>A <strong>whitespace character</strong> is either an ASCII space or a newline. A <strong>whitespace boundary</strong> is one of the following:</p>
 <ul>
 <li><p>The start of the Hoon source file.</p></li>
@@ -152,9 +157,9 @@
 <p>Note that text blocks may contain whitespace characters. We often refer to a text block simply as a <strong>text</strong>.</p>
 <p>The column location at which <code>x</code> starts will sometimes be written as <code>Column(x)</code>, where <code>x</code> designates some text in a Hoon source file. The line location at which <code>x</code> starts will sometimes be written as <code>Line(x)</code>. When we say &quot;the column location of <code>x</code>&quot;, we mean <code>Column(x)</code>.</p>
 <p>We say &quot;column <code>C</code> is aligned <code>N</code> characters after column <code>D</code>&quot; if and only if <code>C = D + N</code>. We say &quot;column <code>C</code> is aligned at column <code>D</code>&quot; if and only if <code>C = D</code>. We say &quot;column <code>C</code> is aligned <code>N</code> characters before column <code>D</code>&quot; if and only if <code>C = D - N</code>.</p>
-<p>When we speak of text blocks being aligned relative to columns or relative to other text blocks, we are refering to the column location of the text blocks. For example, if we say &quot;Text X is aligned N characters after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
+<p>When we speak of text blocks being aligned relative to columns or relative to other text blocks, we are refering to the column location of the text blocks. For example, if we say &quot;text X is aligned N characters after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
 <p>Often we express distance between columns in stops instead of characters. A <strong>stop</strong> is two characters.</p>
-<p>Many alignments are with respect to an <strong>anchor column</strong>. Usually, the anchor column is the rune column, but there are important exceptions, which will be described below.</p>
+<p>Many alignments are with respect to an <strong>anchor column</strong>. In the context of a specific hoon statement, <em>h</em>, the anchor column typically is <code>Column(Rune(h))</code>. But if the rune is curried, the anchor column may be aligned at a different rune, asbe described below.</p>
 <h2 id="hoon-statements">Hoon statements</h2>
 <p>A hoon source file contains one or more hoon <strong>statements</strong>. The hoon statements are separated by whitespace. Optionally, the first hoon statement may be preceded by whitespace. Also optionally, the last hoon statement may be followed by whitespace.</p>
 <p>A hoon <strong>statement</strong> is a text block which compiles to a single AST node. We sometimes refer to a hoon statement as a &quot;hoon&quot;, but strictly speaking, the &quot;hoon statement&quot; is the text block before parsing, and the &quot;hoon&quot; is the AST produced by parsing.</p>
@@ -165,7 +170,7 @@
 <li><p>a statement rune; or</p></li>
 <li><p>an arm marker digraph: one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
 </ul>
-<p>Note that not all special-character digraphs are runes. In this document, HEPHEP (<code>--</code>) or TISTIS (<code>==</code>) will be called <strong>terminators</strong>, and they are not runes. The comment-marking digraph <code>::</code>, is also not a rune. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
+<p>Note that not all special-character digraphs are runes. In this document, HEPHEP (<code>--</code>) or TISTIS (<code>==</code>) will be called <strong>boundaries</strong>, and they are not runes. The comment-marking digraph <code>::</code>, is also not a rune. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
 <p>A tall <strong>rune expression</strong> is a tall Hoon expression whose &quot;keyword&quot; is a rune.</p>
 <p>Let <code>r</code> be the rune digraph of a rune expression. The <strong>rune line</strong> of <code>r</code> is <code>Line(r)</code>. The <strong>rune column</strong> of <code>r</code> is <code>Column(r)</code>.</p>
@@ -174,7 +179,7 @@
 <pre><code>   Line(Hoon(r)) == Line(r)
    Column(Hoon(r)) == Column(r)</code></pre>
 <p>Let <code>h</code> be a rune expression. We sometimes write the Hoon expression that is the syntactic parent of <code>h</code> as <code>Parent(h)</code>.</p>
-<p>A hoon properly contains a text block if it includes the entire text block, but is not identical to it. A hoon &quot;directly contains&quot; a text block if it properly contains the text block, and no other properly contained text block of the hoon is a Hoon subexpression that properly contains that text block.</p>
+<p>A hoon statement properly contains a text block if it includes the entire text block, but is not identical to it. A hoon statement &quot;directly contains&quot; a text block if it properly contains the text block, and no other properly contained text block of the hoon is a Hoon statement that properly contains that text block.</p>
 <h2 id="horizontal-alignment">Horizontal Alignment</h2>
 <p>Three kinds of horizontal alignment will be of special interest:</p>
 <ul>
@@ -185,26 +190,32 @@
 <h2 id="joined-and-split">Joined and split</h2>
 <p>For many Hoon expressions, the pattern of the standard whitespace conventions depends on whether a specific gap in that Hoon expression is horizontal or vertical. If the pattern-decisive gap is horizontal, the conventions follow a &quot;joined&quot; pattern. If the pattern-decisive gap is vertical, the conventions follow a &quot;split&quot; pattern. The specific conventions will be specified below, with each syntax.</p>
 <h2 id="pseudo-joins">Pseudo-joins</h2>
+<pre><code>TODO: Example of a pseudo-join</code></pre>
 <p>It is sometimes convenient to have a vertical pattern-decisive gap, but to otherwise follow the &quot;joined&quot; syntax pattern. For example, the programmer may find &quot;joined&quot; syntax appropriate, but want to insert a comment in the pattern-decisive gap. In these situations, it is useful to have a form of the vertical gap that, for pattern-decisive purposes, is treated as if it were a horizontal gap. Such a gap is called a <strong>pseudo-join</strong>.</p>
 <p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment aligned at <code>J</code>.</p>
 <p>Visually, the pseudo-join's comments look like &quot;place holders&quot; for the text that follows the pseudo-join.</p>
 <p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2</code>, by lexically replacing the pseudo-join with a horizontal gap. Call that horizontal gap, <code>G</code>. Let <code>H</code> be the column location immediately after <code>G</code> in <code>file2</code>. The pseudo-join and the horizontal gap are <strong>equivalent</strong> if and only if <code>J == H</code>.</p>
-<h2 id="reanchoring">Reanchoring</h2>
-<p>Reanchoring is a method of conserving indentation. We call the original rune, the one that is to be reanchored, the <strong>reanchored rune</strong>.</p>
-<p>Typically, a rune is its own &quot;anchor&quot; rune for indentation purposes, but Hoon takes advantage of some opportunities to move the anchor column closer to the left margin. Not all runes participate in reanchoring. Which do, and which do not, are specified in the individual cases.</p>
+<h2 id="backdenting-todo">Backdenting: TODO</h2>
+<p>TODO: Move backdenting description here.</p>
+<h2 id="curried-backdenting">Curried backdenting</h2>
+<p>Curried backdenting is a method of conserving indentation. In curried backdenting, one or more runes are &quot;curried&quot;, or treated as a single rune, for backdenting purposes. (Pedantically, a single rune is considered to be a curried rune consisting only of itself.)</p>
+<p>When a rune is curried, its anchor column is moved back to the first rune of the curried text block. This is called reanchoring. We call the original rune, the one that is to be reanchored, the <strong>reanchored rune</strong>.</p>
+<p>Typically, a rune is its own &quot;anchor&quot; rune for indentation purposes, but curried backdenting allows Hoon to move the anchor column closer to the left margin. Not all runes participate in reanchoring. Which do, and which do not, is specified in the &quot;Details&quot;.</p>
 <p>The anchor column depends on two things: the column location of anchor rune, and the &quot;reanchor offset&quot;. The <strong>anchor rune</strong> is a rune on the same line as the reanchored rune. The anchor rune is either the same as the reanchored rune, or is a rune closer to the left margin.</p>
 <h3 id="reanchor-offset">Reanchor offset</h3>
 <p>The reanchor offset is an adjustment necessary to make reanchor indentation &quot;look right&quot; in Hoon terms. It makes the reanchored indentation look and act like normal backdented indentation. The need for it is not obvious from the definition but, visually, if the reanchor offset were not applied, things would &quot;look wrong&quot;.</p>
-<p>Call the text block that starts at the column location of the anchor rune, and that ends immediately after the last character of the reanchored rune, the &quot;reanchor block&quot;. Reanchoring may be thought of treating the &quot;reanchor block&quot; as if it were a single rune. This can be thought of a sort of &quot;currying&quot;, and the reanchor block can be thought of as a curried rune.</p>
-<p>Some runechildren of the curried runes are included in the reanchor block, and they therefore must be included in the currying. Those runechildren not in the reanchor block are &quot;left over&quot;, and are not included in the currying.</p>
+<p>Call the text block that starts at the column location of the anchor rune, and that ends immediately after the last character of the reanchored rune, the &quot;curried text block&quot;.</p>
+<p>Some runechildren of the curried runes are included in the curried text block, and they therefore must be included in the currying. Those runechildren not in the curried text block are &quot;left over&quot;, and are not included in the currying.</p>
 <p>The &quot;left over&quot; runechildren can be thought of as the runechildren of the curried rune. For it to look as if the children of this curried rune were backdented normally, the whitespace conventions must account for curried versus &quot;left over&quot; runechildren.</p>
 <p>Intuitively, if not all the runechildren of a curried rune are on the rune line, not only are some of the runechildren &quot;left over&quot;, the appropriate amount of indentation is also &quot;left over&quot;. This &quot;left over&quot; indentation of each rune is the &quot;per-rune offset&quot; of that rune.</p>
 <p>An arm marker can be curried, but it must be the anchor rune. As a special case, an arm marker has a per-rune offset of one stop.</p>
 <p>The <strong>reanchor offset</strong> of <code>r</code> is the sum of all the per-rune offsets between the <code>a</code> and <code>r</code>, including <code>a</code> but not including <code>r</code>. <code>r</code>'s per-rune offset is not included in the calculation of the reanchor offset, because the rune-children of <code>r</code> are not curried. In effect, all of <code>r</code>'s children are &quot;left over&quot;.</p>
-<p>There will be examples below that show the calculation of per-rune-offsets in a reanchoring context. But, for a first example, it will be easiest to see how the definition of the per-rune-offset applies to a simple backdented hoon. Call the following Hoon fragment, &quot;Actual&quot;:</p>
+<p>There will be examples below that show the calculation of per-rune-offsets in a curried backdenting context. But, for a first example, it will be easiest to see how the definition of the per-rune-offset applies to a simple backdented hoon.</p>
+<p><em>Actual</em></p>
 <pre><code>:^  a  b  c
 d</code></pre>
-<p>What is the per-rune offset of the COLKET (<code>:^</code>) expression in &quot;Actual&quot;? Its last runechild on the same line is the text <code>c</code>. Let us rewrite &quot;Actual&quot;, moving the <code>c</code> to the next line and aligning according to the conventions of this document. Our rewritten fragment, which we will call &quot;What if?&quot;, follows:</p>
+<p>What is the per-rune offset of the COLKET (<code>:^</code>) expression in &quot;Actual&quot;? Its last runechild on the same line is the text <code>c</code>. Let us rewrite &quot;Actual&quot;, moving the <code>c</code> to the next line and aligning according to the conventions of this document. Our rewritten fragment is as follows:</p>
+<p><em>What if</em></p>
 <pre><code>:^  a  b
   c
 d</code></pre>
@@ -242,7 +253,7 @@ d</code></pre>
 <li><p>meta-comments.</p></li>
 </ul>
 <p>We say that a comment belongs to a hoon if that hoon directly contains the gap that lexically contains that comment. We say a hoon is the hoon of a comment if the comment belongs to that hoon.</p>
-<p>Meta-comments start at column 1. Since, depending on their hoon, inter-comments may also start at column 1, only the programmer's intent determines whether a given header comment is an inter-comment or a meta-comment.</p>
+<p>Meta-comments start at column 1. Depending on their hoon, inter-comments may also start at column 1. When inter-comments start at column 1, only the programmer's intent determines whether a given header comment is an inter-comment or a meta-comment.</p>
 <p>Pre-comments, inter-comments and staircases are structural comments. The contents of structural comments should usually be appropriate for the syntactic context of the code in which the structural comment occurs.</p>
 <p>Meta-comments are not structural comments, and their content may be anything. A frequent use for meta-comments is to &quot;comment out&quot; Hoon code.</p>
 <h2 id="staircase-comments">Staircase comments</h2>
@@ -259,15 +270,15 @@ d</code></pre>
 <blockquote>
 <p>A vertical gap, with comments at the the anchor column and the jog base column</p>
 </blockquote>
-<p>we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment-location is the &quot;jog base column&quot;. If instead we write</p>
+<p>we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment location is the &quot;jog base column&quot;. If instead we write</p>
 <blockquote>
-<p>A vertical gap, with comments at the the anchor column.</p>
+<p>A vertical gap, with comments at the anchor column.</p>
 </blockquote>
-<p>then we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment-location is not defined.</p>
+<p>then we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment location is not defined.</p>
 <p>In describing a vertical gap's comment locations, we may specify them explicitly as column locations, or implicitly, as alignments with a text block. If column location is expressed implicitly via a text block, the implicit location is the start column location of the text block.</p>
 <p>A vertical gap contains</p>
 <ul>
-<li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline.</p></li>
+<li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline character.</p></li>
 <li><p>A body of zero or more full newline-terminated lines, all of them header comments or (in the case of non-standard code) blank lines.</p></li>
 <li><p>A partial line postamble. This is never newline-terminated, and may be zero-length.</p></li>
 </ul>
@@ -282,39 +293,36 @@ d</code></pre>
 </ul>
 <p>A more formal description of a vertical gap body is given in an appendix.</p>
 <h2 id="types-of-tall-hoons">Types of tall hoons</h2>
-<p>Every tall hoon falls into one of 5 disjoint classes: backdented, running, jogging, battery or irregular.</p>
+<p>Every tall hoon falls into one of 8 disjoint classes: running, jogging, battery, irregular, ford, sail, udon and basic syntax.</p>
 <ul>
-<li><p>A tall hoon is a <strong>battery hoon</strong> if it contains an runechild that uses the battery syntax.</p></li>
 <li><p>A tall hoon is a <strong>running hoon</strong> if it contains an runechild that uses the running syntax.</p></li>
 <li><p>A tall hoon is a <strong>jogging hoon</strong> if it contains an runechild that uses the jogging syntax.</p></li>
-<li><p>A tall hoon is a <strong>backdented hoon</strong> if it contains a fixed number of gap-separated runechildren, and none of them follow the running, jogging or battery syntax.</p></li>
-<li><p>SELGAP is a tall <strong>irregular hoon</strong>. (Most irregular hoons do not contain a gap.)</p></li>
+<li><p>A tall hoon is a <strong>battery hoon</strong> if it contains an runechild that uses the battery syntax.</p></li>
+<li><p>SELGAP is the only tall <strong>irregular hoon</strong>. (Most irregular hoons do not contain a gap.)</p></li>
+<li><p>Ford, sail and udon hoon statements have specialized syntaxes, as described under &quot;Details&quot;.</p></li>
+<li><p>Udon (Unmarkdown) hoon statements have a specialized syntax. The whitespace convention of this document allows Udon statements, but does impose any restrictions on their whitespace format.</p></li>
+<li><p>A tall hoon is a <strong>basic syntax hoon</strong> if it does not fall into any of the above, more complex, classes.</p></li>
 </ul>
 <h1 id="top-level-whitespace">Top-level whitespace</h1>
 <p>We call a hoon statement not contained by another hoon statement, a <strong>top-level</strong> hoon statement. A Hoon source file is a sequence of top-level hoon statements. All top-level hoon statements should start at column 1. Successive top-level hoon statements should be separated by a vertical gap with comments at column location 1.</p>
 <p>The first top-level hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case of a vertical gap -- it contains a body and a zero-length postamble, but no preamble.</p>
-<p>The last top-level hoon statement may be follows by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
-<h1 id="fixed-arity-hoons">Fixed-arity hoons</h1>
-<p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in fixed-arity hoons. Here is a example of a 4-ary hoon:</p>
+<p>The last top-level hoon statement may be followed by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
+<h1 id="backdenting">Backdenting</h1>
+<p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in basic syntax hoons. Here is a example of a 4-ary hoon:</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>
 <pre><code>        :^    %wtcl
             [%dtts [%rock %$ |] [%$ axe]]
           [%rock %f |]
         [%rock %f &amp;]
 </code></pre>
-<p>A backdented hoon of arity 3 or more should be joined. A backdented hoon of arity 2 or less should be split.</p>
-<p>The first runechild of a joined backdented hoon should be on the same line as the rune, separated by a horizontal gap. Subsequent runechildren of a joined backdented hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
-<p>The first runechild of a split backdented hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined backdented hoon should also be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
-<h3 id="backdenting-and-vertical-gaps">Backdenting and vertical gaps</h3>
+<p>A basic syntax hoon of arity 3 or more should be joined. A basic syntax hoon of arity 2 or less should be split.</p>
+<p>The first runechild of a joined basic syntax hoon should be on the same line as the rune, separated by a horizontal gap. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
+<p>The first runechild of a split basic syntax hoon should be separated from the rune by a vertical gap. Subsequent runechildren of a joined basic syntax hoon should also be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
+<h2 id="backdenting-and-vertical-gaps">Backdenting and vertical gaps</h2>
 <p>As stated, vertical backdenting is the flagship whitespace convention in Hoon, so in this section we will work out its implications in detail. For the purposes of this section, it is assumed that tight (horizontal) alignment is not being used.</p>
-<p>In an backdented <code>n</code>-arity hoon, the <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. For example, in an 3-runechild hoon, the first runechild should be aligned 2 stops after than the anchor column; a second runechild should be aligned 1 stop after than the anchor column; and the third runechild be aligned at the anchor column.</p>
-<p>This implies that, regardless of the number of runechildren in a backdented hoon,</p>
-<ul>
-<li><p>the last runechild should be aligned at the anchor column;</p></li>
-<li><p>every runechild before the last should be aligned one stop after than the runechild that follows it.</p></li>
-<li><p>every runechild after the first should have be aligned one stop before the runechild that precedes it.</p></li>
-</ul>
-<p>In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
+<p>In an backdented <code>n</code>-arity hoon, the <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. Here <code>m</code> is 1-based, so that the 1'th runechild is the first runechild, the 2'th runechild is the second runechild, etc.</p>
+<p>For example, in an 3-runechild hoon, the first runechild should be aligned 2 stops after than the anchor column; a second runechild should be aligned 1 stop after than the anchor column; and the third runechild be aligned at the anchor column.</p>
+<p>This implies that, regardless of the number of runechildren in a backdented hoon, the last runechild should be aligned at the anchor column. In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
 <h2 id="chaining-backdented-hoons">Chaining backdented hoons</h2>
 <p>As a special case, a runechild of an backdented hoon may have an inter-line alignment, based on its <strong>silo</strong> and <strong>chain</strong>. Intuitively, if two runechildren are in the same silo of the same chain, they should have the same inter-line alignment.</p>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2950-2959:</em></p>
@@ -345,7 +353,8 @@ d</code></pre>
 <li><p>Every row-initial rune is in silo 0,</p></li>
 <li><p>Every tall rune is a separate silo element.</p></li>
 <li><p>Every runechild of a tall rune is a separate silo element, unless it is itself a tall rune expression.</p></li>
-<li><p>For chained inter-line alignment, the row and silo grid may be &quot;ragged&quot;, so that some rows do not have elements in every silo.</p></li>
+<li><p>For chained inter-line alignment, the row and silo grid may be &quot;ragged&quot;, so that some rows do not have elements in every slot.</p></li>
+<li><p>A slot with no element is called &quot;empty&quot;. In a given row, a non-empty slot cannot follow an empty slot. In other words, all the empty slots must be at the end of a row.</p></li>
 <li><p>Every row in a chain starts with a rune, but not every rune starts a new row.</p></li>
 <li><p>A silo may contain both runes and runechildren.</p></li>
 </ul>
@@ -354,9 +363,9 @@ d</code></pre>
     |-  ^+  b
     ?~  a   b
     $(a r.a, b $(a l.a, b (~(put in b) p.n.a)))</code></pre>
-<p>In the above example, the chain contains 3 rows. (The 3rd and 4th lines are both in the last row.) There are 3 silos, but the rows are &quot;ragged&quot;, so that nothing in the first row is in the 3rd silo. In all 3 rows, the 2nd silo is tightly aligned, as is the 3rd silo in the 2nd row.</p>
-<p>The 3rd silo of the 3rd row is inter-line aligned. The <code>b</code> in the 3rd row comes after a gap of 3 spaces, but this follows the standard set forth in this document because it aligns with the <code>b</code> of the 2nd row, at column location 13.</p>
-<p>Note that the 2nd silo includes both runechild and a rune. This is an example of a &quot;joined&quot; hoon. In a chained hoon sequence, when the row starts with a unary rune, joined hoons can be convenient.</p>
+<p>In the above example, the chain contains 3 rows. (The 3rd and 4th lines are both in the last row.) There are 3 silos, but the rows are &quot;ragged&quot;, so that nothing in the first row is in its 3rd slot. In all 3 rows, the 2nd slot is tightly aligned, as is the 3rd slot in the 2nd row.</p>
+<p>The 3rd slot of the 3rd row is inter-line aligned. The <code>b</code> in the 3rd row comes after a gap of 3 spaces, but this follows the standard set forth in this document because it aligns with the <code>b</code> of the 2nd row, at column location 13.</p>
+<p>Note that the 2nd row contains two runes -- both the 1st and 2nd slots of the 2nd row are runes. This is an example of a &quot;joined&quot; hoon. In a chained hoon sequence, when a row starts with a unary rune, joined hoons can be convenient.</p>
 <h2 id="split-hints">Split hints</h2>
 <p><em>From <code>sys/vane/clay.hoon</code>, lines 4022-4228:</em></p>
 <pre><code>    ~&gt;  %slog.
@@ -369,41 +378,142 @@ d</code></pre>
 <p>The first runechild of SIGGAL (<code>~&lt;</code>) and SIGGAR (<code>~&gt;</code>) is a &quot;hint&quot;. Hints have a &quot;split&quot; form.</p>
 <p>A split form hint begins with its &quot;head&quot;: a symbol name (in <code>%name</code> form) followed by a DOT. The rest of the hint is its &quot;tail&quot;.</p>
 <p>The tail of a split form hint should be separated from its head by a vertical gap, with comments aligned with the head. The tail should also be aligned with the head.</p>
-<h2 id="reanchoring-fixed-arity-hoons">Reanchoring fixed-arity hoons</h2>
-<p>The fixed-arity hoons reanchor as follows:</p>
-<ul>
-<li><p>BARDOT reanchors to CENHEP, CENLUS, KETTIS, and LUSLUS.</p></li>
-<li><p>BARHEP reanchors to KETTIS and TISDOT.</p></li>
-<li><p>BARTIS reanchors to COLHEP.</p></li>
-<li><p>CENDOT reanchors to BARTIS and CENHEP.</p></li>
-<li><p>CENHEP reanchors to CENHEP, COLHEP, TISLUS, and TISGAL.</p></li>
-<li><p>CENLUS reanchors to CENHEP and TISLUS.</p></li>
-<li><p>COLCAB reanchors to CENHEP, CENLUS, and COLCAB.</p></li>
-<li><p>COLHEP reanchors to CENLUS and COLCAB.</p></li>
-<li><p>KETHEP reanchors to BARDOT, BARHEP, BARSIG, BARTIS, CENHEP, CENLUS, COLHEP, KETHEP, KETSIG, KETTIS, TISFAS, TISGAL, TISHEP, TISTAR, TISDOT, SIGLUS, and ZAPGAR.</p></li>
-<li><p>KETLUS reanchors to BARDOT, BARHEP, BARTIS, BARTAR, CENHEP, and TISGAL.</p></li>
-<li><p>KETSIG reanchors to CENLUS.</p></li>
-<li><p>KETWUT reanchors to BUCCAB and LUSLUS.</p></li>
-<li><p>SIGCAB reanchors to BARTIS.</p></li>
-<li><p>SIGFAS reanchors to LUSLUS.</p></li>
-<li><p>SIGLUS reanchors to BARDOT, BARTIS, and CENLUS.</p></li>
-<li><p>TISBAR reanchors to BUCCAB and BARTIS.</p></li>
-<li><p>TISCOM reanchors to TISCOM.</p></li>
-<li><p>TISDOT reanchors to TISLUS.</p></li>
-<li><p>TISGAL reanchors to BARTIS, CENHEP, CENLUS, KETLUS, TISGAL, and TISGAR.</p></li>
-<li><p>TISGAR reanchors to CENLUS and TISGAR.</p></li>
-<li><p>WUTCOL reanchors to BARHEP, CENHEP, and WUTCOL.</p></li>
-<li><p>WUTDOT reanchors to BARHEP.</p></li>
-<li><p>WUTGAL reanchors to BARHEP.</p></li>
-<li><p>WUTGAR reanchors to SIGBAR.</p></li>
-<li><p>WUTSIG reanchors to TISLUS and WUTSIG.</p></li>
-<li><p>ZAPCOL reanchors to LUSLUS.</p></li>
-<li><p>ZAPDOT reanchors to LUSLUS.</p></li>
-<li><p>ZAPGAR reanchors to CENHEP.</p></li>
-</ul>
 <h1 id="running-hoons">Running hoons</h1>
 <p>A running runechild is more often called simply a <strong>running</strong>. Currently, no hoon contains more than one running.</p>
 <p>A running hoon may contain a runechild before the running. That runechild is called the <strong>head</strong> of the running hoon.</p>
+<h2 id="runnings">Runnings</h2>
+<p>A running contains one or more <strong>runstep lines</strong>. Runstep lines should be aligned at the <strong>runstep base column</strong>, with exceptions. The runstep base column location for each running hoon, and the exceptions, if any, are stated in the specification of the running hoon that directly contains the running.</p>
+<p>Within a runstep line, the runsteps should be tightly aligned, or they should follow runstep inter-line alignment, as described next.</p>
+<h3 id="runstep-inter-line-alignment">Runstep inter-line alignment</h3>
+<p>In a row of runsteps, runsteps after the first may have inter-line alignment. Within a running, the inter-line alignment column of runsteps is determined by their silo.</p>
+<p><em>From <code>sys/zuse.hoon</code>, lines 4892-4905:</em></p>
+<pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
+            ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
+            ~1998.12.31..23.59.56  ~1997.6.30..23.59.55
+            ~1995.12.31..23.59.54  ~1994.6.30..23.59.53
+            ~1993.6.30..23.59.52   ~1992.6.30..23.59.51
+            ~1990.12.31..23.59.50  ~1989.12.31..23.59.49
+            ~1987.12.31..23.59.48  ~1985.6.30..23.59.47
+            ~1983.6.30..23.59.46   ~1982.6.30..23.59.45
+            ~1981.6.30..23.59.44   ~1979.12.31..23.59.43
+            ~1978.12.31..23.59.42  ~1977.12.31..23.59.41
+            ~1976.12.31..23.59.40  ~1975.12.31..23.59.39
+            ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
+            ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
+        ==</code></pre>
+<p>Each runstep line is a row. For each row, the runsteps, in lexical order, are siloed.</p>
+<h3 id="running-shared-inter-line-alignment">Running-shared inter-line alignment</h3>
+<p>If a runstep is a basic syntax hoon, the runechildren of the basic syntax hoon may have a <strong>running-shared</strong> inter-line alignment. In running-shared inter-line alignment, every basic syntax hoon is a row. For each row, the sequence composed of the rune of the hoon, followed by its runechildren in lexical order, is slotted.</p>
+<p>Within a running, the running-shared inter-line alignment of a runechild is determined by the silo of the runechild.</p>
+<p><em>From `sys/hoon.hoon', lines 5303-5308:</em></p>
+<pre><code>    :~  :-  [&#39;a&#39; &#39;z&#39;]  (cook |=(a/@ta [%$ %tas a]) sym)
+        :-  [&#39;0&#39; &#39;9&#39;]  (stag %$ bisk)
+        :-  &#39;-&#39;        (stag %$ tash)
+        :-  &#39;.&#39;        ;~(pfix dot perd)
+        :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
+    ==</code></pre>
+<h3 id="mixed-inter-line-alignments-in-a-running">Mixed inter-line alignments in a running</h3>
+<p>A running should not have both running-shared and runestep alignment. Note that if a backdented hoon is a runestep, it may have both a running-shared inter-line alignment and a chained inter-line alignment. If a backdented hoon does have both inter-line alignments, they should be consistent. That is, for every silo, the column location of that silo according to running-shared alignment should be identical to the column location of that silo according to chained alignment.</p>
+<h1 id="jogging-hoons">Jogging hoons</h1>
+<p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
+<p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
+<h2 id="joggings">Joggings</h2>
+<p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
+<h3 id="chess-sidedness">Chess-sidedness</h3>
+<p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside. Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. The effect of sidedness on indentation will be specified more precisely in the descriptions of jogs and of the individual types of jogging hoon. The general idea is that chess-sidedness stays consistent within a hoon.</p>
+<h2 id="jogs">Jogs</h2>
+<p>The column location of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
+<p>Jogs are either kingside or queenside. In standard code, the sidedness of a jog determines the alignment of split jogs.</p>
+<p>The base column location of a jog depends on the jogging hoon that it belongs to. It is specified in the description of the different kinds of jogging hoon.</p>
+<h3 id="joined-jogs">Joined jogs</h3>
+<p>A joined jog may be either <strong>inter-line aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is aligned one stop after its head. Otherwise, a joined jog is considered inter-line aligned.</p>
+<p>All inter-line aligned jogging should be aligned at the jogging body column. With each jogging, at most one column should be designated as the <strong>jogging body column</strong> of the jogging.</p>
+<p>A jog may also be pseudo-joined. The pseudo-join of pseudo-joined jog should be equivalent to the one of the horizontal gaps that a joined jog is allowed according to this standard.</p>
+<h3 id="split-jogs">Split jogs</h3>
+<p>The gap of split jog should be a vertical gap with comments at the column location of the jog body. The standard column location of the body of a split jog varies according to the sidedness of the jog.</p>
+<ul>
+<li><p>The column location of the body of a split kingside jog should be aligned one stop <strong>after</strong> the jog's head.</p></li>
+<li><p>The column location of the body of a split queenside jog should be aligned one stop <strong>before</strong> the jog's head.</p></li>
+</ul>
+<h2 id="criss-cross-lines">Criss-cross lines</h2>
+<p><em>From <code>arvo/sys/zuse.hoon</code>, lines 906-918 :</em></p>
+<pre><code>          $:  $:  our/ship                              ::  host
+                  src/ship                              ::  guest
+                  dap/term                              ::  agent
+              ==                                        ::
+              $:  wex/boat                              ::  outgoing subs
+                  sup/bitt                              ::  incoming subs
+              ==                                        ::
+              $:  ost/bone                              ::  opaque cause
+                  act/@ud                               ::  change number
+                  eny/@uvJ                              ::  entropy
+                  now/@da                               ::  current time
+                  byk/beak                              ::  load source
+          ==  ==                                        ::</code></pre>
+<p>Recall that a boundary is a HEPHEP (<code>--</code>) or a TISTIS (<code>==</code>). Successive boundaries may occur on the same line, as part of a <strong>criss-cross boundary line</strong>. A boundary is in a criss-cross line does not have to be aligned correctly, if some other boundary with the required alignment &quot;stands in&quot; for it.</p>
+<p>Note, however, that since every boundary on the line requires some boundary to be aligned according to this standard, all of the boundaries end up with an alignment requirement. In the example above, the two boundaries on line 918 stand in for each other, and each imposes an alignment requirement on the other.</p>
+<p>Criss-cross lines are so called because if you draw a line from each boundary on the criss-cross line to the rune that it matches syntactically, you end up with a set of lines, each of which crosses all the others.</p>
+<p>Only one kind of boundary should appear in a criss-cross line. Every character in a criss-cross line should be part of a boundary, or part of a gap.</p>
+<h2 id="batteries">Batteries</h2>
+<p>The arms of a battery should all align at the same column, called the <strong>base column</strong> of the battery. The arms should be separated by vertical gaps, where the comments are at the base column, as well as two stops after the base column. The base column of the battery is specified below, in the description of each battery hoon. Arms may be joined or split.</p>
+<p><em>From sieve_k example, line 6:</em></p>
+<pre><code>++  abet  (sort (~(tap in fed)) lth)</code></pre>
+<p>A joined arm consists of, in lexical order:</p>
+<ul>
+<li><p>A arm marker.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>The arm head.</p></li>
+<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
+<li><p>The arm body.</p></li>
+</ul>
+<p><em>From sieve_k example, lines 7-12:</em></p>
+<pre><code>++  main
+  =+  fac=2
+  |-  ^+  ..main
+  ?:  (gth (mul fac fac) top)
+    ..main
+  $(fac +(fac), ..main (reap fac))</code></pre>
+<p>A split arm consists of, in lexical order:</p>
+<ul>
+<li><p>A arm marker.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>The arm head.</p></li>
+<li><p>A vertical gap, with comments at the base column,</p></li>
+<li><p>The arm body, aligned one stop after the anchor column.</p></li>
+</ul>
+<h1 id="details">Details</h1>
+<h2 id="currying-basic-syntax-hoons">Currying basic syntax hoons</h2>
+<p>The basic syntax hoons curry as follows:</p>
+<ul>
+<li><p>BARDOT curries to CENHEP, CENLUS, KETTIS, and LUSLUS.</p></li>
+<li><p>BARHEP curries to KETTIS and TISDOT.</p></li>
+<li><p>BARTIS curries to COLHEP.</p></li>
+<li><p>CENDOT curries to BARTIS and CENHEP.</p></li>
+<li><p>CENHEP curries to CENHEP, COLHEP, TISLUS, and TISGAL.</p></li>
+<li><p>CENLUS curries to CENHEP and TISLUS.</p></li>
+<li><p>COLCAB curries to CENHEP, CENLUS, and COLCAB.</p></li>
+<li><p>COLHEP curries to CENLUS and COLCAB.</p></li>
+<li><p>KETHEP curries to BARDOT, BARHEP, BARSIG, BARTIS, CENHEP, CENLUS, COLHEP, KETHEP, KETSIG, KETTIS, TISFAS, TISGAL, TISHEP, TISTAR, TISDOT, SIGLUS, and ZAPGAR.</p></li>
+<li><p>KETLUS curries to BARDOT, BARHEP, BARTIS, BARTAR, CENHEP, and TISGAL.</p></li>
+<li><p>KETSIG curries to CENLUS.</p></li>
+<li><p>KETWUT curries to BUCCAB and LUSLUS.</p></li>
+<li><p>SIGCAB curries to BARTIS.</p></li>
+<li><p>SIGFAS curries to LUSLUS.</p></li>
+<li><p>SIGLUS curries to BARDOT, BARTIS, and CENLUS.</p></li>
+<li><p>TISBAR curries to BUCCAB and BARTIS.</p></li>
+<li><p>TISCOM curries to TISCOM.</p></li>
+<li><p>TISDOT curries to TISLUS.</p></li>
+<li><p>TISGAL curries to BARTIS, CENHEP, CENLUS, KETLUS, TISGAL, and TISGAR.</p></li>
+<li><p>TISGAR curries to CENLUS and TISGAR.</p></li>
+<li><p>WUTCOL curries to BARHEP, CENHEP, and WUTCOL.</p></li>
+<li><p>WUTDOT curries to BARHEP.</p></li>
+<li><p>WUTGAL curries to BARHEP.</p></li>
+<li><p>WUTGAR curries to SIGBAR.</p></li>
+<li><p>WUTSIG curries to TISLUS and WUTSIG.</p></li>
+<li><p>ZAPCOL curries to LUSLUS.</p></li>
+<li><p>ZAPDOT curries to LUSLUS.</p></li>
+<li><p>ZAPGAR curries to CENHEP.</p></li>
+</ul>
 <p>There are two kinds of running hoons:</p>
 <ul>
 <li>A <strong>0-running</strong> has no head. The current 0-running rules are BUCCEN (<code>$%</code>), BUCCOL (<code>$:</code>), BUCWUT (<code>$?</code>), COLSIG (<code>:~</code>), COLTAR (<code>:*</code>), TISSIG (<code>=~</code>), WUTBAR (<code>?|</code>), and WUTPAM (<code>?&amp;</code>).</li>
@@ -417,9 +527,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <h2 id="running-hoons-1">0-running hoons</h2>
 <p>0-running hoons may be either split or joined.</p>
 <ul>
-<li><p>COLSIG (<code>:~</code>) runes reanchor at CENDOT (<code>%.</code>), CENHEP (<code>%-</code>), CENLUS (<code>%+</code>), COLLUS (<code>:+</code>), KETHEP (<code>^-</code>), TISFAS (<code>~/</code>) and TISGAR (<code>~&gt;</code>).</p></li>
-<li><p>COLTAR (<code>:*</code>) runes reanchor at CENHEP (<code>%-</code>).</p></li>
-<li><p>TISSIG (<code>=~</code>) runes reanchor at TISGAR (<code>~&gt;</code>) and WUTLUS (<code>?+</code>).</p></li>
+<li><p>COLSIG (<code>:~</code>) runes curry at CENDOT (<code>%.</code>), CENHEP (<code>%-</code>), CENLUS (<code>%+</code>), COLLUS (<code>:+</code>), KETHEP (<code>^-</code>), TISFAS (<code>~/</code>) and TISGAR (<code>~&gt;</code>).</p></li>
+<li><p>COLTAR (<code>:*</code>) runes curry at CENHEP (<code>%-</code>).</p></li>
+<li><p>TISSIG (<code>=~</code>) runes curry at TISGAR (<code>~&gt;</code>) and WUTLUS (<code>?+</code>).</p></li>
 </ul>
 <h3 id="joined-0-running-hoons">Joined 0-running hoons</h3>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 2399-2402:</em></p>
@@ -460,7 +570,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <!-- TODO: check all uses of runeColumn to be sure that
      anchor column is not what is intended -->
 <h2 id="running-hoons-2">1-running hoons</h2>
-<p>1-running hoon statements do not reanchor. 1-running hoons can be joined or split.</p>
+<p>1-running hoon statements do not curry. 1-running hoons can be joined or split.</p>
 <h3 id="joined-1-running-hoons">Joined 1-running hoons</h3>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 4853-4855:</em></p>
 <pre><code>             ;~  less  soz
@@ -473,9 +583,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its head.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>The first runstep line.</p></li>
-<li><p>A vertical gap with comments at the anchor column, and aligned one stop after the anchor column.</p></li>
-<li><p>The remainder of the running, where runstep lines are aligned one stop after the anchor column. The runsteps lines should be separated by vertical gaps with comments at the anchor column and aligned one stop after the anchor column.</p></li>
-<li><p>A vertical gap with comments at the anchor column and aligned one stop after the anchor column.</p></li>
+<li><p>A vertical gap with comments at the anchor column, as well as aligned one stop after the anchor column.</p></li>
+<li><p>The remainder of the running, where runstep lines are aligned one stop after the anchor column. The runsteps lines should be separated by vertical gaps with comments at the anchor column as well as aligned one stop after the anchor column.</p></li>
+<li><p>A vertical gap with comments at the anchor column as well as aligned one stop after the anchor column.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
 <h3 id="split-1-running-hoons">Split 1-running hoons</h3>
@@ -489,51 +599,12 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, whose inter-column is the anchor column, and whose pre-column is aligned one stop after the anchor column.</p></li>
-<li><p>A running where</p>
-<ul>
-<li><p>runstep lines are aligned one stop after the anchor column;</p></li>
-<li><p>the inter-column of the vertical gaps is aligned at the anchor column; and</p></li>
-<li><p>the pre-column of the vertical gaps is aligned one stop after the anchor column.</p></li>
-</ul></li>
-<li><p>A vertical gap, whose inter-column is the anchor column, and whose pre-column is aligned one stop after the the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as aligned one stop after the anchor column.</p></li>
+<li><p>A running where runstep lines are aligned one stop after the anchor column. Comments in the running are aligned at the anchor column as well as aligned one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as aligned one stop after the the anchor column.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
-<h2 id="runnings">Runnings</h2>
-<p>A running contains one or more <strong>runstep lines</strong>. Runstep lines should be aligned at the <strong>runstep base column</strong>, with exceptions. The runstep base column location for each running hoon, and the exceptions, if any, are stated in the specification of the running hoon that directly contains the running.</p>
-<p>Within a runstep line, the runsteps should be tightly aligned, or they should follow runstep inter-line alignment, as described next.</p>
-<h3 id="runstep-inter-line-alignment">Runstep inter-line alignment</h3>
-<p>In a row of runsteps, runsteps after the first may have inter-line alignment. Within a running, the inter-line alignment column of runsteps is determined by their silo.</p>
-<p><em>From <code>sys/zuse.hoon</code>, lines 4892-4905:</em></p>
-<pre><code>        :~  ~2015.6.30..23.59.59   ~2012.6.30..23.59.59
-            ~2008.12.31..23.59.58  ~2005.12.31..23.59.57
-            ~1998.12.31..23.59.56  ~1997.6.30..23.59.55
-            ~1995.12.31..23.59.54  ~1994.6.30..23.59.53
-            ~1993.6.30..23.59.52   ~1992.6.30..23.59.51
-            ~1990.12.31..23.59.50  ~1989.12.31..23.59.49
-            ~1987.12.31..23.59.48  ~1985.6.30..23.59.47
-            ~1983.6.30..23.59.46   ~1982.6.30..23.59.45
-            ~1981.6.30..23.59.44   ~1979.12.31..23.59.43
-            ~1978.12.31..23.59.42  ~1977.12.31..23.59.41
-            ~1976.12.31..23.59.40  ~1975.12.31..23.59.39
-            ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
-            ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
-        ==</code></pre>
-<p>Each runstep line is a row. For each row, the runsteps, in lexical order, are siloed.</p>
-<h3 id="running-inherited-inter-line-alignment">Running-inherited inter-line alignment</h3>
-<p>If a runstep is a backdented hoon, the runechildren of a backdented hoon may have a <strong>running-inherited</strong> inter-line alignment. Within a running, the running-inherited inter-line alignment of a runechild is determined by the silo of the runechild. A running should not have both running-inherited and runestep alignment.</p>
-<p><em>From `sys/hoon.hoon', lines 5303-5308:</em></p>
-<pre><code>    :~  :-  [&#39;a&#39; &#39;z&#39;]  (cook |=(a/@ta [%$ %tas a]) sym)
-        :-  [&#39;0&#39; &#39;9&#39;]  (stag %$ bisk)
-        :-  &#39;-&#39;        (stag %$ tash)
-        :-  &#39;.&#39;        ;~(pfix dot perd)
-        :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
-    ==</code></pre>
-<p>Each backdented hoon is a row. For each row, The sequence composed of the rune of the hoon, followed by its runechildren in lexical order, is siloed.</p>
-<p>Note that if a backdented hoon is a runestep, it may have both a running-inherited inter-line alignment and a chained inter-line alignment. If a backdented hoon does have both inter-line alignments, they should be consistent. That is, for every silo, the column location of that silo according to running-inherited alignment should be identical to the column location of that silo according to chained alignment.</p>
-<h1 id="jogging-hoons">Jogging hoons</h1>
-<p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
-<p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
+<h2 id="jogging-hoons-1">Jogging hoons</h2>
 <p>There are currently four kinds of jogging hoon:</p>
 <ul>
 <li><p>The current 1-jogging rules are CENTIS (<code>%=</code>), CENCAB (<code>%_</code>) and WUTHEP (<code>?-</code>). A 1-jogging has one head and no tail.</p></li>
@@ -541,45 +612,8 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>The current jogging-1 rule is TISCOL (<code>=:</code>). A jogging-1 has a tail and no head.</p></li>
 <li><p>The current 2-jogging-1 statement is SIGCEN (<code>~%</code>). A 2-jogging-1 statement has a head, a subhead, and a tail.</p></li>
 </ul>
-<h2 id="joggings">Joggings</h2>
-<p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
-<h3 id="chess-sidedness">Chess-sidedness</h3>
-<p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside. Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. The effect of sidedness on indentation will be specified more precisely in the descriptions of jogs and of the individual types of jogging hoon. The general idea is that chess-sidedness stays consistent within a hoon.</p>
-<h2 id="jogs">Jogs</h2>
-<p>The column location of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
-<p>Jogs are either kingside or queenside. In standard code, the sidedness of a jog determines the alignment of split jogs.</p>
-<p>The base column location of a jog depends on the jogging hoon that it belongs to. It is specified in the description of the different kinds of jogging hoon.</p>
-<h3 id="joined-jogs">Joined jogs</h3>
-<p>A joined jog may be either <strong>inter-line aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is aligned one stop after its head. Otherwise, a joined jog is considered inter-line aligned.</p>
-<p>All inter-line aligned jogging should be aligned at the jogging body column. With each jogging, at most one column should be designated as the <strong>jogging body column</strong> of the jogging.</p>
-<p>A jog may also be pseudo-joined. The pseudo-join of pseudo-joined jog should be equivalent to the one of the horizontal gaps that a joined jog is allowed according to this standard.</p>
-<h3 id="split-jogs">Split jogs</h3>
-<p>The gap of split jog should be a vertical gap with comments at the column location of the jog body. The standard column location of the body of a split jog varies according to the sidedness of the jog.</p>
-<ul>
-<li><p>The column location of the body of a split kingside jog should be aligned one stop <strong>after</strong> the jog's head.</p></li>
-<li><p>The column location of the body of a split queenside jog should be aligned one stop <strong>before</strong> the jog's head.</p></li>
-</ul>
-<h2 id="criss-cross-lines">Criss-cross lines</h2>
-<p><em>From <code>arvo/sys/zuse.hoon</code>, lines 906-918 :</em></p>
-<pre><code>          $:  $:  our/ship                              ::  host
-                  src/ship                              ::  guest
-                  dap/term                              ::  agent
-              ==                                        ::
-              $:  wex/boat                              ::  outgoing subs
-                  sup/bitt                              ::  incoming subs
-              ==                                        ::
-              $:  ost/bone                              ::  opaque cause
-                  act/@ud                               ::  change number
-                  eny/@uvJ                              ::  entropy
-                  now/@da                               ::  current time
-                  byk/beak                              ::  load source
-          ==  ==                                        ::</code></pre>
-<p>Recall that a terminator is a HEPHEP (<code>--</code>) or a TISTIS (<code>==</code>). Successive terminators may occur on the same line, as part of a <strong>criss-cross terminator line</strong>. A terminator is in a criss-cross line does not have to be aligned correctly, if some other terminator with the required alignment &quot;stands in&quot; for it.</p>
-<p>Note, however, that since every terminator on the line requires some terminator to be aligned according to this standard, all of the terminators end up with an alignment requirement. In the example above, the two terminators on line 918 stand in for each other, and each imposes an alignment requirement on the other.</p>
-<p>Criss-cross lines are so called because if you draw a line from each terminator on the criss-cross line to the rune that it matches syntactically, you end up with a set of lines, each of which crosses all the others.</p>
-<p>Only one kind of terminator should appear in a criss-cross line. Every character in a criss-cross line should be part of a terminator, or part of a gap.</p>
-<h2 id="jogging-hoons-1">1-jogging hoons</h2>
-<p>Every 1-jogging hoon is either kingside or queenside. 1-jogging hoons reanchor at KETLUS (<code>^+</code>).</p>
+<h2 id="jogging-hoons-2">1-jogging hoons</h2>
+<p>Every 1-jogging hoon is either kingside or queenside. 1-jogging hoons curry with KETLUS (<code>^+</code>).</p>
 <h3 id="kingside-1-jogging-hoons">Kingside 1-jogging hoons</h3>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 6330-6334:</em></p>
 <pre><code>  ?-  pex
@@ -592,9 +626,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, starting at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-1-jogging-hoons">Queenside 1-jogging hoons</h3>
@@ -609,14 +643,14 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune.</p></li>
 <li><p>A 2-stop horizontal gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
-<h2 id="jogging-hoons-2">2-jogging hoons</h2>
+<h2 id="jogging-hoons-3">2-jogging hoons</h2>
 <p>If the head and subhead of a 2-jogging hoon are on the same line, the 2-jogging hoon is called <strong>head-joined</strong>. If the head and subhead of a 2-jogging hoon are on different lines, the 2-jogging hoon is called <strong>head-split</strong>.</p>
-<p>2-jogging hoon statements do not reanchor.</p>
+<p>2-jogging hoon statements do not curry.</p>
 <h3 id="kingside-head-joined-2-jogging-hoons">Kingside head-joined 2-jogging hoons</h3>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 6583-6586:</em></p>
 <pre><code>      ?+  p.mod  [%rock %$ 0]
@@ -630,9 +664,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its head.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>Its subhead.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="kingside-head-split-2-jogging-hoons">Kingside head-split 2-jogging hoons</h3>
@@ -654,9 +688,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>Its subhead, aligned one stop before the head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-head-joined-2-jogging-hoons">Queenside head-joined 2-jogging hoons</h3>
@@ -676,9 +710,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its head.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>Its subhead.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-head-split-2-jogging-hoons">Queenside head-split 2-jogging hoons</h3>
@@ -699,14 +733,14 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the the anchor column.</p></li>
 <li><p>Its subhead, aligned one stop before the head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
 <!-- "Split" form addressed in Github issue #31" -->
-<p>Jogging-1 hoons do not reanchor.</p>
+<p>Jogging-1 hoons do not curry.</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 9720-9727:</em></p>
 <pre><code>          =:  hos  ~
               wec  [~ ~ ~]
@@ -721,13 +755,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune.</p></li>
 <li><p>A one-stop horizontal gap.</p></li>
 <li><p>A kingside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column and the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned one stop after the anchor column.</p></li>
 <li><p>A vertical gap, with comments at the the anchor column.</p></li>
 <li><p>A tail, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="sigcen">SIGCEN</h2>
-<p>SIGCEN does not reanchor.</p>
+<p>SIGCEN does not curry.</p>
 <p><em>From <code>sys/hoon.hoon</code>, lines 3684-6234:</em></p>
 <pre><code>~%    %qua
     +
@@ -741,40 +775,14 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>SIGCEN statements can be treated either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild.</p>
 <p>SIGCEN, except for its 3rd runechild, is treated as an ordinary 4-ary backdented hoon. SIGCEN's 3rd runechild may be either <code>~</code> or a jogging bounded by TISTIS lines. The jogging is always kingside and elements are never split.</p>
 <p>The initial TISTIS should be backdented appropriately for a third runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
-<p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS and with the jogs.</p>
+<p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs.</p>
 <p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a vertical gap with comments aligned with the jogs.</p>
 <h1 id="battery-hoons">Battery hoons</h1>
 <p>The battery hoons are BARCAB, BARCEN and BARKET.</p>
-<h2 id="batteries">Batteries</h2>
-<p>The arms of a battery should all align at the same column, called the <strong>base column</strong> of the battery. The arms should be separated by vertical gaps, where the inter-column is the base column, and the pre-column is two stops after the base column. The base column of the battery is specified below, in the description of each battery hoon. Arms may be joined or split.</p>
-<p>A battery arm reanchors at BARCEN.</p>
-<p><em>From sieve_k example, line 6:</em></p>
-<pre><code>++  abet  (sort (~(tap in fed)) lth)</code></pre>
-<p>A joined arm consists of, in lexical order:</p>
-<ul>
-<li><p>A arm marker.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
-<li><p>The arm head.</p></li>
-<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
-<li><p>The arm body.</p></li>
-</ul>
-<p><em>From sieve_k example, lines 7-12:</em></p>
-<pre><code>++  main
-  =+  fac=2
-  |-  ^+  ..main
-  ?:  (gth (mul fac fac) top)
-    ..main
-  $(fac +(fac), ..main (reap fac))</code></pre>
-<p>A split arm consists of, in lexical order:</p>
-<ul>
-<li><p>A arm marker.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
-<li><p>The arm head.</p></li>
-<li><p>A vertical gap, with comments at the base column,</p></li>
-<li><p>The arm body, aligned one stop after the anchor column.</p></li>
-</ul>
+<h2 id="battery-arm-currying">Battery arm currying</h2>
+<p>A battery arm curries at BARCEN.</p>
 <h2 id="barcen">BARCEN</h2>
-<p>BARCEN may reanchor at KETBAR or KETWUT. It may be joined or split.</p>
+<p>BARCEN may curry with KETBAR or KETWUT. It may be joined or split.</p>
 <h3 id="split-barcen">Split BARCEN</h3>
 <p><em>From the sieve_k example:</em></p>
 <pre><code>|%
@@ -819,7 +827,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barcab">BARCAB</h2>
-<p>BARCAB runes do not reanchor.</p>
+<p>BARCAB runes do not curry.</p>
 <p><em>From <code>sys/vane/jael.hoon</code>, lines 697-827:</em></p>
 <pre><code>  |_  pig/safe
   ::                                                    ::  ++delete:up
@@ -838,13 +846,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune</p></li>
 <li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="barket">BARKET</h2>
-<p>BARKET runes do not reanchor.</p>
+<p>BARKET runes do not curry.</p>
 <p><em>From <code>arvo/sys/zuse.hoon</code>, lines 3975-4025:</em></p>
 <pre><code>    |^  |=(val/json (apex val &quot;&quot;))
     ::                                                  ::  ++apex:en-json:html
@@ -867,9 +875,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <li><p>Its rune</p></li>
 <li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, and one stop after the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
 </ul>
 <h1 id="ford-hoons">Ford hoons</h1>
@@ -1019,7 +1027,7 @@ I have revised it.
 <li><p>A runechild.</p></li>
 </ul>
 <h1 id="sail">Sail</h1>
-<p>Sail statements start with a semicolon. Sail statements never participate in reanchoring.</p>
+<p>Sail statements start with a semicolon. Sail statements do not curry.</p>
 <h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
 <p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
 <pre><code>    ;*  ?.  nopack.dbg
@@ -1067,8 +1075,6 @@ I have revised it.
 <p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement, and with the first element.</p>
 <h2 id="sail-attributes">Sail attributes</h2>
 <p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
-<h1 id="udon">Udon</h1>
-<p>Currently, this standard does not address Udon (Unmarkdown) whitespace conventions.</p>
 <h1 id="selgap">SELGAP</h1>
 <p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
 <pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
@@ -1086,7 +1092,7 @@ I have revised it.
 <p>If two column locations tie in the count of floating text blocks, the tie is broken using the count of total text blocks for that column location. If two column locations tie by total text block count, the tie is broken in favor of the column location that occurs first, lexically.</p>
 <p>If there are no floating lexemes, the inter-line alignment column location is irrelevant and undefined. Also, the inter-line alignment column location is undefined unless it also has a total text block count of at least 2 -- in other words an inter-line alignment column location must be the column location of at least two of the text blocks in the silo.</p>
 <p>Each silo is examined separately. For each silo, only rows with an element in that silo participate in the calculation.</p>
-<p>If a running could have both a runestep alignment, and a running-inherited alignment, the runestep alignment takes precedence. In other words, if a running has runestep alignment, the running-inherited alignment is undefined.</p>
+<p>If a running could have both a runestep alignment, and a running-shared alignment, the runestep alignment takes precedence. In other words, if a running has runestep alignment, the running-shared alignment is undefined.</p>
 <h1 id="appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</h1>
 <p>The format of a vertical gap body obeys the BNF</p>
 <pre><code>:start ::= gapComments
@@ -1169,10 +1175,10 @@ Exception ::= BlankLine</code></pre>
 <li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
 </ul>
 <p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
-<h1 id="appendix-reanchoring-futures">Appendix: Reanchoring futures</h1>
-<p>The reanchoring in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- reanchoring is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Reanchorings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
-<p>In future, it may be best to revise this document to treat more reanchorings as standard than currently.</p>
-<p>The <code>arvo/</code> corpus suggests that BARCEN reanchoring at TISGAR should be considered standard, but accepting BARCEN-to-TISGAR reanchoring as standard would make the tic-tac-toe example non-standard.</p>
+<h1 id="appendix-currying-futures">Appendix: Currying futures</h1>
+<p>The curried backdenting in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- currying is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Curryings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
+<p>In future, it may be best to revise this document to treat more curryings as standard than currently.</p>
+<p>The <code>arvo/</code> corpus suggests that BARCEN currying with TISGAR should be considered standard, but accepting BARCEN-to-TISGAR currying as standard would make the tic-tac-toe example non-standard.</p>
 <p>On the other hand, lines 1323-1326 from <code>sys/vane/ames.hoon</code> suggest that TISGAR resists being an anchoring target:</p>
 <pre><code>=&gt;  ^+  .   %=  .
       q.r.neb  (~(put by q.r.neb) q.fud t.fud)
