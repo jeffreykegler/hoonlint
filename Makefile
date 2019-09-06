@@ -1,6 +1,6 @@
 
 .PHONY: dummy basic_test rebuild single_test full_test install releng \
-  cpan_dir_full_test
+  cpan_dir_full_test doc
 
 dummy: 
 
@@ -49,4 +49,7 @@ install:
 	@echo === install target ===
 	(cd cpan && perl Makefile.PL)
 	(cd cpan && $(MAKE))
+
+doc:
+	cd misc; make all
 
