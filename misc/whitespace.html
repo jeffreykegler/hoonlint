@@ -36,11 +36,11 @@
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdenting">Backdenting</a><ul>
-<li><a href="#backdenting-and-vertical-gaps">Backdenting and vertical gaps</a></li>
+<li><a href="#backdenting-and-vertical-vertical-separation">Backdenting and vertical vertical separation</a></li>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 </ul></li>
 <li><a href="#curried-backdenting">Curried backdenting</a><ul>
-<li><a href="#reanchor-offset">Reanchor offset</a></li>
+<li><a href="#currying-and-the-anchor-column">Currying and the anchor column</a></li>
 <li><a href="#first-example">First example</a></li>
 <li><a href="#second-example">Second example</a></li>
 </ul></li>
@@ -228,7 +228,7 @@
 </ul>
 <p>We say that a comment belongs to a hoon if that hoon directly contains the gap that lexically contains that comment. We say a hoon is the hoon of a comment if the comment belongs to that hoon.</p>
 <p>Meta-comments start at column 1. Depending on their hoon, inter-comments may also start at column 1. When inter-comments start at column 1, only the programmer's intent determines whether a given header comment is an inter-comment or a meta-comment.</p>
-<p>Pre-comments, inter-comments and staircases are structural comments. The contents of structural comments should usually be appropriate for the syntactic context of the code in which the structural comment occurs.</p>
+<p>Pre-comments, inter-comments and staircases are structural comments. The contents of structural comments wll typically be appropriate for the syntactic context of the code in which the structural comment occurs.</p>
 <p>Meta-comments are not structural comments, and their content may be anything. A frequent use for meta-comments is to &quot;comment out&quot; Hoon code.</p>
 <h2 id="staircase-comments">Staircase comments</h2>
 <p>Informally, staircase comments take the form</p>
@@ -239,7 +239,7 @@
   ::</code></pre>
 <p>More formally, a staircase comment consists of an <strong>upper riser</strong>, a <strong>tread</strong>, and a <strong>lower riser</strong>. The upper riser is a sequence of normal comment lines, aligned at the inter-comment column. (The inter-comment column location varies, depending on the syntax which contains the comment.) The tread is four colons, aligned at the inter-comment column and followed by a whitespace character. The lower riser is a sequence of normal comment lines, aligned at the column one stop greater than the inter-comment column. A still more formal definition of a staircase is given in an appendix.</p>
 <h1 id="vertical-gaps">Vertical Gaps</h1>
-<p>When we state that a vertical gap has comments at one location, we mean that the gap's inter-comment column location is the stated column location, and that the gap's pre-comment column location is not defined. When we state that a vertical gap has comments at location A <strong>as well as</strong> location B, we mean that the gap's inter-comment column location is location A, and that the gap's pre-comment column location is location B.</p>
+<p>When we state that a vertical gap has <strong>comments at location A</strong>, we mean that the gap's inter-comment column location is the stated column location, and that the gap's pre-comment column location is not defined. When we state that a vertical gap has <strong>comments at location A as well as location B</strong>, we mean that the gap's inter-comment column location is location A, and that the gap's pre-comment column location is location B.</p>
 <p>For example, when we write</p>
 <blockquote>
 <p>A vertical gap, with comments at the anchor column as well as the jog base column</p>
@@ -250,7 +250,7 @@
 </blockquote>
 <p>then we mean that the inter-comment location of the vertical gap is the anchor column, and the pre-comment location is not defined.</p>
 <p>In describing a vertical gap's comment locations, we may specify them explicitly as column locations, or implicitly, as alignments with a text block. If column location is expressed implicitly via a text block, the implicit location is the start column location of the text block.</p>
-<p>A vertical gap contains</p>
+<p>A vertical gap contains, in lexical order,</p>
 <ul>
 <li><p>A newline-terminated partial line preamble. This preamble may be of length 1 -- that is, it may be just the newline character.</p></li>
 <li><p>A body of zero or more full newline-terminated lines, all of them header comments or (in the case of non-standard code) blank lines.</p></li>
@@ -262,7 +262,7 @@
 <li><p>If both an inter-part and a pre-part are present, the inter-part must precede the pre-part.</p></li>
 <li><p>The inter-part is a non-empty sequence of inter-comments and staircases.</p></li>
 <li><p>A pre-part is a non-empty sequence of pre-comments.</p></li>
-<li><p>Meta-comments may be inserted anywhere in either the pre-part or the inter-part.</p></li>
+<li><p>Meta-comments may be inserted anywhere in, before, or after, either the pre-part or the inter-part.</p></li>
 <li><p>A comment is not regarded as a meta-comment if it can be parsed as structural comment.</p></li>
 </ul>
 <p>A formal description of the vertical gap body is given in an appendix.</p>
@@ -274,14 +274,14 @@
 <li><p>A tall hoon is a <strong>battery hoon</strong> if it contains a runechild that uses the battery syntax.</p></li>
 <li><p>SELGAP is the only tall <strong>irregular hoon</strong>. (Most irregular hoons do not contain a gap.)</p></li>
 <li><p>Ford statements have a specialized syntax, as described under &quot;Details&quot;.</p></li>
-<li><p>Sail statements have a specialized syntax, as described under &quot;Details&quot;.</p></li>
+<li><p>Sail statements have a specialized syntax, as described below.</p></li>
 <li><p>Udon (Unmarkdown) Hoon statements have a specialized syntax. The whitespace convention of this document allows Udon statements, but does impose any restrictions on their whitespace format.</p></li>
 <li><p>A tall hoon is a <strong>basic syntax hoon</strong> if it does not fall into any of the above, more complex, classes.</p></li>
 </ul>
 <h1 id="top-level-whitespace">Top-level whitespace</h1>
 <p>We call a Hoon statement not contained by another Hoon statement, a <strong>top-level</strong> Hoon statement. A Hoon source file is a sequence of top-level Hoon statements. All top-level Hoon statements should start at column 1. Successive top-level Hoon statements should be separated by a vertical gap with comments at column location 1.</p>
-<p>The first top-level Hoon statement may be preceded by a vertical gap, called the top-level leader. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case of a vertical gap -- it contains a body and a zero-length postamble, but no preamble.</p>
-<p>The last top-level Hoon statement may be followed by a vertical gap, called the top-level trailer. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
+<p>The first top-level Hoon statement may be preceded by a vertical gap, called the <strong>top-level leader</strong>. Comments in the top-level leader should be at column location 1. The top-level leader is a special-case of a vertical gap -- it contains a body and a zero-length postamble, but no preamble.</p>
+<p>The last top-level Hoon statement may be followed by a vertical gap, called the <strong>top-level trailer</strong>. Comments in the top-level trailer should be at column location 1. The top-level trailer is a special-case of a vertical gap -- it contains a body and a preamble, but no postamble.</p>
 <h1 id="backdenting">Backdenting</h1>
 <p>The flagship Hoon whitespace strategy is backdenting. Variations on the idea of backdenting appear throughout, but the archetypal case of backdenting is its use in basic syntax hoons. Here is a example of a 4-ary hoon:</p>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, 6752-6755:</em></p>
@@ -293,8 +293,7 @@
 <p>A basic syntax hoon of arity 3 or more should be joined. A basic syntax hoon of arity 2 or less should be split.</p>
 <p>The first runechild of a joined basic syntax hoon should be on the same line as the rune, separated by a horizontal gap. The first runechild may be tightly aligned, or aligned at the backdent column. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
 <p>The first runechild of a split basic syntax hoon should be vertically separated. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or vertically separated.</p>
-<h2 id="backdenting-and-vertical-gaps">Backdenting and vertical gaps</h2>
-<p>As stated, vertical backdenting is the flagship whitespace convention in Hoon, so in this section we will work out its implications in detail. For the purposes of this section, it is assumed that tight alignment is not being used.</p>
+<h2 id="backdenting-and-vertical-vertical-separation">Backdenting and vertical vertical separation</h2>
 <p>In a basic syntax <code>n</code>-arity hoon, a vertically separated <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. Here <code>m</code> is 1-based, so that the 1'th runechild is the first runechild, the 2'th runechild is the second runechild, etc.</p>
 <p>For example, in an 3-runechild hoon, a vertically separated first runechild should be aligned 2 stops after than the anchor column; a vertically separated second runechild should be aligned 1 stop after than the anchor column; and a vertically separated third runechild be aligned at the anchor column.</p>
 <p>This implies that, regardless of the number of runechildren in a backdented hoon, a vertically separated last runechild should be aligned at the anchor column. In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
@@ -322,54 +321,48 @@
 <li><p>The sequence is maximal. That is, a sequence is not considered a chain if it is a sub-sequence of a longer chain.</p></li>
 </ul>
 <p>For the purposes of chain inter-line alignment, we define row and silo as follows: Each row-initial rune starts a new row. For each row, the tall runes and their runechildren on the initial rune's line, taken in lexical order and recursively, are slotted.</p>
-<p>Unless it is a 1-ary rune, a tall rune expression is never a silo element. Hoons statements of arity greater than 1 must be broken out into its statement rune and its runechildren, before being slotted. A row may contain multiple lines, but runes and runechildren not on the first line of the row are not slotted and therefore are not used in determining inter-line alignment.</p>
+<p>Unless it is a 1-ary rune, a tall rune expression is never a silo element. Hoon statements of arity greater than 1 must be broken out into its statement rune and its runechildren, before being slotted. A row may contain multiple lines, but runes and runechildren not on the first line of the row are not slotted and therefore are not used in determining inter-line alignment.</p>
 <p>This implies that, in the first line of a row</p>
 <ul>
 <li><p>Every row-initial rune is in slot 0,</p></li>
 <li><p>Every statement rune is in its own slot.</p></li>
-<li><p>Every runechild of a tall rune is in its own slot, unless that runechild is itself a tall rune expression.</p></li>
+<li><p>Every runechild of a tall rune is in its own slot, unless that runechild is itself a non-unary tall rune expression.</p></li>
 </ul>
 <p>Further,</p>
 <ul>
 <li><p>For chained inter-line alignment, the row and silo grid may be &quot;ragged&quot;, so that some rows do not have elements in every slot.</p></li>
 <li><p>A slot with no element is called &quot;empty&quot;. In a given row, a non-empty slot cannot follow an empty slot. In other words, all the empty slots must be at the end of a row.</p></li>
 <li><p>Every row in a chain starts with a rune, but not every rune starts a new row.</p></li>
-<li><p>A silo may contain both runes and runechildren.</p></li>
+<li><p>A silo may be &quot;mixes&quot;, containing both runes and runechildren.</p></li>
 </ul>
 <p><em>From <code>arvo/sys/hoon.hoon</code>, lines 1572-1575:</em></p>
 <pre><code>    =|  b/(set _?&gt;(?=(^ a) p.n.a))
     |-  ^+  b
     ?~  a   b
     $(a r.a, b $(a l.a, b (~(put in b) p.n.a)))</code></pre>
-<p>In the above example, the chain contains 3 rows. (The 3rd row is multiline -- it contains the 3rd and 4th lines.) There are 3 silos and therefore 3 slots in every row.</p>
-<p>The 3rd slot of the 1st row is empty, so the slotting is &quot;ragged&quot;. All 3 rows has non-empty 1st and 2nd slots.</p>
+<p>In the above example, the chain contains 3 rows. (The 3rd row is multiline -- it contains the 3rd and 4th lines.) There are 3 silos and therefore 3 slots in every row. The 2nd silo is mixed -- it contains a rune (at row 2) as well as runechildren (at rows 1 and 3).</p>
+<p>The 3rd slot of the 1st row is empty, so the slotting is &quot;ragged&quot;. All 3 rows have non-empty 1st and 2nd slots.</p>
 <p>In all 3 rows, the 2nd slot is tightly aligned, The 3rd slot in the 2nd row is also tightly aligned.</p>
 <p>Only one non-empty slot is not tightly aligned. The 3rd slot of the 3rd row is inter-line aligned. The <code>b</code> in the 3rd row comes after a gap of 3 spaces, but this follows the standard set forth in this document because it aligns with the <code>b</code> of the 2nd row, at column location 13.</p>
 <p>Note that the 2nd row is an example of a &quot;joined&quot; hoon. The 2nd row contains two runes -- both the 1st and 2nd slots of the 2nd row are runes. In a chained hoon sequence, when a row starts with a unary rune, joined hoons can be convenient.</p>
 <h1 id="curried-backdenting">Curried backdenting</h1>
-<p>Curried backdenting is a method of conserving indentation. In curried backdenting, one or more runes are &quot;curried&quot;, or treated as a single rune, for backdenting purposes.</p>
-<p>When a rune is curried, its anchor column is moved back to the first rune of the curried text block. This shift of the anchor column is called <strong>reanchoring</strong>. We call the original rune, the one that is to be reanchored, the <strong>reanchored rune</strong>. We also call it the <strong>source rune</strong> of the curried text block. We also call the first rune of the curried text block, its <strong>target rune</strong>. We also call it the <strong>anchor rune</strong>.</p>
-<p>Call the text block that starts at the column location of the anchor rune, and that ends immediately after the last character of the reanchored rune, the &quot;curried text block&quot;.</p>
-<p>Pedantically, every rune is in a curried text block, but most curried text blocks consist only of a single rune. We call such single-rune curried text blocks, &quot;trivial&quot;. In a trivial curried text block the reanchored rune is the same as the anchor rune, and the source rune is the same as the target rune.</p>
-<p>Not all runes participate in reanchoring. Which do, and which do not, is specified in the &quot;Details&quot;.</p>
-<p>The anchor column of a curried text block depends on two things: the column location of anchor rune, and the &quot;reanchor offset&quot;. The <strong>anchor rune</strong> is a rune on the same line as the reanchored rune. The anchor rune is either the same as the reanchored rune, or is a rune closer to the left margin.</p>
-<h2 id="reanchor-offset">Reanchor offset</h2>
-<p>The column location of the anchor rune is <strong>not</strong> necessarily the same as the new anchor column. The distance by which they differ is the <strong>reanchor offset</strong>.</p>
-<p>The reanchor offset is an adjustment necessary to make reanchor indentation look and act like normal backdented indentation. The reanchor offset may be zero. If the reanchor offset is non-zero, and is not applied, the curried backdenting will &quot;look wrong&quot;.</p>
-<p>Some runechildren of the curried runes are contained in the curried text block, and they therefore must be included in calculated the reanchor offset. Those runechildren not in the curried text block are &quot;left over&quot;, and are not included in calculating the reanchor offset.</p>
-<p>The &quot;left over&quot; runechildren can be thought of as the runechildren of the curried rune. For it to look as if the children of this curried rune were backdented normally, the whitespace conventions must account for curried versus &quot;left over&quot; runechildren.</p>
-<p>Intuitively, if not all the runechildren of a curried rune are on the rune line, so that some of the runechildren &quot;left over&quot;, then the appropriate amount of indentation is also &quot;left over&quot;. This &quot;left over&quot; indentation of each rune is the &quot;per-rune offset&quot; of that rune.</p>
-<p>The <strong>reanchor offset</strong> of a curried text block is the sum of all the per-rune offsets between the target and the source rune, including the target rune but not including the source rune. the source rune's per-rune offset is not included in the calculation of the reanchor offset, because the rune-children of the source rune are never inside the curried text block. In other words, all of source rune's children are &quot;left over&quot;.</p>
-<p>There will be examples below that show the calculation of per-rune-offsets in a curried backdenting context. But, for a first example, it will be easiest to see how the definition of the per-rune-offset applies to a simple backdented hoon.</p>
-<p><em>Actual</em></p>
-<pre><code>:^  a  b  c
-d</code></pre>
-<p>What is the per-rune offset of the COLKET (<code>:^</code>) expression in <em>Actual</em>? Its last runechild on the same line is the text <code>c</code>. Let us rewrite &quot;<em>Actual</em>, moving the <code>c</code> to the next line and aligning according to the conventions of this document. Our rewritten fragment is as follows:</p>
-<p><em>What if</em></p>
+<p>Curried backdenting is a method of conserving indentation. Curried backdenting treats a <strong>curried text block</strong> as a single rune for backdenting purposes. A curried text block must start with a rune, and must end with a rune on the same line. This implies that a curried text block cannot contain a multiline gap.</p>
+<p>A curried text block is also called a <strong>currying</strong>. When a rune is in a currying, its anchor column is based on the first rune of the curried text block, and this may involve changing the anchor column of some of the runes in the currying. This shift of the anchor column is called <strong>reanchoring</strong>.</p>
+<p>We call the last rune in a currying, the <strong>source rune</strong> or the <strong>reanchored rune</strong> of the currying. We call the first rune of the curried text block, its <strong>target rune</strong>, or the <strong>anchor rune</strong> of the currying.</p>
+<p>Pedantically, every rune is in a curried text block, but most curryings are <strong>trivial</strong> -- they consist only of a single rune. In a trivial currying the reanchored rune is the same as the anchor rune or, to put the same thing in different words, and the source rune is the same as the target rune.</p>
+<p>Not all all pairings of source and target rune are allowed. If a currying whose source is rune <code>S</code> and whose target is rune <code>T</code> is allowed, we say the <strong>rune S curries with rune T</strong>. Trivial curryings are always allowed. Which rune is allowed to pair with which other runes in a non-trivial curryings is described in &quot;Details&quot;.</p>
+<h2 id="currying-and-the-anchor-column">Currying and the anchor column</h2>
+<p>Non-trivial currying changes the anchor column. The anchor column of a curried text block depends on two things: the column location of the anchor rune, and the &quot;reanchor offset&quot;.</p>
+<p>The column location of the anchor rune is <strong>not</strong> necessarily the same as the new anchor column. The distance by which they differ is the <strong>reanchor offset</strong>. The reanchor offset is an adjustment necessary to make reanchor indentation look and act like normal backdented indentation.</p>
+<p>Some runechildren of the curried runes are contained in the curried text block. Those runechildren not in the curried text block are &quot;left over&quot;. The distinction between contained and &quot;left over&quot; children is important in calculating the reanchor offset. The &quot;left over&quot; runechildren can be thought of as the runechildren of the curried rune.</p>
+<p>Intuitively, if a currying has runechildren &quot;left over&quot;, then an appropriate amount of indentation must also be &quot;left over&quot;. The &quot;left over&quot; indentation can be calculated for each rune contained in the currying. The &quot;left over&quot; indentation of a curried rune is the &quot;per-rune offset&quot; of that rune.</p>
+<p>The <strong>reanchor offset</strong> of a curried text block is the sum of all the per-rune offsets. The per-rune offset of each rune depends on its arity, and on the number of its &quot;left over&quot; runechildren. The per-rune offset of the source rune is always zero.</p>
+<p>There will be examples below that show the calculation of per-rune-offsets in a currying. But, for a first example, it will be easiest to see how the idea of a per-rune-offset looks when applied to a simple backdented hoon.</p>
 <pre><code>:^  a  b
   c
 d</code></pre>
-<p>Standard alignment for the 3rd COLKET runechild placed it at column 3 in the <em>What if?</em> display. Column 3 is two characters after the alignment of the COLKET rune, at column 1. Therefore the per-rune-offset of the COLKET in &quot;<em>Actual</em> is two: <code>3 - 1 == 2</code>. A formal definition of &quot;anchor column&quot; is given in an appendix.</p>
+<p>What is the per-rune offset of the COLKET (<code>:^</code>) expression in the above display? The first runechild not on the same line as the COLKET rune is the text <code>c</code>. Standard alignment for the 3rd COLKET runechild places it at column 3, so that the &quot;left over&quot; indentation for the text <code>c</code> is the distance from column 3 to the anchor column. The anchor column in this simple case is just the column location of the COLKET rune, which is column 1. Therefore the left over indentation is <code>3 - 1 == 2</code>.</p>
+<p>A more formal definition of these concepts is given in the appendix defining &quot;anchor column&quot;.</p>
 <h2 id="first-example">First example</h2>
 <p><em>From <code>arvo/sys/vane/ford.hoon</code>, lines 1916-1920:</em></p>
 <pre><code>        :+  %depends  %|  :~
@@ -377,10 +370,8 @@ d</code></pre>
           listeners+[%&amp; sup]
           waiting+[%&amp; out]
         ==</code></pre>
-<p>The rune line is line 1916, and the rune is COLSIG (<code>:~</code>). The anchor rune is the COLLUS (<code>:+</code>). COLLUS is 3-fixed, but all three of its runechildren are on the rune line, so the per-rune offset of COLLUS is 0.</p>
-<p>The reanchor offset is the sum of the per-rune offsets of the curried runes other than the source rune. This is only one such rune, the target rune, COLLUS. Its per-rune offset is 0, so that the reanchor offset is also 0.</p>
-<p>The anchor column is defined to be the anchor rune column (column 9) plus the reanchor offset (0), so that in this case, the anchor column (<code>9+0</code>) is the same as the anchor rune column (column 9).</p>
-<p>COLSIG is 0-running, and normal COLSIG indentation aligns the runsteps one stop after the anchor column at column 11. It puts the final TISTIS at the anchor column (column 9). This is exactly what we see.</p>
+<p>The currying is on the line 1916, and contains two runes: COLSIG (<code>:~</code>) is the source and COLLUS (<code>:+</code>) is the target. The arity of COLSIG is 1 and the arity of COLLUS is 3. The currying contains 3 runechildren, so the currying is 1-arity: <code>((1 + 3) - 3 = 1</code>.</p>
+<p>The anchor rune is the COLLUS (<code>:+</code>) at column 9, so the anchor column of the currying is column 9. COLSIG is 0-running, so the running is its first and only child. Normal backdenting aligns the 1st runechild of a 1-arity hoon at the anchor column (column 9). As we will see when we deal with runnings, the runsteps should be aligned one stop after running, which means they are at column 11 (<code>11 = 9 + 2</code>). The final TISTIS of running should be aligned at the anchor column (column 9). These alignments are what we see in the display above.</p>
 <h2 id="second-example">Second example</h2>
 <p><em>From <code>arvo/lib/hood/kiln.hoon</code>, lines 346-356:</em></p>
 <pre><code>    =/  request-data  :~
@@ -394,8 +385,11 @@ d</code></pre>
     =/  monies/coin  [%many ~[[%blob request-data] [%$ ~.n 0]]]
     =/  request/silk:ford  [%bake %urb monies [our %home [%da now]] /web]
     (emit `card`[%exec /kiln/prime/cache our `[[our %home [%da now]] request]])</code></pre>
-<p>Here the rune line is line 346, the rune is again COLSIG, and it reanchors at TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line, so that the per-rune offset of the TISFAS is that of its 2nd runechild -- one stop. The anchor column is therefore one stop (2 characters) after the anchor rune column (column 5). Doing the arithmetic, the anchor column is column 7 (<code>7=5+2</code>).</p>
-<p>COLSIG again is 0-running, so that its runsteps should be aligned one stop after the anchor column. Runstep are therefore aligned at column 9 (<code>9=7+2</code>). By the same logic, the TISTIS should be aligned at the anchor column (column 7). This is what we see in the example. The last three lines of the example are the last runechild of the TISFAS.</p>
+<p>The currying is line 346, the source rune is again COLSIG, and the target rune is TISFAS (<code>=/</code>). TISFAS is 3-fixed, and 2 of its runechildren are on the rune line. COLSIG is 1-arity, and its runechild is not on the rune line. The currying therefore contains a total of 2 runechildren.</p>
+<p>Calculating the arity of the currying we have 3 (the arity of TISFAS) plus 1 (the arity of COLSIG) less 2 (the count of runechildren in the currying). There the currying is 2-arity: <code>2 = (3+1)-(2)</code>.</p>
+<p>COLSIG again is 0-running, so that its runsteps should be aligned one stop after the anchor column. The anchor column is column 5, the column of the anchor rune, COLSIG. The running is the first runechild of a 2-arity (curried) hoon, and therefore by the standard backdenting rules should be one stop after the anchor column. The runsteps are aligned one stop after the running, are therefore aligned at column 9 (<code>9=7+2</code>).</p>
+<p>The TISTIS of the running is aligned with the running, and therefore is at column 7, one stop after the anchor column.</p>
+<p>The last child of the TISFAS is on line 354. It is the 2nd child of the 2-arity currying and therefore, by the standard backdenting rules, is aligned at the anchor column (column 5).</p>
 <h1 id="split-hints">Split hints</h1>
 <p><em>From <code>sys/vane/clay.hoon</code>, lines 4022-4228:</em></p>
 <pre><code>    ~&gt;  %slog.
