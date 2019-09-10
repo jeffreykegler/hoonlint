@@ -63,6 +63,13 @@
 </ul></li>
 <li><a href="#criss-cross-lines">Criss-cross lines</a></li>
 <li><a href="#batteries">Batteries</a></li>
+<li><a href="#sail">Sail</a><ul>
+<li><a href="#sail-1-fixed-runes">Sail 1-fixed runes</a></li>
+<li><a href="#semtis">SEMTIS</a></li>
+<li><a href="#tagged-sail-statements">Tagged sail statements</a></li>
+<li><a href="#sail-attributes">Sail attributes</a></li>
+</ul></li>
+<li><a href="#selgap">SELGAP</a></li>
 <li><a href="#details">Details</a><ul>
 <li><a href="#currying-basic-syntax-hoons">Currying basic syntax hoons</a></li>
 <li><a href="#running-hoons-1">0-running hoons</a><ul>
@@ -101,13 +108,6 @@
 <li><a href="#fascom">FASCOM</a></li>
 <li><a href="#fastis">FASTIS</a></li>
 </ul></li>
-<li><a href="#sail">Sail</a><ul>
-<li><a href="#sail-1-fixed-runes">Sail 1-fixed runes</a></li>
-<li><a href="#semtis">SEMTIS</a></li>
-<li><a href="#tagged-sail-statements">Tagged sail statements</a></li>
-<li><a href="#sail-attributes">Sail attributes</a></li>
-</ul></li>
-<li><a href="#selgap">SELGAP</a></li>
 </ul></li>
 <li><a href="#appendix-non-standard-code">Appendix: Non-standard code</a><ul>
 <li><a href="#chess-sidedness-1">Chess-sidedness</a></li>
@@ -116,16 +116,20 @@
 </ul></li>
 <li><a href="#appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</a></li>
 <li><a href="#appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</a></li>
-<li><a href="#appendix-currying-futures">Appendix: Currying futures</a></li>
+<li><a href="#appendix-futures">Appendix: Futures</a><ul>
+<li><a href="#eliminate-the-details">Eliminate the details</a></li>
+<li><a href="#free-currying">&quot;Free&quot; currying</a></li>
+<li><a href="#post-comments">Post-comments</a></li>
+</ul></li>
 </ul>
 </div>
 <h1 id="about-this-document">About this document</h1>
-<p>This document is intended to specify a convention for the use of whitespace by Hoon to the level and to the degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>. This document only deals with conventions for Hoon expressions that contain gaps. These are</p>
+<p>This document specifies a convention for the use of whitespace by Hoon to the level and to the degree of precision necessary for <code>hoonfmt</code> and <code>hoonlint</code>. This document only deals with conventions for Hoon expressions that contain gaps. These are</p>
 <ul>
 <li><p>tall Hoon expressions; and</p></li>
 <li><p>SELGAP, a special case.</p></li>
 </ul>
-<p>Whitespace in other Hoon expressions is always an &quot;ace&quot; -- a single space. For these Hoon expressions in which all whitespace is an ace, there is no latitude in the use of whitespace, and therefore no need for any conventions.</p>
+<p>Whitespace in other Hoon expressions is always an &quot;ace&quot; -- a single space. For Hoon expressions in which all whitespace is an ace, there is no latitude in the use of whitespace, and therefore no need for any conventions.</p>
 <h1 id="terminology">Terminology</h1>
 <h2 id="deontology">Deontology</h2>
 <p>In this document, we say &quot;<code>X</code> should be <code>Y</code>&quot;, if <code>X</code> must be <code>Y</code> in order to meet the standard described in this document. Code or practices that obey this standard we will call <strong>standard</strong>. Code or practices that are not standard we will call <strong>non-standard</strong>. One pragmatic consequence of non-standard code is that it may draw warnings from <code>hoonlint</code>.</p>
@@ -134,7 +138,7 @@
 <p>This document applies to Hoon source files. A Hoon source file is divided into newline-terminated lines each of which contains 1 or more characters. The 1-based offset of a character in its line is its <strong>column location</strong>. The 1-based line number of a character is its <strong>line location</strong>. Line location is often abbreviated to <strong>line</strong>, and column location is often abbreviated to <strong>column</strong>.</p>
 <p>To avoid confusion, in this document &quot;column&quot; is always used to mean the column location of a character within a line, as defined above. When we discuss other 2-dimensional grids, we use the terms &quot;row&quot; for position on the vertical axis, and &quot;silo&quot; for position on the horizontal axis.</p>
 <h2 id="rows-silos-and-slots">Rows, silos and slots</h2>
-<p>A row-silo grid is a 2-dimensional grid of <strong>slots</strong>, where the row is the position of the slot on the vertical axis, and the silo is the position of the slot on the horizontal axis. For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
+<p>A row-silo grid is a 2-dimensional grid of <strong>slots</strong>, where a row is a sequence of slots which share the same position on the vertical axis, and a silo is a sequence of slots which share the same position on the horizontal axis. For orthogonality with columns and lines, row and silo numbers are 1-based. There will be several definitions of &quot;row&quot; and &quot;silo&quot;, and we will give specifics in the context where they are used.</p>
 <p>When, for a given row, we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong> beginning at slot <code>x</code>&quot;, we mean that, for <code>0 &lt;= i &lt;= n</code>, <code>S[i]</code> goes into slot <code>i+x</code>. When, for a given row, we say that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong>&quot;, we mean that &quot;sequence <code>S[0], S[1] ... S[n]</code> is <strong>slotted</strong> beginning at slot 1&quot;,</p>
 <h2 id="characters-and-character-boundaries">Characters and character boundaries</h2>
 <p>A <strong>whitespace character</strong> is either an ASCII space or a newline. A <strong>whitespace boundary</strong> is one of the following:</p>
@@ -146,7 +150,7 @@
 <p>Note that a whitespace boundary is not a column location. Instead it is a location immediately before a column location; immediately after a column location; or both.</p>
 <h2 id="blocks">Blocks</h2>
 <p>A character block is a lexically contiguous sequence of one or more characters. A whitespace block is a character block that contains only whitespace characters and occurs between two whitespace boundaries. An <strong>ace</strong> is a whitespace block that contains a single ASCII space. A <strong>gap</strong> is any whitespace block that is not an ace.</p>
-<p>A <strong>horizontal gap</strong> is a gap that contains only ASCII spaces. A <strong>vertical gap</strong> is a gap that contains at least one newline. All gaps are either horizontal or vertical.</p>
+<p>A <strong>flat gap</strong> is a gap that contains only ASCII spaces. A <strong>multiline gap</strong> is a gap that contains at least one newline. All gaps are either flat or multiline.</p>
 <p>A <strong>text block</strong> is a character block</p>
 <ul>
 <li><p>that begins at a whitespace boundary;</p></li>
@@ -160,9 +164,13 @@
 <p>We say &quot;column <code>C</code> is aligned <code>N</code> characters after column <code>D</code>&quot; if and only if <code>C = D + N</code>. We say &quot;column <code>C</code> is aligned at column <code>D</code>&quot; if and only if <code>C = D</code>. We say &quot;column <code>C</code> is aligned <code>N</code> characters before column <code>D</code>&quot; if and only if <code>C = D - N</code>.</p>
 <p>When we speak of text blocks being aligned relative to columns or relative to other text blocks, we are refering to the column location of the text blocks. For example, if we say &quot;text X is aligned N characters after text Y&quot;, we mean that <code>Column(X) = Column(Y) + N</code>.</p>
 <p>Often we express distance between columns in stops instead of characters. A <strong>stop</strong> is two characters.</p>
-<p>Let <em>T1</em> and <em>T2</em> be two text blocks on the same line. If <em>T1</em> is separated from <em>T2</em> by a horizontal gap, and <em>T1</em> precedes <em>T2</em>, we say that <em>T2</em> is <strong>tightly separated</strong>, or <strong>tightly aigned</strong>. Note that, by this definition, the first text block on a line can never be tightly aligned.</p>
-<p>If a one-stop horizontal gap precedes a text block and separates it from another text block, followed by one-stop horizontal gap, we say that is is</p>
-<p>Many alignments are with respect to an <strong>anchor column</strong>. In the context of a specific Hoon statement, <em>h</em>, the anchor column typically is <code>Column(Rune(h))</code>. But if the rune of <em>h</em> is part of a non-trivial curried text block, as described below, the anchor column of <em>h</em> may be aligned at a different rune.</p>
+<p>Let <em>T1</em> and <em>T2</em> be two text blocks on the same line. We say that <em>T2</em> is <strong>tightly separated</strong>, if and only if</p>
+<ul>
+<li><p><em>T1</em> is separated from <em>T2</em> by a one-stop flat gap, and</p></li>
+<li><p><em>T1</em> precedes <em>T2</em>.</p></li>
+</ul>
+<p>If a text block is <strong>tightly separated</strong>, we also say that it is <strong>tightly aligned</strong>. Note that, by this definition, the first text block on a line can never be tightly aligned.</p>
+<p>Many alignments are with respect to an <strong>anchor column</strong>. In the context of a specific Hoon statement, <strong>h</strong>, the anchor column typically is <code>Column(Rune(h))</code>. But if the rune of <strong>h</strong> is part of a non-trivial curried text block, as described below, the anchor column of <strong>h</strong> may be aligned at a different rune.</p>
 <h2 id="hoon-statements">Hoon statements</h2>
 <p>A Hoon source file contains one or more Hoon <strong>statements</strong>. The Hoon statements are separated by whitespace. Optionally, the first Hoon statement may be preceded by whitespace. Also optionally, the last Hoon statement may be followed by whitespace.</p>
 <p>A Hoon <strong>statement</strong> is a text block which compiles to a single AST node. We sometimes refer to a Hoon statement as a &quot;hoon&quot;, but strictly speaking, the &quot;Hoon statement&quot; is the text block before parsing, and the &quot;hoon&quot; is the AST produced by parsing.</p>
@@ -174,7 +182,7 @@
 <li><p>an arm marker digraph: one of LUSLUS (<code>++</code>), LUSHEP (<code>+-</code>), or LUSTIS (<code>+=</code>).</p></li>
 </ul>
 <p>Note that not all special-character digraphs are runes. In this document, HEPHEP (<code>--</code>) or TISTIS (<code>==</code>) will be called <strong>boundary digraphs</strong>, and in this document they are not considered runes. When context makes the meaning clear, a boundary digraph is usually called simply a <strong>boundary</strong>.</p>
-<p>The comment-marking digraph <code>::</code>, is also not a rune. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
+<p>Comment-marking digraphs, such as <code>::</code>, are also not considered runes. Comments, including the digraphs that begin them, are considered whitespace, and nothing in whitespace is considered a rune.</p>
 <h2 id="hoon-expressions">Hoon expressions</h2>
 <p>A tall <strong>rune expression</strong> is a tall Hoon expression whose &quot;keyword&quot; is a rune. A tall rune expression consists of the initial rune followed by zero or more subexpressions, called <strong>runechildren</strong>.</p>
 <p>The <strong>arity</strong> of a rune expression is the number of its runechildren. In the tall Hoon expressions which are the focus in this document, the rune is separated from its first runechild, and consecutive runechildren are separated from each other, by gaps.</p>
@@ -183,11 +191,13 @@
 <pre><code>   Line(Hoon(r)) == Line(r)
    Column(Hoon(r)) == Column(r)</code></pre>
 <p>Let <code>h</code> be a rune expression. We sometimes write the Hoon expression that is the syntactic parent of <code>h</code> as <code>Parent(h)</code>.</p>
-<p>Let <em>H</em> be a text block which is a Hoon statement, and let <em>T1</em> be a text block. <em>H</em> <strong>properly contains</strong> <em>T1</em> if <em>H</em> contains <em>T1</em>, but <em>H</em> is not identical to <em>T1</em>. <em>H</em> <strong>directly contains</strong> <em>T1</em> if it properly contains <em>T1</em> and no other properly contained Hoon statement of <em>H</em> properly contains <em>T1</em>.</p>
+<p>Let <em>H</em> be a text block which is a Hoon statement, and let <em>T1</em> be a text block. <em>H</em> <strong>properly contains</strong> <em>T1</em> if <em>H</em> contains <em>T1</em>, but <em>H</em> is not identical to <em>T1</em>. <em>H</em> <strong>directly contains</strong> <em>T1</em> if <em>H</em> properly contains <em>T1</em> and no other properly contained Hoon statement of <em>H</em> properly contains <em>T1</em>.</p>
 <h2 id="joined-and-split">Joined and split</h2>
-<p>For many Hoon expressions, the pattern of the standard whitespace conventions depends on whether a specific gap in that Hoon expression is horizontal or vertical. If the pattern-decisive gap is horizontal, the conventions follow a &quot;joined&quot; pattern. If the pattern-decisive gap is vertical, the conventions follow a &quot;split&quot; pattern. The specific conventions will be specified below, with each syntax.</p>
+<p>For many Hoon statements, the pattern of the standard whitespace conventions depends on whether a specific gap in that Hoon statement is horizontal or vertical. A flat gap is always considered horizontal, and a vertical gap is always multiline. But, because of pseudo-joins, a multiline gap is not necessarily a vertical gap. Pseudo-joins are defined below.</p>
+<p>If the pattern-decisive gap is horizontal, the conventions for the hoon which directly contains that gap follow a &quot;joined&quot; pattern. If the pattern-decisive gap is vertical, the conventions for the hoon which directly contains that gap follow a &quot;split&quot; pattern. The specific conventions will be specified below, with each syntax.</p>
 <h2 id="pseudo-joins">Pseudo-joins</h2>
-<p>It is sometimes convenient to have a vertical pattern-decisive gap, but to otherwise follow the &quot;joined&quot; syntax pattern. For example, the programmer may find &quot;joined&quot; syntax appropriate, but want to insert a comment in the pattern-decisive gap. In these situations, it is useful to have a form of the vertical gap that, for pattern-decisive purposes, is treated as if it were a horizontal gap. Such a gap is called a <strong>pseudo-join</strong>.</p>
+<p>It is sometimes convenient to have a multiline pattern-decisive gap, but to otherwise follow the &quot;joined&quot; syntax pattern. For this, it useful to have a form of multiline gap which is treated as a horizontal gap.</p>
+<p>This is useful, for example, when the programmer finds &quot;joined&quot; syntax appropriate, but wants to include a comment in the pattern-decisive gap. A multiline gap that is treated as if it were a horizontal gap is called a <strong>pseudo-join</strong>.</p>
 <p><em>From <code>app/talk.hoon</code>, lines 24-33</em>:</p>
 <pre><code>=&gt;  :&gt;  #
     :&gt;  #  %arch
@@ -200,16 +210,16 @@
           grams/(list telegram)                         :&lt;  all history
           known/(map serial @ud)                        :&lt;  messages heard</code></pre>
 <p>The above example contains two pseudo-joins. The first pseudo-join runs from line 24 to line 29. The second pseudo-join runs from line 31 to line 32.</p>
-<p>Let <code>J</code> be a <strong>join column</strong>. A text is <strong>pseudo-joined</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. Note that this implies that the first, partial, line of the gap must contain a comment aligned at <code>J</code>.</p>
+<p>Let <code>J</code> be a <strong>join column</strong>. A multiline text is a <strong>pseudo-join</strong> at <code>J</code> if and only if every line of it, except the last line, has a comment aligned at <code>J</code>. This implies that the first, partial, line of the pseudo-join must contain a comment aligned at <code>J</code>.</p>
 <p>Visually, the pseudo-join's comments look like &quot;place holders&quot; for the text that follows the pseudo-join.</p>
-<p>Intuitively, a pseudo-join is equivalent to a horizontal gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2</code>, by lexically replacing the pseudo-join with a horizontal gap. Call that horizontal gap, <code>G</code>. Let <code>H</code> be the column location immediately after <code>G</code> in <code>file2</code>. The pseudo-join and the horizontal gap are <strong>equivalent</strong> if and only if <code>J == H</code>.</p>
+<p>Intuitively, a pseudo-join is said to be <strong>equivalent</strong> to a flat gap if the text that follows both of them is aligned at the same column location. More formally, Let <code>file1</code> be a Hoon source file. Let <code>J</code> be the join column of a pseudo-join in <code>file1</code>. Construct another Hoon source file, <code>file2</code>, by lexically replacing the pseudo-join with a flat gap. Call that flat gap, <code>G</code>. Let <code>H</code> be the column location immediately after <code>G</code> in <code>file2</code>. The pseudo-join and the flat gap are <strong>equivalent</strong> if and only if <code>J == H</code>.</p>
 <h2 id="horizontal-multiline-and-vertical-separation">Horizontal, multiline and vertical separation</h2>
-<p>If the gap immediately preceding a text block contains a newline, the text block is <strong>multiline separated</strong>. If a text block is not multiline separated, it is <strong>horizontally separated</strong>.</p>
-<p>If a horizontal gap is allowed according to these conventions, it is a <strong>standard</strong> horizontal gap. If the gap immediately preceding a text block is a pseudo-join equivalent to a standard horizontal gap, the text block is <strong>pseudo-joined</strong>. If a text block is multiline separated, but not pseudo-joined, the text block is <strong>vertically separated</strong>.</p>
+<p>If a flat gap is allowed according to these conventions, it is a <strong>comformant</strong> flat gap. If the gap immediately preceding a text block is a pseudo-join equivalent to a comformant flat gap, the text block is <strong>pseudo-joined</strong>.</p>
+<p>If the gap immediately preceding a text block is flat or a pseudo-join, the text block is <strong>horizontally separated</strong>. If a text block is not horizontally separated, then it is <strong>vertically separated</strong>.</p>
 <h2 id="inter-line-alignment">Inter-line Alignment</h2>
 <p>Inter-line alignment aligns a text block with one or more text blocks on &quot;associated&quot; lines. There are several different kinds of inter-line alignment, and each differs in its definition of which text blocks should be aligned with which, and which lines it &quot;associates&quot; with the current line. The specific definitions of inter-line alignment will be described in detail in the sections to follow.</p>
 <h1 id="header-and-inline-comments">Header and inline comments</h1>
-<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a horizontal gap of 20 or more characters. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
+<p>Comments count as whitespace. A comment is a <strong>header comment</strong> if it is on a line by itself. If a comment is not a header comment, it is a <strong>rightside</strong> comment. A rightside comment is a <strong>margin comment</strong> if it begins at or after column 57, or immediately after a sequence of 20 or more ASCII spaces. All margin comments should start at column 57. A rightside comment is an <strong>inline comment</strong> if it is not a margin comment.</p>
 <p>In standard code, header comments are</p>
 <ul>
 <li><p>pre-comments or inter-comments, as determined by their hoon;</p></li>
@@ -284,7 +294,7 @@
 <p>The first runechild of a joined basic syntax hoon should be on the same line as the rune, separated by a horizontal gap. The first runechild may be tightly aligned, or aligned at the backdent column. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
 <p>The first runechild of a split basic syntax hoon should be vertically separated. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or vertically separated.</p>
 <h2 id="backdenting-and-vertical-gaps">Backdenting and vertical gaps</h2>
-<p>As stated, vertical backdenting is the flagship whitespace convention in Hoon, so in this section we will work out its implications in detail. For the purposes of this section, it is assumed that tight (horizontal) alignment is not being used.</p>
+<p>As stated, vertical backdenting is the flagship whitespace convention in Hoon, so in this section we will work out its implications in detail. For the purposes of this section, it is assumed that tight alignment is not being used.</p>
 <p>In a basic syntax <code>n</code>-arity hoon, a vertically separated <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. Here <code>m</code> is 1-based, so that the 1'th runechild is the first runechild, the 2'th runechild is the second runechild, etc.</p>
 <p>For example, in an 3-runechild hoon, a vertically separated first runechild should be aligned 2 stops after than the anchor column; a vertically separated second runechild should be aligned 1 stop after than the anchor column; and a vertically separated third runechild be aligned at the anchor column.</p>
 <p>This implies that, regardless of the number of runechildren in a backdented hoon, a vertically separated last runechild should be aligned at the anchor column. In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
@@ -421,10 +431,10 @@ d</code></pre>
             ~1974.12.31..23.59.38  ~1973.12.31..23.59.37
             ~1972.12.31..23.59.36  ~1972.6.30..23.59.35
         ==</code></pre>
-<p>Each runstep line is a row. For each row, the runsteps, in lexical order, are siloed.</p>
+<p>Each runstep line is a row. Within each row, the runsteps are slotted in lexical order.</p>
 <h3 id="running-shared-inter-line-alignment">Running-shared inter-line alignment</h3>
-<p>If a runstep is a basic syntax hoon, the runechildren of the basic syntax hoon may have a <strong>running-shared</strong> inter-line alignment. In running-shared inter-line alignment, every basic syntax hoon is a row. For each row, the sequence composed of the rune of the hoon, followed by its runechildren in lexical order, is slotted.</p>
-<p>Within a running, the running-shared inter-line alignment of a runechild is determined by the silo of the runechild.</p>
+<p>If a runstep is a basic syntax hoon, the runechildren of the basic syntax hoon may have a <strong>running-shared</strong> inter-line alignment. In running-shared inter-line alignment, every basic syntax hoon is a row. Within each row, first the rune of the hoon is slotted, then its runechildren in lexical order.</p>
+<p>Within a running, the running-shared inter-line alignment of a runechild is determined by the slot of the runechild.</p>
 <p><em>From `sys/hoon.hoon', lines 5303-5308:</em></p>
 <pre><code>    :~  :-  [&#39;a&#39; &#39;z&#39;]  (cook |=(a/@ta [%$ %tas a]) sym)
         :-  [&#39;0&#39; &#39;9&#39;]  (stag %$ bisk)
@@ -433,22 +443,21 @@ d</code></pre>
         :-  &#39;~&#39;        ;~(pfix sig ;~(pose twid (easy [%$ %n 0])))
     ==</code></pre>
 <h3 id="mixed-inter-line-alignments-in-a-running">Mixed inter-line alignments in a running</h3>
-<p>A running should not have both running-shared and runestep alignment. Note that if a backdented hoon is a runestep, it may have both a running-shared inter-line alignment and a chained inter-line alignment. If a backdented hoon does have both inter-line alignments, they should be consistent. That is, for every silo, the column location of that silo according to running-shared alignment should be identical to the column location of that silo according to chained alignment.</p>
+<p>A running should not have both running-shared and runestep alignment. But note that if a basic syntax hoon is a runestep, it may have both a running-shared inter-line alignment and a chained inter-line alignment. If a basic syntax hoon does have both inter-line alignments, they should be consistent. That is, for every slot, the column location of that slot according to running-shared alignment should be identical to the column location of that slot according to chained alignment.</p>
 <h1 id="jogging-hoons">Jogging hoons</h1>
-<p>A jogging runechild is more often called simply a <strong>jogging</strong>. (Currently all hoons contains at most one jogging.)</p>
+<p>A jogging runechild is more often called simply a <strong>jogging</strong>. A Hoon statement contains at most one jogging.</p>
 <p>In addition to the jogging, a jogging hoon may contain other runechildren, either before or after the jogging. An runechild after the jogging is called a <strong>tail</strong>. If there is one runechild before the jogging, it is called the <strong>head</strong> of the jogging hoon. If there are two runechildren before the jogging, they are called, in order, the <strong>head</strong> and <strong>subhead</strong> of the jogging.</p>
 <h2 id="joggings">Joggings</h2>
 <p>A jogging is a gap-separated sequence of one or more jogs. Every <strong>jog</strong> contains a <strong>jog head</strong>, followed by a gap and a <strong>jog body</strong>. Note that it is important to distinguish between the head of a jogging hoon, defined above, and the head of a jog.</p>
 <h3 id="chess-sidedness">Chess-sidedness</h3>
-<p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside. Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. The effect of sidedness on indentation will be specified more precisely in the descriptions of jogs and of the individual types of jogging hoon. The general idea is that chess-sidedness stays consistent within a hoon.</p>
+<p>Jogs, joggings and jogging hoons have <strong>chess-sidedness</strong>. Chess-sidedness is always either kingside and queenside. Informally, <strong>kingside</strong> means the indentation has a left-side bias; and <strong>queenside</strong> means that the indentation has a right-side bias. The effect of sidedness on indentation will be specified more precisely in the descriptions of jogs and of the individual types of jogging hoon. The general idea is that chess-sidedness stays consistent within a Hoon statement.</p>
 <h2 id="jogs">Jogs</h2>
 <p>The column location of a jog is that of its head. A jog is <strong>joined</strong> if its head is on the same line as its body. Otherwise, a jog is <strong>multiline</strong>. As explained below, a multiline jog may be either <strong>pseudo-joined</strong> or <strong>split</strong>.</p>
 <p>Jogs are either kingside or queenside. In standard code, the sidedness of a jog determines the alignment of split jogs.</p>
-<p>The base column location of a jog depends on the jogging hoon that it belongs to. It is specified in the description of the different kinds of jogging hoon.</p>
+<p>The base column location of a jog depends on the chess-sidedness of the jogging hoon. The base column of kingside jogs is one stop after the anchor column. The base column of queenside jogs is two stops after the anchor column. This is specified in the &quot;Details&quot; section.</p>
 <h3 id="joined-jogs">Joined jogs</h3>
-<p>A joined jog may be either <strong>inter-line aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is aligned one stop after its head. Otherwise, a joined jog is considered inter-line aligned.</p>
-<p>All inter-line aligned jogging should be aligned at the jogging body column. With each jogging, at most one column should be designated as the <strong>jogging body column</strong> of the jogging.</p>
-<p>A jog may also be pseudo-joined. The pseudo-join of pseudo-joined jog should be equivalent to the one of the horizontal gaps that a joined jog is allowed according to this standard.</p>
+<p>A joined jog may be either <strong>inter-line aligned</strong> or <strong>ragged</strong>. A joined jog is ragged if its body is tightly aligned. Otherwise, a joined jog is considered inter-line aligned. A jog may also be pseudo-joined.</p>
+<p>All inter-line aligned jogging should be aligned at the jogging body column. With each jogging, at most one column is designated as the <strong>jogging body column</strong> of the jogging.</p>
 <h3 id="split-jogs">Split jogs</h3>
 <p>The gap of split jog should be a vertical gap with comments at the column location of the jog body. The standard column location of the body of a split jog varies according to the sidedness of the jog.</p>
 <ul>
@@ -481,9 +490,9 @@ d</code></pre>
 <p>A joined arm consists of, in lexical order:</p>
 <ul>
 <li><p>A arm marker.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>The arm head.</p></li>
-<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
 <li><p>The arm body.</p></li>
 </ul>
 <p><em>From sieve_k example, lines 7-12:</em></p>
@@ -496,11 +505,65 @@ d</code></pre>
 <p>A split arm consists of, in lexical order:</p>
 <ul>
 <li><p>A arm marker.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>The arm head.</p></li>
 <li><p>A vertical gap, with comments at the base column,</p></li>
 <li><p>The arm body, aligned one stop after the anchor column.</p></li>
 </ul>
+<h1 id="sail">Sail</h1>
+<p>Sail statements start with a semicolon. Sail statements do not curry.</p>
+<h2 id="sail-1-fixed-runes">Sail 1-fixed runes</h2>
+<p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
+<pre><code>    ;*  ?.  nopack.dbg
+          :_  ~
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/pack/css/codemirror-fonts-bootstrap-tree.css&quot;);
+        ;=
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/fonts.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/bootstrap.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/codemirror.css&quot;);
+          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/tree/main.css&quot;);
+        ==</code></pre>
+<p>The sail 1-fixed runes are SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). They have a single runechild. The rune child should be separated from the rune by a one-stop flat gap.</p>
+<h2 id="semtis">SEMTIS</h2>
+<p><em>From <code>ren/tree/head.hoon</code>, lines 59-64:</em></p>
+<pre><code>        ;=
+::           ;script(type &quot;text/javascript&quot;, src &quot;/===/web/lib/js/hoon.js&quot;);
+          ;script(type &quot;text/javascript&quot;, src &quot;/===/web/tree/main.js&quot;);
+          ;script(type &quot;text/javascript&quot;, src &quot;{?.(aut &quot;&quot; &quot;/~~/~/at&quot;)}&quot;.
+                                              &quot;/===/web/lib/js/urb.js&quot;);
+        ==</code></pre>
+<p>SEMTIS (;=) takes a TISTIS-terminated list of sail statements. It is split or joined, depending on whether the first element of the list is on the same line as the SEMTIS.</p>
+<p>If joined, the first element of the list should be tightly aligned. If split, the first elements of the list should be aligned one stop after the SEMTIS, and the first element should be preceded by a vertical gap with comments aligned at the SEMTIS and with the first element.</p>
+<p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stop after the SEMTIS.</p>
+<p>All elements after the first should be preceded by a vertical gap, with comments aligned at the SEMTIS as well as with the first element.</p>
+<p>The TISTIS should be aligned with the SEMTIS. it should be preceded by a vertical gap, with comments aligned at the SEMTIS as well as with the first element.</p>
+<h2 id="tagged-sail-statements">Tagged sail statements</h2>
+<p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
+<pre><code>;module
+    =nav_title    &quot;Dojo&quot;
+    =nav_no-dpad  &quot;&quot;
+    =nav_no-sibs  &quot;&quot;
+  ;script(src &quot;//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js&quot;);
+  ;style:&#39;&#39;&#39;
+         #term { width: 100%; }
+         #term * { margin: 0px; }
+         .module pre { margin-bottom: 0; }
+         &#39;&#39;&#39;
+  ;div#err;
+  ;div#term:&quot;&quot;
+  ;script@&quot;/lib/js/sole.js&quot;;
+  ;sole(appl &quot;dojo&quot;);
+==</code></pre>
+<p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which starts the tag that is its keyword.</p>
+<p>All elements should be preceded by a vertical gap. Comments in the vertical gaps should be aligned at the start of the statement as well as with the first element.</p>
+<p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement, as well as with the first element.</p>
+<h2 id="sail-attributes">Sail attributes</h2>
+<p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
+<h1 id="selgap">SELGAP</h1>
+<p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
+<pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
+<p>Whitespace in one-line SELGAP's is free-form -- <code>hoonlint</code> never generates a warning for them.</p>
+<p>Only one-line SELGAP's occur in the <code>arvo</code> corpus. If <code>hoonlint</code> encounters a multi-line SELGAP, it issues a &quot;not yet implemented&quot; warning.</p>
 <h1 id="details">Details</h1>
 <h2 id="currying-basic-syntax-hoons">Currying basic syntax hoons</h2>
 <p>The basic syntax hoons curry as follows:</p>
@@ -560,9 +623,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A joined 0-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap, or an equivalent pseudo-join.</p></li>
-<li><p>A running where runstep lines are aligned two stops after the anchor column. Runstep lines should be separated by vertical gaps with comments at at the anchor column or aligned at the runstep lines.</p></li>
-<li><p>A vertical gap with comments at is the anchor column, or aligned at the runstep lines.</p></li>
+<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A running where runstep lines are aligned two stops after the anchor column. Runstep lines should be separated by vertical gaps with comments at the anchor column as well as aligned at the runstep lines.</p></li>
+<li><p>A vertical gap with comments at is the anchor column, as well as aligned at the runstep lines.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
 <h3 id="split-0-running-hoons">Split 0-running hoons</h3>
@@ -582,9 +645,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A split 0-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A vertical gap, with comments at the anchor column or aligned at the runstep lines.</p></li>
-<li><p>A running where runstep lines are aligned one stop after the anchor column. The runstep lines are separated by vertical gaps with comments at the anchor column or aligned with the runstep lines.</p></li>
-<li><p>A vertical gap, with comments at the anchor column, or aligned at the runstep lines.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as aligned at the runstep lines.</p></li>
+<li><p>A running where runstep lines are aligned one stop after the anchor column. The runstep lines are separated by vertical gaps with comments at the anchor column as well as aligned with the runstep lines.</p></li>
+<li><p>A vertical gap, with comments at the anchor column, as well as aligned at the runstep lines.</p></li>
 <li><p>A TISTIS aligned at the anchor column.</p></li>
 </ul>
 <!-- TODO: check all uses of runeColumn to be sure that
@@ -599,9 +662,9 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A joined 1-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>The first runstep line.</p></li>
 <li><p>A vertical gap with comments at the anchor column, as well as aligned one stop after the anchor column.</p></li>
 <li><p>The remainder of the running, where runstep lines are aligned one stop after the anchor column. The runsteps lines should be separated by vertical gaps with comments at the anchor column as well as aligned one stop after the anchor column.</p></li>
@@ -617,7 +680,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A split 1-running hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the anchor column, as well as aligned one stop after the anchor column.</p></li>
 <li><p>A running where runstep lines are aligned one stop after the anchor column. Comments in the running are aligned at the anchor column as well as aligned one stop after the anchor column.</p></li>
@@ -644,11 +707,11 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A kingside 1-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, starting at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-1-jogging-hoons">Queenside 1-jogging hoons</h3>
@@ -661,11 +724,11 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A queenside 1-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A 2-stop horizontal gap.</p></li>
+<li><p>A 2-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="jogging-hoons-3">2-jogging hoons</h2>
@@ -680,13 +743,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A head-joined kingside 2-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its subhead.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="kingside-head-split-2-jogging-hoons">Kingside head-split 2-jogging hoons</h3>
@@ -704,13 +767,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A head-split kingside 2-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>Its subhead, aligned one stop before the head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A kingside jogging. The jog base column should be one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-head-joined-2-jogging-hoons">Queenside head-joined 2-jogging hoons</h3>
@@ -726,13 +789,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A head-joined queenside 2-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A 2-stop horizontal gap.</p></li>
+<li><p>A 2-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>Its subhead.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h3 id="queenside-head-split-2-jogging-hoons">Queenside head-split 2-jogging hoons</h3>
@@ -749,13 +812,13 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A head-split queenside 2-jogging hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A 2-stop horizontal gap.</p></li>
+<li><p>A 2-stop flat gap.</p></li>
 <li><p>Its head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>Its subhead, aligned one stop before the head.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A queenside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="jogging-1-hoons">Jogging-1 hoons</h2>
@@ -773,11 +836,11 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>Every jogging-1 hoon is considered kingside. A jogging-1 hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>A kingside jogging. The jog base column should be two stops after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column as well as the jog base column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column as well as the jog base column.</p></li>
 <li><p>A TISTIS, aligned one stop after the anchor column.</p></li>
-<li><p>A vertical gap, with comments at the the anchor column.</p></li>
+<li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A tail, aligned at the anchor column.</p></li>
 </ul>
 <h2 id="sigcen">SIGCEN</h2>
@@ -792,8 +855,8 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 |%
 :: Lines 3691-6233 are omitted
 --</code></pre>
-<p>SIGCEN statements can be treated either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild.</p>
-<p>SIGCEN, except for its 3rd runechild, is treated as an ordinary 4-ary backdented hoon. SIGCEN's 3rd runechild may be either <code>~</code> or a jogging bounded by TISTIS lines. The jogging is always kingside and elements are never split.</p>
+<p>SIGCEN statements can be regarded either a special form of a jogging hoon, or as a 4-fixed hoon with, optionally, an unusual 3rd runechild.</p>
+<p>SIGCEN, except for its 3rd runechild, is treated as an ordinary 4-ary basic syntax hoon. SIGCEN's 3rd runechild may be either <code>~</code> or a jogging bounded by TISTIS lines. The jogging is always kingside and elements are never split.</p>
 <p>The initial TISTIS should be backdented appropriately for a third runechild. The final TISTIS should be aligned with the initial TISTIS.</p>
 <p>The initial TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs. The final TISTIS should be followed by a vertical gap with comments aligned with the TISTIS as well as with the jogs.</p>
 <p>The jog head should be aligned one stop after the initial TISTIS. The jog body should be tightly aligned, or inter-line aligned with other bodies in the formula list. Successive formulas should be separated by a vertical gap with comments aligned with the jogs.</p>
@@ -841,7 +904,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A joined BARCEN should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune.</p></li>
-<li><p>A one stop horizontal gap.</p></li>
+<li><p>A one stop flat gap.</p></li>
 <li><p>A battery whose base column is two stops after anchor column.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A HEPHEP, aligned at the anchor column.</p></li>
@@ -864,7 +927,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A BARCAB should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune</p></li>
-<li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
+<li><p>A one stop horizontal gap.</p></li>
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
@@ -893,7 +956,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A BARKET should consist of, in lexical order:</p>
 <ul>
 <li><p>Its rune</p></li>
-<li><p>A one stop horizontal gap, or an equivalent pseudo-join.</p></li>
+<li><p>A one stop horizontal gap.</p></li>
 <li><p>Its head.</p></li>
 <li><p>A vertical gap, with comments at the anchor column, as well as one stop after the anchor column.</p></li>
 <li><p>A battery, whose base column location should be the anchor column.</p></li>
@@ -910,7 +973,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A tall ford-1 hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>The runechild.</p></li>
 </ul>
 <h3 id="ford-hoof-hoons">Ford hoof hoons</h3>
@@ -922,7 +985,7 @@ It's a 0-running implemented (why?) in hoon.hoon as a 1-running.
 <p>A tall Ford hoof hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>The runechild.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 </ul>
@@ -944,7 +1007,7 @@ do this is a revised example.
 <p>A tall 0-sequence Ford hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>A sequence of ford hoons.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
@@ -967,7 +1030,7 @@ no examples of tall FASPAM exist in the arvo corpus.
       ==</code></pre>
 <p><em>From <code>hoons/arvo/ren/tree/index.hoon</code>, line 7:</em></p>
 <pre><code>    /;  (getall:tree /h1/h2/h3/h4/h5/h6)  /tree-elem/</code></pre>
-<p>Whitespace conventions for the Ford-2 hoons are the same as those for backdented 2-arity hoons.</p>
+<p>Whitespace conventions for the Ford-2 hoons are the same as those for basic syntax 2-arity hoons.</p>
 <h3 id="fascom">FASCOM</h3>
 <!-- FASCOM is not well represented in the arvo
 database, and a lot of these rules are extrapolations --
@@ -987,7 +1050,7 @@ for extrapolation.
 <p>A tall joined FASCOM hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>A sequence of FASCOM elements, all of which are aligned with the first one.</p></li>
 <li><p>A vertical gap, with comments at the anchor column.</p></li>
 <li><p>A TISTIS.</p></li>
@@ -1035,7 +1098,7 @@ I have revised it.
 <pre><code>/,  /web/pack/css  /%   /!css/
     /              /~  !!
 ==</code></pre>
-<p>A FASCOM element sequence consists of a one or more <strong>FASCOM elements</strong>. The head of all the FASCOM elements should be aligned at the same column. The FASCOM elements should be separated by vertical gaps. Comments in the vertical gaps should be at the anchor column or aligned with the heads of the FASCOM elements.</p>
+<p>A FASCOM element sequence consists of a one or more <strong>FASCOM elements</strong>. The head of all the FASCOM elements should be aligned at the same column. The FASCOM elements should be separated by vertical gaps, with comments at the anchor column as well as aligned with the heads of the FASCOM elements.</p>
 <p>A FASCOM element is considered joined or split, depending on the gap between the head and the body. If joined, the body of the FASCOM element separated from the head by a one-stop gap, or an equivalent pseudo-join.</p>
 <p>If the FASCOM element is split, the body of the FASCOM element should be separated by a vertical gap with comments at the body column. The body of a kingside FASCOM element should be aligned one stop <strong>after</strong> the head of the FASCOM element. The body of a queenside FASCOM element should be aligned one stop <strong>before</strong> the head of the FASCOM element.</p>
 <h3 id="fastis">FASTIS</h3>
@@ -1043,78 +1106,24 @@ I have revised it.
 <p>A tall FASTIS hoon should consist of, in lexical order:</p>
 <ul>
 <li><p>The FASTIS rune.</p></li>
-<li><p>A one-stop horizontal gap.</p></li>
+<li><p>A one-stop flat gap.</p></li>
 <li><p>A runechild.</p></li>
 </ul>
-<h2 id="sail">Sail</h2>
-<p>Sail statements start with a semicolon. Sail statements do not curry.</p>
-<h3 id="sail-1-fixed-runes">Sail 1-fixed runes</h3>
-<p><em>From <code>ren/tree/head.hoon</code>, lines 35-43:</em></p>
-<pre><code>    ;*  ?.  nopack.dbg
-          :_  ~
-          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/pack/css/codemirror-fonts-bootstrap-tree.css&quot;);
-        ;=
-          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/fonts.css&quot;);
-          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/bootstrap.css&quot;);
-          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/lib/css/codemirror.css&quot;);
-          ;link(type &quot;text/css&quot;, rel &quot;stylesheet&quot;, href &quot;/===/web/tree/main.css&quot;);
-        ==</code></pre>
-<p>The sail 1-fixed runes are SEMHEP (;-), SEMLUS (;+), SEMTAR (;*), and SEMCEN (;%). They have a single runechild. The rune child should be on the same line as the rune, and should be separated from it by a one-stop horizontal gap.</p>
-<h3 id="semtis">SEMTIS</h3>
-<p><em>From <code>ren/tree/head.hoon</code>, lines 59-64:</em></p>
-<pre><code>        ;=
-::           ;script(type &quot;text/javascript&quot;, src &quot;/===/web/lib/js/hoon.js&quot;);
-          ;script(type &quot;text/javascript&quot;, src &quot;/===/web/tree/main.js&quot;);
-          ;script(type &quot;text/javascript&quot;, src &quot;{?.(aut &quot;&quot; &quot;/~~/~/at&quot;)}&quot;.
-                                              &quot;/===/web/lib/js/urb.js&quot;);
-        ==</code></pre>
-<p>SEMTIS (;=) takes a TISTIS-terminated list of sail statements. It is split or joined, depending on whether the first element of the list is on the same line as the SEMTIS.</p>
-<p>If joined, the first element of the list should be tightly aligned. If split, the first elements of the list should be aligned one stop after the SEMTIS, and the first element should be preceded by a vertical gap with comments aligned at the SEMTIS and with the first element.</p>
-<p>All subsequent elements should be aligned with the first element. For a joined SEMTIS, this implies that all elements after the first should be aligned two stops after the SEMTIS. For a split SEMTIS, this implies that all elements after the first should be aligned one stop after the SEMTIS.</p>
-<p>All elements after the first should be preceded by a vertical gap. Comments should be aligned at the SEMTIS and with the first element.</p>
-<p>The TISTIS should be aligned with the SEMTIS. it should be preceded by a vertical gap, with comments aligned at the SEMTIS and with the first element.</p>
-<h3 id="tagged-sail-statements">Tagged sail statements</h3>
-<p><em>Adapted from <code>web/dojo.hoon</code>, lines 13-27:</em></p>
-<pre><code>;module
-    =nav_title    &quot;Dojo&quot;
-    =nav_no-dpad  &quot;&quot;
-    =nav_no-sibs  &quot;&quot;
-  ;script(src &quot;//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js&quot;);
-  ;style:&#39;&#39;&#39;
-         #term { width: 100%; }
-         #term * { margin: 0px; }
-         .module pre { margin-bottom: 0; }
-         &#39;&#39;&#39;
-  ;div#err;
-  ;div#term:&quot;&quot;
-  ;script@&quot;/lib/js/sole.js&quot;;
-  ;sole(appl &quot;dojo&quot;);
-==</code></pre>
-<p>Tagged sail statement are always split. The conventions for the sail attributes are described below. All elements should be aligned one stop after the start of the statement. The tagged statement is considered to start at the semicolon which starts the tag that is its keyword.</p>
-<p>All elements should be preceded by a vertical gap. Comments in the vertical gaps should be aligned at the start of the statement and with the first element.</p>
-<p>The TISTIS should be aligned with the tagged sail statement that it terminates. The TISTIS should be preceded by a vertical gap, with comments aligned with the tagged sail statement, and with the first element.</p>
-<h3 id="sail-attributes">Sail attributes</h3>
-<p>The sail attribute base column is two stops after start column location of the sail text block. Sail tall attributes should be separated from each other by a vertical gap with comments aligned at the attribute base column. Values in sail attributes should be on the same line as the sail key. The sail attribute values should be tightly aligned, or aligned with each other.</p>
-<h2 id="selgap">SELGAP</h2>
-<p><em>From <code>arvo/sur/twitter.hoon</code>, line 85:</em></p>
-<pre><code>     [  {$mentions $~}                %get   /statuses/mentions-timeline  ]</code></pre>
-<p>Whitespace in one-line SELGAP's is free-form -- <code>hoonlint</code> never generates a warning for them.</p>
-<p>Only one-line SELGAP's occur in the <code>arvo</code> corpus. If <code>hoonlint</code> encounters a multi-line SELGAP, it issues a &quot;not yet implemented&quot; warning.</p>
 <h1 id="appendix-non-standard-code">Appendix: Non-standard code</h1>
-<p>By non-standard code, we mean code that does not follow the guidelines of this document. In non-standard code, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This appendix describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
+<p>Recall that, by non-standard code, in this document we mean code that does not follow the guidelines of this document. In non-standard code, <code>hoonlint</code> sometimes must decide the &quot;intended&quot; syntax, in order to produce diagnostics that are as helpful as possible. This appendix describes the methods used for deciding what was &quot;intended&quot; in non-standard Hoon code.</p>
 <h2 id="chess-sidedness-1">Chess-sidedness</h2>
 <p>A jog is considered queenside if it is aligned 2 stops or more after the base column of the jogging. Otherwise, the jog is considered kingside.</p>
 <p>The chess-sidedness of a jogging is that of the majority of its jogs. In case of a tie, the jogging is considered to be queenside. The chess-sidedness of a jogging hoon is that of its jogging.</p>
 <h2 id="jogging-body-column">Jogging body column</h2>
 <p>In non-standard code, the jogging body column of a jogging is considered to be the most common start column of the bodies of the jogging's inter-line aligned jogs. If more than one column is &quot;most common&quot;, the tie is resolved in favor of the body column that is lexically first. If there are no inter-line aligned jogs in a jogging, the jogging body column is undefined.</p>
 <h2 id="inter-line-alignment-1">Inter-line alignment</h2>
-<p>&quot;Attached&quot; text blocks are those with tight or backdented alignment. All other text blocks are &quot;floating&quot;. In non-standard code, the column location of the inter-line alignment of a silo of text blocks is the column location most common in the &quot;floating&quot; text blocks.</p>
-<p>If two column locations tie in the count of floating text blocks, the tie is broken using the count of total text blocks for that column location. If two column locations tie by total text block count, the tie is broken in favor of the column location that occurs first, lexically.</p>
-<p>If there are no floating lexemes, the inter-line alignment column location is irrelevant and undefined. Also, the inter-line alignment column location is undefined unless it also has a total text block count of at least 2 -- in other words an inter-line alignment column location must be the column location of at least two of the text blocks in the silo.</p>
-<p>Each silo is examined separately. For each silo, only rows with an element in that silo participate in the calculation.</p>
+<p>&quot;Attached&quot; slots are those with tight or backdented alignment. All other slots are &quot;floating&quot;. In non-standard code, the column location of the inter-line alignment of a silo of slots is the column location most common in the &quot;floating&quot; slots</p>
+<p>If two column locations tie in the count of floating slots, the tie is broken using the count of all slots, including attached slots, with that column location. If two column locations tie by the count of all slots, then the tie is broken in favor of the column location that occurs first, lexically.</p>
+<p>If there are no floating slots, the inter-line alignment column location is irrelevant and undefined. Also, the inter-line alignment column location is undefined unless it also has a total slot count of at least 2 -- in other words an inter-line alignment column location must be the column location of at least two of the slots in its silo.</p>
+<p>Each silo is examined separately. For each silo, only rows with an element in that silo's slot participate in the calculation.</p>
 <p>If a running could have both a runestep alignment, and a running-shared alignment, the runestep alignment takes precedence. In other words, if a running has runestep alignment, the running-shared alignment is undefined.</p>
 <h1 id="appendix-formal-definition-of-vertical-gap-body">Appendix: Formal definition of &quot;vertical gap body&quot;</h1>
-<p>The format of a vertical gap body obeys the BNF</p>
+<p>The format of a vertical gap body obeys this BNF:</p>
 <pre><code>:start ::= gapComments
 gapComments ::= OptExceptions Body
 gapComments ::= OptExceptions
@@ -1160,16 +1169,16 @@ Exception ::= BlankLine</code></pre>
 <li><p>Tread -- a comment that starts at the inter-comment column, whose first four characters are colons, and whose fifth character is either a space or a newline.</p></li>
 <li><p>UpperRiser -- a comment that starts at the inter-comment column.</p></li>
 </ul>
-<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using &quot;priorities&quot;. Each terminal has a numerical priority: 1, 2, 3 or 4. Comments are read as if looked for in numerical order by priority. This has the slightly counter-intuitive effect that the highest priority is the lowest numbered one. These definitions imply that</p>
+<p>Terminals are ambiguous -- a given line may match more than one terminal. The lexer limits this ambiguity using &quot;priorities&quot;. Each terminal has a numerical priority: 1, 2, 3 or 4. Comments are read as if looked for in numerical order by priority. This is traditional, but has the slightly counter-intuitive effect that the highest priority is the lowest numbered one. These definitions imply that</p>
 <ul>
 <li><p>No comment is read as a Priority 4 comment if it can be lexed as a Priority 1, 2 or 3 comment.</p></li>
 <li><p>No comment is read as a Priority 3 comment if it can be lexed as a Priority 1 or 2 comment.</p></li>
 <li><p>No comment is read as a Priority 2 comment if it can be lexed as a Priority 1 comment.</p></li>
 </ul>
-<p>Comments with the same priority are treated as if they were looked for simultaneously. This means that it remains possible for terminals to be ambiguous -- that is, one line can be read as two different terminals. In these cases the BNF grammar ensures that only one of the terminals will be used.</p>
+<p>Comments with the same priority are treated as if they were read simultaneously. This means that it remains possible for terminals to be ambiguous -- that is, one line can be read as two different terminals. In these cases the BNF grammar ensures that only one of the terminals will be used.</p>
 <p>Priority 1 comments are InterComment, LowerRiser, Tread, and UpperRiser. The priority 2 comment is PreComment. The priority 3 comment is MetaComment. Priority 4 comments are BadComment and BlankLine.</p>
 <h1 id="appendix-formal-definition-of-anchor-column">Appendix: Formal definition of &quot;anchor column&quot;</h1>
-<p>Let <code>r</code> be the reanchored rune. Let <code>a</code> be the anchor rune of <code>r</code>. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
+<p>Let <code>r</code> be the source or reanchored rune of a curried text block. Let <code>a</code> be the target of anchor rune of a curried text block. The anchor column is <code>Column(a) + Offset(r)</code>, where <code>Offset(r)</code> is the reanchor-offset of <code>r</code>. The rest of this definition will be devoted to defining <code>Offset(r)</code>.</p>
 <p>We first define <code>PerRuneOff(r)</code>, the per-rune-offset. If <code>r</code> is an arm marker, <code>PerRuneOff(r)</code> is 2 -- one stop.</p>
 <p>In the usual case, <code>r</code> is not an arm marker. In this usual case, let <code>Child(n, r1)</code>, the <code>n</code>'th runechild of a <code>r1</code>, be the last runechild of <code>r1</code> on <code>Line(r1)</code>. Consider a rewrite of Hoon source that</p>
 <ul>
@@ -1177,7 +1186,10 @@ Exception ::= BlankLine</code></pre>
 <li><p>adjusts the whitespace as necessary to follow the standard whitespace conventions, and</p></li>
 <li><p>is minimal in all other respects.</p></li>
 </ul>
-<p>Let <code>c2</code> be <code>Child(n, r1)</code> in this rewrite, so that <code>Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1</code>. Then the per-rune offset of <code>r1</code> is <code>PerRuneOff(r1) == Column(c2) - Column(r1)</code>.</p>
+<p>Let <code>c2</code> be <code>Child(n, r1)</code> in this rewrite, so that</p>
+<pre><code>  Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1.</code></pre>
+<p>Then the per-rune offset of <code>r1</code> is</p>
+<pre><code>  PerRuneOff(r1) == Column(c2) - Column(r1).</code></pre>
 <p>Recall that <code>r</code> is the reanchored rune, and that <code>a</code> is the anchor rune of <code>r</code>. We now define a sequence of runes, <code>S</code>, such that</p>
 <ul>
 <li><p>If <code>a == r</code>, then <code>S</code> is empty.</p></li>
@@ -1195,14 +1207,24 @@ Exception ::= BlankLine</code></pre>
 <li><p>If <code>S</code> is not empty, it includes <code>a</code> and all the proper syntactic parents of <code>r</code> that are descendants of <code>a</code>.</p></li>
 </ul>
 <p>We can now finish our definition of anchor column, by defining <code>Offset(r)</code>: <code>Offset(r)</code> is the sum of <code>PerRuneOff(S[i])</code> for all <code>i</code> such that <code>0 &lt;= i &lt;= n</code>.</p>
-<h1 id="appendix-currying-futures">Appendix: Currying futures</h1>
-<p>The curried backdenting in this document is based, first on the examples, and second, on the <code>arvo/</code> corpus. The approach is conservative -- currying is only in this standard if it is exemplified in the <code>arvo/</code> corpus or the examples. Curryings which cause inconsistences with the <code>arvo/</code> corpus are accepted as part of this standard, if it seems reasonable to consider the exceptions to be aberrations. But no inconsistencies with the examples are accepted as part of this standard.</p>
-<p>In future, it may be best to revise this document to treat more curryings as standard than currently.</p>
-<p>The <code>arvo/</code> corpus suggests that BARCEN currying with TISGAR should be considered standard, but accepting BARCEN-to-TISGAR currying as standard would make the tic-tac-toe example non-standard.</p>
-<p>On the other hand, lines 1323-1326 from <code>sys/vane/ames.hoon</code> suggest that TISGAR resists being an anchoring target:</p>
-<pre><code>=&gt;  ^+  .   %=  .
-      q.r.neb  (~(put by q.r.neb) q.fud t.fud)
-      q.neb    +(q.neb)
-    ==</code></pre>
+<h1 id="appendix-futures">Appendix: Futures</h1>
+<h2 id="eliminate-the-details">Eliminate the details</h2>
+<p>The scheme for currying in this document was derived by attempting to minimize discrepancies with the <code>arvo/</code> corpus, while being conservative. While this allows practices actually exemplified in the <code>arvo/</code> corpus, it bans many practices which fit elegantly with the general principles of these conventions.</p>
+<p>It would produce a simpler and more elegant standard if the rules in the &quot;Details&quot; section were eliminated, except for those describing the Sail and Udon statements.</p>
+<h2 id="free-currying">&quot;Free&quot; currying</h2>
+<p>Another disadvantage of attempting to minimize discrepancies with the <code>arvo/</code> corpus, is that it introduced a large number of &quot;special cases&quot; into the currying conventions.</p>
+<p>It might make more sense to adopt a &quot;free&quot; convention for when currying is allowed. Here &quot;free&quot; is used in the mathematical sense, to mean &quot;free of arbitrary assumptions&quot;.</p>
+<p>Here is a &quot;free&quot; definition of when currying occurs;</p>
+<ul>
+<li><p>The source and target runes of a curried text block should be Hoon statement runes on the same line.</p></li>
+<li><p>A tall running should not start or end inside a text block.</p></li>
+<li><p>A tall jogging should not start or end inside a text block.</p></li>
+<li><p>A battery should not start or end inside a text block.</p></li>
+<li><p>An arm of a battery should not start or end inside a text block.</p></li>
+<li><p>A curried text block should be as long as possible, consistent with the above rules.</p></li>
+</ul>
+<p>This &quot;free&quot; definition is both more liberal and more restrictive than these conventions. These conventions followed the <code>arvo/</code> corpus in allowing battery arms to be curried, while the free definition bans this practice. On the other hand, these conventions restricted currying to the sources and targets actually exemplified in the <code>arvo/</code> corpus, while this free definition allows source-target pairs for which no example exists in the corpus.</p>
+<h2 id="post-comments">Post-comments</h2>
+<p>Currently vertical gaps allow pre-comment and inter-comments. In the <code>arvo/</code> corpus, post-comments also seem to occur. Further, in sequences, the vertical gap before a terminating boundary digraph seems to include post-comments and inter-comments, but not pre-comments. Symmetrically, the vertical gap preceding a sequence seems never to include post-comments.</p>
 </body>
 </html>
