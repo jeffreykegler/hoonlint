@@ -370,7 +370,7 @@ d</code></pre>
           listeners+[%&amp; sup]
           waiting+[%&amp; out]
         ==</code></pre>
-<p>The currying is on the line 1916, and contains two runes: COLSIG (<code>:~</code>) is the source and COLLUS (<code>:+</code>) is the target. The arity of COLSIG is 1 and the arity of COLLUS is 3. The currying contains 3 runechildren, so the currying is 1-arity: <code>((1 + 3) - 3 = 1</code>.</p>
+<p>The currying is on the line 1916, and contains two runes: COLSIG (<code>:~</code>) is the source and COLLUS (<code>:+</code>) is the target. The arity of COLSIG is 1 and the arity of COLLUS is 3. The currying contains 3 runechildren, so the currying is 1-arity: <code>(1 + 3) - 3 = 1</code>.</p>
 <p>The anchor rune is the COLLUS (<code>:+</code>) at column 9, so the anchor column of the currying is column 9. COLSIG is 0-running, so the running is its first and only child. Normal backdenting aligns the 1st runechild of a 1-arity hoon at the anchor column (column 9). As we will see when we deal with runnings, the runsteps should be aligned one stop after running, which means they are at column 11 (<code>11 = 9 + 2</code>). The final TISTIS of running should be aligned at the anchor column (column 9). These alignments are what we see in the display above.</p>
 <h2 id="second-example">Second example</h2>
 <p><em>From <code>arvo/lib/hood/kiln.hoon</code>, lines 346-356:</em></p>

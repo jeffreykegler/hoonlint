@@ -914,7 +914,7 @@ The currying is on the line 1916, and contains two runes:
 COLSIG (`:~`) is the source and COLLUS (`:+`) is the target.
 The arity of COLSIG is 1 and the arity of COLLUS is 3.
 The currying contains 3 runechildren,
-so the currying is 1-arity: `((1 + 3) - 3 = 1`.
+so the currying is 1-arity: `(1 + 3) - 3 = 1`.
 
 The anchor rune is the COLLUS (`:+`) at column 9,
 so the anchor column of the currying is column 9.
