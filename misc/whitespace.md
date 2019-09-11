@@ -627,7 +627,7 @@ Subsequent runechildren of a joined basic syntax hoon should be
 tightly aligned with the previous runechild,
 or vertically separated.
 
-## Backdenting and vertical vertical separation
+## Backdenting and vertical separation
 
 In a basic syntax `n`-arity hoon,
 a vertically separated `m`'th runechild should be aligned `n-m` stops after than the anchor column.

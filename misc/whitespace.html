@@ -4,12 +4,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <title>Hoon whitespace standards</title>
+  <title>Hoon whitespace conventions</title>
   <style type="text/css">code{white-space: pre;}</style>
 </head>
 <body>
 <div id="header">
-<h1 class="title">Hoon whitespace standards</h1>
+<h1 class="title">Hoon whitespace conventions</h1>
 </div>
 <div id="TOC">
 <ul>
@@ -36,7 +36,7 @@
 <li><a href="#types-of-tall-hoons">Types of tall hoons</a></li>
 <li><a href="#top-level-whitespace">Top-level whitespace</a></li>
 <li><a href="#backdenting">Backdenting</a><ul>
-<li><a href="#backdenting-and-vertical-vertical-separation">Backdenting and vertical vertical separation</a></li>
+<li><a href="#backdenting-and-vertical-separation">Backdenting and vertical separation</a></li>
 <li><a href="#chaining-backdented-hoons">Chaining backdented hoons</a></li>
 </ul></li>
 <li><a href="#curried-backdenting">Curried backdenting</a><ul>
@@ -293,7 +293,7 @@
 <p>A basic syntax hoon of arity 3 or more should be joined. A basic syntax hoon of arity 2 or less should be split.</p>
 <p>The first runechild of a joined basic syntax hoon should be on the same line as the rune, separated by a horizontal gap. The first runechild may be tightly aligned, or aligned at the backdent column. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or separated from the previous runechild by a vertical gap.</p>
 <p>The first runechild of a split basic syntax hoon should be vertically separated. Subsequent runechildren of a joined basic syntax hoon should be tightly aligned with the previous runechild, or vertically separated.</p>
-<h2 id="backdenting-and-vertical-vertical-separation">Backdenting and vertical vertical separation</h2>
+<h2 id="backdenting-and-vertical-separation">Backdenting and vertical separation</h2>
 <p>In a basic syntax <code>n</code>-arity hoon, a vertically separated <code>m</code>'th runechild should be aligned <code>n-m</code> stops after than the anchor column. Here <code>m</code> is 1-based, so that the 1'th runechild is the first runechild, the 2'th runechild is the second runechild, etc.</p>
 <p>For example, in an 3-runechild hoon, a vertically separated first runechild should be aligned 2 stops after than the anchor column; a vertically separated second runechild should be aligned 1 stop after than the anchor column; and a vertically separated third runechild be aligned at the anchor column.</p>
 <p>This implies that, regardless of the number of runechildren in a backdented hoon, a vertically separated last runechild should be aligned at the anchor column. In the vertical gaps that belong directly to backdented hoons, comments should be aligned with the runechild immediately following the gap.</p>
