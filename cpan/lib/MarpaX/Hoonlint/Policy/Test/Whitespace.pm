@@ -626,7 +626,6 @@ sub pseudojoinColumn {
         return -1 if $commentOffset != $commentColumn;
     # say STDERR join ' ', __FILE__, __LINE__;
     }
-    say STDERR "PS " . describeLC( $startLine, $commentColumn );
     return $commentColumn;
 }
 
@@ -1137,8 +1136,6 @@ sub checkPseudojoin {
     }
 
     return if not $isPseudojoin;
-
-    say STDERR "PS " .  describeLC( $nextLexemeLine, $nextLexemeColumn ) if $nextLexemeColumn == $pseudojoinColumn;
 
     return [] if $nextLexemeColumn == $pseudojoinColumn;
 
