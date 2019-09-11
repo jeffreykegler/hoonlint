@@ -812,7 +812,7 @@ is the same as the anchor rune or,
 to put the same thing in different words,
 and the source rune is the same as the target rune.
 
-Not all all pairings of source and target rune are allowed.
+Not all pairings of source and target rune are allowed.
 If a currying whose source is rune `S` and
 whose target is rune `T` is allowed,
 we say the
@@ -822,81 +822,19 @@ Which rune is allowed to pair with which other runes
 in a non-trivial curryings is described in
 "Details".
 
-## Currying and the anchor column
+The runechildren of a currying are backdenting according
+to the standard rules for backdenting.
+The anchor column of a currying is the column location
+of the anchor rune.
+The arity of a currying is the sum of the arites of the
+curried runes, less the number of runechildren in the currying.
 
-Non-trivial currying changes the anchor column.
-The anchor column of a curried text block depends
-on two things: the column location of the anchor rune,
-and the "reanchor offset".
-
-The column location of the anchor rune is **not**
-necessarily the same as the new anchor column.
-The distance by which they differ is
-the **reanchor offset**.
-The reanchor offset is an adjustment
-necessary
-to make reanchor indentation
-look
-and act like normal backdented indentation.
-
-Some runechildren of the curried runes are
-contained in the curried text block.
-Those runechildren not in the curried text block
-are "left over".
-The distinction between
-contained and "left over" children
-is important in
-calculating the reanchor offset.
-The "left over" runechildren
-can be thought of as the runechildren of the
-curried rune.
-
-Intuitively, if a currying has
-runechildren "left over",
-then an appropriate amount of indentation
-must also be "left over".
-The "left over" indentation
-can be calculated for each rune contained in the currying.
-The "left over" indentation of a curried rune
-is the "per-rune offset"
-of that rune.
-
-The **reanchor offset** of a curried text block is the sum of all the
-per-rune offsets.
-The per-rune offset of each rune depends on its arity,
-and on the number of its "left over" runechildren.
-The per-rune offset
-of the source rune
-is always zero.
-
-There will be examples below that show the calculation
-of per-rune-offsets in a currying.
-But, for a first example,
-it will be easiest to see how
-the idea of a per-rune-offset
-looks when applied to a simple backdented
-hoon.
-
-```
-:^  a  b
-  c
-d
-```
-
-What is the per-rune offset of the COLKET (`:^`) expression
-in the above display?
-The first runechild not on the same line
-as the COLKET rune is the text `c`.
-Standard alignment for the 3rd COLKET runechild places it at column 3,
-so that the "left over" indentation for the text `c`
-is the distance from column 3 to the anchor column.
-The anchor column in this simple case is just the column location
-of the COLKET rune, which is column 1.
-Therefore the left over indentation is
-`3 - 1 == 2`.
-
-A more formal definition of these concepts is given
-in the appendix defining "anchor column".
+Since backdenting follows the same rules for curried hoons
+as for ordinary hoons,
+backdenting a trivial currying is equivalent to
+backdenting its rune.
+However, non-trivial currying
+will change the anchor column.
 
 ## First example
 
@@ -955,22 +893,17 @@ The currying therefore contains a total of 2 runechildren.
 Calculating the arity of the currying we have 3 (the arity of TISFAS)
 plus 1 (the arity of COLSIG)
 less 2 (the count of runechildren in the currying).
-There the currying is 2-arity: `2 = (3+1)-(2)`.
+Therefore the currying is 2-arity: `2 = (3+1)-(2)`.
 
-COLSIG again is 0-running, so that its runsteps should be aligned
-one stop after the anchor column.
-The anchor column is column 5,
-the column of the anchor rune, COLSIG.
-The running is the first runechild of a 2-arity (curried) hoon,
+The running of COLSIG is the first runechild of a 2-arity (curried) hoon,
 and therefore by the standard backdenting rules should be
-one stop after the anchor column.
+aligned at column 7,
+one stop after the anchor column (column 5).
 The runsteps are aligned one stop after the running,
-are therefore aligned at column 9 (`9=7+2`).
-
+which is column 9 (`9=7+2`).
 The TISTIS of the running
 is aligned with the running,
-and therefore is at column 7, one stop 
-after the anchor column.
+and therefore is at column 7.
 
 The last child of the TISFAS is on line 354.
 It is the 2nd child of the 2-arity currying and therefore,
@@ -1021,15 +954,20 @@ A running contains one or more **runstep lines**.
 Runstep lines should be aligned at the **runstep base column**,
 with exceptions.
 The runstep base column location
-for each running hoon,
-and the exceptions, if any,
-are stated in the specification of the running hoon
-that directly contains the running.
+is usually one stop after the column location
+of the running,
+but there are exceptions, as described in "Details".
 
 Within a runstep line, the runsteps
 should be tightly aligned,
 or they should follow runstep inter-line alignment,
 as described next.
+
+A running is terminated by a
+TISTIS, which should be aligned with the running.
+The TISTIS should be vertically separated,
+with comments aligned with the running,
+and with the runsteps.
 
 ### Runstep inter-line alignment
 
@@ -1061,12 +999,12 @@ Each runstep line is a row.
 Within each row,
 the runsteps are slotted in lexical order.
 
-### Running-shared inter-line alignment
+### Running-inherited inter-line alignment
 
 If a runstep is a basic syntax hoon,
 the runechildren of the basic syntax hoon
-may have a **running-shared** inter-line alignment.
-In running-shared inter-line alignment,
+may have a **running-inherited** inter-line alignment.
+In running-inherited inter-line alignment,
 every basic syntax hoon is a row.
 Within each row,
 first the rune of the hoon is slotted,
@@ -1074,7 +1012,7 @@ then its runechildren in
 lexical order.
 
 Within a running,
-the running-shared inter-line alignment of a runechild
+the running-inherited inter-line alignment of a runechild
 is determined by the slot of the runechild.
 
 *From `sys/hoon.hoon', lines 5303-5308:*
@@ -1089,17 +1027,17 @@ is determined by the slot of the runechild.
 
 ### Mixed inter-line alignments in a running
 
-A running should not have both running-shared and runestep
+A running should not have both running-inherited and runstep
 alignment.
-But note that if a basic syntax hoon is a runestep,
-it may have both a running-shared inter-line alignment
+But note that if a basic syntax hoon is a runstep,
+it may have both a running-inherited inter-line alignment
 and a chained inter-line alignment.
 If a basic syntax hoon does have both inter-line alignments,
 they should be consistent.
 That is,
 for every slot,
 the column location of that slot according
-to running-shared alignment
+to running-inherited alignment
 should be identical to
 the column location of that slot according
 to chained alignment.
@@ -1156,8 +1094,6 @@ The base column location of a jog depends
 on the chess-sidedness of the jogging hoon.
 The base column of kingside jogs is one stop after the anchor column.
 The base column of queenside jogs is two stops after the anchor column.
-This is specified
-in the "Details" section.
 
 ### Joined jogs
 
@@ -1178,7 +1114,7 @@ the **jogging body column** of the jogging.
 The gap of split jog should be a vertical gap
 with comments at the column location of the jog body.
 The standard column location of the body of a split jog
-varies according to the sidedness of the jog.
+varies according to the sidedness of the jog:
 
 * The column location of the body of a split kingside jog
 should be aligned one stop
@@ -1187,6 +1123,86 @@ should be aligned one stop
 * The column location of the body of a split queenside jog
 should be aligned one stop
 **before** the jog's head.
+
+## Jogging terminator
+
+A jogging is terminated by a
+TISTIS, which should be aligned with the jogging.
+The TISTIS should be vertically separated,
+with comments aligned with the jogging,
+and at the jog base column.
+
+# Batteries
+
+The column at which a battery starts is
+the **base column** of the battery.
+The arms of a battery should all align at the
+the base column
+of the battery.
+The arms should be separated by vertical gaps,
+where the comments are at the base column,
+as well as two stops after the base column.
+The base column of the battery is specified below,
+in the description of each battery hoon.
+Arms may be joined or split.
+
+Battery hoons are joined or split according to whether
+the battery is horizontally or vertically separated.
+A joined battery should be tightly aligned.
+A split battery should be vertically separated,
+with comments at the battery base column;
+and with the battery itself
+aligned at the battery base column.
+
+A battery should be followed by a HEPHEP,
+aligned at the battery base column.
+The HEPHEP should be vertically separated,
+with comments at the battery base column
+as well as
+one step after the battery base column.
+
+*From sieve_k example, line 6:*
+```
+++  abet  (sort (~(tap in fed)) lth)
+```
+
+A joined arm consists of,
+in lexical order:
+
+* A arm marker.
+
+* A one-stop flat gap.
+
+* The arm head.
+
+* A one-stop horizontal gap.
+
+* The arm body.
+
+*From sieve_k example, lines 7-12:*
+```
+++  main
+  =+  fac=2
+  |-  ^+  ..main
+  ?:  (gth (mul fac fac) top)
+    ..main
+  $(fac +(fac), ..main (reap fac))
+```
+
+A split arm consists of,
+in lexical order:
+
+* A arm marker.
+
+* A one-stop flat gap.
+
+* The arm head.
+
+* A vertical gap,
+  with comments at the base column,
+
+* The arm body,
+  aligned one stop after the anchor column.
 
 # Criss-cross lines
 
@@ -1237,61 +1253,6 @@ all the others.
 Only one kind of boundary should appear in a criss-cross line.
 Every character in a criss-cross line should be
 part of a boundary, or part of a gap.
-
-# Batteries
-
-The arms of a battery should all align at the
-same column, called the **base column**
-of the battery.
-The arms should be separated by vertical gaps,
-where the comments are at the base column,
-as well as two stops after the base column.
-The base column of the battery is specified below,
-in the description of each battery hoon.
-Arms may be joined or split.
-
-*From sieve_k example, line 6:*
-```
-++  abet  (sort (~(tap in fed)) lth)
-```
-
-A joined arm consists of,
-in lexical order:
-
-* A arm marker.
-
-* A one-stop flat gap.
-
-* The arm head.
-
-* A one-stop horizontal gap.
-
-* The arm body.
-
-*From sieve_k example, lines 7-12:*
-```
-++  main
-  =+  fac=2
-  |-  ^+  ..main
-  ?:  (gth (mul fac fac) top)
-    ..main
-  $(fac +(fac), ..main (reap fac))
-```
-
-A split arm consists of,
-in lexical order:
-
-* A arm marker.
-
-* A one-stop flat gap.
-
-* The arm head.
-
-* A vertical gap,
-  with comments at the base column,
-
-* The arm body,
-  aligned one stop after the anchor column.
 
 # Sail
 
@@ -1354,7 +1315,7 @@ comments aligned at the SEMTIS
 as well as with the first element.
 
 The TISTIS should be aligned with the SEMTIS.
-it should be preceded by a vertical gap,
+The TISTIS should be vertically separated
 with comments aligned at the SEMTIS
 as well as with the first element.
 
@@ -1427,43 +1388,43 @@ it issues a "not yet implemented" warning.
 
 The basic syntax hoons curry as follows:
 
-* BARDOT curries to
+* BARDOT curries with
   CENHEP,
   CENLUS,
   KETTIS, and
   LUSLUS.
 
-* BARHEP curries to
+* BARHEP curries with
   KETTIS and
   TISDOT.
 
-* BARTIS curries to
+* BARTIS curries with
   COLHEP.
 
-* CENDOT curries to
+* CENDOT curries with
   BARTIS and
   CENHEP.
 
-* CENHEP curries to
+* CENHEP curries with
   CENHEP,
   COLHEP,
   TISLUS, and
   TISGAL.
 
-* CENLUS curries to
+* CENLUS curries with
   CENHEP and
   TISLUS.
 
-* COLCAB curries to
+* COLCAB curries with
   CENHEP,
   CENLUS, and
   COLCAB.
 
-* COLHEP curries to
+* COLHEP curries with
   CENLUS and
   COLCAB.
 
-* KETHEP curries to
+* KETHEP curries with
   BARDOT,
   BARHEP,
   BARSIG,
@@ -1482,7 +1443,7 @@ The basic syntax hoons curry as follows:
   SIGLUS, and
   ZAPGAR.
 
-* KETLUS curries to
+* KETLUS curries with
   BARDOT,
   BARHEP,
   BARTIS,
@@ -1490,35 +1451,35 @@ The basic syntax hoons curry as follows:
   CENHEP, and
   TISGAL.
 
-* KETSIG curries to
+* KETSIG curries with
   CENLUS.
 
-* KETWUT curries to
+* KETWUT curries with
   BUCCAB and
   LUSLUS.
 
-* SIGCAB curries to
+* SIGCAB curries with
   BARTIS.
 
-* SIGFAS curries to
+* SIGFAS curries with
   LUSLUS.
 
-* SIGLUS curries to
+* SIGLUS curries with
     BARDOT,
     BARTIS, and
     CENLUS.
 
-* TISBAR curries to
+* TISBAR curries with
   BUCCAB and
   BARTIS.
 
-* TISCOM curries to
+* TISCOM curries with
   TISCOM.
 
-* TISDOT curries to
+* TISDOT curries with
   TISLUS.
 
-* TISGAL curries to
+* TISGAL curries with
   BARTIS,
   CENHEP,
   CENLUS,
@@ -1526,36 +1487,38 @@ The basic syntax hoons curry as follows:
   TISGAL, and
   TISGAR.
 
-* TISGAR curries to
+* TISGAR curries with
     CENLUS and
     TISGAR.
 
-* WUTCOL curries to
+* WUTCOL curries with
   BARHEP,
   CENHEP, and
   WUTCOL.
 
-* WUTDOT curries to
+* WUTDOT curries with
   BARHEP.
 
-* WUTGAL curries to
+* WUTGAL curries with
   BARHEP.
 
-* WUTGAR curries to
+* WUTGAR curries with
   SIGBAR.
 
-* WUTSIG curries to
+* WUTSIG curries with
   TISLUS and
   WUTSIG.
 
-* ZAPCOL curries to
+* ZAPCOL curries with
   LUSLUS.
 
-* ZAPDOT curries to
+* ZAPDOT curries with
   LUSLUS.
 
-* ZAPGAR curries to
+* ZAPGAR curries with
   CENHEP.
+
+## Running hoons
 
 There are two kinds of running hoons:
 
@@ -1629,7 +1592,7 @@ in lexical order:
   as well as
   aligned at the runstep lines.
 
-* A vertical gap with comments at is the anchor column,
+* A vertical gap with comments is the anchor column,
   as well as aligned at the runstep lines.
 
 * A TISTIS aligned at the anchor column.
@@ -1777,7 +1740,7 @@ There are currently four kinds of jogging hoon:
 ## 1-jogging hoons
 
 Every 1-jogging hoon is either kingside or queenside.
-1-jogging hoons curry with KETLUS (`^+`).
+1-jogging runes curry with KETLUS (`^+`).
 
 ### Kingside 1-jogging hoons
 
@@ -1854,7 +1817,7 @@ same line, the 2-jogging hoon is called **head-joined**.
 If the head and subhead of a 2-jogging hoon are on
 different lines, the 2-jogging hoon is called **head-split**.
 
-2-jogging Hoon statements do not curry.
+2-jogging Hoon runes do not curry.
 
 ### Kingside head-joined 2-jogging hoons
 
@@ -2116,7 +2079,7 @@ The battery hoons are BARCAB, BARCEN and BARKET.
 
 An arm marker can be curried,
 but it must be the anchor rune,
-or must curry at BARCEN.
+or must curry with BARCEN.
 As a special case, an arm marker has a per-rune offset of
 one stop.
 
@@ -2541,7 +2504,7 @@ as well as aligned with the heads of the FASCOM elements.
 A FASCOM element is considered joined or split,
 depending on the gap between the head and the body.
 If joined, the body of the FASCOM element
-separated from the head by a one-stop gap,
+is separated from the head by a one-stop gap,
 or an equivalent pseudo-join.
 
 If the FASCOM element is split, the
@@ -2609,37 +2572,37 @@ All other slots are "floating".
 In non-standard code,
 the column location of the inter-line alignment
 of a silo of slots is
-the column location most common in the "floating" slots
-
-If two column locations tie in the
-count of floating slots,
-the tie is broken using the count of all slots,
-including attached slots,
-with that column location.
-If two column locations tie by the count of all slots,
-then the tie is broken in favor of the column location that
-occurs first, lexically.
+the column location most common in the "floating" slots.
 
 If there are no floating slots,
 the inter-line alignment column location
 is irrelevant and undefined.
-Also,
-the inter-line alignment column location is undefined unless it also
-has a total slot count of at least 2 --
-in other words
-an inter-line alignment column location must be the column location
-of at least two of the slots in its silo.
+If two column locations tie in the
+count of floating slots,
+the tie is broken using the overall count of slots,
+including both floating and attached slots,
+with that column location.
+If two column locations remain tied,
+even after taking into account the overall count of slots,
+then the tie is broken in favor of the column location that
+occurs first, lexically.
+
+If no floating slot has an overall slot count
+of at least 2,
+the inter-line alignment column location is undefined.
+The idea is that the inter-line alignment must actually be
+an alignment shared by two different lines.
 
 Each silo is examined separately.
 For each silo, only rows with an element in that silo's slot participate
 in the calculation.
 
-If a running could have both a runestep alignment,
-and a running-shared alignment,
-the runestep alignment takes precedence.
+If a running could have both a runstep alignment,
+and a running-inherited alignment,
+the runstep alignment takes precedence.
 In other words,
-if a running has runestep alignment,
-the running-shared alignment is undefined.
+if a running has runstep alignment,
+the running-inherited alignment is undefined.
 
 # Appendix: Formal definition of "vertical gap body"
 
@@ -2710,7 +2673,7 @@ Each terminal has a numerical priority: 1, 2, 3 or 4.
 Comments are read as if looked for
 in numerical order by priority.
 This is traditional,
-but has the slightly counter-intuitive effect
+but has the counter-intuitive effect
 that the highest priority is the lowest numbered one.
 These definitions imply that
 
@@ -2736,89 +2699,6 @@ and UpperRiser.
 The priority 2 comment is PreComment.
 The priority 3 comment is MetaComment.
 Priority 4 comments are BadComment and BlankLine.
-
-# Appendix: Formal definition of "anchor column"
-
-Let `r` be the source or reanchored rune of a curried text block.
-Let `a` be the target of anchor rune of a curried text block.
-The anchor column is
-`Column(a) + Offset(r)`,
-where `Offset(r)`
-is the reanchor-offset of `r`.
-The rest of this definition will be
-devoted to defining `Offset(r)`.
-
-We first define `PerRuneOff(r)`,
-the per-rune-offset.
-If `r` is an arm marker,
-`PerRuneOff(r)` is 2 -- one stop.
-
-In the usual case, `r`
-is not an arm marker.
-In  this usual case,
-let `Child(n, r1)`,
-the `n`'th runechild of a `r1`,
-be the last runechild of `r1` on `Line(r1)`.
-Consider a rewrite of Hoon source that
-
-* moves `Child(n, r1)` to `Line(r1)+1`,
-
-* adjusts the whitespace as necessary to follow the standard whitespace conventions,
-  and
-
-* is minimal in all other respects.
-
-Let `c2` be `Child(n, r1)` in this rewrite,
-so that
-
-```
-  Line(c2) == Line(r1)+1 == Line(Child(n, r1))+1.
-```
-
-
-Then the per-rune offset of `r1`
-is
-
-```
-  PerRuneOff(r1) == Column(c2) - Column(r1).
-```
-
-Recall that `r` is the reanchored rune,
-and that `a` is the anchor rune of `r`.
-We now define a sequence of runes, `S`,
-such that
-
-* If `a == r`, then `S` is empty.
-
-* Otherwise, `S = S[0], S[1] ... S[n]`, and we
-  have the following:
-
-    * `S[0] = a`.
-
-    * `S[n] = (Rune(Parent(Hoon(r)))`.
-
-    * `S[i] = (Rune(Parent(Hoon(S[i+1])))`,
-      for all `i` such that `0 <= i < n`.
-
-Note the following:
-
-* By the above definition, `r` is never an
-  element of `S`.
-
-* In the trivial case,
-  where a rune is its own anchor,
-  `S` is always empty; the reanchor offset is always zero;
-  and the anchor column is always the same
-  as the rune column.
-
-* If `S` is not empty, it includes `a`
-  and all the proper syntactic parents
-  of `r` that are descendants of `a`.
-
-We can now finish our definition of anchor column,
-by defining `Offset(r)`:
-`Offset(r)` is the sum of `PerRuneOff(S[i])`
-for all `i` such that `0 <= i <= n`.
 
 # Appendix: Futures
 
@@ -2871,11 +2751,11 @@ Here is a "free" definition of when currying occurs;
   with the above rules.
 
 This "free" definition is both more liberal and more restrictive
-than these conventions.
-These conventions followed the `arvo/` corpus in allowing battery
+than these conventions given in the "Details" section.
+The "Details" conventions followed the `arvo/` corpus in allowing battery
 arms to be curried, while the free definition bans this practice.
 On the other hand,
-these conventions restricted currying to the sources and targets
+the "Details" conventions restricted currying to the sources and targets
 actually exemplified in the `arvo/` corpus,
 while this free definition allows source-target pairs for which
 no example exists in the corpus.
