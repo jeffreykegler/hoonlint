@@ -2762,7 +2762,21 @@ no example exists in the corpus.
 
 ## Post-comments
 
-Currently vertical gaps allow pre-comment and inter-comments.
+```
+ :~
+  :: inter-comment
+    :: pre-comment
+    42
+    :: post-comment
+  :: inter-comment
+    :: pre-comment
+    1729
+    :: post-comment
+  :: inter-comment
+  ==
+```
+
+Currently vertical gaps allow pre-comments and inter-comments.
 In the `arvo/` corpus,
 post-comments also seem to occur.
 Further, in sequences,
