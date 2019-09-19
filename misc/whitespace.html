@@ -1184,6 +1184,17 @@ Exception ::= BlankLine</code></pre>
 </ul>
 <p>This &quot;free&quot; definition is both more liberal and more restrictive than these conventions given in the &quot;Details&quot; section. The &quot;Details&quot; conventions followed the <code>arvo/</code> corpus in allowing battery arms to be curried, while the free definition bans this practice. On the other hand, the &quot;Details&quot; conventions restricted currying to the sources and targets actually exemplified in the <code>arvo/</code> corpus, while this free definition allows source-target pairs for which no example exists in the corpus.</p>
 <h2 id="post-comments">Post-comments</h2>
-<p>Currently vertical gaps allow pre-comment and inter-comments. In the <code>arvo/</code> corpus, post-comments also seem to occur. Further, in sequences, the vertical gap before a terminating boundary digraph seems to include post-comments and inter-comments, but not pre-comments. Symmetrically, the vertical gap preceding a sequence seems never to include post-comments.</p>
+<pre><code> :~
+  :: inter-comment
+    :: pre-comment
+    42
+    :: post-comment
+  :: inter-comment
+    :: pre-comment
+    1729
+    :: post-comment
+  :: inter-comment
+  ==</code></pre>
+<p>Currently vertical gaps allow pre-comments and inter-comments. In the <code>arvo/</code> corpus, post-comments also seem to occur. Further, in sequences, the vertical gap before a terminating boundary digraph seems to include post-comments and inter-comments, but not pre-comments. Symmetrically, the vertical gap preceding a sequence seems never to include post-comments.</p>
 </body>
 </html>
