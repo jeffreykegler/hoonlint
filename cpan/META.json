@@ -97,13 +97,13 @@
          }
       }
    },
-   "release_status" : "stable",
+   "release_status" : "unstable",
    "resources" : {
       "repository" : {
          "type" : "git",
          "url" : "git://github.com/jeffreykegler/hoonlint.git"
       }
    },
-   "version" : "1.004000",
+   "version" : "1.005_001",
    "x_serialization_backend" : "JSON::PP version 2.97001"
 }

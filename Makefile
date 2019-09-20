@@ -13,7 +13,7 @@ releng:
 	@echo === releng: make distcheck ===
 	cd cpan && $(MAKE) distcheck
 	@echo === releng: make dist ===
-	cd cpan && $(MAKE) dist
+	cd cpan && GZIP=-f $(MAKE) dist
 	@echo === releng: git status ===
 	git status
 
@@ -44,6 +44,8 @@ cpan_dir_full_test:
 	cd cpan && $(MAKE)
 	@echo === cpan_dir_full_test: make test ===
 	cd cpan && $(MAKE) test
+	@echo === cpan_dir_full_test: make disttest ===
+	cd cpan && $(MAKE) disttest
 
 install:
 	@echo === install target ===
