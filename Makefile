@@ -14,6 +14,10 @@ releng:
 	cd cpan && $(MAKE) distcheck
 	@echo === releng: make dist ===
 	cd cpan && GZIP=-f $(MAKE) dist
+	@echo === releng: make disttest ===
+	cd cpan && $(MAKE) disttest
+	@echo === xt: prove -v xt ===
+	cd cpan && prove -v xt
 	@echo === releng: git status ===
 	git status
 
