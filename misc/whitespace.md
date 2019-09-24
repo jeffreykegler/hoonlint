@@ -1384,6 +1384,14 @@ it issues a "not yet implemented" warning.
 
 # Details
 
+This "Details" section contains specific and detailed
+whitespace conventions.
+Where they conflict with
+the more general principles set forth
+in the rest of this
+document,
+these "details" override.
+
 ## Currying basic syntax hoons
 
 The basic syntax hoons curry as follows:
