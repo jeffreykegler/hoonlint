@@ -847,10 +847,164 @@ sub nearestBrickOfLineExc {
     return $node;
 }
 
+my $semantics = <<'EOS';
+:default ::= action=>MarpaX::Hoonlint::doNode
+lexeme default = latm => 1 action=>[start,length,name]
+EOS
+
+my $parser =
+  MarpaX::Hoonlint::YAHC->new( { semantics => $semantics, all_symbols => 1 } );
+my $dsl = $parser->dsl();
+
+$MarpaX::Hoonlint::grammar = $parser->rawGrammar();
+my %baseLintInstance = ();
+$baseLintInstance{grammar} = $MarpaX::Hoonlint::grammar;
+
+my %NYI_Rule = ();
+$NYI_Rule{$_} = 1 for qw();
+$baseLintInstance{NYI_Rule} = \%NYI_Rule;
+
+my %tallRuneRule = map { +( $_, 1 ) } grep {
+         /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
+      or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
+} map { $MarpaX::Hoonlint::grammar->symbol_name($_); }
+  $MarpaX::Hoonlint::grammar->symbol_ids();
+$baseLintInstance{tallRuneRule} = \%tallRuneRule;
+
+# TODO: Check that these are all backdented,
+my %tallNoteRule = map { +( $_, 1 ) } qw(
+  tallBarhep tallBardot
+  tallBuccab
+  tallCendot tallColcab
+  tallKetbar tallKethep tallKetlus tallKetsig tallKetwut
+  tallSigbar tallSigcab tallSigfas tallSiglus
+  tallTisbar tallTiscom tallTisgal
+  tallWutgal tallWutgar tallWuttis
+  tallZapgar
+);
+$baseLintInstance{tallNoteRule} = \%tallNoteRule;
+
+my %mortarLHS = map { +( $_, 1 ) }
+  qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq
+  fordFile fordHoop fordHoopSeq norm5d tall5d
+  boog5d wisp5d whap5d);
+$baseLintInstance{mortarLHS} = \%mortarLHS;
+
+my %tallBodyRule =
+  map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
+$baseLintInstance{tallBodyRule} = \%tallBodyRule;
+
+# Will include:
+# BuccenMold BuccolMold BucwutMold
+# Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
+my %tall_0RunningRule = map { +( $_, 1 ) } qw(
+  tallBuccen tallBuccenMold
+  tallBuccol tallBuccolMold
+  tallBucwut tallBucwutMold
+  tallColsig tallColtar tallTissig
+  tallWutbar tallWutpam);
+$baseLintInstance{tall_0RunningRule} = \%tall_0RunningRule;
+
+my %tall_1RunningRule =
+  map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig tallCencolMold );
+$baseLintInstance{tall_1RunningRule} = \%tall_1RunningRule;
+
+my %tall_1JoggingRule =
+  map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
+$baseLintInstance{tall_1JoggingRule} = \%tall_1JoggingRule;
+
+my %tall_2JoggingRule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
+$baseLintInstance{tall_2JoggingRule} = \%tall_2JoggingRule;
+
+my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
+$baseLintInstance{tallJogging1_Rule} = \%tallJogging1_Rule;
+
+my %joggingRule = map { +( $_, 1 ) } (
+    keys %tall_1JoggingRule,
+    keys %tall_2JoggingRule,
+    keys %tallJogging1_Rule
+);
+$baseLintInstance{joggingRule} = \%joggingRule;
+
+my %tallLuslusRule =
+  map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell);
+$baseLintInstance{tallLuslusRule} = \%tallLuslusRule;
+
+my %barcenAnchorExceptions = ();
+$barcenAnchorExceptions{$_} = 1
+  for qw(tallTisgar tallTisgal LuslusCell LushepCell LustisCell);
+$baseLintInstance{barcenAnchorExceptions} = \%barcenAnchorExceptions;
+
+my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
+$baseLintInstance{tallJogRule} = \%tallJogRule;
+
+my %tallBackdentRule = map { +( $_, 1 ) } qw(
+  bonz5d
+  fordFascol
+  fordFasket
+  fordFaspam
+  fordFassem
+  tallBarcol
+  tallBarsig
+  tallBartar
+  tallBartis
+  tallBuchep
+  tallBuchepMold
+  tallBucket
+  tallBucketMold
+  tallBucpat
+  tallBuctisMold
+  tallCenhep
+  tallCenhepMold
+  tallCenket
+  tallCenlus
+  tallCenlusMold
+  tallCensig
+  tallCentar
+  tallColhep
+  tallColket
+  tallCollus
+  tallDottar
+  tallDottis
+  tallKetcen
+  tallKettis
+  tallSigbuc
+  tallSigcen
+  tallSiggar
+  tallSigpam
+  tallSigwut
+  tallSigzap
+  tallTisdot
+  tallTisfas
+  tallTisgar
+  tallTishep
+  tallTisket
+  tallTislus
+  tallTissem
+  tallTistar
+  tallTiswut
+  tallWutcol
+  tallWutdot
+  tallWutket
+  tallWutpat
+  tallWutsig
+  tallZapcol
+  tallZapdot
+  tallZaptis
+  tallZapwut
+);
+$baseLintInstance{backdentedRule} = \%tallBackdentRule;
+
+$baseLintInstance{ruleDB}          = [];
+$baseLintInstance{symbolDB}        = [];
+$baseLintInstance{symbolReverseDB} = {};
+
+testStyleCensus(\%baseLintInstance);
+
 sub new {
     my ( $class, $config ) = (@_);
     my $fileName     = $config->{fileName};
-    my %lint         = %{$config};
+    my %lint         = (%{$config}, %baseLintInstance);
     my $lintInstance = \%lint;
     bless $lintInstance, "MarpaX::Hoonlint";
     my $policies = $lintInstance->{policies};
@@ -858,154 +1012,6 @@ sub new {
 
     my @data = ();
 
-    my $semantics = <<'EOS';
-:default ::= action=>MarpaX::Hoonlint::doNode
-lexeme default = latm => 1 action=>[start,length,name]
-EOS
-
-    my $parser =
-      MarpaX::Hoonlint::YAHC->new( { semantics => $semantics, all_symbols => 1 } );
-    my $dsl = $parser->dsl();
-
-    $MarpaX::Hoonlint::grammar = $parser->rawGrammar();
-    $lintInstance->{grammar} = $MarpaX::Hoonlint::grammar;
-
-    my %NYI_Rule = ();
-    $NYI_Rule{$_} = 1 for qw();
-    $lintInstance->{NYI_Rule} = \%NYI_Rule;
-
-    my %tallRuneRule = map { +( $_, 1 ) } grep {
-             /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]$/
-          or /^tall[B-Z][aeoiu][b-z][b-z][aeiou][b-z]Mold$/
-    } map { $MarpaX::Hoonlint::grammar->symbol_name($_); }
-      $MarpaX::Hoonlint::grammar->symbol_ids();
-    $lintInstance->{tallRuneRule} = \%tallRuneRule;
-
-    # TODO: Check that these are all backdented,
-    my %tallNoteRule = map { +( $_, 1 ) } qw(
-      tallBarhep tallBardot
-      tallBuccab
-      tallCendot tallColcab
-      tallKetbar tallKethep tallKetlus tallKetsig tallKetwut
-      tallSigbar tallSigcab tallSigfas tallSiglus
-      tallTisbar tallTiscom tallTisgal
-      tallWutgal tallWutgar tallWuttis
-      tallZapgar
-    );
-    $lintInstance->{tallNoteRule} = \%tallNoteRule;
-
-    my %mortarLHS = map { +( $_, 1 ) }
-      qw(rick5dJog ruck5dJog rick5d ruck5d till5dSeq tall5dSeq
-      fordFile fordHoop fordHoopSeq norm5d tall5d
-      boog5d wisp5d whap5d);
-    $lintInstance->{mortarLHS} = \%mortarLHS;
-
-    my %tallBodyRule =
-      map { +( $_, 1 ) } grep { not $tallNoteRule{$_} } keys %tallRuneRule;
-    $lintInstance->{tallBodyRule} = \%tallBodyRule;
-
-    # Will include:
-    # BuccenMold BuccolMold BucwutMold
-    # Buccen Buccol Bucwut Colsig Coltar Wutbar Wutpam
-    my %tall_0RunningRule = map { +( $_, 1 ) } qw(
-      tallBuccen tallBuccenMold
-      tallBuccol tallBuccolMold
-      tallBucwut tallBucwutMold
-      tallColsig tallColtar tallTissig
-      tallWutbar tallWutpam);
-    $lintInstance->{tall_0RunningRule} = \%tall_0RunningRule;
-
-    my %tall_1RunningRule =
-      map { +( $_, 1 ) } qw( tallDotket tallSemcol tallSemsig tallCencolMold );
-    $lintInstance->{tall_1RunningRule} = \%tall_1RunningRule;
-
-    my %tall_1JoggingRule =
-      map { +( $_, 1 ) } qw(tallCentis tallCencab tallWuthep);
-    $lintInstance->{tall_1JoggingRule} = \%tall_1JoggingRule;
-
-    my %tall_2JoggingRule = map { +( $_, 1 ) } qw(tallCentar tallWutlus);
-    $lintInstance->{tall_2JoggingRule} = \%tall_2JoggingRule;
-
-    my %tallJogging1_Rule = map { +( $_, 1 ) } qw(tallTiscol);
-    $lintInstance->{tallJogging1_Rule} = \%tallJogging1_Rule;
-
-    my %joggingRule = map { +( $_, 1 ) } (
-        keys %tall_1JoggingRule,
-        keys %tall_2JoggingRule,
-        keys %tallJogging1_Rule
-    );
-    $lintInstance->{joggingRule} = \%joggingRule;
-
-    my %tallLuslusRule =
-      map { +( $_, 1 ) } qw(LuslusCell LushepCell LustisCell);
-    $lintInstance->{tallLuslusRule} = \%tallLuslusRule;
-
-    my %barcenAnchorExceptions = ();
-    $barcenAnchorExceptions{$_} = 1
-      for qw(tallTisgar tallTisgal LuslusCell LushepCell LustisCell);
-    $lintInstance->{barcenAnchorExceptions} = \%barcenAnchorExceptions;
-
-    my %tallJogRule = map { +( $_, 1 ) } qw(rick5dJog ruck5dJog);
-    $lintInstance->{tallJogRule} = \%tallJogRule;
-
-    my %tallBackdentRule = map { +( $_, 1 ) } qw(
-      bonz5d
-      fordFascol
-      fordFasket
-      fordFaspam
-      fordFassem
-      tallBarcol
-      tallBarsig
-      tallBartar
-      tallBartis
-      tallBuchep
-      tallBuchepMold
-      tallBucket
-      tallBucketMold
-      tallBucpat
-      tallBuctisMold
-      tallCenhep
-      tallCenhepMold
-      tallCenket
-      tallCenlus
-      tallCenlusMold
-      tallCensig
-      tallCentar
-      tallColhep
-      tallColket
-      tallCollus
-      tallDottar
-      tallDottis
-      tallKetcen
-      tallKettis
-      tallSigbuc
-      tallSigcen
-      tallSiggar
-      tallSigpam
-      tallSigwut
-      tallSigzap
-      tallTisdot
-      tallTisfas
-      tallTisgar
-      tallTishep
-      tallTisket
-      tallTislus
-      tallTissem
-      tallTistar
-      tallTiswut
-      tallWutcol
-      tallWutdot
-      tallWutket
-      tallWutpat
-      tallWutsig
-      tallZapcol
-      tallZapdot
-      tallZaptis
-      tallZapwut
-    );
-    $lintInstance->{backdentedRule} = \%tallBackdentRule;
-
-    # say Data::Dumper::Dumper(\%tallBodyRule);
 
     $parser->read($pSource);
 
@@ -1039,12 +1045,6 @@ EOS
     # local $Data::Dumper::Maxdepth    = 3;
 
     my $astValue = ${$astRef};
-
-    $lintInstance->{ruleDB}          = [];
-    $lintInstance->{symbolDB}        = [];
-    $lintInstance->{symbolReverseDB} = {};
-
-    $lintInstance->testStyleCensus();
 
     for my $policyShortName ( keys %{$policies} ) {
         my $policyFullName = $policies->{$policyShortName};
