@@ -52,8 +52,9 @@ cpan_dir_full_test:
 	cd cpan && $(MAKE) disttest
 
 install:
-	@echo === install target ===
+	@echo === target: perl Makefile.PL ===
 	(cd cpan && perl Makefile.PL)
+	@echo === target: make ===
 	(cd cpan && $(MAKE))
 
 doc:
