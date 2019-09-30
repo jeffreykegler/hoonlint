@@ -71,3 +71,4 @@
 ^pod2htmd[.]tmp
 ^pod2htmi[.]tmp
 ^test[.]out$
+^releng[.]out$
