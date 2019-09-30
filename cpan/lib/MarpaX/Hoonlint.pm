@@ -858,6 +858,7 @@ my $dsl = $parser->dsl();
 
 $MarpaX::Hoonlint::grammar = $parser->rawGrammar();
 my %baseLintInstance = ();
+$baseLintInstance{parser} = $parser;
 $baseLintInstance{grammar} = $MarpaX::Hoonlint::grammar;
 
 my %NYI_Rule = ();
@@ -1009,9 +1010,9 @@ sub new {
     bless $lintInstance, "MarpaX::Hoonlint";
     my $policies = $lintInstance->{policies};
     my $pSource  = $lintInstance->{pHoonSource};
+    my $parser  = $lintInstance->{parser};
 
     my @data = ();
-
 
     $parser->read($pSource);
 
