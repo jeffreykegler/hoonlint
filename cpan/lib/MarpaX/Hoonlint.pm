@@ -1007,10 +1007,13 @@ sub new {
     my $fileName     = $config->{fileName};
     my %lint         = (%{$config}, %baseLintInstance);
     my $lintInstance = \%lint;
+
     bless $lintInstance, "MarpaX::Hoonlint";
     my $policies = $lintInstance->{policies};
     my $pSource  = $lintInstance->{pHoonSource};
     my $parser  = $lintInstance->{parser};
+    $lintInstance->{topicLines}   = {};
+    $lintInstance->{mistakeLines} = {};
 
     my @data = ();
 

@@ -163,9 +163,6 @@ for my $fileName (@fileNames) {
     $config{fileName} = $fileName;
     my $pHoonSource = slurp($fileName);
     $config{pHoonSource} = $pHoonSource;
-    $config{topicLines}   = {};
-    $config{mistakeLines} = {};
-
 
     my ( $suppressions, $unusedSuppressions ) =
       parseReportItems( \%config, $pSuppressions );
