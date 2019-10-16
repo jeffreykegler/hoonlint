@@ -334,6 +334,5 @@ t/examples.d/fizzbuzz.lint.out
 t/examples.d/sieve_b.lint.out
 t/examples.d/sieve_k.lint.out
 t/examples.d/toe.lint.out
-t/examples_if.t
 xt/arvo.t
 xt/arvo_if.t
