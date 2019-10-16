@@ -332,6 +332,13 @@ is being displayed.
 I<NUM> defaults to 0 is no lines of context are being
 displayed.
 
+=item B<-f I<listFile>>, B<--filelist=I<listFile>>
+
+Add the files in the file named I<listFile>
+to the files to be processed by C<hoonlint>.
+If I<listFile> is C<->, read the list of files
+from STDIN.
+
 =item B<-P I<policy>>, B<--policy=I<policy>>
 
 Set the policy that C<hoonlint>
