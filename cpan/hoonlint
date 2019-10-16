@@ -11,6 +11,12 @@ use Getopt::Long;
 
 use MarpaX::Hoonlint;
 
+sub slurpStdin {
+    local $RS = undef;
+    my $file = <STDIN>;
+    return \$file;
+}
+
 sub slurp {
     my ($fileName) = @_;
     local $RS = undef;
@@ -68,11 +74,13 @@ my @suppressionsFileNames;
 my @policiesArg;
 my $contextSize = 0;
 my $displayDetails = 1;
+my $fileList;
 
 GetOptions(
     "verbose"               => \$verbose,
     "context|C:i"           => \$contextSize,
     "displayDetails|details:i"           => \$displayDetails,
+    "filelist|f:s"           => \$fileList,
     "inclusions-file|I=s"   => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
     "policy|P=s"            => \@policiesArg,
@@ -82,8 +90,17 @@ sub usage {
     die "usage: $PROGRAM_NAME [options ...] fileName\n";
 }
 
-usage() if scalar @ARGV <= 0;
-my @fileNames = @ARGV;
+my @fileNames = ();
+GET_FILE_LIST: {
+    last GET_FILE_LIST unless $fileList;
+    if ($fileList eq '-') {
+        push @fileNames, (split "\n", ${ slurpStdin() });
+        last GET_FILE_LIST;
+    }
+    push @fileNames, (split "\n", ${ slurp($fileList) });
+}
+push @fileNames, @ARGV;
+die "No files specified\n" if scalar @fileNames <= 0;
 
 # Config is essentially a proto-lint-instance, containing all
 # variables which are from some kind of "environment", which
