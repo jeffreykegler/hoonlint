@@ -194,7 +194,7 @@ hoonlint - lint utility for the Hoon language
 
 =head1 SYNOPSIS
 
-    hoonlint [options] FILE
+    hoonlint [options] FILE ...
 
 =head1 Status
 
@@ -214,6 +214,11 @@ At this point, the link is
 L<https://github.com/jeffreykegler/hoonlint/blob/master/UPDATES.md>.
 
 =head1 Description
+
+The C<hoonlint> command runs checks on one or more hoon
+files.
+These may be specified on the command line,
+or via the C<-f> option.
 
 =head2 Simple example
 
