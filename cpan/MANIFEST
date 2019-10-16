@@ -328,7 +328,8 @@ suppressions/aberration.suppressions
 suppressions/examples.suppressions
 t/00-load.t
 t/05-examples.t
-t/cmdline.t
+t/ex_cmdline.t
+t/ex_stdin.t
 t/examples.d/fizzbuzz.lint.out
 t/examples.d/sieve_b.lint.out
 t/examples.d/sieve_k.lint.out
