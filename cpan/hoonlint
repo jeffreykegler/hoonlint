@@ -82,8 +82,8 @@ sub usage {
     die "usage: $PROGRAM_NAME [options ...] fileName\n";
 }
 
-usage() if scalar @ARGV != 1;
-my $fileName = $ARGV[0];
+usage() if scalar @ARGV <= 0;
+my @fileNames = @ARGV;
 
 # Config is essentially a proto-lint-instance, containing all
 # variables which are from some kind of "environment", which
@@ -96,29 +96,28 @@ my $fileName = $ARGV[0];
 # which contains information taken from the command line
 # arguments and read from various files.
 
-my %config = ();
+my %sharedConfig = ();
 
-$config{fileName} = $fileName;
-
-$config{topicLines}       = {};
-$config{mistakeLines}     = {};
+$sharedConfig{topicLines}   = {};
+$sharedConfig{mistakeLines} = {};
 
 my @policies = ();
 push @policies, @policiesArg;
+
 # Default policy
 @policies = ('Test::Whitespace') if not scalar @policies;
 die "Multiple policies not yet implemented" if scalar @policies != 1;
 my %policies = ();
 for my $shortPolicyName (@policies) {
-  my $fullPolicyName = 'MarpaX::Hoonlint::Policy::' . $shortPolicyName;
+    my $fullPolicyName = 'MarpaX::Hoonlint::Policy::' . $shortPolicyName;
 
-  # "require policy name" is a hack until I create the full directory
-  # structure required to make this a Perl module
-  my $eval_ok = eval "require $fullPolicyName";
-  die $EVAL_ERROR if not $eval_ok;
-  $policies{$shortPolicyName} = $fullPolicyName;
+    # "require policy name" is a hack until I create the full directory
+    # structure required to make this a Perl module
+    my $eval_ok = eval "require $fullPolicyName";
+    die $EVAL_ERROR if not $eval_ok;
+    $policies{$shortPolicyName} = $fullPolicyName;
 }
-$config{policies} = \%policies;
+$sharedConfig{policies} = \%policies;
 
 my $defaultSuppressionFile = 'hoonlint.suppressions';
 if ( not @suppressionsFileNames
@@ -136,35 +135,40 @@ my $pSuppressions;
     $pSuppressions = \( join "", @suppressions );
 }
 
-my ( $suppressions, $unusedSuppressions ) = parseReportItems(\%config, $pSuppressions);
-die $unusedSuppressions if not $suppressions;
-$config{suppressions}       = $suppressions;
-$config{unusedSuppressions} = $unusedSuppressions;
-
-my $pInclusions;
-my ( $inclusions, $unusedInclusions );
-if ( defined $inclusionsFileName ) {
-    $pInclusions = slurp($inclusionsFileName);
-    ( $inclusions, $unusedInclusions ) = parseReportItems(\%config, $pInclusions);
-    die $unusedInclusions if not $inclusions;
-}
-$config{inclusions}       = $inclusions;
-$config{unusedInclusions} = $unusedInclusions;
-
-my $pHoonSource = slurp($fileName);
-
-$config{pHoonSource} = $pHoonSource;
-$config{contextSize} = $contextSize;
+$sharedConfig{contextSize} = $contextSize;
 SET_DISPLAY_DETAILS: {
-    if (not defined $displayDetails) {
-         $config{displayDetails} = $contextSize >= 1 ? 1 : 0;
-         last SET_DISPLAY_DETAILS;
+    if ( not defined $displayDetails ) {
+        $sharedConfig{displayDetails} = $contextSize >= 1 ? 1 : 0;
+        last SET_DISPLAY_DETAILS;
     }
-    $config{displayDetails} = $displayDetails;
+    $sharedConfig{displayDetails} = $displayDetails;
 }
 
-MarpaX::Hoonlint->new(\%config);
+for my $fileName (@fileNames) {
+    my %config = %sharedConfig;
+    $config{fileName} = $fileName;
+    my $pHoonSource = slurp($fileName);
+    $config{pHoonSource} = $pHoonSource;
 
+    my ( $suppressions, $unusedSuppressions ) =
+      parseReportItems( \%config, $pSuppressions );
+    die $unusedSuppressions if not $suppressions;
+    $config{suppressions}       = $suppressions;
+    $config{unusedSuppressions} = $unusedSuppressions;
+
+    my $pInclusions;
+    my ( $inclusions, $unusedInclusions );
+    if ( defined $inclusionsFileName ) {
+        $pInclusions = slurp($inclusionsFileName);
+        ( $inclusions, $unusedInclusions ) =
+          parseReportItems( \%config, $pInclusions );
+        die $unusedInclusions if not $inclusions;
+    }
+    $config{inclusions}       = $inclusions;
+    $config{unusedInclusions} = $unusedInclusions;
+
+    MarpaX::Hoonlint->new( \%config );
+}
 
 =pod
 
