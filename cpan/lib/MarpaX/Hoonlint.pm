@@ -398,7 +398,6 @@ sub reportItem {
     # been enforced.  This is a mistake and should change.
     # Add reportLine/reportColumn to all mistakes, and do not use
     # line/column.  (Can line/column be eliminated?)
-    my $parentLine       = $mistake->{parentLine} // -1;
     my $reportLine       = $mistake->{reportLine} // $mistake->{line};
     my $reportColumn     = $mistake->{reportColumn} // $mistake->{column};
     my $reportLC         = join ':', $reportLine, $reportColumn + 1;
@@ -409,17 +408,17 @@ sub reportItem {
       if $inclusions
       and not $inclusions->{$reportLC}{$reportPolicy}{$reportSubpolicy};
 
-    my $lineSkip = $skipLines->{$reportLine} // $skipLines->{$parentLine};
+    my $lineSkip = $skipLines->{$reportLine} && $reportLine;
+
+    if( ref($mistake->{topicLines}) && $mistake->{topicLines}[0]){
+      my $topicLine = $mistake->{topicLines}[0];
+      $lineSkip //= $skipLines->{$topicLine} && $topicLine;
+    }
     my $suppression =
       $suppressions->{$reportLC}->{$reportPolicy}->{$reportSubpolicy};
     if ( defined $lineSkip ){
         $suppressThisItem = 1;
-        if( defined $instance->{skipLinesUnused}->{$reportLine}){
-          delete $instance->{skipLinesUnused}->{$reportLine};
-        }
-        else {
-          delete $instance->{skipLinesUnused}->{$parentLine};
-        }
+        delete $instance->{skipLinesUnused}->{$lineSkip};
     }
     elsif ( defined $suppression ) {
         $suppressThisItem = 1;
