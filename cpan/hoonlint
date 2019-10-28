@@ -69,6 +69,7 @@ sub parseReportItems {
 }
 
 my $verbose;    # right now does nothing
+my $ignoreSic;
 my $inclusionsFileName;
 my @suppressionsFileNames;
 my @policiesArg;
@@ -84,6 +85,7 @@ GetOptions(
     "inclusions-file|I=s"   => \$inclusionsFileName,
     "suppressions_file|S=s" => \@suppressionsFileNames,
     "policy|P=s"            => \@policiesArg,
+    "ignore-sic|i"          => \$ignoreSic,
 ) or die("Error in command line arguments\n");
 
 sub usage {
@@ -163,6 +165,14 @@ for my $fileName (@fileNames) {
     $config{fileName} = $fileName;
     my $pHoonSource = slurp($fileName);
     $config{pHoonSource} = $pHoonSource;
+
+    my %skipLines = ();
+    if ( not defined $ignoreSic) {
+      # TODO I'm sure there's a fancy way to do this, using a grammar perhaps
+      %skipLines = map { int($_) => 1 } split '\n', `sed -n '/:::sic/=' $fileName`;
+    }
+    $config{skipLines} = \%skipLines;
+    $config{skipLinesUnused} = { %skipLines };
 
     my ( $suppressions, $unusedSuppressions ) =
       parseReportItems( \%config, $pSuppressions );

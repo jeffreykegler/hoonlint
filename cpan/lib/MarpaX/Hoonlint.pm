@@ -374,6 +374,7 @@ sub reportItem {
 
     my $inclusions      = $instance->{inclusions};
     my $suppressions    = $instance->{suppressions};
+    my $skipLines       = $instance->{skipLines};
     my $reportPolicy    = $mistake->{policy};
 
     # TODO: Is subpolicy everywhere?  Can the tag
@@ -406,9 +407,20 @@ sub reportItem {
     $excludeThisItem = 1
       if $inclusions
       and not $inclusions->{$reportLC}{$reportPolicy}{$reportSubpolicy};
+
+    my $lineSkip = $skipLines->{$reportLine} && $reportLine;
+
+    if( ref($mistake->{topicLines}) && $mistake->{topicLines}[0]){
+      my $topicLine = $mistake->{topicLines}[0];
+      $lineSkip //= $skipLines->{$topicLine} && $topicLine;
+    }
     my $suppression =
       $suppressions->{$reportLC}->{$reportPolicy}->{$reportSubpolicy};
-    if ( defined $suppression ) {
+    if ( defined $lineSkip ){
+        $suppressThisItem = 1;
+        delete $instance->{skipLinesUnused}->{$lineSkip};
+    }
+    elsif ( defined $suppression ) {
         $suppressThisItem = 1;
         $instance->{unusedSuppressions}->{$reportLC}->{$reportPolicy}
           ->{$reportSubpolicy} = undef;
@@ -1079,6 +1091,10 @@ sub new {
                 say "Unused suppression: $fileName $lc $policy $subpolicy";
             }
         }
+    }
+    my $skipLinesUnused = $lintInstance->{skipLinesUnused};
+    for my $line ( keys %{$skipLinesUnused} ) {
+        say "Redundant :::sic in $fileName:$line";
     }
 
     return $lintInstance;
